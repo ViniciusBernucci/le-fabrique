@@ -1,6 +1,6 @@
 # FAC-003 — controle web e persistência
 
-Status: PRONTO PARA REVISÃO
+Status: DONE
 
 ## Objetivo
 
@@ -51,3 +51,5 @@ Criar o relatório datado do FAC-003, atualizar README dos domínios afetados, �
 ## Evidência de implementação
 
 Implementado na branch `feat/fac-003-control` e verificado no SHA de código `1807330bcf7b1374fa626d9fcbfc47dd8002f433`. Evidências detalhadas estão em `documentacoes/controle/2026-09-30-FAC-003-controle-web-persistencia.md`.
+
+O responsável concedeu aceite explícito em 30/09/2026 após receber os SHAs de código e documentação. FAC-003 está DONE.

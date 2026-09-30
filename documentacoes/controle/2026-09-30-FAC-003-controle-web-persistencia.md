@@ -2,7 +2,7 @@
 
 Data: 2026-09-30
 
-Status: IMPLEMENTADO; AGUARDANDO REVISÃO E ACEITE
+Status: DONE
 
 Branch: `feat/fac-003-control`
 
@@ -33,4 +33,8 @@ Reverter o commit de código restaura o painel e a API anteriores. A coluna adit
 
 ## Documentação e lessons
 
-Foram atualizados README raiz, controle, operação, planejamento, índice, changelog e backlog. A lesson `lessons/outbox-idempotencia.md` registra o conceito aplicado. O FAC-003 só será DONE após revisão do commit exato e aceite humano.
+Foram atualizados README raiz, controle, operação, planejamento, índice, changelog e backlog. A lesson `lessons/outbox-idempotencia.md` registra o conceito aplicado.
+
+## Aceite
+
+O responsável concedeu aceite explícito em 30/09/2026 para o código `1807330bcf7b1374fa626d9fcbfc47dd8002f433` e a documentação apresentada no commit `499caab`. O registro de aceite é documental e não altera o código verificado.

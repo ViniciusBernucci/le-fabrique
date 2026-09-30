@@ -1,6 +1,6 @@
 # Controle administrativo
 
-Status: IMPLEMENTADO no FAC-003; AGUARDANDO REVISÃO E ACEITE.
+Status: IMPLEMENTADO e ACEITO no FAC-003.
 
 A API NestJS expõe health sem autenticação e protege as rotas administrativas com um Bearer token vindo de `ADMIN_API_TOKEN`. O painel solicita esse token ao operador, mantém o valor somente durante a sessão do navegador e chama contratos validados por Zod.
 
