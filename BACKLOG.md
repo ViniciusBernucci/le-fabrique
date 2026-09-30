@@ -7,12 +7,12 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 está DONE. Por decisão do responsável em 30/09/2026, o piloto externo foi adiado até o núcleo da plataforma estar pronto para validação; FAC-003 é o próximo ticket elegível. Não preencher prazo contratual sem capacidade definida.
+FAC-000 está DONE. O piloto externo está adiado até a validação operacional. FAC-003 foi implementado e aguarda revisão e aceite; nenhum ticket seguinte deve iniciar antes desse gate. Não preencher prazo contratual sem capacidade definida.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
 - FAC-002: PLANEJADO — Validar clientes e baseline com cenário sintético; dependências: FAC-004.
-- FAC-003: READY — Controle web e persistência; dependências: FAC-000.
+- FAC-003: PRONTO PARA REVISÃO — Controle web e persistência; dependências: FAC-000.
 - FAC-004: PLANEJADO — Worker interno e identidade de serviço; dependências: FAC-003.
 - FAC-005: PLANEJADO — Runtime Gateway e primeiro adapter; dependências: FAC-002, FAC-004.
 - FAC-006: PLANEJADO — Context Builder e RuntimeGuard; dependências: FAC-003.

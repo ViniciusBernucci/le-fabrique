@@ -13,6 +13,12 @@ Sandbox sem privileged, socket Docker, home completo, banco/Redis da fábrica, c
 ## Worker API
 POST /workers/register (onboarding restrito), POST /workers/{id}/heartbeat, POST /workers/{id}/jobs/claim, POST /attempts/{id}/events, POST /attempts/{id}/checkpoint, POST /attempts/{id}/complete. Payloads versionados; autenticação por worker; claim transacional; sequence/event_id únicos; fencing_token obrigatório. Artefatos com tamanho/hash/paths permitidos, nunca path traversal.
 Worker não escolhe arbitrariamente repo, comando ou URL fornecidos em output de IA. Controle só distribui jobs de projetos cadastrados; valida repo/ref e perfis de comando. Eventos/logs são sanitizados e limitados antes de armazenar/exibir.
+
+## Controle administrativo atual
+
+FAC-003 protege `GET /auth/session`, projetos e tickets com `Authorization: Bearer`. O valor de `ADMIN_API_TOKEN` tem no mínimo 32 caracteres, fica somente no ambiente da API e nunca deve entrar no bundle, banco ou logs. O painel conserva a credencial em `sessionStorage`, portanto a implantação exige HTTPS e uma origem web confiável; identidade multiusuário, expiração e revogação granular continuam futuras.
+
+O operador pode criar/listar projetos, criar/listar tickets e promover `DRAFT` para `READY`. A promoção exige `expectedVersion`, incrementa a versão e cria `ticket.ready.v1` na mesma transação. `deduplication_key` único torna retries idempotentes. O dispatcher dessa outbox pertence aos tickets seguintes; estado `READY` ainda não executa trabalho.
 ## Recuperação
 Queda do worker: parar agendamento local, manter painel, esperar heartbeat; preservar checkpoints. Internet caiu: parar execução antes de lease expirar. Auth expirada: AUTH_REQUIRED; usuário faz login oficial local. Cota acabou: handoff seguro ou WAITING_PROVIDER. Disco cheio/OOM: PAUSED_RESOURCE, limpar somente workspaces já preservados. CLI mudou schema: bloquear adapter, testar fixture e integrar atualização em ticket próprio.
 Kill switch bloqueia claims, solicita cancelamento e monitora fim das árvores de processos; nunca declarar cancelado sem evidência. Supervisor aplica timeout e limites de logs/disco, além de CPU/RAM.

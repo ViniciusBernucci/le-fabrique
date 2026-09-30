@@ -1,6 +1,6 @@
 # FAC-003 — controle web e persistência
 
-Status: READY
+Status: PRONTO PARA REVISÃO
 
 ## Objetivo
 
@@ -47,3 +47,7 @@ Nenhum provider de IA é requisito funcional do FAC-003; a implementação segue
 ## Documentação e evidências
 
 Criar o relatório datado do FAC-003, atualizar README dos domínios afetados, índice, changelog, backlog, contratos e operação. Registrar migration, testes de autorização/idempotência, diff sanitizado, revisão exata, limitações e rollback. O ticket só muda para DONE após revisão e aceite humano.
+
+## Evidência de implementação
+
+Implementado na branch `feat/fac-003-control` e verificado no SHA de código `1807330bcf7b1374fa626d9fcbfc47dd8002f433`. Evidências detalhadas estão em `documentacoes/controle/2026-09-30-FAC-003-controle-web-persistencia.md`.
