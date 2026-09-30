@@ -21,3 +21,5 @@ Heartbeat proposto 15s, lease 90s; worker precisa parar antes de expirar, inclui
 ## Conteúdo mínimo
 Ticket/run/attempt, objetivo/aceite, escopo, base SHA/code SHA, branch/workspace, provider/versão/modelo conhecido, arquivos modificados/untracked, patch hash, decisões e evidências, testes reais e revisão, falhas/limitações, próximos passos, docs pendentes, motivo da pausa e autenticação/cota observada sem segredos.
 Checkpoint não afirma aceite nem transforma checks antigos em atuais. Cancelamento pode ter consumido cota; guardar uso desconhecido como desconhecido.
+
+FAC-007 implementa a camada local de artefato: patch binario, arquivos untracked regulares, modos, tamanhos e hashes, com restauracao somente no mesmo SHA-base limpo. Persistir esse manifesto, associa-lo ao attempt e liberar writer com fencing continuam responsabilidades do FAC-008.

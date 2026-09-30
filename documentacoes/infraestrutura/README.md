@@ -1,6 +1,6 @@
 # Infraestrutura atual
 
-Status: IMPLEMENTADO e ACEITO no FAC-000; implantação em VPS NÃO REALIZADA.
+Status: bootstrap aceito no FAC-000; sandbox e snapshots do FAC-007 implementados e aguardando aceite. Implantação em VPS NÃO REALIZADA.
 
 ## Componentes
 
@@ -25,3 +25,7 @@ docker compose up -d --build
 Verifique `GET http://localhost:8080/api/health/live` e `GET http://localhost:8080/api/health/ready`. Para interromper o ambiente sem apagar dados, execute `docker compose down`. A remoção de volumes não faz parte do rollback padrão.
 
 Provisionamento, HTTPS, firewall, backup externo, restauração, isolamento de clientes oficiais e limites reais da VPS continuam sujeitos aos tickets de infraestrutura do MVP.
+
+## Sandbox atual
+
+FAC-007 implementa worktree detached, unidade systemd de usuario com cgroup, namespaces Linux sem root e snapshot local com patch binario/untracked verificados por SHA-256. O comando enxerga o workspace como `/mnt`; home, `/run`, temporarios gravaveis e rede externa sao substituidos. O supervisor confiavel continua fora do namespace para operar Git e artefatos. Integracao ao worker e persistencia pertencem ao FAC-008.

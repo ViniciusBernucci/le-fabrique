@@ -9,6 +9,7 @@
 - [infraestrutura/README.md](infraestrutura/README.md)
 - [infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md](infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md)
 - [infraestrutura/2026-09-30-FAC-000-aceite.md](infraestrutura/2026-09-30-FAC-000-aceite.md)
+- [infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md](infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md)
 - [operacao/README.md](operacao/README.md)
 - [runtime/README.md](runtime/README.md)
 - [runtime/2026-09-30-FAC-002-preflight-codex.md](runtime/2026-09-30-FAC-002-preflight-codex.md)

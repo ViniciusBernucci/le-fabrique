@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.12 - 2026-09-30
+FAC-007 implementa worktree detached, sandbox Linux sem root com namespaces e cgroup systemd, ambiente minimo, rede/home/socket ocultos, timeout confirmado e snapshots de patch binario/untracked com hashes e restauracao na revisao exata. A revisao funcional aguarda aceite; integracao ao worker e persistencia ficam no FAC-008.
+
 ## 2.11 - 2026-09-30
 FAC-006 aceito pelo responsavel na revisao `ea8cf7afb0e55840722f306262b5334bb408b51a`; FAC-007 passa a ser o proximo ticket READY.
 

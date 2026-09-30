@@ -1,6 +1,8 @@
 # FAC-007 — Sandbox e snapshots recuperaveis
 
-Status: READY
+Status: AWAITING_HUMAN
+
+Implementacao funcional: `a99fb1f30a48fa3e7a991f9cd425d6757543ad12`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
 
 ## Objetivo
 
