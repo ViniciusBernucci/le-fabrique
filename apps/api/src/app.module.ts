@@ -2,8 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { z } from "zod";
 import { HealthModule } from "./health/health.module";
-import { PrismaService } from "./prisma.service";
-import { RedisService } from "./redis.service";
+import { InfrastructureModule } from "./infrastructure.module";
 
 const environmentSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -19,9 +18,8 @@ const environmentSchema = z.object({
       isGlobal: true,
       validate: (environment) => environmentSchema.parse(environment),
     }),
+    InfrastructureModule,
     HealthModule,
   ],
-  providers: [PrismaService, RedisService],
-  exports: [PrismaService, RedisService],
 })
 export class AppModule {}

@@ -9,6 +9,7 @@ Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstr
 
 Nenhum ticket DONE; FAC-001 aguarda definição do repo/piloto. Não preencher prazo contratual sem capacidade definida.
 
+- FAC-000: PRONTO PARA REVISÃO — Bootstrap TypeScript e Docker; dependências: ADR-002 e ADR-003.
 - FAC-001: PLANEJADO — Contratar piloto; dependências: nenhuma.
 - FAC-002: PLANEJADO — Validar clientes e baseline assistido; dependências: FAC-001.
 - FAC-003: PLANEJADO — Controle web e persistência; dependências: FAC-002.

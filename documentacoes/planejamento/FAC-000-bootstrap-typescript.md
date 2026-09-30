@@ -1,6 +1,6 @@
 # FAC-000 - Bootstrap TypeScript da fábrica
 
-Status: EM ANDAMENTO
+Status: PRONTO PARA REVISÃO
 
 ## Objetivo
 

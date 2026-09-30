@@ -27,3 +27,7 @@ Separar execução em outra VPS é alternativa futura, sujeita a métricas e rev
 Selecionar perfil em infraestrutura/DIMENSIONAMENTO-VPS.md e registrar especificações reais. Configurar firewall: HTTPS público; SSH administrativo restrito; Redis/PostgreSQL/worker privados. Separar volumes persistentes de temporários. Instalar supervisor como serviço com usuário dedicado e recuperação após reinício.
 Fazer login oficial pelo método suportado para servidor sem interface; callback/fluxo remoto apenas conforme documentação do cliente. Não desabilitar autenticação nem copiar cookies. Confirmar credenciais acessíveis ao cliente e inacessíveis a código/testes/logs.
 Rodar baseline no mesmo ambiente que executará jobs. Medir recursos e painel durante build. Reiniciar worker, depois VPS em janela de teste; comprovar leases, nenhuma duplicação e retomada de checkpoint. Validar backup externo e restauração. Não abrir banco/fila para facilitar diagnóstico.
+
+## Bootstrap executável atual
+
+FAC-000 implementa a fundação local. `compose.dev.yaml` publica PostgreSQL e Redis apenas no loopback para desenvolvimento. A composição completa publica somente o Nginx na porta 8080; API, worker, PostgreSQL e Redis ficam na rede interna. A API aplica migrations com `prisma migrate deploy` e expõe liveness e readiness. O worker inicia com concorrência global igual a 1 e processa apenas o probe sintético do bootstrap. Execução de clientes oficiais, leases, fencing e jobs reais continuam pendentes nos tickets funcionais.
