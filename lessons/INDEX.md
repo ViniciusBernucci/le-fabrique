@@ -6,3 +6,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Heartbeat e parada conservadora](worker-heartbeat-quiescencia.md)
 - [Perfis de permissao para clientes CLI](perfis-permissao-cliente-cli.md)
 - [Lifecycle seguro de um cliente CLI](lifecycle-processo-cli.md)
+- [Contexto deterministico e limites conservadores](contexto-deterministico-limites.md)

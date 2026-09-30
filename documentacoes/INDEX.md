@@ -13,6 +13,8 @@
 - [runtime/README.md](runtime/README.md)
 - [runtime/2026-09-30-FAC-002-preflight-codex.md](runtime/2026-09-30-FAC-002-preflight-codex.md)
 - [runtime/2026-09-30-FAC-005-runtime-gateway-codex.md](runtime/2026-09-30-FAC-005-runtime-gateway-codex.md)
+- [contexto/README.md](contexto/README.md)
+- [contexto/2026-09-30-FAC-006-context-builder-runtime-guard.md](contexto/2026-09-30-FAC-006-context-builder-runtime-guard.md)
 - [planejamento/FAC-000-bootstrap-typescript.md](planejamento/FAC-000-bootstrap-typescript.md)
 - [planejamento/README.md](planejamento/README.md)
 - [planejamento/2026-09-30-PLAN-001-adiamento-piloto.md](planejamento/2026-09-30-PLAN-001-adiamento-piloto.md)
