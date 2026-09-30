@@ -9,7 +9,7 @@ Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstr
 30/09/2026. A fundação TypeScript está implementada: painel React/Vite, API NestJS, worker Node.js, contratos Zod, PostgreSQL, Redis/BullMQ e Docker Compose. Clientes oficiais, autenticação e workflow completo seguem nos tickets do MVP. APIs de IA e créditos extras permanecem desligados.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
-2. Revisar FAC-000; preencher PILOTO.md e executar FAC-001/FAC-002 antes das funcionalidades do piloto.
+2. FAC-000 está aceito; preencher PILOTO.md e executar FAC-001/FAC-002 antes das funcionalidades do piloto.
 3. Mesclar AGENTS.md e CLAUDE.md com regras existentes; preservar escopos locais.
 4. Antigravity: ler ANTIGRAVITY.md e confirmar como a versão carrega regras; injetar explicitamente quando necessário.
 5. Seguir documentacoes/POLITICA-IA.md em toda entrega; usar templates.

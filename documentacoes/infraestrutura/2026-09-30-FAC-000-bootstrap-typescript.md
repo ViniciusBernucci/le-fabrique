@@ -2,7 +2,7 @@
 
 Data: 2026-09-30
 
-Status: IMPLEMENTADO; AGUARDANDO REVISÃO E ACEITE
+Status: DONE
 
 Domínio: infraestrutura
 
@@ -40,4 +40,4 @@ Execute `docker compose down` para interromper a fundação sem remover volumes.
 
 ## Aceite
 
-FAC-000 está PRONTO PARA REVISÃO. O status DONE depende da revisão do diff exato e do aceite humano, conforme a política do repositório.
+FAC-000 foi revisado no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f` e recebeu aceite humano explícito em 30/09/2026. A evidência final e os limites preservados estão registrados em `2026-09-30-FAC-000-aceite.md`.

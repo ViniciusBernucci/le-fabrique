@@ -1,6 +1,6 @@
 # Infraestrutura atual
 
-Status: IMPLEMENTADO localmente em FAC-000; implantação em VPS NÃO REALIZADA.
+Status: IMPLEMENTADO e ACEITO no FAC-000; implantação em VPS NÃO REALIZADA.
 
 ## Componentes
 

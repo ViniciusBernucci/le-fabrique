@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 entrega a fundação executável da arquitetura aprovada. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. A implementação está na branch `feat/fac-000-typescript-foundation`, pronta para revisão e ainda sem aceite para DONE.
+FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE após revisão e aceite do SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. FAC-001 aguarda a definição do repositório e do contrato do piloto.
 
 ## Fronteiras e contratos
 
@@ -15,8 +15,8 @@ FAC-000 entrega a fundação executável da arquitetura aprovada. O monorepo con
 
 ## Sequência recomendada
 
-1. Revisar e aceitar FAC-000 no SHA exato da entrega.
-2. Concluir FAC-001 e FAC-002 com piloto, repositório, baseline e providers elegíveis comprovados.
+1. Definir o contrato do piloto e concluir FAC-001.
+2. Executar FAC-002 com baseline e providers elegíveis comprovados.
 3. Implementar FAC-003 sobre os contratos e a persistência existentes.
 4. Implementar FAC-004 com identidade de serviço e protocolo interno autenticado.
 5. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem FAC-005 a FAC-013.

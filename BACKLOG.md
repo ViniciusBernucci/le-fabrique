@@ -7,9 +7,9 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-Nenhum ticket DONE; FAC-001 aguarda definição do repo/piloto. Não preencher prazo contratual sem capacidade definida.
+FAC-000 está DONE; FAC-001 aguarda definição do repo/piloto. Não preencher prazo contratual sem capacidade definida.
 
-- FAC-000: PRONTO PARA REVISÃO — Bootstrap TypeScript e Docker; dependências: ADR-002 e ADR-003.
+- FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: PLANEJADO — Contratar piloto; dependências: nenhuma.
 - FAC-002: PLANEJADO — Validar clientes e baseline assistido; dependências: FAC-001.
 - FAC-003: PLANEJADO — Controle web e persistência; dependências: FAC-002.

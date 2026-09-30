@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Um módulo existente, um projeto, um worker, um writer. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V0 assistida entrega aprendizado antes da plataforma; V1 valida runtime único; V2 testa handoff; Sprint 3 mede operação. Nenhum ticket está implementado.
+V0 assistida entrega aprendizado antes da plataforma; V1 valida runtime único; V2 testa handoff; Sprint 3 mede operação. FAC-000 está implementado e aceito; FAC-001 a FAC-013 permanecem planejados.
 ## Épicos
 Sprint 0: contrato e viabilidade. Sprint 1: controle, worker e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, painel e experimento. Evolução: terceiro adapter/capacidades novas.
 

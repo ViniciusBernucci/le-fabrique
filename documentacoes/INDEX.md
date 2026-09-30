@@ -8,6 +8,7 @@
 - [infraestrutura/DIMENSIONAMENTO-VPS.md](infraestrutura/DIMENSIONAMENTO-VPS.md)
 - [infraestrutura/README.md](infraestrutura/README.md)
 - [infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md](infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md)
+- [infraestrutura/2026-09-30-FAC-000-aceite.md](infraestrutura/2026-09-30-FAC-000-aceite.md)
 - [operacao/README.md](operacao/README.md)
 - [runtime/README.md](runtime/README.md)
 - [planejamento/FAC-000-bootstrap-typescript.md](planejamento/FAC-000-bootstrap-typescript.md)
