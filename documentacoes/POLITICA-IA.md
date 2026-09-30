@@ -23,7 +23,7 @@ Histórico de entregas é append-only salvo correção identificada; docs atuais
 ## Regras de veracidade
 Usar IMPLEMENTADO, PLANEJADO ou NÃO VERIFICADO. Não escrever que foi executado algo apenas recomendado. Datas reais no fuso do responsável; IDs reais; hashes reais. Evitar hash circular: usar revisão do código anterior ao commit documental e/ou link do PR final.
 ## Bloqueios
-Ausência de repo/escopo/critério impede a implementação do piloto, mas permite inspeção e planejamento. Budget esgotado impede novas chamadas. Merge/deploy, ações destrutivas e migrações irreversíveis dependem de autorização explícita.
+Ausência de repo/escopo/critério impede somente a execução do piloto externo. Tickets da própria fábrica explicitamente independentes no backlog podem avançar com fixtures sintéticas; nenhum resultado sintético conta como aceite do piloto. Budget esgotado impede novas chamadas. Merge/deploy, ações destrutivas e migrações irreversíveis dependem de autorização explícita.
 
 ## Execução e handoff
 Ler o checkpoint e conferir SHA, diff e arquivos não rastreados antes de retomar. Nunca depender da memória da conversa anterior. Um writer por worktree; não iniciar outro até confirmar término da árvore de processos anterior. Se não houver provider, preservar trabalho e aguardar. Não alterar login, plano, créditos ou política financeira para continuar.

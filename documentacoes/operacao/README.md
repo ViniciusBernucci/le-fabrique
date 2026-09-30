@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 ## Inicialização
-Confirmar piloto e políticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Deploy do controle é uma tarefa futura autorizada separadamente.
+Durante a construção, confirmar políticas e usar somente fixtures sintéticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Confirmar o contrato do piloto real antes do FAC-012. Deploy do controle é uma tarefa futura autorizada separadamente.
 VPS roda proxy HTTPS, frontend, API, scheduler, PostgreSQL e Redis privados. Supervisor interno roda como usuário dedicado e usa protocolo interno autenticado. Manter credencial da fábrica separada de credenciais dos providers. Não expor endpoint local ou montar diretórios pessoais nos worktrees.
 Sandbox sem privileged, socket Docker, home completo, banco/Redis da fábrica, credenciais de Git amplas ou dados reais. Supervisor confiável prepara checkout e serviços sintéticos. Credenciais de provider inevitavelmente acessíveis ao cliente exigem isolamento de identidade/armazenamento; código executado não deve conseguir lê-las. Validar por teste de acesso negado, não só instrução escrita.
 ## Worker API

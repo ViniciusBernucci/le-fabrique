@@ -7,21 +7,21 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 está DONE; FAC-001 aguarda definição do repo/piloto. Não preencher prazo contratual sem capacidade definida.
+FAC-000 está DONE. Por decisão do responsável em 30/09/2026, o piloto externo foi adiado até o núcleo da plataforma estar pronto para validação; FAC-003 é o próximo ticket elegível. Não preencher prazo contratual sem capacidade definida.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
-- FAC-001: PLANEJADO — Contratar piloto; dependências: nenhuma.
-- FAC-002: PLANEJADO — Validar clientes e baseline assistido; dependências: FAC-001.
-- FAC-003: PLANEJADO — Controle web e persistência; dependências: FAC-002.
+- FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
+- FAC-002: PLANEJADO — Validar clientes e baseline com cenário sintético; dependências: FAC-004.
+- FAC-003: READY — Controle web e persistência; dependências: FAC-000.
 - FAC-004: PLANEJADO — Worker interno e identidade de serviço; dependências: FAC-003.
 - FAC-005: PLANEJADO — Runtime Gateway e primeiro adapter; dependências: FAC-002, FAC-004.
-- FAC-006: PLANEJADO — Context Builder e RuntimeGuard; dependências: FAC-001, FAC-003.
+- FAC-006: PLANEJADO — Context Builder e RuntimeGuard; dependências: FAC-003.
 - FAC-007: PLANEJADO — Sandbox e snapshots recuperáveis; dependências: FAC-004, FAC-005.
 - FAC-008: PLANEJADO — Orquestrador e checkpoints; dependências: FAC-006, FAC-007.
 - FAC-009: PLANEJADO — Developer, checks e revisão; dependências: FAC-008.
 - FAC-010: PLANEJADO — Segundo provider e handoff automático; dependências: FAC-005, FAC-008, FAC-009.
 - FAC-011: PLANEJADO — Gate documental e Provider Manager; dependências: FAC-009, FAC-010.
-- FAC-012: PLANEJADO — Dez tickets e operação; dependências: FAC-011.
+- FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.

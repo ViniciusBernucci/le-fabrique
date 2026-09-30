@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE após revisão e aceite do SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. FAC-001 aguarda a definição do repositório e do contrato do piloto.
+FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE após revisão e aceite do SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. Por decisão do responsável, o contrato do piloto externo foi adiado até o núcleo estar pronto; FAC-003 é o próximo ticket.
 
 ## Fronteiras e contratos
 
@@ -15,11 +15,11 @@ FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE a
 
 ## Sequência recomendada
 
-1. Definir o contrato do piloto e concluir FAC-001.
-2. Executar FAC-002 com baseline e providers elegíveis comprovados.
-3. Implementar FAC-003 sobre os contratos e a persistência existentes.
-4. Implementar FAC-004 com identidade de serviço e protocolo interno autenticado.
-5. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem FAC-005 a FAC-013.
+1. Implementar FAC-003 sobre os contratos e a persistência existentes.
+2. Implementar FAC-004 com identidade de serviço e protocolo interno autenticado.
+3. Executar FAC-002 em cenário sintético e comprovar ao menos um cliente oficial elegível antes do FAC-005.
+4. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem de dependências até FAC-011.
+5. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
 

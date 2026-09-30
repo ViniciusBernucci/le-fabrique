@@ -6,7 +6,7 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-Status: PLANEJADO — completar antes de execução.
+Status: DEFERRED — o responsável definirá o projeto manualmente após o núcleo da plataforma, antes do FAC-012. Este contrato não bloqueia FAC-003 a FAC-011.
 - Repositório/acesso, base branch/SHA: A DEFINIR.
 - Funcionalidade pequena e critérios verificáveis: A DEFINIR.
 - Stack da fábrica: React/Vite, NestJS e worker Node, todos em TypeScript; PostgreSQL e Redis/BullMQ. Decisão encerrada.

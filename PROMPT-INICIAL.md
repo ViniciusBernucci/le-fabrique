@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Leia AGENTS.md (Codex), CLAUDE.md (Claude) ou ANTIGRAVITY.md (Antigravity), documentacoes/POLITICA-IA.md, README.md e PILOTO.md. Se o ambiente não carregar regras, considere-as explicitamente parte desta instrução.
-Inspecione o estado real do repositório. Comece pelo menor ticket READY; se não houver, execute somente inspeção/planejamento de FAC-001. Não invente repo, modelo, cota ou teste. A arquitetura é assinatura/CLI oficial no worker interno na VPS, controle e execução na mesma VPS, APIs e créditos extras desligados.
+Inspecione o estado real do repositório. Comece pelo menor ticket READY; após o aceite do FAC-000 e o adiamento explícito do piloto, o próximo é FAC-003. Não invente repo externo, modelo, cota ou teste. Use fixtures sintéticas até o responsável definir o piloto antes do FAC-012. A arquitetura é assinatura/CLI oficial no worker interno na VPS, controle e execução na mesma VPS, APIs e créditos extras desligados.
 Antes de executar, registre contrato, revisão e baseline. Preserve trabalho existente. Entregue código revisável, evidências, relato por domínio, documentação atual e lessons. Em interrupção, checkpoint com patch/untracked e próximos passos. Não implemente todo o backlog numa sessão sem validar incrementos.
 
 ## Stack obrigatória da fábrica - revisão 2.3
