@@ -11,7 +11,9 @@ Durante a construção, confirmar políticas e usar somente fixtures sintéticas
 VPS roda proxy HTTPS, frontend, API, scheduler, PostgreSQL e Redis privados. Supervisor interno roda como usuário dedicado e usa protocolo interno autenticado. Manter credencial da fábrica separada de credenciais dos providers. Não expor endpoint local ou montar diretórios pessoais nos worktrees.
 Sandbox sem privileged, socket Docker, home completo, banco/Redis da fábrica, credenciais de Git amplas ou dados reais. Supervisor confiável prepara checkout e serviços sintéticos. Credenciais de provider inevitavelmente acessíveis ao cliente exigem isolamento de identidade/armazenamento; código executado não deve conseguir lê-las. Validar por teste de acesso negado, não só instrução escrita.
 ## Worker API
-POST /workers/register (onboarding restrito), POST /workers/{id}/heartbeat, POST /workers/{id}/jobs/claim, POST /attempts/{id}/events, POST /attempts/{id}/checkpoint, POST /attempts/{id}/complete. Payloads versionados; autenticação por worker; claim transacional; sequence/event_id únicos; fencing_token obrigatório. Artefatos com tamanho/hash/paths permitidos, nunca path traversal.
+Implementado no FAC-004: `POST /internal/workers/register`, `POST /internal/workers/{id}/heartbeat` e `GET /workers` administrativo. O protocolo interno usa `WORKER_API_TOKEN`, não aceita a credencial administrativa e é bloqueado pelo Nginx público. O worker encerra após três heartbeats consecutivos com falha.
+
+Planejado: claim, eventos, checkpoint e complete. Esses payloads serão versionados; claim será transacional e conclusão exigirá fencing token. Artefatos terão tamanho/hash/paths permitidos, nunca path traversal.
 Worker não escolhe arbitrariamente repo, comando ou URL fornecidos em output de IA. Controle só distribui jobs de projetos cadastrados; valida repo/ref e perfis de comando. Eventos/logs são sanitizados e limitados antes de armazenar/exibir.
 
 ## Controle administrativo atual
@@ -36,4 +38,4 @@ Rodar baseline no mesmo ambiente que executará jobs. Medir recursos e painel du
 
 ## Bootstrap executável atual
 
-FAC-000 implementa a fundação local. `compose.dev.yaml` publica PostgreSQL e Redis apenas no loopback para desenvolvimento. A composição completa publica somente o Nginx na porta 8080; API, worker, PostgreSQL e Redis ficam na rede interna. A API aplica migrations com `prisma migrate deploy` e expõe liveness e readiness. O worker inicia com concorrência global igual a 1 e processa apenas o probe sintético do bootstrap. Execução de clientes oficiais, leases, fencing e jobs reais continuam pendentes nos tickets funcionais.
+FAC-000 implementa a fundação local. `compose.dev.yaml` publica PostgreSQL e Redis apenas no loopback para desenvolvimento. A composição completa publica somente o Nginx na porta 8080; API, worker, PostgreSQL e Redis ficam na rede interna. A API aplica migrations com `prisma migrate deploy` e expõe liveness e readiness. FAC-004 registra o worker com UUID/capacidades e mantém heartbeat persistido, com concorrência global igual a 1. O BullMQ ainda processa apenas o probe sintético. Execução de clientes oficiais, leases, fencing e jobs reais continuam pendentes.

@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real entra antes do ensaio operacional. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000 está implementado e aceito; FAC-003 é o próximo ticket. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
+V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000 e FAC-003 estão implementados e aceitos; FAC-004 é o próximo ticket. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
 ## Épicos
 Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, definição do piloto real e experimento operacional. Evolução: terceiro adapter/capacidades novas.
 
@@ -26,17 +26,17 @@ Aceite: Um cliente oficial elegível comprovado em cenário sintético, autentic
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-003 — Controle web e persistência
-Sprint: Sprint 1. Dependências: FAC-000. Esforço estimado: 2-3 dias. Status: READY.
+Sprint: Sprint 1. Dependências: FAC-000. Esforço estimado: 2-3 dias. Status: DONE.
 Descrição: Implementar autenticação administrativa mínima, cadastro e consulta de projetos/tickets e transição idempotente para `READY` com outbox transacional, mantendo Redis/PostgreSQL privados. Provisionamento, HTTPS e backup externo permanecem em tarefas operacionais autorizadas separadamente.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Ticket autenticado persiste após reinício e dispatch idempotente; sem segredo em Git.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-004 — Worker interno e identidade de serviço
-Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Worker Node.js/TypeScript separado da API, consumo BullMQ idempotente, registro restrito, claim, heartbeat, eventos, systemd, login oficial na identidade de serviço e limites globais; rede interna autenticada.
+Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: PRONTO PARA REVISÃO.
+Descrição: Estabelecer identidade própria do worker Node.js separado, registro restrito, heartbeat persistido, encerramento conservador após perda do controle e rede interna autenticada. Claim, leases, fencing e execução real permanecem nos tickets de orquestração/runtime.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
-Aceite: Queda de rede interrompe writer antes do lease; job antigo não recebe conclusão válida; sem portas públicas de worker/banco/fila.
+Aceite: Worker registra identidade/capacidades, heartbeat avança, credencial inválida é rejeitada, perda repetida do controle encerra o processo e worker/banco/fila não possuem portas públicas.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-005 — Runtime Gateway e primeiro adapter

@@ -3,3 +3,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 
 - [Contratos de runtime no monorepo TypeScript](contratos-runtime-monorepo.md)
 - [Outbox idempotente e versão otimista](outbox-idempotencia.md)
+- [Heartbeat e parada conservadora](worker-heartbeat-quiescencia.md)

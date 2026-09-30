@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE após revisão e aceite do SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. Por decisão do responsável, o contrato do piloto externo foi adiado até o núcleo estar pronto; FAC-003 é o próximo ticket.
+FAC-000 e FAC-003 estão DONE. O controle possui autenticação administrativa, projetos/tickets e outbox idempotente. FAC-004 implementou identidade persistida, registro e heartbeat autenticado do worker no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1` e aguarda revisão. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
@@ -15,11 +15,10 @@ FAC-000 entregou a fundação executável da arquitetura aprovada e está DONE a
 
 ## Sequência recomendada
 
-1. Implementar FAC-003 sobre os contratos e a persistência existentes.
-2. Implementar FAC-004 com identidade de serviço e protocolo interno autenticado.
-3. Executar FAC-002 em cenário sintético e comprovar ao menos um cliente oficial elegível antes do FAC-005.
-4. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem de dependências até FAC-011.
-5. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
+1. Revisar e aceitar FAC-004 na revisão exata.
+2. Executar FAC-002 em cenário sintético e comprovar ao menos um cliente oficial elegível antes do FAC-005.
+3. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem de dependências até FAC-011.
+4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
 
@@ -27,4 +26,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam dispatcher transacional de outbox, idempotência de jobs, leases/fencing, sandbox efetivo, sanitização de logs, autenticação administrativa e do worker, backups restauráveis e adapters validados com clientes oficiais. Esses itens não devem ser inferidos a partir do probe sintético do bootstrap.
+Ainda faltam dispatcher da outbox, idempotência de jobs, claim, leases/fencing, sandbox efetivo, sanitização completa de logs, rotação/multiusuário, backups restauráveis e adapters validados com clientes oficiais. Esses itens não devem ser inferidos a partir do registro e heartbeat sintéticos.

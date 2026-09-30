@@ -15,6 +15,8 @@
 - [planejamento/README.md](planejamento/README.md)
 - [planejamento/2026-09-30-PLAN-001-adiamento-piloto.md](planejamento/2026-09-30-PLAN-001-adiamento-piloto.md)
 - [planejamento/FAC-003-controle-web-persistencia.md](planejamento/FAC-003-controle-web-persistencia.md)
+- [planejamento/FAC-004-worker-identidade.md](planejamento/FAC-004-worker-identidade.md)
+- [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
 - [arquitetura/TECH-LEAD-HANDOFF.md](arquitetura/TECH-LEAD-HANDOFF.md)
