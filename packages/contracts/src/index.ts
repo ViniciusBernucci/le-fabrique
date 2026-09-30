@@ -88,3 +88,28 @@ export const ticketListSchema = z.array(ticketSchema);
 
 export const readyTicketSchema = z.object({ expectedVersion: z.number().int().positive() });
 export type ReadyTicket = z.infer<typeof readyTicketSchema>;
+
+export const workerRegistrationSchema = z.object({
+  id: z.uuid(),
+  name: z.string().trim().min(1).max(120),
+  capabilities: z.array(z.string().trim().min(1).max(120)).max(50),
+  os: z.string().trim().min(1).max(80),
+  arch: z.string().trim().min(1).max(40),
+  nodeVersion: z.string().trim().min(1).max(40),
+});
+export type WorkerRegistration = z.infer<typeof workerRegistrationSchema>;
+
+export const workerStatusSchema = z.enum(["ONLINE", "OFFLINE"]);
+export const workerSchema = workerRegistrationSchema.extend({
+  status: workerStatusSchema,
+  lastHeartbeatAt: z.iso.datetime(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+});
+export type WorkerIdentity = z.infer<typeof workerSchema>;
+export const workerListSchema = z.array(workerSchema);
+export const workerHeartbeatSchema = z.object({
+  workerId: z.uuid(),
+  acceptedAt: z.iso.datetime(),
+});
+export type WorkerHeartbeat = z.infer<typeof workerHeartbeatSchema>;

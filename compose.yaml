@@ -40,6 +40,7 @@ services:
       DATABASE_URL: ${DATABASE_URL:?configure DATABASE_URL}
       REDIS_URL: redis://redis:6379
       ADMIN_API_TOKEN: ${ADMIN_API_TOKEN:?configure ADMIN_API_TOKEN}
+      WORKER_API_TOKEN: ${WORKER_API_TOKEN:?configure WORKER_API_TOKEN}
     depends_on:
       postgres:
         condition: service_healthy
@@ -64,7 +65,14 @@ services:
       NODE_ENV: production
       REDIS_URL: redis://redis:6379
       WORKER_CONCURRENCY: 1
+      CONTROL_API_URL: http://api:3000/api
+      WORKER_API_TOKEN: ${WORKER_API_TOKEN:?configure WORKER_API_TOKEN}
+      WORKER_ID: ${WORKER_ID:?configure WORKER_ID}
+      WORKER_NAME: control-worker-1
+      WORKER_HEARTBEAT_INTERVAL_MS: 5000
     depends_on:
+      api:
+        condition: service_healthy
       redis:
         condition: service_healthy
     networks: [backend]

@@ -5,6 +5,7 @@ import {
   healthResponseSchema,
   readyTicketSchema,
   workerProbeJobSchema,
+  workerRegistrationSchema,
 } from "./index.js";
 
 describe("shared contracts", () => {
@@ -36,5 +37,11 @@ describe("shared contracts", () => {
       createTicketSchema.parse({ title: "Ticket", objective: "Objetivo", acceptanceCriteria: [] }),
     ).toThrow();
     expect(() => readyTicketSchema.parse({ expectedVersion: 0 })).toThrow();
+  });
+
+  it("rejects an incomplete worker identity", () => {
+    expect(() =>
+      workerRegistrationSchema.parse({ id: crypto.randomUUID(), name: "worker" }),
+    ).toThrow();
   });
 });

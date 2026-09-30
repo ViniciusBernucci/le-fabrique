@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ControlModule } from "./control/control.module";
 import { HealthModule } from "./health/health.module";
 import { InfrastructureModule } from "./infrastructure.module";
+import { WorkerIdentityModule } from "./worker-identity/worker-identity.module";
 
 const environmentSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -11,6 +12,7 @@ const environmentSchema = z.object({
   DATABASE_URL: z.url().startsWith("postgresql://"),
   REDIS_URL: z.url().startsWith("redis://"),
   ADMIN_API_TOKEN: z.string().min(32),
+  WORKER_API_TOKEN: z.string().min(32),
   WEB_ORIGIN: z.url().optional(),
 });
 
@@ -22,6 +24,7 @@ const environmentSchema = z.object({
     }),
     InfrastructureModule,
     ControlModule,
+    WorkerIdentityModule,
     HealthModule,
   ],
 })
