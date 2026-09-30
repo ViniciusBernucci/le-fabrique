@@ -411,3 +411,120 @@ export const runtimeGuardDecisionSchema = z.object({
   state: runtimeGuardStateSchema,
 });
 export type RuntimeGuardDecision = z.infer<typeof runtimeGuardDecisionSchema>;
+
+export const workspaceCreateRequestSchema = z.object({
+  executionId: z.uuid(),
+  repositoryPath: z.string().trim().min(1).max(4096),
+  revision: z.string().trim().min(7).max(200),
+});
+export type WorkspaceCreateRequest = z.infer<typeof workspaceCreateRequestSchema>;
+
+export const workspaceCreateResultSchema = z.object({
+  executionId: z.uuid(),
+  workspacePath: z.string().min(1).max(4096),
+  revision: z.string().regex(/^[0-9a-f]{40}$/),
+  detached: z.literal(true),
+});
+export type WorkspaceCreateResult = z.infer<typeof workspaceCreateResultSchema>;
+
+export const sandboxLimitsSchema = z.object({
+  timeoutMs: z.number().int().min(100).max(1_800_000),
+  maxLogBytes: z
+    .number()
+    .int()
+    .min(1024)
+    .max(10 * 1024 * 1024),
+  memoryBytes: z
+    .number()
+    .int()
+    .min(64 * 1024 * 1024)
+    .max(8 * 1024 * 1024 * 1024),
+  cpuQuotaPercent: z.number().int().min(10).max(400),
+  maxProcesses: z.number().int().min(16).max(1024),
+  maxOpenFiles: z.number().int().min(64).max(65_536),
+  maxFileBytes: z
+    .number()
+    .int()
+    .min(1024)
+    .max(10 * 1024 * 1024 * 1024),
+});
+export type SandboxLimits = z.infer<typeof sandboxLimitsSchema>;
+
+export const sandboxCommandRequestSchema = z.object({
+  schemaVersion: z.literal(1),
+  executionId: z.uuid(),
+  workspacePath: z.string().trim().min(1).max(4096),
+  command: z.string().trim().min(1).max(4096),
+  args: z.array(z.string().max(16_384)).max(200),
+  environment: z.record(z.string().regex(/^[A-Z_][A-Z0-9_]*$/), z.string().max(16_384)).default({}),
+  limits: sandboxLimitsSchema,
+});
+export type SandboxCommandRequest = z.infer<typeof sandboxCommandRequestSchema>;
+
+export const sandboxCommandResultSchema = z.object({
+  schemaVersion: z.literal(1),
+  executionId: z.uuid(),
+  unitName: z.string().min(1).max(200),
+  status: z.enum(["COMPLETED", "FAILED", "TIMED_OUT", "LOG_LIMIT"]),
+  exitCode: z.number().int().nullable(),
+  stdout: z.string().max(10 * 1024 * 1024),
+  stderr: z.string().max(10 * 1024 * 1024),
+  startedAt: z.iso.datetime(),
+  finishedAt: z.iso.datetime(),
+  stoppedConfirmed: z.boolean(),
+});
+export type SandboxCommandResult = z.infer<typeof sandboxCommandResultSchema>;
+
+export const snapshotLimitsSchema = z.object({
+  maxUntrackedFiles: z.number().int().min(1).max(10_000),
+  maxArtifactBytes: z
+    .number()
+    .int()
+    .min(1024)
+    .max(1024 * 1024 * 1024),
+});
+export type SnapshotLimits = z.infer<typeof snapshotLimitsSchema>;
+
+export const snapshotCaptureRequestSchema = z.object({
+  schemaVersion: z.literal(1),
+  workspacePath: z.string().trim().min(1).max(4096),
+  limits: snapshotLimitsSchema,
+});
+export type SnapshotCaptureRequest = z.infer<typeof snapshotCaptureRequestSchema>;
+
+export const snapshotUntrackedEntrySchema = z.object({
+  path: z.string().min(1).max(4096),
+  sizeBytes: z.number().int().nonnegative(),
+  mode: z.number().int().min(0).max(0o777),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/),
+});
+export type SnapshotUntrackedEntry = z.infer<typeof snapshotUntrackedEntrySchema>;
+
+export const workspaceSnapshotManifestSchema = z.object({
+  schemaVersion: z.literal(1),
+  snapshotId: z.uuid(),
+  baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+  headRevision: z.string().regex(/^[0-9a-f]{40}$/),
+  patchBytes: z.number().int().nonnegative(),
+  patchSha256: z.string().regex(/^[0-9a-f]{64}$/),
+  untracked: z.array(snapshotUntrackedEntrySchema).max(10_000),
+  totalArtifactBytes: z.number().int().nonnegative(),
+  createdAt: z.iso.datetime(),
+  manifestHash: z.string().regex(/^[0-9a-f]{64}$/),
+});
+export type WorkspaceSnapshotManifest = z.infer<typeof workspaceSnapshotManifestSchema>;
+
+export const workspaceSnapshotSchema = z.object({
+  artifactPath: z.string().min(1).max(4096),
+  manifest: workspaceSnapshotManifestSchema,
+});
+export type WorkspaceSnapshot = z.infer<typeof workspaceSnapshotSchema>;
+
+export const snapshotRestoreResultSchema = z.object({
+  snapshotId: z.uuid(),
+  workspacePath: z.string().min(1).max(4096),
+  baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+  patchApplied: z.boolean(),
+  untrackedFilesRestored: z.number().int().nonnegative(),
+});
+export type SnapshotRestoreResult = z.infer<typeof snapshotRestoreResultSchema>;

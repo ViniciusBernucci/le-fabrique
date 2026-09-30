@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && cp src/sandbox-launcher.cjs dist/sandbox-launcher.cjs",
     "test": "vitest run src",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

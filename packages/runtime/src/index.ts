@@ -6,3 +6,6 @@ export {
   type SanitizedSubscriptionEnvironment,
   sanitizeSubscriptionEnvironment,
 } from "./runtime-guard";
+export { SandboxRunner, type SandboxRunnerOptions } from "./sandbox-runner";
+export { SnapshotManager } from "./snapshot-manager";
+export { WorkspaceManager } from "./workspace-manager";

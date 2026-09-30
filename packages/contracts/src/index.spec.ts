@@ -9,6 +9,7 @@ import {
   runtimeExecutionRequestSchema,
   runtimeExecutionResultSchema,
   runtimeGuardPolicySchema,
+  sandboxCommandRequestSchema,
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
@@ -122,6 +123,45 @@ describe("shared contracts", () => {
         monthlyApiBudget: 1,
         apiFallbackEnabled: true,
         paidExtrasAllowed: true,
+      }),
+    ).toThrow();
+  });
+
+  it("validates sandbox resource bounds", () => {
+    expect(
+      sandboxCommandRequestSchema.parse({
+        schemaVersion: 1,
+        executionId: crypto.randomUUID(),
+        workspacePath: "/tmp/workspace",
+        command: "/usr/bin/node",
+        args: [],
+        limits: {
+          timeoutMs: 1_000,
+          maxLogBytes: 4_096,
+          memoryBytes: 256 * 1024 * 1024,
+          cpuQuotaPercent: 100,
+          maxProcesses: 64,
+          maxOpenFiles: 256,
+          maxFileBytes: 16 * 1024 * 1024,
+        },
+      }),
+    ).toMatchObject({ environment: {} });
+    expect(() =>
+      sandboxCommandRequestSchema.parse({
+        schemaVersion: 1,
+        executionId: crypto.randomUUID(),
+        workspacePath: "/tmp/workspace",
+        command: "/usr/bin/node",
+        args: [],
+        limits: {
+          timeoutMs: 10,
+          maxLogBytes: 1,
+          memoryBytes: 1,
+          cpuQuotaPercent: 1,
+          maxProcesses: 1,
+          maxOpenFiles: 1,
+          maxFileBytes: 1,
+        },
       }),
     ).toThrow();
   });
