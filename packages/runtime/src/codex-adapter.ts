@@ -21,6 +21,7 @@ import {
   runtimeUsageSchema,
 } from "@le-fabrique/contracts";
 import type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";
+import { sanitizeSubscriptionEnvironment } from "./runtime-guard";
 
 type TerminationReason = "cancel" | "timeout" | "log-limit" | "result-unknown";
 
@@ -341,10 +342,7 @@ export class CodexAdapter implements RuntimeAdapter {
   }
 
   private subscriptionEnvironment(): NodeJS.ProcessEnv {
-    const environment = { ...this.environment };
-    delete environment.OPENAI_API_KEY;
-    delete environment.CODEX_API_KEY;
-    return environment;
+    return sanitizeSubscriptionEnvironment(this.environment).environment;
   }
 
   private signal(active: ActiveExecution, signal: NodeJS.Signals): void {

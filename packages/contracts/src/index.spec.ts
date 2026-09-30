@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  contextBuildRequestSchema,
   createProjectSchema,
   createTicketSchema,
   healthResponseSchema,
@@ -7,6 +8,7 @@ import {
   runtimeEventSchema,
   runtimeExecutionRequestSchema,
   runtimeExecutionResultSchema,
+  runtimeGuardPolicySchema,
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
@@ -85,5 +87,42 @@ describe("shared contracts", () => {
         finishedAt: "2026-09-30T00:00:01.000Z",
       }),
     ).toBeDefined();
+  });
+
+  it("validates context and subscription-only guard contracts", () => {
+    expect(
+      contextBuildRequestSchema.parse({
+        schemaVersion: 1,
+        workspacePath: "/tmp/fixture",
+        baseRevision: "7044a0a",
+        sources: [{ path: "README.md", role: "INSTRUCTION" }],
+        limits: { maxFiles: 10, maxFileBytes: 4_096, maxTotalBytes: 16_384 },
+      }),
+    ).toBeDefined();
+    expect(() =>
+      contextBuildRequestSchema.parse({
+        schemaVersion: 1,
+        workspacePath: "/tmp/fixture",
+        baseRevision: "7044a0a",
+        sources: [
+          { path: "README.md", role: "INSTRUCTION" },
+          { path: "README.md", role: "SOURCE" },
+        ],
+        limits: { maxFiles: 10, maxFileBytes: 4_096, maxTotalBytes: 16_384 },
+      }),
+    ).toThrow();
+    expect(() =>
+      runtimeGuardPolicySchema.parse({
+        schemaVersion: 1,
+        maxAttempts: 2,
+        maxElapsedMs: 1_000,
+        maxProviderSwitches: 1,
+        repeatedFailureLimit: 2,
+        subscriptionOnly: true,
+        monthlyApiBudget: 1,
+        apiFallbackEnabled: true,
+        paidExtrasAllowed: true,
+      }),
+    ).toThrow();
   });
 });

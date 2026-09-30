@@ -260,3 +260,154 @@ export const providerUsageObservationSchema = z.object({
   source: z.literal("client-not-exposed"),
 });
 export type ProviderUsageObservation = z.infer<typeof providerUsageObservationSchema>;
+
+export const contextSourceRoleSchema = z.enum([
+  "INSTRUCTION",
+  "TICKET",
+  "SPECIFICATION",
+  "ARCHITECTURE",
+  "SOURCE",
+  "TEST",
+  "FINDING",
+]);
+export type ContextSourceRole = z.infer<typeof contextSourceRoleSchema>;
+
+export const contextSourceRequestSchema = z.object({
+  path: z.string().trim().min(1).max(4096),
+  role: contextSourceRoleSchema,
+});
+export type ContextSourceRequest = z.infer<typeof contextSourceRequestSchema>;
+
+export const contextLimitsSchema = z.object({
+  maxFiles: z.number().int().min(1).max(500),
+  maxFileBytes: z
+    .number()
+    .int()
+    .min(1)
+    .max(2 * 1024 * 1024),
+  maxTotalBytes: z
+    .number()
+    .int()
+    .min(1)
+    .max(10 * 1024 * 1024),
+});
+export type ContextLimits = z.infer<typeof contextLimitsSchema>;
+
+export const contextBuildRequestSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    workspacePath: z.string().trim().min(1).max(4096),
+    baseRevision: z.string().regex(/^[0-9a-f]{7,64}$/i),
+    sources: z.array(contextSourceRequestSchema).min(1).max(500),
+    limits: contextLimitsSchema,
+  })
+  .superRefine((request, context) => {
+    const paths = new Set<string>();
+    for (const source of request.sources) {
+      if (paths.has(source.path)) {
+        context.addIssue({
+          code: "custom",
+          message: `Duplicate context path: ${source.path}`,
+          path: ["sources"],
+        });
+      }
+      paths.add(source.path);
+    }
+  });
+export type ContextBuildRequest = z.infer<typeof contextBuildRequestSchema>;
+
+export const contextOmissionReasonSchema = z.enum([
+  "INVALID_PATH",
+  "OUTSIDE_WORKSPACE",
+  "SYMLINK",
+  "DEPENDENCY_OR_GENERATED",
+  "SECRET_PATH",
+  "MISSING",
+  "UNREADABLE",
+  "BINARY",
+  "SECRET_DETECTED",
+  "FILE_TOO_LARGE",
+  "FILE_LIMIT",
+  "TOTAL_BYTES_LIMIT",
+]);
+export type ContextOmissionReason = z.infer<typeof contextOmissionReasonSchema>;
+
+export const contextManifestSourceSchema = z.object({
+  path: z.string().min(1).max(4096),
+  role: contextSourceRoleSchema,
+  sizeBytes: z.number().int().nonnegative(),
+  sha256: z.string().regex(/^[0-9a-f]{64}$/),
+});
+export type ContextManifestSource = z.infer<typeof contextManifestSourceSchema>;
+
+export const contextManifestOmissionSchema = z.object({
+  path: z.string().min(1).max(4096),
+  role: contextSourceRoleSchema,
+  reason: contextOmissionReasonSchema,
+});
+export type ContextManifestOmission = z.infer<typeof contextManifestOmissionSchema>;
+
+export const contextManifestSchema = z.object({
+  schemaVersion: z.literal(1),
+  baseRevision: z.string().regex(/^[0-9a-f]{7,64}$/i),
+  sources: z.array(contextManifestSourceSchema).max(500),
+  omissions: z.array(contextManifestOmissionSchema).max(500),
+  totalBytes: z.number().int().nonnegative(),
+  truncated: z.boolean(),
+  manifestHash: z.string().regex(/^[0-9a-f]{64}$/),
+});
+export type ContextManifest = z.infer<typeof contextManifestSchema>;
+
+export const contextBuildResultSchema = z.object({
+  manifest: contextManifestSchema,
+  content: z.string().max(12 * 1024 * 1024),
+});
+export type ContextBuildResult = z.infer<typeof contextBuildResultSchema>;
+
+export const runtimeGuardPolicySchema = z.object({
+  schemaVersion: z.literal(1),
+  maxAttempts: z.number().int().min(1).max(10),
+  maxElapsedMs: z
+    .number()
+    .int()
+    .min(100)
+    .max(24 * 60 * 60 * 1000),
+  maxProviderSwitches: z.number().int().min(0).max(10),
+  repeatedFailureLimit: z.number().int().min(2).max(5),
+  subscriptionOnly: z.literal(true),
+  monthlyApiBudget: z.literal(0),
+  apiFallbackEnabled: z.literal(false),
+  paidExtrasAllowed: z.literal(false),
+});
+export type RuntimeGuardPolicy = z.infer<typeof runtimeGuardPolicySchema>;
+
+export const runtimeGuardFailureSchema = z.object({
+  fingerprint: z.string().trim().min(1).max(200),
+  consecutiveCount: z.number().int().positive(),
+});
+export type RuntimeGuardFailure = z.infer<typeof runtimeGuardFailureSchema>;
+
+export const runtimeGuardStateSchema = z.object({
+  schemaVersion: z.literal(1),
+  startedAt: z.iso.datetime(),
+  attempts: z.number().int().nonnegative(),
+  providerSwitches: z.number().int().nonnegative(),
+  lastProvider: z.string().trim().min(1).max(120).nullable(),
+  lastFailure: runtimeGuardFailureSchema.nullable(),
+});
+export type RuntimeGuardState = z.infer<typeof runtimeGuardStateSchema>;
+
+export const runtimeGuardPauseReasonSchema = z.enum([
+  "ATTEMPT_LIMIT",
+  "ELAPSED_TIME_LIMIT",
+  "PROVIDER_SWITCH_LIMIT",
+  "REPEATED_FAILURE",
+]);
+export type RuntimeGuardPauseReason = z.infer<typeof runtimeGuardPauseReasonSchema>;
+
+export const runtimeGuardDecisionSchema = z.object({
+  action: z.enum(["ALLOW", "PAUSE"]),
+  reason: runtimeGuardPauseReasonSchema.nullable(),
+  state: runtimeGuardStateSchema,
+});
+export type RuntimeGuardDecision = z.infer<typeof runtimeGuardDecisionSchema>;
