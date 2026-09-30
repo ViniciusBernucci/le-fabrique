@@ -2,7 +2,7 @@
 
 Data: 2026-09-30
 
-Status: IMPLEMENTADO; AGUARDANDO REVISÃO E ACEITE
+Status: DONE
 
 Revisão de código: `6d73041bdcbd50215b6a018c9937475c29f542b1`
 
@@ -33,4 +33,8 @@ Reverter o commit restaura o probe sem registro. A tabela aditiva `worker_identi
 
 ## Documentação e lessons
 
-Foram atualizados operação, planejamento, README, índice, changelog e backlog. `lessons/worker-heartbeat-quiescencia.md` registra a parada conservadora aplicada. DONE depende do aceite da revisão exata.
+Foram atualizados operação, planejamento, README, índice, changelog e backlog. `lessons/worker-heartbeat-quiescencia.md` registra a parada conservadora aplicada.
+
+## Aceite
+
+O responsável aceitou explicitamente o código `6d73041bdcbd50215b6a018c9937475c29f542b1` e a documentação `c2c211c` em 30/09/2026.

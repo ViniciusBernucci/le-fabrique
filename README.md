@@ -6,10 +6,10 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-30/09/2026. A fundação TypeScript e o FAC-003 estão implementados e aceitos. FAC-004 acrescenta identidade persistida, registro e heartbeat autenticado do worker e aguarda revisão. Clientes oficiais e workflow completo seguem nos tickets do MVP. APIs de IA e créditos extras permanecem desligados.
+30/09/2026. FAC-000, FAC-003 e FAC-004 estão implementados e aceitos. O controle possui projetos/tickets/outbox; o worker possui identidade persistida, registro e heartbeat autenticado. O primeiro cliente oficial será validado no FAC-002. APIs de IA e créditos extras permanecem desligados.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
-2. FAC-000 e FAC-003 estão aceitos; revisar FAC-004 antes de iniciar FAC-002. O contrato do piloto externo foi adiado até o núcleo estar pronto, antes do FAC-012.
+2. FAC-000, FAC-003 e FAC-004 estão aceitos; executar FAC-002 com cenário sintético. O contrato do piloto externo foi adiado até o núcleo estar pronto, antes do FAC-012.
 3. Mesclar AGENTS.md e CLAUDE.md com regras existentes; preservar escopos locais.
 4. Antigravity: ler ANTIGRAVITY.md e confirmar como a versão carrega regras; injetar explicitamente quando necessário.
 5. Seguir documentacoes/POLITICA-IA.md em toda entrega; usar templates.

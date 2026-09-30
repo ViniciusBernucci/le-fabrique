@@ -3,6 +3,8 @@
 ## 2.6 - 2026-09-30
 FAC-004 implementa identidade persistida do worker, registro e heartbeat autenticados, listagem administrativa, bloqueio público das rotas internas e encerramento conservador após três falhas de heartbeat. Claim, leases, fencing e execução real permanecem planejados.
 
+FAC-004 aceito pelo responsável nos commits apresentados; FAC-002 passa a ser o próximo ticket.
+
 ## 2.5 - 2026-09-30
 FAC-003 implementa autenticação administrativa por token de ambiente, contratos Zod para projetos/tickets, endpoints NestJS, controle de versão otimista, outbox idempotente, migration aditiva e painel React para cadastro e promoção a `READY`. A composição completa e o fluxo HTTP foram validados localmente; dispatcher, worker real e deploy permanecem fora do escopo.
 

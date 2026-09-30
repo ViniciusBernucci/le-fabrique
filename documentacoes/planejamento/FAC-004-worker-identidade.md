@@ -1,6 +1,6 @@
 # FAC-004 — worker interno e identidade de serviço
 
-Status: PRONTO PARA REVISÃO
+Status: DONE
 
 ## Objetivo
 
@@ -41,3 +41,5 @@ Atualizar operação, contratos, planejamento, índice, changelog, backlog e rel
 ## Evidência
 
 Implementado e verificado no SHA de código `6d73041bdcbd50215b6a018c9937475c29f542b1`. O relatório está em `documentacoes/operacao/2026-09-30-FAC-004-worker-identidade.md`.
+
+O responsável concedeu aceite explícito em 30/09/2026 para os commits apresentados. FAC-004 está DONE.

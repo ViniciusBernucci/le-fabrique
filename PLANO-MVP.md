@@ -19,7 +19,7 @@ Aceite: Contrato verificável e baseline reproduzido; não editar lógica fora d
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-002 — Validar clientes e baseline assistido
-Sprint: Sprint 1. Dependências: FAC-004. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Sprint: Sprint 1. Dependências: FAC-004. Esforço estimado: 2-3 dias. Status: READY.
 Descrição: Fazer preflight de login, cobrança e isolamento na VPS; medir recursos com fixture/repositório sintético controlado e confirmar providers um a um. A execução de tickets reais e o handoff sobre o piloto ficam para FAC-012.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Um cliente oficial elegível comprovado em cenário sintético, autenticação por assinatura verificada, extras/API bloqueados e limites desconhecidos explícitos.
@@ -33,7 +33,7 @@ Aceite: Ticket autenticado persiste após reinício e dispatch idempotente; sem 
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-004 — Worker interno e identidade de serviço
-Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: PRONTO PARA REVISÃO.
+Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: DONE.
 Descrição: Estabelecer identidade própria do worker Node.js separado, registro restrito, heartbeat persistido, encerramento conservador após perda do controle e rede interna autenticada. Claim, leases, fencing e execução real permanecem nos tickets de orquestração/runtime.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Worker registra identidade/capacidades, heartbeat avança, credencial inválida é rejeitada, perda repetida do controle encerra o processo e worker/banco/fila não possuem portas públicas.
