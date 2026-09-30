@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { z } from "zod";
+import { ControlModule } from "./control/control.module";
 import { HealthModule } from "./health/health.module";
 import { InfrastructureModule } from "./infrastructure.module";
 
@@ -9,6 +10,7 @@ const environmentSchema = z.object({
   API_PORT: z.coerce.number().int().positive().default(3000),
   DATABASE_URL: z.url().startsWith("postgresql://"),
   REDIS_URL: z.url().startsWith("redis://"),
+  ADMIN_API_TOKEN: z.string().min(32),
   WEB_ORIGIN: z.url().optional(),
 });
 
@@ -19,6 +21,7 @@ const environmentSchema = z.object({
       validate: (environment) => environmentSchema.parse(environment),
     }),
     InfrastructureModule,
+    ControlModule,
     HealthModule,
   ],
 })

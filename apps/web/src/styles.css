@@ -1,12 +1,9 @@
 :root {
-  color: #e5e7eb;
-  background: #080b12;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e7ecf5;
+  background: #090d16;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
 }
-
 * {
   box-sizing: border-box;
 }
@@ -14,103 +11,139 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: radial-gradient(circle at 12% 0%, #173553 0, transparent 32%), #090d16;
 }
-.shell {
-  width: min(1120px, calc(100% - 40px));
+.shell,
+.login-shell {
+  width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 96px 0 64px;
+  padding: 56px 0;
 }
-.hero {
-  max-width: 760px;
+.login-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.login {
+  width: min(520px, 100%);
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 .eyebrow {
-  color: #a7f3d0;
-  font-size: 0.75rem;
+  color: #63e6be;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.22em;
 }
 h1 {
-  margin: 12px 0;
-  color: #f9fafb;
-  font-size: clamp(3rem, 8vw, 6.8rem);
-  line-height: 0.94;
+  margin: 8px 0 0;
+  font-size: clamp(2.6rem, 7vw, 5rem);
   letter-spacing: -0.055em;
 }
-.subtitle {
-  max-width: 600px;
-  color: #9ca3af;
-  font-size: 1.25rem;
-  line-height: 1.6;
+h2 {
+  margin: 0 0 22px;
 }
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-  padding: 14px 18px;
-  border: 1px solid #253047;
-  border-radius: 14px;
-  background: #111827;
+h3 {
+  margin: 10px 0 4px;
 }
-.status__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #94a3b8;
-  box-shadow: 0 0 18px currentColor;
+p {
+  line-height: 1.5;
 }
-.status--success .status__dot {
-  color: #34d399;
-  background: #34d399;
-}
-.status--danger .status__dot {
-  color: #fb7185;
-  background: #fb7185;
-}
-.status div {
-  display: grid;
-  gap: 2px;
-}
-.status span {
-  color: #9ca3af;
-  font-size: 0.85rem;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 88px;
-}
-article {
-  min-height: 220px;
+.panel {
   padding: 24px;
-  border: 1px solid #1f2937;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #111827, #0c111d);
+  border: 1px solid #25334a;
+  border-radius: 18px;
+  background: rgba(17, 25, 40, 0.92);
+  box-shadow: 0 20px 70px #0005;
 }
-.card-index {
-  color: #6ee7b7;
-  font-family: ui-monospace, monospace;
-  font-size: 0.75rem;
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
-article h2 {
-  margin: 56px 0 8px;
-  font-size: 1.35rem;
+label {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0;
+  color: #aebbd0;
+  font-size: 0.86rem;
+  font-weight: 650;
 }
-article p {
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 13px;
+  color: #f8fafc;
+  border: 1px solid #33445f;
+  border-radius: 10px;
+  background: #0a101c;
+  font: inherit;
+}
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+button {
+  padding: 11px 16px;
+  color: #062017;
+  border: 0;
+  border-radius: 10px;
+  background: #63e6be;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+button:hover {
+  background: #8af0d1;
+}
+.message,
+.muted {
+  color: #9aabc1;
+}
+.records {
+  margin-top: 20px;
+}
+.records article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid #26354b;
+}
+.records article:first-of-type {
+  border-top: 0;
+}
+.records article p {
   margin: 0;
-  color: #9ca3af;
-  line-height: 1.55;
+  color: #9aabc1;
+}
+.badge {
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #dce7f8;
+  background: #344157;
+  font:
+    700 0.7rem ui-monospace,
+    monospace;
+}
+.badge--ready {
+  color: #062017;
+  background: #63e6be;
 }
 @media (max-width: 760px) {
-  .shell {
-    padding-top: 56px;
-  }
-  .grid {
+  .columns {
     grid-template-columns: 1fr;
-    margin-top: 56px;
   }
-  article {
-    min-height: 180px;
+  header,
+  .records article {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

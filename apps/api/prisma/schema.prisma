@@ -64,6 +64,7 @@ model OutboxEvent {
   id          String       @id @default(uuid()) @db.Uuid
   aggregateId String       @db.Uuid @map("aggregate_id")
   eventType   String       @map("event_type")
+  deduplicationKey String   @unique @map("deduplication_key")
   payload     Json
   status      OutboxStatus @default(PENDING)
   attempts    Int          @default(0)

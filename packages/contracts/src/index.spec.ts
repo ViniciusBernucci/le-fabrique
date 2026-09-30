@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { healthResponseSchema, workerProbeJobSchema } from "./index.js";
+import {
+  createProjectSchema,
+  createTicketSchema,
+  healthResponseSchema,
+  readyTicketSchema,
+  workerProbeJobSchema,
+} from "./index.js";
 
 describe("shared contracts", () => {
   it("accepts a valid health response", () => {
@@ -16,5 +22,19 @@ describe("shared contracts", () => {
     expect(() =>
       workerProbeJobSchema.parse({ requestedAt: "2026-09-30T00:00:00.000Z", correlationId: "x" }),
     ).toThrow();
+  });
+
+  it("validates control-plane commands at runtime", () => {
+    expect(
+      createProjectSchema.parse({
+        name: "Projeto sintético",
+        repoUrl: "https://example.test/repository.git",
+        baseRef: "main",
+      }),
+    ).toBeDefined();
+    expect(() =>
+      createTicketSchema.parse({ title: "Ticket", objective: "Objetivo", acceptanceCriteria: [] }),
+    ).toThrow();
+    expect(() => readyTicketSchema.parse({ expectedVersion: 0 })).toThrow();
   });
 });
