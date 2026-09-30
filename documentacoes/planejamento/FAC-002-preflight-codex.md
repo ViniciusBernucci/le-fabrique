@@ -9,7 +9,7 @@ Comprovar, na VPS e com fixture sintetica, que o Codex CLI oficial pode executar
 ## Escopo
 
 - Cliente inicial: OpenAI Codex CLI instalado em `/usr/bin/codex` pelo pacote oficial `@openai/codex`.
-- Fixture permitida: `fixtures/codex-preflight`.
+- Fixtures permitidas: `fixtures/codex-preflight`, `fixtures/codex-preflight-isolation` e uma copia descartavel de `fixtures/codex-preflight-write` sob `.artifacts/fac-002`.
 - Executor permitido: `scripts/fac-002-codex-preflight.sh`.
 - Artefatos locais: `.artifacts/fac-002`, ignorados pelo Git e sanitizados antes de qualquer registro documental.
 - Dados: somente marcadores sinteticos.
@@ -21,10 +21,12 @@ Ficam fora deste ticket: adapter integrado ao worker, execucao de projeto extern
 1. Versao e origem do binario sao registradas.
 2. `codex login status` confirma autenticacao ChatGPT com `OPENAI_API_KEY` e `CODEX_API_KEY` removidas do processo.
 3. O script recusa a execucao se alguma dessas chaves estiver herdada.
-4. `codex exec` conclui a fixture em JSONL, modo efemero, sandbox `read-only` e politica de aprovacao `never`.
+4. `codex exec` conclui a fixture em JSONL, modo efemero, perfil de permissao que nega o filesystem por padrao, libera somente runtime minimo e leitura da fixture, desliga rede dos comandos e usa aprovacao `never`.
 5. Os marcadores do `AGENTS.md` e do `README.md` aparecem na resposta, sem mudanca no workspace.
-6. Duracao, recursos e uso exposto pelo cliente sao medidos; modelo ou cota ausentes permanecem `UNKNOWN`/`null`.
-7. O responsavel confirma separadamente que extras, creditos e autorecharge estao desligados na conta, porque o CLI nao comprova configuracoes de cobranca do portal.
+6. Um canario confirma que comandos no perfil nao conseguem ler `~/.codex/auth.json`, sem abrir ou exibir o arquivo.
+7. Uma copia descartavel permite somente escrita no workspace, aplica uma alteracao minima e passa em `node check.cjs` sem rede.
+8. Duracao, recursos e uso exposto pelo cliente sao medidos; modelo ou cota ausentes permanecem `UNKNOWN`/`null`.
+9. O responsavel confirma separadamente que extras, creditos e autorecharge estao desligados na conta, porque o CLI nao comprova configuracoes de cobranca do portal.
 
 ## Baseline e limites
 
