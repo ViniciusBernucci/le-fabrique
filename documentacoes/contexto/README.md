@@ -1,6 +1,6 @@
 # Contexto de execucao
 
-Status: Context Builder implementado no FAC-006, aguardando aceite da revisao funcional.
+Status: Context Builder e RuntimeGuard do FAC-006 aceitos na revisao `ea8cf7afb0e55840722f306262b5334bb408b51a`.
 
 O `ContextBuilder` recebe workspace absoluto, revisao-base, fontes relativas explicitamente selecionadas e limites. Ele ordena os caminhos lexicalmente, le somente arquivos regulares dentro do workspace e devolve conteudo acompanhado de manifesto com caminho, papel, tamanho, SHA-256, total de bytes, omissoes e hash do proprio manifesto.
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.11 - 2026-09-30
+FAC-006 aceito pelo responsavel na revisao `ea8cf7afb0e55840722f306262b5334bb408b51a`; FAC-007 passa a ser o proximo ticket READY.
+
 ## 2.10 - 2026-09-30
 FAC-006 implementa Context Builder deterministico com SHA-256, omissoes explicitas e bloqueio de segredo/dependencia, alem de RuntimeGuard subscription-only para tentativas, tempo, trocas de provider, falha repetida e remocao de chaves de API herdadas. A revisao funcional aguarda aceite humano; worker e orquestrador ainda nao usam os novos modulos.
 

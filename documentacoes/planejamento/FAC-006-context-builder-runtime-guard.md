@@ -1,8 +1,8 @@
 # FAC-006 — Context Builder e RuntimeGuard
 
-Status: AWAITING_HUMAN
+Status: DONE
 
-Implementacao funcional: `61722dd9e4fc012ce155be5c85a36a4547967a2c`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
+Revisao aceita: `ea8cf7afb0e55840722f306262b5334bb408b51a`, em 2026-09-30. O commit documental posterior apenas registra o aceite da revisao apresentada.
 
 ## Objetivo
 

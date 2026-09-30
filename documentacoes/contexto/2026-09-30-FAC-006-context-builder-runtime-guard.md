@@ -1,8 +1,8 @@
 # FAC-006 — Context Builder e RuntimeGuard
 
 Data: 2026-09-30
-Estado: AWAITING_HUMAN
-Revisao funcional: `61722dd9e4fc012ce155be5c85a36a4547967a2c`
+Estado: DONE
+Revisao aceita: `ea8cf7afb0e55840722f306262b5334bb408b51a`, em 2026-09-30
 
 ## Resultado
 
