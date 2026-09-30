@@ -1,0 +1,13 @@
+# Política de economia
+A prioridade é economizar capacidade e evitar retrabalho. Assinaturas substituem cobrança por chamada na arquitetura principal, dentro da elegibilidade e limites reais de cada plano.
+1. Ticket pequeno, critérios claros e baseline antes da IA.
+2. rg/imports/testes para selecionar fontes; excluir vendor/node_modules/dumps/segredos.
+3. Apenas Developer e Reviewer no fluxo comum; QA automatizado e documentação integrada. Papéis adicionais por necessidade.
+4. Sessão independente para review, contexto resumido mas com fontes acessíveis.
+5. Limitar correções, timeout, handoffs e concorrência; pausar se diagnóstico repetido.
+6. Escolher modelo exposto/elegível adequado e medir qualidade. Contextos curtos ajudam a cota, mas limites não são conversão fixa tokens/tickets.
+7. Reusar caches de dependências e outputs determinísticos por revisão. Checks antigos não validam diff novo.
+8. Handoff objetivo com artefatos; não colar conversas inteiras entre providers.
+9. API, extra usage e créditos automáticos desligados. Aguardar cota se todos indisponíveis.
+10. Revisar resultados após dez tickets; custo atribuído, incremental, espera por cota e retrabalho separados.
+Não prometer gasto total R$0: assinaturas, VPS e energia têm custo. Não contratar plano adicional antes de medir gargalo. Preços não foram fixados no kit; preencher com cobrança real e data na configuração financeira.

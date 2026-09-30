@@ -1,0 +1,4 @@
+# Prompt de início
+Leia AGENTS.md (Codex), CLAUDE.md (Claude) ou ANTIGRAVITY.md (Antigravity), documentacoes/POLITICA-IA.md, README.md e PILOTO.md. Se o ambiente não carregar regras, considere-as explicitamente parte desta instrução.
+Inspecione o estado real do repositório. Comece pelo menor ticket READY; se não houver, execute somente inspeção/planejamento de FAC-001. Não invente repo, modelo, cota ou teste. A arquitetura é assinatura/CLI oficial no worker interno na VPS, controle e execução na mesma VPS, APIs e créditos extras desligados.
+Antes de executar, registre contrato, revisão e baseline. Preserve trabalho existente. Entregue código revisável, evidências, relato por domínio, documentação atual e lessons. Em interrupção, checkpoint com patch/untracked e próximos passos. Não implemente todo o backlog numa sessão sem validar incrementos.

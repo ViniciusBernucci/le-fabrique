@@ -1,0 +1,8 @@
+# Conceito
+## O que é
+## Por que usamos
+## Exemplo aplicado
+Código/configuração real com caminho e revisão.
+## Cuidados e alternativas
+## Evidências e referências
+## Entregas relacionadas
