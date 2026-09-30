@@ -25,4 +25,8 @@ Fonte: kit v1 e PDF original recuperados nesta tarefa, mais nova direção forne
 | Handoff entre providers | Novo contrato seguro incluindo untracked | Handoff; template |
 | Fontes/pendências | Revalidadas; não inventar capacidades | FONTES; PILOTO |
 
-Revisão 2.1: VPS única aceita; perfis mínimo/bom/ideal incorporados ao MVP, ADR-002 e dimensionamento. Evidências de implantação seguem pendentes.
+Revisão 2.3: VPS única aceita; perfis mínimo/bom/ideal incorporados ao MVP, ADR-002 e dimensionamento. Evidências de implantação seguem pendentes.
+
+## Stack obrigatória da fábrica - revisão 2.3
+React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.
+Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredos/código servidor no painel. Outbox, idempotência, leases e fencing seguem obrigatórios: lock BullMQ não substitui exclusão do writer. API não executa builds/clientes. Executar typecheck, lint, builds e testes relevantes. Preservar a stack somente de pilotos externos; a própria fábrica segue a stack aprovada.

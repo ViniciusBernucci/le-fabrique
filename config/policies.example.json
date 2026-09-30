@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.1",
+  "schema_version": "2.2",
   "status": "planejado-validar-no-preflight",
   "mode": "personal-subscription-cli",
   "max_concurrent_executors": 1,

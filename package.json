@@ -1,0 +1,30 @@
+{
+  "name": "le-fabrique",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fábrica de software com controle e execução em uma VPS",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.9.0"
+  },
+  "scripts": {
+    "build": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime && npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && npm run build -w @le-fabrique/web",
+    "dev": "concurrently -n api,worker,web -c blue,magenta,green \"npm run dev -w @le-fabrique/api\" \"npm run dev -w @le-fabrique/worker\" \"npm run dev -w @le-fabrique/web\"",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "test": "npm run test -w @le-fabrique/contracts && npm run test -w @le-fabrique/api && npm run test -w @le-fabrique/worker && npm run test -w @le-fabrique/web",
+    "typecheck": "npm run typecheck -w @le-fabrique/contracts && npm run typecheck -w @le-fabrique/runtime && npm run typecheck -w @le-fabrique/api && npm run typecheck -w @le-fabrique/worker && npm run typecheck -w @le-fabrique/web",
+    "db:generate": "npm run db:generate -w @le-fabrique/api",
+    "db:migrate": "npm run db:migrate -w @le-fabrique/api",
+    "db:deploy": "npm run db:deploy -w @le-fabrique/api"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "concurrently": "10.0.5",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,4 +1,11 @@
 # Plano do MVP v2
+
+## Decisão obrigatória da stack - revisão 2.3
+A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
+
 Um módulo existente, um projeto, um worker, um writer. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
 V0 assistida entrega aprendizado antes da plataforma; V1 valida runtime único; V2 testa handoff; Sprint 3 mede operação. Nenhum ticket está implementado.
 ## Épicos
@@ -20,14 +27,14 @@ Entregáveis: código quando pertinente, checks reais, artefatos por revisão e 
 
 ## FAC-003 — Controle web e persistência
 Sprint: Sprint 1. Dependências: FAC-002. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Selecionar e registrar perfil mínimo/bom/ideal, provisionar VPS única, redes/volumes/limites e backup externo; bootstrap proposto, auth administrativa, entidades/tickets/attempts e outbox; Redis/Postgres privados.
+Descrição: Selecionar e registrar perfil mínimo/bom/ideal, provisionar VPS única, redes/volumes/limites e backup externo; bootstrap do monorepo React/NestJS/worker Node em TypeScript, contratos validados em runtime, auth administrativa, entidades/tickets/attempts e outbox; Redis/Postgres privados.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Ticket autenticado persiste após reinício e dispatch idempotente; sem segredo em Git.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-004 — Worker interno e identidade de serviço
 Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Registro restrito, claim, heartbeat, eventos, systemd, login oficial na identidade de serviço e limites globais; rede interna autenticada.
+Descrição: Worker Node.js/TypeScript separado da API, consumo BullMQ idempotente, registro restrito, claim, heartbeat, eventos, systemd, login oficial na identidade de serviço e limites globais; rede interna autenticada.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Queda de rede interrompe writer antes do lease; job antigo não recebe conclusão válida; sem portas públicas de worker/banco/fila.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
@@ -55,7 +62,7 @@ Entregáveis: código quando pertinente, checks reais, artefatos por revisão e 
 
 ## FAC-008 — Orquestrador e checkpoints
 Sprint: Sprint 2. Dependências: FAC-006, FAC-007. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Estados/outbox/leases, writer lock, pausa/cancel/resume e recovery conservador.
+Descrição: Orquestração NestJS, PostgreSQL/outbox, Redis/BullMQ e leases, writer lock, pausa/cancel/resume e recovery conservador.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Lease expirado sem quiescência bloqueia novo writer; eventos duplicados não repetem efeitos; retorno seguro após crash.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
@@ -76,7 +83,7 @@ Entregáveis: código quando pertinente, checks reais, artefatos por revisão e 
 
 ## FAC-011 — Gate documental e Provider Manager
 Sprint: Sprint 3. Dependências: FAC-009, FAC-010. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Docs/lessons/índices, painel móvel, observações de cota com fonte e aceite por revisão.
+Descrição: Docs/lessons/índices, painel React responsivo com SSE autenticado e retomada, observações de cota com fonte e aceite por revisão.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Mudança sem docs falha; unknown visível; aprovação obsoleta rejeitada; docs atuais coerentes com código.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
@@ -105,3 +112,7 @@ Toda execução fica na mesma VPS; MacBook não é dependência. Assinaturas aut
 FAC-002 valida compatibilidade, login, extras desativados e baseline na VPS. FAC-003 registra plano contratado, limites e separação de redes/volumes. FAC-004 testa serviço/credenciais após reboot. FAC-007 prova que código não lê credenciais/controle. FAC-012 mede painel sob build, OOM/I/O/disco e restauração externa.
 Aceite de infraestrutura: specs reais documentadas; checks do piloto cabem no envelope; sem OOM no ensaio; bancos privados; segredo inacessível ao código; nenhum efeito duplicado após reinício; backup externo restaurável. Na ocorrência de falha de capacidade, otimizar/subir perfil antes de ampliar concorrência.
 Perfil Bom é recomendação de engenharia, não contratação autorizada. Preços, fornecedor e acesso ainda precisam ser informados para provisionar. Detalhamento em documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md.
+
+## Stack obrigatória da fábrica - revisão 2.3
+React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.
+Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredos/código servidor no painel. Outbox, idempotência, leases e fencing seguem obrigatórios: lock BullMQ não substitui exclusão do writer. API não executa builds/clientes. Executar typecheck, lint, builds e testes relevantes. Preservar a stack somente de pilotos externos; a própria fábrica segue a stack aprovada.

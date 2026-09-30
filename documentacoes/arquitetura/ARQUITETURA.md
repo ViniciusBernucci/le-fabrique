@@ -1,15 +1,22 @@
 # Software Factory - Arquitetura e operação
 
-Versão 2.1 - 2026-09-29
+## Decisão obrigatória da stack - revisão 2.3
+A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-## 1. Decisão e escopo v2.1
+
+Versão 2.3 - 2026-09-29
+
+## 1. Decisão e escopo v2.3
 Decisão do usuário em 29/09/2026: toda a fábrica na mesma VPS Linux, incluindo painel/API, PostgreSQL, Redis, supervisor, clientes oficiais, autenticação, sandboxes, worktrees, builds, testes e documentação. MacBook não é necessário para executar o MVP. Assinaturas primeiro; APIs e créditos extras desativados. Nenhum serviço foi implementado nesta entrega.
-Stack proposta preservada: Laravel, Angular, PostgreSQL, Redis e supervisor Node/TypeScript. Usar módulos/processos separados, não exigir microserviços. O software piloto mantém sua stack.
+Stack aprovada: React + TypeScript + Vite no painel, NestJS + TypeScript na API, worker Node.js + TypeScript separado, PostgreSQL e Redis + BullMQ. Monorepo e backend modular. O piloto mantém sua stack. Ver ADR-003-stack-typescript.md.
 Inferência permanece nos fornecedores por internet, sem GPU ou modelo local na VPS. Autenticar cada cliente pelo fluxo oficial na identidade de execução dedicada; validar headless, plano, compatibilidade e cobrança no ambiente real.
 Uso pessoal de desenvolvimento. Multiusuário comercial, revenda e compartilhamento de credenciais ficam fora do MVP e exigem avaliação das condições aplicáveis.
 
 ## 2. Arquitetura numa VPS
-Navegador -> HTTPS/proxy -> Angular/Laravel -> Orchestrator/Context Builder -> PostgreSQL/outbox/Redis -> worker interno -> Agent Runtime Gateway -> Codex/Claude/Antigravity oficiais -> sandbox/worktree -> checks/review/docs -> painel/aceite.
+Navegador -> HTTPS/proxy -> React/NestJS -> Orchestrator/Context Builder -> PostgreSQL/outbox/Redis -> worker interno -> Agent Runtime Gateway -> Codex/Claude/Antigravity oficiais -> sandbox/worktree -> checks/review/docs -> painel/aceite.
 Separar serviços de controle, supervisor confiável, cliente de IA e execução de código por identidades, redes e volumes. Redis/PostgreSQL internos, sem portas públicas. Worker usa protocolo interno autenticado para claim/heartbeat/events/checkpoint/complete; preservar contrato que permite execução remota futura sem torná-la requisito.
 Credenciais ficam nos mecanismos oficiais do cliente na VPS, fora do Git, logs, artefatos, contexto e mounts do código do piloto. A fábrica não coleta senhas nem reutiliza token OAuth como API. Login humano inicial e renovação quando solicitada; não prometer sessão permanente.
 Agent Runtime Gateway gerencia lifecycle e resultados. CLI pode executar ferramentas autonomamente, exigindo limites no host. Validar que código/testes não leem credenciais; se isso não for possível no modo instalado, bloquear adapter e registrar ADR de isolamento compatível.
@@ -109,5 +116,5 @@ CLI encerrou com zero não prova sucesso do ticket. Validar schemas, diff, check
 ## 13. Fontes e pendências
 Fontes oficiais verificadas em 29/09/2026, listadas integralmente em FONTES.md. Confirmado: Codex possui exec não interativo e reutiliza autenticação do CLI; Claude Code possui -p; Google documenta agy -p para automação. Isso comprova mecanismos técnicos, não capacidade ilimitada ou elegibilidade automática de qualquer uso.
 Autenticação oficial, plano contratado, modo de execução, créditos extras, termos e compatibilidade precisam ser validados no worker antes de ativar o adapter. No Claude, diferenciar cliente oficial de SDK/serviço usando credenciais de assinatura; não capturar/intermediar tokens OAuth. Documentação de assinatura não substitui análise de modo de cobrança real.
-Pendências para execução: repo/branch, feature piloto, baseline, perfil contratado da VPS e compatibilidade dos clientes, assinaturas e modelos acessíveis, forma oficial de login, VPS e capacidade semanal. Stack da fábrica proposta pode ser confirmada antes de bootstrap. O planejamento avança sem inventar estas respostas.
-Esta v2.1 substitui a topologia VPS + MacBook da v2 e a execução por APIs da v1. Mantém qualidade, isolamento, documentação por domínio, lessons, evidências, backlog e aceite. Nenhum cliente foi instalado ou testado nesta entrega.
+Pendências para execução: repo/branch, feature piloto, baseline, perfil contratado da VPS e compatibilidade dos clientes, assinaturas e modelos acessíveis, forma oficial de login, VPS e capacidade semanal. A stack da fábrica está aprovada e não deve ser questionada no bootstrap. O planejamento avança sem inventar estas respostas.
+Esta v2.3 substitui a topologia VPS + MacBook da v2 e a execução por APIs da v1. Mantém qualidade, isolamento, documentação por domínio, lessons, evidências, backlog e aceite. Nenhum cliente foi instalado ou testado nesta entrega.

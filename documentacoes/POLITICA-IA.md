@@ -1,8 +1,15 @@
 # Política comum de engenharia e documentação
+
+## Decisão obrigatória da stack - revisão 2.3
+A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
+
 ## Antes da implementação
 Ler README.md, PILOTO.md, PLANO-MVP.md, arquitetura, ADRs e regras locais. Inspecionar o código: documentos não substituem a realidade. Preservar instruções existentes; conflitos relevantes devem ser apresentados ao responsável. Executar apenas um ticket READY com objetivo, escopo, critérios e orçamento definidos.
 ## Implementação
-Preservar stack e padrões do repo alvo. Não ampliar escopo, migrar linguagem ou adicionar dependência sem necessidade. Planejar curto, trabalhar em branch isolada, limitar ferramentas e nunca acessar produção. Não inserir segredos em prompts, arquivos ou logs. Clientes oficiais autenticados pelo usuário; API e extras desligados no MVP. Escolha somente provider elegível no catálogo validado.
+Na própria fábrica, aplicar a stack aprovada React/NestJS/worker Node em TypeScript. Em projetos externos cadastrados, preservar sua stack e padrões. Não ampliar escopo, migrar linguagem ou adicionar dependência sem necessidade. Planejar curto, trabalhar em branch isolada, limitar ferramentas e nunca acessar produção. Não inserir segredos em prompts, arquivos ou logs. Clientes oficiais autenticados pelo usuário; API e extras desligados no MVP. Escolha somente provider elegível no catálogo validado.
 Rodar os checks pertinentes e relatar comandos/resultado real. Distinguir falha de baseline de regressão. Não simular sucesso. Revisão recebe diff, critérios e evidências. Corrigir no máximo duas rodadas antes de pausar com diagnóstico.
 ## Entrega obrigatória em toda alteração
 1. Criar documentacoes/<dominio>/AAAA-MM-DD-TICKET-titulo.md, usando o template.
@@ -25,5 +32,9 @@ Documentar também entregas parciais/interrompidas e próximos passos; checkpoin
 ## Contexto e verificação
 Não carregar todo o kit a cada ticket. Ler política comum e documentos relevantes ao domínio; Context Builder guarda hashes e omissões. Executar checks na revisão final e invalidar evidência após alteração pertinente. Gate de documentação estrutural precisa de revisão semântica.
 
-## Topologia obrigatória v2.1
+## Topologia obrigatória v2.3
 Controle, worker, clientes oficiais/autenticação e sandbox executam na mesma VPS. Seguir ADR-002 e infraestrutura/DIMENSIONAMENTO-VPS.md (sob documentacoes). Não depender de MacBook. Um executor inicial; impor limites globais e preservar controle/banco/credenciais fora do alcance do código. Não contratar VPS ou habilitar gastos sem autorização aplicável.
+
+## Stack obrigatória da fábrica - revisão 2.3
+React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.
+Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredos/código servidor no painel. Outbox, idempotência, leases e fencing seguem obrigatórios: lock BullMQ não substitui exclusão do writer. API não executa builds/clientes. Executar typecheck, lint, builds e testes relevantes. Preservar a stack somente de pilotos externos; a própria fábrica segue a stack aprovada.
