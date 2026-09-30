@@ -8,6 +8,8 @@ Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstr
 
 ## Inicialização
 Durante a construção, confirmar políticas e usar somente fixtures sintéticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Confirmar o contrato do piloto real antes do FAC-012. Deploy do controle é uma tarefa futura autorizada separadamente.
+
+FAC-002 comprovou o Codex CLI 0.159.2 no usuario atual da VPS, com autenticacao ChatGPT, chaves de API ausentes e comandos confinados a fixtures. O teste financeiro continua humano: verificar em Settings > Usage que creditos e recarga automatica nao serao usados. O FAC-005 deve repetir a prova sob a identidade de servico que executara o adapter.
 VPS roda proxy HTTPS, frontend, API, scheduler, PostgreSQL e Redis privados. Supervisor interno roda como usuário dedicado e usa protocolo interno autenticado. Manter credencial da fábrica separada de credenciais dos providers. Não expor endpoint local ou montar diretórios pessoais nos worktrees.
 Sandbox sem privileged, socket Docker, home completo, banco/Redis da fábrica, credenciais de Git amplas ou dados reais. Supervisor confiável prepara checkout e serviços sintéticos. Credenciais de provider inevitavelmente acessíveis ao cliente exigem isolamento de identidade/armazenamento; código executado não deve conseguir lê-las. Validar por teste de acesso negado, não só instrução escrita.
 ## Worker API
