@@ -1,5 +1,17 @@
 import { arch, platform } from "node:os";
-import { workerHeartbeatSchema, workerSchema } from "@le-fabrique/contracts";
+import type {
+  OrchestrationCheckpointRequest,
+  OrchestrationClaimRequest,
+  OrchestrationCompleteRequest,
+  OrchestrationJob,
+  OrchestrationLeaseRequest,
+} from "@le-fabrique/contracts";
+import {
+  orchestrationClaimSchema,
+  orchestrationStateSchema,
+  workerHeartbeatSchema,
+  workerSchema,
+} from "@le-fabrique/contracts";
 import type { WorkerConfig } from "./config";
 
 export class ControlClient {
@@ -40,6 +52,47 @@ export class ControlClient {
     return workerHeartbeatSchema.parse(
       await this.request(`/internal/workers/${this.config.WORKER_ID}/heartbeat`, {
         method: "POST",
+      }),
+    );
+  }
+
+  async claim(job: OrchestrationJob, leaseDurationMs = 90_000) {
+    const body: OrchestrationClaimRequest = {
+      ...job,
+      workerId: this.config.WORKER_ID,
+      leaseDurationMs,
+    };
+    return orchestrationClaimSchema.parse(
+      await this.request("/internal/orchestration/claims", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+    );
+  }
+
+  async renew(attemptId: string, input: Omit<OrchestrationLeaseRequest, "workerId">) {
+    return orchestrationClaimSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/lease`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async checkpoint(attemptId: string, input: Omit<OrchestrationCheckpointRequest, "workerId">) {
+    return orchestrationStateSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/checkpoint`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async complete(attemptId: string, input: Omit<OrchestrationCompleteRequest, "workerId">) {
+    return orchestrationStateSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),
     );
   }

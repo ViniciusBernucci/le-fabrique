@@ -4,6 +4,8 @@ import {
   createProjectSchema,
   createTicketSchema,
   healthResponseSchema,
+  orchestrationCheckpointRequestSchema,
+  orchestrationJobSchema,
   readyTicketSchema,
   runtimeEventSchema,
   runtimeExecutionRequestSchema,
@@ -162,6 +164,30 @@ describe("shared contracts", () => {
           maxOpenFiles: 1,
           maxFileBytes: 1,
         },
+      }),
+    ).toThrow();
+  });
+
+  it("validates orchestration jobs and complete checkpoint identity", () => {
+    expect(
+      orchestrationJobSchema.parse({
+        schemaVersion: 1,
+        eventId: crypto.randomUUID(),
+        projectId: crypto.randomUUID(),
+        ticketId: crypto.randomUUID(),
+        ticketVersion: 2,
+      }),
+    ).toBeDefined();
+    expect(() =>
+      orchestrationCheckpointRequestSchema.parse({
+        workerId: crypto.randomUUID(),
+        fencingToken: 1,
+        baseRevision: "a".repeat(40),
+        codeRevision: null,
+        snapshotId: null,
+        patchHash: "short",
+        reason: "COMPLETED",
+        stoppedConfirmed: true,
       }),
     ).toThrow();
   });

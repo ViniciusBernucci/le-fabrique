@@ -89,7 +89,7 @@ export class ControlService {
           payload: {
             ticketId,
             projectId: ticket.projectId,
-            version: readyTicket.version,
+            ticketVersion: readyTicket.version,
           } satisfies Prisma.InputJsonValue,
         },
       });

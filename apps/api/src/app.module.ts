@@ -4,6 +4,7 @@ import { z } from "zod";
 import { ControlModule } from "./control/control.module";
 import { HealthModule } from "./health/health.module";
 import { InfrastructureModule } from "./infrastructure.module";
+import { OrchestrationModule } from "./orchestration/orchestration.module";
 import { WorkerIdentityModule } from "./worker-identity/worker-identity.module";
 
 const environmentSchema = z.object({
@@ -25,6 +26,7 @@ const environmentSchema = z.object({
     InfrastructureModule,
     ControlModule,
     WorkerIdentityModule,
+    OrchestrationModule,
     HealthModule,
   ],
 })

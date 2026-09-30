@@ -528,3 +528,75 @@ export const snapshotRestoreResultSchema = z.object({
   untrackedFilesRestored: z.number().int().nonnegative(),
 });
 export type SnapshotRestoreResult = z.infer<typeof snapshotRestoreResultSchema>;
+
+export const orchestrationJobSchema = z.object({
+  schemaVersion: z.literal(1),
+  eventId: z.uuid(),
+  ticketId: z.uuid(),
+  projectId: z.uuid(),
+  ticketVersion: z.number().int().positive(),
+});
+export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
+
+export const orchestrationClaimRequestSchema = orchestrationJobSchema.extend({
+  workerId: z.uuid(),
+  leaseDurationMs: z.number().int().min(15_000).max(300_000),
+});
+export type OrchestrationClaimRequest = z.infer<typeof orchestrationClaimRequestSchema>;
+
+export const orchestrationClaimSchema = z.object({
+  runId: z.uuid(),
+  attemptId: z.uuid(),
+  workerId: z.uuid(),
+  fencingToken: z.number().int().positive(),
+  leaseExpiresAt: z.iso.datetime(),
+  replayed: z.boolean(),
+});
+export type OrchestrationClaim = z.infer<typeof orchestrationClaimSchema>;
+
+export const orchestrationLeaseRequestSchema = z.object({
+  workerId: z.uuid(),
+  fencingToken: z.number().int().positive(),
+  leaseDurationMs: z.number().int().min(15_000).max(300_000),
+});
+export type OrchestrationLeaseRequest = z.infer<typeof orchestrationLeaseRequestSchema>;
+
+export const checkpointReasonSchema = z.enum([
+  "PROGRESS",
+  "PAUSED",
+  "CANCELLED",
+  "FAILED",
+  "COMPLETED",
+]);
+export const orchestrationCheckpointRequestSchema = z.object({
+  workerId: z.uuid(),
+  fencingToken: z.number().int().positive(),
+  baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+  codeRevision: z
+    .string()
+    .regex(/^[0-9a-f]{40}$/)
+    .nullable(),
+  snapshotId: z.uuid().nullable(),
+  patchHash: z
+    .string()
+    .regex(/^[0-9a-f]{64}$/)
+    .nullable(),
+  reason: checkpointReasonSchema,
+  stoppedConfirmed: z.boolean(),
+});
+export type OrchestrationCheckpointRequest = z.infer<typeof orchestrationCheckpointRequestSchema>;
+
+export const orchestrationCompleteRequestSchema = z.object({
+  workerId: z.uuid(),
+  fencingToken: z.number().int().positive(),
+  outcome: z.enum(["VALIDATING", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
+});
+export type OrchestrationCompleteRequest = z.infer<typeof orchestrationCompleteRequestSchema>;
+
+export const orchestrationStateSchema = z.object({
+  runId: z.uuid(),
+  attemptId: z.uuid(),
+  status: z.enum(["RUNNING", "VALIDATING", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
+  stoppedConfirmed: z.boolean(),
+});
+export type OrchestrationState = z.infer<typeof orchestrationStateSchema>;

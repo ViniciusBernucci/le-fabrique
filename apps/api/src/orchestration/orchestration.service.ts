@@ -1,0 +1,240 @@
+import type {
+  OrchestrationCheckpointRequest,
+  OrchestrationClaim,
+  OrchestrationClaimRequest,
+  OrchestrationCompleteRequest,
+  OrchestrationLeaseRequest,
+  OrchestrationState,
+} from "@le-fabrique/contracts";
+import { orchestrationClaimSchema, orchestrationStateSchema } from "@le-fabrique/contracts";
+import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import type { Attempt, Prisma, Run } from "@prisma/client";
+import { PrismaService } from "../prisma.service";
+
+type AttemptWithRun = Attempt & { run: Run; checkpoint?: { stoppedConfirmed: boolean } | null };
+
+@Injectable()
+export class OrchestrationService {
+  constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
+
+  async claim(input: OrchestrationClaimRequest): Promise<OrchestrationClaim> {
+    const now = new Date();
+    const result = await this.prisma.$transaction(
+      async (transaction) => {
+        const worker = await transaction.workerIdentity.findUnique({
+          where: { id: input.workerId },
+        });
+        if (worker?.status !== "ONLINE") throw new NotFoundException("Worker unavailable");
+        const ticket = await transaction.ticket.findUnique({ where: { id: input.ticketId } });
+        if (!ticket) throw new NotFoundException("Ticket not found");
+        if (ticket.projectId !== input.projectId) {
+          throw new ConflictException("Ticket belongs to another project");
+        }
+        let run = await transaction.run.findUnique({ where: { dispatchEventId: input.eventId } });
+        if (!run) {
+          if (ticket.status !== "READY" || ticket.version !== input.ticketVersion) {
+            throw new ConflictException("Ticket is not claimable at this version");
+          }
+          run = await transaction.run.create({
+            data: { ticketId: ticket.id, dispatchEventId: input.eventId },
+          });
+        } else if (run.ticketId !== input.ticketId) {
+          throw new ConflictException("Dispatch event belongs to another ticket");
+        }
+
+        const latest = await transaction.attempt.findFirst({
+          where: { runId: run.id },
+          orderBy: { sequence: "desc" },
+        });
+        const active = latest?.status === "RUNNING" ? latest : null;
+        if (active) {
+          if (active.leaseExpiresAt > now) {
+            if (active.workerId !== input.workerId) {
+              throw new ConflictException("Run already has an active writer");
+            }
+            return { claim: mapClaim(active, true), blocked: false };
+          }
+          if (!active.stoppedConfirmed) {
+            await transaction.run.update({
+              where: { id: run.id },
+              data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
+            });
+            await transaction.ticket.update({
+              where: { id: ticket.id },
+              data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
+            });
+            return { claim: null, blocked: true };
+          }
+        }
+        if (!active && latest && !["WAITING_WORKER", "RUNNING"].includes(run.status)) {
+          return { claim: mapClaim(latest, true), blocked: false };
+        }
+
+        const fencingToken = run.nextFencingToken + 1;
+        const attempt = await transaction.attempt.create({
+          data: {
+            runId: run.id,
+            workerId: input.workerId,
+            sequence: fencingToken,
+            fencingToken,
+            leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs),
+          },
+        });
+        await transaction.run.update({
+          where: { id: run.id },
+          data: {
+            status: "RUNNING",
+            nextFencingToken: fencingToken,
+            version: { increment: 1 },
+          },
+        });
+        await transaction.ticket.update({
+          where: { id: ticket.id },
+          data: { status: "RUNNING", version: { increment: 1 } },
+        });
+        return { claim: mapClaim(attempt, false), blocked: false };
+      },
+      { isolationLevel: "Serializable" },
+    );
+    if (result.blocked || !result.claim) {
+      throw new ConflictException("Previous writer termination is not confirmed");
+    }
+    return result.claim;
+  }
+
+  async renew(attemptId: string, input: OrchestrationLeaseRequest): Promise<OrchestrationClaim> {
+    const now = new Date();
+    return this.prisma.$transaction(async (transaction) => {
+      const attempt = await this.currentAttempt(transaction, attemptId, input);
+      if (attempt.status !== "RUNNING" || attempt.leaseExpiresAt <= now) {
+        throw new ConflictException("Lease already expired");
+      }
+      const updated = await transaction.attempt.update({
+        where: { id: attempt.id },
+        data: { leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs) },
+      });
+      return mapClaim(updated, false);
+    });
+  }
+
+  async checkpoint(
+    attemptId: string,
+    input: OrchestrationCheckpointRequest,
+  ): Promise<OrchestrationState> {
+    return this.prisma.$transaction(async (transaction) => {
+      const attempt = await this.currentAttempt(transaction, attemptId, input, true);
+      const existing = await transaction.checkpoint.findUnique({ where: { attemptId } });
+      const data = {
+        attemptId,
+        baseRevision: input.baseRevision,
+        codeRevision: input.codeRevision,
+        snapshotId: input.snapshotId,
+        patchHash: input.patchHash,
+        reason: input.reason,
+        stoppedConfirmed: input.stoppedConfirmed,
+      };
+      if (existing) {
+        const same = Object.entries(data).every(
+          ([key, value]) => existing[key as keyof typeof existing] === value,
+        );
+        if (!same) throw new ConflictException("Checkpoint already exists with other content");
+      } else {
+        await transaction.checkpoint.create({ data });
+      }
+      if (input.stoppedConfirmed && !attempt.stoppedConfirmed) {
+        await transaction.attempt.update({
+          where: { id: attempt.id },
+          data: { stoppedConfirmed: true, status: "STOPPED" },
+        });
+      }
+      return orchestrationStateSchema.parse({
+        runId: attempt.runId,
+        attemptId,
+        status: "RUNNING",
+        stoppedConfirmed: input.stoppedConfirmed,
+      });
+    });
+  }
+
+  async complete(
+    attemptId: string,
+    input: OrchestrationCompleteRequest,
+  ): Promise<OrchestrationState> {
+    return this.prisma.$transaction(async (transaction) => {
+      const attempt = await this.currentAttempt(transaction, attemptId, input, true);
+      const checkpoint = await transaction.checkpoint.findUnique({ where: { attemptId } });
+      if (!checkpoint?.stoppedConfirmed) {
+        throw new ConflictException("Completion requires a stopped checkpoint");
+      }
+      if (attempt.run.status === input.outcome && attempt.status !== "RUNNING") {
+        return orchestrationStateSchema.parse({
+          runId: attempt.runId,
+          attemptId,
+          status: input.outcome,
+          stoppedConfirmed: true,
+        });
+      }
+      const attemptStatus =
+        input.outcome === "VALIDATING"
+          ? "COMPLETED"
+          : input.outcome === "CANCELLED"
+            ? "CANCELLED"
+            : input.outcome === "PAUSED_LIMIT"
+              ? "STOPPED"
+              : "FAILED";
+      await transaction.attempt.update({
+        where: { id: attemptId },
+        data: { status: attemptStatus, stoppedConfirmed: true, completedAt: new Date() },
+      });
+      await transaction.run.update({
+        where: { id: attempt.runId },
+        data: { status: input.outcome, version: { increment: 1 } },
+      });
+      await transaction.ticket.update({
+        where: { id: attempt.run.ticketId },
+        data: { status: input.outcome, version: { increment: 1 } },
+      });
+      return orchestrationStateSchema.parse({
+        runId: attempt.runId,
+        attemptId,
+        status: input.outcome,
+        stoppedConfirmed: true,
+      });
+    });
+  }
+
+  private async currentAttempt(
+    transaction: Prisma.TransactionClient,
+    attemptId: string,
+    input: { workerId: string; fencingToken: number },
+    allowStopped = false,
+  ): Promise<AttemptWithRun> {
+    const attempt = await transaction.attempt.findUnique({
+      where: { id: attemptId },
+      include: { run: true },
+    });
+    if (!attempt) throw new NotFoundException("Attempt not found");
+    if (
+      attempt.workerId !== input.workerId ||
+      attempt.fencingToken !== input.fencingToken ||
+      attempt.run.nextFencingToken !== input.fencingToken ||
+      (!allowStopped && attempt.status !== "RUNNING") ||
+      (allowStopped &&
+        !["RUNNING", "STOPPED", "COMPLETED", "FAILED", "CANCELLED"].includes(attempt.status))
+    ) {
+      throw new ConflictException("Stale or foreign fencing token");
+    }
+    return attempt;
+  }
+}
+
+function mapClaim(attempt: Attempt, replayed: boolean): OrchestrationClaim {
+  return orchestrationClaimSchema.parse({
+    runId: attempt.runId,
+    attemptId: attempt.id,
+    workerId: attempt.workerId,
+    fencingToken: attempt.fencingToken,
+    leaseExpiresAt: attempt.leaseExpiresAt.toISOString(),
+    replayed,
+  });
+}
