@@ -1,8 +1,8 @@
 # FAC-002 — Preflight do Codex oficial
 
-Status: AWAITING_HUMAN
+Status: DONE
 
-Implementacao tecnica: `ebc89bc72a01a41e46a2aabccb47f6c3e0ce814d`. Os cenarios de leitura, isolamento e escrita descartavel passaram. Falta confirmar no portal que creditos/recarga automatica nao serao usados e aceitar a revisao exata. Evidencias: `documentacoes/runtime/2026-09-30-FAC-002-preflight-codex.md`.
+Implementacao tecnica: `ebc89bc72a01a41e46a2aabccb47f6c3e0ce814d`. Revisao aceita: `1666ee108343563e35edb6971bea11234a62d47e`. Os cenarios de leitura, isolamento e escrita descartavel passaram. O responsavel confirmou o gate financeiro e aceitou a revisao em 2026-09-30. Evidencias: `documentacoes/runtime/2026-09-30-FAC-002-preflight-codex.md`.
 
 ## Objetivo
 

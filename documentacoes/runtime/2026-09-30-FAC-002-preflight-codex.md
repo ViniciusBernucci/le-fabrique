@@ -1,7 +1,7 @@
 # FAC-002 — Preflight do Codex oficial
 
 Data: 2026-09-30
-Estado: AWAITING_HUMAN
+Estado: DONE
 Revisao funcional: `ebc89bc72a01a41e46a2aabccb47f6c3e0ce814d`
 
 ## Resultado
@@ -10,7 +10,7 @@ O Codex CLI oficial executou tres cenarios sinteticos na VPS usando a autenticac
 
 O modo antigo `--sandbox read-only` permitiu ao comando testar `~/.codex/auth.json` como legivel. Nenhum conteudo foi aberto ou exibido. A entrega substituiu esse modo por um perfil de permissoes da versao instalada: filesystem negado por padrao, runtime minimo legivel, somente a fixture liberada, rede de comandos desligada e aprovacao `never`. Com esse perfil, o mesmo canario retornou `AUTH_FILE_BLOCKED`.
 
-O cliente esta tecnicamente elegivel para o primeiro adapter. A integracao ao worker pertence ao FAC-005 e deve reutilizar o perfil restrito, argumentos em array e stdin seguro. A FAC-002 ainda depende da confirmacao humana de cobranca e do aceite desta revisao.
+O cliente esta tecnicamente elegivel para o primeiro adapter. A integracao ao worker pertence ao FAC-005 e deve reutilizar o perfil restrito, argumentos em array e stdin seguro. O responsavel confirmou o gate financeiro e aceitou a revisao `1666ee108343563e35edb6971bea11234a62d47e` em 2026-09-30.
 
 ## Evidencias
 
@@ -36,7 +36,7 @@ O cliente esta tecnicamente elegivel para o primeiro adapter. A integracao ao wo
 
 A primeira rodada de correcao passou a capturar `codex login status` em `stderr`. A segunda corrigiu o diretorio de trabalho do check externo da fixture de escrita. Nenhuma dessas falhas chamou API nem alterou login, plano ou codigo da aplicacao.
 
-## Verificacao humana pendente
+## Verificacao humana
 
 O login ChatGPT e a inferencia concluida comprovam o modo de autenticacao, mas nao comprovam as opcoes financeiras da conta. Em ChatGPT, abrir **Settings > Usage** (ou **Usage & Billing** no aplicativo Codex) e confirmar:
 
@@ -44,7 +44,7 @@ O login ChatGPT e a inferencia concluida comprovam o modo de autenticacao, mas n
 2. nenhum saldo de creditos sera usado pela fabrica depois do limite incluido;
 3. nenhuma API key sera configurada como fallback.
 
-Depois dessa confirmacao e do aceite do diff exato, a FAC-002 pode ser marcada DONE e a FAC-005 pode iniciar. A documentacao oficial informa que `codex exec` reutiliza a autenticacao salva, que JSONL e suportado e que chaves de API usam cobranca de API; ela tambem orienta consultar o painel de uso para limites e creditos.
+O responsavel respondeu `continue` ao pedido de confirmacao e aceite da revisao exata. Isso registra a confirmacao humana dos tres itens em 2026-09-30; nao representa verificacao automatica do portal. A documentacao oficial informa que `codex exec` reutiliza a autenticacao salva, que JSONL e suportado e que chaves de API usam cobranca de API; ela tambem orienta consultar o painel de uso para limites e creditos.
 
 ## Limites e rollback
 
