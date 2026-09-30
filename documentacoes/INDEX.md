@@ -18,6 +18,7 @@
 - [planejamento/FAC-003-controle-web-persistencia.md](planejamento/FAC-003-controle-web-persistencia.md)
 - [planejamento/FAC-004-worker-identidade.md](planejamento/FAC-004-worker-identidade.md)
 - [planejamento/FAC-002-preflight-codex.md](planejamento/FAC-002-preflight-codex.md)
+- [planejamento/FAC-005-runtime-gateway-codex.md](planejamento/FAC-005-runtime-gateway-codex.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
