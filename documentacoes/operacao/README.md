@@ -1,4 +1,11 @@
 # Operação da fábrica e worker
+
+## Decisão obrigatória da stack - revisão 2.3
+A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
+
 ## Inicialização
 Confirmar piloto e políticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Deploy do controle é uma tarefa futura autorizada separadamente.
 VPS roda proxy HTTPS, frontend, API, scheduler, PostgreSQL e Redis privados. Supervisor interno roda como usuário dedicado e usa protocolo interno autenticado. Manter credencial da fábrica separada de credenciais dos providers. Não expor endpoint local ou montar diretórios pessoais nos worktrees.
@@ -20,3 +27,7 @@ Separar execução em outra VPS é alternativa futura, sujeita a métricas e rev
 Selecionar perfil em infraestrutura/DIMENSIONAMENTO-VPS.md e registrar especificações reais. Configurar firewall: HTTPS público; SSH administrativo restrito; Redis/PostgreSQL/worker privados. Separar volumes persistentes de temporários. Instalar supervisor como serviço com usuário dedicado e recuperação após reinício.
 Fazer login oficial pelo método suportado para servidor sem interface; callback/fluxo remoto apenas conforme documentação do cliente. Não desabilitar autenticação nem copiar cookies. Confirmar credenciais acessíveis ao cliente e inacessíveis a código/testes/logs.
 Rodar baseline no mesmo ambiente que executará jobs. Medir recursos e painel durante build. Reiniciar worker, depois VPS em janela de teste; comprovar leases, nenhuma duplicação e retomada de checkpoint. Validar backup externo e restauração. Não abrir banco/fila para facilitar diagnóstico.
+
+## Bootstrap executável atual
+
+FAC-000 implementa a fundação local. `compose.dev.yaml` publica PostgreSQL e Redis apenas no loopback para desenvolvimento. A composição completa publica somente o Nginx na porta 8080; API, worker, PostgreSQL e Redis ficam na rede interna. A API aplica migrations com `prisma migrate deploy` e expõe liveness e readiness. O worker inicia com concorrência global igual a 1 e processa apenas o probe sintético do bootstrap. Execução de clientes oficiais, leases, fencing e jobs reais continuam pendentes nos tickets funcionais.

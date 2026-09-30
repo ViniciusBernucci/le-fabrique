@@ -1,0 +1,25 @@
+{
+  "name": "@le-fabrique/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@le-fabrique/contracts": "0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

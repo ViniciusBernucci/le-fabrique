@@ -1,4 +1,4 @@
-# Dimensionamento da VPS única - MVP v2.1
+# Dimensionamento da VPS única - MVP v2.3
 Status: PLANEJADO. Estimativa de engenharia, sujeita a ensaio do repositório. Não são requisitos oficiais dos CLIs. Uma VPS abriga controle, banco/fila, clientes, execução e checks; inferência nos fornecedores, sem GPU.
 ## Perfis
 | Recurso | Mínimo | Bom - recomendação inicial | Ideal para o MVP |
@@ -9,13 +9,13 @@ Status: PLANEJADO. Estimativa de engenharia, sujeita a ensaio do repositório. N
 | Jobs de código simultâneos | 1 leve | 1 completo | 1 inicialmente; até 2 validados |
 | Browser/E2E | Opcional, leve e sequencial | 1 sessão sequencial | 1-2 conforme medição |
 | Projetos ativos no experimento | 1 | 1 | 1; expandir depois |
-Todos: Linux 64 bits suportado/atualizado, preferência x86_64; compatibilidade dos binários confirmada; Docker/Compose quando usados; Git/Node/PHP e toolchains do piloto; HTTPS, saída aos fornecedores/Git/dependências; backup externo e Git remoto. Tráfego depende de imagens, builds e artefatos; medir antes de contratar franquia. GUI completa e GPU não são requisitos; browser headless só quando necessário.
+Todos: Linux 64 bits suportado/atualizado, preferência x86_64; compatibilidade dos binários confirmada; Docker/Compose quando usados; Git/Node.js LTS suportado e toolchains adicionais exigidas pelo piloto; HTTPS, saída aos fornecedores/Git/dependências; backup externo e Git remoto. Tráfego depende de imagens, builds e artefatos; medir antes de contratar franquia. GUI completa e GPU não são requisitos; browser headless só quando necessário.
 ## Mínimo: 4 vCPU / 8 GB / 120 GB
 Viável como ponto de partida para repositório pequeno, poucos serviços e build leve. Envelope inicial: SO/controle/Postgres/Redis/supervisor até 3 GB; execução agregada até 3 GB; margem 2 GB. Limite do job 2 vCPU/3 GB, 256 processos e 30 min, ajustáveis após ensaio. Limitar serviços de integração e não rodar builds e E2E simultâneos.
-Não representa garantia de que qualquer Angular/Laravel/build caberá. Se baseline exceder limite, usar Bom antes do experimento completo. Swap pode amortecer picos, mas não substitui RAM; evitar execução sustentada em swap. Não selecionar VPS de 2 GB/4 GB para este escopo completo com builds.
+Não representa garantia de que qualquer React/NestJS/build caberá. Se baseline exceder limite, usar Bom antes do experimento completo. Swap pode amortecer picos, mas não substitui RAM; evitar execução sustentada em swap. Não selecionar VPS de 2 GB/4 GB para este escopo completo com builds.
 ## Bom: 8 vCPU / 16 GB / 200 GB
 Perfil recomendado para começar o MVP com folga: controle e um job, incluindo build/testes; browser e revisão sequenciais. Envelope: SO 1.5 GB, controle/API/scheduler 1.5 GB, PostgreSQL 1.5 GB, Redis 0.5 GB, supervisor/observabilidade 1 GB = 6 GB; execução agregada até 6 GB; margem 4 GB.
-São envelopes de planejamento, não configurações finais de PostgreSQL/PHP. Guardar orçamento global com overhead/cache do kernel; medir RSS e memória do cgroup. Limite inicial job 4 vCPU/6 GB/256 processos/30 min. Capacidade de review e dependências auxiliares precisa caber no mesmo envelope se ativa na etapa.
+São envelopes de planejamento, não configurações finais de PostgreSQL/Node.js. Guardar orçamento global com overhead/cache do kernel; medir RSS e memória do cgroup. Limite inicial job 4 vCPU/6 GB/256 processos/30 min. Capacidade de review e dependências auxiliares precisa caber no mesmo envelope se ativa na etapa.
 ## Ideal: 8 vCPU / 32 GB / 300 GB
 Prioriza margem de memória para builds, serviços de integração e QA. Envelope: host/controle até 8 GB; até dois jobs com 8 GB cada; margem 8 GB. Inicialmente apenas um job, limite 4 vCPU/8 GB. Ao testar dois, limitar cada um a aproximadamente 3 vCPU e validar latência/I/O, sem dois writers no mesmo worktree.
 Mais RAM não cria cota de IA. Dois jobs podem disputar CPU, disco e cotas; se CPU sustentada for o gargalo, avaliar 12-16 vCPU ou CPU dedicada apenas após medir. Ideal significa conforto para este MVP, não alta disponibilidade nem tamanho final para múltiplos produtos.
