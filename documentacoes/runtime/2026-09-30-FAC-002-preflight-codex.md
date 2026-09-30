@@ -1,7 +1,7 @@
 # FAC-002 — Preflight do Codex oficial
 
-Data: 2026-09-30  
-Estado: AWAITING_HUMAN  
+Data: 2026-09-30
+Estado: AWAITING_HUMAN
 Revisao funcional: `ebc89bc72a01a41e46a2aabccb47f6c3e0ce814d`
 
 ## Resultado
