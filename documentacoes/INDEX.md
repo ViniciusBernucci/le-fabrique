@@ -20,6 +20,7 @@
 - [planejamento/FAC-004-worker-identidade.md](planejamento/FAC-004-worker-identidade.md)
 - [planejamento/FAC-002-preflight-codex.md](planejamento/FAC-002-preflight-codex.md)
 - [planejamento/FAC-005-runtime-gateway-codex.md](planejamento/FAC-005-runtime-gateway-codex.md)
+- [planejamento/FAC-006-context-builder-runtime-guard.md](planejamento/FAC-006-context-builder-runtime-guard.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
