@@ -1,6 +1,8 @@
 # FAC-005 — Runtime Gateway e primeiro adapter Codex
 
-Status: READY
+Status: AWAITING_HUMAN
+
+Implementacao funcional: `d7488ccff1b5cb5f33a9bfcfb3b36f526cbdcde8`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
 
 ## Objetivo
 

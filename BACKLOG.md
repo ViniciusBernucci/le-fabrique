@@ -7,14 +7,14 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000, FAC-002, FAC-003 e FAC-004 estão DONE. FAC-005 e o proximo ticket para o Runtime Gateway e primeiro adapter. O piloto externo permanece adiado até a validação operacional.
+FAC-000, FAC-002, FAC-003 e FAC-004 estão DONE. FAC-005 esta implementado e aguarda aceite da revisao exata. O piloto externo permanece adiado até a validação operacional.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
 - FAC-002: DONE — Codex validado e aceito na revisão `1666ee108343563e35edb6971bea11234a62d47e`; dependências: FAC-004.
 - FAC-003: DONE — Controle web e persistência aceitos no SHA `1807330bcf7b1374fa626d9fcbfc47dd8002f433`; dependências: FAC-000.
 - FAC-004: DONE — Worker interno e identidade de serviço aceitos no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1`; dependências: FAC-003.
-- FAC-005: PLANEJADO — Runtime Gateway e primeiro adapter; dependências: FAC-002, FAC-004.
+- FAC-005: AWAITING_HUMAN — Runtime Gateway e adapter Codex implementados; dependências: FAC-002, FAC-004.
 - FAC-006: PLANEJADO — Context Builder e RuntimeGuard; dependências: FAC-003.
 - FAC-007: PLANEJADO — Sandbox e snapshots recuperáveis; dependências: FAC-004, FAC-005.
 - FAC-008: PLANEJADO — Orquestrador e checkpoints; dependências: FAC-006, FAC-007.

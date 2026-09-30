@@ -5,3 +5,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Outbox idempotente e versão otimista](outbox-idempotencia.md)
 - [Heartbeat e parada conservadora](worker-heartbeat-quiescencia.md)
 - [Perfis de permissao para clientes CLI](perfis-permissao-cliente-cli.md)
+- [Lifecycle seguro de um cliente CLI](lifecycle-processo-cli.md)

@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real entra antes do ensaio operacional. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000, FAC-002, FAC-003 e FAC-004 estão implementados e aceitos; FAC-005 e o proximo ticket. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
+V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000, FAC-002, FAC-003 e FAC-004 estão implementados e aceitos; FAC-005 esta implementado e aguarda aceite. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
 ## Épicos
 Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, definição do piloto real e experimento operacional. Evolução: terceiro adapter/capacidades novas.
 
@@ -40,7 +40,7 @@ Aceite: Worker registra identidade/capacidades, heartbeat avança, credencial in
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-005 — Runtime Gateway e primeiro adapter
-Sprint: Sprint 1. Dependências: FAC-002, FAC-004. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Sprint: Sprint 1. Dependências: FAC-002, FAC-004. Esforço estimado: 2-3 dias. Status: AWAITING_HUMAN.
 Descrição: Interface, execução segura por argv/stdin, fixtures/eventos e cliente oficial escolhido por preflight.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Execute/cancel/schema comprovados; auth/cota normalizados; modelo/uso desconhecido não inventados.

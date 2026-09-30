@@ -12,6 +12,7 @@
 - [operacao/README.md](operacao/README.md)
 - [runtime/README.md](runtime/README.md)
 - [runtime/2026-09-30-FAC-002-preflight-codex.md](runtime/2026-09-30-FAC-002-preflight-codex.md)
+- [runtime/2026-09-30-FAC-005-runtime-gateway-codex.md](runtime/2026-09-30-FAC-005-runtime-gateway-codex.md)
 - [planejamento/FAC-000-bootstrap-typescript.md](planejamento/FAC-000-bootstrap-typescript.md)
 - [planejamento/README.md](planejamento/README.md)
 - [planejamento/2026-09-30-PLAN-001-adiamento-piloto.md](planejamento/2026-09-30-PLAN-001-adiamento-piloto.md)

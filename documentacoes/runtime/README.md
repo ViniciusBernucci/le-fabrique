@@ -6,9 +6,9 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-Status: preflight do Codex concluido e aceito no FAC-002. O primeiro adapter segue no FAC-005.
+Status: preflight do Codex aceito no FAC-002 e primeiro adapter implementado no FAC-005, aguardando aceite. Integracao ao worker/orquestrador continua planejada.
 ## Adapters
-Codex: `codex exec --json` com perfil nomeado que nega o host, libera somente runtime minimo/workspace necessario e desliga rede de comandos; prompt via stdin ou argumento seguro; `--output-last-message` quando suportado. Claude: `claude -p --output-format json`, permissões mínimas validadas. Antigravity: `agy -p`; validar flags de saída/permissões pela versão instalada antes de assumir JSON.
+Codex implementado em `packages/runtime`: `codex exec --json` com perfil nomeado que nega o host, libera somente runtime minimo/workspace necessario e desliga rede de comandos; prompt via stdin, execucao efemera e configuracao do usuario ignorada. Claude: `claude -p --output-format json`, permissões mínimas ainda nao validadas. Antigravity: `agy -p`; validar flags de saída/permissões pela versão instalada antes de assumir JSON.
 Exemplos acima descrevem invocação, não autorizam executar código com privilégios. Usar spawn/execFile com array de argumentos e stdin, jamais interpolar prompt em shell. Fixar versão/binário; validar origem oficial e registrar checksums quando disponíveis.
 Clientes CLI executam ferramentas autonomamente. Adaptador coleta eventos e controla processo; o host impõe recursos, mounts, rede e identidade. Não fingir que tool_requests da API continua idêntico ao loop interno do CLI.
 ## Preflight por instalação
@@ -17,8 +17,10 @@ Testar credenciais no serviço real: login num terminal não prova acesso pelo u
 
 O FAC-002 validou `codex-cli 0.159.2` no usuario atual da VPS com autenticacao ChatGPT, JSONL e execucao efemera. O perfil aplicado nega leitura do host por padrao, libera somente runtime minimo e a raiz ativa, desliga rede de comandos e bloqueia `~/.codex/auth.json`. O script `scripts/fac-002-codex-preflight.sh` tambem recusa `OPENAI_API_KEY` e `CODEX_API_KEY`. O FAC-005 deve executar novamente o preflight sob a identidade real do servico; a prova no usuario atual nao substitui essa verificacao.
 Cada capability carrega verified_at, cli_version e evidence_id. Recursos desconhecidos são unsupported; getUsage pode retornar UNKNOWN. Um provider não passa a AVAILABLE apenas porque existe no catálogo.
-## Interface proposta
-execute(request) -> event stream + result; getStatus() -> health/auth/limits; getCapabilities() -> capacidades verificadas; getUsage() -> observações nullable; cancel(execution_id) -> estado e confirmação de processos parados; resume(checkpoint) -> nova tentativa ou unsupported.
+## Interface atual
+`execute(request, eventSink)` produz eventos sanitizados e resultado validado; `getStatus()` verifica versao/auth; `getCapabilities()` retorna capacidades comprovadas; `getUsage()` retorna observacao `UNKNOWN`; `cancel(execution_id)` confirma processo encerrado. Resume permanece planejado e deve retornar unsupported ate implementacao explicita.
+
+## Contrato ampliado planejado
 Request inclui run_id, attempt_id, fencing_token, provider_installation_id, model_requested nullable, workspace_id, base_sha/code_sha, context_manifest, instruction_hashes, command_profile, limites e policy_version.
 Resultado inclui schema_version, status, exit_code, model_effective nullable, provider_session_id nullable, revisão, patch/artifact hashes, checks, summary, usage nullable, billing_mode, timestamps e erro normalizado. Não capturar raciocínio interno privado.
 Eventos: started, progress, checkpoint, usage_observed, limit_observed, artifact_ready, process_exited e finished. A fábrica valida sequência/schema; output do agente é dado não confiável e não pode alterar orçamento/política.
