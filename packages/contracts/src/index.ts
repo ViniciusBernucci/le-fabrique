@@ -113,3 +113,150 @@ export const workerHeartbeatSchema = z.object({
   acceptedAt: z.iso.datetime(),
 });
 export type WorkerHeartbeat = z.infer<typeof workerHeartbeatSchema>;
+
+export const runtimePermissionModeSchema = z.enum(["READ_ONLY", "WORKSPACE_WRITE"]);
+export type RuntimePermissionMode = z.infer<typeof runtimePermissionModeSchema>;
+
+export const runtimeLimitsSchema = z.object({
+  timeoutMs: z.number().int().min(100).max(1_800_000),
+  maxLogBytes: z
+    .number()
+    .int()
+    .min(1024)
+    .max(10 * 1024 * 1024),
+});
+export type RuntimeLimits = z.infer<typeof runtimeLimitsSchema>;
+
+export const runtimeExecutionRequestSchema = z.object({
+  schemaVersion: z.literal(1),
+  executionId: z.uuid(),
+  workspacePath: z.string().trim().min(1).max(4096),
+  prompt: z.string().trim().min(1).max(200_000),
+  permissionMode: runtimePermissionModeSchema,
+  modelRequested: z.string().trim().min(1).max(120).nullable().default(null),
+  limits: runtimeLimitsSchema,
+});
+export type RuntimeExecutionRequest = z.infer<typeof runtimeExecutionRequestSchema>;
+
+export const runtimeUsageSchema = z.object({
+  inputTokens: z.number().int().nonnegative(),
+  cachedInputTokens: z.number().int().nonnegative(),
+  outputTokens: z.number().int().nonnegative(),
+  reasoningOutputTokens: z.number().int().nonnegative(),
+});
+export type RuntimeUsage = z.infer<typeof runtimeUsageSchema>;
+
+export const runtimeErrorCodeSchema = z.enum([
+  "AUTH_REQUIRED",
+  "RATE_LIMITED",
+  "CONTEXT_TOO_LARGE",
+  "TOOL_DENIED",
+  "TIMEOUT",
+  "CANCELLED",
+  "LOG_LIMIT",
+  "PROVIDER_BUSY",
+  "TRANSIENT",
+  "RESULT_UNKNOWN",
+  "UNSUPPORTED",
+]);
+export type RuntimeErrorCode = z.infer<typeof runtimeErrorCodeSchema>;
+
+export const runtimeErrorSchema = z.object({
+  code: runtimeErrorCodeSchema,
+  message: z.string().trim().min(1).max(500),
+  retryable: z.boolean(),
+});
+export type RuntimeError = z.infer<typeof runtimeErrorSchema>;
+
+export const runtimeExecutionStatusSchema = z.enum([
+  "COMPLETED",
+  "FAILED",
+  "CANCELLED",
+  "TIMED_OUT",
+]);
+export type RuntimeExecutionStatus = z.infer<typeof runtimeExecutionStatusSchema>;
+
+export const runtimeExecutionResultSchema = z.object({
+  schemaVersion: z.literal(1),
+  executionId: z.uuid(),
+  provider: z.literal("codex"),
+  status: runtimeExecutionStatusSchema,
+  exitCode: z.number().int().nullable(),
+  providerSessionId: z.string().min(1).max(200).nullable(),
+  modelRequested: z.string().min(1).max(120).nullable(),
+  modelEffective: z.string().min(1).max(120).nullable(),
+  finalMessage: z.string().max(200_000).nullable(),
+  usage: runtimeUsageSchema.nullable(),
+  error: runtimeErrorSchema.nullable(),
+  startedAt: z.iso.datetime(),
+  finishedAt: z.iso.datetime(),
+});
+export type RuntimeExecutionResult = z.infer<typeof runtimeExecutionResultSchema>;
+
+export const runtimeEventSchema = z.discriminatedUnion("type", [
+  z.object({
+    type: z.literal("started"),
+    executionId: z.uuid(),
+    timestamp: z.iso.datetime(),
+  }),
+  z.object({
+    type: z.literal("progress"),
+    executionId: z.uuid(),
+    timestamp: z.iso.datetime(),
+    category: z.enum(["agent_message", "command", "file_change", "tool"]),
+  }),
+  z.object({
+    type: z.literal("usage_observed"),
+    executionId: z.uuid(),
+    timestamp: z.iso.datetime(),
+    usage: runtimeUsageSchema,
+  }),
+  z.object({
+    type: z.literal("process_exited"),
+    executionId: z.uuid(),
+    timestamp: z.iso.datetime(),
+    exitCode: z.number().int().nullable(),
+  }),
+  z.object({
+    type: z.literal("finished"),
+    executionId: z.uuid(),
+    timestamp: z.iso.datetime(),
+    status: runtimeExecutionStatusSchema,
+  }),
+]);
+export type RuntimeEvent = z.infer<typeof runtimeEventSchema>;
+
+export const runtimeCancelResultSchema = z.object({
+  executionId: z.uuid(),
+  status: z.enum(["CANCELLED", "NOT_FOUND"]),
+});
+export type RuntimeCancelResult = z.infer<typeof runtimeCancelResultSchema>;
+
+export const providerStateSchema = z.enum([
+  "AVAILABLE",
+  "AUTH_REQUIRED",
+  "RATE_LIMITED",
+  "ERROR",
+  "DISABLED",
+]);
+export type ProviderState = z.infer<typeof providerStateSchema>;
+
+export const providerStatusSchema = z.object({
+  provider: z.literal("codex"),
+  state: providerStateSchema,
+  authMode: z.literal("chatgpt"),
+  observedAt: z.iso.datetime(),
+  cliVersion: z.string().min(1).max(120).nullable(),
+});
+export type ProviderStatus = z.infer<typeof providerStatusSchema>;
+
+export const providerUsageObservationSchema = z.object({
+  provider: z.literal("codex"),
+  state: z.literal("UNKNOWN"),
+  value: z.null(),
+  unit: z.null(),
+  resetAt: z.null(),
+  observedAt: z.iso.datetime(),
+  source: z.literal("client-not-exposed"),
+});
+export type ProviderUsageObservation = z.infer<typeof providerUsageObservationSchema>;
