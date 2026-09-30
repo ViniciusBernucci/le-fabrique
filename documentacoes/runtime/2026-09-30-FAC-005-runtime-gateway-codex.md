@@ -1,8 +1,8 @@
 # FAC-005 — Runtime Gateway e adapter Codex
 
 Data: 2026-09-30
-Estado: AWAITING_HUMAN
-Revisao funcional: `d7488ccff1b5cb5f33a9bfcfb3b36f526cbdcde8`
+Estado: DONE
+Revisao aceita: `9102fcc614739fd7bd7ca4992b16617db92ca66f`, em 2026-09-30
 
 ## Resultado
 
