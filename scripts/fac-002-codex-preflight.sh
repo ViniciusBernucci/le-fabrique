@@ -15,7 +15,7 @@ fi
 mkdir -p "$artifact_dir"
 
 version="$($codex_bin --version)"
-login_status="$(env -u OPENAI_API_KEY -u CODEX_API_KEY "$codex_bin" login status)"
+login_status="$(env -u OPENAI_API_KEY -u CODEX_API_KEY "$codex_bin" login status 2>&1)"
 if [[ "$login_status" != "Logged in using ChatGPT" ]]; then
   echo "preflight recusado: autenticacao ChatGPT nao confirmada" >&2
   exit 21
