@@ -1,6 +1,6 @@
 # Infraestrutura atual
 
-Status: bootstrap aceito no FAC-000; sandbox e snapshots do FAC-007 implementados e aguardando aceite. Implantação em VPS NÃO REALIZADA.
+Status: bootstrap do FAC-000 e sandbox/snapshots do FAC-007 aceitos. Implantação em VPS NÃO REALIZADA.
 
 ## Componentes
 

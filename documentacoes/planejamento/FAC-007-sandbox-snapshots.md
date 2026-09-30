@@ -1,8 +1,8 @@
 # FAC-007 — Sandbox e snapshots recuperaveis
 
-Status: AWAITING_HUMAN
+Status: DONE
 
-Implementacao funcional: `a99fb1f30a48fa3e7a991f9cd425d6757543ad12`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
+Revisao aceita: `2bf14f35de64f118ec8224fee6151e60027dedb0`, em 2026-09-30. O commit documental posterior apenas registra o aceite da revisao apresentada.
 
 ## Objetivo
 

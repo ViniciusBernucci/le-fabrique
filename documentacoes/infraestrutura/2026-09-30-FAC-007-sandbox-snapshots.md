@@ -1,8 +1,8 @@
 # FAC-007 — Sandbox e snapshots recuperaveis
 
 Data: 2026-09-30
-Estado: AWAITING_HUMAN
-Revisao funcional: `a99fb1f30a48fa3e7a991f9cd425d6757543ad12`
+Estado: DONE
+Revisao aceita: `2bf14f35de64f118ec8224fee6151e60027dedb0`, em 2026-09-30
 
 ## Resultado
 

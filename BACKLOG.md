@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-006 estão DONE. FAC-007 esta implementado e aguarda aceite da revisao exata. O piloto externo permanece adiado até a validação operacional.
+FAC-000 e FAC-002 a FAC-007 estão DONE. FAC-008 e o proximo ticket READY. O piloto externo permanece adiado até a validação operacional.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -16,8 +16,8 @@ FAC-000 e FAC-002 a FAC-006 estão DONE. FAC-007 esta implementado e aguarda ace
 - FAC-004: DONE — Worker interno e identidade de serviço aceitos no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1`; dependências: FAC-003.
 - FAC-005: DONE — Runtime Gateway e adapter Codex aceitos na revisão `9102fcc614739fd7bd7ca4992b16617db92ca66f`; dependências: FAC-002, FAC-004.
 - FAC-006: DONE — Context Builder e RuntimeGuard aceitos na revisão `ea8cf7afb0e55840722f306262b5334bb408b51a`; dependências: FAC-003.
-- FAC-007: AWAITING_HUMAN — Sandbox e snapshots recuperáveis implementados; dependências: FAC-004, FAC-005.
-- FAC-008: PLANEJADO — Orquestrador e checkpoints; dependências: FAC-006, FAC-007.
+- FAC-007: DONE — Sandbox e snapshots aceitos na revisão `2bf14f35de64f118ec8224fee6151e60027dedb0`; dependências: FAC-004, FAC-005.
+- FAC-008: READY — Orquestrador e checkpoints; dependências: FAC-006, FAC-007.
 - FAC-009: PLANEJADO — Developer, checks e revisão; dependências: FAC-008.
 - FAC-010: PLANEJADO — Segundo provider e handoff automático; dependências: FAC-005, FAC-008, FAC-009.
 - FAC-011: PLANEJADO — Gate documental e Provider Manager; dependências: FAC-009, FAC-010.
