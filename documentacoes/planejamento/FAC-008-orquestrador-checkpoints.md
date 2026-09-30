@@ -1,6 +1,8 @@
 # FAC-008 — Orquestrador, leases e checkpoints
 
-Status: READY
+Status: AWAITING_HUMAN
+
+Implementacao funcional: `ddb8937a6bcdf59ee5a270142710c1df445d76bd`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
 
 ## Objetivo
 

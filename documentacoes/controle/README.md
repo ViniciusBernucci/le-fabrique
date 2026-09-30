@@ -13,4 +13,4 @@ Rotas atuais:
 - `POST|GET /api/projects/{projectId}/tickets`
 - `POST /api/tickets/{ticketId}/ready`
 
-O estado `READY` ainda não aciona o worker. Dispatcher, leases, fencing, SSE, usuários múltiplos e providers pertencem aos próximos tickets.
+FAC-008 conecta o evento `READY` ao BullMQ por dispatcher idempotente e oferece o protocolo interno de runs/attempts, leases, fencing e checkpoints. O consumidor do runtime ainda nao esta ligado ao loop principal. SSE, usuarios multiplos e providers pertencem aos proximos tickets.

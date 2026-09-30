@@ -8,3 +8,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Lifecycle seguro de um cliente CLI](lifecycle-processo-cli.md)
 - [Contexto deterministico e limites conservadores](contexto-deterministico-limites.md)
 - [Sandbox, worktree e snapshot sao limites diferentes](sandbox-worktree-snapshot.md)
+- [Lease, fencing e checkpoint cobrem falhas diferentes](leases-fencing-checkpoints.md)
