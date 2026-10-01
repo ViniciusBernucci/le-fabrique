@@ -3,6 +3,7 @@ import {
   contextBuildRequestSchema,
   createProjectSchema,
   createTicketSchema,
+  developerWorkflowRequestSchema,
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
@@ -190,6 +191,47 @@ describe("shared contracts", () => {
         reason: "COMPLETED",
         stoppedConfirmed: true,
       }),
+    ).toThrow();
+  });
+
+  it("bounds developer workflow corrections and trusted checks", () => {
+    const base = {
+      schemaVersion: 1 as const,
+      workflowId: crypto.randomUUID(),
+      repositoryPath: "/tmp/repository",
+      baseRevision: "a".repeat(40),
+      objective: "Implementar fixture",
+      acceptanceCriteria: ["Passa"],
+      contextSources: [{ path: "README.md", role: "INSTRUCTION" as const }],
+      contextLimits: { maxFiles: 10, maxFileBytes: 10_000, maxTotalBytes: 20_000 },
+      checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"], environment: {} }],
+      guardPolicy: {
+        schemaVersion: 1 as const,
+        maxAttempts: 4,
+        maxElapsedMs: 60_000,
+        maxProviderSwitches: 0,
+        repeatedFailureLimit: 2,
+        subscriptionOnly: true as const,
+        monthlyApiBudget: 0 as const,
+        apiFallbackEnabled: false as const,
+        paidExtrasAllowed: false as const,
+      },
+      runtimeLimits: { timeoutMs: 60_000, maxLogBytes: 10_000 },
+      sandboxLimits: {
+        timeoutMs: 60_000,
+        maxLogBytes: 10_000,
+        memoryBytes: 256 * 1024 * 1024,
+        cpuQuotaPercent: 100,
+        maxProcesses: 64,
+        maxOpenFiles: 256,
+        maxFileBytes: 10 * 1024 * 1024,
+      },
+      snapshotLimits: { maxUntrackedFiles: 100, maxArtifactBytes: 10 * 1024 * 1024 },
+      modelRequested: null,
+    };
+    expect(developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 2 })).toBeDefined();
+    expect(() =>
+      developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 3 }),
     ).toThrow();
   });
 });

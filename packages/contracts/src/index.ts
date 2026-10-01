@@ -605,3 +605,75 @@ export const orchestrationStateSchema = z.object({
   stoppedConfirmed: z.boolean(),
 });
 export type OrchestrationState = z.infer<typeof orchestrationStateSchema>;
+
+export const workflowCheckCommandSchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  command: z.string().trim().min(1).max(4096),
+  args: z.array(z.string().max(16_384)).max(200),
+  environment: z.record(z.string().regex(/^[A-Z_][A-Z0-9_]*$/), z.string().max(16_384)).default({}),
+});
+export type WorkflowCheckCommand = z.infer<typeof workflowCheckCommandSchema>;
+
+export const developerWorkflowRequestSchema = z.object({
+  schemaVersion: z.literal(1),
+  workflowId: z.uuid(),
+  repositoryPath: z.string().trim().min(1).max(4096),
+  baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+  objective: z.string().trim().min(1).max(4000),
+  acceptanceCriteria: z.array(z.string().trim().min(1).max(1000)).min(1).max(20),
+  contextSources: z.array(contextSourceRequestSchema).min(1).max(500),
+  contextLimits: contextLimitsSchema,
+  checks: z.array(workflowCheckCommandSchema).min(1).max(20),
+  guardPolicy: runtimeGuardPolicySchema,
+  runtimeLimits: runtimeLimitsSchema,
+  sandboxLimits: sandboxLimitsSchema,
+  snapshotLimits: snapshotLimitsSchema,
+  maxCorrectionRounds: z.number().int().min(0).max(2).default(2),
+  modelRequested: z.string().trim().min(1).max(120).nullable().default(null),
+});
+export type DeveloperWorkflowRequest = z.infer<typeof developerWorkflowRequestSchema>;
+
+export const workflowCheckObservationSchema = z.object({
+  name: z.string().min(1).max(120),
+  phase: z.enum(["BASELINE", "POST_CHANGE"]),
+  round: z.number().int().nonnegative(),
+  status: sandboxCommandResultSchema.shape.status,
+  exitCode: z.number().int().nullable(),
+  stoppedConfirmed: z.boolean(),
+  preExisting: z.boolean(),
+});
+export type WorkflowCheckObservation = z.infer<typeof workflowCheckObservationSchema>;
+
+export const workflowReviewSchema = z.object({
+  schemaVersion: z.literal(1),
+  verdict: z.enum(["APPROVE", "REQUEST_CHANGES"]),
+  summary: z.string().trim().min(1).max(4000),
+  findings: z.array(z.string().trim().min(1).max(1000)).max(20),
+});
+export type WorkflowReview = z.infer<typeof workflowReviewSchema>;
+
+export const developerWorkflowResultSchema = z.object({
+  schemaVersion: z.literal(1),
+  workflowId: z.uuid(),
+  status: z.enum(["AWAITING_HUMAN", "PAUSED_LIMIT", "FAILED"]),
+  reason: z.enum([
+    "APPROVED",
+    "RUNTIME_GUARD",
+    "DEVELOPER_FAILED",
+    "CHECK_UNQUIESCED",
+    "CHECK_REGRESSION",
+    "REVIEW_REJECTED",
+    "REVIEW_INVALID",
+  ]),
+  workspace: workspaceCreateResultSchema,
+  contextManifest: contextManifestSchema,
+  guardState: runtimeGuardStateSchema,
+  developerExecutions: z.number().int().nonnegative(),
+  reviewerExecutions: z.number().int().nonnegative(),
+  corrections: z.number().int().nonnegative().max(2),
+  checks: z.array(workflowCheckObservationSchema),
+  snapshots: z.array(workspaceSnapshotManifestSchema).max(3),
+  review: workflowReviewSchema.nullable(),
+  diagnostic: z.string().trim().min(1).max(1000),
+});
+export type DeveloperWorkflowResult = z.infer<typeof developerWorkflowResultSchema>;
