@@ -665,6 +665,104 @@ export const completeGithubOnboardingSchema = z
   });
 export type CompleteGithubOnboarding = z.infer<typeof completeGithubOnboardingSchema>;
 
+export const githubRepositoryVerificationStatusSchema = z.enum([
+  "PENDING",
+  "RUNNING",
+  "COMPLETED",
+  "FAILED",
+]);
+export type GithubRepositoryVerificationStatus = z.infer<
+  typeof githubRepositoryVerificationStatusSchema
+>;
+
+export const githubRepositoryAccessSchema = z.enum(["READABLE", "UNAVAILABLE"]);
+export type GithubRepositoryAccess = z.infer<typeof githubRepositoryAccessSchema>;
+
+export const githubRepositoryVerificationSchema = z
+  .object({
+    id: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+    owner: z.string().trim().min(1).max(100),
+    repository: z.string().trim().min(1).max(100),
+    baseBranch: githubSettingsSchema.shape.baseBranch,
+    status: githubRepositoryVerificationStatusSchema,
+    workerId: z.uuid().nullable(),
+    access: githubRepositoryAccessSchema.nullable(),
+    observedOwner: z.string().trim().min(1).max(100).nullable(),
+    observedRepository: z.string().trim().min(1).max(100).nullable(),
+    defaultBranch: z.string().trim().min(1).max(200).nullable(),
+    observedBaseBranch: z.string().trim().min(1).max(200).nullable(),
+    isPrivate: z.boolean().nullable(),
+    isArchived: z.boolean().nullable(),
+    message: z.string().trim().min(1).max(240).nullable(),
+    createdAt: z.iso.datetime(),
+    startedAt: z.iso.datetime().nullable(),
+    completedAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+export type GithubRepositoryVerification = z.infer<typeof githubRepositoryVerificationSchema>;
+export const githubRepositoryVerificationListSchema = z.array(githubRepositoryVerificationSchema);
+
+export const githubRepositoryVerificationJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    eventId: z.uuid(),
+    verificationId: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+    owner: z.string().trim().min(1).max(100),
+    repository: z.string().trim().min(1).max(100),
+    baseBranch: githubSettingsSchema.shape.baseBranch,
+  })
+  .strict();
+export type GithubRepositoryVerificationJob = z.infer<typeof githubRepositoryVerificationJobSchema>;
+
+export const startGithubRepositoryVerificationSchema = z.object({ workerId: z.uuid() }).strict();
+export const completeGithubRepositoryVerificationSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED"]),
+    access: githubRepositoryAccessSchema,
+    observedOwner: z.string().trim().min(1).max(100).nullable(),
+    observedRepository: z.string().trim().min(1).max(100).nullable(),
+    defaultBranch: z.string().trim().min(1).max(200).nullable(),
+    observedBaseBranch: z.string().trim().min(1).max(200).nullable(),
+    isPrivate: z.boolean().nullable(),
+    isArchived: z.boolean().nullable(),
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict()
+  .superRefine((result, context) => {
+    const observations = [
+      result.observedOwner,
+      result.observedRepository,
+      result.defaultBranch,
+      result.observedBaseBranch,
+      result.isPrivate,
+      result.isArchived,
+    ];
+    if (
+      result.status === "COMPLETED" &&
+      (result.access !== "READABLE" || observations.some((value) => value === null))
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Completed repository verification requires complete readable evidence",
+      });
+    }
+    if (
+      result.status === "FAILED" &&
+      (result.access !== "UNAVAILABLE" || observations.some((value) => value !== null))
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Failed repository verification cannot expose partial observations",
+      });
+    }
+  });
+export type CompleteGithubRepositoryVerification = z.infer<
+  typeof completeGithubRepositoryVerificationSchema
+>;
+
 export const providerOnboardingStatusSchema = z.enum([
   "PENDING",
   "RUNNING",

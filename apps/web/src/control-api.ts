@@ -6,10 +6,13 @@ import {
   factorySettingsSchema,
   type GithubOnboardingChallenge,
   type GithubOnboardingSession,
+  type GithubRepositoryVerification,
   type GithubVerification,
   githubOnboardingChallengeSchema,
   githubOnboardingSessionListSchema,
   githubOnboardingSessionSchema,
+  githubRepositoryVerificationListSchema,
+  githubRepositoryVerificationSchema,
   githubVerificationListSchema,
   githubVerificationSchema,
   type Project,
@@ -91,6 +94,22 @@ export async function listGithubVerifications(token: string): Promise<GithubVeri
 export async function requestGithubVerification(token: string): Promise<GithubVerification> {
   return githubVerificationSchema.parse(
     await request("/settings/github/verifications", token, { method: "POST" }),
+  );
+}
+
+export async function listGithubRepositoryVerifications(
+  token: string,
+): Promise<GithubRepositoryVerification[]> {
+  return githubRepositoryVerificationListSchema.parse(
+    await request("/settings/github/repository-verifications", token),
+  );
+}
+
+export async function requestGithubRepositoryVerification(
+  token: string,
+): Promise<GithubRepositoryVerification> {
+  return githubRepositoryVerificationSchema.parse(
+    await request("/settings/github/repository-verifications", token, { method: "POST" }),
   );
 }
 

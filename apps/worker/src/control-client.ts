@@ -1,6 +1,7 @@
 import { arch, platform } from "node:os";
 import type {
   CompleteGithubOnboarding,
+  CompleteGithubRepositoryVerification,
   CompleteGithubVerification,
   CompleteProviderOnboarding,
   CompleteProviderVerification,
@@ -14,6 +15,7 @@ import type {
 } from "@le-fabrique/contracts";
 import {
   githubOnboardingSessionSchema,
+  githubRepositoryVerificationSchema,
   githubVerificationSchema,
   orchestrationClaimSchema,
   orchestrationStateSchema,
@@ -55,6 +57,7 @@ export class ControlClient {
             "codex-device-onboarding",
             "github-cli-verification",
             "github-device-onboarding",
+            "github-repository-read-verification",
           ],
           os: platform(),
           arch: arch(),
@@ -179,6 +182,27 @@ export class ControlClient {
   ) {
     return githubOnboardingSessionSchema.parse(
       await this.request(`/internal/github-onboarding/${sessionId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startGithubRepositoryVerification(verificationId: string) {
+    return githubRepositoryVerificationSchema.parse(
+      await this.request(`/internal/github-repository-verifications/${verificationId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async completeGithubRepositoryVerification(
+    verificationId: string,
+    input: Omit<CompleteGithubRepositoryVerification, "workerId">,
+  ) {
+    return githubRepositoryVerificationSchema.parse(
+      await this.request(`/internal/github-repository-verifications/${verificationId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

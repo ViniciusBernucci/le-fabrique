@@ -87,6 +87,13 @@ enum GithubOnboardingStatus {
   EXPIRED
 }
 
+enum GithubRepositoryVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -276,4 +283,29 @@ model GithubOnboardingSession {
 
   @@index([status, createdAt])
   @@map("github_onboarding_sessions")
+}
+
+model GithubRepositoryVerification {
+  id                 String                             @id @default(uuid()) @db.Uuid
+  host               String
+  owner              String
+  repository         String
+  baseBranch         String                             @map("base_branch")
+  status             GithubRepositoryVerificationStatus @default(PENDING)
+  workerId           String?                            @db.Uuid @map("worker_id")
+  access             String?
+  observedOwner      String?                            @map("observed_owner")
+  observedRepository String?                            @map("observed_repository")
+  defaultBranch      String?                            @map("default_branch")
+  observedBaseBranch String?                            @map("observed_base_branch")
+  isPrivate          Boolean?                           @map("is_private")
+  isArchived         Boolean?                           @map("is_archived")
+  message            String?
+  createdAt          DateTime                           @default(now()) @map("created_at")
+  startedAt          DateTime?                          @map("started_at")
+  completedAt        DateTime?                          @map("completed_at")
+
+  @@index([status, createdAt])
+  @@index([host, owner, repository, baseBranch, createdAt])
+  @@map("github_repository_verifications")
 }

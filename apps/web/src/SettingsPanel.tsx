@@ -4,6 +4,7 @@ import type {
   FactorySettings,
   GithubOnboardingChallenge,
   GithubOnboardingSession,
+  GithubRepositoryVerification,
   GithubVerification,
   ProviderInstallation,
   ProviderOnboardingChallenge,
@@ -16,10 +17,12 @@ import {
   getGithubOnboardingChallenge,
   getProviderOnboardingChallenge,
   listGithubOnboardingSessions,
+  listGithubRepositoryVerifications,
   listGithubVerifications,
   listProviderOnboardingSessions,
   listProviderVerifications,
   requestGithubOnboarding,
+  requestGithubRepositoryVerification,
   requestGithubVerification,
   requestProviderOnboarding,
   requestProviderVerification,
@@ -42,6 +45,9 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [githubOnboardingSessions, setGithubOnboardingSessions] = useState<
     GithubOnboardingSession[]
   >([]);
+  const [githubRepositoryVerifications, setGithubRepositoryVerifications] = useState<
+    GithubRepositoryVerification[]
+  >([]);
   const [githubOnboardingChallenges, setGithubOnboardingChallenges] = useState<
     Record<string, GithubOnboardingChallenge>
   >({});
@@ -63,14 +69,16 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       listProviderOnboardingSessions(token),
       listGithubVerifications(token),
       listGithubOnboardingSessions(token),
+      listGithubRepositoryVerifications(token),
     ])
-      .then(([data, history, sessions, githubHistory, githubSessions]) => {
+      .then(([data, history, sessions, githubHistory, githubSessions, repositoryHistory]) => {
         setSettings(data);
         setDraft(structuredClone(data.configuration));
         setVerifications(history);
         setOnboardingSessions(sessions);
         setGithubVerifications(githubHistory);
         setGithubOnboardingSessions(githubSessions);
+        setGithubRepositoryVerifications(repositoryHistory);
       })
       .catch(() => onMessage("Falha ao carregar as configurações."));
   }, [onMessage, token]);
@@ -197,6 +205,18 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     }, 2_000);
     return () => clearInterval(timer);
   }, [hasActiveGithubOnboarding, onMessage, token]);
+
+  useEffect(() => {
+    if (
+      !githubRepositoryVerifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))
+    ) {
+      return;
+    }
+    const timer = setInterval(() => {
+      void listGithubRepositoryVerifications(token).then(setGithubRepositoryVerifications);
+    }, 3_000);
+    return () => clearInterval(timer);
+  }, [githubRepositoryVerifications, token]);
 
   const summary = useMemo(() => (settings ? configurationSummary(settings) : null), [settings]);
   const latestGithubOnboarding = githubOnboardingSessions[0];
@@ -341,6 +361,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       onMessage("Login oficial GitHub iniciado; aguarde o código temporário.");
     } catch {
       onMessage("Não foi possível iniciar o login GitHub.");
+    }
+  }
+
+  async function verifyGithubRepository() {
+    try {
+      const verification = await requestGithubRepositoryVerification(token);
+      setGithubRepositoryVerifications((current) => [
+        verification,
+        ...current.filter((item) => item.id !== verification.id),
+      ]);
+      onMessage("Verificação somente-leitura do repositório enviada ao worker.");
+    } catch {
+      onMessage("Não foi possível verificar o repositório GitHub salvo.");
     }
   }
 
@@ -771,6 +804,24 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
               ) : null}
             </div>
           ) : null}
+          {githubRepositoryVerifications[0] ? (
+            <p className="verification-line">
+              Repositório: <strong>{githubRepositoryVerifications[0].status}</strong>
+              {githubRepositoryVerifications[0].access
+                ? ` · ${statusLabel(githubRepositoryVerifications[0].access)}`
+                : ""}
+              {githubRepositoryVerifications[0].observedOwner &&
+              githubRepositoryVerifications[0].observedRepository
+                ? ` · ${githubRepositoryVerifications[0].observedOwner}/${githubRepositoryVerifications[0].observedRepository}`
+                : ""}
+              {githubRepositoryVerifications[0].observedBaseBranch
+                ? ` · ${githubRepositoryVerifications[0].observedBaseBranch}`
+                : ""}
+              {githubRepositoryVerifications[0].message
+                ? ` · ${githubRepositoryVerifications[0].message}`
+                : ""}
+            </p>
+          ) : null}
           <button
             className="secondary-action account-action"
             type="button"
@@ -795,6 +846,21 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
               Conectar GitHub CLI
             </button>
           ) : null}
+          <button
+            className="secondary-action account-action"
+            type="button"
+            onClick={verifyGithubRepository}
+            disabled={
+              settings.configuration.github.state !== "CONNECTED" ||
+              settings.configuration.github.owner === null ||
+              settings.configuration.github.repository === null ||
+              githubRepositoryVerifications.some((item) =>
+                ["PENDING", "RUNNING"].includes(item.status),
+              )
+            }
+          >
+            Verificar repositório salvo (somente leitura)
+          </button>
         </section>
 
         <section className="panel safety-card">

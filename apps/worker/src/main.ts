@@ -1,5 +1,6 @@
 import type {
   GithubOnboardingJob,
+  GithubRepositoryVerificationJob,
   GithubVerificationJob,
   OrchestrationJob,
   ProviderOnboardingJob,
@@ -13,6 +14,7 @@ import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
 } from "./github-onboarding.processor";
+import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
 import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
@@ -118,6 +120,21 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
+  const githubRepositoryVerificationWorker = new Worker<GithubRepositoryVerificationJob>(
+    "le-fabrique.github-repository-verification",
+    async (job) => processGithubRepositoryVerification(job.data, control),
+    {
+      concurrency: 1,
+      connection: {
+        host: redisUrl.hostname,
+        port: Number(redisUrl.port || 6379),
+        username: redisUrl.username || undefined,
+        password: redisUrl.password || undefined,
+        db: Number(redisUrl.pathname.slice(1) || 0),
+        maxRetriesPerRequest: null,
+      },
+    },
+  );
 
   let stopping = false;
   const shutdown = async (reason: string): Promise<void> => {
@@ -134,6 +151,7 @@ async function bootstrap(): Promise<void> {
       providerOnboardingWorker.close(),
       githubVerificationWorker.close(),
       githubOnboardingWorker.close(),
+      githubRepositoryVerificationWorker.close(),
     ]);
     process.exit(reason === "control-unavailable" ? 1 : 0);
   };
@@ -161,6 +179,12 @@ async function bootstrap(): Promise<void> {
   );
   githubOnboardingWorker.on("failed", (job, error) =>
     console.error("GitHub onboarding failed", { jobId: job?.id, error: error.message }),
+  );
+  githubRepositoryVerificationWorker.on("failed", (job, error) =>
+    console.error("GitHub repository verification failed", {
+      jobId: job?.id,
+      error: error.message,
+    }),
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));

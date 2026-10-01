@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   completeGithubOnboardingSchema,
+  completeGithubRepositoryVerificationSchema,
   completeGithubVerificationSchema,
   contextBuildRequestSchema,
   createProjectSchema,
@@ -9,6 +10,7 @@ import {
   factoryConfigurationSchema,
   githubOnboardingChallengeSchema,
   githubOnboardingJobSchema,
+  githubRepositoryVerificationJobSchema,
   githubVerificationJobSchema,
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
@@ -469,6 +471,48 @@ describe("shared contracts", () => {
         githubState: "CONNECTED",
         credentialStorage: "PLAINTEXT_FILE",
         message: "invalid",
+      }),
+    ).toThrow();
+  });
+
+  it("validates repository snapshots and requires all-or-nothing read evidence", () => {
+    const job = {
+      schemaVersion: 1 as const,
+      eventId: crypto.randomUUID(),
+      verificationId: crypto.randomUUID(),
+      host: "github.com",
+      owner: "fixture-owner",
+      repository: "fixture-repository",
+      baseBranch: "feature/fixture",
+    };
+    expect(githubRepositoryVerificationJobSchema.parse(job)).toEqual(job);
+    expect(() => githubRepositoryVerificationJobSchema.parse({ ...job, method: "POST" })).toThrow();
+    expect(
+      completeGithubRepositoryVerificationSchema.parse({
+        workerId: crypto.randomUUID(),
+        status: "COMPLETED",
+        access: "READABLE",
+        observedOwner: "fixture-owner",
+        observedRepository: "fixture-repository",
+        defaultBranch: "main",
+        observedBaseBranch: "feature/fixture",
+        isPrivate: true,
+        isArchived: false,
+        message: "Repository and base branch are readable",
+      }),
+    ).toBeDefined();
+    expect(() =>
+      completeGithubRepositoryVerificationSchema.parse({
+        workerId: crypto.randomUUID(),
+        status: "FAILED",
+        access: "UNAVAILABLE",
+        observedOwner: "leaked-owner",
+        observedRepository: null,
+        defaultBranch: null,
+        observedBaseBranch: null,
+        isPrivate: null,
+        isArchived: null,
+        message: "failed",
       }),
     ).toThrow();
   });

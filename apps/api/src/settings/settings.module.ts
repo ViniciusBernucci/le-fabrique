@@ -12,6 +12,15 @@ import {
 } from "./github-onboarding.dispatcher";
 import { GithubOnboardingService } from "./github-onboarding.service";
 import {
+  GithubRepositoryVerificationAdminController,
+  GithubRepositoryVerificationWorkerController,
+} from "./github-repository-verification.controller";
+import {
+  GITHUB_REPOSITORY_VERIFICATION_QUEUE,
+  GithubRepositoryVerificationDispatcher,
+} from "./github-repository-verification.dispatcher";
+import { GithubRepositoryVerificationService } from "./github-repository-verification.service";
+import {
   GithubVerificationAdminController,
   GithubVerificationWorkerController,
 } from "./github-verification.controller";
@@ -52,6 +61,8 @@ import { SettingsService } from "./settings.service";
     GithubVerificationWorkerController,
     GithubOnboardingAdminController,
     GithubOnboardingWorkerController,
+    GithubRepositoryVerificationAdminController,
+    GithubRepositoryVerificationWorkerController,
   ],
   providers: [
     AdminAuthGuard,
@@ -65,6 +76,8 @@ import { SettingsService } from "./settings.service";
     GithubVerificationDispatcher,
     GithubOnboardingService,
     GithubOnboardingDispatcher,
+    GithubRepositoryVerificationService,
+    GithubRepositoryVerificationDispatcher,
     {
       provide: PROVIDER_VERIFICATION_QUEUE,
       useFactory: () => {
@@ -115,6 +128,21 @@ import { SettingsService } from "./settings.service";
       useFactory: () => {
         const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
         return new Queue("le-fabrique.github-onboarding", {
+          connection: {
+            host: redisUrl.hostname,
+            port: Number(redisUrl.port || 6379),
+            username: redisUrl.username || undefined,
+            password: redisUrl.password || undefined,
+            db: Number(redisUrl.pathname.slice(1) || 0),
+          },
+        });
+      },
+    },
+    {
+      provide: GITHUB_REPOSITORY_VERIFICATION_QUEUE,
+      useFactory: () => {
+        const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
+        return new Queue("le-fabrique.github-repository-verification", {
           connection: {
             host: redisUrl.hostname,
             port: Number(redisUrl.port || 6379),
