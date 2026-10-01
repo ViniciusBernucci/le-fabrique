@@ -506,6 +506,67 @@ export const completeProviderVerificationSchema = z
   .strict();
 export type CompleteProviderVerification = z.infer<typeof completeProviderVerificationSchema>;
 
+export const githubVerificationStatusSchema = z.enum(["PENDING", "RUNNING", "COMPLETED", "FAILED"]);
+export type GithubVerificationStatus = z.infer<typeof githubVerificationStatusSchema>;
+
+export const githubVerificationSchema = z
+  .object({
+    id: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+    status: githubVerificationStatusSchema,
+    workerId: z.uuid().nullable(),
+    githubState: githubSettingsSchema.shape.state.nullable(),
+    cliVersion: z.string().trim().min(1).max(120).nullable(),
+    message: z.string().trim().min(1).max(240).nullable(),
+    createdAt: z.iso.datetime(),
+    startedAt: z.iso.datetime().nullable(),
+    completedAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+export type GithubVerification = z.infer<typeof githubVerificationSchema>;
+export const githubVerificationListSchema = z.array(githubVerificationSchema);
+
+export const githubVerificationJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    eventId: z.uuid(),
+    verificationId: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+  })
+  .strict();
+export type GithubVerificationJob = z.infer<typeof githubVerificationJobSchema>;
+
+export const startGithubVerificationSchema = z.object({ workerId: z.uuid() }).strict();
+export const completeGithubVerificationSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED"]),
+    githubState: githubSettingsSchema.shape.state,
+    cliVersion: z.string().trim().min(1).max(120).nullable(),
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict()
+  .superRefine((result, context) => {
+    if (result.status === "FAILED" && result.githubState !== "ERROR") {
+      context.addIssue({
+        code: "custom",
+        message: "Failed GitHub verification must report ERROR",
+        path: ["githubState"],
+      });
+    }
+    if (
+      result.status === "COMPLETED" &&
+      !["CONNECTED", "AUTH_REQUIRED"].includes(result.githubState)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Completed GitHub verification must report connection evidence",
+        path: ["githubState"],
+      });
+    }
+  });
+export type CompleteGithubVerification = z.infer<typeof completeGithubVerificationSchema>;
+
 export const providerOnboardingStatusSchema = z.enum([
   "PENDING",
   "RUNNING",

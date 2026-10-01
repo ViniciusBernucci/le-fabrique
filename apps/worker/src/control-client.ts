@@ -1,5 +1,6 @@
 import { arch, platform } from "node:os";
 import type {
+  CompleteGithubVerification,
   CompleteProviderOnboarding,
   CompleteProviderVerification,
   OrchestrationCheckpointRequest,
@@ -10,6 +11,7 @@ import type {
   ProviderOnboardingChallenge,
 } from "@le-fabrique/contracts";
 import {
+  githubVerificationSchema,
   orchestrationClaimSchema,
   orchestrationStateSchema,
   providerOnboardingSessionSchema,
@@ -44,7 +46,12 @@ export class ControlClient {
         body: JSON.stringify({
           id: this.config.WORKER_ID,
           name: this.config.WORKER_NAME,
-          capabilities: ["probe", "subscription-client-preflight", "codex-device-onboarding"],
+          capabilities: [
+            "probe",
+            "subscription-client-preflight",
+            "codex-device-onboarding",
+            "github-cli-verification",
+          ],
           os: platform(),
           arch: arch(),
           nodeVersion: process.version,
@@ -117,6 +124,27 @@ export class ControlClient {
   ) {
     return providerVerificationSchema.parse(
       await this.request(`/internal/provider-verifications/${verificationId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startGithubVerification(verificationId: string) {
+    return githubVerificationSchema.parse(
+      await this.request(`/internal/github-verifications/${verificationId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async completeGithubVerification(
+    verificationId: string,
+    input: Omit<CompleteGithubVerification, "workerId">,
+  ) {
+    return githubVerificationSchema.parse(
+      await this.request(`/internal/github-verifications/${verificationId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

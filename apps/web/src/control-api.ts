@@ -4,6 +4,9 @@ import {
   type CreateTicket,
   type FactorySettings,
   factorySettingsSchema,
+  type GithubVerification,
+  githubVerificationListSchema,
+  githubVerificationSchema,
   type Project,
   type ProviderOnboardingChallenge,
   type ProviderOnboardingSession,
@@ -74,6 +77,16 @@ export async function markTicketReady(token: string, ticket: Ticket): Promise<Ti
 
 export async function getFactorySettings(token: string): Promise<FactorySettings> {
   return factorySettingsSchema.parse(await request("/settings", token));
+}
+
+export async function listGithubVerifications(token: string): Promise<GithubVerification[]> {
+  return githubVerificationListSchema.parse(await request("/settings/github/verifications", token));
+}
+
+export async function requestGithubVerification(token: string): Promise<GithubVerification> {
+  return githubVerificationSchema.parse(
+    await request("/settings/github/verifications", token, { method: "POST" }),
+  );
 }
 
 export async function updateFactorySettings(

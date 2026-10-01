@@ -1,4 +1,5 @@
 import type {
+  GithubVerificationJob,
   OrchestrationJob,
   ProviderOnboardingJob,
   ProviderVerificationJob,
@@ -7,6 +8,7 @@ import type {
 import { Worker } from "bullmq";
 import { loadWorkerConfig } from "./config";
 import { ControlClient, startHeartbeat } from "./control-client";
+import { processGithubVerification } from "./github-verification.processor";
 import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
 import {
@@ -81,6 +83,21 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
+  const githubVerificationWorker = new Worker<GithubVerificationJob>(
+    "le-fabrique.github-verification",
+    async (job) => processGithubVerification(job.data, control),
+    {
+      concurrency: 1,
+      connection: {
+        host: redisUrl.hostname,
+        port: Number(redisUrl.port || 6379),
+        username: redisUrl.username || undefined,
+        password: redisUrl.password || undefined,
+        db: Number(redisUrl.pathname.slice(1) || 0),
+        maxRetriesPerRequest: null,
+      },
+    },
+  );
 
   let stopping = false;
   const shutdown = async (reason: string): Promise<void> => {
@@ -94,6 +111,7 @@ async function bootstrap(): Promise<void> {
       orchestrationWorker.close(),
       providerVerificationWorker.close(),
       providerOnboardingWorker.close(),
+      githubVerificationWorker.close(),
     ]);
     process.exit(reason === "control-unavailable" ? 1 : 0);
   };
@@ -115,6 +133,9 @@ async function bootstrap(): Promise<void> {
   );
   providerOnboardingWorker.on("failed", (job, error) =>
     console.error("provider onboarding failed", { jobId: job?.id, error: error.message }),
+  );
+  githubVerificationWorker.on("failed", (job, error) =>
+    console.error("GitHub verification failed", { jobId: job?.id, error: error.message }),
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));

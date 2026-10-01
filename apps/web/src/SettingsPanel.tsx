@@ -2,6 +2,7 @@ import type {
   AgentAssignment,
   FactoryConfiguration,
   FactorySettings,
+  GithubVerification,
   ProviderInstallation,
   ProviderOnboardingChallenge,
   ProviderOnboardingSession,
@@ -11,8 +12,10 @@ import { useEffect, useMemo, useState } from "react";
 import {
   getFactorySettings,
   getProviderOnboardingChallenge,
+  listGithubVerifications,
   listProviderOnboardingSessions,
   listProviderVerifications,
+  requestGithubVerification,
   requestProviderOnboarding,
   requestProviderVerification,
   updateFactorySettings,
@@ -30,6 +33,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const [saving, setSaving] = useState(false);
   const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
+  const [githubVerifications, setGithubVerifications] = useState<GithubVerification[]>([]);
   const [onboardingSessions, setOnboardingSessions] = useState<ProviderOnboardingSession[]>([]);
   const [onboardingChallenges, setOnboardingChallenges] = useState<
     Record<string, ProviderOnboardingChallenge>
@@ -43,12 +47,14 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       getFactorySettings(token),
       listProviderVerifications(token),
       listProviderOnboardingSessions(token),
+      listGithubVerifications(token),
     ])
-      .then(([data, history, sessions]) => {
+      .then(([data, history, sessions, githubHistory]) => {
         setSettings(data);
         setDraft(structuredClone(data.configuration));
         setVerifications(history);
         setOnboardingSessions(sessions);
+        setGithubVerifications(githubHistory);
       })
       .catch(() => onMessage("Falha ao carregar as configurações."));
   }, [onMessage, token]);
@@ -120,6 +126,27 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     }, 3_000);
     return () => clearInterval(timer);
   }, [token, verifications]);
+
+  useEffect(() => {
+    if (!githubVerifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))) return;
+    const timer = setInterval(() => {
+      void Promise.all([getFactorySettings(token), listGithubVerifications(token)]).then(
+        ([data, history]) => {
+          setSettings(data);
+          setDraft((current) =>
+            current
+              ? {
+                  ...current,
+                  github: { ...current.github, state: data.configuration.github.state },
+                }
+              : current,
+          );
+          setGithubVerifications(history);
+        },
+      );
+    }, 3_000);
+    return () => clearInterval(timer);
+  }, [githubVerifications, token]);
 
   const summary = useMemo(() => (settings ? configurationSummary(settings) : null), [settings]);
 
@@ -234,6 +261,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       onMessage("Login oficial iniciado; aguarde o código temporário.");
     } catch {
       onMessage("Não foi possível iniciar o login desta instalação.");
+    }
+  }
+
+  async function verifyGithub() {
+    try {
+      const verification = await requestGithubVerification(token);
+      setGithubVerifications((current) => [
+        verification,
+        ...current.filter((item) => item.id !== verification.id),
+      ]);
+      onMessage("Verificação GitHub enviada ao worker; nenhum token será lido pelo painel.");
+    } catch {
+      onMessage("Não foi possível solicitar a verificação GitHub.");
     }
   }
 
@@ -633,6 +673,23 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             Autenticação prevista via <strong>gh CLI</strong> no worker. Tokens não trafegam pelo
             painel.
           </p>
+          {githubVerifications[0] ? (
+            <p className="verification-line">
+              Verificação: <strong>{githubVerifications[0].status}</strong>
+              {githubVerifications[0].cliVersion ? ` · ${githubVerifications[0].cliVersion}` : ""}
+              {githubVerifications[0].message ? ` · ${githubVerifications[0].message}` : ""}
+            </p>
+          ) : null}
+          <button
+            className="secondary-action account-action"
+            type="button"
+            onClick={verifyGithub}
+            disabled={githubVerifications.some((item) =>
+              ["PENDING", "RUNNING"].includes(item.status),
+            )}
+          >
+            Verificar GitHub CLI
+          </button>
         </section>
 
         <section className="panel safety-card">

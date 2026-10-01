@@ -71,6 +71,13 @@ enum ProviderOnboardingStatus {
   EXPIRED
 }
 
+enum GithubVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -227,4 +234,20 @@ model ProviderOnboardingSession {
   @@index([installationId, createdAt])
   @@index([status, createdAt])
   @@map("provider_onboarding_sessions")
+}
+
+model GithubVerification {
+  id          String                   @id @default(uuid()) @db.Uuid
+  host        String
+  status      GithubVerificationStatus @default(PENDING)
+  workerId    String?                  @db.Uuid @map("worker_id")
+  githubState String?                  @map("github_state")
+  cliVersion  String?                  @map("cli_version")
+  message     String?
+  createdAt   DateTime                 @default(now()) @map("created_at")
+  startedAt   DateTime?                @map("started_at")
+  completedAt DateTime?                @map("completed_at")
+
+  @@index([status, createdAt])
+  @@map("github_verifications")
 }

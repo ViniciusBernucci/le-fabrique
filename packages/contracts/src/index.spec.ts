@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  completeGithubVerificationSchema,
   contextBuildRequestSchema,
   createProjectSchema,
   createTicketSchema,
   developerWorkflowRequestSchema,
   factoryConfigurationSchema,
+  githubVerificationJobSchema,
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
@@ -398,6 +400,35 @@ describe("shared contracts", () => {
             models: ["gpt-test", "gpt-test"],
           },
         ],
+      }),
+    ).toThrow();
+  });
+
+  it("validates GitHub verification jobs and fail-closed results", () => {
+    expect(
+      githubVerificationJobSchema.parse({
+        schemaVersion: 1,
+        eventId: crypto.randomUUID(),
+        verificationId: crypto.randomUUID(),
+        host: "github.com",
+      }),
+    ).toBeDefined();
+    expect(() =>
+      githubVerificationJobSchema.parse({
+        schemaVersion: 1,
+        eventId: crypto.randomUUID(),
+        verificationId: crypto.randomUUID(),
+        host: "github.com",
+        token: "must-not-enter-job",
+      }),
+    ).toThrow();
+    expect(() =>
+      completeGithubVerificationSchema.parse({
+        workerId: crypto.randomUUID(),
+        status: "FAILED",
+        githubState: "CONNECTED",
+        cliVersion: null,
+        message: "invalid",
       }),
     ).toThrow();
   });
