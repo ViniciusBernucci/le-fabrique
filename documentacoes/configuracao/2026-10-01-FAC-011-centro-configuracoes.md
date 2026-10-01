@@ -11,7 +11,8 @@ Transformar contas de IA, modelos, atribuicoes por funcionario e GitHub em confi
 - Base do trabalho: `0186bcf5420d941b50f38e4a77f119aaa8faa678`.
 - Ticket READY: `b37b020ea4f2e634e3eeb3c8434fafae5953a318`.
 - Implementacao inicial: `b119a4e56f2518fc292f916737ababb01bd0ad00`.
-- Revisao funcional corrigida e verificada: `2737ab89d7bbf91cb3377df03080370e6d470b6c`.
+- Bootstrap atomico: `2737ab89d7bbf91cb3377df03080370e6d470b6c`.
+- Revisao funcional corrigida e verificada: `9a948d968c072b8b5a5841d8eff4d8c8c5e343e6`.
 - Branch/worktree: `feat/fac-011-settings-center`, `/home/vinicius/le-fabrique-fac-011`.
 
 ## Implementacao
@@ -28,8 +29,10 @@ Transformar contas de IA, modelos, atribuicoes por funcionario e GitHub em confi
 2. O servico cria defaults desabilitados, `AUTH_REQUIRED`, sem modelos e atualiza somente com a versao esperada.
 3. O painel distingue cliente habilitado de cliente comprovadamente `AVAILABLE` e permite configurar cada funcao separadamente.
 4. Remover uma conta limpa suas atribuicoes no draft antes de salvar.
-5. GitHub persiste somente metadados; autenticacao e segredo nao atravessam o novo contrato.
-6. Politicas financeiras proibidas sao literais `false` no schema e aparecem como somente leitura.
+5. Desabilitar conta ou remover modelo limpa atribuicoes invalidas; modelos duplicados sao normalizados na UI e rejeitados pelo contrato.
+6. Estados `AVAILABLE`/`CONNECTED` e demais observacoes nao podem ser forjados por `PUT /api/settings`; pertencem ao worker futuro.
+7. GitHub persiste somente metadados; autenticacao e segredo nao atravessam o novo contrato.
+8. Politicas financeiras proibidas sao literais `false` no schema e aparecem como somente leitura.
 
 ## Checks reais
 
@@ -38,7 +41,7 @@ Executados no worktree com Node/npm do repositorio e dependencias do `package-lo
 - `npm ci`: 211 pacotes instalados, 0 vulnerabilidades reportadas.
 - `npm run lint`: passou, 85 arquivos verificados.
 - `npm run typecheck`: passou em contracts, runtime, API, worker e web.
-- `npm test`: passou, 69 testes em 19 arquivos.
+- `npm test`: passou, 70 testes em 19 arquivos.
 - `npm run build`: passou; web gerou bundle Vite de producao.
 - `DATABASE_URL=postgresql://fixture:fixture@127.0.0.1:5432/fixture npm exec -w @le-fabrique/api -- prisma validate --schema prisma/schema.prisma`: schema valido, sem conexao ao banco.
 - `git diff --check`: passou.
@@ -59,4 +62,4 @@ Foram reaproveitados conceitos publicos de organizacao por secoes, ativacao de a
 
 ## Rollback e aceite
 
-Antes de deploy, o rollback funcional e reverter, nesta ordem, `2737ab89d7bbf91cb3377df03080370e6d470b6c` e `b119a4e56f2518fc292f916737ababb01bd0ad00`; a migration ainda nao foi aplicada. Se ela ja tiver sido aplicada em outro ambiente, preservar a tabela/dados e fazer migration compensatoria; nao apagar configuracoes manualmente. A entrega permanece `AWAITING_HUMAN`; `DONE` exige aceite explicito da revisao documental final.
+Antes de deploy, o rollback funcional e reverter, nesta ordem, `9a948d968c072b8b5a5841d8eff4d8c8c5e343e6`, `2737ab89d7bbf91cb3377df03080370e6d470b6c` e `b119a4e56f2518fc292f916737ababb01bd0ad00`; a migration ainda nao foi aplicada. Se ela ja tiver sido aplicada em outro ambiente, preservar a tabela/dados e fazer migration compensatoria; nao apagar configuracoes manualmente. A entrega permanece `AWAITING_HUMAN`; `DONE` exige aceite explicito da revisao documental final.

@@ -10,7 +10,7 @@ O schema de readiness define a resposta esperada da API e é consumido pelo pain
 
 O pacote disponibiliza fonte ESM ao Vite para permitir tree-shaking e compila CommonJS para API e worker. Ele exporta somente contratos neutros: código Prisma, configuração de servidor, segredos e adapters permanecem fora do pacote compartilhado.
 
-No FAC-011, objetos `.strict()` fazem parte da fronteira de seguranca: um campo `token` enviado junto a uma instalacao e rejeitado, em vez de ser silenciosamente persistido. A validacao cruzada tambem comprova que o modelo pertence ao catalogo da conta habilitada e que todas as funcoes aparecem uma unica vez. Tipagem isolada nao garantiria nenhuma dessas relacoes ao receber JSON.
+No FAC-011, objetos `.strict()` fazem parte da fronteira de seguranca: um campo `token` enviado junto a uma instalacao e rejeitado, em vez de ser silenciosamente persistido. A validacao cruzada tambem comprova que o modelo pertence ao catalogo da conta habilitada, modelos/funcoes nao se repetem e todas as funcoes aparecem. O servico aplica ainda uma regra contextual que o schema isolado nao conhece: `AVAILABLE` e `CONNECTED` nao podem ser promovidos pelo update administrativo, pois exigem evidencia do worker.
 
 ## Quando repetir
 

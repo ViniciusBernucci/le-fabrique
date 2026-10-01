@@ -10,7 +10,7 @@ O painel administrativo possui as areas `Operacao` e `Configuracoes`. O Centro d
 - `Funcionarios digitais`: Planner, Developer, Reviewer, QA, Documentation e Security, cada um com conta/modelo, modo de permissao, timeout, tentativas e ativacao proprios;
 - `GitHub`: modo `GH_CLI`, estado da conexao, host, owner, repositorio, branch base e intencao de criar PR depois de gate humano.
 
-A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuracao e um singleton PostgreSQL versionado; a atualizacao exige `expectedVersion` e rejeita gravacao obsoleta. Os contratos Zod estritos validam relacoes: IDs e funcoes unicos, modelo pertencente a uma instalacao habilitada, conta/modelo selecionados juntos e owner/repository do GitHub preenchidos juntos.
+A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuracao e um singleton PostgreSQL versionado; a atualizacao exige `expectedVersion` e rejeita gravacao obsoleta. Os contratos Zod estritos validam relacoes: IDs, modelos e funcoes unicos, modelo pertencente a uma instalacao habilitada, conta/modelo selecionados juntos e owner/repository do GitHub preenchidos juntos. Estados observados de provider e GitHub nao podem ser alterados pelo update administrativo: pertencem a evidencia futura do worker.
 
 ## Seguranca e limites
 

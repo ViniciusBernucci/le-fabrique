@@ -56,4 +56,4 @@ FAC-003 e FAC-009 aceitos. FAC-010 permanece `WAITING_PROVIDER` e passa a depend
 
 ## Aceite
 
-A entrega esta `AWAITING_HUMAN` apos os checks da revisao funcional corrigida `2737ab89d7bbf91cb3377df03080370e6d470b6c`. `DONE` somente com aceite explicito do responsavel sobre a revisao documental final.
+A entrega esta `AWAITING_HUMAN` apos os checks da revisao funcional corrigida `9a948d968c072b8b5a5841d8eff4d8c8c5e343e6`. `DONE` somente com aceite explicito do responsavel sobre a revisao documental final.
