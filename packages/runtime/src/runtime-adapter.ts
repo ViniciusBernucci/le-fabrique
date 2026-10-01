@@ -5,12 +5,13 @@ import type {
   RuntimeEvent,
   RuntimeExecutionRequest,
   RuntimeExecutionResult,
+  RuntimeProvider,
 } from "@le-fabrique/contracts";
 
 export type RuntimeEventSink = (event: RuntimeEvent) => void;
 
 export interface RuntimeAdapter {
-  readonly name: "codex";
+  readonly name: RuntimeProvider;
   execute(
     request: RuntimeExecutionRequest,
     eventSink?: RuntimeEventSink,

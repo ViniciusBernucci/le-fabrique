@@ -8,6 +8,7 @@ import {
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
+  providerHandoffRequestSchema,
   providerOnboardingChallengeSchema,
   providerOnboardingJobSchema,
   readyTicketSchema,
@@ -242,6 +243,68 @@ describe("shared contracts", () => {
         expiresAt,
       }),
     ).toBeDefined();
+  });
+
+  it("requires stopped source and matching snapshot base for provider handoff", () => {
+    const source = runtimeExecutionResultSchema.parse({
+      schemaVersion: 1,
+      executionId: crypto.randomUUID(),
+      provider: "codex",
+      status: "FAILED",
+      exitCode: 1,
+      providerSessionId: null,
+      modelRequested: null,
+      modelEffective: null,
+      finalMessage: null,
+      usage: null,
+      error: { code: "RATE_LIMITED", message: "limit", retryable: true },
+      startedAt: "2026-10-01T12:00:00.000Z",
+      finishedAt: "2026-10-01T12:01:00.000Z",
+    });
+    expect(() =>
+      providerHandoffRequestSchema.parse({
+        schemaVersion: 1,
+        handoffId: crypto.randomUUID(),
+        source: {
+          executionId: source.executionId,
+          provider: source.provider,
+          status: source.status,
+          errorCode: source.error?.code ?? null,
+          finishedAt: source.finishedAt,
+        },
+        sourceStoppedConfirmed: false,
+        targetRole: "REVIEWER",
+        repositoryPath: "/srv/repo",
+        baseRevision: "a".repeat(40),
+        snapshot: {
+          artifactPath: "/srv/snapshot",
+          manifest: {
+            schemaVersion: 1,
+            snapshotId: crypto.randomUUID(),
+            baseRevision: "b".repeat(40),
+            headRevision: "a".repeat(40),
+            patchBytes: 0,
+            patchSha256: "c".repeat(64),
+            untracked: [],
+            totalArtifactBytes: 0,
+            createdAt: "2026-10-01T12:01:00.000Z",
+            manifestHash: "d".repeat(64),
+          },
+        },
+        objective: "Review",
+        acceptanceCriteria: ["Safe"],
+        configuration: validConfiguration,
+        guardState: {
+          schemaVersion: 1,
+          startedAt: "2026-10-01T12:00:00.000Z",
+          attempts: 1,
+          providerSwitches: 0,
+          lastProvider: "codex",
+          lastFailure: null,
+        },
+        runtimeLimits: { timeoutMs: 1000, maxLogBytes: 4096 },
+      }),
+    ).toThrow();
   });
 
   it("validates orchestration jobs and complete checkpoint identity", () => {

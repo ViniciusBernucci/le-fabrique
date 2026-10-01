@@ -1,3 +1,5 @@
+export { ClaudeAdapter, type ClaudeAdapterOptions } from "./claude-adapter";
+export { classifyClaudeSubscriptionStatus } from "./claude-auth";
 export { CodexAdapter, type CodexAdapterOptions } from "./codex-adapter";
 export { ContextBuilder } from "./context-builder";
 export type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";

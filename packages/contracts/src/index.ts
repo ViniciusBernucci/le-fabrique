@@ -117,6 +117,9 @@ export type WorkerHeartbeat = z.infer<typeof workerHeartbeatSchema>;
 export const runtimePermissionModeSchema = z.enum(["READ_ONLY", "WORKSPACE_WRITE"]);
 export type RuntimePermissionMode = z.infer<typeof runtimePermissionModeSchema>;
 
+export const runtimeProviderSchema = z.enum(["codex", "claude"]);
+export type RuntimeProvider = z.infer<typeof runtimeProviderSchema>;
+
 export const runtimeLimitsSchema = z.object({
   timeoutMs: z.number().int().min(100).max(1_800_000),
   maxLogBytes: z
@@ -179,7 +182,7 @@ export type RuntimeExecutionStatus = z.infer<typeof runtimeExecutionStatusSchema
 export const runtimeExecutionResultSchema = z.object({
   schemaVersion: z.literal(1),
   executionId: z.uuid(),
-  provider: z.literal("codex"),
+  provider: runtimeProviderSchema,
   status: runtimeExecutionStatusSchema,
   exitCode: z.number().int().nullable(),
   providerSessionId: z.string().min(1).max(200).nullable(),
@@ -242,16 +245,16 @@ export const providerStateSchema = z.enum([
 export type ProviderState = z.infer<typeof providerStateSchema>;
 
 export const providerStatusSchema = z.object({
-  provider: z.literal("codex"),
+  provider: runtimeProviderSchema,
   state: providerStateSchema,
-  authMode: z.literal("chatgpt"),
+  authMode: z.enum(["chatgpt", "claude-subscription"]),
   observedAt: z.iso.datetime(),
   cliVersion: z.string().min(1).max(120).nullable(),
 });
 export type ProviderStatus = z.infer<typeof providerStatusSchema>;
 
 export const providerUsageObservationSchema = z.object({
-  provider: z.literal("codex"),
+  provider: runtimeProviderSchema,
   state: z.literal("UNKNOWN"),
   value: z.null(),
   unit: z.null(),
@@ -997,3 +1000,75 @@ export const developerWorkflowResultSchema = z.object({
   diagnostic: z.string().trim().min(1).max(1000),
 });
 export type DeveloperWorkflowResult = z.infer<typeof developerWorkflowResultSchema>;
+
+export const agentRouteSchema = z
+  .object({
+    role: employeeRoleSchema,
+    installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    provider: runtimeProviderSchema,
+    model: z.string().trim().min(1).max(120),
+    permissionMode: runtimePermissionModeSchema,
+  })
+  .strict();
+export type AgentRoute = z.infer<typeof agentRouteSchema>;
+
+export const providerHandoffSourceSchema = z
+  .object({
+    executionId: z.uuid(),
+    provider: runtimeProviderSchema,
+    status: runtimeExecutionStatusSchema,
+    errorCode: runtimeErrorCodeSchema.nullable(),
+    finishedAt: z.iso.datetime(),
+  })
+  .strict();
+export type ProviderHandoffSource = z.infer<typeof providerHandoffSourceSchema>;
+
+export const providerHandoffRequestSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    handoffId: z.uuid(),
+    source: providerHandoffSourceSchema,
+    sourceStoppedConfirmed: z.literal(true),
+    targetRole: employeeRoleSchema,
+    repositoryPath: z.string().trim().min(1).max(4096),
+    baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+    snapshot: workspaceSnapshotSchema,
+    objective: z.string().trim().min(1).max(4000),
+    acceptanceCriteria: z.array(z.string().trim().min(1).max(1000)).min(1).max(20),
+    configuration: factoryConfigurationSchema,
+    guardState: runtimeGuardStateSchema,
+    runtimeLimits: runtimeLimitsSchema,
+  })
+  .strict()
+  .superRefine((request, context) => {
+    if (request.snapshot.manifest.baseRevision !== request.baseRevision) {
+      context.addIssue({
+        code: "custom",
+        message: "Snapshot must belong to the handoff base revision",
+        path: ["snapshot", "manifest", "baseRevision"],
+      });
+    }
+    if (Date.parse(request.snapshot.manifest.createdAt) < Date.parse(request.source.finishedAt)) {
+      context.addIssue({
+        code: "custom",
+        message: "Snapshot must be captured after the source process stopped",
+        path: ["snapshot", "manifest", "createdAt"],
+      });
+    }
+  });
+export type ProviderHandoffRequest = z.infer<typeof providerHandoffRequestSchema>;
+
+export const providerHandoffResultSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    handoffId: z.uuid(),
+    status: z.enum(["COMPLETED", "WAITING_PROVIDER", "PAUSED_LIMIT", "FAILED"]),
+    route: agentRouteSchema.nullable(),
+    workspace: workspaceCreateResultSchema.nullable(),
+    restore: snapshotRestoreResultSchema.nullable(),
+    execution: runtimeExecutionResultSchema.nullable(),
+    guardState: runtimeGuardStateSchema,
+    diagnostic: z.string().trim().min(1).max(1000),
+  })
+  .strict();
+export type ProviderHandoffResult = z.infer<typeof providerHandoffResultSchema>;

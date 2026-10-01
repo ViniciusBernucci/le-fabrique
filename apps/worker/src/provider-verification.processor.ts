@@ -4,7 +4,10 @@ import type {
   ProviderVerificationJob,
   SettingsProvider,
 } from "@le-fabrique/contracts";
-import { sanitizeSubscriptionEnvironment } from "@le-fabrique/runtime";
+import {
+  classifyClaudeSubscriptionStatus,
+  sanitizeSubscriptionEnvironment,
+} from "@le-fabrique/runtime";
 import type { ControlClient } from "./control-client";
 
 type CommandResult = { exitCode: number | null; stdout: string; stderr: string };
@@ -85,22 +88,19 @@ export async function inspectProvider(
     const status = await runner(profile.binary, profile.statusArgs);
     const cliVersion = version.exitCode === 0 ? version.stdout.trim().slice(0, 120) || null : null;
     if (provider === "CLAUDE" && status.exitCode === 0) {
-      const parsed = JSON.parse(status.stdout) as { loggedIn?: boolean };
-      return parsed.loggedIn
-        ? {
-            status: "COMPLETED",
-            providerState: "AVAILABLE",
-            cliVersion,
-            observedModels: [],
-            message: "Authenticated subscription client observed",
-          }
-        : {
-            status: "COMPLETED",
-            providerState: "AUTH_REQUIRED",
-            cliVersion,
-            observedModels: [],
-            message: "Official client requires authentication",
-          };
+      const providerState = classifyClaudeSubscriptionStatus(JSON.parse(status.stdout));
+      return {
+        status: "COMPLETED",
+        providerState,
+        cliVersion,
+        observedModels: [],
+        message:
+          providerState === "AVAILABLE"
+            ? "Authenticated subscription client observed"
+            : providerState === "AUTH_REQUIRED"
+              ? "Official client requires authentication"
+              : "Client authentication mode is not subscription eligible",
+      };
     }
     if (
       status.exitCode !== 0 ||

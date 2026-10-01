@@ -75,10 +75,28 @@ describe("sanitizeSubscriptionEnvironment", () => {
       PATH: "/usr/bin",
       OPENAI_API_KEY: "openai-secret",
       ANTHROPIC_API_KEY: "anthropic-secret",
+      ANTHROPIC_AUTH_TOKEN: "anthropic-token",
+      ANTHROPIC_BASE_URL: "https://api-gateway.example.test",
+      AWS_ACCESS_KEY_ID: "aws-key",
+      AWS_SECRET_ACCESS_KEY: "aws-secret",
+      CLAUDE_CODE_OAUTH_TOKEN: "oauth-token",
+      CLAUDE_CODE_USE_BEDROCK: "1",
+      CLAUDE_CODE_USE_VERTEX: "1",
       GOOGLE_API_KEY: "google-secret",
     });
     expect(result.environment).toEqual({ PATH: "/usr/bin" });
-    expect(result.removedKeys).toEqual(["ANTHROPIC_API_KEY", "GOOGLE_API_KEY", "OPENAI_API_KEY"]);
+    expect(result.removedKeys).toEqual([
+      "ANTHROPIC_API_KEY",
+      "ANTHROPIC_AUTH_TOKEN",
+      "ANTHROPIC_BASE_URL",
+      "AWS_ACCESS_KEY_ID",
+      "AWS_SECRET_ACCESS_KEY",
+      "CLAUDE_CODE_OAUTH_TOKEN",
+      "CLAUDE_CODE_USE_BEDROCK",
+      "CLAUDE_CODE_USE_VERTEX",
+      "GOOGLE_API_KEY",
+      "OPENAI_API_KEY",
+    ]);
     expect(JSON.stringify(result)).not.toContain("secret");
   });
 });

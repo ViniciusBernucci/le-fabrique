@@ -22,6 +22,28 @@ describe("provider verification", () => {
     });
   });
 
+  it("fails closed for a Claude Console or ambiguous OAuth login", async () => {
+    const runner = vi.fn(async (_binary: string, args: readonly string[]) =>
+      args.includes("--version")
+        ? { exitCode: 0, stdout: "2.1.285\n", stderr: "" }
+        : {
+            exitCode: 0,
+            stdout: JSON.stringify({
+              loggedIn: true,
+              authMethod: "oauth",
+              apiProvider: "firstParty",
+            }),
+            stderr: "",
+          },
+    );
+
+    await expect(inspectProvider("CLAUDE", runner)).resolves.toMatchObject({
+      status: "COMPLETED",
+      providerState: "ERROR",
+      message: "Client authentication mode is not subscription eligible",
+    });
+  });
+
   it("uses fixed Codex argv and reports an authenticated client", async () => {
     const runner = vi.fn(async (_binary: string, args: readonly string[]) => ({
       exitCode: 0,
