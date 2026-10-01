@@ -36,8 +36,17 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       const installations = [...current.installations];
       const installation = installations[index];
       if (!installation) return current;
-      installations[index] = { ...installation, ...patch };
-      return { ...current, installations };
+      const updated = { ...installation, ...patch };
+      installations[index] = updated;
+      const assignments = current.assignments.map((assignment) =>
+        assignment.installationId === updated.id &&
+        (!updated.enabled ||
+          assignment.model === null ||
+          !updated.models.includes(assignment.model))
+          ? { ...assignment, enabled: false, installationId: null, model: null }
+          : assignment,
+      );
+      return { ...current, installations, assignments };
     });
   }
 
@@ -218,10 +227,14 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 <textarea
                   value={installation.models.join("\n")}
                   onChange={(event) => {
-                    const models = event.target.value
-                      .split("\n")
-                      .map((item) => item.trim())
-                      .filter(Boolean);
+                    const models = [
+                      ...new Set(
+                        event.target.value
+                          .split("\n")
+                          .map((item) => item.trim())
+                          .filter(Boolean),
+                      ),
+                    ];
                     updateInstallation(index, {
                       models,
                       defaultModel: models.includes(installation.defaultModel ?? "")

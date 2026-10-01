@@ -3,7 +3,7 @@ import {
   type FactorySettings,
   factoryConfigurationSchema,
 } from "@le-fabrique/contracts";
-import { ConflictException, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, ConflictException, Inject, Injectable } from "@nestjs/common";
 import type { FactorySettings as FactorySettingsRecord, Prisma } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
 import { createDefaultFactoryConfiguration } from "./settings.defaults";
@@ -17,6 +17,36 @@ function mapSettings(settings: FactorySettingsRecord): FactorySettings {
     createdAt: settings.createdAt.toISOString(),
     updatedAt: settings.updatedAt.toISOString(),
   };
+}
+
+function assertObservedStatesUnchanged(
+  current: FactoryConfiguration,
+  requested: FactoryConfiguration,
+): void {
+  const currentInstallations = new Map(current.installations.map((item) => [item.id, item]));
+  for (const installation of requested.installations) {
+    const existing = currentInstallations.get(installation.id);
+    if (!existing) {
+      if (installation.state !== "AUTH_REQUIRED") {
+        throw new BadRequestException("New provider installations must require authentication");
+      }
+      continue;
+    }
+    if (installation.state !== existing.state) {
+      throw new BadRequestException("Provider state is managed by worker evidence");
+    }
+    if (
+      existing.state !== "AUTH_REQUIRED" &&
+      (installation.provider !== existing.provider ||
+        installation.executable !== existing.executable ||
+        installation.authMode !== existing.authMode)
+    ) {
+      throw new BadRequestException("Reconfigure provider identity through worker onboarding");
+    }
+  }
+  if (requested.github.state !== current.github.state) {
+    throw new BadRequestException("GitHub state is managed by worker evidence");
+  }
 }
 
 @Injectable()
@@ -43,6 +73,14 @@ export class SettingsService {
   ): Promise<FactorySettings> {
     factoryConfigurationSchema.parse(configuration);
     return this.prisma.$transaction(async (transaction) => {
+      const current = await transaction.factorySettings.findUnique({ where: { id: SETTINGS_ID } });
+      if (!current || current.version !== expectedVersion) {
+        throw new ConflictException("Settings changed; reload before saving");
+      }
+      assertObservedStatesUnchanged(
+        factoryConfigurationSchema.parse(current.configuration),
+        configuration,
+      );
       const updated = await transaction.factorySettings.updateMany({
         where: { id: SETTINGS_ID, version: expectedVersion },
         data: {

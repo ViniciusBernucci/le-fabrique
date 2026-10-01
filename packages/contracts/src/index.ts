@@ -265,9 +265,12 @@ export const settingsProviderSchema = z.enum(["CODEX", "CLAUDE", "ANTIGRAVITY"])
 export type SettingsProvider = z.infer<typeof settingsProviderSchema>;
 
 export const settingsProviderStateSchema = z.enum([
+  "UNCONFIGURED",
   "AUTH_REQUIRED",
   "AVAILABLE",
+  "BUSY",
   "RATE_LIMITED",
+  "COOLDOWN",
   "ERROR",
   "DISABLED",
 ]);
@@ -292,6 +295,13 @@ export const providerInstallationSchema = z
   })
   .strict()
   .superRefine((installation, context) => {
+    if (new Set(installation.models).size !== installation.models.length) {
+      context.addIssue({
+        code: "custom",
+        message: "Installation models must be unique",
+        path: ["models"],
+      });
+    }
     if (
       installation.defaultModel !== null &&
       !installation.models.includes(installation.defaultModel)

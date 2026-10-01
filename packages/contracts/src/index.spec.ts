@@ -296,5 +296,16 @@ describe("shared contracts", () => {
         ),
       }),
     ).toThrow();
+    expect(() =>
+      factoryConfigurationSchema.parse({
+        ...validConfiguration,
+        installations: [
+          {
+            ...validConfiguration.installations[0],
+            models: ["gpt-test", "gpt-test"],
+          },
+        ],
+      }),
+    ).toThrow();
   });
 });
