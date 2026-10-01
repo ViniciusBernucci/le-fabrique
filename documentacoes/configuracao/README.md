@@ -28,3 +28,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
 4. Integracao GitHub implementa conexao e PR em ticket proprio; merge continua manual.
+
+## Verificacao de instalacoes
+
+FAC-010A implementa `Verificar instalacao`. Pedido/outbox sao persistidos e o worker executa apenas comandos allowlisted, nunca o caminho editavel no painel. Historico mostra estado, versao e modelos sanitizados; output bruto nao e armazenado. Essa verificacao nao faz login nem torna uma conta elegivel quando o cliente informa `AUTH_REQUIRED`.

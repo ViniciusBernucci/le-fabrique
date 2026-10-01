@@ -15,3 +15,5 @@ O JSONL do cliente e validado e reduzido a eventos internos. Mensagens de racioc
 `packages/runtime/src/codex-adapter.ts` mantem o mapa de processos ativos, limita bytes e produz contratos de `packages/contracts`. `fake-codex.cjs` simula sucesso, auth, cota, contexto, permissao, timeout, cancelamento, JSON invalido e excesso de output sem consumir assinatura.
 
 Esse lifecycle ainda precisa de lease/fencing e persistencia antes de executar tickets controlados pelo worker.
+
+No FAC-010A, ate um probe de autenticacao recebe lifecycle: comando/argv sao fixos por provider, shell fica desligado, ambiente perde chaves de API herdadas, processo tem 15 s e 64 KiB e somente classificacao sanitizada e persistida. Exit code zero nao basta: `agy models` pode responder "sign in" sem modelo, portanto a classificacao procura evidencia de autenticacao antes de declarar `AVAILABLE`.

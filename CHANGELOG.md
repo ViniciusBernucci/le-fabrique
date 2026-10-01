@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.22 - 2026-10-01
+FAC-010A implementa verificacao gerenciada de Codex, Claude Code e Antigravity pelo worker, com pedido/outbox atomicos, fila separada, comandos fixos, timeout/log limit, resultado sanitizado e atualizacao de estado reservada ao worker. Painel solicita e acompanha sem iniciar login ou prompt; aguarda aceite.
+
 ## 2.21 - 2026-10-01
 FAC-011 aceito pelo responsavel na revisao `e41ec1e45273aba3205f266e8753dfca305c5952`. FAC-010 passa a READY para implementar onboarding oficial iniciado pelo painel e executado pelo worker antes do preflight/handoff.
 

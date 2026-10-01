@@ -1,6 +1,7 @@
 # Fontes e evidências
 Consulta inicial: 29/09/2026; autenticacao e CLI Claude Code reconferidas em 01/10/2026. Arquitetura, limites, preferência de papéis e metas são propostas de engenharia. Nenhum prompt de segundo provider foi executado no FAC-010.
 ## OpenAI
+- https://learn.chatgpt.com/docs/auth — login Codex com ChatGPT, `codex login status`, device auth para headless e protecao do cache de credenciais; consultado novamente em 01/10/2026 para FAC-010A.
 - https://developers.openai.com/codex/noninteractive — exec, JSONL, sandbox e reutilização de autenticação CLI; endereço redireciona para https://learn.chatgpt.com/docs/non-interactive-mode.
 - https://github.com/openai/codex — cliente oficial local e login ChatGPT. Validar plano/modelos/limites reais no onboarding; não derivar capacidade pelo número de tickets.
 ## Anthropic

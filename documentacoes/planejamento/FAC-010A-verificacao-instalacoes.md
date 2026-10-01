@@ -1,6 +1,6 @@
 # FAC-010A — Verificacao gerenciada de instalacoes
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -48,4 +48,4 @@ FAC-010A prepara evidencia e status. FAC-010B implementara o canal interativo ef
 
 ## Aceite
 
-Entrega termina `AWAITING_HUMAN`; `DONE` apenas com aceite da revisao exata.
+Entrega esta `AWAITING_HUMAN` na revisao funcional `b6012bb262f0d3342dd1c9633ee9079089e76b76`; `DONE` apenas com aceite da revisao documental exata.
