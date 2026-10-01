@@ -1,6 +1,6 @@
 # FAC-010B — Login efemero do Codex
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -47,4 +47,4 @@ Permitir que o administrador inicie no Centro de Configuracoes o login oficial d
 
 ## Verificacao e aceite
 
-Fixtures simulam o processo sem chamar o fornecedor. A entrega permanecera `AWAITING_HUMAN` ate aceite explicito da revisao exata; merge, migracao e deploy nao fazem parte do ticket.
+Fixtures simulam o processo sem chamar o fornecedor. Implementacao funcional verificada em `4d979aa7045022020447114c0dd125dfe5dfadde`; a entrega permanece `AWAITING_HUMAN` ate aceite explicito da revisao documental exata. Merge, migracao e deploy nao fazem parte do ticket.

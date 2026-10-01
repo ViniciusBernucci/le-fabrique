@@ -17,3 +17,5 @@ O JSONL do cliente e validado e reduzido a eventos internos. Mensagens de racioc
 Esse lifecycle ainda precisa de lease/fencing e persistencia antes de executar tickets controlados pelo worker.
 
 No FAC-010A, ate um probe de autenticacao recebe lifecycle: comando/argv sao fixos por provider, shell fica desligado, ambiente perde chaves de API herdadas, processo tem 15 s e 64 KiB e somente classificacao sanitizada e persistida. Exit code zero nao basta: `agy models` pode responder "sign in" sem modelo, portanto a classificacao procura evidencia de autenticacao antes de declarar `AVAILABLE`.
+
+No FAC-010B, o lifecycle inclui uma informacao sensivel de curta duracao. O processo `codex login --device-auth` pode viver dez minutos, mas URL/codigo sao extraidos em memoria e publicados somente no Redis com TTL menor ou igual ao da sessao. PostgreSQL recebe estado, nao desafio. Falha ao publicar mata o processo; SIGINT/SIGTERM mata todos os logins ativos; e exit code zero ainda exige `codex login status` antes de atualizar a instalacao para `AVAILABLE`. Assim, vida do processo, vida do desafio e evidencia persistente sao limites distintos.

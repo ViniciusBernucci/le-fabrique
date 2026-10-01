@@ -26,6 +26,8 @@ Cada capability carrega verified_at, cli_version e evidence_id. Recursos desconh
 
 O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 
+FAC-010B conecta somente Codex por fluxo oficial de device code. O worker mantem o processo em memoria por ate dez minutos, limita output e publica apenas URL/codigo validados no canal efemero. Saida bem-sucedida nao basta: `codex login status` precisa confirmar autenticacao antes de `AVAILABLE`. Encerramento do worker mata o grupo de login ativo; nenhum desafio ou output bruto vira evento persistente.
+
 O FAC-011 introduz `ProviderInstallation` e atribuicoes administrativas por funcao. Essa configuracao expressa intencao, nao evidencia: habilitar uma linha ou digitar um modelo nao muda o estado real do cliente. O worker futuro precisa detectar binario, autenticar pelo fluxo oficial, observar modelos e gravar evidencia antes de o router considerar a instalacao elegivel. Segredos nao pertencem ao contrato nem ao PostgreSQL de controle.
 
 O Reviewer deve devolver JSON validado com `APPROVE` ou `REQUEST_CHANGES`; texto livre, falha do runtime ou schema invalido falha fechado. `APPROVE` produz somente `AWAITING_HUMAN`, nunca `DONE`.
