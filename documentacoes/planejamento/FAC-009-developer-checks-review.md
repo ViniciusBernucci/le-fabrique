@@ -1,8 +1,8 @@
 # FAC-009 — Developer, checks e revisao
 
-Status: AWAITING_HUMAN
+Status: DONE
 
-Implementacao funcional: `7ba457470171d80571c0ce8650ed2b26f3f197ef`. Criterios tecnicos comprovados com fixtures; falta aceite humano da revisao exata com documentacao.
+Revisao aceita: `02819fb847e303f1a823cc2784a7326ec5e696f9`, em 2026-10-01. O commit documental posterior apenas registra o aceite da revisao apresentada.
 
 ## Objetivo
 

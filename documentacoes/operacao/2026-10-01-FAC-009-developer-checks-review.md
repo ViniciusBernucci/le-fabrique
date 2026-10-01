@@ -1,7 +1,7 @@
 # FAC-009 — Developer, checks e revisao
 
 Data: 2026-10-01
-Estado: AWAITING_HUMAN
+Estado: DONE
 Revisao funcional: `7ba457470171d80571c0ce8650ed2b26f3f197ef`
 
 ## Resultado
@@ -45,4 +45,4 @@ Reverter `7ba457470171d80571c0ce8650ed2b26f3f197ef` remove os contratos e o coor
 
 ## Estado do aceite
 
-FAC-009 permanece `AWAITING_HUMAN` ate revisao e aceite explicito da revisao final documentada.
+O responsavel aceitou explicitamente a revisao `02819fb847e303f1a823cc2784a7326ec5e696f9` em 2026-10-01. FAC-009 esta `DONE`; FAC-010 pode ser preparado em branch/worktree proprio.

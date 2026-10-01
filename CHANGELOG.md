@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.18 - 2026-10-01
+FAC-009 aceito pelo responsavel na revisao `02819fb847e303f1a823cc2784a7326ec5e696f9`; FAC-010 passa a ser o proximo ticket READY.
+
 ## 2.17 - 2026-10-01
 FAC-009 implementa contratos e coordenador no worker para worktree, contexto, RuntimeGuard, baseline, Developer com escrita, checks isolados, snapshots e Reviewer separado somente leitura. Regressao nova, review invalido, processo sem parada confirmada e limites falham de forma conservadora. A integracao usa somente fixtures e aguarda aceite humano.
 

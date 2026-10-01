@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 e FAC-002 a FAC-008 estão DONE. FAC-009 implementa a composicao controlada de Developer, checks, snapshots e Reviewer e aguarda aceite. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente e orquestracao persistida. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000 e FAC-002 a FAC-009 estão DONE. O coordenador de Developer, checks, snapshots e Reviewer foi aceito. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente e orquestracao persistida. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 deve validar um segundo provider e o handoff sem contornar esse gate. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
@@ -15,9 +15,9 @@ FAC-000 e FAC-002 a FAC-008 estão DONE. FAC-009 implementa a composicao control
 
 ## Sequência recomendada
 
-1. Revisar e aceitar FAC-009 na revisao exata.
+1. Validar um segundo cliente oficial antes de implementar seu adapter no FAC-010.
 2. Preservar checkpoint e quiescencia antes de qualquer nova tentativa ou troca de papel.
-3. Evoluir segundo provider, handoff e perfil operacional na ordem de dependências até FAC-011.
+3. Implementar handoff por estado externo, sem transferir sessao privada, e manter perfil operacional bloqueado ate allowlist confiavel.
 4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
