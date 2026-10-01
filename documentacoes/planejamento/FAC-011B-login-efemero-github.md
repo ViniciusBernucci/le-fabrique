@@ -1,6 +1,6 @@
 # FAC-011B — Login efemero do GitHub CLI
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -70,3 +70,7 @@ FAC-011B implementa apenas login. Verificacao de permissao no repositorio e cria
 - Codigo verificado: `c2f353db0befbaa5b8bbddc69430f739206c0b7a`.
 - Relatorio: `documentacoes/configuracao/2026-10-01-FAC-011B-login-efemero-github.md`.
 - Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e login remoto nao executado.
+
+## Aceite
+
+Entrega aceita explicitamente pelo responsavel em 2026-10-02 na revisao documental exata `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`.

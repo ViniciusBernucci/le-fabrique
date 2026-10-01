@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.33 - 2026-10-02
+FAC-011B aceito pelo responsavel na revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`. Login GitHub gerenciado esta concluido em codigo; instalacao/keyring/login reais permanecem futuros e FAC-011C passa a ser o proximo incremento.
+
 ## 2.32 - 2026-10-01
 FAC-011B implementa login GitHub web/device iniciado no painel: sessao/outbox sem segredo, desafio efemero no Redis, worker com argv fixo e cancelamento, ambiente sem tokens e confirmacao obrigatoria de `tokenSource=keyring`. Fallback `hosts.yml` falha fechado. Passaram 123 testes, lint, typecheck, build e schema Prisma; `gh` segue ausente e a revisao aguarda aceite.
 

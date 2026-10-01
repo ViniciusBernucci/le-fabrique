@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro e verificacao GitHub ACEITOS; login GitHub IMPLEMENTADO no FAC-011B e aguardando aceite.
+Status: Centro, verificacao e login GitHub ACEITOS ate FAC-011B, revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`.
 
 ## Funcionamento atual
 
