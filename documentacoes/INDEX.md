@@ -12,6 +12,7 @@
 - [infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md](infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md)
 - [operacao/README.md](operacao/README.md)
 - [operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md](operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md)
+- [operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md](operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md)
 - [runtime/README.md](runtime/README.md)
 - [runtime/2026-09-30-FAC-002-preflight-codex.md](runtime/2026-09-30-FAC-002-preflight-codex.md)
 - [runtime/2026-09-30-FAC-005-runtime-gateway-codex.md](runtime/2026-09-30-FAC-005-runtime-gateway-codex.md)

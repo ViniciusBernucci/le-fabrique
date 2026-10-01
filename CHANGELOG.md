@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.15 - 2026-10-01
+FAC-008 corrige a reentrega entre checkpoint e conclusao para reutilizar o attempt parado, conecta o probe sintetico a fila `le-fabrique.execution` e propaga a revisao-base resolvida. Jobs sem SHA-base falham antes do claim; provider, API e cobranca extra continuam desligados. A revisao corrigida aguarda aceite humano.
+
 ## 2.14 - 2026-09-30
 FAC-008 implementa dispatcher outbox/BullMQ idempotente, runs e attempts persistidos, leases, fencing monotono, checkpoint com parada confirmada e bloqueio conservador de recuperacao. Migration e fluxos reais PostgreSQL/Redis passaram; a revisao exata aguarda aceite humano e o consumidor completo fica no FAC-009.
 

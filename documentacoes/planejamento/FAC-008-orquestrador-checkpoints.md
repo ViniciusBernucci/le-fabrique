@@ -2,7 +2,7 @@
 
 Status: AWAITING_HUMAN
 
-Implementacao funcional: `ddb8937a6bcdf59ee5a270142710c1df445d76bd`. Criterios tecnicos comprovados; falta aceite humano da revisao exata.
+Implementacao funcional original: `ddb8937a6bcdf59ee5a270142710c1df445d76bd`. Correcao de revisao: `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d`. Criterios tecnicos corrigidos; falta aceite humano da revisao exata com documentacao.
 
 ## Objetivo
 

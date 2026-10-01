@@ -4,4 +4,8 @@ Lease limita por quanto tempo o controle considera um writer vigente. Fencing to
 
 Idempotencia precisa cobrir o ciclo inteiro. O dispatcher usa o ID da outbox como `jobId`; run e attempt possuem restricoes unicas; claim, checkpoint e complete devolvem o estado existente quando o mesmo request reaparece. O ensaio HTTP repetiu cada etapa e terminou com uma unica linha em cada tabela.
 
+Reentrega e retry deliberado precisam ser comandos distintos. No FAC-008, um checkpoint com parada confirmada muda o attempt para `STOPPED` antes de `complete`; uma reentrega nessa janela deve devolver esse mesmo attempt. Criar outro fencing token apenas porque o writer parou transforma redelivery em retry e impede a conclusao pelo token anterior. O retry administrativo fica para um contrato explicito posterior.
+
 Checkpoint liga recuperacao logica ao artefato do FAC-007. Ele registra base/code SHA, snapshot ou hash do patch e confirmacao de parada. A conclusao so avanca depois desse registro, evitando que uma mensagem de sucesso sem artefato recuperavel libere a etapa seguinte.
+
+Identificadores de revisao nao podem ser inventados pelo consumidor. O evento propaga `baseRevision` apenas quando o projeto ja possui SHA Git completo; sem ele, o probe falha antes de adquirir claim e preserva o ticket para reconciliacao.

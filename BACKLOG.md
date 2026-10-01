@@ -17,7 +17,7 @@ FAC-000 e FAC-002 a FAC-007 estão DONE. FAC-008 esta AWAITING_HUMAN; FAC-009 se
 - FAC-005: DONE — Runtime Gateway e adapter Codex aceitos na revisão `9102fcc614739fd7bd7ca4992b16617db92ca66f`; dependências: FAC-002, FAC-004.
 - FAC-006: DONE — Context Builder e RuntimeGuard aceitos na revisão `ea8cf7afb0e55840722f306262b5334bb408b51a`; dependências: FAC-003.
 - FAC-007: DONE — Sandbox e snapshots aceitos na revisão `2bf14f35de64f118ec8224fee6151e60027dedb0`; dependências: FAC-004, FAC-005.
-- FAC-008: AWAITING_HUMAN — Orquestrador e checkpoints implementados na revisao funcional `ddb8937a6bcdf59ee5a270142710c1df445d76bd`; dependências: FAC-006, FAC-007.
+- FAC-008: AWAITING_HUMAN — Orquestrador e checkpoints corrigidos na revisao funcional `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d`; dependências: FAC-006, FAC-007.
 - FAC-009: PLANEJADO — Developer, checks e revisão; dependências: FAC-008.
 - FAC-010: PLANEJADO — Segundo provider e handoff automático; dependências: FAC-005, FAC-008, FAC-009.
 - FAC-011: PLANEJADO — Gate documental e Provider Manager; dependências: FAC-009, FAC-010.

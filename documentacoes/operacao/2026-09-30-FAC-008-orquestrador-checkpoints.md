@@ -47,6 +47,10 @@ O dispatcher usa polling por instancia. O `jobId` do BullMQ e as restricoes unic
 
 Nenhum provider, API, credito ou extra usage foi utilizado.
 
+## Correcao posterior
+
+Em 01/10/2026, a revisao identificou uma janela em que a reentrega depois do checkpoint parado e antes da conclusao criava outro attempt. A revisao funcional `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d` passa a reutilizar o attempt existente, conecta o probe sintetico ao consumidor BullMQ principal e recusa claim quando a revisao-base nao foi resolvida. Evidencias e rollback adicionais estao em `2026-10-01-FAC-008-correcao-idempotencia-consumidor.md`.
+
 ## Rollback
 
 Parar API e worker que usem o protocolo e reverter o commit funcional `ddb8937a6bcdf59ee5a270142710c1df445d76bd`. Para preservar dados, manter as tabelas sem uso. Se os dados FAC-008 forem comprovadamente descartaveis, uma migration revisada pode remover, nesta ordem, `checkpoints`, `attempts`, `runs`, `AttemptStatus` e `RunStatus`. Nao remover volumes nem dados existentes como rollback padrao.
