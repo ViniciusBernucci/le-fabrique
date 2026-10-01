@@ -4,6 +4,7 @@ import {
   createProjectSchema,
   createTicketSchema,
   developerWorkflowRequestSchema,
+  factoryConfigurationSchema,
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
@@ -16,6 +17,50 @@ import {
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
+
+const validConfiguration = {
+  installations: [
+    {
+      id: "codex-main",
+      provider: "CODEX" as const,
+      label: "Codex principal",
+      executable: "/usr/bin/codex",
+      enabled: true,
+      state: "AUTH_REQUIRED" as const,
+      authMode: "SUBSCRIPTION_CLI" as const,
+      models: ["gpt-test"],
+      defaultModel: "gpt-test",
+    },
+  ],
+  assignments: ["PLANNER", "DEVELOPER", "REVIEWER", "QA", "DOCUMENTATION", "SECURITY"].map(
+    (role) => ({
+      role,
+      enabled: role === "DEVELOPER",
+      installationId: role === "DEVELOPER" ? "codex-main" : null,
+      model: role === "DEVELOPER" ? "gpt-test" : null,
+      permissionMode: role === "DEVELOPER" ? "WORKSPACE_WRITE" : "READ_ONLY",
+      timeoutMinutes: 30,
+      maxAttempts: 2,
+    }),
+  ),
+  github: {
+    authMode: "GH_CLI" as const,
+    state: "DISCONNECTED" as const,
+    host: "github.com",
+    owner: null,
+    repository: null,
+    baseBranch: "main",
+    pullRequestCreationEnabled: false,
+    mergeEnabled: false as const,
+  },
+  financialSafety: {
+    apiEnabled: false as const,
+    extraUsageEnabled: false as const,
+    paidCreditsEnabled: false as const,
+    autoRechargeEnabled: false as const,
+    paidFallbackEnabled: false as const,
+  },
+};
 
 describe("shared contracts", () => {
   it("accepts a valid health response", () => {
@@ -232,6 +277,24 @@ describe("shared contracts", () => {
     expect(developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 2 })).toBeDefined();
     expect(() =>
       developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 3 }),
+    ).toThrow();
+  });
+
+  it("validates settings relationships and rejects credential fields", () => {
+    expect(factoryConfigurationSchema.parse(validConfiguration)).toBeDefined();
+    expect(() =>
+      factoryConfigurationSchema.parse({
+        ...validConfiguration,
+        installations: [{ ...validConfiguration.installations[0], token: "must-not-enter-dto" }],
+      }),
+    ).toThrow();
+    expect(() =>
+      factoryConfigurationSchema.parse({
+        ...validConfiguration,
+        assignments: validConfiguration.assignments.map((assignment) =>
+          assignment.role === "DEVELOPER" ? { ...assignment, model: "not-allowed" } : assignment,
+        ),
+      }),
     ).toThrow();
   });
 });

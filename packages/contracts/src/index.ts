@@ -261,6 +261,191 @@ export const providerUsageObservationSchema = z.object({
 });
 export type ProviderUsageObservation = z.infer<typeof providerUsageObservationSchema>;
 
+export const settingsProviderSchema = z.enum(["CODEX", "CLAUDE", "ANTIGRAVITY"]);
+export type SettingsProvider = z.infer<typeof settingsProviderSchema>;
+
+export const settingsProviderStateSchema = z.enum([
+  "AUTH_REQUIRED",
+  "AVAILABLE",
+  "RATE_LIMITED",
+  "ERROR",
+  "DISABLED",
+]);
+export type SettingsProviderState = z.infer<typeof settingsProviderStateSchema>;
+
+export const providerInstallationSchema = z
+  .object({
+    id: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    provider: settingsProviderSchema,
+    label: z.string().trim().min(1).max(80),
+    executable: z
+      .string()
+      .trim()
+      .min(1)
+      .max(4096)
+      .regex(/^\/?[a-zA-Z0-9._/-]+$/),
+    enabled: z.boolean(),
+    state: settingsProviderStateSchema,
+    authMode: z.literal("SUBSCRIPTION_CLI"),
+    models: z.array(z.string().trim().min(1).max(120)).max(50),
+    defaultModel: z.string().trim().min(1).max(120).nullable(),
+  })
+  .strict()
+  .superRefine((installation, context) => {
+    if (
+      installation.defaultModel !== null &&
+      !installation.models.includes(installation.defaultModel)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Default model must belong to the installation model catalog",
+        path: ["defaultModel"],
+      });
+    }
+  });
+export type ProviderInstallation = z.infer<typeof providerInstallationSchema>;
+
+export const employeeRoleSchema = z.enum([
+  "PLANNER",
+  "DEVELOPER",
+  "REVIEWER",
+  "QA",
+  "DOCUMENTATION",
+  "SECURITY",
+]);
+export type EmployeeRole = z.infer<typeof employeeRoleSchema>;
+
+export const agentAssignmentSchema = z
+  .object({
+    role: employeeRoleSchema,
+    enabled: z.boolean(),
+    installationId: z
+      .string()
+      .regex(/^[a-z0-9][a-z0-9-]{1,62}$/)
+      .nullable(),
+    model: z.string().trim().min(1).max(120).nullable(),
+    permissionMode: runtimePermissionModeSchema,
+    timeoutMinutes: z.number().int().min(1).max(30),
+    maxAttempts: z.number().int().min(1).max(2),
+  })
+  .strict();
+export type AgentAssignment = z.infer<typeof agentAssignmentSchema>;
+
+export const githubSettingsSchema = z
+  .object({
+    authMode: z.literal("GH_CLI"),
+    state: z.enum(["DISCONNECTED", "AUTH_REQUIRED", "CONNECTED", "ERROR", "DISABLED"]),
+    host: z
+      .string()
+      .trim()
+      .min(1)
+      .max(253)
+      .regex(/^[a-zA-Z0-9.-]+$/),
+    owner: z.string().trim().min(1).max(100).nullable(),
+    repository: z.string().trim().min(1).max(100).nullable(),
+    baseBranch: z.string().trim().min(1).max(200),
+    pullRequestCreationEnabled: z.boolean(),
+    mergeEnabled: z.literal(false),
+  })
+  .strict()
+  .superRefine((github, context) => {
+    if ((github.owner === null) !== (github.repository === null)) {
+      context.addIssue({
+        code: "custom",
+        message: "GitHub owner and repository must be configured together",
+        path: ["repository"],
+      });
+    }
+  });
+export type GithubSettings = z.infer<typeof githubSettingsSchema>;
+
+export const financialSafetySettingsSchema = z
+  .object({
+    apiEnabled: z.literal(false),
+    extraUsageEnabled: z.literal(false),
+    paidCreditsEnabled: z.literal(false),
+    autoRechargeEnabled: z.literal(false),
+    paidFallbackEnabled: z.literal(false),
+  })
+  .strict();
+
+const employeeRoles = employeeRoleSchema.options;
+
+export const factoryConfigurationSchema = z
+  .object({
+    installations: z.array(providerInstallationSchema).max(20),
+    assignments: z.array(agentAssignmentSchema).length(employeeRoles.length),
+    github: githubSettingsSchema,
+    financialSafety: financialSafetySettingsSchema,
+  })
+  .strict()
+  .superRefine((configuration, context) => {
+    const installations = new Map<string, ProviderInstallation>();
+    for (const [index, installation] of configuration.installations.entries()) {
+      if (installations.has(installation.id)) {
+        context.addIssue({
+          code: "custom",
+          message: "Installation ids must be unique",
+          path: ["installations", index, "id"],
+        });
+      }
+      installations.set(installation.id, installation);
+    }
+
+    const roles = new Set<EmployeeRole>();
+    for (const [index, assignment] of configuration.assignments.entries()) {
+      if (roles.has(assignment.role)) {
+        context.addIssue({
+          code: "custom",
+          message: "Employee roles must be unique",
+          path: ["assignments", index, "role"],
+        });
+      }
+      roles.add(assignment.role);
+      if ((assignment.installationId === null) !== (assignment.model === null)) {
+        context.addIssue({
+          code: "custom",
+          message: "Installation and model must be selected together",
+          path: ["assignments", index],
+        });
+        continue;
+      }
+      if (assignment.installationId === null || assignment.model === null) continue;
+      const installation = installations.get(assignment.installationId);
+      if (!installation?.enabled || !installation.models.includes(assignment.model)) {
+        context.addIssue({
+          code: "custom",
+          message: "Assignment requires an enabled installation and one of its allowed models",
+          path: ["assignments", index],
+        });
+      }
+    }
+    for (const role of employeeRoles) {
+      if (!roles.has(role)) {
+        context.addIssue({ code: "custom", message: `Missing employee role: ${role}` });
+      }
+    }
+  });
+export type FactoryConfiguration = z.infer<typeof factoryConfigurationSchema>;
+
+export const factorySettingsSchema = z
+  .object({
+    version: z.number().int().positive(),
+    configuration: factoryConfigurationSchema,
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+export type FactorySettings = z.infer<typeof factorySettingsSchema>;
+
+export const updateFactorySettingsSchema = z
+  .object({
+    expectedVersion: z.number().int().positive(),
+    configuration: factoryConfigurationSchema,
+  })
+  .strict();
+export type UpdateFactorySettings = z.infer<typeof updateFactorySettingsSchema>;
+
 export const contextSourceRoleSchema = z.enum([
   "INSTRUCTION",
   "TICKET",

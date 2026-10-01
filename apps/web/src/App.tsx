@@ -9,6 +9,7 @@ import {
   listTickets,
   markTicketReady,
 } from "./control-api";
+import { SettingsPanel } from "./SettingsPanel";
 
 export function App() {
   const [token, setToken] = useState(() => sessionStorage.getItem("adminToken") ?? "");
@@ -17,6 +18,7 @@ export function App() {
   const [selectedProject, setSelectedProject] = useState("");
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
+  const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
 
   async function loadProjects(activeToken = token) {
     const data = await listProjects(activeToken);
@@ -122,84 +124,106 @@ export function App() {
       <header>
         <div>
           <p className="eyebrow">LE FABRIQUE</p>
-          <h1>Controle</h1>
+          <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
         </div>
         <p className="message" role="status">
           {message}
         </p>
       </header>
-      <section className="columns">
-        <form className="panel" onSubmit={addProject}>
-          <h2>Novo projeto</h2>
-          <label>
-            Nome
-            <input name="name" required />
-          </label>
-          <label>
-            Repositório
-            <input name="repoUrl" type="url" placeholder="https://…" required />
-          </label>
-          <label>
-            Referência base
-            <input name="baseRef" defaultValue="main" required />
-          </label>
-          <button type="submit">Cadastrar projeto</button>
-        </form>
-        <form className="panel" onSubmit={addTicket}>
-          <h2>Novo ticket</h2>
-          <label>
-            Projeto
-            <select
-              value={selectedProject}
-              onChange={(event) => setSelectedProject(event.target.value)}
-              required
-            >
-              <option value="">Selecione</option>
-              {projects.map((project) => (
-                <option key={project.id} value={project.id}>
-                  {project.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Título
-            <input name="title" required />
-          </label>
-          <label>
-            Objetivo
-            <textarea name="objective" required />
-          </label>
-          <label>
-            Critérios, um por linha
-            <textarea name="criteria" required />
-          </label>
-          <button type="submit">Criar rascunho</button>
-        </form>
-      </section>
-      <section className="panel records">
-        <h2>Tickets</h2>
-        {tickets.length === 0 ? (
-          <p className="muted">Nenhum ticket neste projeto.</p>
-        ) : (
-          tickets.map((ticket) => (
-            <article key={ticket.id}>
-              <div>
-                <span className={`badge badge--${ticket.status.toLowerCase()}`}>
-                  {ticket.status}
-                </span>
-                <h3>{ticket.title}</h3>
-                <p>{ticket.objective}</p>
-              </div>
-              {ticket.status === "DRAFT" && (
-                <button type="button" onClick={() => ready(ticket)}>
-                  Marcar READY
-                </button>
-              )}
-            </article>
-          ))
-        )}
-      </section>
+      <nav className="area-nav" aria-label="Áreas do painel">
+        <button
+          type="button"
+          className={activeArea === "control" ? "active" : ""}
+          onClick={() => setActiveArea("control")}
+        >
+          Operação
+        </button>
+        <button
+          type="button"
+          className={activeArea === "settings" ? "active" : ""}
+          onClick={() => setActiveArea("settings")}
+        >
+          Configurações
+        </button>
+      </nav>
+      {activeArea === "settings" ? (
+        <SettingsPanel token={token} onMessage={setMessage} />
+      ) : (
+        <>
+          <section className="columns">
+            <form className="panel" onSubmit={addProject}>
+              <h2>Novo projeto</h2>
+              <label>
+                Nome
+                <input name="name" required />
+              </label>
+              <label>
+                Repositório
+                <input name="repoUrl" type="url" placeholder="https://…" required />
+              </label>
+              <label>
+                Referência base
+                <input name="baseRef" defaultValue="main" required />
+              </label>
+              <button type="submit">Cadastrar projeto</button>
+            </form>
+            <form className="panel" onSubmit={addTicket}>
+              <h2>Novo ticket</h2>
+              <label>
+                Projeto
+                <select
+                  value={selectedProject}
+                  onChange={(event) => setSelectedProject(event.target.value)}
+                  required
+                >
+                  <option value="">Selecione</option>
+                  {projects.map((project) => (
+                    <option key={project.id} value={project.id}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Título
+                <input name="title" required />
+              </label>
+              <label>
+                Objetivo
+                <textarea name="objective" required />
+              </label>
+              <label>
+                Critérios, um por linha
+                <textarea name="criteria" required />
+              </label>
+              <button type="submit">Criar rascunho</button>
+            </form>
+          </section>
+          <section className="panel records">
+            <h2>Tickets</h2>
+            {tickets.length === 0 ? (
+              <p className="muted">Nenhum ticket neste projeto.</p>
+            ) : (
+              tickets.map((ticket) => (
+                <article key={ticket.id}>
+                  <div>
+                    <span className={`badge badge--${ticket.status.toLowerCase()}`}>
+                      {ticket.status}
+                    </span>
+                    <h3>{ticket.title}</h3>
+                    <p>{ticket.objective}</p>
+                  </div>
+                  {ticket.status === "DRAFT" && (
+                    <button type="button" onClick={() => ready(ticket)}>
+                      Marcar READY
+                    </button>
+                  )}
+                </article>
+              ))
+            )}
+          </section>
+        </>
+      )}
     </main>
   );
 }

@@ -2,12 +2,15 @@ import {
   adminSessionSchema,
   type CreateProject,
   type CreateTicket,
+  type FactorySettings,
+  factorySettingsSchema,
   type Project,
   projectListSchema,
   projectSchema,
   type Ticket,
   ticketListSchema,
   ticketSchema,
+  type UpdateFactorySettings,
 } from "@le-fabrique/contracts";
 
 const apiUrl = import.meta.env.VITE_API_URL ?? "/api";
@@ -58,5 +61,18 @@ export async function markTicketReady(token: string, ticket: Ticket): Promise<Ti
       method: "POST",
       body: JSON.stringify({ expectedVersion: ticket.version }),
     }),
+  );
+}
+
+export async function getFactorySettings(token: string): Promise<FactorySettings> {
+  return factorySettingsSchema.parse(await request("/settings", token));
+}
+
+export async function updateFactorySettings(
+  token: string,
+  input: UpdateFactorySettings,
+): Promise<FactorySettings> {
+  return factorySettingsSchema.parse(
+    await request("/settings", token, { method: "PUT", body: JSON.stringify(input) }),
   );
 }
