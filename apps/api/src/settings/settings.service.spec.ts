@@ -6,14 +6,14 @@ const now = new Date("2026-10-01T12:00:00.000Z");
 
 describe("SettingsService", () => {
   it("creates conservative defaults without inferred accounts or models", async () => {
-    const create = vi.fn().mockImplementation(({ data }) => ({
-      ...data,
+    const upsert = vi.fn().mockImplementation(({ create }) => ({
+      ...create,
       version: 1,
       createdAt: now,
       updatedAt: now,
     }));
     const prisma = {
-      factorySettings: { findUnique: vi.fn().mockResolvedValue(null), create },
+      factorySettings: { upsert },
     };
     const service = new SettingsService(prisma as never);
 
@@ -23,6 +23,7 @@ describe("SettingsService", () => {
     expect(result.configuration.installations.every((item) => !item.enabled)).toBe(true);
     expect(result.configuration.installations.every((item) => item.models.length === 0)).toBe(true);
     expect(Object.values(result.configuration.financialSafety).every((value) => !value)).toBe(true);
+    expect(upsert).toHaveBeenCalledWith(expect.objectContaining({ update: {} }));
   });
 
   it("updates atomically with optimistic concurrency", async () => {

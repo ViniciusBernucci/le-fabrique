@@ -24,15 +24,15 @@ export class SettingsService {
   constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
 
   async get(): Promise<FactorySettings> {
-    const existing = await this.prisma.factorySettings.findUnique({ where: { id: SETTINGS_ID } });
-    if (existing) return mapSettings(existing);
     const configuration = createDefaultFactoryConfiguration();
     return mapSettings(
-      await this.prisma.factorySettings.create({
-        data: {
+      await this.prisma.factorySettings.upsert({
+        where: { id: SETTINGS_ID },
+        create: {
           id: SETTINGS_ID,
           configuration: configuration as Prisma.InputJsonValue,
         },
+        update: {},
       }),
     );
   }
