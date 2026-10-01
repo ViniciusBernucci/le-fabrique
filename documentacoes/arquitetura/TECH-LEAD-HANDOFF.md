@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011 e FAC-011A estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente, orquestracao persistida e configuracao versionada de contas/modelos/funcoes/GitHub sem segredos. FAC-011A adiciona verificacao GitHub CLI aceita; o binario `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011 e FAC-011A estão DONE. O controle possui autenticacao, projetos/tickets, outbox, orquestracao e configuracao versionada sem segredos. FAC-011B implementa login GitHub web/device e aguarda aceite; `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado.
 
 ## Fronteiras e contratos
 
@@ -15,8 +15,8 @@ FAC-000, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011 e FAC-011A estão DONE. O cont
 
 ## Sequência recomendada
 
-1. Implementar FAC-011B, login GitHub oficial iniciado pelo painel, sem segredo em browser/API/banco.
-2. Implementar criacao de PR sob gate humano em ticket separado.
+1. Revisar e aceitar a revisao exata FAC-011B.
+2. Implementar verificacao de repositorio e criacao de PR sob gate humano em ticket separado.
 3. Instalar/configurar clientes pela operacao futura e repetir os preflights reais de Claude e GitHub.
 4. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
 5. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
@@ -27,4 +27,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam login GitHub gerenciado, instalacao/preflights reais, criacao de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.
+Ainda faltam instalacao/login/preflights reais, keyring comprovado, criacao de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotacao/multiusuario, backups restauraveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.

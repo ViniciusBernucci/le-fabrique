@@ -1,6 +1,6 @@
 # FAC-011B — Login efemero do GitHub CLI
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -64,3 +64,9 @@ GitHub CLI em modo `GH_CLI`. O fluxo web/device e o armazenamento pertencem ao c
 
 FAC-011B implementa apenas login. Verificacao de permissao no repositorio e criacao de PR sob gate humano pertencem ao FAC-011C ou ticket equivalente; merge permanece manual.
 
+## Revisao entregue
+
+- Ticket READY: `da02b574ba60a03e136da18848b259f9c5207d15`.
+- Codigo verificado: `c2f353db0befbaa5b8bbddc69430f739206c0b7a`.
+- Relatorio: `documentacoes/configuracao/2026-10-01-FAC-011B-login-efemero-github.md`.
+- Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e login remoto nao executado.

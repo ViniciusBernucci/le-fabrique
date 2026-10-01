@@ -2,6 +2,6 @@
 
 FAC-000 está DONE. O piloto externo foi adiado por decisão do responsável até o núcleo da plataforma estar pronto para validação.
 
-FAC-002 a FAC-009, FAC-010A/B/C, FAC-011 e FAC-011A estão DONE. FAC-010 permanece `WAITING_PROVIDER` somente para o preflight real futuro da conta Claude. FAC-011B, login GitHub oficial sem PAT no controle, esta READY. FAC-001 retorna apos o nucleo configuravel e as integracoes gerenciadas para definir o projeto real; FAC-012 executa o piloto e o ensaio operacional.
+FAC-002 a FAC-009, FAC-010A/B/C, FAC-011 e FAC-011A estão DONE. FAC-010 permanece `WAITING_PROVIDER` somente para o preflight real futuro da conta Claude. FAC-011B implementa login GitHub oficial sem PAT e esta `AWAITING_HUMAN`; a prova real aguarda instalacao/configuracao futura no software. FAC-001 retorna apos o nucleo configuravel e as integracoes gerenciadas para definir o projeto real; FAC-012 executa o piloto e o ensaio operacional.
 
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

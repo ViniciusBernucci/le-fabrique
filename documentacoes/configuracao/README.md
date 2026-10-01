@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro ACEITO no FAC-011; verificacao GitHub ACEITA no FAC-011A, revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`.
+Status: Centro e verificacao GitHub ACEITOS; login GitHub IMPLEMENTADO no FAC-011B e aguardando aceite.
 
 ## Funcionamento atual
 
@@ -14,7 +14,7 @@ A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuraca
 
 ## Seguranca e limites
 
-Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Fluxos de login suportados sao executados pelo worker confiavel usando o cliente oficial; login GitHub continua futuro. O browser recebe somente desafios efemeros permitidos, metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.
+Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Fluxos de login suportados sao executados pelo worker confiavel usando o cliente oficial. O browser recebe somente desafios efemeros permitidos, metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.
 
 API paga, extra usage, creditos pagos, autorecharge, fallback pago e merge permanecem `false` por contrato. O painel os exibe como protecoes nao editaveis. Salvar configuracao nao executa clientes, nao conecta GitHub, nao cria PR e nao altera cobranca externa.
 
@@ -27,7 +27,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 1. Worker detecta instalacoes e executa login oficial sem transportar segredo pelo painel.
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
-4. FAC-011B implementa login GitHub oficial iniciado pelo painel; criacao de PR continua ticket separado e merge continua manual.
+4. Verificacao de permissao no repositorio e criacao de PR continuam ticket separado; merge continua manual.
 
 ## Verificacao de instalacoes
 
@@ -47,4 +47,10 @@ FAC-010C consome a escolha de conta, modelo e permissao feita em `Funcionarios d
 
 FAC-011A adiciona `Verificar GitHub CLI`. Pedido e outbox sao atomicos; a API nao executa cliente. O worker usa o binario fixo `gh`, remove variaveis de token e consulta somente `--version` e `auth status --hostname <host> --json hosts`. O painel recebe estado, versao e mensagem controlada, nunca JSON bruto, login, scopes ou origem/token.
 
-`CONNECTED` exige uma conta ativa com estado `success`; host sem conta ativa vira `AUTH_REQUIRED`; CLI ausente, timeout ou resposta invalida viram `ERROR`. Alterar o host durante um job invalida somente aquela verificacao. O ambiente atual nao possui `gh`, portanto a integracao real permanece nao verificada e nenhum login foi iniciado.
+`CONNECTED` exige uma conta ativa com estado `success` e `tokenSource=keyring`; host sem conta ativa vira `AUTH_REQUIRED`; CLI ausente, armazenamento inseguro, timeout ou resposta invalida viram `ERROR`. Alterar o host durante um job invalida somente aquela verificacao. O ambiente atual nao possui `gh`, portanto a integracao real permanece nao verificada e nenhum login foi iniciado.
+
+## Login efemero GitHub
+
+FAC-011B adiciona `Conectar GitHub CLI` quando a verificacao informa `AUTH_REQUIRED`. Sessao/outbox guardam apenas metadados; URL e codigo do device flow ficam no Redis privado por ate dez minutos e na memoria da tela. O worker usa somente o fluxo `--web` oficial, HTTPS, sem PAT, clipboard, chave SSH ou armazenamento inseguro solicitado.
+
+A conclusao exige nova leitura de status: conta ativa `success` e `tokenSource=keyring`. Fallback do cliente para `hosts.yml` aparece como `PLAINTEXT_FILE/ERROR` e tambem nao passa pela verificacao posterior. O controle nunca le ou remove token. Detalhes: [2026-10-01-FAC-011B-login-efemero-github.md](2026-10-01-FAC-011B-login-efemero-github.md).

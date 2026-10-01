@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.32 - 2026-10-01
+FAC-011B implementa login GitHub web/device iniciado no painel: sessao/outbox sem segredo, desafio efemero no Redis, worker com argv fixo e cancelamento, ambiente sem tokens e confirmacao obrigatoria de `tokenSource=keyring`. Fallback `hosts.yml` falha fechado. Passaram 123 testes, lint, typecheck, build e schema Prisma; `gh` segue ausente e a revisao aguarda aceite.
+
 ## 2.31 - 2026-10-01
 FAC-011B passa a READY para login web/device oficial do GitHub CLI: desafio efemero no Redis, nenhum PAT no controle, argv fixo e conexao somente quando o cliente confirmar credential store seguro. `gh` continua ausente e nenhuma autenticacao sera executada na implementacao com fixtures.
 
