@@ -23,4 +23,6 @@ FAC-011A permite pedir/listar verificacoes GitHub. A criacao grava `GithubVerifi
 
 FAC-011B adiciona sessoes GitHub e `github.onboarding.requested.v1`. Rotas internas `/api/internal/github-onboarding/{id}/...` iniciam, publicam desafio e concluem sob `WORKER_API_TOKEN`. PostgreSQL nunca recebe o desafio; a rota administrativa le o valor efemero do Redis. Conclusao `CONNECTED` exige `SECURE_STORE`; login/verificacao ativos se excluem e host alterado invalida a sessao antiga.
 
+FAC-011C adiciona `GET/POST /api/settings/github/repository-verifications` e as rotas internas `/api/internal/github-repository-verifications/{id}/start|complete`. Pedido e `github.repository-verification.requested.v1` sao atomicos e guardam snapshot do alvo, nunca credencial. O complete so aceita o worker autenticado, reconfere configuracao `CONNECTED` e alvo atual e persiste evidencia integral ou falha sem observacao parcial; a API nao executa `gh`.
+
 FAC-008 conecta o evento `READY` ao BullMQ por dispatcher idempotente, oferece o protocolo interno de runs/attempts, leases, fencing e checkpoints e liga ao worker um consumidor restrito ao probe sintetico. O consumidor do runtime real ainda nao esta ligado ao loop principal. SSE, usuarios multiplos, login gerenciado e conexao GitHub pertencem aos proximos tickets.

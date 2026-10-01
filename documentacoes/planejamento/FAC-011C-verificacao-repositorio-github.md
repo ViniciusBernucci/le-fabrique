@@ -1,6 +1,6 @@
 # FAC-011C — Verificacao somente-leitura do repositorio GitHub
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -59,3 +59,10 @@ O provider e GitHub CLI em modo `GH_CLI`. O pedido so e elegivel apos evidencia 
 ## Sequenciamento
 
 FAC-011C comprova somente leitura do alvo configurado. Criacao de PR, permissao de escrita e gate humano pertencem a um ticket posterior; merge continua manual.
+
+## Revisao entregue
+
+- Ticket READY: `9ef339c8aad58aaa546ef24d52189ad5b304d84e`.
+- Codigo verificado: `53d605a53b4762bc1055046345aab7fdbeb31b34`.
+- Relatorio: `documentacoes/configuracao/2026-10-02-FAC-011C-verificacao-repositorio-github.md`.
+- Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e GitHub remoto nao consultado.

@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro, verificacao e login GitHub ACEITOS ate FAC-011B, revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`.
+Status: Centro, verificacao e login GitHub ACEITOS ate FAC-011B; verificacao de repositorio FAC-011C IMPLEMENTADA e aguardando aceite.
 
 ## Funcionamento atual
 
@@ -27,7 +27,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 1. Worker detecta instalacoes e executa login oficial sem transportar segredo pelo painel.
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
-4. Verificacao de permissao no repositorio e criacao de PR continuam ticket separado; merge continua manual.
+4. Criacao de PR e permissao de escrita continuam ticket separado; merge continua manual.
 
 ## Verificacao de instalacoes
 
@@ -54,3 +54,9 @@ FAC-011A adiciona `Verificar GitHub CLI`. Pedido e outbox sao atomicos; a API na
 FAC-011B adiciona `Conectar GitHub CLI` quando a verificacao informa `AUTH_REQUIRED`. Sessao/outbox guardam apenas metadados; URL e codigo do device flow ficam no Redis privado por ate dez minutos e na memoria da tela. O worker usa somente o fluxo `--web` oficial, HTTPS, sem PAT, clipboard, chave SSH ou armazenamento inseguro solicitado.
 
 A conclusao exige nova leitura de status: conta ativa `success` e `tokenSource=keyring`. Fallback do cliente para `hosts.yml` aparece como `PLAINTEXT_FILE/ERROR` e tambem nao passa pela verificacao posterior. O controle nunca le ou remove token. Detalhes: [2026-10-01-FAC-011B-login-efemero-github.md](2026-10-01-FAC-011B-login-efemero-github.md).
+
+## Verificacao do repositorio GitHub
+
+FAC-011C adiciona `Verificar repositorio salvo (somente leitura)` para configuracao persistida `CONNECTED`. A API cria snapshot/outbox e o worker usa duas requisicoes autenticadas `GET` pelo `gh api`: metadados/permissao do repositorio e existencia da branch base. Somente identidade, `permissions.pull=true` e branch exatas produzem `READABLE`.
+
+O painel recebe apenas owner/repositorio canonicos, branch padrao/base, visibilidade, arquivamento e mensagem controlada. Falhas descartam observacao parcial. Nao ha clone, leitura de arquivo, escrita ou teste de PR. Detalhes: [2026-10-02-FAC-011C-verificacao-repositorio-github.md](2026-10-02-FAC-011C-verificacao-repositorio-github.md).

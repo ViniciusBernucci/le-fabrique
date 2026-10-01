@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.34 - 2026-10-02
+FAC-011C implementa verificacao autenticada e somente-leitura do repositorio/branch GitHub salvo: snapshot/outbox, fila dedicada, duas chamadas `GET` fixas pelo worker, evidencia integral ou falha sem metadado parcial e painel sanitizado. Passaram 134 testes, lint, typecheck, build e schema Prisma; `gh` segue ausente, nenhuma chamada remota ocorreu e a revisao aguarda aceite.
+
 ## 2.33 - 2026-10-02
 FAC-011B aceito pelo responsavel na revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`. Login GitHub gerenciado esta concluido em codigo; instalacao/keyring/login reais permanecem futuros e FAC-011C passa a ser o proximo incremento.
 
