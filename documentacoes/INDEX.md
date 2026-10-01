@@ -28,6 +28,7 @@
 - [planejamento/FAC-006-context-builder-runtime-guard.md](planejamento/FAC-006-context-builder-runtime-guard.md)
 - [planejamento/FAC-007-sandbox-snapshots.md](planejamento/FAC-007-sandbox-snapshots.md)
 - [planejamento/FAC-008-orquestrador-checkpoints.md](planejamento/FAC-008-orquestrador-checkpoints.md)
+- [planejamento/FAC-009-developer-checks-review.md](planejamento/FAC-009-developer-checks-review.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
