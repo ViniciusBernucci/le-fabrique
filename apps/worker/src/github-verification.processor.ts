@@ -77,7 +77,10 @@ export async function runGithubCommand(
   });
 }
 
-function hasActiveAuthenticatedAccount(output: string, host: string): boolean {
+function classifyActiveCredential(
+  output: string,
+  host: string,
+): "SECURE_STORE" | "PLAINTEXT_FILE" | "UNKNOWN" | "MISSING" {
   const parsed: unknown = JSON.parse(output);
   if (typeof parsed !== "object" || parsed === null || !("hosts" in parsed)) {
     throw new Error("GitHub status JSON does not contain hosts");
@@ -87,13 +90,20 @@ function hasActiveAuthenticatedAccount(output: string, host: string): boolean {
     throw new Error("GitHub status hosts are invalid");
   }
   const accounts = (hosts as Record<string, unknown>)[host];
-  if (accounts === undefined) return false;
+  if (accounts === undefined) return "MISSING";
   if (!Array.isArray(accounts)) throw new Error("GitHub status accounts are invalid");
-  return accounts.some((account) => {
+  const active = accounts.find((account) => {
     if (typeof account !== "object" || account === null) return false;
     const candidate = account as Record<string, unknown>;
     return candidate.active === true && String(candidate.state).toLowerCase() === "success";
   });
+  if (typeof active !== "object" || active === null) return "MISSING";
+  const tokenSource = (active as Record<string, unknown>).tokenSource;
+  if (tokenSource === "keyring") return "SECURE_STORE";
+  if (typeof tokenSource === "string" && /hosts\.ya?ml$/i.test(tokenSource)) {
+    return "PLAINTEXT_FILE";
+  }
+  return "UNKNOWN";
 }
 
 export async function inspectGithub(
@@ -106,7 +116,19 @@ export async function inspectGithub(
     const cliVersion = version.stdout.split("\n")[0]?.trim().slice(0, 120) || null;
     if (!cliVersion) throw new Error("GitHub CLI version is empty");
     const status = await runner("gh", ["auth", "status", "--hostname", host, "--json", "hosts"]);
-    const connected = hasActiveAuthenticatedAccount(status.stdout, host);
+    const credentialStorage = classifyActiveCredential(status.stdout, host);
+    if (credentialStorage !== "SECURE_STORE" && credentialStorage !== "MISSING") {
+      return {
+        status: "FAILED",
+        githubState: "ERROR",
+        cliVersion,
+        message:
+          credentialStorage === "PLAINTEXT_FILE"
+            ? "GitHub credential store unavailable; plaintext fallback is not eligible"
+            : "GitHub credential storage could not be verified as secure",
+      };
+    }
+    const connected = credentialStorage === "SECURE_STORE";
     return {
       status: "COMPLETED",
       githubState: connected ? "CONNECTED" : "AUTH_REQUIRED",

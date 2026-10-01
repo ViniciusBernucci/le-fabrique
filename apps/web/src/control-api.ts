@@ -4,7 +4,12 @@ import {
   type CreateTicket,
   type FactorySettings,
   factorySettingsSchema,
+  type GithubOnboardingChallenge,
+  type GithubOnboardingSession,
   type GithubVerification,
+  githubOnboardingChallengeSchema,
+  githubOnboardingSessionListSchema,
+  githubOnboardingSessionSchema,
   githubVerificationListSchema,
   githubVerificationSchema,
   type Project,
@@ -86,6 +91,29 @@ export async function listGithubVerifications(token: string): Promise<GithubVeri
 export async function requestGithubVerification(token: string): Promise<GithubVerification> {
   return githubVerificationSchema.parse(
     await request("/settings/github/verifications", token, { method: "POST" }),
+  );
+}
+
+export async function listGithubOnboardingSessions(
+  token: string,
+): Promise<GithubOnboardingSession[]> {
+  return githubOnboardingSessionListSchema.parse(
+    await request("/settings/github/onboarding", token),
+  );
+}
+
+export async function requestGithubOnboarding(token: string): Promise<GithubOnboardingSession> {
+  return githubOnboardingSessionSchema.parse(
+    await request("/settings/github/onboarding", token, { method: "POST" }),
+  );
+}
+
+export async function getGithubOnboardingChallenge(
+  token: string,
+  sessionId: string,
+): Promise<GithubOnboardingChallenge> {
+  return githubOnboardingChallengeSchema.parse(
+    await request(`/settings/github/onboarding/${sessionId}/challenge`, token),
   );
 }
 

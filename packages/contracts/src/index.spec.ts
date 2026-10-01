@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  completeGithubOnboardingSchema,
   completeGithubVerificationSchema,
   contextBuildRequestSchema,
   createProjectSchema,
   createTicketSchema,
   developerWorkflowRequestSchema,
   factoryConfigurationSchema,
+  githubOnboardingChallengeSchema,
+  githubOnboardingJobSchema,
   githubVerificationJobSchema,
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
@@ -428,6 +431,43 @@ describe("shared contracts", () => {
         status: "FAILED",
         githubState: "CONNECTED",
         cliVersion: null,
+        message: "invalid",
+      }),
+    ).toThrow();
+  });
+
+  it("keeps GitHub onboarding challenges bounded and requires secure completion", () => {
+    const expiresAt = new Date(Date.now() + 300_000).toISOString();
+    expect(
+      githubOnboardingChallengeSchema.parse({
+        verificationUri: "https://github.com/login/device",
+        userCode: "TEST-CODE",
+        expiresAt,
+      }),
+    ).toBeDefined();
+    expect(() =>
+      githubOnboardingChallengeSchema.parse({
+        verificationUri: "https://github.com/settings/tokens",
+        userCode: "TEST-CODE",
+        expiresAt,
+      }),
+    ).toThrow();
+    expect(() =>
+      githubOnboardingJobSchema.parse({
+        schemaVersion: 1,
+        eventId: crypto.randomUUID(),
+        sessionId: crypto.randomUUID(),
+        host: "github.com",
+        expiresAt,
+        token: "must-not-enter-job",
+      }),
+    ).toThrow();
+    expect(() =>
+      completeGithubOnboardingSchema.parse({
+        workerId: crypto.randomUUID(),
+        status: "COMPLETED",
+        githubState: "CONNECTED",
+        credentialStorage: "PLAINTEXT_FILE",
         message: "invalid",
       }),
     ).toThrow();

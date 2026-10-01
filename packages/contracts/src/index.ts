@@ -567,6 +567,104 @@ export const completeGithubVerificationSchema = z
   });
 export type CompleteGithubVerification = z.infer<typeof completeGithubVerificationSchema>;
 
+export const githubOnboardingStatusSchema = z.enum([
+  "PENDING",
+  "RUNNING",
+  "AWAITING_USER",
+  "COMPLETED",
+  "FAILED",
+  "EXPIRED",
+]);
+export type GithubOnboardingStatus = z.infer<typeof githubOnboardingStatusSchema>;
+
+export const githubCredentialStorageSchema = z.enum(["SECURE_STORE", "PLAINTEXT_FILE", "UNKNOWN"]);
+export type GithubCredentialStorage = z.infer<typeof githubCredentialStorageSchema>;
+
+export const githubOnboardingSessionSchema = z
+  .object({
+    id: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+    status: githubOnboardingStatusSchema,
+    workerId: z.uuid().nullable(),
+    githubState: githubSettingsSchema.shape.state.nullable(),
+    credentialStorage: githubCredentialStorageSchema.nullable(),
+    message: z.string().trim().min(1).max(240).nullable(),
+    expiresAt: z.iso.datetime(),
+    createdAt: z.iso.datetime(),
+    startedAt: z.iso.datetime().nullable(),
+    completedAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+export type GithubOnboardingSession = z.infer<typeof githubOnboardingSessionSchema>;
+export const githubOnboardingSessionListSchema = z.array(githubOnboardingSessionSchema);
+
+export const githubOnboardingJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    eventId: z.uuid(),
+    sessionId: z.uuid(),
+    host: githubSettingsSchema.shape.host,
+    expiresAt: z.iso.datetime(),
+  })
+  .strict();
+export type GithubOnboardingJob = z.infer<typeof githubOnboardingJobSchema>;
+
+export const githubOnboardingChallengeSchema = z
+  .object({
+    verificationUri: z
+      .url()
+      .max(500)
+      .refine((value) => {
+        const url = new URL(value);
+        return url.protocol === "https:" && url.pathname.replace(/\/$/, "") === "/login/device";
+      }, "GitHub challenge must use the HTTPS device path"),
+    userCode: z
+      .string()
+      .trim()
+      .regex(/^[A-Z0-9]{4,12}(?:-[A-Z0-9]{4,12}){0,3}$/),
+    expiresAt: z.iso.datetime(),
+  })
+  .strict();
+export type GithubOnboardingChallenge = z.infer<typeof githubOnboardingChallengeSchema>;
+
+export const startGithubOnboardingSchema = z.object({ workerId: z.uuid() }).strict();
+export const publishGithubOnboardingChallengeSchema = z
+  .object({ workerId: z.uuid(), challenge: githubOnboardingChallengeSchema })
+  .strict();
+export const completeGithubOnboardingSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED", "EXPIRED"]),
+    githubState: githubSettingsSchema.shape.state,
+    credentialStorage: githubCredentialStorageSchema,
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict()
+  .superRefine((result, context) => {
+    if (
+      result.status === "COMPLETED" &&
+      (result.githubState !== "CONNECTED" || result.credentialStorage !== "SECURE_STORE")
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "Completed GitHub onboarding requires secure connected evidence",
+      });
+    }
+    if (result.status === "EXPIRED" && result.githubState !== "AUTH_REQUIRED") {
+      context.addIssue({
+        code: "custom",
+        message: "Expired GitHub onboarding must require authentication",
+      });
+    }
+    if (result.status === "FAILED" && result.githubState === "CONNECTED") {
+      context.addIssue({
+        code: "custom",
+        message: "Failed GitHub onboarding cannot report CONNECTED",
+      });
+    }
+  });
+export type CompleteGithubOnboarding = z.infer<typeof completeGithubOnboardingSchema>;
+
 export const providerOnboardingStatusSchema = z.enum([
   "PENDING",
   "RUNNING",

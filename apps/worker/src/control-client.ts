@@ -1,8 +1,10 @@
 import { arch, platform } from "node:os";
 import type {
+  CompleteGithubOnboarding,
   CompleteGithubVerification,
   CompleteProviderOnboarding,
   CompleteProviderVerification,
+  GithubOnboardingChallenge,
   OrchestrationCheckpointRequest,
   OrchestrationClaimRequest,
   OrchestrationCompleteRequest,
@@ -11,6 +13,7 @@ import type {
   ProviderOnboardingChallenge,
 } from "@le-fabrique/contracts";
 import {
+  githubOnboardingSessionSchema,
   githubVerificationSchema,
   orchestrationClaimSchema,
   orchestrationStateSchema,
@@ -51,6 +54,7 @@ export class ControlClient {
             "subscription-client-preflight",
             "codex-device-onboarding",
             "github-cli-verification",
+            "github-device-onboarding",
           ],
           os: platform(),
           arch: arch(),
@@ -145,6 +149,36 @@ export class ControlClient {
   ) {
     return githubVerificationSchema.parse(
       await this.request(`/internal/github-verifications/${verificationId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startGithubOnboarding(sessionId: string) {
+    return githubOnboardingSessionSchema.parse(
+      await this.request(`/internal/github-onboarding/${sessionId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async publishGithubOnboardingChallenge(sessionId: string, challenge: GithubOnboardingChallenge) {
+    return githubOnboardingSessionSchema.parse(
+      await this.request(`/internal/github-onboarding/${sessionId}/challenge`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID, challenge }),
+      }),
+    );
+  }
+
+  async completeGithubOnboarding(
+    sessionId: string,
+    input: Omit<CompleteGithubOnboarding, "workerId">,
+  ) {
+    return githubOnboardingSessionSchema.parse(
+      await this.request(`/internal/github-onboarding/${sessionId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

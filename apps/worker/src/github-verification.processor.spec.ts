@@ -19,7 +19,7 @@ describe("GitHub CLI verification", () => {
                     active: true,
                     state: "success",
                     login: "private-user",
-                    tokenSource: "private-token-source",
+                    tokenSource: "keyring",
                   },
                 ],
               },
@@ -62,6 +62,33 @@ describe("GitHub CLI verification", () => {
       status: "COMPLETED",
       githubState: "AUTH_REQUIRED",
     });
+  });
+
+  it("does not promote the plaintext credential fallback to connected", async () => {
+    const runner = vi.fn(async (_binary: string, args: readonly string[]) =>
+      args.includes("--version")
+        ? { exitCode: 0, stdout: "gh version 2.80.0\n", stderr: "" }
+        : {
+            exitCode: 0,
+            stdout: JSON.stringify({
+              hosts: {
+                "github.com": [
+                  {
+                    active: true,
+                    state: "success",
+                    tokenSource: "/private/config/hosts.yml",
+                  },
+                ],
+              },
+            }),
+            stderr: "",
+          },
+    );
+
+    const result = await inspectGithub("github.com", runner);
+    expect(result).toMatchObject({ status: "FAILED", githubState: "ERROR" });
+    expect(result.message).toContain("plaintext fallback");
+    expect(JSON.stringify(result)).not.toContain("/private/config");
   });
 
   it("fails closed on absent CLI, timeout or malformed status without returning raw output", async () => {
@@ -116,7 +143,9 @@ describe("GitHub CLI verification", () => {
         : {
             exitCode: 0,
             stdout: JSON.stringify({
-              hosts: { "github.com": [{ active: true, state: "success" }] },
+              hosts: {
+                "github.com": [{ active: true, state: "success", tokenSource: "keyring" }],
+              },
             }),
             stderr: "",
           },

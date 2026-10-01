@@ -1,4 +1,5 @@
 import type {
+  GithubOnboardingJob,
   GithubVerificationJob,
   OrchestrationJob,
   ProviderOnboardingJob,
@@ -8,6 +9,10 @@ import type {
 import { Worker } from "bullmq";
 import { loadWorkerConfig } from "./config";
 import { ControlClient, startHeartbeat } from "./control-client";
+import {
+  cancelGithubOnboardingProcesses,
+  processGithubOnboarding,
+} from "./github-onboarding.processor";
 import { processGithubVerification } from "./github-verification.processor";
 import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
@@ -98,6 +103,21 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
+  const githubOnboardingWorker = new Worker<GithubOnboardingJob>(
+    "le-fabrique.github-onboarding",
+    async (job) => processGithubOnboarding(job.data, control),
+    {
+      concurrency: 1,
+      connection: {
+        host: redisUrl.hostname,
+        port: Number(redisUrl.port || 6379),
+        username: redisUrl.username || undefined,
+        password: redisUrl.password || undefined,
+        db: Number(redisUrl.pathname.slice(1) || 0),
+        maxRetriesPerRequest: null,
+      },
+    },
+  );
 
   let stopping = false;
   const shutdown = async (reason: string): Promise<void> => {
@@ -105,6 +125,7 @@ async function bootstrap(): Promise<void> {
     stopping = true;
     stopHeartbeat();
     cancelProviderOnboardingProcesses();
+    cancelGithubOnboardingProcesses();
     console.info("worker stopping", { reason });
     await Promise.all([
       probeWorker.close(),
@@ -112,6 +133,7 @@ async function bootstrap(): Promise<void> {
       providerVerificationWorker.close(),
       providerOnboardingWorker.close(),
       githubVerificationWorker.close(),
+      githubOnboardingWorker.close(),
     ]);
     process.exit(reason === "control-unavailable" ? 1 : 0);
   };
@@ -136,6 +158,9 @@ async function bootstrap(): Promise<void> {
   );
   githubVerificationWorker.on("failed", (job, error) =>
     console.error("GitHub verification failed", { jobId: job?.id, error: error.message }),
+  );
+  githubOnboardingWorker.on("failed", (job, error) =>
+    console.error("GitHub onboarding failed", { jobId: job?.id, error: error.message }),
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));

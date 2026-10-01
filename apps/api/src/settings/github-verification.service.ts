@@ -28,6 +28,12 @@ export class GithubVerificationService {
         const settings = await transaction.factorySettings.findUnique({ where: { id: "global" } });
         if (!settings) throw new NotFoundException("Factory settings not initialized");
         const configuration = factoryConfigurationSchema.parse(settings.configuration);
+        const activeOnboarding = await transaction.githubOnboardingSession.findFirst({
+          where: { status: { in: ["PENDING", "RUNNING", "AWAITING_USER"] } },
+        });
+        if (activeOnboarding) {
+          throw new ConflictException("GitHub onboarding is already active");
+        }
         const active = await transaction.githubVerification.findFirst({
           where: { status: { in: ["PENDING", "RUNNING"] } },
           orderBy: { createdAt: "desc" },

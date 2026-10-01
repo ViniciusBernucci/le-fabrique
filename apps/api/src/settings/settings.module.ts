@@ -3,6 +3,15 @@ import { Queue } from "bullmq";
 import { AdminAuthGuard } from "../control/admin-auth.guard";
 import { WorkerAuthGuard } from "../worker-identity/worker-auth.guard";
 import {
+  GithubOnboardingAdminController,
+  GithubOnboardingWorkerController,
+} from "./github-onboarding.controller";
+import {
+  GITHUB_ONBOARDING_QUEUE,
+  GithubOnboardingDispatcher,
+} from "./github-onboarding.dispatcher";
+import { GithubOnboardingService } from "./github-onboarding.service";
+import {
   GithubVerificationAdminController,
   GithubVerificationWorkerController,
 } from "./github-verification.controller";
@@ -41,6 +50,8 @@ import { SettingsService } from "./settings.service";
     ProviderOnboardingWorkerController,
     GithubVerificationAdminController,
     GithubVerificationWorkerController,
+    GithubOnboardingAdminController,
+    GithubOnboardingWorkerController,
   ],
   providers: [
     AdminAuthGuard,
@@ -52,6 +63,8 @@ import { SettingsService } from "./settings.service";
     ProviderOnboardingDispatcher,
     GithubVerificationService,
     GithubVerificationDispatcher,
+    GithubOnboardingService,
+    GithubOnboardingDispatcher,
     {
       provide: PROVIDER_VERIFICATION_QUEUE,
       useFactory: () => {
@@ -87,6 +100,21 @@ import { SettingsService } from "./settings.service";
       useFactory: () => {
         const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
         return new Queue("le-fabrique.github-verification", {
+          connection: {
+            host: redisUrl.hostname,
+            port: Number(redisUrl.port || 6379),
+            username: redisUrl.username || undefined,
+            password: redisUrl.password || undefined,
+            db: Number(redisUrl.pathname.slice(1) || 0),
+          },
+        });
+      },
+    },
+    {
+      provide: GITHUB_ONBOARDING_QUEUE,
+      useFactory: () => {
+        const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
+        return new Queue("le-fabrique.github-onboarding", {
           connection: {
             host: redisUrl.hostname,
             port: Number(redisUrl.port || 6379),

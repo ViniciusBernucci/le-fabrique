@@ -34,6 +34,7 @@ describe("GithubVerificationService", () => {
         findFirst: vi.fn().mockResolvedValue(null),
         create: vi.fn().mockResolvedValue(created),
       },
+      githubOnboardingSession: { findFirst: vi.fn().mockResolvedValue(null) },
       outboxEvent: { create: vi.fn().mockResolvedValue({}) },
     };
     const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
