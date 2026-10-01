@@ -6,10 +6,10 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-01/10/2026. FAC-000 a FAC-009 aplicaveis estão aceitos. O proximo incremento e segundo provider e handoff no FAC-010. APIs de IA permanecem desligadas.
+01/10/2026. FAC-000 a FAC-009 aplicaveis estão aceitos. FAC-010 aguarda login oficial e gate financeiro de um segundo provider; APIs de IA permanecem desligadas.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
-2. Executar preflight do segundo provider e handoff no FAC-010. O contrato do piloto externo foi adiado até o núcleo estar pronto, antes do FAC-012.
+2. Desbloquear o preflight do segundo provider conforme o ticket FAC-010; nao usar chave API como atalho. O contrato do piloto externo foi adiado até o núcleo estar pronto, antes do FAC-012.
 3. Mesclar AGENTS.md e CLAUDE.md com regras existentes; preservar escopos locais.
 4. Antigravity: ler ANTIGRAVITY.md e confirmar como a versão carrega regras; injetar explicitamente quando necessário.
 5. Seguir documentacoes/POLITICA-IA.md em toda entrega; usar templates.

@@ -20,3 +20,5 @@ A prioridade é economizar capacidade e evitar retrabalho. Assinaturas substitue
 Não prometer gasto total R$0: assinaturas, VPS e energia têm custo. Não contratar plano adicional antes de medir gargalo. Preços não foram fixados no kit; preencher com cobrança real e data na configuração financeira.
 
 O FAC-006 implementa os limites locais: no maximo duas tentativas, 30 minutos de janela configurada, duas trocas de provider e pausa na segunda falha consecutiva identica. A politica validada exige assinatura, budget de API zero, fallback e extras desligados. A conta do fornecedor continua exigindo verificacao humana; configuracao local nao altera cobranca externa.
+
+No FAC-010, os clientes candidatos estavam deslogados. A documentacao oficial diferencia Claude App Pro/Max de Anthropic Console com billing de API; somente a primeira modalidade pode ser avaliada neste MVP. Nao houve login automatico, chave API, chamada, compra ou mudanca de configuracao financeira. O responsavel precisa confirmar plano e extras antes do preflight funcional.

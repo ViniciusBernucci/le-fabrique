@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.19 - 2026-10-01
+FAC-010 inicia preflight do segundo provider e entra em WAITING_PROVIDER: Claude Code 2.1.285 e Antigravity CLI 1.2.14 estao instalados, mas ambos exigem login. Nenhum prompt, API, credito, extra ou mudanca de autenticacao foi executado.
+
 ## 2.18 - 2026-10-01
 FAC-009 aceito pelo responsavel na revisao `02819fb847e303f1a823cc2784a7326ec5e696f9`; FAC-010 passa a ser o proximo ticket READY.
 

@@ -1,5 +1,5 @@
 # Fontes e evidências
-Consulta: 29/09/2026. Arquitetura, limites, preferência de papéis e metas são propostas de engenharia. Clientes não foram executados neste trabalho.
+Consulta inicial: 29/09/2026; autenticacao e CLI Claude Code reconferidas em 01/10/2026. Arquitetura, limites, preferência de papéis e metas são propostas de engenharia. Nenhum prompt de segundo provider foi executado no FAC-010.
 ## OpenAI
 - https://developers.openai.com/codex/noninteractive — exec, JSONL, sandbox e reutilização de autenticação CLI; endereço redireciona para https://learn.chatgpt.com/docs/non-interactive-mode.
 - https://github.com/openai/codex — cliente oficial local e login ChatGPT. Validar plano/modelos/limites reais no onboarding; não derivar capacidade pelo número de tickets.
@@ -7,6 +7,8 @@ Consulta: 29/09/2026. Arquitetura, limites, preferência de papéis e metas são
 - https://code.claude.com/docs/en/headless — -p não interativo, saída estruturada e descoberta de regras; --bare ignora CLAUDE.md.
 - https://code.claude.com/docs/en/legal-and-compliance — autenticação oficial, credenciais e distinção entre uso próprio do binário e serviços para usuários. Não transformar OAuth de assinatura em chave de SDK nem intermediar credenciais.
 - https://code.claude.com/docs/en/costs — acompanhamento de uso e distinção entre estimativa de tokens e faturamento de assinantes. Condições podem mudar; verificar cobrança do modo automatizado contratado.
+- https://docs.anthropic.com/en/docs/claude-code/getting-started — Claude App Pro/Max inclui Claude Code; Anthropic Console exige billing proprio. O MVP aceita somente a modalidade de assinatura confirmada no preflight.
+- https://docs.anthropic.com/en/docs/claude-code/cli-usage — `-p`, JSON/stream-json e controles de permissao para automacao.
 ## Google
 - https://codelabs.developers.google.com/antigravity-cli-hands-on — instalação/login, agy -p, modelos e controles de permissões/créditos.
 - https://codelabs.developers.google.com/agentic-ui-automation-with-antigravity — CLI e teste de UI; presença de capacidade não prova cobertura de todos os planos/modelos.

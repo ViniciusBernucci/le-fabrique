@@ -6,7 +6,7 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-Status: preflight do Codex, adapter, Context Builder/RuntimeGuard, sandbox e snapshots aceitos ate o FAC-007. FAC-008 implementa o protocolo persistido. FAC-009 compoe os componentes num coordenador testado com fixtures e aguarda aceite; ativacao BullMQ real continua bloqueada ate existir perfil local confiavel.
+Status: Codex, Context Builder/RuntimeGuard, sandbox, snapshots, orquestracao e coordenador aceitos ate FAC-009. FAC-010 esta WAITING_PROVIDER: Claude Code 2.1.285 e Antigravity 1.2.14 estao instalados, mas deslogados; nenhum segundo adapter foi iniciado.
 ## Adapters
 Codex implementado em `packages/runtime`: `codex exec --json` com perfil nomeado que nega o host, libera somente runtime minimo/workspace necessario e desliga rede de comandos; prompt via stdin, execucao efemera e configuracao do usuario ignorada. Claude: `claude -p --output-format json`, permissões mínimas ainda nao validadas. Antigravity: `agy -p`; validar flags de saída/permissões pela versão instalada antes de assumir JSON.
 Exemplos acima descrevem invocação, não autorizam executar código com privilégios. Usar spawn/execFile com array de argumentos e stdin, jamais interpolar prompt em shell. Fixar versão/binário; validar origem oficial e registrar checksums quando disponíveis.
@@ -23,6 +23,8 @@ Cada capability carrega verified_at, cli_version e evidence_id. Recursos desconh
 `ContextBuilder.build(request)` produz conteudo e manifesto deterministico com hashes e omissoes explicitas. `RuntimeGuard` aplica tentativas, tempo, trocas de provider e repeticao de falha; `sanitizeSubscriptionEnvironment` remove chaves de API herdadas antes de iniciar o cliente.
 
 `WorkspaceManager.create` prepara worktree detached; `SandboxRunner.execute` controla unidade/namespaces/limites; `SnapshotManager.capture/restore` preserva patch binario e untracked com verificacao de integridade. O `DeveloperWorkflow` do FAC-009 coordena essas portas com o adapter: baseline, Developer, checks, snapshot e Reviewer separado. O loop BullMQ do FAC-008 ainda chama apenas a fixture de protocolo porque repositorio e comandos precisam vir de perfil operacional confiavel, nao do output de IA nem de caminho arbitrario do ticket.
+
+O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 
 O Reviewer deve devolver JSON validado com `APPROVE` ou `REQUEST_CHANGES`; texto livre, falha do runtime ou schema invalido falha fechado. `APPROVE` produz somente `AWAITING_HUMAN`, nunca `DONE`.
 

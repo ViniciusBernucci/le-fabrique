@@ -23,3 +23,5 @@ Ticket/run/attempt, objetivo/aceite, escopo, base SHA/code SHA, branch/workspace
 Checkpoint não afirma aceite nem transforma checks antigos em atuais. Cancelamento pode ter consumido cota; guardar uso desconhecido como desconhecido.
 
 FAC-007 implementa a camada local de artefato: patch binario, arquivos untracked regulares, modos, tamanhos e hashes, com restauracao somente no mesmo SHA-base limpo. FAC-008 persiste base/code SHA, snapshot/patch hash e parada no checkpoint associado ao attempt; fencing impede mutacao por tentativa antiga. FAC-009 passa a capturar snapshot depois dos checks e antes do Reviewer ou de nova correcao, mas ainda nao envia esse manifesto ao protocolo persistido. Handoff entre providers e persistencia do resultado coordenado permanecem no FAC-010 e na integracao operacional.
+
+FAC-010 nao inicia handoff enquanto nao existir segundo provider elegivel. O preflight de 2026-10-01 encontrou Claude Code e Antigravity deslogados; o estado correto e `WAITING_PROVIDER`, mantendo snapshot e fencing atuais sem liberar outro writer. Login e gate financeiro dependem do responsavel.
