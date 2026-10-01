@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.28 - 2026-10-01
+FAC-011A passa a READY para verificar instalacao e autenticacao do GitHub CLI pelo worker. O escopo e somente leitura, remove variaveis de token e proibe importar/exibir credenciais; login, PR, merge, deploy e instalacao do `gh` ficam fora deste incremento.
+
 ## 2.27 - 2026-10-01
 FAC-010C aceito pelo responsavel na revisao `0748f029a8a62ce891486dc5751c207bdd6e56db`. O codigo de adapter/handoff esta concluido; FAC-010 permanece `WAITING_PROVIDER` somente para validacao operacional futura da conta Claude.
 

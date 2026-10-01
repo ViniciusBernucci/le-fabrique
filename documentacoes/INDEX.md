@@ -41,6 +41,7 @@
 - [planejamento/FAC-010A-verificacao-instalacoes.md](planejamento/FAC-010A-verificacao-instalacoes.md)
 - [planejamento/FAC-010B-login-efemero-codex.md](planejamento/FAC-010B-login-efemero-codex.md)
 - [planejamento/FAC-010C-adapter-claude-handoff.md](planejamento/FAC-010C-adapter-claude-handoff.md)
+- [planejamento/FAC-011A-verificacao-github-cli.md](planejamento/FAC-011A-verificacao-github-cli.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
