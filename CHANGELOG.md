@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.21 - 2026-10-01
+FAC-011 aceito pelo responsavel na revisao `e41ec1e45273aba3205f266e8753dfca305c5952`. FAC-010 passa a READY para implementar onboarding oficial iniciado pelo painel e executado pelo worker antes do preflight/handoff.
+
 ## 2.20 - 2026-10-01
 FAC-011 foi antecipado e implementa o Centro de Configuracoes: multiplas contas Codex/Claude/Antigravity, catalogos e modelos padrao, provider/modelo/permissoes/limites por funcionario e metadados GitHub. Persistencia PostgreSQL usa versao otimista; contratos rejeitam segredos, estados comprovados ficam reservados ao worker e API, extras, creditos, autorecharge, fallback pago e merge permanecem desligados. Login, discovery, conexao GitHub, migration real e deploy nao foram executados; a revisao aguarda aceite humano.
 

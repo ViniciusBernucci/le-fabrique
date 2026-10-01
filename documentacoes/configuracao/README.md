@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: IMPLEMENTADO no FAC-011 e aguardando aceite humano.
+Status: IMPLEMENTADO e ACEITO no FAC-011, revisao `e41ec1e45273aba3205f266e8753dfca305c5952`.
 
 ## Funcionamento atual
 

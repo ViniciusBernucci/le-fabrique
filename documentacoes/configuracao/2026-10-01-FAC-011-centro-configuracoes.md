@@ -2,7 +2,7 @@
 
 Data: 2026-10-01
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo e revisoes
 
@@ -62,4 +62,4 @@ Foram reaproveitados conceitos publicos de organizacao por secoes, ativacao de a
 
 ## Rollback e aceite
 
-Antes de deploy, o rollback funcional e reverter, nesta ordem, `9a948d968c072b8b5a5841d8eff4d8c8c5e343e6`, `2737ab89d7bbf91cb3377df03080370e6d470b6c` e `b119a4e56f2518fc292f916737ababb01bd0ad00`; a migration ainda nao foi aplicada. Se ela ja tiver sido aplicada em outro ambiente, preservar a tabela/dados e fazer migration compensatoria; nao apagar configuracoes manualmente. A entrega permanece `AWAITING_HUMAN`; `DONE` exige aceite explicito da revisao documental final.
+Antes de deploy, o rollback funcional e reverter, nesta ordem, `9a948d968c072b8b5a5841d8eff4d8c8c5e343e6`, `2737ab89d7bbf91cb3377df03080370e6d470b6c` e `b119a4e56f2518fc292f916737ababb01bd0ad00`; a migration ainda nao foi aplicada. Se ela ja tiver sido aplicada em outro ambiente, preservar a tabela/dados e fazer migration compensatoria; nao apagar configuracoes manualmente. O responsavel aceitou a revisao documental exata `e41ec1e45273aba3205f266e8753dfca305c5952` em 2026-10-01.

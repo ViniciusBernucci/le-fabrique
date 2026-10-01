@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 implementa o Centro de Configuracoes e aguarda aceite. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente, orquestracao persistida e configuracao versionada de contas/modelos/funcoes/GitHub sem segredos. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 esta WAITING_PROVIDER porque Claude Code e Antigravity estao deslogados. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000, FAC-002 a FAC-009 e FAC-011 estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente, orquestracao persistida e configuracao versionada de contas/modelos/funcoes/GitHub sem segredos. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 esta READY para onboarding gerenciado porque Claude Code e Antigravity continuam deslogados. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
