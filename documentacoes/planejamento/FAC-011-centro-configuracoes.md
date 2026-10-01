@@ -1,6 +1,6 @@
 # FAC-011 — Centro de configuracoes e atribuicao de agentes
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -56,4 +56,4 @@ FAC-003 e FAC-009 aceitos. FAC-010 permanece `WAITING_PROVIDER` e passa a depend
 
 ## Aceite
 
-A entrega fica `AWAITING_HUMAN` apos os checks e a revisao exata. `DONE` somente com aceite explicito do responsavel.
+A entrega esta `AWAITING_HUMAN` apos os checks da revisao funcional corrigida `2737ab89d7bbf91cb3377df03080370e6d470b6c`. `DONE` somente com aceite explicito do responsavel sobre a revisao documental final.

@@ -39,7 +39,7 @@ Risco R3. Um executor, um writer, no maximo duas tentativas, duas trocas e 30 mi
 
 ## Dependencias
 
-FAC-005, FAC-008 e FAC-009 aceitos. Bloqueio externo atual: nenhum segundo provider autenticado/elegivel.
+FAC-005, FAC-008 e FAC-009 aceitos; FAC-011 precisa ser aceito para fornecer a configuracao administrativa. Bloqueio externo atual: nenhum segundo provider autenticado/elegivel. O responsavel nao fornecera configuracao fora do software; o onboarding oficial precisa ser iniciado pelo Centro de Configuracoes e executado pelo worker confiavel em incremento posterior, sem segredo no browser.
 
 ## Entregaveis e documentacao afetada
 
@@ -47,4 +47,4 @@ Quando desbloqueado: adapter, router/handoff, contratos/testes, relato datado, R
 
 ## Evidencias e aceite
 
-Preflight de 2026-10-01 em `documentacoes/runtime/2026-10-01-FAC-010-preflight-segundo-provider.md`. Retomar somente depois de login oficial interativo e confirmacao humana de assinatura/extras. DONE exige revisao funcional exata e aceite humano posterior.
+Preflight de 2026-10-01 em `documentacoes/runtime/2026-10-01-FAC-010-preflight-segundo-provider.md`. Retomar depois do aceite FAC-011 e de um fluxo de onboarding no software que permita ao responsavel escolher conta/plano sem entregar credenciais nesta conversa. O worker entao executa login oficial interativo e registra somente estado/evidencia sanitizada. DONE exige revisao funcional exata e aceite humano posterior.

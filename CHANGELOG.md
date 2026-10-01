@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.20 - 2026-10-01
+FAC-011 foi antecipado e implementa o Centro de Configuracoes: multiplas contas Codex/Claude/Antigravity, catalogos e modelos padrao, provider/modelo/permissoes/limites por funcionario e metadados GitHub. Persistencia PostgreSQL usa versao otimista; contratos rejeitam segredos e mantem API, extras, creditos, autorecharge, fallback pago e merge desligados. Login, discovery, conexao GitHub, migration real e deploy nao foram executados; a revisao aguarda aceite humano.
+
 ## 2.19 - 2026-10-01
 FAC-010 inicia preflight do segundo provider e entra em WAITING_PROVIDER: Claude Code 2.1.285 e Antigravity CLI 1.2.14 estao instalados, mas ambos exigem login. Nenhum prompt, API, credito, extra ou mudanca de autenticacao foi executado.
 

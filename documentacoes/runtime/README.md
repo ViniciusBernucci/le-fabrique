@@ -6,7 +6,7 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-Status: Codex, Context Builder/RuntimeGuard, sandbox, snapshots, orquestracao e coordenador aceitos ate FAC-009. FAC-010 esta WAITING_PROVIDER: Claude Code 2.1.285 e Antigravity 1.2.14 estao instalados, mas deslogados; nenhum segundo adapter foi iniciado.
+Status: Codex, Context Builder/RuntimeGuard, sandbox, snapshots, orquestracao e coordenador aceitos ate FAC-009. FAC-011 implementa a configuracao administrativa de contas/modelos por funcao e aguarda aceite. FAC-010 continua WAITING_PROVIDER ate login e preflight; nenhum segundo adapter foi iniciado.
 ## Adapters
 Codex implementado em `packages/runtime`: `codex exec --json` com perfil nomeado que nega o host, libera somente runtime minimo/workspace necessario e desliga rede de comandos; prompt via stdin, execucao efemera e configuracao do usuario ignorada. Claude: `claude -p --output-format json`, permissões mínimas ainda nao validadas. Antigravity: `agy -p`; validar flags de saída/permissões pela versão instalada antes de assumir JSON.
 Exemplos acima descrevem invocação, não autorizam executar código com privilégios. Usar spawn/execFile com array de argumentos e stdin, jamais interpolar prompt em shell. Fixar versão/binário; validar origem oficial e registrar checksums quando disponíveis.
@@ -26,6 +26,8 @@ Cada capability carrega verified_at, cli_version e evidence_id. Recursos desconh
 
 O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 
+O FAC-011 introduz `ProviderInstallation` e atribuicoes administrativas por funcao. Essa configuracao expressa intencao, nao evidencia: habilitar uma linha ou digitar um modelo nao muda o estado real do cliente. O worker futuro precisa detectar binario, autenticar pelo fluxo oficial, observar modelos e gravar evidencia antes de o router considerar a instalacao elegivel. Segredos nao pertencem ao contrato nem ao PostgreSQL de controle.
+
 O Reviewer deve devolver JSON validado com `APPROVE` ou `REQUEST_CHANGES`; texto livre, falha do runtime ou schema invalido falha fechado. `APPROVE` produz somente `AWAITING_HUMAN`, nunca `DONE`.
 
 ## Contrato ampliado planejado
@@ -36,5 +38,5 @@ Eventos: started, progress, checkpoint, usage_observed, limit_observed, artifact
 AUTH_REQUIRED: usuário autentica no fluxo oficial. RATE_LIMITED: cooldown/fallback elegível. TRANSIENT: backoff com limite. CONTEXT_TOO_LARGE: reduzir contexto e registrar mudança. TOOL_DENIED: corrigir perfil/escopo, não ampliar automaticamente. TIMEOUT: cancelar árvore, checkpoint e revisão de estado. RESULT_UNKNOWN: reconciliar antes de repetir. UNSUPPORTED: manter adapter desativado para a capacidade.
 Uso e cotas têm unidade/fonte/observed_at/reset_at/confiança. Estado de quota, crédito de assinatura e tarifa API são dados distintos. Não usar endpoints privados ou scraping do site para medir cota.
 ## Roteamento
-Filtrar por política/capacidade e disponibilidade; ordenar por preferência do papel e desempenho recente; adquirir lock do writer; executar. Preferências iniciais configuráveis: implementação Codex; revisão/arquitetura Claude; UI/QA Antigravity. Não usar percentuais fictícios de sucesso; aprender com ensaio registrado.
+Filtrar por política/capacidade e disponibilidade; ordenar pela atribuicao configurada no FAC-011 e desempenho recente; adquirir lock do writer; executar. Cada funcao pode selecionar instalacao e modelo permitido, mas o router ainda deve exigir estado/evidencia elegivel. Não usar percentuais fictícios de sucesso; aprender com ensaio registrado.
 Cache de roteamento não deve ignorar observações novas de limite. Provider indisponível não implica mudar modelo/conta silenciosamente. API só entra no catálogo quando habilitada explicitamente em política futura.

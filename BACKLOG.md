@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-010 esta WAITING_PROVIDER porque os dois candidatos instalados estao deslogados. O piloto externo permanece adiado até a validação operacional.
+FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 foi antecipado, esta AWAITING_HUMAN e fornece o Centro de Configuracoes. FAC-010 continua WAITING_PROVIDER porque os dois candidatos instalados estao deslogados. O piloto externo permanece adiado até a validação operacional.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -19,8 +19,8 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-010 esta WAITING_PROVIDER porque os
 - FAC-007: DONE — Sandbox e snapshots aceitos na revisão `2bf14f35de64f118ec8224fee6151e60027dedb0`; dependências: FAC-004, FAC-005.
 - FAC-008: DONE — Orquestrador e checkpoints aceitos na revisao `29061a911e0f6bc5122e9e53511f2f475caf8dce`; dependências: FAC-006, FAC-007.
 - FAC-009: DONE — Coordenador de Developer, checks e Reviewer aceito na revisao `02819fb847e303f1a823cc2784a7326ec5e696f9`; dependências: FAC-008.
-- FAC-010: WAITING_PROVIDER — Claude Code 2.1.285 e Antigravity 1.2.14 instalados, ambos sem login elegivel; dependências: FAC-005, FAC-008, FAC-009 e autenticacao/financeiro humano.
-- FAC-011: PLANEJADO — Gate documental e Provider Manager; dependências: FAC-009, FAC-010.
+- FAC-010: WAITING_PROVIDER — Claude Code 2.1.285 e Antigravity 1.2.14 instalados, ambos sem login elegivel; dependências: FAC-005, FAC-008, FAC-009, configuracao FAC-011 e autenticacao/financeiro humano.
+- FAC-011: AWAITING_HUMAN — Centro de Configuracoes para contas/modelos por funcionario, GitHub e protecoes financeiras; revisao funcional corrigida `2737ab89d7bbf91cb3377df03080370e6d470b6c`; dependências: FAC-003 e FAC-009.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 

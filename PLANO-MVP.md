@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real entra antes do ensaio operacional. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000 e FAC-002 a FAC-009 estão implementados e aceitos; FAC-010 aguarda autenticacao elegivel de um segundo provider. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
+V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000 e FAC-002 a FAC-009 estão implementados e aceitos. FAC-011 foi antecipado para tornar contas/modelos/funcoes configuraveis e aguarda aceite; FAC-010 aguarda essa fundacao e autenticacao elegivel de um segundo provider. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
 ## Épicos
 Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, definição do piloto real e experimento operacional. Evolução: terceiro adapter/capacidades novas.
 
@@ -75,17 +75,17 @@ Aceite: Critérios comprovados na revisão exata; falhas anteriores separadas; a
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-010 — Segundo provider e handoff automático
-Sprint: Sprint 2. Dependências: FAC-005, FAC-008, FAC-009. Esforço estimado: 2-3 dias. Status: WAITING_PROVIDER.
+Sprint: Sprint 2. Dependências: FAC-005, FAC-008, FAC-009, FAC-011. Esforço estimado: 2-3 dias. Status: WAITING_PROVIDER.
 Descrição: Preflight segundo adapter, roteamento por capacidade e troca após término confirmado.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Simular cota, preservar patch/untracked, outro cliente continua sem writer concorrente; sem provider aguarda.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
-## FAC-011 — Gate documental e Provider Manager
-Sprint: Sprint 3. Dependências: FAC-009, FAC-010. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Docs/lessons/índices, painel React responsivo com SSE autenticado e retomada, observações de cota com fonte e aceite por revisão.
+## FAC-011 — Centro de Configuracoes e Provider Manager
+Sprint: Sprint 2. Dependências: FAC-003, FAC-009. Esforço estimado: 2-3 dias. Status: AWAITING_HUMAN.
+Descrição: Painel React responsivo, persistencia e contratos para contas de clientes oficiais, catalogos de modelos, atribuicao de provider/modelo por funcionario, metadados GitHub e protecoes financeiras fixas. Login, discovery e operacoes GitHub permanecem no worker futuro.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
-Aceite: Mudança sem docs falha; unknown visível; aprovação obsoleta rejeitada; docs atuais coerentes com código.
+Aceite: Configuracao versionada rejeita segredo e relacoes invalidas; unknown/auth required permanece visivel; API/extras/fallback/merge nao podem ser ativados; docs atuais coerentes com código.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-012 — Dez tickets e operação

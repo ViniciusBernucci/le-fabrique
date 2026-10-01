@@ -30,13 +30,16 @@ Fontes oficiais consultadas:
 
 ## Gate para retomada
 
-1. O responsavel executa `claude auth login` interativamente sob a identidade que rodara o worker e escolhe a conta Claude App, nao Console/API.
-2. Confirma que o plano e Pro/Max elegivel e que extra usage/creditos pagos/recarga nao serao usados.
-3. O preflight repete `claude auth status --json`, lista capacidades/modelos realmente expostos e roda fixture sintetica de leitura antes de qualquer escrita.
-4. Se Claude nao for a conta escolhida, o responsavel pode autenticar `agy` oficialmente e confirmar plano/modelos/creditos; a escolha continua baseada no preflight real.
+Este gate manual foi substituido pela decisao posterior do responsavel de configurar contas somente pelo software:
+
+1. Aceitar o Centro de Configuracoes FAC-011.
+2. Implementar acao de onboarding que inicia o login oficial sob a identidade do worker, mantendo a interacao sensivel no fluxo do cliente e fora dos DTOs/logs.
+3. O responsavel escolhe no painel a instalacao e confirma plano/extras; a fabrica nao preenche nem armazena credencial.
+4. O preflight repete status, lista capacidades/modelos realmente expostos e roda fixture sintetica de leitura antes de qualquer escrita.
+5. Claude ou Antigravity so se tornam elegiveis pela evidencia real; nenhuma selecao cadastrada equivale a autenticacao.
 
 Nao copiar arquivos de credencial, cookies ou tokens entre usuarios. Nao definir chave API para desbloquear o ticket.
 
 ## Rollback
 
-Este checkpoint altera somente documentacao de estado. Reverter o commit documental restaura FAC-010 para READY, mas nao cria elegibilidade. Nenhum login, configuracao de fornecedor, banco, fila ou codigo foi alterado.
+Este checkpoint original alterou somente documentacao de estado. FAC-011 adiciona configuracao administrativa em revisao separada, ainda sem login. Reverter o checkpoint nao cria elegibilidade; nenhum login, configuracao externa do fornecedor ou chamada foi executado.
