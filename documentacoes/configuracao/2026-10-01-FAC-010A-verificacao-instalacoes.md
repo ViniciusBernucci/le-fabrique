@@ -1,6 +1,6 @@
 # Entrega FAC-010A — Verificacao gerenciada de instalacoes
 
-Data: 2026-10-01. Status: AWAITING_HUMAN.
+Data: 2026-10-01. Status: DONE; aceita na revisao `7c8d95eecc33488c43d7bf6d6166bedd6c143341`.
 
 ## Revisoes e funcionamento
 

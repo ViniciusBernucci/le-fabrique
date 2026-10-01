@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.23 - 2026-10-01
+FAC-010A aceito pelo responsavel na revisao `7c8d95eecc33488c43d7bf6d6166bedd6c143341`. FAC-010B passa a ser o proximo incremento para login efemero iniciado no painel.
+
 ## 2.22 - 2026-10-01
 FAC-010A implementa verificacao gerenciada de Codex, Claude Code e Antigravity pelo worker, com pedido/outbox atomicos, fila separada, comandos fixos, timeout/log limit, resultado sanitizado e atualizacao de estado reservada ao worker. Painel solicita e acompanha sem iniciar login ou prompt; aguarda aceite.
 

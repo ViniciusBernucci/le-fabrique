@@ -19,7 +19,7 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 foi aceito e fornece o Centro d
 - FAC-007: DONE — Sandbox e snapshots aceitos na revisão `2bf14f35de64f118ec8224fee6151e60027dedb0`; dependências: FAC-004, FAC-005.
 - FAC-008: DONE — Orquestrador e checkpoints aceitos na revisao `29061a911e0f6bc5122e9e53511f2f475caf8dce`; dependências: FAC-006, FAC-007.
 - FAC-009: DONE — Coordenador de Developer, checks e Reviewer aceito na revisao `02819fb847e303f1a823cc2784a7326ec5e696f9`; dependências: FAC-008.
-- FAC-010: IN_PROGRESS — FAC-010A AWAITING_HUMAN na revisao funcional `b6012bb262f0d3342dd1c9633ee9079089e76b76`; depois login efemero e adapter/handoff; dependências aceitas: FAC-005, FAC-008, FAC-009 e FAC-011.
+- FAC-010: IN_PROGRESS — FAC-010A DONE na revisao `7c8d95eecc33488c43d7bf6d6166bedd6c143341`; FAC-010B e o proximo incremento para login efemero; depois adapter/handoff.
 - FAC-011: DONE — Centro de Configuracoes aceito na revisao `e41ec1e45273aba3205f266e8753dfca305c5952`; dependências: FAC-003 e FAC-009.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
