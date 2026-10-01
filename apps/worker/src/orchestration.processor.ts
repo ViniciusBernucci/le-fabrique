@@ -4,16 +4,15 @@ import type { ControlClient } from "./control-client";
 
 export async function processOrchestrationFixture(
   payload: OrchestrationJob,
-  baseRevision: string,
   control: Pick<ControlClient, "claim" | "checkpoint" | "complete">,
 ): Promise<{ runId: string; attemptId: string }> {
   const job = orchestrationJobSchema.parse(payload);
-  if (!/^[0-9a-f]{40}$/.test(baseRevision)) throw new Error("Fixture base revision is invalid");
+  if (!job.baseRevision) throw new Error("Fixture base revision is unavailable");
   const claim = await control.claim(job);
   await control.checkpoint(claim.attemptId, {
     fencingToken: claim.fencingToken,
-    baseRevision,
-    codeRevision: baseRevision,
+    baseRevision: job.baseRevision,
+    codeRevision: job.baseRevision,
     snapshotId: null,
     patchHash: null,
     reason: "COMPLETED",

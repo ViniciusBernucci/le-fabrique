@@ -66,7 +66,7 @@ export class OrchestrationService {
             return { claim: null, blocked: true };
           }
         }
-        if (!active && latest && !["WAITING_WORKER", "RUNNING"].includes(run.status)) {
+        if (latest) {
           return { claim: mapClaim(latest, true), blocked: false };
         }
 

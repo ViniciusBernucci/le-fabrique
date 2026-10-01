@@ -48,6 +48,7 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
           eventId: event.id,
           ...storedPayload,
           ticketVersion: storedPayload.ticketVersion ?? storedPayload.version,
+          baseRevision: storedPayload.baseRevision ?? null,
         });
         await this.queue.add("ticket.execute.v1", payload, {
           jobId: event.id,

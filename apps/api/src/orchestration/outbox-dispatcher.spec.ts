@@ -11,6 +11,7 @@ describe("OutboxDispatcher", () => {
         ticketId: crypto.randomUUID(),
         projectId: crypto.randomUUID(),
         version: 2,
+        baseRevision: "a".repeat(40),
       },
     };
     const prisma = {
@@ -41,6 +42,7 @@ describe("OutboxDispatcher", () => {
         ticketId: crypto.randomUUID(),
         projectId: crypto.randomUUID(),
         ticketVersion: 2,
+        baseRevision: "a".repeat(40),
       },
     };
     const prisma = {

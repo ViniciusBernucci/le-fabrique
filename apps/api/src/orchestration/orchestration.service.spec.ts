@@ -20,6 +20,7 @@ function claimInput() {
     ticketId,
     projectId,
     ticketVersion: 2,
+    baseRevision: "a".repeat(40),
     workerId,
     leaseDurationMs: 90_000,
   };
@@ -110,6 +111,39 @@ describe("OrchestrationService", () => {
         findUnique: vi.fn().mockResolvedValue({ id: runId, ticketId, status: "VALIDATING" }),
       },
       attempt: { findFirst: vi.fn().mockResolvedValue(completed), create: vi.fn() },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+
+    await expect(
+      new OrchestrationService(prisma as never).claim(claimInput()),
+    ).resolves.toMatchObject({ attemptId, fencingToken: 1, replayed: true });
+    expect(transaction.attempt.create).not.toHaveBeenCalled();
+  });
+
+  it("replays a stopped checkpoint instead of creating an attempt during completion", async () => {
+    const stopped = {
+      id: attemptId,
+      runId,
+      workerId,
+      sequence: 1,
+      fencingToken: 1,
+      status: "STOPPED",
+      leaseExpiresAt: new Date(now.getTime() + 30_000),
+      stoppedConfirmed: true,
+      startedAt: now,
+      completedAt: null,
+    };
+    const transaction = {
+      workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
+      ticket: {
+        findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
+      },
+      run: {
+        findUnique: vi
+          .fn()
+          .mockResolvedValue({ id: runId, ticketId, status: "RUNNING", nextFencingToken: 1 }),
+      },
+      attempt: { findFirst: vi.fn().mockResolvedValue(stopped), create: vi.fn() },
     };
     const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
 

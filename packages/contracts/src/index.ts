@@ -535,6 +535,11 @@ export const orchestrationJobSchema = z.object({
   ticketId: z.uuid(),
   projectId: z.uuid(),
   ticketVersion: z.number().int().positive(),
+  baseRevision: z
+    .string()
+    .regex(/^[0-9a-f]{40}$/)
+    .nullable()
+    .default(null),
 });
 export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
 

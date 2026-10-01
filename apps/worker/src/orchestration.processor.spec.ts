@@ -18,8 +18,8 @@ describe("processOrchestrationFixture", () => {
           ticketId: crypto.randomUUID(),
           projectId: crypto.randomUUID(),
           ticketVersion: 2,
+          baseRevision: "a".repeat(40),
         },
-        "a".repeat(40),
         control as never,
       ),
     ).resolves.toEqual({ runId, attemptId });
@@ -31,5 +31,23 @@ describe("processOrchestrationFixture", () => {
       fencingToken: 3,
       outcome: "VALIDATING",
     });
+  });
+
+  it("fails safely before claim when the project has no resolved base revision", async () => {
+    const control = { claim: vi.fn(), checkpoint: vi.fn(), complete: vi.fn() };
+    await expect(
+      processOrchestrationFixture(
+        {
+          schemaVersion: 1,
+          eventId: crypto.randomUUID(),
+          ticketId: crypto.randomUUID(),
+          projectId: crypto.randomUUID(),
+          ticketVersion: 2,
+          baseRevision: null,
+        },
+        control as never,
+      ),
+    ).rejects.toThrow("Fixture base revision is unavailable");
+    expect(control.claim).not.toHaveBeenCalled();
   });
 });

@@ -65,7 +65,10 @@ export class ControlService {
 
   async markReady(ticketId: string, expectedVersion: number): Promise<Ticket> {
     return this.prisma.$transaction(async (transaction) => {
-      const ticket = await transaction.ticket.findUnique({ where: { id: ticketId } });
+      const ticket = await transaction.ticket.findUnique({
+        where: { id: ticketId },
+        include: { project: { select: { baseRef: true } } },
+      });
       if (!ticket) throw new NotFoundException("Ticket not found");
       const deduplicationKey = `ticket:${ticketId}:ready`;
       if (ticket.status === "READY") {
@@ -90,6 +93,9 @@ export class ControlService {
             ticketId,
             projectId: ticket.projectId,
             ticketVersion: readyTicket.version,
+            baseRevision: /^[0-9a-f]{40}$/.test(ticket.project.baseRef)
+              ? ticket.project.baseRef
+              : null,
           } satisfies Prisma.InputJsonValue,
         },
       });

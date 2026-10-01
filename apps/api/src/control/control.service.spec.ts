@@ -12,6 +12,7 @@ const draft = {
   version: 1,
   createdAt: now,
   updatedAt: now,
+  project: { baseRef: "a".repeat(40) },
 };
 
 describe("ControlService", () => {
@@ -35,7 +36,10 @@ describe("ControlService", () => {
     expect(transaction.outboxEvent.create).toHaveBeenCalledOnce();
     expect(transaction.outboxEvent.create).toHaveBeenCalledWith(
       expect.objectContaining({
-        data: expect.objectContaining({ deduplicationKey: `ticket:${draft.id}:ready` }),
+        data: expect.objectContaining({
+          deduplicationKey: `ticket:${draft.id}:ready`,
+          payload: expect.objectContaining({ baseRevision: "a".repeat(40) }),
+        }),
       }),
     );
   });

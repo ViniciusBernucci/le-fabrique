@@ -176,6 +176,7 @@ describe("shared contracts", () => {
         projectId: crypto.randomUUID(),
         ticketId: crypto.randomUUID(),
         ticketVersion: 2,
+        baseRevision: "a".repeat(40),
       }),
     ).toBeDefined();
     expect(() =>
