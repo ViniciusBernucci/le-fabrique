@@ -15,3 +15,5 @@ O cliente confiavel ainda precisa acessar sua autenticacao para falar com o forn
 ## Limite
 
 Esse perfil nao substitui cgroups, timeout, kill da arvore de processos, worktree isolada ou bloqueio de sockets. Esses controles pertencem aos tickets de runtime e sandbox.
+
+No FAC-010C, o perfil Claude combina `safe-mode`, `restricted`, MCP estrito, browser desligado, sessao nao persistida e prompts de permissao `none`. Read-only expoe apenas leitura/busca; workspace-write acrescenta somente Edit/Write. O ambiente remove tambem token/base URL e seletores AWS/Bedrock/Vertex/Foundry. Como configuracao administrada ainda pode existir fora do processo, elegibilidade exige `authMethod` de assinatura explicitamente reconhecido e `apiProvider=firstParty`; qualquer ambiguidade falha fechado.

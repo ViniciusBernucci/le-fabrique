@@ -38,3 +38,7 @@ FAC-010A implementa `Verificar instalacao`. Pedido/outbox sao persistidos e o wo
 FAC-010B implementa `Conectar assinatura Codex` para instalacao habilitada em `AUTH_REQUIRED`. A sessao e a intencao ficam no PostgreSQL/outbox, mas URL e codigo temporarios existem somente no Redis privado por ate dez minutos e no estado em memoria da tela. O worker executa `codex login --device-auth`, nunca o executavel editavel, e confirma com `codex login status` antes de atualizar o estado observado.
 
 O painel nao recebe senha, token, cookie ou cache de autenticacao. Claude e Antigravity continuam sem botao de login gerenciado ate seus fluxos oficiais seguros serem comprovados. Detalhes e evidencias: [2026-10-01-FAC-010B-login-efemero-codex.md](2026-10-01-FAC-010B-login-efemero-codex.md).
+
+## Rota por funcionario
+
+FAC-010C consome a escolha de conta, modelo e permissao feita em `Funcionarios digitais`. A rota so existe quando a atribuicao esta habilitada, a instalacao esta habilitada e `AVAILABLE`, o modelo pertence ao catalogo e o provider possui adapter. Claude Console/API, autenticacao ambigua e Antigravity sem adapter falham fechado; nenhuma troca silenciosa substitui a escolha configurada.

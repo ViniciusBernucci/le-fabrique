@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.26 - 2026-10-01
+FAC-010C implementa contratos multi-provider, adapter Claude subscription-only fail-closed, selecao de conta/modelo por funcionario e handoff por nova worktree/snapshot verificado sem transferir sessao privada. O verificador Claude tambem passa a rejeitar login Console/API. Foram usados apenas fixtures; aguarda aceite e a conta real continua deslogada.
+
 ## 2.25 - 2026-10-01
 FAC-010B aceito pelo responsavel na revisao `d39412282d9401b2a22c70eb4b353883e559be4c`. FAC-010C passa a ser o proximo incremento para segundo adapter e handoff seguro.
 

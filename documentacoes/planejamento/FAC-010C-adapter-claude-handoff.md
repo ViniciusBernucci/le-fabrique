@@ -1,6 +1,6 @@
 # FAC-010C — Adapter Claude e handoff seguro
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -48,3 +48,5 @@ Adicionar um segundo adapter subscription-only para Claude Code e um handoff loc
 ## Fontes e aceite
 
 Referencias oficiais: CLI reference e setup do Claude Code em `docs.anthropic.com`. Fixtures nao comprovam assinatura real. A entrega permanecera `AWAITING_HUMAN` ate aceite da revisao exata; elegibilidade operacional do Claude permanecera pendente ate configuracao posterior pelo software e confirmacao humana da conta.
+
+Implementacao funcional verificada em `3420e241644fa64d7c525939c3cfebf407518681`. A revisao documental exata ainda exige aceite explicito; Claude permanece inelegivel enquanto a conta real estiver deslogada.
