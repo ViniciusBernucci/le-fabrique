@@ -27,7 +27,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 1. Worker detecta instalacoes e executa login oficial sem transportar segredo pelo painel.
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
-4. Login GitHub oficial iniciado pelo painel e criacao de PR continuam tickets separados; merge continua manual.
+4. FAC-011B implementa login GitHub oficial iniciado pelo painel; criacao de PR continua ticket separado e merge continua manual.
 
 ## Verificacao de instalacoes
 

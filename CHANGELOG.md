@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.31 - 2026-10-01
+FAC-011B passa a READY para login web/device oficial do GitHub CLI: desafio efemero no Redis, nenhum PAT no controle, argv fixo e conexao somente quando o cliente confirmar credential store seguro. `gh` continua ausente e nenhuma autenticacao sera executada na implementacao com fixtures.
+
 ## 2.30 - 2026-10-01
 FAC-011A aceito pelo responsavel na revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`. A verificacao somente-leitura esta concluida; instalacao e login real permanecem futuros e FAC-011B passa a ser o proximo incremento.
 
