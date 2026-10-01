@@ -1,6 +1,6 @@
 # Entrega FAC-010C — Adapter Claude e handoff seguro
 
-Data: 2026-10-01. Status: AWAITING_HUMAN.
+Data: 2026-10-01. Status: DONE; aceita na revisao `0748f029a8a62ce891486dc5751c207bdd6e56db`.
 
 ## Revisoes e funcionamento
 

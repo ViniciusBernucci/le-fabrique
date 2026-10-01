@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.27 - 2026-10-01
+FAC-010C aceito pelo responsavel na revisao `0748f029a8a62ce891486dc5751c207bdd6e56db`. O codigo de adapter/handoff esta concluido; FAC-010 permanece `WAITING_PROVIDER` somente para validacao operacional futura da conta Claude.
+
 ## 2.26 - 2026-10-01
 FAC-010C implementa contratos multi-provider, adapter Claude subscription-only fail-closed, selecao de conta/modelo por funcionario e handoff por nova worktree/snapshot verificado sem transferir sessao privada. O verificador Claude tambem passa a rejeitar login Console/API. Foram usados apenas fixtures; aguarda aceite e a conta real continua deslogada.
 
