@@ -456,6 +456,53 @@ export const updateFactorySettingsSchema = z
   .strict();
 export type UpdateFactorySettings = z.infer<typeof updateFactorySettingsSchema>;
 
+export const providerVerificationStatusSchema = z.enum([
+  "PENDING",
+  "RUNNING",
+  "COMPLETED",
+  "FAILED",
+]);
+export type ProviderVerificationStatus = z.infer<typeof providerVerificationStatusSchema>;
+
+export const providerVerificationSchema = z.object({
+  id: z.uuid(),
+  installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+  provider: settingsProviderSchema,
+  status: providerVerificationStatusSchema,
+  workerId: z.uuid().nullable(),
+  providerState: settingsProviderStateSchema.nullable(),
+  cliVersion: z.string().trim().min(1).max(120).nullable(),
+  observedModels: z.array(z.string().trim().min(1).max(120)).max(50),
+  message: z.string().trim().min(1).max(240).nullable(),
+  createdAt: z.iso.datetime(),
+  startedAt: z.iso.datetime().nullable(),
+  completedAt: z.iso.datetime().nullable(),
+});
+export type ProviderVerification = z.infer<typeof providerVerificationSchema>;
+export const providerVerificationListSchema = z.array(providerVerificationSchema);
+
+export const providerVerificationJobSchema = z.object({
+  schemaVersion: z.literal(1),
+  eventId: z.uuid(),
+  verificationId: z.uuid(),
+  installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+  provider: settingsProviderSchema,
+});
+export type ProviderVerificationJob = z.infer<typeof providerVerificationJobSchema>;
+
+export const startProviderVerificationSchema = z.object({ workerId: z.uuid() }).strict();
+export const completeProviderVerificationSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED"]),
+    providerState: settingsProviderStateSchema,
+    cliVersion: z.string().trim().min(1).max(120).nullable(),
+    observedModels: z.array(z.string().trim().min(1).max(120)).max(50),
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict();
+export type CompleteProviderVerification = z.infer<typeof completeProviderVerificationSchema>;
+
 export const contextSourceRoleSchema = z.enum([
   "INSTRUCTION",
   "TICKET",

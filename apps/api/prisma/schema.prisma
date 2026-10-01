@@ -55,6 +55,13 @@ enum AttemptStatus {
   CANCELLED
 }
 
+enum ProviderVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -174,4 +181,23 @@ model FactorySettings {
   updatedAt     DateTime @updatedAt @map("updated_at")
 
   @@map("factory_settings")
+}
+
+model ProviderVerification {
+  id             String                     @id @default(uuid()) @db.Uuid
+  installationId String                     @map("installation_id")
+  provider       String
+  status         ProviderVerificationStatus @default(PENDING)
+  workerId       String?                    @db.Uuid @map("worker_id")
+  providerState  String?                    @map("provider_state")
+  cliVersion     String?                    @map("cli_version")
+  observedModels Json                       @default("[]") @map("observed_models")
+  message        String?
+  createdAt      DateTime                   @default(now()) @map("created_at")
+  startedAt      DateTime?                  @map("started_at")
+  completedAt    DateTime?                  @map("completed_at")
+
+  @@index([installationId, createdAt])
+  @@index([status, createdAt])
+  @@map("provider_verifications")
 }

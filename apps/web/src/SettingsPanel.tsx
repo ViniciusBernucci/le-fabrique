@@ -3,9 +3,15 @@ import type {
   FactoryConfiguration,
   FactorySettings,
   ProviderInstallation,
+  ProviderVerification,
 } from "@le-fabrique/contracts";
 import { useEffect, useMemo, useState } from "react";
-import { getFactorySettings, updateFactorySettings } from "./control-api";
+import {
+  getFactorySettings,
+  listProviderVerifications,
+  requestProviderVerification,
+  updateFactorySettings,
+} from "./control-api";
 import { configurationSummary, providerLabels, roleLabels } from "./settings-view-model";
 
 type SettingsPanelProps = { token: string; onMessage: (message: string) => void };
@@ -18,15 +24,43 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const [saving, setSaving] = useState(false);
+  const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
 
   useEffect(() => {
-    getFactorySettings(token)
-      .then((data) => {
+    Promise.all([getFactorySettings(token), listProviderVerifications(token)])
+      .then(([data, history]) => {
         setSettings(data);
         setDraft(structuredClone(data.configuration));
+        setVerifications(history);
       })
       .catch(() => onMessage("Falha ao carregar as configurações."));
   }, [onMessage, token]);
+
+  useEffect(() => {
+    if (!verifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))) return;
+    const timer = setInterval(() => {
+      void Promise.all([getFactorySettings(token), listProviderVerifications(token)]).then(
+        ([data, history]) => {
+          setSettings(data);
+          setDraft((current) => {
+            if (!current) return current;
+            const observedStates = new Map(
+              data.configuration.installations.map((item) => [item.id, item.state]),
+            );
+            return {
+              ...current,
+              installations: current.installations.map((item) => ({
+                ...item,
+                state: observedStates.get(item.id) ?? item.state,
+              })),
+            };
+          });
+          setVerifications(history);
+        },
+      );
+    }, 3_000);
+    return () => clearInterval(timer);
+  }, [token, verifications]);
 
   const summary = useMemo(() => (settings ? configurationSummary(settings) : null), [settings]);
 
@@ -118,6 +152,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     }
   }
 
+  async function verify(installationId: string) {
+    try {
+      const verification = await requestProviderVerification(token, installationId);
+      setVerifications((current) => [
+        verification,
+        ...current.filter((item) => item.id !== verification.id),
+      ]);
+      onMessage("Verificação enviada ao worker; nenhum prompt será executado.");
+    } catch {
+      onMessage("Não foi possível solicitar a verificação desta instalação.");
+    }
+  }
+
   if (!draft || !settings || !summary) return <section className="panel">Carregando…</section>;
 
   return (
@@ -175,6 +222,17 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         <div className="account-grid">
           {draft.installations.map((installation, index) => (
             <article className="account-card" key={installation.id}>
+              {(() => {
+                const latest = verifications.find(
+                  (item) => item.installationId === installation.id,
+                );
+                return latest ? (
+                  <p className="verification-line">
+                    Verificação: <strong>{latest.status}</strong>
+                    {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
+                  </p>
+                ) : null;
+              })()}
               <div className="account-title">
                 <div
                   className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
@@ -268,6 +326,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 />
                 <span>Disponível para atribuição</span>
               </label>
+              <button
+                className="secondary-action account-action"
+                type="button"
+                onClick={() => verify(installation.id)}
+              >
+                Verificar instalação
+              </button>
               <button
                 className="remove-action"
                 type="button"

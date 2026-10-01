@@ -254,6 +254,18 @@ button:disabled {
 .secondary-action:hover {
   color: #07140f;
 }
+.account-action {
+  width: 100%;
+  margin-top: 8px;
+}
+.verification-line {
+  margin: 0 0 12px;
+  color: #9aabc1;
+  font-size: 0.72rem;
+}
+.verification-line strong {
+  color: #63e6be;
+}
 .account-card {
   padding: 18px;
   border: 1px solid #293950;

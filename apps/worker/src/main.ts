@@ -1,9 +1,14 @@
-import type { OrchestrationJob, WorkerProbeJob } from "@le-fabrique/contracts";
+import type {
+  OrchestrationJob,
+  ProviderVerificationJob,
+  WorkerProbeJob,
+} from "@le-fabrique/contracts";
 import { Worker } from "bullmq";
 import { loadWorkerConfig } from "./config";
 import { ControlClient, startHeartbeat } from "./control-client";
 import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
+import { processProviderVerification } from "./provider-verification.processor";
 
 async function bootstrap(): Promise<void> {
   const config = loadWorkerConfig();
@@ -41,6 +46,21 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
+  const providerVerificationWorker = new Worker<ProviderVerificationJob>(
+    "le-fabrique.provider-verification",
+    async (job) => processProviderVerification(job.data, control),
+    {
+      concurrency: 1,
+      connection: {
+        host: redisUrl.hostname,
+        port: Number(redisUrl.port || 6379),
+        username: redisUrl.username || undefined,
+        password: redisUrl.password || undefined,
+        db: Number(redisUrl.pathname.slice(1) || 0),
+        maxRetriesPerRequest: null,
+      },
+    },
+  );
 
   let stopping = false;
   const shutdown = async (reason: string): Promise<void> => {
@@ -48,7 +68,11 @@ async function bootstrap(): Promise<void> {
     stopping = true;
     stopHeartbeat();
     console.info("worker stopping", { reason });
-    await Promise.all([probeWorker.close(), orchestrationWorker.close()]);
+    await Promise.all([
+      probeWorker.close(),
+      orchestrationWorker.close(),
+      providerVerificationWorker.close(),
+    ]);
     process.exit(reason === "control-unavailable" ? 1 : 0);
   };
   const stopHeartbeat = startHeartbeat(
@@ -63,6 +87,9 @@ async function bootstrap(): Promise<void> {
   );
   orchestrationWorker.on("failed", (job, error) =>
     console.error("orchestration probe failed", { jobId: job?.id, error: error.message }),
+  );
+  providerVerificationWorker.on("failed", (job, error) =>
+    console.error("provider verification failed", { jobId: job?.id, error: error.message }),
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));

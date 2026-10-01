@@ -5,8 +5,11 @@ import {
   type FactorySettings,
   factorySettingsSchema,
   type Project,
+  type ProviderVerification,
   projectListSchema,
   projectSchema,
+  providerVerificationListSchema,
+  providerVerificationSchema,
   type Ticket,
   ticketListSchema,
   ticketSchema,
@@ -74,5 +77,20 @@ export async function updateFactorySettings(
 ): Promise<FactorySettings> {
   return factorySettingsSchema.parse(
     await request("/settings", token, { method: "PUT", body: JSON.stringify(input) }),
+  );
+}
+
+export async function listProviderVerifications(token: string): Promise<ProviderVerification[]> {
+  return providerVerificationListSchema.parse(await request("/settings/verifications", token));
+}
+
+export async function requestProviderVerification(
+  token: string,
+  installationId: string,
+): Promise<ProviderVerification> {
+  return providerVerificationSchema.parse(
+    await request(`/settings/installations/${installationId}/verifications`, token, {
+      method: "POST",
+    }),
   );
 }

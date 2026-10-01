@@ -1,5 +1,6 @@
 import { arch, platform } from "node:os";
 import type {
+  CompleteProviderVerification,
   OrchestrationCheckpointRequest,
   OrchestrationClaimRequest,
   OrchestrationCompleteRequest,
@@ -9,6 +10,7 @@ import type {
 import {
   orchestrationClaimSchema,
   orchestrationStateSchema,
+  providerVerificationSchema,
   workerHeartbeatSchema,
   workerSchema,
 } from "@le-fabrique/contracts";
@@ -91,6 +93,27 @@ export class ControlClient {
   async complete(attemptId: string, input: Omit<OrchestrationCompleteRequest, "workerId">) {
     return orchestrationStateSchema.parse(
       await this.request(`/internal/orchestration/attempts/${attemptId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startProviderVerification(verificationId: string) {
+    return providerVerificationSchema.parse(
+      await this.request(`/internal/provider-verifications/${verificationId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async completeProviderVerification(
+    verificationId: string,
+    input: Omit<CompleteProviderVerification, "workerId">,
+  ) {
+    return providerVerificationSchema.parse(
+      await this.request(`/internal/provider-verifications/${verificationId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),
