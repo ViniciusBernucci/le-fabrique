@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: IMPLEMENTADO e ACEITO no FAC-011, revisao `e41ec1e45273aba3205f266e8753dfca305c5952`.
+Status: Centro ACEITO no FAC-011; verificacao GitHub IMPLEMENTADA no FAC-011A e aguardando aceite.
 
 ## Funcionamento atual
 
@@ -14,7 +14,7 @@ A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuraca
 
 ## Seguranca e limites
 
-Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Login de provider e GitHub sera executado futuramente pelo worker confiavel usando o fluxo oficial; o browser recebe somente metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.
+Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Fluxos de login suportados sao executados pelo worker confiavel usando o cliente oficial; login GitHub continua futuro. O browser recebe somente desafios efemeros permitidos, metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.
 
 API paga, extra usage, creditos pagos, autorecharge, fallback pago e merge permanecem `false` por contrato. O painel os exibe como protecoes nao editaveis. Salvar configuracao nao executa clientes, nao conecta GitHub, nao cria PR e nao altera cobranca externa.
 
@@ -27,7 +27,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 1. Worker detecta instalacoes e executa login oficial sem transportar segredo pelo painel.
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
-4. FAC-011A verifica binario e autenticacao GitHub por comando somente-leitura; login e PR continuam tickets separados e merge continua manual.
+4. Login GitHub oficial iniciado pelo painel e criacao de PR continuam tickets separados; merge continua manual.
 
 ## Verificacao de instalacoes
 
@@ -42,3 +42,9 @@ O painel nao recebe senha, token, cookie ou cache de autenticacao. Claude e Anti
 ## Rota por funcionario
 
 FAC-010C consome a escolha de conta, modelo e permissao feita em `Funcionarios digitais`. A rota so existe quando a atribuicao esta habilitada, a instalacao esta habilitada e `AVAILABLE`, o modelo pertence ao catalogo e o provider possui adapter. Claude Console/API, autenticacao ambigua e Antigravity sem adapter falham fechado; nenhuma troca silenciosa substitui a escolha configurada.
+
+## Verificacao GitHub CLI
+
+FAC-011A adiciona `Verificar GitHub CLI`. Pedido e outbox sao atomicos; a API nao executa cliente. O worker usa o binario fixo `gh`, remove variaveis de token e consulta somente `--version` e `auth status --hostname <host> --json hosts`. O painel recebe estado, versao e mensagem controlada, nunca JSON bruto, login, scopes ou origem/token.
+
+`CONNECTED` exige uma conta ativa com estado `success`; host sem conta ativa vira `AUTH_REQUIRED`; CLI ausente, timeout ou resposta invalida viram `ERROR`. Alterar o host durante um job invalida somente aquela verificacao. O ambiente atual nao possui `gh`, portanto a integracao real permanece nao verificada e nenhum login foi iniciado.

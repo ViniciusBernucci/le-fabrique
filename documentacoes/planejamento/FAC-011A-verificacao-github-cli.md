@@ -1,6 +1,6 @@
 # FAC-011A — Verificacao gerenciada do GitHub CLI
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -58,3 +58,9 @@ O provider deste ticket e GitHub CLI em modo `GH_CLI`, nao um provider de IA. A 
 
 FAC-011A comprova instalacao e estado sem mudar autenticacao. Um FAC-011B posterior podera implementar login oficial efemero iniciado pelo painel, somente depois de revisar armazenamento seguro da credencial e sem PAT no controle.
 
+## Revisao entregue
+
+- Ticket READY: `0d85f198be1bf32ea2dad156e1d0852e31f00597`.
+- Codigo verificado: `6ce04c5f8c94779c4a110fde52ba77891df8c926`.
+- Relatorio e evidencias: `documentacoes/configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md`.
+- Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e integracao remota nao verificada.

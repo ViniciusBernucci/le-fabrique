@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.29 - 2026-10-01
+FAC-011A implementa verificacao GitHub CLI somente-leitura: contratos estritos, outbox/fila dedicada, worker com argv fixo, ambiente sem variaveis de token, timeout/limite de output, estado atomico e painel com historico. Passaram 109 testes, lint, typecheck, build e schema Prisma; `gh` esta ausente, nenhuma integracao real foi executada e a revisao aguarda aceite.
+
 ## 2.28 - 2026-10-01
 FAC-011A passa a READY para verificar instalacao e autenticacao do GitHub CLI pelo worker. O escopo e somente leitura, remove variaveis de token e proibe importar/exibir credenciais; login, PR, merge, deploy e instalacao do `gh` ficam fora deste incremento.
 

@@ -18,6 +18,7 @@
 - [configuracao/2026-10-01-FAC-011-centro-configuracoes.md](configuracao/2026-10-01-FAC-011-centro-configuracoes.md)
 - [configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md](configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md)
 - [configuracao/2026-10-01-FAC-010B-login-efemero-codex.md](configuracao/2026-10-01-FAC-010B-login-efemero-codex.md)
+- [configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md](configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md)
 - [runtime/README.md](runtime/README.md)
 - [runtime/2026-09-30-FAC-002-preflight-codex.md](runtime/2026-09-30-FAC-002-preflight-codex.md)
 - [runtime/2026-09-30-FAC-005-runtime-gateway-codex.md](runtime/2026-09-30-FAC-005-runtime-gateway-codex.md)

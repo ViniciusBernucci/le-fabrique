@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000, FAC-002 a FAC-009 e FAC-011 estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente, orquestracao persistida e configuracao versionada de contas/modelos/funcoes/GitHub sem segredos. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 esta READY para onboarding gerenciado porque Claude Code e Antigravity continuam deslogados. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011 estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente, orquestracao persistida e configuracao versionada de contas/modelos/funcoes/GitHub sem segredos. FAC-011A adiciona verificacao GitHub CLI e aguarda aceite; o binario `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
@@ -15,10 +15,10 @@ FAC-000, FAC-002 a FAC-009 e FAC-011 estão DONE. O controle possui autenticaç�
 
 ## Sequência recomendada
 
-1. Revisar e aceitar a revisao exata FAC-011.
-2. Implementar no software o onboarding que inicia login oficial no worker, sem segredo em browser/API/banco, e repetir o preflight FAC-010.
-3. Preservar checkpoint e quiescencia antes de qualquer nova tentativa ou troca de papel.
-4. Implementar handoff por estado externo, sem transferir sessao privada, e manter perfil operacional bloqueado ate allowlist confiavel.
+1. Revisar e aceitar a revisao exata FAC-011A.
+2. Implementar login GitHub oficial iniciado pelo painel, sem segredo em browser/API/banco, e depois a criacao de PR sob gate humano.
+3. Instalar/configurar clientes pela operacao futura e repetir os preflights reais de Claude e GitHub.
+4. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
 5. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
@@ -27,4 +27,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam onboarding/login gerenciado, reconciliacao do estado desejado com o cliente real, perfil operacional que liga o coordenador FAC-009 ao consumer, segundo provider/handoff, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. A composicao possui prova sintetica, mas ainda nao comprova um ticket real ponta a ponta.
+Ainda faltam login GitHub gerenciado, instalacao/preflights reais, criacao de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.
