@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.30 - 2026-10-01
+FAC-011A aceito pelo responsavel na revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`. A verificacao somente-leitura esta concluida; instalacao e login real permanecem futuros e FAC-011B passa a ser o proximo incremento.
+
 ## 2.29 - 2026-10-01
 FAC-011A implementa verificacao GitHub CLI somente-leitura: contratos estritos, outbox/fila dedicada, worker com argv fixo, ambiente sem variaveis de token, timeout/limite de output, estado atomico e painel com historico. Passaram 109 testes, lint, typecheck, build e schema Prisma; `gh` esta ausente, nenhuma integracao real foi executada e a revisao aguarda aceite.
 

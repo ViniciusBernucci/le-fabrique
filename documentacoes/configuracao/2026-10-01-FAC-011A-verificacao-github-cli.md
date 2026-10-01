@@ -2,7 +2,7 @@
 
 Data: 2026-10-01
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo e revisoes
 
@@ -73,4 +73,4 @@ O diff funcional sanitizado e revisavel e o commit `6ce04c5f8c94779c4a110fde52ba
 
 Antes de aplicar a migration, o rollback e reverter o commit funcional e este commit documental. Se a migration aditiva ja tiver sido aplicada em outro ambiente, a aplicacao anterior pode continuar com a tabela sem uso; qualquer migration compensatoria deve preservar historico e ser autorizada, sem apagar linhas manualmente. Nenhum rollback externo e necessario porque nenhuma configuracao GitHub real foi alterada.
 
-O FAC-011A permanece `AWAITING_HUMAN`. `DONE` exige aceite explicito da revisao documental exata que contem este relatorio.
+O responsavel aceitou explicitamente a revisao documental exata `dce2e676a91b5ffaeb246afeea2cc699e60aff9d` em 2026-10-01. O FAC-011A esta `DONE`; a instalacao/login real do GitHub CLI continua fora deste aceite.

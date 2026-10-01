@@ -1,6 +1,6 @@
 # FAC-011A — Verificacao gerenciada do GitHub CLI
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -64,3 +64,7 @@ FAC-011A comprova instalacao e estado sem mudar autenticacao. Um FAC-011B poster
 - Codigo verificado: `6ce04c5f8c94779c4a110fde52ba77891df8c926`.
 - Relatorio e evidencias: `documentacoes/configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md`.
 - Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e integracao remota nao verificada.
+
+## Aceite
+
+Entrega aceita explicitamente pelo responsavel em 2026-10-01 na revisao documental exata `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`.

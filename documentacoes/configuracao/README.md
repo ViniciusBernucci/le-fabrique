@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro ACEITO no FAC-011; verificacao GitHub IMPLEMENTADA no FAC-011A e aguardando aceite.
+Status: Centro ACEITO no FAC-011; verificacao GitHub ACEITA no FAC-011A, revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`.
 
 ## Funcionamento atual
 
