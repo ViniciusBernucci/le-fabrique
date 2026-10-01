@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 e FAC-002 a FAC-008 estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente e orquestracao persistida. O worker tem identidade, heartbeat, probe sintetico de orquestracao, leases, fencing e checkpoints. Runtime Codex, contexto, guard, sandbox e snapshots estao implementados como componentes; sua composicao controlada pertence ao FAC-009. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000 e FAC-002 a FAC-008 estão DONE. FAC-009 implementa a composicao controlada de Developer, checks, snapshots e Reviewer e aguarda aceite. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente e orquestracao persistida. O loop BullMQ continua no probe sintetico ate existir perfil local confiavel de repositorio e comandos. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
@@ -15,9 +15,9 @@ FAC-000 e FAC-002 a FAC-008 estão DONE. O controle possui autenticação admini
 
 ## Sequência recomendada
 
-1. Executar FAC-009 em branch/worktree proprio, compondo developer, checks e reviewer sem ampliar providers.
+1. Revisar e aceitar FAC-009 na revisao exata.
 2. Preservar checkpoint e quiescencia antes de qualquer nova tentativa ou troca de papel.
-3. Evoluir segundo provider e gates na ordem de dependências até FAC-011.
+3. Evoluir segundo provider, handoff e perfil operacional na ordem de dependências até FAC-011.
 4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
@@ -26,4 +26,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam a composicao executora do FAC-009, segundo provider/handoff, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. Sandbox e adapter possuem provas isoladas; isso ainda nao comprova o fluxo completo de um ticket.
+Ainda faltam o perfil operacional e a persistencia que ligam o coordenador FAC-009 ao consumer real, segundo provider/handoff, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. A composicao possui prova sintetica, mas ainda nao comprova um ticket real ponta a ponta.

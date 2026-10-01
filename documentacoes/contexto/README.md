@@ -7,3 +7,5 @@ O `ContextBuilder` recebe workspace absoluto, revisao-base, fontes relativas exp
 Caminhos absolutos, traversal, symlinks, dependencias, saidas geradas, nomes de segredo, binarios, conteudo com padroes fortes de segredo e arquivos fora dos limites sao omitidos com motivo normalizado. O builder nao percorre o repositorio automaticamente, nao usa embeddings e nao persiste o conteudo. Se houver qualquer omissao, `truncated` e verdadeiro; o chamador precisa decidir se ainda ha contexto suficiente.
 
 O manifesto prova quais bytes foram selecionados para uma revisao-base. Ele nao prova que a selecao foi semanticamente suficiente e nao substitui acesso controlado as fontes originais.
+
+O FAC-009 usa esse resultado no coordenador do worker e recusa prompts acima do limite do contrato do runtime. Objetivo, criterios, feedback de correcao e contexto entram em prompts separados por papel; o Reviewer recebe sessao e permissao `READ_ONLY` proprias. O conteudo continua sem persistencia automatica e os testes usam somente texto sintetico.

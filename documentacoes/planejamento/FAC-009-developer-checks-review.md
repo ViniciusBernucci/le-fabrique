@@ -1,6 +1,8 @@
 # FAC-009 — Developer, checks e revisao
 
-Status: READY
+Status: AWAITING_HUMAN
+
+Implementacao funcional: `7ba457470171d80571c0ce8650ed2b26f3f197ef`. Criterios tecnicos comprovados com fixtures; falta aceite humano da revisao exata com documentacao.
 
 ## Objetivo
 
