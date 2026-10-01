@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000 e FAC-003 estão DONE. O controle possui autenticação administrativa, projetos/tickets e outbox idempotente. FAC-004 implementou identidade persistida, registro e heartbeat autenticado do worker no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1` e aguarda revisão. O piloto externo permanece adiado até o núcleo estar pronto.
+FAC-000 e FAC-002 a FAC-008 estão DONE. O controle possui autenticação administrativa, projetos/tickets, outbox idempotente e orquestracao persistida. O worker tem identidade, heartbeat, probe sintetico de orquestracao, leases, fencing e checkpoints. Runtime Codex, contexto, guard, sandbox e snapshots estao implementados como componentes; sua composicao controlada pertence ao FAC-009. O piloto externo permanece adiado até o núcleo estar pronto.
 
 ## Fronteiras e contratos
 
@@ -15,9 +15,9 @@ FAC-000 e FAC-003 estão DONE. O controle possui autenticação administrativa, 
 
 ## Sequência recomendada
 
-1. Revisar e aceitar FAC-004 na revisão exata.
-2. Executar FAC-002 em cenário sintético e comprovar ao menos um cliente oficial elegível antes do FAC-005.
-3. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem de dependências até FAC-011.
+1. Executar FAC-009 em branch/worktree proprio, compondo developer, checks e reviewer sem ampliar providers.
+2. Preservar checkpoint e quiescencia antes de qualquer nova tentativa ou troca de papel.
+3. Evoluir segundo provider e gates na ordem de dependências até FAC-011.
 4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
@@ -26,4 +26,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam dispatcher da outbox, idempotência de jobs, claim, leases/fencing, sandbox efetivo, sanitização completa de logs, rotação/multiusuário, backups restauráveis e adapters validados com clientes oficiais. Esses itens não devem ser inferidos a partir do registro e heartbeat sintéticos.
+Ainda faltam a composicao executora do FAC-009, segundo provider/handoff, gate documental automatizado, painel de runs/SSE, rotação/multiusuário, backups restauráveis e piloto real. Sandbox e adapter possuem provas isoladas; isso ainda nao comprova o fluxo completo de um ticket.

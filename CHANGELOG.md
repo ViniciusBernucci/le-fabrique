@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.16 - 2026-10-01
+FAC-008 aceito pelo responsavel na revisao corrigida `29061a911e0f6bc5122e9e53511f2f475caf8dce`; FAC-009 passa a ser o proximo ticket READY.
+
 ## 2.15 - 2026-10-01
 FAC-008 corrige a reentrega entre checkpoint e conclusao para reutilizar o attempt parado, conecta o probe sintetico a fila `le-fabrique.execution` e propaga a revisao-base resolvida. Jobs sem SHA-base falham antes do claim; provider, API e cobranca extra continuam desligados. A revisao corrigida aguarda aceite humano.
 

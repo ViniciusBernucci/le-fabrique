@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-007 estão DONE. FAC-008 esta AWAITING_HUMAN; FAC-009 sera o proximo ticket apos o aceite. O piloto externo permanece adiado até a validação operacional.
+FAC-000 e FAC-002 a FAC-008 estão DONE. FAC-009 e o proximo ticket READY. O piloto externo permanece adiado até a validação operacional.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -17,8 +17,8 @@ FAC-000 e FAC-002 a FAC-007 estão DONE. FAC-008 esta AWAITING_HUMAN; FAC-009 se
 - FAC-005: DONE — Runtime Gateway e adapter Codex aceitos na revisão `9102fcc614739fd7bd7ca4992b16617db92ca66f`; dependências: FAC-002, FAC-004.
 - FAC-006: DONE — Context Builder e RuntimeGuard aceitos na revisão `ea8cf7afb0e55840722f306262b5334bb408b51a`; dependências: FAC-003.
 - FAC-007: DONE — Sandbox e snapshots aceitos na revisão `2bf14f35de64f118ec8224fee6151e60027dedb0`; dependências: FAC-004, FAC-005.
-- FAC-008: AWAITING_HUMAN — Orquestrador e checkpoints corrigidos na revisao funcional `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d`; dependências: FAC-006, FAC-007.
-- FAC-009: PLANEJADO — Developer, checks e revisão; dependências: FAC-008.
+- FAC-008: DONE — Orquestrador e checkpoints aceitos na revisao `29061a911e0f6bc5122e9e53511f2f475caf8dce`; dependências: FAC-006, FAC-007.
+- FAC-009: READY — Developer, checks e revisão; dependências: FAC-008.
 - FAC-010: PLANEJADO — Segundo provider e handoff automático; dependências: FAC-005, FAC-008, FAC-009.
 - FAC-011: PLANEJADO — Gate documental e Provider Manager; dependências: FAC-009, FAC-010.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.

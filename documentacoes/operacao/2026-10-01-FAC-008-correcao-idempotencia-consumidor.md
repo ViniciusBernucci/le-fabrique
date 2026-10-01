@@ -1,7 +1,7 @@
 # FAC-008 — Correcao de idempotencia e consumidor
 
 Data: 2026-10-01
-Estado: AWAITING_HUMAN
+Estado: DONE
 Revisao funcional: `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d`
 
 ## Objetivo e resultado
@@ -35,4 +35,4 @@ Reverter `5a766c4c928dda27c3b1417afbc4ec3e1de52d0d` remove o segundo consumidor 
 
 ## Estado do aceite
 
-FAC-008 permanece `AWAITING_HUMAN`. FAC-009 so pode iniciar depois do aceite da revisao corrigida e de sua documentacao exata.
+O responsavel aceitou explicitamente a revisao `29061a911e0f6bc5122e9e53511f2f475caf8dce` em 2026-10-01. FAC-008 esta `DONE`; FAC-009 pode ser preparado em branch/worktree proprio.
