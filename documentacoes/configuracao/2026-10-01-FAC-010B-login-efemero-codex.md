@@ -1,6 +1,6 @@
 # Entrega FAC-010B — Login efemero do Codex
 
-Data: 2026-10-01. Status: AWAITING_HUMAN.
+Data: 2026-10-01. Status: DONE; aceita na revisao `d39412282d9401b2a22c70eb4b353883e559be4c`.
 
 ## Revisoes e funcionamento
 

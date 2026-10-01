@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.25 - 2026-10-01
+FAC-010B aceito pelo responsavel na revisao `d39412282d9401b2a22c70eb4b353883e559be4c`. FAC-010C passa a ser o proximo incremento para segundo adapter e handoff seguro.
+
 ## 2.24 - 2026-10-01
 FAC-010B implementa login Codex por device code iniciado no painel: sessao/outbox persistem somente metadados, desafio fica no Redis privado com TTL, worker usa comando fixo e confirma autenticacao por status antes de marcar `AVAILABLE`. Fixtures passaram sem login real; aguarda aceite.
 
