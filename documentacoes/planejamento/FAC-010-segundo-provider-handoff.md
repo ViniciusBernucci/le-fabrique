@@ -1,10 +1,12 @@
 # FAC-010 — Segundo provider e handoff automatico
 
-Status: WAITING_PROVIDER
+Status: IN_PROGRESS — dividido em FAC-010A/B/C
 
 ## Objetivo
 
 Validar um segundo cliente oficial em modo subscription-only, implementar seu adapter e rotear handoff por checkpoint/snapshot depois de quiescencia confirmada, sem transferir sessao privada nem habilitar API ou cobranca extra.
+
+Execucao incremental: FAC-010A verifica instalacoes pelo worker; FAC-010B fornece login interativo efemero iniciado no painel; FAC-010C valida o segundo adapter e handoff. A divisao reduz o risco R3 sem alterar os criterios finais deste ticket.
 
 ## Atual e esperado
 

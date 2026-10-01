@@ -75,7 +75,7 @@ Aceite: Critérios comprovados na revisão exata; falhas anteriores separadas; a
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-010 — Segundo provider e handoff automático
-Sprint: Sprint 2. Dependências: FAC-005, FAC-008, FAC-009, FAC-011. Esforço estimado: 2-3 dias. Status: READY.
+Sprint: Sprint 2. Dependências: FAC-005, FAC-008, FAC-009, FAC-011. Esforço estimado: 2-3 dias. Status: IN_PROGRESS (FAC-010A READY).
 Descrição: Preflight segundo adapter, roteamento por capacidade e troca após término confirmado.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Simular cota, preservar patch/untracked, outro cliente continua sem writer concorrente; sem provider aguarda.
