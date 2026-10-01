@@ -62,6 +62,15 @@ enum ProviderVerificationStatus {
   FAILED
 }
 
+enum ProviderOnboardingStatus {
+  PENDING
+  RUNNING
+  AWAITING_USER
+  COMPLETED
+  FAILED
+  EXPIRED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -200,4 +209,22 @@ model ProviderVerification {
   @@index([installationId, createdAt])
   @@index([status, createdAt])
   @@map("provider_verifications")
+}
+
+model ProviderOnboardingSession {
+  id             String                   @id @default(uuid()) @db.Uuid
+  installationId String                   @map("installation_id")
+  provider       String
+  status         ProviderOnboardingStatus @default(PENDING)
+  workerId       String?                  @db.Uuid @map("worker_id")
+  providerState  String?                  @map("provider_state")
+  message        String?
+  expiresAt      DateTime                 @map("expires_at")
+  createdAt      DateTime                 @default(now()) @map("created_at")
+  startedAt      DateTime?                @map("started_at")
+  completedAt    DateTime?                @map("completed_at")
+
+  @@index([installationId, createdAt])
+  @@index([status, createdAt])
+  @@map("provider_onboarding_sessions")
 }

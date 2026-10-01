@@ -8,6 +8,8 @@ import {
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
+  providerOnboardingChallengeSchema,
+  providerOnboardingJobSchema,
   readyTicketSchema,
   runtimeEventSchema,
   runtimeExecutionRequestSchema,
@@ -212,6 +214,34 @@ describe("shared contracts", () => {
         },
       }),
     ).toThrow();
+  });
+
+  it("accepts only bounded official provider onboarding challenges", () => {
+    const expiresAt = "2026-10-01T12:10:00.000Z";
+    expect(
+      providerOnboardingChallengeSchema.parse({
+        verificationUri: "https://auth.openai.com/device",
+        userCode: "TEST-CODE",
+        expiresAt,
+      }),
+    ).toBeDefined();
+    expect(() =>
+      providerOnboardingChallengeSchema.parse({
+        verificationUri: "https://malicious.example/device",
+        userCode: "TEST-CODE",
+        expiresAt,
+      }),
+    ).toThrow();
+    expect(
+      providerOnboardingJobSchema.parse({
+        schemaVersion: 1,
+        eventId: crypto.randomUUID(),
+        sessionId: crypto.randomUUID(),
+        installationId: "codex-main",
+        provider: "CODEX",
+        expiresAt,
+      }),
+    ).toBeDefined();
   });
 
   it("validates orchestration jobs and complete checkpoint identity", () => {

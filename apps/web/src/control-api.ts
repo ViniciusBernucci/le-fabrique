@@ -5,9 +5,14 @@ import {
   type FactorySettings,
   factorySettingsSchema,
   type Project,
+  type ProviderOnboardingChallenge,
+  type ProviderOnboardingSession,
   type ProviderVerification,
   projectListSchema,
   projectSchema,
+  providerOnboardingChallengeSchema,
+  providerOnboardingSessionListSchema,
+  providerOnboardingSessionSchema,
   providerVerificationListSchema,
   providerVerificationSchema,
   type Ticket,
@@ -92,5 +97,31 @@ export async function requestProviderVerification(
     await request(`/settings/installations/${installationId}/verifications`, token, {
       method: "POST",
     }),
+  );
+}
+
+export async function listProviderOnboardingSessions(
+  token: string,
+): Promise<ProviderOnboardingSession[]> {
+  return providerOnboardingSessionListSchema.parse(await request("/settings/onboarding", token));
+}
+
+export async function requestProviderOnboarding(
+  token: string,
+  installationId: string,
+): Promise<ProviderOnboardingSession> {
+  return providerOnboardingSessionSchema.parse(
+    await request(`/settings/installations/${installationId}/onboarding`, token, {
+      method: "POST",
+    }),
+  );
+}
+
+export async function getProviderOnboardingChallenge(
+  token: string,
+  sessionId: string,
+): Promise<ProviderOnboardingChallenge> {
+  return providerOnboardingChallengeSchema.parse(
+    await request(`/settings/onboarding/${sessionId}/challenge`, token),
   );
 }

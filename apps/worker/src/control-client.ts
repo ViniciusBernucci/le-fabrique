@@ -1,15 +1,18 @@
 import { arch, platform } from "node:os";
 import type {
+  CompleteProviderOnboarding,
   CompleteProviderVerification,
   OrchestrationCheckpointRequest,
   OrchestrationClaimRequest,
   OrchestrationCompleteRequest,
   OrchestrationJob,
   OrchestrationLeaseRequest,
+  ProviderOnboardingChallenge,
 } from "@le-fabrique/contracts";
 import {
   orchestrationClaimSchema,
   orchestrationStateSchema,
+  providerOnboardingSessionSchema,
   providerVerificationSchema,
   workerHeartbeatSchema,
   workerSchema,
@@ -41,7 +44,7 @@ export class ControlClient {
         body: JSON.stringify({
           id: this.config.WORKER_ID,
           name: this.config.WORKER_NAME,
-          capabilities: ["probe", "subscription-client-preflight"],
+          capabilities: ["probe", "subscription-client-preflight", "codex-device-onboarding"],
           os: platform(),
           arch: arch(),
           nodeVersion: process.version,
@@ -114,6 +117,39 @@ export class ControlClient {
   ) {
     return providerVerificationSchema.parse(
       await this.request(`/internal/provider-verifications/${verificationId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startProviderOnboarding(sessionId: string) {
+    return providerOnboardingSessionSchema.parse(
+      await this.request(`/internal/provider-onboarding/${sessionId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async publishProviderOnboardingChallenge(
+    sessionId: string,
+    challenge: ProviderOnboardingChallenge,
+  ) {
+    return providerOnboardingSessionSchema.parse(
+      await this.request(`/internal/provider-onboarding/${sessionId}/challenge`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID, challenge }),
+      }),
+    );
+  }
+
+  async completeProviderOnboarding(
+    sessionId: string,
+    input: Omit<CompleteProviderOnboarding, "workerId">,
+  ) {
+    return providerOnboardingSessionSchema.parse(
+      await this.request(`/internal/provider-onboarding/${sessionId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

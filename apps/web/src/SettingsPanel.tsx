@@ -3,12 +3,17 @@ import type {
   FactoryConfiguration,
   FactorySettings,
   ProviderInstallation,
+  ProviderOnboardingChallenge,
+  ProviderOnboardingSession,
   ProviderVerification,
 } from "@le-fabrique/contracts";
 import { useEffect, useMemo, useState } from "react";
 import {
   getFactorySettings,
+  getProviderOnboardingChallenge,
+  listProviderOnboardingSessions,
   listProviderVerifications,
+  requestProviderOnboarding,
   requestProviderVerification,
   updateFactorySettings,
 } from "./control-api";
@@ -25,16 +30,70 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const [saving, setSaving] = useState(false);
   const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
+  const [onboardingSessions, setOnboardingSessions] = useState<ProviderOnboardingSession[]>([]);
+  const [onboardingChallenges, setOnboardingChallenges] = useState<
+    Record<string, ProviderOnboardingChallenge>
+  >({});
+  const hasActiveOnboarding = onboardingSessions.some((item) =>
+    ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+  );
 
   useEffect(() => {
-    Promise.all([getFactorySettings(token), listProviderVerifications(token)])
-      .then(([data, history]) => {
+    Promise.all([
+      getFactorySettings(token),
+      listProviderVerifications(token),
+      listProviderOnboardingSessions(token),
+    ])
+      .then(([data, history, sessions]) => {
         setSettings(data);
         setDraft(structuredClone(data.configuration));
         setVerifications(history);
+        setOnboardingSessions(sessions);
       })
       .catch(() => onMessage("Falha ao carregar as configurações."));
   }, [onMessage, token]);
+
+  useEffect(() => {
+    if (!hasActiveOnboarding) return;
+    const refresh = async () => {
+      const [data, sessions] = await Promise.all([
+        getFactorySettings(token),
+        listProviderOnboardingSessions(token),
+      ]);
+      setSettings(data);
+      setDraft((current) => {
+        if (!current) return current;
+        const observedStates = new Map(
+          data.configuration.installations.map((item) => [item.id, item.state]),
+        );
+        return {
+          ...current,
+          installations: current.installations.map((item) => ({
+            ...item,
+            state: observedStates.get(item.id) ?? item.state,
+          })),
+        };
+      });
+      setOnboardingSessions(sessions);
+      const challenges = await Promise.all(
+        sessions
+          .filter((item) => ["RUNNING", "AWAITING_USER"].includes(item.status))
+          .map(async (item) => {
+            try {
+              return [item.id, await getProviderOnboardingChallenge(token, item.id)] as const;
+            } catch {
+              return null;
+            }
+          }),
+      );
+      setOnboardingChallenges(Object.fromEntries(challenges.filter((item) => item !== null)));
+    };
+    void refresh().catch(() => onMessage("Falha ao atualizar o login do Codex."));
+    const timer = setInterval(() => {
+      void refresh().catch(() => onMessage("Falha ao atualizar o login do Codex."));
+    }, 2_000);
+    return () => clearInterval(timer);
+  }, [hasActiveOnboarding, onMessage, token]);
 
   useEffect(() => {
     if (!verifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))) return;
@@ -165,6 +224,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     }
   }
 
+  async function connect(installationId: string) {
+    try {
+      const session = await requestProviderOnboarding(token, installationId);
+      setOnboardingSessions((current) => [
+        session,
+        ...current.filter((item) => item.id !== session.id),
+      ]);
+      onMessage("Login oficial iniciado; aguarde o código temporário.");
+    } catch {
+      onMessage("Não foi possível iniciar o login desta instalação.");
+    }
+  }
+
   if (!draft || !settings || !summary) return <section className="panel">Carregando…</section>;
 
   return (
@@ -232,6 +304,33 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                     {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
                   </p>
                 ) : null;
+              })()}
+              {(() => {
+                const session = onboardingSessions.find(
+                  (item) => item.installationId === installation.id,
+                );
+                const challenge = session ? onboardingChallenges[session.id] : undefined;
+                if (!session) return null;
+                return (
+                  <div className="onboarding-status">
+                    <p>
+                      Login: <strong>{statusLabel(session.status)}</strong>
+                    </p>
+                    {challenge ? (
+                      <div className="onboarding-challenge">
+                        <span>Abra o site oficial e informe o código temporário:</span>
+                        <a
+                          href={challenge.verificationUri}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {challenge.verificationUri}
+                        </a>
+                        <code>{challenge.userCode}</code>
+                      </div>
+                    ) : null}
+                  </div>
+                );
               })()}
               <div className="account-title">
                 <div
@@ -333,6 +432,22 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
               >
                 Verificar instalação
               </button>
+              {installation.provider === "CODEX" &&
+              installation.enabled &&
+              installation.state === "AUTH_REQUIRED" ? (
+                <button
+                  className="secondary-action account-action"
+                  type="button"
+                  onClick={() => connect(installation.id)}
+                  disabled={onboardingSessions.some(
+                    (item) =>
+                      item.installationId === installation.id &&
+                      ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                  )}
+                >
+                  Conectar assinatura Codex
+                </button>
+              ) : null}
               <button
                 className="remove-action"
                 type="button"

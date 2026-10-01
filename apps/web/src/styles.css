@@ -263,6 +263,29 @@ button:disabled {
   color: #9aabc1;
   font-size: 0.72rem;
 }
+
+.onboarding-status {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.onboarding-status p {
+  margin: 0;
+}
+
+.onboarding-challenge {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+  overflow-wrap: anywhere;
+}
+
+.onboarding-challenge code {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
 .verification-line strong {
   color: #63e6be;
 }

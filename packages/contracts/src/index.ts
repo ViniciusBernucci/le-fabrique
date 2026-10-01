@@ -503,6 +503,84 @@ export const completeProviderVerificationSchema = z
   .strict();
 export type CompleteProviderVerification = z.infer<typeof completeProviderVerificationSchema>;
 
+export const providerOnboardingStatusSchema = z.enum([
+  "PENDING",
+  "RUNNING",
+  "AWAITING_USER",
+  "COMPLETED",
+  "FAILED",
+  "EXPIRED",
+]);
+export type ProviderOnboardingStatus = z.infer<typeof providerOnboardingStatusSchema>;
+
+export const providerOnboardingSessionSchema = z
+  .object({
+    id: z.uuid(),
+    installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    provider: z.literal("CODEX"),
+    status: providerOnboardingStatusSchema,
+    workerId: z.uuid().nullable(),
+    providerState: settingsProviderStateSchema.nullable(),
+    message: z.string().trim().min(1).max(240).nullable(),
+    expiresAt: z.iso.datetime(),
+    createdAt: z.iso.datetime(),
+    startedAt: z.iso.datetime().nullable(),
+    completedAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+export type ProviderOnboardingSession = z.infer<typeof providerOnboardingSessionSchema>;
+export const providerOnboardingSessionListSchema = z.array(providerOnboardingSessionSchema);
+
+export const providerOnboardingJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    eventId: z.uuid(),
+    sessionId: z.uuid(),
+    installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    provider: z.literal("CODEX"),
+    expiresAt: z.iso.datetime(),
+  })
+  .strict();
+export type ProviderOnboardingJob = z.infer<typeof providerOnboardingJobSchema>;
+
+export const providerOnboardingChallengeSchema = z
+  .object({
+    verificationUri: z
+      .url()
+      .max(500)
+      .refine((value) => {
+        const url = new URL(value);
+        return (
+          url.protocol === "https:" &&
+          (url.hostname === "openai.com" ||
+            url.hostname.endsWith(".openai.com") ||
+            url.hostname === "chatgpt.com" ||
+            url.hostname.endsWith(".chatgpt.com"))
+        );
+      }, "Challenge URL must use an official HTTPS host"),
+    userCode: z
+      .string()
+      .trim()
+      .regex(/^[A-Z0-9]{4,12}(?:-[A-Z0-9]{4,12}){0,3}$/),
+    expiresAt: z.iso.datetime(),
+  })
+  .strict();
+export type ProviderOnboardingChallenge = z.infer<typeof providerOnboardingChallengeSchema>;
+
+export const startProviderOnboardingSchema = z.object({ workerId: z.uuid() }).strict();
+export const publishProviderOnboardingChallengeSchema = z
+  .object({ workerId: z.uuid(), challenge: providerOnboardingChallengeSchema })
+  .strict();
+export const completeProviderOnboardingSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED", "EXPIRED"]),
+    providerState: settingsProviderStateSchema,
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict();
+export type CompleteProviderOnboarding = z.infer<typeof completeProviderOnboardingSchema>;
+
 export const contextSourceRoleSchema = z.enum([
   "INSTRUCTION",
   "TICKET",
