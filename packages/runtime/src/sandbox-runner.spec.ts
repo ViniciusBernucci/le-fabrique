@@ -39,24 +39,37 @@ afterEach(async () => {
 
 describe("SandboxRunner Linux integration", () => {
   it("hides host home, Docker socket, inherited keys and external network", async () => {
+    await symlink("/etc/hostname", resolve(workspace, "host-marker-link"));
     await writeFile(
       resolve(workspace, "probe.cjs"),
       `
 const fs = require("node:fs");
 const net = require("node:net");
+const { spawnSync } = require("node:child_process");
 const result = {
   cwd: process.cwd(),
-  authReadable: fs.existsSync("/home/vinicius/.codex/auth.json"),
-  controlVisible: fs.existsSync("/home/vinicius/le-fabrique"),
+  hostRootVisible: fs.existsSync("/etc/hostname"),
+  homeEntries: fs.readdirSync("/home"),
+  hostSymlinkReadable: fs.existsSync("/mnt/host-marker-link"),
   dockerSocketVisible: fs.existsSync("/var/run/docker.sock"),
+  hostVarVisible: fs.readdirSync("/var/lib").length > 0,
+  cgroupVisible: fs.existsSync("/sys/fs/cgroup/memory.max"),
   inheritedKey: typeof process.env.OPENAI_API_KEY !== "undefined",
   ci: process.env.CI,
   networkBlocked: false,
+  privilegesDropped: false,
+  mountEscapeDenied: false,
 };
-const cgroup = fs.readFileSync("/proc/self/cgroup", "utf8").trim().split("::")[1];
-const cgroupRoot = "/sys/fs/cgroup" + cgroup;
-result.memoryMax = fs.readFileSync(cgroupRoot + "/memory.max", "utf8").trim();
-result.processMax = fs.readFileSync(cgroupRoot + "/pids.max", "utf8").trim();
+fs.writeFileSync("/tmp/sandbox-temporary", "allowed");
+const processStatus = fs.readFileSync("/proc/self/status", "utf8");
+const capabilitySet = processStatus.match(/^CapEff:\\s+([0-9a-f]+)$/m)?.[1];
+const permittedSet = processStatus.match(/^CapPrm:\\s+([0-9a-f]+)$/m)?.[1];
+const noNewPrivileges = processStatus.match(/^NoNewPrivs:\\s+(\\d+)$/m)?.[1];
+result.privilegesDropped =
+  capabilitySet === "0000000000000000" &&
+  permittedSet === "0000000000000000" &&
+  noNewPrivileges === "1";
+result.mountEscapeDenied = spawnSync("/usr/bin/mount", ["-o", "remount,rw", "/mnt"], { stdio: "ignore" }).status !== 0;
 const socket = net.connect({ host: "1.1.1.1", port: 53 });
 socket.setTimeout(500);
 socket.on("connect", () => { socket.destroy(); console.log(JSON.stringify(result)); });
@@ -71,14 +84,17 @@ socket.on("error", () => { result.networkBlocked = true; console.log(JSON.string
       expect(result.stoppedConfirmed).toBe(true);
       expect(JSON.parse(result.stdout.trim())).toEqual({
         cwd: "/mnt",
-        authReadable: false,
-        controlVisible: false,
+        hostRootVisible: false,
+        homeEntries: [],
+        hostSymlinkReadable: false,
         dockerSocketVisible: false,
+        hostVarVisible: false,
+        cgroupVisible: false,
         inheritedKey: false,
         ci: "true",
         networkBlocked: true,
-        memoryMax: String(256 * 1024 * 1024),
-        processMax: "64",
+        privilegesDropped: true,
+        mountEscapeDenied: true,
       });
       expect(result.stdout).not.toContain("synthetic-must-not-reach-sandbox");
     } finally {
