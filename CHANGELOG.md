@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.62 - 2026-10-02
+FAC-012H fica READY após teste sintético mostrar que `SandboxRunner` ainda permite ler `/etc/hostname` do host; execução de checks permanece bloqueada até troca para uma raiz isolada.
+
 ## 2.61 - 2026-10-02
 FAC-012G conecta DeveloperWorkflow às rotas atuais Developer/Reviewer, selecionando adapters/modelos por função em toda chamada e falhando antes do adapter quando a rota falta; consumer permanece no probe.
 
