@@ -72,6 +72,7 @@
 - [planejamento/FAC-012I-perfil-execucao-projeto.md](planejamento/FAC-012I-perfil-execucao-projeto.md)
 - [planejamento/FAC-012J-checkout-confiavel-worker.md](planejamento/FAC-012J-checkout-confiavel-worker.md)
 - [planejamento/FAC-012K-lease-vivo-cancelamento.md](planejamento/FAC-012K-lease-vivo-cancelamento.md)
+- [planejamento/FAC-012L-consumer-execucao-real.md](planejamento/FAC-012L-consumer-execucao-real.md)
 - [operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md](operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md)
 - [infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md](infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md)
 - [operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md](operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md)

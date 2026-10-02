@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.73 - 2026-10-03
+FAC-012L fica READY para ligar com segurança o consumer real a checkout, workflow configurado, lease/fencing, quiescência e checkpoint; default desabilitado, sem provider ou piloto.
+
 ## 2.72 - 2026-10-03
 FAC-012K implementa primitiva isolada para renovar lease com fencing token, abortar e aguardar confirmação de parada quando a autoridade é perdida; 211 testes, typecheck, lint e build passaram. Consumer, provider e checkout reais continuam desligados; aguarda revisão humana.
 
