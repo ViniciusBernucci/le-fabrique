@@ -66,6 +66,7 @@
 - [planejamento/FAC-012F-rota-agente-configurada.md](planejamento/FAC-012F-rota-agente-configurada.md)
 - [planejamento/FAC-012G-workflow-rotas-por-funcao.md](planejamento/FAC-012G-workflow-rotas-por-funcao.md)
 - [planejamento/FAC-012H-isolamento-raiz-sandbox.md](planejamento/FAC-012H-isolamento-raiz-sandbox.md)
+- [planejamento/FAC-012I-perfil-execucao-projeto.md](planejamento/FAC-012I-perfil-execucao-projeto.md)
 - [operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md](operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)

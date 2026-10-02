@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.64 - 2026-10-02
+FAC-012I fica READY para configurar perfil de execução por projeto e aprovar checks/contexto explicitamente antes do gate READY; sem checkout ou execução real.
+
 ## 2.63 - 2026-10-02
 FAC-012H implementa raiz de sandbox com `pivot_root`, runtime read-only, workspace isolado e remoção de capabilities. A leitura sintética de `/etc/hostname` que antes funcionava agora é negada; a suíte confirma bloqueio de host paths e mount escape.
 

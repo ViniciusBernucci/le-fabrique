@@ -14,4 +14,6 @@ FAC-012G implementado após a base `03d7a9b` e aguarda aceite humano. O workflow
 
 FAC-012H implementado em branch isolada; aguarda revisão/aceite humano. O sandbox agora troca para uma raiz mínima e testes sintéticos bloqueiam leitura do host e tentativa de remontar o workspace.
 
+FAC-012I está READY para configurar contexto e checks explicitamente aprovados por projeto, persistidos na definição versionada e exigidos antes de READY; nenhum consumer/provider será ligado.
+
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.
