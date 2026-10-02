@@ -8,6 +8,9 @@ export async function processOrchestrationFixture(
 ): Promise<{ runId: string; attemptId: string }> {
   const job = orchestrationJobSchema.parse(payload);
   if (!job.baseRevision) throw new Error("Fixture base revision is unavailable");
+  if (!job.executionSpecification) {
+    throw new Error("Fixture execution specification is unavailable");
+  }
   const claim = await control.claim(job);
   await control.checkpoint(claim.attemptId, {
     fencingToken: claim.fencingToken,

@@ -2,6 +2,15 @@ import { describe, expect, it, vi } from "vitest";
 import { ControlService } from "./control.service";
 
 const now = new Date("2026-09-30T12:00:00.000Z");
+const definitionInput = {
+  summary: "Projeto configurado no painel",
+  externalStack: "Stack externa preservada",
+  instructions: "Nao executar deploy.",
+  allowedPaths: ["src"],
+  forbiddenPaths: ["secrets"],
+  checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+};
+
 const draft = {
   id: "00000000-0000-4000-8000-000000000002",
   projectId: "00000000-0000-4000-8000-000000000001",
@@ -12,16 +21,12 @@ const draft = {
   version: 1,
   createdAt: now,
   updatedAt: now,
-  project: { baseRef: "a".repeat(40), definition: { version: 3 } },
-};
-
-const definitionInput = {
-  summary: "Projeto configurado no painel",
-  externalStack: "Stack externa preservada",
-  instructions: "Nao executar deploy.",
-  allowedPaths: ["src"],
-  forbiddenPaths: ["secrets"],
-  checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+  project: {
+    name: "Projeto externo",
+    repoUrl: "https://example.test/repository.git",
+    baseRef: "a".repeat(40),
+    definition: { version: 3, configuration: definitionInput },
+  },
 };
 
 describe("ControlService", () => {
@@ -50,6 +55,14 @@ describe("ControlService", () => {
           payload: expect.objectContaining({
             baseRevision: "a".repeat(40),
             projectDefinitionVersion: 3,
+            executionSpecification: expect.objectContaining({
+              project: expect.objectContaining({
+                id: draft.projectId,
+                definitionVersion: 3,
+                definition: definitionInput,
+              }),
+              ticket: expect.objectContaining({ id: draft.id, version: 2 }),
+            }),
           }),
         }),
       }),

@@ -376,6 +376,55 @@ describe("shared contracts", () => {
     ).toThrow();
   });
 
+  it("rejects an execution specification that does not match its job envelope", () => {
+    const projectId = crypto.randomUUID();
+    const ticketId = crypto.randomUUID();
+    const job = {
+      schemaVersion: 1 as const,
+      eventId: crypto.randomUUID(),
+      projectId,
+      ticketId,
+      ticketVersion: 2,
+      baseRevision: "a".repeat(40),
+      projectDefinitionVersion: 3,
+      executionSpecification: {
+        schemaVersion: 1 as const,
+        project: {
+          id: projectId,
+          name: "Projeto externo",
+          repoUrl: "https://example.test/repository.git",
+          baseRevision: "a".repeat(40),
+          definitionVersion: 3,
+          definition: {
+            summary: "Projeto configurado",
+            externalStack: "Stack externa",
+            instructions: "Nao executar deploy.",
+            allowedPaths: ["src"],
+            forbiddenPaths: ["secrets"],
+            checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+          },
+        },
+        ticket: {
+          id: ticketId,
+          version: 2,
+          title: "Incremento",
+          objective: "Implementar incremento",
+          acceptanceCriteria: ["Checks passam"],
+        },
+      },
+    };
+    expect(orchestrationJobSchema.parse(job)).toBeDefined();
+    expect(() =>
+      orchestrationJobSchema.parse({
+        ...job,
+        executionSpecification: {
+          ...job.executionSpecification,
+          ticket: { ...job.executionSpecification.ticket, version: 3 },
+        },
+      }),
+    ).toThrow();
+  });
+
   it("bounds developer workflow corrections and trusted checks", () => {
     const base = {
       schemaVersion: 1 as const,

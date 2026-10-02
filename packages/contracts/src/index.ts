@@ -1349,7 +1349,33 @@ export const snapshotRestoreResultSchema = z.object({
 });
 export type SnapshotRestoreResult = z.infer<typeof snapshotRestoreResultSchema>;
 
-export const orchestrationJobSchema = z.object({
+export const executionSpecificationSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    project: z
+      .object({
+        id: z.uuid(),
+        name: z.string().trim().min(1).max(120),
+        repoUrl: z.url(),
+        baseRevision: gitCommitShaSchema,
+        definitionVersion: z.number().int().positive(),
+        definition: projectDefinitionInputSchema,
+      })
+      .strict(),
+    ticket: z
+      .object({
+        id: z.uuid(),
+        version: z.number().int().positive(),
+        title: z.string().trim().min(1).max(160),
+        objective: z.string().trim().min(1).max(4000),
+        acceptanceCriteria: z.array(z.string().trim().min(1).max(1000)).min(1).max(20),
+      })
+      .strict(),
+  })
+  .strict();
+export type ExecutionSpecification = z.infer<typeof executionSpecificationSchema>;
+
+const orchestrationJobFieldsSchema = z.object({
   schemaVersion: z.literal(1),
   eventId: z.uuid(),
   ticketId: z.uuid(),
@@ -1357,13 +1383,47 @@ export const orchestrationJobSchema = z.object({
   ticketVersion: z.number().int().positive(),
   baseRevision: gitCommitShaSchema.nullable().default(null),
   projectDefinitionVersion: z.number().int().positive().nullable().default(null),
+  executionSpecification: executionSpecificationSchema.nullable().default(null),
 });
+
+function validateExecutionSpecificationConsistency(
+  job: z.infer<typeof orchestrationJobFieldsSchema>,
+  context: z.RefinementCtx,
+): void {
+  const specification = job.executionSpecification;
+  if (!specification) return;
+  const mismatches = [
+    [specification.project.id !== job.projectId, "projectId"],
+    [specification.ticket.id !== job.ticketId, "ticketId"],
+    [specification.ticket.version !== job.ticketVersion, "ticketVersion"],
+    [specification.project.baseRevision !== job.baseRevision, "baseRevision"],
+    [
+      specification.project.definitionVersion !== job.projectDefinitionVersion,
+      "projectDefinitionVersion",
+    ],
+  ] as const;
+  for (const [mismatch, field] of mismatches) {
+    if (mismatch) {
+      context.addIssue({
+        code: "custom",
+        path: ["executionSpecification", field],
+        message: `Execution specification does not match ${field}`,
+      });
+    }
+  }
+}
+
+export const orchestrationJobSchema = orchestrationJobFieldsSchema.superRefine(
+  validateExecutionSpecificationConsistency,
+);
 export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
 
-export const orchestrationClaimRequestSchema = orchestrationJobSchema.extend({
-  workerId: z.uuid(),
-  leaseDurationMs: z.number().int().min(15_000).max(300_000),
-});
+export const orchestrationClaimRequestSchema = orchestrationJobFieldsSchema
+  .extend({
+    workerId: z.uuid(),
+    leaseDurationMs: z.number().int().min(15_000).max(300_000),
+  })
+  .superRefine(validateExecutionSpecificationConsistency);
 export type OrchestrationClaimRequest = z.infer<typeof orchestrationClaimRequestSchema>;
 
 export const orchestrationClaimSchema = z.object({

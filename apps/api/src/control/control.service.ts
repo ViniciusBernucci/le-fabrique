@@ -1,6 +1,7 @@
 import {
   type CreateProject,
   type CreateTicket,
+  executionSpecificationSchema,
   gitCommitShaSchema,
   type Project,
   type ProjectDefinition,
@@ -161,7 +162,14 @@ export class ControlService {
       const ticket = await transaction.ticket.findUnique({
         where: { id: ticketId },
         include: {
-          project: { select: { baseRef: true, definition: { select: { version: true } } } },
+          project: {
+            select: {
+              name: true,
+              repoUrl: true,
+              baseRef: true,
+              definition: { select: { version: true, configuration: true } },
+            },
+          },
         },
       });
       if (!ticket) throw new NotFoundException("Ticket not found");
@@ -182,6 +190,24 @@ export class ControlService {
       if (!ticket.project.definition) {
         throw new ConflictException("Project definition must be configured before READY");
       }
+      const executionSpecification = executionSpecificationSchema.parse({
+        schemaVersion: 1,
+        project: {
+          id: ticket.projectId,
+          name: ticket.project.name,
+          repoUrl: ticket.project.repoUrl,
+          baseRevision: baseRevision.data,
+          definitionVersion: ticket.project.definition.version,
+          definition: projectDefinitionInputSchema.parse(ticket.project.definition.configuration),
+        },
+        ticket: {
+          id: ticket.id,
+          version: ticket.version + 1,
+          title: ticket.title,
+          objective: ticket.objective,
+          acceptanceCriteria: ticket.acceptanceCriteria,
+        },
+      });
       const updated = await transaction.ticket.updateMany({
         where: { id: ticketId, status: "DRAFT", version: expectedVersion },
         data: { status: "READY", version: { increment: 1 } },
@@ -199,6 +225,7 @@ export class ControlService {
             ticketVersion: readyTicket.version,
             baseRevision: baseRevision.data,
             projectDefinitionVersion: ticket.project.definition.version,
+            executionSpecification,
           } satisfies Prisma.InputJsonValue,
         },
       });
