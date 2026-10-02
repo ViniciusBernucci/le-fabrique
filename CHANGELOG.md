@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.56 - 2026-10-02
+FAC-012E fica READY para disponibilizar ao worker leitura interna da configuração de providers/modelos da interface, sem segredos, mudança de DB ou execução.
+
 ## 2.53 - 2026-10-02
 FAC-012C implementa política read-only por padrão e caminhos explícitos para o SandboxRunner. Lint, typecheck, 172 testes e build passaram; consumer permanece desligado porque o CLI Developer ainda não está confinado.
 
