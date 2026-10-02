@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.67 - 2026-10-02
+FAC-012J implementa preparação isolada de checkout por execução no worker, com host HTTPS allowlisted, autenticação GitHub efêmera somente após confirmar keyring, Git sem shell/config/hooks e SHA detached verificado. 203 testes, typecheck, lint e build passaram; módulo não foi ligado ao consumer, e Git/GH/keyring reais não foram usados.
+
 ## 2.66 - 2026-10-02
 FAC-012J fica READY para preparar checkouts efêmeros, com root/hosts do worker configuráveis, commit exato e sem executar conteúdo do repositório; consumer e rede real permanecem desligados.
 

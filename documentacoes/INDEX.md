@@ -68,6 +68,7 @@
 - [planejamento/FAC-012H-isolamento-raiz-sandbox.md](planejamento/FAC-012H-isolamento-raiz-sandbox.md)
 - [planejamento/FAC-012I-perfil-execucao-projeto.md](planejamento/FAC-012I-perfil-execucao-projeto.md)
 - [planejamento/FAC-012J-checkout-confiavel-worker.md](planejamento/FAC-012J-checkout-confiavel-worker.md)
+- [infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md](infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md)
 - [operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md](operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md)
 - [operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md](operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)

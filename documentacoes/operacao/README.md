@@ -1,6 +1,6 @@
 # Operação da fábrica e worker
 
-FAC-012I exige perfil de execução versionado no projeto antes de READY. O compilador cruza contexto e checks do snapshot com a resolução confiável local. A implementação não fornece ainda checkout local, identidade de serviço validada nem integração do workflow real ao consumidor da fila; manter consumer no probe.
+FAC-012I exige perfil de execução versionado no projeto antes de READY. FAC-012J adiciona materialização segura do checkout no worker, mas o preparador ainda não é chamado pelo consumidor. Continuam pendentes identidade de serviço validada, integração do workflow real à fila e lease/fencing/writer persistidos; manter consumer no probe.
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
@@ -24,6 +24,8 @@ FAC-008 implementa o dispatcher outbox/BullMQ, o protocolo interno de claim, ren
 FAC-009 implementa `DeveloperWorkflow` como coordenador injetavel no worker. Ele cria worktree na revisao exata, constroi contexto, mede baseline, autoriza chamadas pelo guard, executa Developer com escrita, checks argv confiaveis no sandbox, snapshot e Reviewer em execucao separada somente leitura. Falha preexistente e registrada separadamente; regressao nova bloqueia aprovacao. Check sem parada confirmada encerra o fluxo antes de iniciar writer ou capturar snapshot.
 
 FAC-012B compila snapshot FAC-012A em `DeveloperWorkflowRequest` após reconciliar projeto/URL/SHA contra perfil confiável do worker. Checks configurados precisam corresponder exatamente a uma allowlist em argv; fontes de contexto ficam em caminhos permitidos e fora dos proibidos. Limites e modelo entram por configuração validada, não por hardcode. O compilador ainda não é chamado pelo consumer.
+
+FAC-012J adiciona `prepareRepositoryCheckout` como serviço confiável fora do sandbox: root/hosts são configuração local, repo URL é HTTPS sem credenciais e host allowlisted, SHA é exato e o destino combina UUID de projeto/workflow. `gh auth status` precisa provar armazenamento `keyring` antes de `gh auth token`; o token é mantido em memória e enviado ao Git por configuração ambiental host-scoped, nunca por argv, URL, log, job ou controle. Git roda sem shell, `GIT_CONFIG_NOSYSTEM`, hooks ou transferência LFS, e o checkout detached é publicado por rename de diretório privado. O módulo não está ligado ao loop BullMQ; os testes usam runner sintético e não constituem prova da VPS/keyring reais.
 
 FAC-012C torna o `SandboxRunner` read-only por padrão: o contrato aceita caminhos graváveis relativos explícitos, e o runner rejeita caminhos ausentes, fora da raiz ou com symlinks antes de iniciar. O launcher monta o workspace somente leitura e abre apenas os caminhos selecionados. Checks do workflow usam lista vazia. Esta barreira vale para comandos executados pelo SandboxRunner, não para o processo do CLI Developer; manter o consumer desligado até confinar também esse writer e provar inacessibilidade às credenciais oficiais.
 

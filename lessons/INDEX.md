@@ -11,3 +11,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Lease, fencing e checkpoint cobrem falhas diferentes](leases-fencing-checkpoints.md)
 - [Baseline, regressao e review sao sinais diferentes](baseline-regressao-review.md)
 - [Definicao de projeto e compilacao com fronteiras confiaveis](definicao-projeto-configuravel.md)
+- [Checkout confiavel separa credencial e conteudo externo](checkout-confiavel.md)

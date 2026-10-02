@@ -16,6 +16,6 @@ FAC-012H implementado em branch isolada; aguarda revisão/aceite humano. O sandb
 
 FAC-012I está implementado e aguarda aceite humano: contexto e checks explicitamente aprovados por projeto persistem na definição versionada e são exigidos antes de READY; nenhum consumer/provider foi ligado.
 
-FAC-012J está READY para preparar checkout efêmero e exato no worker, com hosts e root operacional explícitos. Não fará checkout remoto nem ligará o consumer neste incremento.
+FAC-012J implementado em biblioteca isolada; aguarda aceite humano. Prepara checkout em root privado a partir do SHA do evento e usa credencial GitHub oficial efêmera após provar keyring, sem expor token. Não foi integrado ao consumer nem exercitado com rede/credenciais reais.
 
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

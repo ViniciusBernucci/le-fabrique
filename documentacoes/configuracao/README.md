@@ -2,6 +2,8 @@
 
 Os checks do perfil de execução pertencem à definição de cada projeto, não às contas/rotas de IA. O operador aprova individualmente os checks autônomos e enumera arquivos de contexto; alteração de nome/comando/argv invalida a aprovação correspondente. O Centro de Configurações continua sendo a única fonte para instalação de clientes, contas e modelos.
 
+Para checkout autenticado FAC-012J, apenas o GitHub CLI oficial sob a identidade do worker pode fornecer credencial efêmera; a origem precisa ser verificada como `keyring`. A integração futura deve reconciliar host/estado conectados nesta interface e nunca persistir token em configuração, job ou controle.
+
 Status: Centro e integracao GitHub ACEITOS ate FAC-011D, revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; provas reais continuam futuras.
 
 ## Funcionamento atual

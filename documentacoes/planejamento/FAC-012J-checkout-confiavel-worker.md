@@ -1,6 +1,6 @@
 # FAC-012J — Checkout confiável no worker
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -28,3 +28,11 @@ Nenhum provider de IA será usado. Testes usam runners sintéticos; nenhum token
 ## Fora de escopo
 
 Ligar o consumer, integração lease/fencing/workflow, sandbox do Developer CLI, teste operacional sob identidade systemd e prova da disponibilidade segura de keyring em VPS. Esses gates continuam impedindo execução real até tickets separados e aceitos.
+
+## Implementação e evidências
+
+Implementado em `apps/worker/src/repository-checkout.ts`, configuração/runtime e testes sintéticos. Hosts entram por `WORKER_REPOSITORY_HOSTS` e o root absoluto por `WORKER_CHECKOUT_ROOT`; sem ambos a preparação falha fechada. `gh auth status` precisa confirmar `tokenSource=keyring` antes da chamada efêmera `gh auth token`. Git recebe credencial em cabeçalho HTTP restrito ao host por variável de ambiente interna, sem argv/remote URL/log; usa `shell:false`, config isolada e comandos fixos. O manager reserva path por lock exclusivo, cria clone 0700, verifica objeto e HEAD exatos, prova estado detached e publica por rename.
+
+Revisão do código: `c587569c484387e9f821a6a4c0f4dcfe81127c36`.
+
+Em 2026-10-02 passaram: worker 80 testes; suíte total 203 (21 contracts, 40 runtime, 55 API, 80 worker, 5 web e 2 launcher); `npm run typecheck`, `npm run lint`, `npm run build`, `git diff --check`. Nenhum comando real `git`/`gh`, host remoto, keyring, banco, fila, provider ou consumer foi usado; todos os processos de teste de checkout usam runner sintético. A revisão exata aguarda aceite humano.
