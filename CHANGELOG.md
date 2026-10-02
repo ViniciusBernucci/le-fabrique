@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.39 - 2026-10-02
+OPS-001 implementa launcher raiz com `.env`, URL same-origin no Vite, retry transitorio limitado do registro do worker e procedimento `db:deploy`. Passaram 148 testes, lint, typecheck, build e schema Prisma; nenhum banco/fila foi alterado e a revisao aguarda aceite.
+
 ## 2.38 - 2026-10-02
 OPS-001 passa a READY para corrigir o bootstrap reproduzido pelo responsavel: carregamento do `.env` raiz, tolerancia limitada a corrida de inicializacao da API e uso de migrations versionadas, sem limpar filas ou aplicar mudancas no banco.
 

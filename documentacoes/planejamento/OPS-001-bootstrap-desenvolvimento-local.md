@@ -1,6 +1,6 @@
 # OPS-001 — Bootstrap confiavel do desenvolvimento local
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -50,4 +50,4 @@ FAC-000, FAC-004 e aceite da FAC-011D registrados. PostgreSQL e Redis locais con
 
 ## Evidencias e aceite
 
-O ticket esta READY na base identificada. A implementacao sera vinculada a uma revisao exata e permanecera `AWAITING_HUMAN` ate aceite explicito.
+Ticket READY: `ab48aead8eec1680e7b15b5f3b7abbaa9340a04d`. Codigo verificado: `12018c3596efceb7bf4d171ca4787a81bfd9c136`. Relatorio: `documentacoes/infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md`. A implementacao permanece `AWAITING_HUMAN` ate aceite explicito da revisao documental exata.

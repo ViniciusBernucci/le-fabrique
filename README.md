@@ -6,7 +6,7 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-02/10/2026. FAC-000 a FAC-009, FAC-010A/B/C e FAC-011A/B/C/D estão aceitos. FAC-010 aguarda Claude e provas GitHub reais; o bootstrap local observado no ensaio manual sera corrigido em incremento isolado. APIs de IA permanecem desligadas.
+02/10/2026. FAC-000 a FAC-009, FAC-010A/B/C e FAC-011A/B/C/D estão aceitos. FAC-010 aguarda Claude e provas GitHub reais; OPS-001 corrige o bootstrap local e aguarda aceite. APIs de IA permanecem desligadas.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
 2. Revisar o Centro de Configuracoes FAC-011 e depois desbloquear o preflight do segundo provider conforme FAC-010; nao usar chave API como atalho. O contrato do piloto externo foi adiado até o núcleo estar pronto, antes do FAC-012.
@@ -29,11 +29,13 @@ cp .env.example .env
 docker compose -f compose.dev.yaml up -d
 npm ci
 npm run db:generate
-npm run db:migrate
+npm run db:deploy
 npm run dev
 ```
 
-O painel fica em `http://localhost:5173` e a API em `http://localhost:3000/api`. Para validar a composição completa, copie `.env.production.example` para `.env`, substitua todos os valores sintéticos e execute `docker compose up -d --build`. Nessa composição, somente o proxy web é publicado em `http://localhost:8080`; API, worker, PostgreSQL e Redis permanecem na rede interna.
+`npm run dev` carrega o `.env` raiz automaticamente; nao e necessario executar `source .env`. O painel fica em `http://localhost:5173` e encaminha `/api` para a API em `http://localhost:3000/api`, inclusive quando o painel e aberto pelo endereco de rede exibido pelo Vite. `db:deploy` aplica somente migrations versionadas; use `db:migrate` apenas ao criar conscientemente uma nova migration.
+
+Para validar a composição completa, copie `.env.production.example` para `.env`, substitua todos os valores sintéticos e execute `docker compose up -d --build`. Nessa composição, somente o proxy web é publicado em `http://localhost:8080`; API, worker, PostgreSQL e Redis permanecem na rede interna.
 
 Checks locais: `npm run lint`, `npm run typecheck`, `npm test` e `npm run build`.
 

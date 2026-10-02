@@ -10,6 +10,7 @@
 - [infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md](infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md)
 - [infraestrutura/2026-09-30-FAC-000-aceite.md](infraestrutura/2026-09-30-FAC-000-aceite.md)
 - [infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md](infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md)
+- [infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md](infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md)
 - [operacao/README.md](operacao/README.md)
 - [operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md](operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md)
 - [operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md](operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md)

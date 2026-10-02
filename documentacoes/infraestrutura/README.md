@@ -16,6 +16,19 @@ Na composição completa, apenas a porta 8080 do Nginx é publicada. Os demais s
 
 `.env.example` atende ao desenvolvimento local. `.env.production.example` documenta as variáveis da composição completa e contém apenas valores sintéticos, que precisam ser trocados antes de qualquer implantação.
 
+O bootstrap local atual e:
+
+```bash
+cp .env.example .env
+docker compose -f compose.dev.yaml up -d
+npm ci
+npm run db:generate
+npm run db:deploy
+npm run dev
+```
+
+O launcher raiz carrega `.env` antes de iniciar os tres workspaces. O painel usa `VITE_API_URL=/api` e o proxy do Vite, evitando que um browser remoto interprete `localhost` como a propria maquina. `db:deploy` aplica migrations existentes; `db:migrate` e reservado a autoria de uma nova migration e nao faz parte de um simples start.
+
 ```bash
 cp .env.production.example .env
 docker compose config
