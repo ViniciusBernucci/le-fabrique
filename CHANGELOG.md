@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.41 - 2026-10-02
+FAC-003A passa a READY apos diagnostico dos logs: os UUIDs eram jobs distintos publicados com `baseRevision: null`, nao retry infinito. O incremento bloqueia novos eventos invalidos e torna o SHA exato configuravel, sem limpar a fila.
+
 ## 2.40 - 2026-10-02
 OPS-001 aceito explicitamente pelo responsavel na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`. O proximo incremento investiga de forma nao destrutiva os jobs sinteticos invalidos observados no ensaio.
 
