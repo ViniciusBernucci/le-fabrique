@@ -79,3 +79,5 @@ FAC-000 implementa a fundação local. `compose.dev.yaml` publica PostgreSQL e R
 OPS-001 faz o launcher raiz carregar `.env` e limita o registro inicial a 30 tentativas com um segundo de intervalo. Somente falha de rede e HTTP 5xx recebem retry; 4xx/configuracao falham imediatamente. Essa espera nao altera a regra de heartbeat: depois do registro, tres falhas consecutivas encerram o worker. Mensagens `orchestration probe failed` de jobs sinteticos antigos descrevem falha daquele job e podem aparecer junto de `worker ready`; nenhuma limpeza automatica da fila e autorizada.
 
 FAC-012E fornece ao worker somente leitura interna da configuração da interface, com autenticação `WORKER_API_TOKEN`, schema estrito, versão e defaults não persistidos inativos. Testes usam Prisma/fetch simulados; nenhum banco ou serviço real foi consultado e o consumer continua no probe.
+
+FAC-012F resolve a rota configurada em cada chamada e valida adapter/permissões sem executar o cliente. Testes usam snapshots e adapters sintéticos; o loop BullMQ permanece no probe.

@@ -14,6 +14,8 @@ A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuraca
 
 FAC-012E adiciona `GET /api/internal/worker-settings`, protegido por `WORKER_API_TOKEN`, que retorna apenas `version`, `observedAt` e a configuração validada. Não transporta credenciais, e versão `0` com defaults inativos representa a ausência de linha persistida sem fazer `upsert`. O worker valida a mesma resposta via `workerConfigurationSnapshotSchema`; esse bridge ainda não conecta o consumer nem seleciona/executa provider.
 
+FAC-012F adiciona `ConfiguredAgentRouter`: em cada resolução ele busca o snapshot atual, aplica a atribuição por função e exige instalação `AVAILABLE`, modelo do catálogo e adapter compatível. Não mantém cache ou fallback. Reviewer com permissão de escrita falha fechado; nenhuma resolução inicia o cliente. Consumer ainda não chama o router.
+
 ## Seguranca e limites
 
 Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Fluxos de login suportados sao executados pelo worker confiavel usando o cliente oficial. O browser recebe somente desafios efemeros permitidos, metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.

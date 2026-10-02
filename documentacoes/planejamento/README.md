@@ -8,6 +8,6 @@ FAC-012C está implementado em `a8f7a66dfc1b5c58a0596611dc300559504709ce` e agua
 
 FAC-012E implementa leitura interna versionada e sem segredos das contas/modelos configurados pela interface (`4aca1e1`) e aguarda aceite humano. O consumer permanece fora deste incremento.
 
-FAC-012F está READY para resolver Developer/Reviewer a partir da configuração atual, sem cache/fallback e sem executar adapters.
+FAC-012F implementado no commit `950f3b62651b1e918bae09d89996af0d95e9fbee`; aguarda aceite humano. Resolve Developer/Reviewer da configuração atual sem cache/fallback, mas ainda não está conectado ao consumer nem executa adapters.
 
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

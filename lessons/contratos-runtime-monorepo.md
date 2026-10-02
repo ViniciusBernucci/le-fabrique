@@ -14,6 +14,8 @@ No FAC-011, objetos `.strict()` fazem parte da fronteira de seguranca: um campo 
 
 No FAC-012E, o worker recebe um DTO dedicado (`workerConfigurationSnapshotSchema`) em vez do registro Prisma. O endpoint interno retorna `{version, observedAt, configuration}`; versão `0` deixa explícito que defaults inativos ainda não foram persistidos. O GET usa `findUnique`, sem criar estado, e `WorkerAuthGuard`; segredos adicionais falham no parse estrito.
 
+No FAC-012F, a decisão usa uma nova leitura para cada rota e devolve junto a versão/observação de settings; assim não há cache de modelo nem troca silenciosa quando a configuração muda. O router confere também que o adapter injetado tem o mesmo `name` do provider roteado. `REVIEWER` com `WORKSPACE_WRITE` é inválido em vez de ser corrigido silenciosamente.
+
 ## Quando repetir
 
 Todo novo endpoint, evento de outbox, payload de fila ou checkpoint precisa de schema versionado na fronteira. Validação de runtime deve acontecer antes de persistir ou executar o dado. Interfaces internas sem entrada externa podem permanecer apenas em `packages/runtime`.

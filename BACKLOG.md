@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C e FAC-012E implementados, aguardando aceite humano; FAC-012D está em branch isolada e também aguarda aceite. O consumer real permanece desligado. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
+FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C, FAC-012E e FAC-012F implementados, aguardando aceite humano; FAC-012D está em branch isolada e também aguarda aceite. O consumer real permanece desligado. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -32,6 +32,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - FAC-012B: DONE — Compilador de snapshot para DeveloperWorkflowRequest com perfil confiável injetado; código `e7b9bf60e03089c502255d19edbb5d1e31725d2c`, revisao documental aceita `3e28363b0642f8e05840bb649b681e3837e1e015`; consumer permanece desligado.
 - FAC-012C: AWAITING_HUMAN — SandboxRunner read-only por padrão, caminhos de escrita explícitos e prova de isolamento; código `a8f7a66dfc1b5c58a0596611dc300559504709ce`, relatório `documentacoes/operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md`; sem ligar o consumer ou iniciar provider. A política ainda não confina o processo do CLI Developer.
 - FAC-012E: AWAITING_HUMAN — endpoint `GET /api/internal/worker-settings` fornece ao worker snapshot de configuração versionado/validado sem credenciais; defaults não persistidos têm versão 0. Código `4aca1e10085f047712766f51ca7e4e749508a7a9`, relatório `documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md`. Não altera consumer, DB ou autenticação.
+- FAC-012F: AWAITING_HUMAN — router sem cache usa cada snapshot da interface para selecionar papel, instalação/modelo e adapter; sem fallback e Reviewer obrigatoriamente `READ_ONLY`. Código `950f3b62651b1e918bae09d89996af0d95e9fbee`, relatório `documentacoes/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md`. Biblioteca não conectada ao consumer nem executada.
 - FAC-012F: READY — resolver rotas Developer/Reviewer a partir do snapshot versionado da interface, sem hardcode nem fallback de conta/modelo e sem execução de adapter.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.

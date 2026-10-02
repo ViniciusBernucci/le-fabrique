@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.59 - 2026-10-02
+FAC-012F implementa router de runtime sem cache/fallback usando a configuração atual da interface, valida adapter e Reviewer READ_ONLY; 185 testes, lint, typecheck e build passaram. Nenhum adapter executado.
+
 ## 2.58 - 2026-10-02
 FAC-012F fica READY para ligar, como biblioteca pura, configurações atuais de agentes aos adapters suportados sem fallback nem execução.
 

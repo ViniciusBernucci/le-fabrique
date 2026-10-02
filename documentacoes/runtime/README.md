@@ -32,6 +32,8 @@ FAC-012B adiciona `compileWorkflowRequest`: perfil validado e injetado pelo work
 
 FAC-012E adiciona `ControlClient.getWorkerConfiguration()` para buscar `GET /internal/worker-settings`, conferir versão/observedAt e validar `FactoryConfiguration` no contrato compartilhado. O endpoint requer token do worker e retorna defaults inativos sem persistir se ainda não houver settings. Ainda não existe conexão entre esse método, resolução de rota e consumer de execução.
 
+FAC-012F adiciona `ConfiguredAgentRouter.resolve(role)`, que consulta o snapshot a cada chamada, reutiliza `resolveAgentRoute`, associa apenas o adapter registrado para o provider escolhido e devolve versão/instante da configuração junto à rota. Provider, instalação indisponível, adapter ausente/desalinhado ou Reviewer configurado com escrita falham sem fallback. Essa é uma biblioteca pura; o consumer ainda não a chama e nenhum adapter foi executado.
+
 O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 
 FAC-010C implementa `ClaudeAdapter`, rota por funcionario e `ProviderHandoff` como bibliotecas testadas. O handoff recebe apenas evidencia terminal minima, objetivo/aceite e snapshot; exige parada confirmada, snapshot posterior ao processo e mesma base, autoriza a troca no RuntimeGuard e restaura em nova worktree. O consumidor real permanece no probe ate existir perfil allowlisted de repositorio/comandos e provider autenticado.

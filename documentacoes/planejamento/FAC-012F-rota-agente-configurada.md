@@ -1,6 +1,6 @@
 # FAC-012F — Resolver rota do agente pela configuração atual
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -23,3 +23,7 @@ Base `36c89e1` (FAC-012E documentado), branch `feat/fac-012f-configured-agent-ro
 ## Fora de escopo
 
 Conectar o router ao `DeveloperWorkflow`/consumer, checkout do repositório, executar adapter, validar frescor temporal de evidência de disponibilidade, login/preflight do serviço ou escolher o piloto. A execução continua desligada.
+
+## Implementação e evidências
+
+Implementado no commit `950f3b62651b1e918bae09d89996af0d95e9fbee`; relatório `documentacoes/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md`. Os testes comprovam novas leituras sem cache, alteração de modelo/versão, validação de Reviewer read-only, conta indisponível sem fallback, adapter ausente/desalinhado e provider sem suporte. Lint, typecheck, 185 testes, build e `git diff --check` passaram. Não houve execução de adapter/provider, consumer, fila, DB ou piloto. Aguarda revisão/aceite humano.
