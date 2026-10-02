@@ -51,6 +51,10 @@ function pathIsWithin(path: string, root: string): boolean {
   return path === root || path.startsWith(`${root}/`);
 }
 
+function pathsOverlap(left: string, right: string): boolean {
+  return pathIsWithin(left, right) || pathIsWithin(right, left);
+}
+
 export function compileWorkflowRequest(
   workflowId: string,
   specification: ExecutionSpecification,
@@ -74,7 +78,7 @@ export function compileWorkflowRequest(
       pathIsWithin(source.path, path),
     );
     const forbidden = specification.project.definition.forbiddenPaths.some((path) =>
-      pathIsWithin(source.path, path),
+      pathsOverlap(source.path, path),
     );
     if (!normalized || !allowed || forbidden) {
       throw new Error(`Context source is outside configured project paths: ${source.path}`);

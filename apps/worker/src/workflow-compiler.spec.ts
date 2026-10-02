@@ -107,6 +107,29 @@ describe("compileWorkflowRequest", () => {
     ).toThrow("Context source is outside configured project paths");
   });
 
+  it("rejects a context directory that could include a forbidden descendant", () => {
+    expect(() =>
+      compileWorkflowRequest(
+        workflowId,
+        {
+          ...specification,
+          project: {
+            ...specification.project,
+            definition: {
+              ...specification.project.definition,
+              allowedPaths: ["src"],
+              forbiddenPaths: ["src/private"],
+            },
+          },
+        },
+        {
+          ...profile,
+          contextSources: [{ path: "src", role: "INSTRUCTION" }],
+        },
+      ),
+    ).toThrow("Context source is outside configured project paths");
+  });
+
   it("rejects invalid trusted runtime settings at the boundary", () => {
     expect(() =>
       compileWorkflowRequest(workflowId, specification, {
