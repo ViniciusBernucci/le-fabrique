@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.46 - 2026-10-02
+FAC-012A fica READY para transformar a configuracao generica de projeto e o ticket em especificacao imutavel no evento READY, sem cadastrar piloto, executar worker real ou escolher provider.
+
 ## 2.45 - 2026-10-02
 O responsavel aceitou FAC-003A na revisao `4630ce0b9a613b937d40d550e4551fa1402d6c6a` e FAC-001A na revisao `094190af26c1175bad08eb46293230b2938843d4`. O proximo incremento interno pode preparar FAC-012 sem cadastrar o projeto externo.
 
