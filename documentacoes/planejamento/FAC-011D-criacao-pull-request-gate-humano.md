@@ -1,6 +1,6 @@
 # FAC-011D — Criacao de pull request sob gate humano
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -63,3 +63,10 @@ O provider e GitHub CLI em modo `GH_CLI`, elegivel apenas apos FAC-011C legivel 
 ## Sequenciamento
 
 FAC-011D cria ou reconcilia somente o PR aprovado. Tornar draft pronto, revisar, comentar, mesclar e fazer deploy permanecem fora do MVP atual e exigem tickets/gates proprios.
+
+## Revisao entregue
+
+- Ticket READY: `7dab2a83f76c25035578d2b4ef3b9310ea1ed104`.
+- Codigo verificado: `29c4931f74eedb134150fbb12add2d520d68022d`.
+- Relatorio: `documentacoes/configuracao/2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md`.
+- Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e nenhum PR remoto criado.

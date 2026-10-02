@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.36 - 2026-10-02
+FAC-011D implementa preparacao e aprovacao exata de PR, outbox somente no gate, prova `permissions.push`, reconciliacao e `gh pr create` limitado, sem merge/push. Passaram 143 testes, lint, typecheck, build e Prisma; `gh` segue ausente, nenhuma escrita real ocorreu e aguarda aceite.
+
 ## 2.35 - 2026-10-02
 FAC-011C aceito pelo responsavel na revisao `8fd38781652fac187d0f5a419eb336c15e94b816`. Verificacao somente-leitura de repositorio/branch esta concluida em codigo; prova real permanece futura e FAC-011D passa a ser o proximo incremento.
 

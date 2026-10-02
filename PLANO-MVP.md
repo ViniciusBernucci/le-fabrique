@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real entra antes do ensaio operacional. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B estão implementados e aceitos. FAC-010 aguarda validacao operacional do segundo provider; FAC-011C implementa verificacao de leitura GitHub e aguarda aceite. FAC-001 foi adiado por decisão do responsável até a plataforma estar pronta para validação.
+V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão implementados e aceitos. FAC-010 aguarda validacao operacional; FAC-011D implementa PR sob gate e aguarda aceite. FAC-001 foi adiado até a plataforma estar pronta.
 ## Épicos
 Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, definição do piloto real e experimento operacional. Evolução: terceiro adapter/capacidades novas.
 
@@ -83,7 +83,7 @@ Entregáveis: código quando pertinente, checks reais, artefatos por revisão e 
 
 ## FAC-011 — Centro de Configuracoes e Provider Manager
 Sprint: Sprint 2. Dependências: FAC-003, FAC-009. Esforço estimado: 2-3 dias. Status: DONE.
-Descrição: Painel React responsivo, persistencia e contratos para contas de clientes oficiais, catalogos de modelos, atribuicao de provider/modelo por funcionario, metadados GitHub e protecoes financeiras fixas. FAC-011A/B adicionaram verificacao/login GitHub aceitos; FAC-011C adiciona verificacao somente-leitura de repositorio/branch e aguarda aceite. Escrita/PR permanece incremento separado.
+Descrição: Painel React responsivo, persistencia e contratos para contas/modelos/funcionarios, GitHub e protecoes financeiras. FAC-011A/B/C adicionaram verificacao, login e leitura aceitos; FAC-011D implementa PR aprovado, sem merge, e aguarda aceite.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Configuracao versionada rejeita segredo e relacoes invalidas; unknown/auth required permanece visivel; API/extras/fallback/merge nao podem ser ativados; docs atuais coerentes com código.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.

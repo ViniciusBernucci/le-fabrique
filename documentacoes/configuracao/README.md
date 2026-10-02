@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro, verificacao, login e leitura do repositorio GitHub ACEITOS ate FAC-011C, revisao `8fd38781652fac187d0f5a419eb336c15e94b816`.
+Status: Centro, verificacao, login e leitura GitHub ACEITOS ate FAC-011C; PR com gate humano IMPLEMENTADO no FAC-011D e aguardando aceite.
 
 ## Funcionamento atual
 
@@ -27,7 +27,7 @@ O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao dis
 1. Worker detecta instalacoes e executa login oficial sem transportar segredo pelo painel.
 2. Preflight grava versao, modelos realmente acessiveis, estado e evidencia.
 3. FAC-010 consome atribuicoes validadas para roteamento e handoff.
-4. Criacao de PR e permissao de escrita continuam ticket separado; merge continua manual.
+4. Instalar `gh`/keyring, repetir as provas reais e validar um PR draft controlado; merge continua manual.
 
 ## Verificacao de instalacoes
 
@@ -60,3 +60,7 @@ A conclusao exige nova leitura de status: conta ativa `success` e `tokenSource=k
 FAC-011C adiciona `Verificar repositorio salvo (somente leitura)` para configuracao persistida `CONNECTED`. A API cria snapshot/outbox e o worker usa duas requisicoes autenticadas `GET` pelo `gh api`: metadados/permissao do repositorio e existencia da branch base. Somente identidade, `permissions.pull=true` e branch exatas produzem `READABLE`.
 
 O painel recebe apenas owner/repositorio canonicos, branch padrao/base, visibilidade, arquivamento e mensagem controlada. Falhas descartam observacao parcial. Nao ha clone, leitura de arquivo, escrita ou teste de PR. Detalhes: [2026-10-02-FAC-011C-verificacao-repositorio-github.md](2026-10-02-FAC-011C-verificacao-repositorio-github.md).
+
+## Pull request sob gate humano
+
+FAC-011D separa `Preparar` de `Aprovar e enviar ao worker`. Preparacao grava payload/version/digest sem outbox; aprovacao exata reconfere opt-in e leitura antes de publicar. O worker exige `permissions.push`, reconcilia PR aberto e so depois usa `gh pr create` com argv fixo e body por stdin. Draft e configuravel por pedido; merge permanece impossivel neste fluxo. Detalhes: [2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md](2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md).

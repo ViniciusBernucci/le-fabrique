@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. O controle possui autenticacao, projetos/tickets, outbox, orquestracao e configuracao versionada sem segredos. Verificacao somente-leitura de repositorio/branch esta aceita; `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado.
+FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. FAC-011D implementa PR sob gate humano e aguarda aceite. `gh` ainda nao esta instalado; nenhuma escrita real foi feita. O loop de tickets continua no probe sintetico. FAC-010 aguarda Claude real e o piloto externo permanece adiado.
 
 ## Fronteiras e contratos
 
@@ -15,8 +15,8 @@ FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. O controle 
 
 ## Sequência recomendada
 
-1. Implementar FAC-011D, criacao de PR e prova de permissao de escrita sob gate humano.
-2. Instalar/configurar clientes pela operacao futura e repetir os preflights reais de Claude e GitHub.
+1. Revisar e aceitar a revisao exata FAC-011D.
+2. Instalar/configurar clientes e repetir preflights reais de Claude e GitHub.
 3. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
 4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
@@ -26,4 +26,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam instalacao/login/preflights reais, keyring comprovado, criacao de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotacao/multiusuario, backups restauraveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.
+Ainda faltam instalacao/login/preflights reais, keyring comprovado, prova remota de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotacao/multiusuario, backups restauraveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.
