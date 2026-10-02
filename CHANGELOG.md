@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.40 - 2026-10-02
+OPS-001 aceito explicitamente pelo responsavel na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`. O proximo incremento investiga de forma nao destrutiva os jobs sinteticos invalidos observados no ensaio.
+
 ## 2.39 - 2026-10-02
 OPS-001 implementa launcher raiz com `.env`, URL same-origin no Vite, retry transitorio limitado do registro do worker e procedimento `db:deploy`. Passaram 148 testes, lint, typecheck, build e schema Prisma; nenhum banco/fila foi alterado e a revisao aguarda aceite.
 

@@ -1,7 +1,7 @@
 # OPS-001 — Bootstrap confiavel do desenvolvimento local
 
 Data: 2026-10-02
-Status: IMPLEMENTADO / AWAITING_HUMAN
+Status: IMPLEMENTADO / DONE
 Dominio: infraestrutura e operacao
 Base SHA / revisao do codigo: `c069926cb4b43a1519b5fd10b212b8fbe36cbfaa` / `12018c3596efceb7bf4d171ca4787a81bfd9c136`
 Branch / run / PR: `fix/ops-001-dev-bootstrap` / worktree `/home/vinicius/le-fabrique-dev-bootstrap` / sem PR
@@ -83,4 +83,4 @@ Implementacao assistida por Codex nesta sessao; versao/modelo efetivo, tokens e 
 
 ## Pendencias e aceite
 
-A revisao funcional exata e `12018c3596efceb7bf4d171ca4787a81bfd9c136`. A entrega permanece `AWAITING_HUMAN`; o responsavel deve testar `npm run dev` depois de encerrar a pilha antiga e aceitar essa revisao documental exata. Prova de VPS/Compose completo e limpeza de historico da fila nao pertencem a este ticket.
+A revisao funcional exata e `12018c3596efceb7bf4d171ca4787a81bfd9c136`. O responsavel aceitou explicitamente a revisao documental exata `7c1d1dcb44ab3464085aad729ae2b5dbdc473057` em 2026-10-02. Prova de VPS/Compose completo e limpeza de historico da fila nao pertencem a este ticket.
