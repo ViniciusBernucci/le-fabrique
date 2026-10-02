@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.66 - 2026-10-02
+FAC-012J fica READY para preparar checkouts efêmeros, com root/hosts do worker configuráveis, commit exato e sem executar conteúdo do repositório; consumer e rede real permanecem desligados.
+
 ## 2.65 - 2026-10-02
 FAC-012I implementa perfil de execução versionado no projeto: contexto permitido e checks explicitamente aprovados no painel, bloqueio de READY sem perfil e compilação apenas dos checks aprovados. Testes, typecheck, lint e build passaram; worker continua sem checkout operacional e consumer segue desligado.
 
