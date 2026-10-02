@@ -1,6 +1,6 @@
 # Agent Runtime Gateway e Provider Manager
 
-FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. A política não é confinamento do processo Developer CLI; ver relatório operacional e manter consumer desativado até essa lacuna ser fechada.
+FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. FAC-012D restringe o perfil nativo do Codex: leitura geral do workspace, escrita apenas nos `allowedPaths` do snapshot imutável, `.git`/`.codex` negados e rede desligada. Paths autorizados precisam existir e não podem conter symlinks; paths vazios mantêm o workspace read-only. Reviewer usa lista vazia e `READ_ONLY`. Além de contratos/fixtures, o perfil passou smoke test real sem inferência pelo `codex sandbox` 0.159.2: escrita fora da allowlist (`EROFS`), leitura de `.git`/`.codex` (`EACCES`) e conexão local (`EPERM`) foram bloqueadas; detalhes sanitizados no relatório FAC-012D. Isso ainda não comprova acesso/autenticação sob a identidade real do serviço. Claude não aplica essa allowlist granular e não está coberto por FAC-012D.
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
@@ -29,6 +29,8 @@ Cada capability carrega verified_at, cli_version e evidence_id. Recursos desconh
 FAC-012A faz o job carregar `executionSpecification`, copia estrita e autocontida do projeto, definicao e ticket no instante de READY. Envelope e snapshot precisam concordar em IDs, SHA e versoes. Isso preserva a intencao, mas nao torna URL/comando automaticamente confiavel: o worker ainda deve reconciliar checkout e allowlist antes de substituir a fixture pelo `DeveloperWorkflow`.
 
 FAC-012B adiciona `compileWorkflowRequest`: perfil validado e injetado pelo worker precisa casar projeto/URL/SHA; comandos são comparados por nome, executável e argv exatos; fontes de contexto respeitam caminhos permitidos/proibidos. Limites e modelo nullable também vêm do perfil, sem hardcode. Esta biblioteca pura não está conectada à fila. Caminhos de escrita ainda não são impostos pelo sandbox, então execução real permanece bloqueada.
+
+FAC-012D faz o parse runtime do snapshot recebido e encaminha somente `project.definition.allowedPaths` à execução Developer. Codex usa rules nomeadas por subpath no perfil `permissions.lefabrique`; requests read-only não elevam escrita mesmo se trouxerem uma lista. Handoff sem manifesto de paths permanece read-only. O worker/consumer real não está ligado e a configuração de escrita granular para Claude permanece pendente.
 
 O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 

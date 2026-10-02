@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import type { RuntimeEvent, RuntimeExecutionRequest } from "@le-fabrique/contracts";
@@ -18,6 +18,7 @@ function request(
     workspacePath: workspace,
     prompt,
     permissionMode: "READ_ONLY",
+    writablePaths: [],
     modelRequested: null,
     limits: { timeoutMs: 2_000, maxLogBytes: 16_384 },
     ...overrides,
@@ -71,9 +72,26 @@ describe("CodexAdapter", () => {
     expect(JSON.stringify(events)).not.toContain("sensitive command output");
   });
 
-  it("selects write access only for a workspace-write request", async () => {
-    const result = await adapter().execute(request("write", { permissionMode: "WORKSPACE_WRITE" }));
-    expect(result.finalMessage).toBe("prompt=write;keys=false;profile=true;access=write");
+  it("grants writes only to declared paths for a workspace-write request", async () => {
+    await mkdir(resolve(workspace, "src"));
+    await writeFile(resolve(workspace, "README.md"), "safe fixture");
+    const result = await adapter().execute(
+      request("write", { permissionMode: "WORKSPACE_WRITE", writablePaths: ["src", "README.md"] }),
+    );
+    expect(result.finalMessage).toBe("prompt=write;keys=false;profile=true;access=README.md,src");
+  });
+
+  it("rejects unavailable writable paths before starting the CLI", async () => {
+    const result = await adapter().execute(
+      request("write", { permissionMode: "WORKSPACE_WRITE", writablePaths: ["missing"] }),
+    );
+    expect(result).toMatchObject({ status: "FAILED", error: { code: "TOOL_DENIED" } });
+  });
+
+  it("keeps declared paths read-only when the permission mode is read-only", async () => {
+    await mkdir(resolve(workspace, "src"));
+    const result = await adapter().execute(request("hello", { writablePaths: ["src"] }));
+    expect(result.finalMessage).toBe("prompt=hello;keys=false;profile=true;access=read");
   });
 
   it("reports ChatGPT auth and unknown quota without inventing values", async () => {

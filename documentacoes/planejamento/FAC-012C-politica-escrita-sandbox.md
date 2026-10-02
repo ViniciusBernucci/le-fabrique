@@ -22,7 +22,7 @@ Base `ce27c13cace1fa81b8bffde1df98e8c3e499fe0e`; branch `feat/fac-012c-sandbox-p
 
 ## Dependências e limites conhecidos
 
-FAC-007, FAC-009, FAC-012A/B. Este ticket restringe `SandboxRunner`; o processo do CLI Developer ainda precisa aplicar a mesma política antes do consumer real ser ativado.
+FAC-007, FAC-009, FAC-012A/B. Este ticket restringe processos do `SandboxRunner`. Correção de escopo: CodexAdapter já executa comandos do modelo sob perfil de sandbox nativo customizado, com rede desativada; naquele perfil, no entanto, a escrita está liberada em `.` em vez dos caminhos `allowedPaths` do projeto. FAC-012D trata essa lacuna. A inacessibilidade operacional às credenciais oficiais sob a identidade real do worker continua sem prova.
 
 ## Implementação
 

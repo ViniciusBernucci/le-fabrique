@@ -92,6 +92,12 @@ describe("shared contracts", () => {
       projectDefinitionInputSchema.parse({ ...definition, allowedPaths: ["../outside"] }),
     ).toThrow();
     expect(() =>
+      projectDefinitionInputSchema.parse({ ...definition, allowedPaths: ["src/.git/config"] }),
+    ).toThrow();
+    expect(() =>
+      projectDefinitionInputSchema.parse({ ...definition, allowedPaths: [".codex/config.toml"] }),
+    ).toThrow();
+    expect(() =>
       projectDefinitionInputSchema.parse({
         ...definition,
         allowedPaths: ["src"],
@@ -157,7 +163,18 @@ describe("shared contracts", () => {
         permissionMode: "READ_ONLY",
         limits: { timeoutMs: 1_000, maxLogBytes: 4_096 },
       }),
-    ).toMatchObject({ modelRequested: null });
+    ).toMatchObject({ modelRequested: null, writablePaths: [] });
+    expect(() =>
+      runtimeExecutionRequestSchema.parse({
+        schemaVersion: 1,
+        executionId,
+        workspacePath: "/tmp/fixture",
+        prompt: "change files",
+        permissionMode: "WORKSPACE_WRITE",
+        writablePaths: ["src", "src/private"],
+        limits: { timeoutMs: 1_000, maxLogBytes: 4_096 },
+      }),
+    ).toThrow("Writable paths must not overlap");
     expect(() =>
       runtimeEventSchema.parse({
         type: "progress",
@@ -461,6 +478,7 @@ describe("shared contracts", () => {
       contextSources: [{ path: "README.md", role: "INSTRUCTION" as const }],
       contextLimits: { maxFiles: 10, maxFileBytes: 10_000, maxTotalBytes: 20_000 },
       checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"], environment: {} }],
+      writablePaths: ["src"],
       guardPolicy: {
         schemaVersion: 1 as const,
         maxAttempts: 4,
@@ -488,6 +506,9 @@ describe("shared contracts", () => {
     expect(developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 2 })).toBeDefined();
     expect(() =>
       developerWorkflowRequestSchema.parse({ ...base, maxCorrectionRounds: 3 }),
+    ).toThrow();
+    expect(() =>
+      developerWorkflowRequestSchema.parse({ ...base, writablePaths: [".git"] }),
     ).toThrow();
   });
 

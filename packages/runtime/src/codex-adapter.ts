@@ -22,6 +22,7 @@ import {
 } from "@le-fabrique/contracts";
 import type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";
 import { sanitizeSubscriptionEnvironment } from "./runtime-guard";
+import { validateWorkspaceWritablePaths } from "./workspace-write-policy";
 
 type TerminationReason = "cancel" | "timeout" | "log-limit" | "result-unknown";
 
@@ -98,6 +99,17 @@ export class CodexAdapter implements RuntimeAdapter {
         message: "The requested workspace is unavailable",
         retryable: false,
       });
+    }
+    if (request.permissionMode === "WORKSPACE_WRITE") {
+      try {
+        await validateWorkspaceWritablePaths(workspace, request.writablePaths);
+      } catch {
+        return this.failureResult(request, startedAt, null, {
+          code: "TOOL_DENIED",
+          message: "A requested writable path is unavailable",
+          retryable: false,
+        });
+      }
     }
 
     const child = spawn(this.binaryPath, this.executionArguments(request, workspace), {
@@ -315,11 +327,22 @@ export class CodexAdapter implements RuntimeAdapter {
   }
 
   private executionArguments(request: RuntimeExecutionRequest, workspace: string): string[] {
-    const workspaceAccess = request.permissionMode === "WORKSPACE_WRITE" ? "write" : "read";
+    const workspaceRules = new Map<string, "read" | "write" | "deny">([
+      [".", "read"],
+      [".git", "deny"],
+      [".codex", "deny"],
+    ]);
+    if (request.permissionMode === "WORKSPACE_WRITE") {
+      for (const path of request.writablePaths) workspaceRules.set(path, "write");
+    }
+    const workspaceRulesToml = [...workspaceRules.entries()]
+      .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
+      .map(([path, access]) => `${JSON.stringify(path)}=${JSON.stringify(access)}`)
+      .join(",");
     const permissionProfile =
       `permissions.lefabrique={ description="Le Fabrique runtime", ` +
       `filesystem={ ":root"="deny", ":minimal"="read", ` +
-      `":workspace_roots"={ "."="${workspaceAccess}" } }, network={ enabled=false } }`;
+      `":workspace_roots"={ ${workspaceRulesToml} } }, network={ enabled=false } }`;
     const args = [
       ...this.binaryArgsPrefix,
       "--no-daemon",

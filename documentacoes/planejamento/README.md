@@ -6,4 +6,6 @@ FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D, FAC-003A, FAC-012A/B 
 
 FAC-012C está implementado em `a8f7a66dfc1b5c58a0596611dc300559504709ce` e aguarda aceite humano. Impõe caminhos graváveis explícitos no `SandboxRunner`, mas não ativa nem confina ainda a escrita do agente via CLI.
 
+FAC-012D implementa escrita Codex restrita a `allowedPaths` congelados no snapshot e está `AWAITING_HUMAN`. Ver relatório operacional e evidências; consumer, provider real e piloto continuam fora de escopo.
+
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

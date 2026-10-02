@@ -120,6 +120,7 @@ export class DeveloperWorkflow {
           "Developer",
         ),
         permissionMode: "WORKSPACE_WRITE",
+        writablePaths: request.writablePaths,
         modelRequested: request.modelRequested,
         limits: request.runtimeLimits,
       });
@@ -224,6 +225,7 @@ export class DeveloperWorkflow {
           "Reviewer",
         ),
         permissionMode: "READ_ONLY",
+        writablePaths: [],
         modelRequested: request.modelRequested,
         limits: request.runtimeLimits,
       });

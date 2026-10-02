@@ -98,6 +98,7 @@ export class ProviderHandoff {
         workspacePath: workspace.workspacePath,
         prompt: handoffPrompt(request),
         permissionMode: route.permissionMode,
+        writablePaths: [],
         modelRequested: route.model,
         limits: request.runtimeLimits,
       });
