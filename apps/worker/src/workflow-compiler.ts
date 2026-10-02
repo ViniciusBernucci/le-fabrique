@@ -1,0 +1,123 @@
+import {
+  contextLimitsSchema,
+  contextSourceRequestSchema,
+  type DeveloperWorkflowRequest,
+  developerWorkflowRequestSchema,
+  type ExecutionSpecification,
+  runtimeGuardPolicySchema,
+  runtimeLimitsSchema,
+  sandboxLimitsSchema,
+  snapshotLimitsSchema,
+} from "@le-fabrique/contracts";
+import { z } from "zod";
+
+const trustedCheckSchema = z
+  .object({
+    name: z.string().trim().min(1).max(120),
+    command: z.string().trim().min(1).max(4096),
+    args: z.array(z.string().max(16_384)).max(200),
+  })
+  .strict();
+
+/** Values resolved by trusted worker configuration; never read from the job payload. */
+export const trustedWorkflowProfileSchema = z
+  .object({
+    projectId: z.uuid(),
+    repositoryUrl: z.url(),
+    repositoryPath: z.string().trim().min(1).max(4096),
+    baseRevision: z.string().regex(/^[0-9a-f]{40}$/),
+    contextSources: z.array(contextSourceRequestSchema).min(1).max(500),
+    contextLimits: contextLimitsSchema,
+    allowedChecks: z
+      .array(trustedCheckSchema)
+      .min(1)
+      .max(20)
+      .refine(
+        (checks) => new Set(checks.map((check) => check.name)).size === checks.length,
+        "Trusted check names must be unique",
+      ),
+    guardPolicy: runtimeGuardPolicySchema,
+    runtimeLimits: runtimeLimitsSchema,
+    sandboxLimits: sandboxLimitsSchema,
+    snapshotLimits: snapshotLimitsSchema,
+    maxCorrectionRounds: z.number().int().min(0).max(2),
+    modelRequested: z.string().trim().min(1).max(120).nullable(),
+  })
+  .strict();
+
+export type TrustedWorkflowProfile = z.infer<typeof trustedWorkflowProfileSchema>;
+
+function pathIsWithin(path: string, root: string): boolean {
+  return path === root || path.startsWith(`${root}/`);
+}
+
+export function compileWorkflowRequest(
+  workflowId: string,
+  specification: ExecutionSpecification,
+  untrustedProfile: TrustedWorkflowProfile,
+): DeveloperWorkflowRequest {
+  const profile = trustedWorkflowProfileSchema.parse(untrustedProfile);
+  if (
+    profile.projectId !== specification.project.id ||
+    profile.repositoryUrl !== specification.project.repoUrl ||
+    profile.baseRevision !== specification.project.baseRevision
+  ) {
+    throw new Error("Trusted workflow profile does not match execution specification");
+  }
+
+  for (const source of profile.contextSources) {
+    const normalized =
+      !source.path.startsWith("/") &&
+      !source.path.includes("\\") &&
+      !source.path.split("/").some((segment) => segment === ".." || segment === ".");
+    const allowed = specification.project.definition.allowedPaths.some((path) =>
+      pathIsWithin(source.path, path),
+    );
+    const forbidden = specification.project.definition.forbiddenPaths.some((path) =>
+      pathIsWithin(source.path, path),
+    );
+    if (!normalized || !allowed || forbidden) {
+      throw new Error(`Context source is outside configured project paths: ${source.path}`);
+    }
+  }
+
+  const allowedChecks = new Map(profile.allowedChecks.map((check) => [check.name, check]));
+  const checks = specification.project.definition.checks.map((check) => {
+    const trusted = allowedChecks.get(check.name);
+    if (
+      !trusted ||
+      trusted.command !== check.command ||
+      JSON.stringify(trusted.args) !== JSON.stringify(check.args)
+    ) {
+      throw new Error(`Project check is not allowlisted: ${check.name}`);
+    }
+    return { ...trusted, environment: {} };
+  });
+
+  const objective = [
+    specification.ticket.objective,
+    `Project summary: ${specification.project.definition.summary}`,
+    `External stack: ${specification.project.definition.externalStack}`,
+    `Project instructions: ${specification.project.definition.instructions}`,
+    `Allowed paths: ${specification.project.definition.allowedPaths.join(", ")}`,
+    `Forbidden paths: ${specification.project.definition.forbiddenPaths.join(", ") || "none"}`,
+  ].join("\n\n");
+
+  return developerWorkflowRequestSchema.parse({
+    schemaVersion: 1,
+    workflowId,
+    repositoryPath: profile.repositoryPath,
+    baseRevision: specification.project.baseRevision,
+    objective,
+    acceptanceCriteria: specification.ticket.acceptanceCriteria,
+    contextSources: profile.contextSources,
+    contextLimits: profile.contextLimits,
+    checks,
+    guardPolicy: profile.guardPolicy,
+    runtimeLimits: profile.runtimeLimits,
+    sandboxLimits: profile.sandboxLimits,
+    snapshotLimits: profile.snapshotLimits,
+    maxCorrectionRounds: profile.maxCorrectionRounds,
+    modelRequested: profile.modelRequested,
+  });
+}
