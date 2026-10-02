@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A implementou a especificacao imutavel e aguarda aceite; FAC-012B está READY para compilar o pedido de workflow sem ligar o consumer. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
+FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A e FAC-012B aguardam aceite; FAC-012B compila pedido de workflow sem ligar o consumer. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -29,7 +29,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - FAC-011D: DONE — Gate em duas etapas, prova de push, reconciliacao e criacao de PR aceitos na revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; dependência: FAC-011C. Prova real e merge permanecem pendentes.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-012A: AWAITING_HUMAN — Snapshot imutavel de projeto/definicao/ticket no evento READY; codigo `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`, sem executar piloto; dependências: FAC-001A, FAC-003A e FAC-008.
-- FAC-012B: READY — Compilador validado de snapshot para DeveloperWorkflowRequest com perfil confiável injetado; sem execução real, checkout, provider ou piloto; dependências: FAC-009 e FAC-012A.
+- FAC-012B: AWAITING_HUMAN — Compilador de snapshot para DeveloperWorkflowRequest com perfil confiável injetado; código `e7b9bf60e03089c502255d19edbb5d1e31725d2c`; consumer permanece desligado; dependências: FAC-009 e FAC-012A.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 

@@ -36,3 +36,5 @@ FAC-008 conecta o evento `READY` ao BullMQ por dispatcher idempotente, oferece o
 FAC-003A tambem protege a fronteira do dispatcher: evento legado PENDING com `baseRevision: null` nunca chega a `queue.add` e converge para `FAILED` pelo limite da outbox. Eventos e jobs historicos permanecem preservados; nao existe limpeza automatica neste fluxo.
 
 FAC-012A torna o evento READY autocontido: `executionSpecification` copia projeto, SHA, definicao completa e ticket dentro da mesma transacao. O contrato cruza IDs e versoes do snapshot com o envelope. Atualizar a definicao depois nao altera eventos anteriores, e evento legado sem snapshot nao e publicado.
+
+FAC-012B consome esse snapshot apenas como dado de entrada de um compilador puro no worker. Perfil local confiável e allowlists não são aceitos do job; nenhum campo administrativo inicia comando por si só. O consumer continua em probe até enforcement de caminhos de escrita, binding/checkout confiável, provider elegível e integração de lease/fencing serem demonstrados.

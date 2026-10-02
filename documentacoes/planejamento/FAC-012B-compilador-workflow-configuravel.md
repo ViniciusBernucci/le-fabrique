@@ -1,6 +1,6 @@
 # FAC-012B — Compilador da especificação para workflow
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -16,6 +16,10 @@ Compilar o snapshot imutável FAC-012A em `DeveloperWorkflowRequest`, sem ativar
 6. Preservar `modelRequested` como valor resolvido externo opcional; não codificar conta, provider ou modelo.
 7. Testes provam correspondência, rejeição de desvios e validação runtime. O consumer real continua desligado.
 8. Lint, typecheck, testes, build e `git diff --check` passam.
+
+## Entrega
+
+Código: `e7b9bf60e03089c502255d19edbb5d1e31725d2c`. Relatório: `documentacoes/operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md`. DONE somente após aceite da revisão exata.
 
 ## Baseline, caminhos e limites
 

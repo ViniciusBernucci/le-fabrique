@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.49 - 2026-10-02
+FAC-012B implementa compilador puro de snapshot para DeveloperWorkflowRequest, com vínculo exato de checkout, allowlist argv, fontes dentro dos caminhos permitidos e limites confiáveis injetados. Lint, typecheck, 169 testes e build passaram; consumer real permanece desligado e escrita por caminho ainda requer enforcement no sandbox.
+
 ## 2.48 - 2026-10-02
 FAC-012B fica READY para compilar snapshot READY em pedido de workflow validado, exigindo perfil de checkout/allowlist confiável injetado; consumer, provider, piloto e execução permanecem desligados.
 

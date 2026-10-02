@@ -21,6 +21,8 @@ FAC-008 implementa o dispatcher outbox/BullMQ, o protocolo interno de claim, ren
 
 FAC-009 implementa `DeveloperWorkflow` como coordenador injetavel no worker. Ele cria worktree na revisao exata, constroi contexto, mede baseline, autoriza chamadas pelo guard, executa Developer com escrita, checks argv confiaveis no sandbox, snapshot e Reviewer em execucao separada somente leitura. Falha preexistente e registrada separadamente; regressao nova bloqueia aprovacao. Check sem parada confirmada encerra o fluxo antes de iniciar writer ou capturar snapshot.
 
+FAC-012B compila snapshot FAC-012A em `DeveloperWorkflowRequest` após reconciliar projeto/URL/SHA contra perfil confiável do worker. Checks configurados precisam corresponder exatamente a uma allowlist em argv; fontes de contexto ficam em caminhos permitidos e fora dos proibidos. Limites e modelo entram por configuração validada, não por hardcode. O compilador ainda não é chamado pelo consumer.
+
 O coordenador ainda nao substitui o probe BullMQ. FAC-001A fornece a definicao versionada desejada de repositorio, caminhos e checks, mas o worker ainda precisa traduzi-la para um perfil local confiavel/allowlist e associar o repositorio clonado. Ativar antes disso aceitaria configuracao administrativa sem a reconciliacao do executor. O FAC-010 pode reutilizar o resultado e snapshots, mas nao deve contornar esse gate.
 
 FAC-010 esta WAITING_PROVIDER. Claude Code e Antigravity estao instalados, mas deslogados; o worker nao deve tentar login, copiar credenciais ou cair para API. Sem segundo provider elegivel, preservar snapshots/checkpoints e aguardar intervencao humana.
