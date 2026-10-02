@@ -12,7 +12,16 @@ const draft = {
   version: 1,
   createdAt: now,
   updatedAt: now,
-  project: { baseRef: "a".repeat(40) },
+  project: { baseRef: "a".repeat(40), definition: { version: 3 } },
+};
+
+const definitionInput = {
+  summary: "Projeto configurado no painel",
+  externalStack: "Stack externa preservada",
+  instructions: "Nao executar deploy.",
+  allowedPaths: ["src"],
+  forbiddenPaths: ["secrets"],
+  checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
 };
 
 describe("ControlService", () => {
@@ -38,7 +47,10 @@ describe("ControlService", () => {
       expect.objectContaining({
         data: expect.objectContaining({
           deduplicationKey: `ticket:${draft.id}:ready`,
-          payload: expect.objectContaining({ baseRevision: "a".repeat(40) }),
+          payload: expect.objectContaining({
+            baseRevision: "a".repeat(40),
+            projectDefinitionVersion: 3,
+          }),
         }),
       }),
     );
@@ -60,7 +72,7 @@ describe("ControlService", () => {
   });
 
   it("rejects READY before mutation when the project base is not an exact revision", async () => {
-    const unresolved = { ...draft, project: { baseRef: "main" } };
+    const unresolved = { ...draft, project: { baseRef: "main", definition: { version: 3 } } };
     const transaction = {
       ticket: {
         findUnique: vi.fn().mockResolvedValue(unresolved),
@@ -77,6 +89,68 @@ describe("ControlService", () => {
     );
     expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
     expect(transaction.outboxEvent.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects READY before mutation when the project definition is absent", async () => {
+    const undefinedProject = { ...draft, project: { baseRef: "a".repeat(40), definition: null } };
+    const transaction = {
+      ticket: {
+        findUnique: vi.fn().mockResolvedValue(undefinedProject),
+        updateMany: vi.fn(),
+        findUniqueOrThrow: vi.fn(),
+      },
+      outboxEvent: { findUnique: vi.fn(), create: vi.fn() },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+
+    await expect(new ControlService(prisma as never).markReady(draft.id, 1)).rejects.toThrow(
+      "Project definition must be configured before READY",
+    );
+    expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
+    expect(transaction.outboxEvent.create).not.toHaveBeenCalled();
+  });
+
+  it("creates the first project definition at version one", async () => {
+    const stored = {
+      projectId: draft.projectId,
+      version: 1,
+      configuration: definitionInput,
+      createdAt: now,
+      updatedAt: now,
+    };
+    const transaction = {
+      project: { findUnique: vi.fn().mockResolvedValue({ id: draft.projectId, definition: null }) },
+      projectDefinition: { create: vi.fn().mockResolvedValue(stored) },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+
+    await expect(
+      new ControlService(prisma as never).putProjectDefinition(draft.projectId, {
+        expectedVersion: 0,
+        definition: definitionInput,
+      }),
+    ).resolves.toMatchObject({ projectId: draft.projectId, version: 1, ...definitionInput });
+  });
+
+  it("preserves a project definition when its expected version is obsolete", async () => {
+    const transaction = {
+      project: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: draft.projectId,
+          definition: { version: 2 },
+        }),
+      },
+      projectDefinition: { updateMany: vi.fn() },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+
+    await expect(
+      new ControlService(prisma as never).putProjectDefinition(draft.projectId, {
+        expectedVersion: 1,
+        definition: definitionInput,
+      }),
+    ).rejects.toThrow("Project definition version changed");
+    expect(transaction.projectDefinition.updateMany).not.toHaveBeenCalled();
   });
 
   it("updates a project base revision with optimistic comparison", async () => {

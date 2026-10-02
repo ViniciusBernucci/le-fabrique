@@ -71,6 +71,93 @@ export const projectSchema = createProjectSchema.extend({
 export type Project = z.infer<typeof projectSchema>;
 export const projectListSchema = z.array(projectSchema);
 
+export const projectRelativePathSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(500)
+  .refine(
+    (path) =>
+      path !== "." &&
+      !path.startsWith("/") &&
+      !path.endsWith("/") &&
+      !path.includes("\\") &&
+      !path.includes("//") &&
+      !path.split("/").some((segment) => segment === "." || segment === ".."),
+    "Path must be a normalized repository-relative path",
+  );
+
+export const projectCheckSchema = z
+  .object({
+    name: z.string().trim().min(1).max(120),
+    command: z.string().trim().min(1).max(4096),
+    args: z.array(z.string().max(16_384)).max(200),
+  })
+  .strict();
+export type ProjectCheck = z.infer<typeof projectCheckSchema>;
+
+function pathsOverlap(left: string, right: string): boolean {
+  return left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
+}
+
+export const projectDefinitionInputSchema = z
+  .object({
+    summary: z.string().trim().min(1).max(4000),
+    externalStack: z.string().trim().min(1).max(2000),
+    instructions: z.string().trim().min(1).max(8000),
+    allowedPaths: z.array(projectRelativePathSchema).min(1).max(100),
+    forbiddenPaths: z.array(projectRelativePathSchema).max(100),
+    checks: z.array(projectCheckSchema).min(1).max(20),
+  })
+  .strict()
+  .superRefine((definition, context) => {
+    for (const [key, paths] of [
+      ["allowedPaths", definition.allowedPaths],
+      ["forbiddenPaths", definition.forbiddenPaths],
+    ] as const) {
+      if (new Set(paths).size !== paths.length) {
+        context.addIssue({ code: "custom", path: [key], message: "Paths must be unique" });
+      }
+    }
+    if (
+      definition.allowedPaths.some((allowed) =>
+        definition.forbiddenPaths.some((forbidden) => pathsOverlap(allowed, forbidden)),
+      )
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["forbiddenPaths"],
+        message: "Allowed and forbidden path scopes must not overlap",
+      });
+    }
+    const checkNames = definition.checks.map((check) => check.name);
+    if (new Set(checkNames).size !== checkNames.length) {
+      context.addIssue({ code: "custom", path: ["checks"], message: "Check names must be unique" });
+    }
+  });
+export type ProjectDefinitionInput = z.infer<typeof projectDefinitionInputSchema>;
+
+export const projectDefinitionSchema = projectDefinitionInputSchema.extend({
+  projectId: z.uuid(),
+  version: z.number().int().positive(),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+});
+export type ProjectDefinition = z.infer<typeof projectDefinitionSchema>;
+
+export const projectDefinitionStateSchema = z.object({
+  definition: projectDefinitionSchema.nullable(),
+});
+export type ProjectDefinitionState = z.infer<typeof projectDefinitionStateSchema>;
+
+export const putProjectDefinitionSchema = z
+  .object({
+    expectedVersion: z.number().int().nonnegative(),
+    definition: projectDefinitionInputSchema,
+  })
+  .strict();
+export type PutProjectDefinition = z.infer<typeof putProjectDefinitionSchema>;
+
 export const updateProjectBaseRevisionSchema = z.object({
   expectedBaseRef: z.string().trim().min(1).max(200),
   baseRevision: gitCommitShaSchema,
@@ -1269,6 +1356,7 @@ export const orchestrationJobSchema = z.object({
   projectId: z.uuid(),
   ticketVersion: z.number().int().positive(),
   baseRevision: gitCommitShaSchema.nullable().default(null),
+  projectDefinitionVersion: z.number().int().positive().nullable().default(null),
 });
 export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
 

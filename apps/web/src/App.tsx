@@ -10,6 +10,7 @@ import {
   markTicketReady,
   updateProjectBaseRevision,
 } from "./control-api";
+import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { hasExecutableBaseRevision } from "./project-view-model";
 import { SettingsPanel } from "./SettingsPanel";
 
@@ -21,10 +22,12 @@ export function App() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
   const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
+  const [projectDefinitionVersion, setProjectDefinitionVersion] = useState<number | null>(null);
   const activeProject = projects.find((project) => project.id === selectedProject);
   const projectHasExecutableBase = activeProject
     ? hasExecutableBaseRevision(activeProject.baseRef)
     : false;
+  const projectCanExecute = projectHasExecutableBase && projectDefinitionVersion !== null;
 
   async function loadProjects(activeToken = token) {
     const data = await listProjects(activeToken);
@@ -246,7 +249,7 @@ export function App() {
                   <button type="submit">Atualizar revisão-base</button>
                   <p className="muted">
                     {projectHasExecutableBase
-                      ? "Este projeto está liberado para promover novos tickets."
+                      ? "SHA válido. A definição do projeto também precisa estar configurada."
                       : "READY permanece bloqueado até configurar um SHA exato."}
                   </p>
                 </>
@@ -255,6 +258,12 @@ export function App() {
               )}
             </form>
           </section>
+          <ProjectDefinitionPanel
+            token={token}
+            project={activeProject}
+            onMessage={setMessage}
+            onVersion={setProjectDefinitionVersion}
+          />
           <section className="panel records">
             <h2>Tickets</h2>
             {tickets.length === 0 ? (
@@ -272,11 +281,11 @@ export function App() {
                   {ticket.status === "DRAFT" && (
                     <button
                       type="button"
-                      disabled={!projectHasExecutableBase}
+                      disabled={!projectCanExecute}
                       title={
-                        projectHasExecutableBase
+                        projectCanExecute
                           ? "Promover ticket"
-                          : "Configure um SHA-base exato antes de READY"
+                          : "Configure o SHA-base e a definição do projeto antes de READY"
                       }
                       onClick={() => ready(ticket)}
                     >

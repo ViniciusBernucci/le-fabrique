@@ -3,6 +3,10 @@ import {
   type CreateTicket,
   gitCommitShaSchema,
   type Project,
+  type ProjectDefinition,
+  type ProjectDefinitionState,
+  type PutProjectDefinition,
+  projectDefinitionInputSchema,
   type Ticket,
   type UpdateProjectBaseRevision,
 } from "@le-fabrique/contracts";
@@ -39,6 +43,22 @@ function mapTicket(ticket: TicketRecord): Ticket {
   };
 }
 
+function mapProjectDefinition(definition: {
+  projectId: string;
+  version: number;
+  configuration: unknown;
+  createdAt: Date;
+  updatedAt: Date;
+}): ProjectDefinition {
+  return {
+    projectId: definition.projectId,
+    version: definition.version,
+    ...projectDefinitionInputSchema.parse(definition.configuration),
+    createdAt: definition.createdAt.toISOString(),
+    updatedAt: definition.updatedAt.toISOString(),
+  };
+}
+
 @Injectable()
 export class ControlService {
   constructor(@Inject(PrismaService) private readonly prisma: PrismaService) {}
@@ -49,6 +69,53 @@ export class ControlService {
 
   async listProjects(): Promise<Project[]> {
     return (await this.prisma.project.findMany({ orderBy: { createdAt: "desc" } })).map(mapProject);
+  }
+
+  async getProjectDefinition(projectId: string): Promise<ProjectDefinitionState> {
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      include: { definition: true },
+    });
+    if (!project) throw new NotFoundException("Project not found");
+    return { definition: project.definition ? mapProjectDefinition(project.definition) : null };
+  }
+
+  async putProjectDefinition(
+    projectId: string,
+    input: PutProjectDefinition,
+  ): Promise<ProjectDefinition> {
+    return this.prisma.$transaction(async (transaction) => {
+      const project = await transaction.project.findUnique({
+        where: { id: projectId },
+        include: { definition: true },
+      });
+      if (!project) throw new NotFoundException("Project not found");
+      if (!project.definition) {
+        if (input.expectedVersion !== 0) {
+          throw new ConflictException("Project definition version changed");
+        }
+        return mapProjectDefinition(
+          await transaction.projectDefinition.create({
+            data: { projectId, configuration: input.definition as Prisma.InputJsonValue },
+          }),
+        );
+      }
+      if (project.definition.version !== input.expectedVersion) {
+        throw new ConflictException("Project definition version changed");
+      }
+      const updated = await transaction.projectDefinition.updateMany({
+        where: { projectId, version: input.expectedVersion },
+        data: {
+          configuration: input.definition as Prisma.InputJsonValue,
+          version: { increment: 1 },
+        },
+      });
+      if (updated.count !== 1)
+        throw new ConflictException("Project definition was updated concurrently");
+      return mapProjectDefinition(
+        await transaction.projectDefinition.findUniqueOrThrow({ where: { projectId } }),
+      );
+    });
   }
 
   async updateProjectBaseRevision(
@@ -93,7 +160,9 @@ export class ControlService {
     return this.prisma.$transaction(async (transaction) => {
       const ticket = await transaction.ticket.findUnique({
         where: { id: ticketId },
-        include: { project: { select: { baseRef: true } } },
+        include: {
+          project: { select: { baseRef: true, definition: { select: { version: true } } } },
+        },
       });
       if (!ticket) throw new NotFoundException("Ticket not found");
       const deduplicationKey = `ticket:${ticketId}:ready`;
@@ -109,6 +178,9 @@ export class ControlService {
         throw new ConflictException(
           "Project base revision must be an exact lowercase 40-character commit SHA",
         );
+      }
+      if (!ticket.project.definition) {
+        throw new ConflictException("Project definition must be configured before READY");
       }
       const updated = await transaction.ticket.updateMany({
         where: { id: ticketId, status: "DRAFT", version: expectedVersion },
@@ -126,6 +198,7 @@ export class ControlService {
             projectId: ticket.projectId,
             ticketVersion: readyTicket.version,
             baseRevision: baseRevision.data,
+            projectDefinitionVersion: ticket.project.definition.version,
           } satisfies Prisma.InputJsonValue,
         },
       });

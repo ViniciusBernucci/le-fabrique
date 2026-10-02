@@ -111,8 +111,20 @@ model Project {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   tickets   Ticket[]
+  definition ProjectDefinition?
 
   @@map("projects")
+}
+
+model ProjectDefinition {
+  projectId     String   @id @db.Uuid @map("project_id")
+  version       Int      @default(1)
+  configuration Json
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+
+  @@map("project_definitions")
 }
 
 model Ticket {

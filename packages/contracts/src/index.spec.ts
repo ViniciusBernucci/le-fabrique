@@ -18,6 +18,7 @@ import {
   healthResponseSchema,
   orchestrationCheckpointRequestSchema,
   orchestrationJobSchema,
+  projectDefinitionInputSchema,
   providerHandoffRequestSchema,
   providerOnboardingChallengeSchema,
   providerOnboardingJobSchema,
@@ -77,6 +78,28 @@ const validConfiguration = {
 };
 
 describe("shared contracts", () => {
+  it("validates a configurable project definition without shell commands", () => {
+    const definition = {
+      summary: "Aplicacao externa cadastrada pelo operador",
+      externalStack: "Stack descoberta no repositorio externo",
+      instructions: "Preservar as convencoes locais e nao executar deploy.",
+      allowedPaths: ["src", "tests"],
+      forbiddenPaths: ["secrets"],
+      checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+    };
+    expect(projectDefinitionInputSchema.parse(definition)).toEqual(definition);
+    expect(() =>
+      projectDefinitionInputSchema.parse({ ...definition, allowedPaths: ["../outside"] }),
+    ).toThrow();
+    expect(() =>
+      projectDefinitionInputSchema.parse({
+        ...definition,
+        allowedPaths: ["src"],
+        forbiddenPaths: ["src/generated"],
+      }),
+    ).toThrow();
+  });
+
   it("requires an exact lowercase Git commit SHA for executable base revisions", () => {
     const revision = "a".repeat(40);
     expect(gitCommitShaSchema.parse(revision)).toBe(revision);

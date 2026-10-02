@@ -132,6 +132,20 @@ button:disabled {
 .records {
   margin-top: 20px;
 }
+.project-definition {
+  margin-top: 20px;
+}
+.check-row {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 1.2fr auto;
+  gap: 12px;
+  align-items: end;
+  padding: 12px 0;
+  border-top: 1px solid #26354b;
+}
+.check-row label {
+  margin: 0;
+}
 .records article {
   display: flex;
   justify-content: space-between;
@@ -254,6 +268,9 @@ button:disabled {
 .secondary-action:hover {
   color: #07140f;
 }
+.check-row .secondary-action {
+  margin: 0;
+}
 .account-action {
   width: 100%;
   margin-top: 8px;
@@ -262,6 +279,12 @@ button:disabled {
   margin: 0 0 12px;
   color: #9aabc1;
   font-size: 0.72rem;
+}
+
+@media (max-width: 760px) {
+  .check-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .onboarding-status {

@@ -2,8 +2,11 @@ import {
   adminSessionSchema,
   createProjectSchema,
   createTicketSchema,
+  projectDefinitionSchema,
+  projectDefinitionStateSchema,
   projectListSchema,
   projectSchema,
+  putProjectDefinitionSchema,
   readyTicketSchema,
   ticketListSchema,
   ticketSchema,
@@ -19,6 +22,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from "@nestjs/common";
 import type { z } from "zod";
@@ -61,6 +65,21 @@ export class ControlController {
         projectId,
         parse(updateProjectBaseRevisionSchema, body),
       ),
+    );
+  }
+
+  @Get("projects/:projectId/definition")
+  async getProjectDefinition(@Param("projectId", ParseUUIDPipe) projectId: string) {
+    return projectDefinitionStateSchema.parse(await this.control.getProjectDefinition(projectId));
+  }
+
+  @Put("projects/:projectId/definition")
+  async putProjectDefinition(
+    @Param("projectId", ParseUUIDPipe) projectId: string,
+    @Body() body: unknown,
+  ) {
+    return projectDefinitionSchema.parse(
+      await this.control.putProjectDefinition(projectId, parse(putProjectDefinitionSchema, body)),
     );
   }
 

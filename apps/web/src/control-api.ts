@@ -20,9 +20,13 @@ import {
   githubVerificationSchema,
   type PrepareGithubPullRequest,
   type Project,
+  type ProjectDefinition,
+  type ProjectDefinitionInput,
   type ProviderOnboardingChallenge,
   type ProviderOnboardingSession,
   type ProviderVerification,
+  projectDefinitionSchema,
+  projectDefinitionStateSchema,
   projectListSchema,
   projectSchema,
   providerOnboardingChallengeSchema,
@@ -72,6 +76,27 @@ export async function updateProjectBaseRevision(
     await request(`/projects/${project.id}/base-revision`, token, {
       method: "PATCH",
       body: JSON.stringify({ expectedBaseRef: project.baseRef, baseRevision }),
+    }),
+  );
+}
+export async function getProjectDefinition(
+  token: string,
+  projectId: string,
+): Promise<ProjectDefinition | null> {
+  return projectDefinitionStateSchema.parse(
+    await request(`/projects/${projectId}/definition`, token),
+  ).definition;
+}
+export async function putProjectDefinition(
+  token: string,
+  projectId: string,
+  expectedVersion: number,
+  definition: ProjectDefinitionInput,
+): Promise<ProjectDefinition> {
+  return projectDefinitionSchema.parse(
+    await request(`/projects/${projectId}/definition`, token, {
+      method: "PUT",
+      body: JSON.stringify({ expectedVersion, definition }),
     }),
   );
 }
