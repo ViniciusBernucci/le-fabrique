@@ -25,6 +25,9 @@ export function resolveAgentRoute(input: FactoryConfiguration, role: EmployeeRol
   if (!installation?.enabled || installation.state !== "AVAILABLE") {
     throw new Error(`Configured installation for ${role} is not available`);
   }
+  if (role === "REVIEWER" && assignment.permissionMode !== "READ_ONLY") {
+    throw new Error("Reviewer route must be READ_ONLY");
+  }
   const provider = runtimeProviders[installation.provider];
   if (!provider) throw new Error(`Configured provider for ${role} has no runtime adapter`);
   return agentRouteSchema.parse({
