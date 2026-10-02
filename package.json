@@ -13,10 +13,10 @@
   },
   "scripts": {
     "build": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime && npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && npm run build -w @le-fabrique/web",
-    "dev": "concurrently -n api,worker,web -c blue,magenta,green \"npm run dev -w @le-fabrique/api\" \"npm run dev -w @le-fabrique/worker\" \"npm run dev -w @le-fabrique/web\"",
+    "dev": "node scripts/dev.mjs",
     "format": "biome format --write .",
     "lint": "biome check .",
-    "test": "npm run test -w @le-fabrique/contracts && npm run test -w @le-fabrique/runtime && npm run test -w @le-fabrique/api && npm run test -w @le-fabrique/worker && npm run test -w @le-fabrique/web",
+    "test": "node --test scripts/dev.test.mjs && npm run test -w @le-fabrique/contracts && npm run test -w @le-fabrique/runtime && npm run test -w @le-fabrique/api && npm run test -w @le-fabrique/worker && npm run test -w @le-fabrique/web",
     "typecheck": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime && npm run typecheck -w @le-fabrique/contracts && npm run typecheck -w @le-fabrique/runtime && npm run typecheck -w @le-fabrique/api && npm run typecheck -w @le-fabrique/worker && npm run typecheck -w @le-fabrique/web",
     "db:generate": "npm run db:generate -w @le-fabrique/api",
     "db:migrate": "npm run db:migrate -w @le-fabrique/api",

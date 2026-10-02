@@ -10,7 +10,7 @@ import type {
 } from "@le-fabrique/contracts";
 import { Worker } from "bullmq";
 import { loadWorkerConfig } from "./config";
-import { ControlClient, startHeartbeat } from "./control-client";
+import { ControlClient, registerWithRetry, startHeartbeat } from "./control-client";
 import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
@@ -32,7 +32,16 @@ import { processProviderVerification } from "./provider-verification.processor";
 async function bootstrap(): Promise<void> {
   const config = loadWorkerConfig();
   const control = new ControlClient(config);
-  await control.register();
+  await registerWithRetry(control, {
+    maxAttempts: 30,
+    delayMs: 1000,
+    onRetry: ({ failedAttempt, maxAttempts, delayMs }) =>
+      console.warn("worker waiting for control API", {
+        failedAttempt,
+        maxAttempts,
+        retryInMs: delayMs,
+      }),
+  });
 
   const redisUrl = new URL(config.REDIS_URL);
   const probeWorker = new Worker<WorkerProbeJob, ProbeResult>(

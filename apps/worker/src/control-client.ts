@@ -42,7 +42,7 @@ export class ControlClient {
         authorization: `Bearer ${this.config.WORKER_API_TOKEN}`,
       },
     });
-    if (!response.ok) throw new Error(`Control request failed with status ${response.status}`);
+    if (!response.ok) throw new ControlRequestError(response.status);
     return response.json();
   }
 
@@ -264,6 +264,56 @@ export class ControlClient {
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),
     );
+  }
+}
+
+export class ControlRequestError extends Error {
+  constructor(readonly status: number) {
+    super(`Control request failed with status ${status}`);
+    this.name = "ControlRequestError";
+  }
+}
+
+interface RegistrationRetryOptions {
+  maxAttempts?: number;
+  delayMs?: number;
+  wait?: (delayMs: number) => Promise<void>;
+  onRetry?: (input: { failedAttempt: number; maxAttempts: number; delayMs: number }) => void;
+}
+
+function isTransientRegistrationError(error: unknown): boolean {
+  return (
+    error instanceof TypeError || (error instanceof ControlRequestError && error.status >= 500)
+  );
+}
+
+const waitFor = (delayMs: number): Promise<void> =>
+  new Promise((resolveWait) => setTimeout(resolveWait, delayMs));
+
+export async function registerWithRetry(
+  client: Pick<ControlClient, "register">,
+  options: RegistrationRetryOptions = {},
+): Promise<void> {
+  const maxAttempts = options.maxAttempts ?? 30;
+  const delayMs = options.delayMs ?? 1000;
+  const wait = options.wait ?? waitFor;
+
+  if (!Number.isInteger(maxAttempts) || maxAttempts < 1) {
+    throw new RangeError("maxAttempts must be a positive integer");
+  }
+  if (!Number.isInteger(delayMs) || delayMs < 0) {
+    throw new RangeError("delayMs must be a non-negative integer");
+  }
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      await client.register();
+      return;
+    } catch (error) {
+      if (attempt === maxAttempts || !isTransientRegistrationError(error)) throw error;
+      options.onRetry?.({ failedAttempt: attempt, maxAttempts, delayMs });
+      await wait(delayMs);
+    }
   }
 }
 

@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import type { WorkerConfig } from "./config";
-import { ControlClient, startHeartbeat } from "./control-client";
+import {
+  ControlClient,
+  ControlRequestError,
+  registerWithRetry,
+  startHeartbeat,
+} from "./control-client";
 
 const config: WorkerConfig = {
   NODE_ENV: "test",
@@ -50,5 +55,51 @@ describe("ControlClient", () => {
     expect(unavailable).toHaveBeenCalledOnce();
     stop();
     vi.useRealTimers();
+  });
+
+  it("retries transient registration failures and stops after success", async () => {
+    const client = {
+      register: vi
+        .fn()
+        .mockRejectedValueOnce(new TypeError("fetch failed"))
+        .mockRejectedValueOnce(new ControlRequestError(503))
+        .mockResolvedValue({}),
+    };
+    const wait = vi.fn().mockResolvedValue(undefined);
+    const onRetry = vi.fn();
+
+    await expect(
+      registerWithRetry(client, { maxAttempts: 30, delayMs: 1000, wait, onRetry }),
+    ).resolves.toBeUndefined();
+    expect(client.register).toHaveBeenCalledTimes(3);
+    expect(wait).toHaveBeenCalledTimes(2);
+    expect(wait).toHaveBeenNthCalledWith(1, 1000);
+    expect(onRetry).toHaveBeenLastCalledWith({
+      failedAttempt: 2,
+      maxAttempts: 30,
+      delayMs: 1000,
+    });
+  });
+
+  it("preserves the last transient error after exhausting registration attempts", async () => {
+    const error = new TypeError("fetch failed");
+    const client = { register: vi.fn().mockRejectedValue(error) };
+    const wait = vi.fn().mockResolvedValue(undefined);
+
+    await expect(registerWithRetry(client, { maxAttempts: 3, delayMs: 1000, wait })).rejects.toBe(
+      error,
+    );
+    expect(client.register).toHaveBeenCalledTimes(3);
+    expect(wait).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not retry a permanent registration response", async () => {
+    const error = new ControlRequestError(401);
+    const client = { register: vi.fn().mockRejectedValue(error) };
+    const wait = vi.fn().mockResolvedValue(undefined);
+
+    await expect(registerWithRetry(client, { wait })).rejects.toBe(error);
+    expect(client.register).toHaveBeenCalledOnce();
+    expect(wait).not.toHaveBeenCalled();
   });
 });
