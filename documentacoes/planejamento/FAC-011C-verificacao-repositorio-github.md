@@ -1,6 +1,6 @@
 # FAC-011C — Verificacao somente-leitura do repositorio GitHub
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -66,3 +66,7 @@ FAC-011C comprova somente leitura do alvo configurado. Criacao de PR, permissao 
 - Codigo verificado: `53d605a53b4762bc1055046345aab7fdbeb31b34`.
 - Relatorio: `documentacoes/configuracao/2026-10-02-FAC-011C-verificacao-repositorio-github.md`.
 - Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e GitHub remoto nao consultado.
+
+## Aceite
+
+Entrega aceita explicitamente pelo responsavel em 2026-10-02 na revisao documental exata `8fd38781652fac187d0f5a419eb336c15e94b816`.

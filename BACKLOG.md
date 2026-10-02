@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 e seus incrementos A/B foram aceitos; FAC-011C implementa verificacao do repositorio e aguarda aceite. FAC-010 esta WAITING_PROVIDER depois dos incrementos A/B/C. O piloto externo permanece adiado até a validação operacional.
+FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 e seus incrementos A/B/C foram aceitos; FAC-011D e o proximo incremento. FAC-010 esta WAITING_PROVIDER depois dos incrementos A/B/C. O piloto externo permanece adiado até a validação operacional.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -23,7 +23,7 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011 e seus incrementos A/B foram ac
 - FAC-011: DONE — Centro de Configuracoes aceito na revisao `e41ec1e45273aba3205f266e8753dfca305c5952`; dependências: FAC-003 e FAC-009.
 - FAC-011A: DONE — Verificacao GitHub CLI aceita na revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`; dependência: FAC-011.
 - FAC-011B: DONE — Login GitHub web/device aceito na revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`; dependência: FAC-011A.
-- FAC-011C: AWAITING_HUMAN — Verificacao somente-leitura de repositorio/branch implementada no codigo `53d605a53b4762bc1055046345aab7fdbeb31b34`; dependência: FAC-011B. `gh` e integracao real permanecem nao verificados.
+- FAC-011C: DONE — Verificacao somente-leitura de repositorio/branch aceita na revisao `8fd38781652fac187d0f5a419eb336c15e94b816`; dependência: FAC-011B. `gh` e integracao real permanecem nao verificados.
 - FAC-011D: PLANEJADO — Provar permissao de escrita e criar PR somente apos gate humano; dependência: FAC-011C. Merge permanece manual.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.

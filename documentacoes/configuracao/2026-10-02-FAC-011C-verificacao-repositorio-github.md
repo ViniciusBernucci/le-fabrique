@@ -2,7 +2,7 @@
 
 Data: 2026-10-02
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo e revisoes
 
@@ -74,4 +74,4 @@ O diff funcional sanitizado e revisavel e o commit `53d605a53b4762bc1055046345aa
 
 Antes de aplicar a migration, o rollback e reverter o commit funcional e o commit documental. Se a migration aditiva ja tiver sido aplicada, manter a tabela/historico sem uso e criar migration compensatoria somente com autorizacao; nao apagar verificacoes manualmente. Nenhuma configuracao externa precisa de rollback.
 
-O FAC-011C permanece `AWAITING_HUMAN`. `DONE` exige aceite explicito da revisao documental exata que contem este relatorio.
+O responsavel aceitou explicitamente a revisao documental exata `8fd38781652fac187d0f5a419eb336c15e94b816` em 2026-10-02. O FAC-011C esta `DONE`; instalacao, credencial e verificacao remota reais continuam fora deste aceite.

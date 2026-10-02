@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B estão DONE. FAC-011C implementa verificacao somente-leitura de repositorio/branch e aguarda aceite. O controle possui autenticacao, projetos/tickets, outbox, orquestracao e configuracao versionada sem segredos. `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado.
+FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. O controle possui autenticacao, projetos/tickets, outbox, orquestracao e configuracao versionada sem segredos. Verificacao somente-leitura de repositorio/branch esta aceita; `gh` ainda nao esta instalado. O loop BullMQ de tickets continua no probe sintetico ate existir perfil local confiavel. FAC-010 aguarda preflight Claude real futuro. O piloto externo permanece adiado.
 
 ## Fronteiras e contratos
 
@@ -15,11 +15,10 @@ FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B estão DONE. FAC-011C impl
 
 ## Sequência recomendada
 
-1. Revisar e aceitar a revisao exata FAC-011C.
-2. Implementar criacao de PR e prova de permissao de escrita sob gate humano em ticket separado.
-3. Instalar/configurar clientes pela operacao futura e repetir os preflights reais de Claude e GitHub.
-4. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
-5. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
+1. Implementar FAC-011D, criacao de PR e prova de permissao de escrita sob gate humano.
+2. Instalar/configurar clientes pela operacao futura e repetir os preflights reais de Claude e GitHub.
+3. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
+4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
 
 ## Restrições para os próximos tickets
 

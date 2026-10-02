@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.35 - 2026-10-02
+FAC-011C aceito pelo responsavel na revisao `8fd38781652fac187d0f5a419eb336c15e94b816`. Verificacao somente-leitura de repositorio/branch esta concluida em codigo; prova real permanece futura e FAC-011D passa a ser o proximo incremento.
+
 ## 2.34 - 2026-10-02
 FAC-011C implementa verificacao autenticada e somente-leitura do repositorio/branch GitHub salvo: snapshot/outbox, fila dedicada, duas chamadas `GET` fixas pelo worker, evidencia integral ou falha sem metadado parcial e painel sanitizado. Passaram 134 testes, lint, typecheck, build e schema Prisma; `gh` segue ausente, nenhuma chamada remota ocorreu e a revisao aguarda aceite.
 
