@@ -27,6 +27,7 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-010 e
 - FAC-011D: DONE — Gate em duas etapas, prova de push, reconciliacao e criacao de PR aceitos na revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; dependência: FAC-011C. Prova real e merge permanecem pendentes.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
+- OPS-001: READY — Carregar `.env` no comando raiz, aguardar a API no registro inicial do worker e aplicar somente migrations versionadas no bootstrap local; dependências: FAC-000 e FAC-004.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.
 

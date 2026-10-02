@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.38 - 2026-10-02
+OPS-001 passa a READY para corrigir o bootstrap reproduzido pelo responsavel: carregamento do `.env` raiz, tolerancia limitada a corrida de inicializacao da API e uso de migrations versionadas, sem limpar filas ou aplicar mudancas no banco.
+
 ## 2.37 - 2026-10-02
 FAC-011D aceito pelo responsavel na revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`. PR sob gate humano esta concluido em codigo; prova real permanece futura e o proximo incremento trata falhas observadas no bootstrap local.
 
