@@ -1,8 +1,11 @@
 # FAC-012C — Política de escrita do SandboxRunner
 
-Status: AWAITING_HUMAN  
-Branch: `feat/fac-012c-sandbox-path-policy`  
-Base: `ce27c13cace1fa81b8bffde1df98e8c3e499fe0e`  
+Status: AWAITING_HUMAN
+
+Branch: `feat/fac-012c-sandbox-path-policy`
+
+Base: `ce27c13cace1fa81b8bffde1df98e8c3e499fe0e`
+
 Código: `a8f7a66dfc1b5c58a0596611dc300559504709ce`
 
 ## O que mudou
