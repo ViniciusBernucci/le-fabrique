@@ -96,7 +96,7 @@ export class DeveloperWorkflow {
       let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
       try {
         developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
-      } catch (error) {
+      } catch {
         return this.result(
           request,
           workspace,
@@ -104,7 +104,7 @@ export class DeveloperWorkflow {
           progress,
           "FAILED",
           "RUNTIME_ROUTE_UNAVAILABLE",
-          error instanceof Error ? error.message : "Developer runtime route is unavailable",
+          "Configured Developer runtime route is unavailable",
           round,
         );
       }
@@ -216,7 +216,7 @@ export class DeveloperWorkflow {
       let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
       try {
         reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
-      } catch (error) {
+      } catch {
         return this.result(
           request,
           workspace,
@@ -224,7 +224,7 @@ export class DeveloperWorkflow {
           progress,
           "FAILED",
           "RUNTIME_ROUTE_UNAVAILABLE",
-          error instanceof Error ? error.message : "Reviewer runtime route is unavailable",
+          "Configured Reviewer runtime route is unavailable",
           round,
         );
       }

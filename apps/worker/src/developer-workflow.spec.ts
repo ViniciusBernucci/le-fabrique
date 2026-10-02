@@ -330,6 +330,7 @@ describe("DeveloperWorkflow", () => {
     await expect(new DeveloperWorkflow(deps).execute(request())).resolves.toMatchObject({
       status: "FAILED",
       reason: "RUNTIME_ROUTE_UNAVAILABLE",
+      diagnostic: "Configured Developer runtime route is unavailable",
       developerExecutions: 0,
       reviewerExecutions: 0,
     });
