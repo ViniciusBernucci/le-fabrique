@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.52 - 2026-10-02
+FAC-012C fica READY para tornar o SandboxRunner read-only por padrão e permitir somente caminhos graváveis explícitos, com prova via teste Linux de integração; consumer e provider continuam desligados.
+
 ## 2.51 - 2026-10-02
 Responsável aceita FAC-012A/B nas revisões documentais exatas. OPS-003 registra os aceites e integra bind loopback no proxy e migration corretiva para alinhar defaults UUID/índice do Prisma; lint, typecheck, 169 testes, build, Prisma validate e Compose config passaram. Migration não aplicada; aguarda revisão humana OPS-003.
 

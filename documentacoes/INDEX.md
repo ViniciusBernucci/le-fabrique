@@ -57,6 +57,7 @@
 - [planejamento/FAC-011D-criacao-pull-request-gate-humano.md](planejamento/FAC-011D-criacao-pull-request-gate-humano.md)
 - [planejamento/FAC-012A-especificacao-execucao-imutavel.md](planejamento/FAC-012A-especificacao-execucao-imutavel.md)
 - [planejamento/FAC-012B-compilador-workflow-configuravel.md](planejamento/FAC-012B-compilador-workflow-configuravel.md)
+- [planejamento/FAC-012C-politica-escrita-sandbox.md](planejamento/FAC-012C-politica-escrita-sandbox.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)

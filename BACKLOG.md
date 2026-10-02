@@ -30,6 +30,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-012A: DONE — Snapshot imutavel de projeto/definicao/ticket no evento READY; codigo `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`, revisao documental aceita `3ef3d543b98fb48226714787315f4de947fa6dd9`; sem piloto.
 - FAC-012B: DONE — Compilador de snapshot para DeveloperWorkflowRequest com perfil confiável injetado; código `e7b9bf60e03089c502255d19edbb5d1e31725d2c`, revisao documental aceita `3e28363b0642f8e05840bb649b681e3837e1e015`; consumer permanece desligado.
+- FAC-012C: READY — SandboxRunner read-only por padrão, caminhos de escrita explícitos e prova de isolamento; sem ligar o consumer ou iniciar provider.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 - OPS-003: AWAITING_HUMAN — Aceites FAC-012A/B registrados; bind loopback e migration corretiva integrados em `e09204c5205af047d79bcd7d530a1acd1db563ca`, migration não aplicada.
