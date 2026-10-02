@@ -307,6 +307,7 @@ export class DeveloperWorkflow {
         command: check.command,
         args: check.args,
         environment: check.environment,
+        writablePaths: [],
         limits: request.sandboxLimits,
       });
       observations.push({

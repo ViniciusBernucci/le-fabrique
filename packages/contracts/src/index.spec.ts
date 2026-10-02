@@ -240,7 +240,7 @@ describe("shared contracts", () => {
           maxFileBytes: 16 * 1024 * 1024,
         },
       }),
-    ).toMatchObject({ environment: {} });
+    ).toMatchObject({ environment: {}, writablePaths: [] });
     expect(() =>
       sandboxCommandRequestSchema.parse({
         schemaVersion: 1,
@@ -258,6 +258,31 @@ describe("shared contracts", () => {
           maxFileBytes: 1,
         },
       }),
+    ).toThrow();
+  });
+
+  it("rejects writable paths that overlap or target Git metadata", () => {
+    const base = {
+      schemaVersion: 1 as const,
+      executionId: crypto.randomUUID(),
+      workspacePath: "/tmp/workspace",
+      command: "/usr/bin/node",
+      args: [],
+      limits: {
+        timeoutMs: 1_000,
+        maxLogBytes: 4_096,
+        memoryBytes: 256 * 1024 * 1024,
+        cpuQuotaPercent: 100,
+        maxProcesses: 64,
+        maxOpenFiles: 256,
+        maxFileBytes: 16 * 1024 * 1024,
+      },
+    };
+    expect(() =>
+      sandboxCommandRequestSchema.parse({ ...base, writablePaths: ["src", "src/file.ts"] }),
+    ).toThrow();
+    expect(() =>
+      sandboxCommandRequestSchema.parse({ ...base, writablePaths: [".git/config"] }),
     ).toThrow();
   });
 

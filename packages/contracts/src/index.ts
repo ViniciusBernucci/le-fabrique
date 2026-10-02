@@ -1277,6 +1277,22 @@ export const sandboxCommandRequestSchema = z.object({
   command: z.string().trim().min(1).max(4096),
   args: z.array(z.string().max(16_384)).max(200),
   environment: z.record(z.string().regex(/^[A-Z_][A-Z0-9_]*$/), z.string().max(16_384)).default({}),
+  writablePaths: z
+    .array(projectRelativePathSchema.refine((path) => !path.split("/").includes(".git")))
+    .max(100)
+    .default([])
+    .refine((paths) => new Set(paths).size === paths.length, "Writable paths must be unique")
+    .refine(
+      (paths) =>
+        paths.every((path, index) =>
+          paths.slice(index + 1).every((other) => {
+            const overlaps = (left: string, right: string) =>
+              left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
+            return !overlaps(path, other);
+          }),
+        ),
+      "Writable paths must not overlap",
+    ),
   limits: sandboxLimitsSchema,
 });
 export type SandboxCommandRequest = z.infer<typeof sandboxCommandRequestSchema>;

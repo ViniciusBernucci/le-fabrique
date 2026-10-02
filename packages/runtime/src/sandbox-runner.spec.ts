@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import type { SandboxCommandRequest } from "@le-fabrique/contracts";
@@ -15,6 +15,7 @@ function request(overrides: Partial<SandboxCommandRequest> = {}): SandboxCommand
     command: process.execPath,
     args: ["/mnt/probe.cjs"],
     environment: { CI: "true" },
+    writablePaths: [],
     limits: {
       timeoutMs: 5_000,
       maxLogBytes: 16_384,
@@ -85,6 +86,43 @@ socket.on("error", () => { result.networkBlocked = true; console.log(JSON.string
     }
   }, 15_000);
 
+  it("keeps the workspace read-only except for explicit writable paths", async () => {
+    await writeFile(
+      resolve(workspace, "probe.cjs"),
+      `
+const fs = require("node:fs");
+fs.writeFileSync("/mnt/allowed.txt", "updated");
+let denied = false;
+try { fs.writeFileSync("/mnt/denied.txt", "forbidden"); }
+catch (error) { denied = error.code === "EROFS"; }
+console.log(JSON.stringify({ denied }));
+`,
+    );
+    await writeFile(resolve(workspace, "allowed.txt"), "before");
+    await writeFile(resolve(workspace, "denied.txt"), "protected");
+
+    const result = await new SandboxRunner().execute(request({ writablePaths: ["allowed.txt"] }));
+
+    expect(result.status).toBe("COMPLETED");
+    expect(result.stoppedConfirmed).toBe(true);
+    expect(JSON.parse(result.stdout.trim())).toEqual({ denied: true });
+    expect(await readFile(resolve(workspace, "allowed.txt"), "utf8")).toBe("updated");
+    expect(await readFile(resolve(workspace, "denied.txt"), "utf8")).toBe("protected");
+  }, 15_000);
+
+  it("rejects nonexistent and symbolic-link writable paths before launching", async () => {
+    await writeFile(resolve(workspace, "target.txt"), "protected");
+    await symlink(resolve(workspace, "target.txt"), resolve(workspace, "alias.txt"));
+
+    await expect(
+      new SandboxRunner().execute(request({ writablePaths: ["missing.txt"] })),
+    ).rejects.toThrow("does not exist");
+    await expect(
+      new SandboxRunner().execute(request({ writablePaths: ["alias.txt"] })),
+    ).rejects.toThrow("symbolic link");
+    expect(await readFile(resolve(workspace, "target.txt"), "utf8")).toBe("protected");
+  });
+
   it("kills the complete cgroup after timeout", async () => {
     await writeFile(
       resolve(workspace, "timeout.cjs"),
@@ -96,8 +134,14 @@ fs.writeFileSync("/mnt/started", "yes");
 setInterval(() => {}, 1000);
 `,
     );
+    await writeFile(resolve(workspace, "started"), "");
+    await writeFile(resolve(workspace, "heartbeat"), "");
     const result = await new SandboxRunner({ killGraceMs: 100 }).execute(
-      request({ args: ["/mnt/timeout.cjs"], limits: { ...request().limits, timeoutMs: 1_000 } }),
+      request({
+        args: ["/mnt/timeout.cjs"],
+        writablePaths: ["started", "heartbeat"],
+        limits: { ...request().limits, timeoutMs: 1_000 },
+      }),
     );
     expect(result).toMatchObject({ status: "TIMED_OUT", stoppedConfirmed: true });
     expect(await readFile(resolve(workspace, "started"), "utf8")).toBe("yes");
