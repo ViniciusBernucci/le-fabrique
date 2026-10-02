@@ -15,6 +15,8 @@ No FAC-001A, `ProjectDefinition` e uma entidade um-para-um persistida separadame
 - Definicao ausente deve continuar explicita; defaults sinteticos nao podem fingir que um projeto real foi inspecionado.
 - Uma configuracao do piloto nao e feature nova: o piloto futuro reutiliza o mesmo fluxo de qualquer projeto.
 
+No FAC-012A, apenas registrar `definitionVersion` mostrou-se insuficiente porque a tabela guarda a versao atual, nao o historico completo. A fronteira READY passou a copiar a definicao e o ticket para `executionSpecification` na outbox. Referencia de versao detecta divergencia; snapshot autocontido preserva o que realmente foi autorizado. Ambos sao necessarios quando o estado fonte permanece editavel.
+
 ## Referencias
 
 - `documentacoes/planejamento/FAC-001A-definicao-projeto-configuravel.md`

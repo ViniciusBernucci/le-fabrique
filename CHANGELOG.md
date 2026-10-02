@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.47 - 2026-10-02
+FAC-012A implementa snapshot imutavel de projeto, definicao e ticket no evento READY, com invariantes cruzadas e bloqueio de eventos legados incompletos. Passaram 163 testes, lint, typecheck, build e Prisma validate; nenhum piloto/provider foi executado e a revisao aguarda aceite.
+
 ## 2.46 - 2026-10-02
 FAC-012A fica READY para transformar a configuracao generica de projeto e o ticket em especificacao imutavel no evento READY, sem cadastrar piloto, executar worker real ou escolher provider.
 

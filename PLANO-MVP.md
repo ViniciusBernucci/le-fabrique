@@ -89,14 +89,20 @@ Entregáveis: código quando pertinente, checks reais, artefatos por revisão e 
 
 ## FAC-011 — Centro de Configuracoes e Provider Manager
 Sprint: Sprint 2. Dependências: FAC-003, FAC-009. Esforço estimado: 2-3 dias. Status: DONE.
-Descrição: Painel React responsivo, persistencia e contratos para contas/modelos/funcionarios, GitHub e protecoes financeiras. FAC-011A/B/C adicionaram verificacao, login e leitura aceitos; FAC-011D implementa PR aprovado, sem merge, e aguarda aceite.
+Descrição: Painel React responsivo, persistencia e contratos para contas/modelos/funcionarios, GitHub e protecoes financeiras. FAC-011A/B/C/D foram aceitos; PR permanece sob gate e sem merge automatico.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Configuracao versionada rejeita segredo e relacoes invalidas; unknown/auth required permanece visivel; API/extras/fallback/merge nao podem ser ativados; docs atuais coerentes com código.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
+## FAC-012A — Especificacao imutavel de execucao
+Sprint: Sprint 3, fundacao interna. Dependências: FAC-001A, FAC-003A, FAC-008. Esforço estimado: 1 dia. Status: AWAITING_HUMAN.
+Descrição: Congelar projeto, definicao e ticket no evento READY para que a execucao futura nao dependa de configuracao mutavel.
+Aceite: Snapshot estrito, invariantes cruzadas, montagem transacional e bloqueio de legado incompleto, sem iniciar piloto/provider.
+Entregáveis: contratos, controle, dispatcher, probe, testes e documentacao vinculados ao codigo `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`.
+
 ## FAC-012 — Dez tickets e operação
 Sprint: Sprint 3. Dependências: FAC-001, FAC-011. Esforço estimado: 2-3 dias. Status: PLANEJADO.
-Descrição: Executar o piloto real definido manualmente pelo responsável, incluindo dez tickets, falhas, backup/restauração, métricas de custo/espera/qualidade e retrospectiva.
+Descrição: Executar o projeto real selecionado e configurado pelo responsavel no software, incluindo dez tickets, falhas, backup/restauração, métricas de custo/espera/qualidade e retrospectiva.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Dez tickets contabilizados; restauração comprovada; metas avaliadas; zero cobrança extra/API não autorizada.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.

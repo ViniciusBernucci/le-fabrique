@@ -34,3 +34,5 @@ FAC-011D adiciona `GET/POST /api/settings/github/pull-requests`, `approve` e `ca
 FAC-008 conecta o evento `READY` ao BullMQ por dispatcher idempotente, oferece o protocolo interno de runs/attempts, leases, fencing e checkpoints e liga ao worker um consumidor restrito ao probe sintetico. O consumidor do runtime real ainda nao esta ligado ao loop principal. SSE, usuarios multiplos, login gerenciado e conexao GitHub pertencem aos proximos tickets.
 
 FAC-003A tambem protege a fronteira do dispatcher: evento legado PENDING com `baseRevision: null` nunca chega a `queue.add` e converge para `FAILED` pelo limite da outbox. Eventos e jobs historicos permanecem preservados; nao existe limpeza automatica neste fluxo.
+
+FAC-012A torna o evento READY autocontido: `executionSpecification` copia projeto, SHA, definicao completa e ticket dentro da mesma transacao. O contrato cruza IDs e versoes do snapshot com o envelope. Atualizar a definicao depois nao altera eventos anteriores, e evento legado sem snapshot nao e publicado.
