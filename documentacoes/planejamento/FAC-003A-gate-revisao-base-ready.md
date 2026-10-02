@@ -1,6 +1,6 @@
 # FAC-003A — Gate de revisao-base exata antes de READY
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -50,4 +50,4 @@ Nenhum. A revisao e informada pelo operador e validada localmente; resolucao rem
 
 ## Entregaveis e aceite
 
-Codigo e testes, relatorio `documentacoes/controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md`, READMEs atuais, indice, changelog, backlog e lesson reutilizada. DONE somente apos aceite da revisao documental exata.
+Ticket READY: `dcc380c11775bba97c7020d5a22ca075f4feee05`. Codigo verificado: `e65c88fd8f3bd15e3aa65773fedc945af3709def`. Relatorio: `documentacoes/controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md`. DONE somente apos aceite da revisao documental exata.

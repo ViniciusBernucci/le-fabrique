@@ -55,6 +55,7 @@
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
+- [controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md](controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md)
 - [arquitetura/TECH-LEAD-HANDOFF.md](arquitetura/TECH-LEAD-HANDOFF.md)
 
 - [arquitetura/ADR-003-stack-typescript.md](arquitetura/ADR-003-stack-typescript.md)

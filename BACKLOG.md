@@ -13,7 +13,7 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-010 e
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
 - FAC-002: DONE — Codex validado e aceito na revisão `1666ee108343563e35edb6971bea11234a62d47e`; dependências: FAC-004.
 - FAC-003: DONE — Controle web e persistência aceitos no SHA `1807330bcf7b1374fa626d9fcbfc47dd8002f433`; dependências: FAC-000.
-- FAC-003A: READY — Gate de revisao-base exata antes de READY e atualizacao configuravel no painel, preservando jobs historicos; dependências: FAC-003 e FAC-008.
+- FAC-003A: AWAITING_HUMAN — Gate de revisao-base exata antes de READY, barreira no dispatcher e atualizacao configuravel no painel; codigo `e65c88fd8f3bd15e3aa65773fedc945af3709def`, dependências: FAC-003 e FAC-008.
 - FAC-004: DONE — Worker interno e identidade de serviço aceitos no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1`; dependências: FAC-003.
 - FAC-005: DONE — Runtime Gateway e adapter Codex aceitos na revisão `9102fcc614739fd7bd7ca4992b16617db92ca66f`; dependências: FAC-002, FAC-004.
 - FAC-006: DONE — Context Builder e RuntimeGuard aceitos na revisão `ea8cf7afb0e55840722f306262b5334bb408b51a`; dependências: FAC-003.

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.42 - 2026-10-02
+FAC-003A exige SHA-base exato antes de READY, oferece update otimista no painel e impede evento legado nulo de chegar ao worker. Passaram 155 testes, lint, typecheck, build e schema Prisma; nenhum banco/fila foi alterado e a revisao aguarda aceite.
+
 ## 2.41 - 2026-10-02
 FAC-003A passa a READY apos diagnostico dos logs: os UUIDs eram jobs distintos publicados com `baseRevision: null`, nao retry infinito. O incremento bloqueia novos eventos invalidos e torna o SHA exato configuravel, sem limpar a fila.
 

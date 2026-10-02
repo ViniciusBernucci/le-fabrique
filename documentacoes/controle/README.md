@@ -4,12 +4,13 @@ Status: controle base ACEITO no FAC-003; Centro de Configuracoes ACEITO no FAC-0
 
 A API NestJS expõe health sem autenticação e protege as rotas administrativas com um Bearer token vindo de `ADMIN_API_TOKEN`. O painel solicita esse token ao operador, mantém o valor somente durante a sessão do navegador e chama contratos validados por Zod.
 
-Projetos registram nome, URL do repositório e referência base. Tickets registram objetivo, critérios, estado e versão otimista. A transição `DRAFT -> READY` grava o ticket e `ticket.ready.v1` na outbox em uma única transação. Quando a referência base já é um SHA Git de 40 caracteres, ela segue no evento como `baseRevision`; referências ainda não resolvidas seguem como `null` e o worker não inicia claim. A chave `ticket:{id}:ready` impede evento duplicado em retry.
+Projetos registram nome, URL do repositório e referência base. Tickets registram objetivo, critérios, estado e versão otimista. FAC-003A permite trocar a referencia por um SHA Git minusculo de 40 caracteres com comparacao otimista. A transição `DRAFT -> READY` so grava ticket e `ticket.ready.v1` quando esse SHA ja esta resolvido; falha de elegibilidade ocorre antes de qualquer mutacao. A chave `ticket:{id}:ready` impede evento duplicado em retry.
 
 Rotas atuais:
 
 - `GET /api/auth/session`
 - `POST|GET /api/projects`
+- `PATCH /api/projects/{projectId}/base-revision`
 - `POST|GET /api/projects/{projectId}/tickets`
 - `POST /api/tickets/{ticketId}/ready`
 - `GET|PUT /api/settings`
@@ -28,3 +29,5 @@ FAC-011C adiciona `GET/POST /api/settings/github/repository-verifications` e as 
 FAC-011D adiciona `GET/POST /api/settings/github/pull-requests`, `approve` e `cancel`, alem das rotas internas `start|complete`. Somente `approve` cria outbox; `expectedVersion` e digest vinculam o gate ao payload exato. Complete reconfere alvo/opt-in e URL. API nao executa escrita GitHub.
 
 FAC-008 conecta o evento `READY` ao BullMQ por dispatcher idempotente, oferece o protocolo interno de runs/attempts, leases, fencing e checkpoints e liga ao worker um consumidor restrito ao probe sintetico. O consumidor do runtime real ainda nao esta ligado ao loop principal. SSE, usuarios multiplos, login gerenciado e conexao GitHub pertencem aos proximos tickets.
+
+FAC-003A tambem protege a fronteira do dispatcher: evento legado PENDING com `baseRevision: null` nunca chega a `queue.add` e converge para `FAILED` pelo limite da outbox. Eventos e jobs historicos permanecem preservados; nao existe limpeza automatica neste fluxo.
