@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.51 - 2026-10-02
+Responsável aceita FAC-012A/B nas revisões documentais exatas. OPS-003 registra os aceites e integra bind loopback no proxy e migration corretiva para alinhar defaults UUID/índice do Prisma; lint, typecheck, 169 testes, build, Prisma validate e Compose config passaram. Migration não aplicada; aguarda revisão humana OPS-003.
+
 ## 2.50 - 2026-10-02
 OPS-003 fica READY para registrar os aceites explícitos FAC-012A/B e reconciliar bind local da porta de origem e migration Prisma corretiva, sem aplicar migration ou fazer deploy.
 

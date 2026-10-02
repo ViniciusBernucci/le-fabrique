@@ -1,7 +1,7 @@
 # FAC-012A — Especificacao imutavel de execucao
 
 Data: 2026-10-02
-Status: IMPLEMENTADO / AWAITING_HUMAN
+Status: IMPLEMENTADO / ACEITO
 Dominio: operacao, controle e contratos
 Base SHA / revisao do codigo: `43043c98ca4b105daf1f2e9986882b26da6f2ec3` / `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`
 Branch / PR: `feat/fac-012a-execution-spec` / sem PR
@@ -62,4 +62,4 @@ Foram atualizados READMEs de controle/operacao/runtime, especificacao, plano, ba
 
 ## Aceite
 
-Codigo verificado em `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`. A entrega permanece `AWAITING_HUMAN` ate aceite da revisao documental exata.
+Codigo verificado em `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`; revisao documental aceita `3ef3d543b98fb48226714787315f4de947fa6dd9`. Aceite explicito do responsavel em 2026-10-02. O piloto e o consumer real continuam fora desta entrega.

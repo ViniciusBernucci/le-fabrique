@@ -1,7 +1,7 @@
 # FAC-012B — Compilador da especificação para workflow
 
 Data: 2026-10-02  
-Status: IMPLEMENTADO / AWAITING_HUMAN  
+Status: IMPLEMENTADO / ACEITO
 Domínio: operação e runtime  
 Base SHA: `f3ca9f2550b3d83535dffbe99f6bc7d2d07aee90`  
 Revisão do código: `e7b9bf60e03089c502255d19edbb5d1e31725d2c`  
@@ -59,4 +59,4 @@ Implementação assistida nesta sessão, sem chamar provider do produto, sem tok
 
 ## Aceite
 
-Revisão técnica concluída nos checks listados. Estado permanece `AWAITING_HUMAN`; não marcar DONE sem aceite desta revisão documental exata.
+Revisão técnica concluída nos checks listados. Revisão documental `3e28363b0642f8e05840bb649b681e3837e1e015` aceita explicitamente pelo responsável em 2026-10-02. Estado `DONE`; nenhum consumer real ou piloto foi ativado.

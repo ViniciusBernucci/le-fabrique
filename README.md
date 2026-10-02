@@ -6,7 +6,7 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-02/10/2026. FAC-000, FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D e OPS-001 estão aceitos. FAC-012A implementa a especificacao imutavel de execucao e aguarda aceite. FAC-010 aguarda Claude e provas GitHub reais. APIs de IA permanecem desligadas.
+02/10/2026. FAC-000, FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D, FAC-012A/B e OPS-001 estão aceitos. O status por ticket está em [BACKLOG.md](BACKLOG.md); evidências e verificações estão nos relatórios indexados em [documentacoes/INDEX.md](documentacoes/INDEX.md). O consumer real ainda não está ligado; FAC-010 aguarda validação operacional Claude/GitHub. APIs de IA permanecem desligadas.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
 2. Cadastrar projetos e suas definicoes pelo painel; o projeto externo real continua indefinido ate o operador escolhe-lo. Revisar o Centro de Configuracoes FAC-011 e depois desbloquear o preflight do segundo provider conforme FAC-010; nao usar chave API como atalho.

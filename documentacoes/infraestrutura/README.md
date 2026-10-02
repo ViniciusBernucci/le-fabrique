@@ -10,7 +10,7 @@ Status: bootstrap do FAC-000 e sandbox/snapshots do FAC-007 aceitos. Implantaç�
 - `postgres`: persistência relacional com migration inicial para projetos, tickets e outbox.
 - `redis`: fila interna do worker e verificação de prontidão da API.
 
-Na composição completa, apenas a porta 8080 do Nginx é publicada. Os demais serviços usam redes internas e volumes nomeados. Os containers de aplicação usam filesystem somente leitura, `tmpfs` e `no-new-privileges`.
+Na composição completa, a porta do Nginx é publicada somente em `127.0.0.1:8080`; um proxy HTTPS no host pode encaminhá-la sem expor diretamente a porta de origem. Os demais serviços usam redes internas e volumes nomeados. Os containers de aplicação usam filesystem somente leitura, `tmpfs` e `no-new-privileges`.
 
 ## Variáveis e execução
 
@@ -38,6 +38,8 @@ docker compose up -d --build
 Verifique `GET http://localhost:8080/api/health/live` e `GET http://localhost:8080/api/health/ready`. Para interromper o ambiente sem apagar dados, execute `docker compose down`. A remoção de volumes não faz parte do rollback padrão.
 
 Provisionamento, HTTPS, firewall, backup externo, restauração, isolamento de clientes oficiais e limites reais da VPS continuam sujeitos aos tickets de infraestrutura do MVP.
+
+OPS-003 versiona uma migration que remove defaults PostgreSQL de UUID gerados pelo Prisma Client e renomeia o índice de verificações GitHub para refletir o schema. A migration ainda não foi aplicada a banco algum.
 
 ## Sandbox atual
 

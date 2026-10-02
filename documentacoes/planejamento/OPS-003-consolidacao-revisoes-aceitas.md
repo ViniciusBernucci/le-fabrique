@@ -1,6 +1,6 @@
 # OPS-003 — Consolidar revisões aceitas e deltas locais
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -22,3 +22,7 @@ Base `3e28363b0642f8e05840bb649b681e3837e1e015`, branch isolada `fix/ops-003-rec
 ## Provider
 
 Nenhum; apenas documentação, configuração de bind e migration aditiva/corretiva sem aplicação.
+
+## Entrega
+
+Revisão `e09204c5205af047d79bcd7d530a1acd1db563ca`; relatório `documentacoes/operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md`. OPS-003 aguarda aceite específico desta integração.

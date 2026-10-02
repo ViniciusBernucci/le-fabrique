@@ -1,6 +1,6 @@
 # FAC-012B — Compilador da especificação para workflow
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -19,7 +19,7 @@ Compilar o snapshot imutável FAC-012A em `DeveloperWorkflowRequest`, sem ativar
 
 ## Entrega
 
-Código: `e7b9bf60e03089c502255d19edbb5d1e31725d2c`. Relatório: `documentacoes/operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md`. DONE somente após aceite da revisão exata.
+Código: `e7b9bf60e03089c502255d19edbb5d1e31725d2c`. Revisao documental aceita: `3e28363b0642f8e05840bb649b681e3837e1e015`. Aceite explicito do responsavel em 2026-10-02. O consumer continua desligado ate cumprir os gates de seguranca pendentes.
 
 ## Baseline, caminhos e limites
 

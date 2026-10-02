@@ -1,6 +1,6 @@
 # FAC-012A — Especificacao imutavel de execucao
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -50,4 +50,4 @@ Nenhum provider do produto. O incremento e deterministico e nao inicia cliente o
 
 ## Entregaveis e aceite
 
-Ticket READY: `c658df97cf745df87c5895b037b2c95d7815e7ca`. Codigo verificado: `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`. Relatorio: `documentacoes/operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md`. DONE somente apos aceite da revisao documental exata.
+Ticket READY: `c658df97cf745df87c5895b037b2c95d7815e7ca`. Codigo verificado: `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`. Revisao documental aceita: `3ef3d543b98fb48226714787315f4de947fa6dd9`. Aceite explicito do responsavel em 2026-10-02; sem piloto ou consumer real.
