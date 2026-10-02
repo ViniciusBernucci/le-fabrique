@@ -9,6 +9,7 @@ import {
   createTicketSchema,
   developerWorkflowRequestSchema,
   factoryConfigurationSchema,
+  gitCommitShaSchema,
   githubOnboardingChallengeSchema,
   githubOnboardingJobSchema,
   githubPullRequestJobSchema,
@@ -26,6 +27,7 @@ import {
   runtimeExecutionResultSchema,
   runtimeGuardPolicySchema,
   sandboxCommandRequestSchema,
+  updateProjectBaseRevisionSchema,
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
@@ -75,6 +77,16 @@ const validConfiguration = {
 };
 
 describe("shared contracts", () => {
+  it("requires an exact lowercase Git commit SHA for executable base revisions", () => {
+    const revision = "a".repeat(40);
+    expect(gitCommitShaSchema.parse(revision)).toBe(revision);
+    expect(
+      updateProjectBaseRevisionSchema.parse({ expectedBaseRef: "main", baseRevision: revision }),
+    ).toEqual({ expectedBaseRef: "main", baseRevision: revision });
+    expect(() => gitCommitShaSchema.parse("main")).toThrow();
+    expect(() => gitCommitShaSchema.parse("A".repeat(40))).toThrow();
+  });
+
   it("accepts a valid health response", () => {
     expect(
       healthResponseSchema.parse({

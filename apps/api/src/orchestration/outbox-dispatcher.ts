@@ -50,6 +50,9 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
           ticketVersion: storedPayload.ticketVersion ?? storedPayload.version,
           baseRevision: storedPayload.baseRevision ?? null,
         });
+        if (payload.baseRevision === null) {
+          throw new Error("Ticket execution requires an exact base revision");
+        }
         await this.queue.add("ticket.execute.v1", payload, {
           jobId: event.id,
           removeOnComplete: false,

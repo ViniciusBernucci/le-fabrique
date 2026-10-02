@@ -8,7 +8,9 @@ import {
   listProjects,
   listTickets,
   markTicketReady,
+  updateProjectBaseRevision,
 } from "./control-api";
+import { hasExecutableBaseRevision } from "./project-view-model";
 import { SettingsPanel } from "./SettingsPanel";
 
 export function App() {
@@ -19,6 +21,10 @@ export function App() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
   const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
+  const activeProject = projects.find((project) => project.id === selectedProject);
+  const projectHasExecutableBase = activeProject
+    ? hasExecutableBaseRevision(activeProject.baseRef)
+    : false;
 
   async function loadProjects(activeToken = token) {
     const data = await listProjects(activeToken);
@@ -85,13 +91,30 @@ export function App() {
     }
   }
 
+  async function setBaseRevision(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!activeProject) return;
+    const form = new FormData(event.currentTarget);
+    try {
+      const updated = await updateProjectBaseRevision(
+        token,
+        activeProject,
+        String(form.get("baseRevision")),
+      );
+      setProjects((items) => items.map((item) => (item.id === updated.id ? updated : item)));
+      setMessage("Revisão-base exata configurada; tickets podem ser promovidos a READY.");
+    } catch {
+      setMessage("A referência do projeto mudou; recarregue antes de atualizar o SHA.");
+    }
+  }
+
   async function ready(ticket: Ticket) {
     try {
       const updated = await markTicketReady(token, ticket);
       setTickets((items) => items.map((item) => (item.id === updated.id ? updated : item)));
       setMessage("Ticket pronto e evento de outbox registrado.");
     } catch {
-      setMessage("O ticket mudou; recarregue antes de tentar novamente.");
+      setMessage("Ticket não promovido; confirme a revisão-base e recarregue o estado.");
     }
   }
 
@@ -198,6 +221,39 @@ export function App() {
               </label>
               <button type="submit">Criar rascunho</button>
             </form>
+            <form
+              className="panel"
+              key={activeProject ? `${activeProject.id}:${activeProject.baseRef}` : "no-project"}
+              onSubmit={setBaseRevision}
+            >
+              <h2>Revisão-base executável</h2>
+              {activeProject ? (
+                <>
+                  <p className="muted">
+                    Referência atual: <code>{activeProject.baseRef}</code>
+                  </p>
+                  <label>
+                    SHA exato do commit
+                    <input
+                      name="baseRevision"
+                      pattern="[0-9a-f]{40}"
+                      minLength={40}
+                      maxLength={40}
+                      placeholder="40 caracteres hexadecimais em minúsculas"
+                      required
+                    />
+                  </label>
+                  <button type="submit">Atualizar revisão-base</button>
+                  <p className="muted">
+                    {projectHasExecutableBase
+                      ? "Este projeto está liberado para promover novos tickets."
+                      : "READY permanece bloqueado até configurar um SHA exato."}
+                  </p>
+                </>
+              ) : (
+                <p className="muted">Selecione um projeto.</p>
+              )}
+            </form>
           </section>
           <section className="panel records">
             <h2>Tickets</h2>
@@ -214,13 +270,25 @@ export function App() {
                     <p>{ticket.objective}</p>
                   </div>
                   {ticket.status === "DRAFT" && (
-                    <button type="button" onClick={() => ready(ticket)}>
+                    <button
+                      type="button"
+                      disabled={!projectHasExecutableBase}
+                      title={
+                        projectHasExecutableBase
+                          ? "Promover ticket"
+                          : "Configure um SHA-base exato antes de READY"
+                      }
+                      onClick={() => ready(ticket)}
+                    >
                       Marcar READY
                     </button>
                   )}
                 </article>
               ))
             )}
+            <p className="muted">
+              Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
+            </p>
           </section>
         </>
       )}

@@ -1,4 +1,11 @@
-import type { CreateProject, CreateTicket, Project, Ticket } from "@le-fabrique/contracts";
+import {
+  type CreateProject,
+  type CreateTicket,
+  gitCommitShaSchema,
+  type Project,
+  type Ticket,
+  type UpdateProjectBaseRevision,
+} from "@le-fabrique/contracts";
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import type { Prisma, Ticket as TicketRecord } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
@@ -44,6 +51,25 @@ export class ControlService {
     return (await this.prisma.project.findMany({ orderBy: { createdAt: "desc" } })).map(mapProject);
   }
 
+  async updateProjectBaseRevision(
+    projectId: string,
+    input: UpdateProjectBaseRevision,
+  ): Promise<Project> {
+    return this.prisma.$transaction(async (transaction) => {
+      const current = await transaction.project.findUnique({ where: { id: projectId } });
+      if (!current) throw new NotFoundException("Project not found");
+      if (current.baseRef !== input.expectedBaseRef) {
+        throw new ConflictException("Project base reference changed");
+      }
+      const updated = await transaction.project.updateMany({
+        where: { id: projectId, baseRef: input.expectedBaseRef },
+        data: { baseRef: input.baseRevision },
+      });
+      if (updated.count !== 1) throw new ConflictException("Project was updated concurrently");
+      return mapProject(await transaction.project.findUniqueOrThrow({ where: { id: projectId } }));
+    });
+  }
+
   async createTicket(projectId: string, input: CreateTicket): Promise<Ticket> {
     const project = await this.prisma.project.findUnique({
       where: { id: projectId },
@@ -78,6 +104,12 @@ export class ControlService {
       if (ticket.status !== "DRAFT" || ticket.version !== expectedVersion) {
         throw new ConflictException("Ticket state or version changed");
       }
+      const baseRevision = gitCommitShaSchema.safeParse(ticket.project.baseRef);
+      if (!baseRevision.success) {
+        throw new ConflictException(
+          "Project base revision must be an exact lowercase 40-character commit SHA",
+        );
+      }
       const updated = await transaction.ticket.updateMany({
         where: { id: ticketId, status: "DRAFT", version: expectedVersion },
         data: { status: "READY", version: { increment: 1 } },
@@ -93,9 +125,7 @@ export class ControlService {
             ticketId,
             projectId: ticket.projectId,
             ticketVersion: readyTicket.version,
-            baseRevision: /^[0-9a-f]{40}$/.test(ticket.project.baseRef)
-              ? ticket.project.baseRef
-              : null,
+            baseRevision: baseRevision.data,
           } satisfies Prisma.InputJsonValue,
         },
       });

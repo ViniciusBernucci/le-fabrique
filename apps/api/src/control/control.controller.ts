@@ -7,6 +7,7 @@ import {
   readyTicketSchema,
   ticketListSchema,
   ticketSchema,
+  updateProjectBaseRevisionSchema,
 } from "@le-fabrique/contracts";
 import {
   BadRequestException,
@@ -16,6 +17,7 @@ import {
   Inject,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   UseGuards,
 } from "@nestjs/common";
@@ -47,6 +49,19 @@ export class ControlController {
   @Get("projects")
   async listProjects() {
     return projectListSchema.parse(await this.control.listProjects());
+  }
+
+  @Patch("projects/:projectId/base-revision")
+  async updateProjectBaseRevision(
+    @Param("projectId", ParseUUIDPipe) projectId: string,
+    @Body() body: unknown,
+  ) {
+    return projectSchema.parse(
+      await this.control.updateProjectBaseRevision(
+        projectId,
+        parse(updateProjectBaseRevisionSchema, body),
+      ),
+    );
   }
 
   @Post("projects/:projectId/tickets")

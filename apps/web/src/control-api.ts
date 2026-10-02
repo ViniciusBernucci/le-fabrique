@@ -63,6 +63,18 @@ export async function createProject(token: string, input: CreateProject): Promis
     await request("/projects", token, { method: "POST", body: JSON.stringify(input) }),
   );
 }
+export async function updateProjectBaseRevision(
+  token: string,
+  project: Project,
+  baseRevision: string,
+): Promise<Project> {
+  return projectSchema.parse(
+    await request(`/projects/${project.id}/base-revision`, token, {
+      method: "PATCH",
+      body: JSON.stringify({ expectedBaseRef: project.baseRef, baseRevision }),
+    }),
+  );
+}
 export async function listTickets(token: string, projectId: string): Promise<Ticket[]> {
   return ticketListSchema.parse(await request(`/projects/${projectId}/tickets`, token));
 }

@@ -62,4 +62,31 @@ describe("OutboxDispatcher", () => {
       data: { status: "PENDING", attempts: { increment: 1 } },
     });
   });
+
+  it("fails a legacy unresolved event without publishing it to the worker", async () => {
+    const event = {
+      id: crypto.randomUUID(),
+      attempts: 4,
+      payload: {
+        ticketId: crypto.randomUUID(),
+        projectId: crypto.randomUUID(),
+        ticketVersion: 2,
+        baseRevision: null,
+      },
+    };
+    const prisma = {
+      outboxEvent: {
+        findMany: vi.fn().mockResolvedValue([event]),
+        updateMany: vi.fn().mockResolvedValue({ count: 1 }),
+      },
+    };
+    const queue = { add: vi.fn(), close: vi.fn() };
+
+    await expect(new OutboxDispatcher(prisma as never, queue).dispatchOnce()).resolves.toBe(0);
+    expect(queue.add).not.toHaveBeenCalled();
+    expect(prisma.outboxEvent.updateMany).toHaveBeenCalledWith({
+      where: { id: event.id, status: "PENDING" },
+      data: { status: "FAILED", attempts: { increment: 1 } },
+    });
+  });
 });

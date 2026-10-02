@@ -53,6 +53,9 @@ export type TicketStatus = z.infer<typeof ticketStatusSchema>;
 export const adminSessionSchema = z.object({ authenticated: z.literal(true) });
 export type AdminSession = z.infer<typeof adminSessionSchema>;
 
+export const gitCommitShaSchema = z.string().regex(/^[0-9a-f]{40}$/);
+export type GitCommitSha = z.infer<typeof gitCommitShaSchema>;
+
 export const createProjectSchema = z.object({
   name: z.string().trim().min(1).max(120),
   repoUrl: z.url(),
@@ -67,6 +70,12 @@ export const projectSchema = createProjectSchema.extend({
 });
 export type Project = z.infer<typeof projectSchema>;
 export const projectListSchema = z.array(projectSchema);
+
+export const updateProjectBaseRevisionSchema = z.object({
+  expectedBaseRef: z.string().trim().min(1).max(200),
+  baseRevision: gitCommitShaSchema,
+});
+export type UpdateProjectBaseRevision = z.infer<typeof updateProjectBaseRevisionSchema>;
 
 export const createTicketSchema = z.object({
   title: z.string().trim().min(1).max(160),
@@ -1259,11 +1268,7 @@ export const orchestrationJobSchema = z.object({
   ticketId: z.uuid(),
   projectId: z.uuid(),
   ticketVersion: z.number().int().positive(),
-  baseRevision: z
-    .string()
-    .regex(/^[0-9a-f]{40}$/)
-    .nullable()
-    .default(null),
+  baseRevision: gitCommitShaSchema.nullable().default(null),
 });
 export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
 
