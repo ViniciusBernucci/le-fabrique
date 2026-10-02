@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.43 - 2026-10-02
+FAC-001A fica READY para implementar a definicao versionada de projetos pelo painel. O incremento nao embute piloto, repositorio, comandos nem contas de IA no codigo e nao altera o Provider Manager existente.
+
 ## 2.42 - 2026-10-02
 FAC-003A exige SHA-base exato antes de READY, oferece update otimista no painel e impede evento legado nulo de chegar ao worker. Passaram 155 testes, lint, typecheck, build e schema Prisma; nenhum banco/fila foi alterado e a revisao aguarda aceite.
 
