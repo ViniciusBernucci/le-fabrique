@@ -1,7 +1,7 @@
 # FAC-001A — Definicao de projeto configuravel
 
 Data: 2026-10-02
-Status: IMPLEMENTADO / AWAITING_HUMAN
+Status: IMPLEMENTADO / ACEITO
 Dominio: controle
 Base SHA / revisao do codigo: `4630ce0f85ef549c520c758e6870fdb874de8c55f` / `148485ec5858756460b1db6f183c346854703981`
 Branch / PR: `feat/fac-001a-project-definition` / sem PR
@@ -66,4 +66,4 @@ Foram atualizados README de controle/operacao, especificacao, plano, contrato ad
 
 ## Aceite
 
-Codigo verificado em `148485ec5858756460b1db6f183c346854703981`. A entrega permanece `AWAITING_HUMAN`; nenhuma marcacao DONE foi inferida.
+Codigo verificado em `148485ec5858756460b1db6f183c346854703981`. O responsavel aceitou a revisao documental `094190af26c1175bad08eb46293230b2938843d4` em 2026-10-02.

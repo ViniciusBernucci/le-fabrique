@@ -1,7 +1,7 @@
 # FAC-003A — Gate de revisao-base exata antes de READY
 
 Data: 2026-10-02
-Status: IMPLEMENTADO / AWAITING_HUMAN
+Status: IMPLEMENTADO / ACEITO
 Dominio: controle e operacao
 Base SHA / revisao do codigo: `4e5b772a2dbeb1dd8868e3fe2bedd480c8e837c4` / `e65c88fd8f3bd15e3aa65773fedc945af3709def`
 Branch / run / PR: `fix/ops-002-stale-orchestration-jobs` / worktree `/home/vinicius/le-fabrique-ops-002` / sem PR
@@ -81,4 +81,4 @@ Implementacao assistida por Codex nesta sessao; versao/modelo efetivo, tokens e 
 
 ## Pendencias e aceite
 
-Codigo verificado em `e65c88fd8f3bd15e3aa65773fedc945af3709def`. A entrega permanece `AWAITING_HUMAN` ate aceite explicito da revisao documental exata. Resolucao automatica de branch, remediacao de tickets READY antigos e politica de retencao BullMQ ficam fora do escopo.
+Codigo verificado em `e65c88fd8f3bd15e3aa65773fedc945af3709def`. O responsavel aceitou a revisao documental `4630ce0b9a613b937d40d550e4551fa1402d6c6a` em 2026-10-02. Resolucao automatica de branch, remediacao de tickets READY antigos e politica de retencao BullMQ ficam fora do escopo.

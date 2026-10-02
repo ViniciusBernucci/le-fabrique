@@ -19,7 +19,7 @@ Aceite: Contrato verificável e baseline reproduzido; não editar lógica fora d
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-001A — Definicao configuravel de projeto
-Sprint: Sprint 3 antecipado como fundacao interna. Dependências: FAC-003, FAC-003A, FAC-011. Esforço estimado: 1 dia. Status: AWAITING_HUMAN.
+Sprint: Sprint 3 antecipado como fundacao interna. Dependências: FAC-003, FAC-003A, FAC-011. Esforço estimado: 1 dia. Status: DONE.
 Descrição: Persistir e editar no painel a descricao, stack externa, instrucoes, caminhos e checks de qualquer projeto, mantendo contas/modelos no Centro de Configuracoes.
 Aceite: Contratos runtime, versao otimista, gate de READY e ausencia explicita de definicao; sem hardcode do piloto.
 Entregáveis: migration aditiva, API, painel, testes e documentacao vinculados ao codigo `148485ec5858756460b1db6f183c346854703981`.

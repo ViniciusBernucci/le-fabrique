@@ -1,6 +1,6 @@
 # FAC-001A — Definicao de projeto configuravel
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -45,7 +45,7 @@ Risco R2 por contrato compartilhado, migration aditiva e mudancas em API/painel.
 
 ## Dependencias
 
-FAC-003, FAC-003A e FAC-011. O FAC-003A permanece `AWAITING_HUMAN`; este incremento parte de sua revisao documental sem alterar seu estado de aceite.
+FAC-003, FAC-003A e FAC-011, todos aceitos.
 
 ## Entregaveis e documentacao afetada
 
@@ -53,4 +53,4 @@ FAC-003, FAC-003A e FAC-011. O FAC-003A permanece `AWAITING_HUMAN`; este increme
 
 ## Evidencias e aceite
 
-Ticket READY: `af30aa906fcacd54ccfd8a985558964956585760`. Codigo verificado: `148485ec5858756460b1db6f183c346854703981`. Relatorio: `documentacoes/controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md`. DONE somente apos aceite da revisao documental exata.
+Ticket READY: `af30aa906fcacd54ccfd8a985558964956585760`. Codigo verificado: `148485ec5858756460b1db6f183c346854703981`. Aceite do responsavel: revisao documental `094190af26c1175bad08eb46293230b2938843d4` em 2026-10-02.

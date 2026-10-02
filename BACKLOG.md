@@ -7,14 +7,14 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-001A implementou a definicao configuravel de projetos e aguarda aceite; FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
+FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido; a proxima fundacao interna sera FAC-012A.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
-- FAC-001A: AWAITING_HUMAN — Definicao generica e versionada de projeto no painel, gate de READY e codigo `148485ec5858756460b1db6f183c346854703981`; sem hardcode do piloto ou de contas de IA; dependências: FAC-003, FAC-003A e FAC-011.
+- FAC-001A: DONE — Definicao generica e versionada de projeto no painel e gate de READY aceitos na revisao `094190af26c1175bad08eb46293230b2938843d4`; sem hardcode do piloto ou de contas de IA; dependências: FAC-003, FAC-003A e FAC-011.
 - FAC-002: DONE — Codex validado e aceito na revisão `1666ee108343563e35edb6971bea11234a62d47e`; dependências: FAC-004.
 - FAC-003: DONE — Controle web e persistência aceitos no SHA `1807330bcf7b1374fa626d9fcbfc47dd8002f433`; dependências: FAC-000.
-- FAC-003A: AWAITING_HUMAN — Gate de revisao-base exata antes de READY, barreira no dispatcher e atualizacao configuravel no painel; codigo `e65c88fd8f3bd15e3aa65773fedc945af3709def`, dependências: FAC-003 e FAC-008.
+- FAC-003A: DONE — Gate de revisao-base exata antes de READY, barreira no dispatcher e atualizacao configuravel no painel aceitos na revisao `4630ce0b9a613b937d40d550e4551fa1402d6c6a`; dependências: FAC-003 e FAC-008.
 - FAC-004: DONE — Worker interno e identidade de serviço aceitos no SHA `6d73041bdcbd50215b6a018c9937475c29f542b1`; dependências: FAC-003.
 - FAC-005: DONE — Runtime Gateway e adapter Codex aceitos na revisão `9102fcc614739fd7bd7ca4992b16617db92ca66f`; dependências: FAC-002, FAC-004.
 - FAC-006: DONE — Context Builder e RuntimeGuard aceitos na revisão `ea8cf7afb0e55840722f306262b5334bb408b51a`; dependências: FAC-003.
