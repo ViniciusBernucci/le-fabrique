@@ -1,5 +1,9 @@
 # Centro de configuracoes
 
+Os checks do perfil de execução pertencem à definição de cada projeto, não às contas/rotas de IA. O operador aprova individualmente os checks autônomos e enumera arquivos de contexto; alteração de nome/comando/argv invalida a aprovação correspondente. O Centro de Configurações continua sendo a única fonte para instalação de clientes, contas e modelos.
+
+Para checkout autenticado FAC-012J, apenas o GitHub CLI oficial sob a identidade do worker pode fornecer credencial efêmera; a origem precisa ser verificada como `keyring`. A integração futura deve reconciliar host/estado conectados nesta interface e nunca persistir token em configuração, job ou controle.
+
 Status: Centro e integracao GitHub ACEITOS ate FAC-011D, revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; provas reais continuam futuras.
 
 ## Funcionamento atual
@@ -11,6 +15,10 @@ O painel administrativo possui as areas `Operacao` e `Configuracoes`. O Centro d
 - `GitHub`: modo `GH_CLI`, estado da conexao, host, owner, repositorio, branch base e intencao de criar PR depois de gate humano.
 
 A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuracao e um singleton PostgreSQL versionado; a atualizacao exige `expectedVersion` e rejeita gravacao obsoleta. Os contratos Zod estritos validam relacoes: IDs, modelos e funcoes unicos, modelo pertencente a uma instalacao habilitada, conta/modelo selecionados juntos e owner/repository do GitHub preenchidos juntos. Estados observados de provider e GitHub nao podem ser alterados pelo update administrativo: pertencem a evidencia futura do worker.
+
+FAC-012E adiciona `GET /api/internal/worker-settings`, protegido por `WORKER_API_TOKEN`, que retorna apenas `version`, `observedAt` e a configuração validada. Não transporta credenciais, e versão `0` com defaults inativos representa a ausência de linha persistida sem fazer `upsert`. O worker valida a mesma resposta via `workerConfigurationSnapshotSchema`; esse bridge ainda não conecta o consumer nem seleciona/executa provider.
+
+FAC-012F adiciona `ConfiguredAgentRouter`: em cada resolução ele busca o snapshot atual, aplica a atribuição por função e exige instalação `AVAILABLE`, modelo do catálogo e adapter compatível. Não mantém cache ou fallback. Reviewer com permissão de escrita falha fechado; nenhuma resolução inicia o cliente. Consumer ainda não chama o router.
 
 ## Seguranca e limites
 
@@ -42,6 +50,8 @@ O painel nao recebe senha, token, cookie ou cache de autenticacao. Claude e Anti
 ## Rota por funcionario
 
 FAC-010C consome a escolha de conta, modelo e permissao feita em `Funcionarios digitais`. A rota so existe quando a atribuicao esta habilitada, a instalacao esta habilitada e `AVAILABLE`, o modelo pertence ao catalogo e o provider possui adapter. Claude Console/API, autenticacao ambigua e Antigravity sem adapter falham fechado; nenhuma troca silenciosa substitui a escolha configurada.
+
+FAC-012G conecta essa configuração ao workflow: Developer e Reviewer consultam suas funções separadamente em cada chamada, usando a conta/modelo selecionados na interface. O router não troca para outra conta se a opção estiver indisponível; a execução real ainda não está ligada à fila.
 
 ## Verificacao GitHub CLI
 

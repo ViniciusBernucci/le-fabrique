@@ -29,7 +29,7 @@ function request(maxCorrectionRounds = 2, maxAttempts = 6): DeveloperWorkflowReq
       schemaVersion: 1,
       maxAttempts,
       maxElapsedMs: 30 * 60 * 1000,
-      maxProviderSwitches: 0,
+      maxProviderSwitches: 8,
       repeatedFailureLimit: 2,
       subscriptionOnly: true,
       monthlyApiBudget: 0,
@@ -119,6 +119,17 @@ function dependencies(
   maxAttempts = 6,
 ) {
   let snapshotSequence = 0;
+  const execute = vi.fn().mockImplementation(async (input: { modelRequested: string | null }) => {
+    const result = adapterResults.shift();
+    if (!result) throw new Error("No synthetic runtime result available");
+    return {
+      ...result,
+      provider: input.modelRequested?.startsWith("claude-") ? "claude" : "codex",
+      modelRequested: input.modelRequested,
+    };
+  });
+  const codex = { name: "codex", execute };
+  const claude = { name: "claude", execute };
   return {
     workspaceManager: {
       create: vi.fn().mockResolvedValue({
@@ -143,7 +154,30 @@ function dependencies(
       }),
     },
     guard: new RuntimeGuard(request(2, maxAttempts).guardPolicy),
-    adapter: { execute: vi.fn().mockImplementation(async () => adapterResults.shift()) },
+    execute,
+    agentRouter: {
+      resolve: vi.fn().mockImplementation(async (role: "DEVELOPER" | "REVIEWER") => ({
+        route:
+          role === "DEVELOPER"
+            ? {
+                role,
+                installationId: "developer-installation",
+                provider: "codex",
+                model: "codex-model-selected-in-ui",
+                permissionMode: "WORKSPACE_WRITE",
+              }
+            : {
+                role,
+                installationId: "reviewer-installation",
+                provider: "claude",
+                model: "claude-model-selected-in-ui",
+                permissionMode: "READ_ONLY",
+              },
+        adapter: role === "DEVELOPER" ? codex : claude,
+        configurationVersion: 1,
+        configurationObservedAt: timestamp,
+      })),
+    },
     sandbox: { execute: vi.fn().mockImplementation(async () => checkResults.shift()) },
     snapshots: {
       capture: vi.fn().mockImplementation(async () => {
@@ -190,13 +224,21 @@ describe("DeveloperWorkflow", () => {
       expect.objectContaining({ phase: "BASELINE", preExisting: false, status: "FAILED" }),
       expect.objectContaining({ phase: "POST_CHANGE", preExisting: true, status: "FAILED" }),
     ]);
-    expect(deps.adapter.execute.mock.calls[0]?.[0]).toMatchObject({
+    expect(deps.agentRouter.resolve.mock.calls.map(([role]) => role)).toEqual([
+      "DEVELOPER",
+      "REVIEWER",
+    ]);
+    expect(deps.execute.mock.calls[0]?.[0]).toMatchObject({
       permissionMode: "WORKSPACE_WRITE",
       writablePaths: ["src"],
     });
-    expect(deps.adapter.execute.mock.calls[1]?.[0]).toMatchObject({
+    expect(deps.execute.mock.calls[0]?.[0]).toMatchObject({
+      modelRequested: "codex-model-selected-in-ui",
+    });
+    expect(deps.execute.mock.calls[1]?.[0]).toMatchObject({
       permissionMode: "READ_ONLY",
       writablePaths: [],
+      modelRequested: "claude-model-selected-in-ui",
     });
   });
 
@@ -218,6 +260,11 @@ describe("DeveloperWorkflow", () => {
       corrections: 1,
     });
     expect(result.snapshots).toHaveLength(2);
+    expect(deps.agentRouter.resolve.mock.calls.map(([role]) => role)).toEqual([
+      "DEVELOPER",
+      "DEVELOPER",
+      "REVIEWER",
+    ]);
   });
 
   it("fails closed when reviewer output is not the required JSON verdict", async () => {
@@ -277,7 +324,66 @@ describe("DeveloperWorkflow", () => {
       reviewerExecutions: 0,
       snapshots: [],
     });
-    expect(deps.adapter.execute).not.toHaveBeenCalled();
+    expect(deps.execute).not.toHaveBeenCalled();
     expect(deps.snapshots.capture).not.toHaveBeenCalled();
+  });
+
+  it("fails closed before adapter execution when a configured route cannot be resolved", async () => {
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    deps.agentRouter.resolve = vi.fn().mockRejectedValue(new Error("No enabled route configured"));
+
+    await expect(new DeveloperWorkflow(deps).execute(request())).resolves.toMatchObject({
+      status: "FAILED",
+      reason: "RUNTIME_ROUTE_UNAVAILABLE",
+      diagnostic: "Configured Developer runtime route is unavailable",
+      developerExecutions: 0,
+      reviewerExecutions: 0,
+    });
+    expect(deps.execute).not.toHaveBeenCalled();
+  });
+
+  it("fails closed when a Reviewer route is not read-only", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "implemented")],
+      [checkResult("COMPLETED"), checkResult("COMPLETED")],
+    );
+    deps.agentRouter.resolve = vi
+      .fn()
+      .mockImplementation(async (role: "DEVELOPER" | "REVIEWER") => {
+        if (role === "DEVELOPER") {
+          return {
+            route: {
+              role,
+              installationId: "developer-installation",
+              provider: "codex",
+              model: "codex-model-selected-in-ui",
+              permissionMode: "WORKSPACE_WRITE",
+            },
+            adapter: { name: "codex", execute: deps.execute },
+            configurationVersion: 1,
+            configurationObservedAt: timestamp,
+          };
+        }
+        return {
+          route: {
+            role,
+            installationId: "reviewer-installation",
+            provider: "claude",
+            model: "claude-model-selected-in-ui",
+            permissionMode: "WORKSPACE_WRITE",
+          },
+          adapter: { name: "claude", execute: deps.execute },
+          configurationVersion: 1,
+          configurationObservedAt: timestamp,
+        };
+      });
+
+    await expect(new DeveloperWorkflow(deps).execute(request())).resolves.toMatchObject({
+      status: "FAILED",
+      reason: "RUNTIME_ROUTE_UNAVAILABLE",
+      developerExecutions: 1,
+      reviewerExecutions: 0,
+    });
+    expect(deps.execute).toHaveBeenCalledTimes(1);
   });
 });

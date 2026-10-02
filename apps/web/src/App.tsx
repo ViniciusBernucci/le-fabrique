@@ -23,11 +23,13 @@ export function App() {
   const [message, setMessage] = useState("Informe o token administrativo.");
   const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
   const [projectDefinitionVersion, setProjectDefinitionVersion] = useState<number | null>(null);
+  const [projectExecutionProfileReady, setProjectExecutionProfileReady] = useState(false);
   const activeProject = projects.find((project) => project.id === selectedProject);
   const projectHasExecutableBase = activeProject
     ? hasExecutableBaseRevision(activeProject.baseRef)
     : false;
-  const projectCanExecute = projectHasExecutableBase && projectDefinitionVersion !== null;
+  const projectCanExecute =
+    projectHasExecutableBase && projectDefinitionVersion !== null && projectExecutionProfileReady;
 
   async function loadProjects(activeToken = token) {
     const data = await listProjects(activeToken);
@@ -263,6 +265,7 @@ export function App() {
             project={activeProject}
             onMessage={setMessage}
             onVersion={setProjectDefinitionVersion}
+            onProfileReady={setProjectExecutionProfileReady}
           />
           <section className="panel records">
             <h2>Tickets</h2>
@@ -285,7 +288,7 @@ export function App() {
                       title={
                         projectCanExecute
                           ? "Promover ticket"
-                          : "Configure o SHA-base e a definição do projeto antes de READY"
+                          : "Configure SHA-base, definição e perfil de execução aprovado antes de READY"
                       }
                       onClick={() => ready(ticket)}
                     >

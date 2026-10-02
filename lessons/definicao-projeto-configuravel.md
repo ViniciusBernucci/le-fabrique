@@ -19,6 +19,8 @@ No FAC-012A, apenas registrar `definitionVersion` mostrou-se insuficiente porque
 
 No FAC-012B, snapshot autocontido ainda não era um pedido confiável. `compileWorkflowRequest` compara ID/URL/SHA com perfil resolvido pelo worker e só transfere checks com nome, executável e argv idênticos à allowlist; configuração administrativa não vira shell. Fontes de contexto também precisam caber em `allowedPaths` e não podem sobrepor `forbiddenPaths`, inclusive quando um diretório contém um caminho proibido. Isso não impõe limite de escrita do agente: até o sandbox aplicar e provar essa política, o consumer deve continuar desligado.
 
+No FAC-012I, separar “check cadastrado” de “check aprovado para execução autônoma” evita que uma definição descritiva se torne autorização implícita. O perfil aprovado fica junto à versão da definição congelada no evento; o worker exige igualdade exata de caminho/papel e nome/comando/argv antes de compilar a execução. A UI também revoga a aprovação ao editar esses valores. A mesma fronteira mantém credenciais e modelos no Centro de Configurações, nunca no perfil do projeto.
+
 ## Referencias
 
 - `documentacoes/planejamento/FAC-001A-definicao-projeto-configuravel.md`

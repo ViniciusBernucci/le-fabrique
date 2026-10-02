@@ -9,6 +9,10 @@ const definitionInput = {
   allowedPaths: ["src"],
   forbiddenPaths: ["secrets"],
   checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+  executionProfile: {
+    contextSources: [{ path: "src/README.md", role: "INSTRUCTION" as const }],
+    approvedChecks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
+  },
 };
 
 const draft = {
@@ -118,6 +122,31 @@ describe("ControlService", () => {
 
     await expect(new ControlService(prisma as never).markReady(draft.id, 1)).rejects.toThrow(
       "Project definition must be configured before READY",
+    );
+    expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
+    expect(transaction.outboxEvent.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects READY before mutation without an approved execution profile", async () => {
+    const unprofiled = {
+      ...draft,
+      project: {
+        ...draft.project,
+        definition: { version: 3, configuration: { ...definitionInput, executionProfile: null } },
+      },
+    };
+    const transaction = {
+      ticket: {
+        findUnique: vi.fn().mockResolvedValue(unprofiled),
+        updateMany: vi.fn(),
+        findUniqueOrThrow: vi.fn(),
+      },
+      outboxEvent: { findUnique: vi.fn(), create: vi.fn() },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+
+    await expect(new ControlService(prisma as never).markReady(draft.id, 1)).rejects.toThrow(
+      "Project execution profile with approved context and checks is required before READY",
     );
     expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
     expect(transaction.outboxEvent.create).not.toHaveBeenCalled();

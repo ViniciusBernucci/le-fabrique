@@ -96,6 +96,54 @@ export const projectCheckSchema = z
   .strict();
 export type ProjectCheck = z.infer<typeof projectCheckSchema>;
 
+export const contextSourceRoleSchema = z.enum([
+  "INSTRUCTION",
+  "TICKET",
+  "SPECIFICATION",
+  "ARCHITECTURE",
+  "SOURCE",
+  "TEST",
+  "FINDING",
+]);
+export type ContextSourceRole = z.infer<typeof contextSourceRoleSchema>;
+
+const projectExecutionContextSourceSchema = z
+  .object({
+    path: projectRelativePathSchema,
+    role: contextSourceRoleSchema,
+  })
+  .strict();
+
+export const projectExecutionProfileSchema = z
+  .object({
+    contextSources: z.array(projectExecutionContextSourceSchema).min(1).max(100),
+    approvedChecks: z.array(projectCheckSchema).min(1).max(20),
+  })
+  .strict()
+  .superRefine((profile, context) => {
+    if (
+      new Set(profile.contextSources.map((source) => source.path)).size !==
+      profile.contextSources.length
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["contextSources"],
+        message: "Execution context paths must be unique",
+      });
+    }
+    if (
+      new Set(profile.approvedChecks.map((check) => check.name)).size !==
+      profile.approvedChecks.length
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["approvedChecks"],
+        message: "Approved check names must be unique",
+      });
+    }
+  });
+export type ProjectExecutionProfile = z.infer<typeof projectExecutionProfileSchema>;
+
 function pathsOverlap(left: string, right: string): boolean {
   return left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
 }
@@ -125,6 +173,7 @@ export const projectDefinitionInputSchema = z
     allowedPaths: z.array(projectRelativePathSchema.refine(isWritableProjectPath)).min(1).max(100),
     forbiddenPaths: z.array(projectRelativePathSchema).max(100),
     checks: z.array(projectCheckSchema).min(1).max(20),
+    executionProfile: projectExecutionProfileSchema.nullable().default(null),
   })
   .strict()
   .superRefine((definition, context) => {
@@ -150,6 +199,37 @@ export const projectDefinitionInputSchema = z
     const checkNames = definition.checks.map((check) => check.name);
     if (new Set(checkNames).size !== checkNames.length) {
       context.addIssue({ code: "custom", path: ["checks"], message: "Check names must be unique" });
+    }
+    if (!definition.executionProfile) return;
+
+    for (const [index, source] of definition.executionProfile.contextSources.entries()) {
+      const allowed = definition.allowedPaths.some(
+        (path) => source.path === path || source.path.startsWith(`${path}/`),
+      );
+      const forbidden = definition.forbiddenPaths.some((path) => pathsOverlap(source.path, path));
+      if (!allowed || forbidden) {
+        context.addIssue({
+          code: "custom",
+          path: ["executionProfile", "contextSources", index, "path"],
+          message: "Execution context must be within allowed paths and outside forbidden paths",
+        });
+      }
+    }
+
+    const projectChecks = new Map(definition.checks.map((check) => [check.name, check]));
+    for (const [index, approved] of definition.executionProfile.approvedChecks.entries()) {
+      const configured = projectChecks.get(approved.name);
+      if (
+        !configured ||
+        configured.command !== approved.command ||
+        JSON.stringify(configured.args) !== JSON.stringify(approved.args)
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["executionProfile", "approvedChecks", index],
+          message: "Approved checks must exactly match configured check commands and arguments",
+        });
+      }
     }
   });
 export type ProjectDefinitionInput = z.infer<typeof projectDefinitionInputSchema>;
@@ -564,6 +644,15 @@ export const factorySettingsSchema = z
   })
   .strict();
 export type FactorySettings = z.infer<typeof factorySettingsSchema>;
+
+export const workerConfigurationSnapshotSchema = z
+  .object({
+    version: z.number().int().nonnegative(),
+    observedAt: z.iso.datetime(),
+    configuration: factoryConfigurationSchema,
+  })
+  .strict();
+export type WorkerConfigurationSnapshot = z.infer<typeof workerConfigurationSnapshotSchema>;
 
 export const updateFactorySettingsSchema = z
   .object({
@@ -1099,17 +1188,6 @@ export const completeProviderOnboardingSchema = z
   .strict();
 export type CompleteProviderOnboarding = z.infer<typeof completeProviderOnboardingSchema>;
 
-export const contextSourceRoleSchema = z.enum([
-  "INSTRUCTION",
-  "TICKET",
-  "SPECIFICATION",
-  "ARCHITECTURE",
-  "SOURCE",
-  "TEST",
-  "FINDING",
-]);
-export type ContextSourceRole = z.infer<typeof contextSourceRoleSchema>;
-
 export const contextSourceRequestSchema = z.object({
   path: z.string().trim().min(1).max(4096),
   role: contextSourceRoleSchema,
@@ -1556,6 +1634,7 @@ export const developerWorkflowResultSchema = z.object({
   reason: z.enum([
     "APPROVED",
     "RUNTIME_GUARD",
+    "RUNTIME_ROUTE_UNAVAILABLE",
     "DEVELOPER_FAILED",
     "CHECK_UNQUIESCED",
     "CHECK_REGRESSION",

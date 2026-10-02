@@ -58,10 +58,12 @@ import {
 import { ProviderVerificationService } from "./provider-verification.service";
 import { SettingsController } from "./settings.controller";
 import { SettingsService } from "./settings.service";
+import { WorkerSettingsController } from "./worker-settings.controller";
 
 @Module({
   controllers: [
     SettingsController,
+    WorkerSettingsController,
     ProviderVerificationAdminController,
     ProviderVerificationWorkerController,
     ProviderOnboardingAdminController,

@@ -71,6 +71,9 @@ export function compileWorkflowRequest(
     throw new Error("Trusted workflow profile does not match execution specification");
   }
 
+  const executionProfile = specification.project.definition.executionProfile;
+  if (!executionProfile) throw new Error("Project execution profile is required");
+
   for (const source of profile.contextSources) {
     const normalized =
       !source.path.startsWith("/") &&
@@ -87,8 +90,19 @@ export function compileWorkflowRequest(
     }
   }
 
+  const contextSourceKey = (source: { path: string; role: string }) =>
+    `${source.path}\0${source.role}`;
+  const expectedContextSources = executionProfile.contextSources.map(contextSourceKey).sort();
+  const actualContextSources = profile.contextSources.map(contextSourceKey).sort();
+  if (JSON.stringify(expectedContextSources) !== JSON.stringify(actualContextSources)) {
+    throw new Error("Trusted context sources do not match the approved project profile");
+  }
+
   const allowedChecks = new Map(profile.allowedChecks.map((check) => [check.name, check]));
-  const checks = specification.project.definition.checks.map((check) => {
+  if (allowedChecks.size !== executionProfile.approvedChecks.length) {
+    throw new Error("Trusted checks do not match the approved project profile");
+  }
+  const checks = executionProfile.approvedChecks.map((check) => {
     const trusted = allowedChecks.get(check.name);
     if (
       !trusted ||

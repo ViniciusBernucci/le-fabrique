@@ -13,6 +13,7 @@ import type {
   OrchestrationJob,
   OrchestrationLeaseRequest,
   ProviderOnboardingChallenge,
+  WorkerConfigurationSnapshot,
 } from "@le-fabrique/contracts";
 import {
   githubOnboardingSessionSchema,
@@ -23,6 +24,7 @@ import {
   orchestrationStateSchema,
   providerOnboardingSessionSchema,
   providerVerificationSchema,
+  workerConfigurationSnapshotSchema,
   workerHeartbeatSchema,
   workerSchema,
 } from "@le-fabrique/contracts";
@@ -75,6 +77,12 @@ export class ControlClient {
       await this.request(`/internal/workers/${this.config.WORKER_ID}/heartbeat`, {
         method: "POST",
       }),
+    );
+  }
+
+  async getWorkerConfiguration(): Promise<WorkerConfigurationSnapshot> {
+    return workerConfigurationSnapshotSchema.parse(
+      await this.request("/internal/worker-settings", { method: "GET" }),
     );
   }
 

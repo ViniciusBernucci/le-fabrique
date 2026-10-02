@@ -7,6 +7,8 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 02/10/2026. FAC-000, FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D, FAC-012A/B e OPS-001 estão aceitos. O status por ticket está em [BACKLOG.md](BACKLOG.md); evidências e verificações estão nos relatórios indexados em [documentacoes/INDEX.md](documentacoes/INDEX.md). O consumer real ainda não está ligado; FAC-010 aguarda validação operacional Claude/GitHub. APIs de IA permanecem desligadas.
+
+FAC-012I adiciona perfil explícito de execução por projeto e FAC-012J prepara checkout confiável em biblioteca isolada; ambos aguardam aceite humano. A execução real continua desligada até integrar checkout/workflow à fila, conectar lease/fencing/writer, provisionar CLIs/keyring sob identidade de serviço e verificar os sandboxes na VPS. Piloto externo segue manual e não está codificado.
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
 2. Cadastrar projetos e suas definicoes pelo painel; o projeto externo real continua indefinido ate o operador escolhe-lo. Revisar o Centro de Configuracoes FAC-011 e depois desbloquear o preflight do segundo provider conforme FAC-010; nao usar chave API como atalho.

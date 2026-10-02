@@ -29,6 +29,7 @@ import {
   runtimeGuardPolicySchema,
   sandboxCommandRequestSchema,
   updateProjectBaseRevisionSchema,
+  workerConfigurationSnapshotSchema,
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
@@ -87,7 +88,36 @@ describe("shared contracts", () => {
       forbiddenPaths: ["secrets"],
       checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
     };
-    expect(projectDefinitionInputSchema.parse(definition)).toEqual(definition);
+    expect(projectDefinitionInputSchema.parse(definition)).toEqual({
+      ...definition,
+      executionProfile: null,
+    });
+    const approvedDefinition = {
+      ...definition,
+      executionProfile: {
+        contextSources: [{ path: "src/main.ts", role: "SOURCE" }],
+        approvedChecks: definition.checks,
+      },
+    };
+    expect(projectDefinitionInputSchema.parse(approvedDefinition)).toEqual(approvedDefinition);
+    expect(() =>
+      projectDefinitionInputSchema.parse({
+        ...approvedDefinition,
+        executionProfile: {
+          ...approvedDefinition.executionProfile,
+          contextSources: [{ path: "secrets/token", role: "SOURCE" }],
+        },
+      }),
+    ).toThrow();
+    expect(() =>
+      projectDefinitionInputSchema.parse({
+        ...approvedDefinition,
+        executionProfile: {
+          ...approvedDefinition.executionProfile,
+          approvedChecks: [{ ...definition.checks[0], args: ["install"] }],
+        },
+      }),
+    ).toThrow();
     expect(() =>
       projectDefinitionInputSchema.parse({ ...definition, allowedPaths: ["../outside"] }),
     ).toThrow();
@@ -538,6 +568,18 @@ describe("shared contracts", () => {
           },
         ],
       }),
+    ).toThrow();
+  });
+
+  it("validates the worker settings snapshot and rejects extra credential fields", () => {
+    const snapshot = {
+      version: 0,
+      observedAt: "2026-10-02T12:00:00.000Z",
+      configuration: validConfiguration,
+    };
+    expect(workerConfigurationSnapshotSchema.parse(snapshot)).toEqual(snapshot);
+    expect(() =>
+      workerConfigurationSnapshotSchema.parse({ ...snapshot, credential: "must-not-enter-dto" }),
     ).toThrow();
   });
 

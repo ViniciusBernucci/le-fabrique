@@ -19,6 +19,59 @@ const config: WorkerConfig = {
 };
 
 describe("ControlClient", () => {
+  it("fetches a validated worker configuration snapshot without sending credentials in the body", async () => {
+    const observedAt = "2026-10-02T12:00:00.000Z";
+    const configuration = {
+      installations: [],
+      assignments: ["PLANNER", "DEVELOPER", "REVIEWER", "QA", "DOCUMENTATION", "SECURITY"].map(
+        (role) => ({
+          role,
+          enabled: false,
+          installationId: null,
+          model: null,
+          permissionMode: role === "DEVELOPER" ? "WORKSPACE_WRITE" : "READ_ONLY",
+          timeoutMinutes: 30,
+          maxAttempts: 2,
+        }),
+      ),
+      github: {
+        authMode: "GH_CLI",
+        state: "DISCONNECTED",
+        host: "github.com",
+        owner: null,
+        repository: null,
+        baseBranch: "main",
+        pullRequestCreationEnabled: false,
+        mergeEnabled: false,
+      },
+      financialSafety: {
+        apiEnabled: false,
+        extraUsageEnabled: false,
+        paidCreditsEnabled: false,
+        autoRechargeEnabled: false,
+        paidFallbackEnabled: false,
+      },
+    };
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ version: 4, observedAt, configuration }),
+    });
+    const client = new ControlClient(config, fetcher as never);
+
+    await expect(client.getWorkerConfiguration()).resolves.toEqual({
+      version: 4,
+      observedAt,
+      configuration,
+    });
+    expect(fetcher).toHaveBeenCalledWith(
+      `${config.CONTROL_API_URL}/internal/worker-settings`,
+      expect.objectContaining({ method: "GET" }),
+    );
+    const request = fetcher.mock.calls[0]?.[1] as RequestInit;
+    expect(request.headers).toMatchObject({ authorization: `Bearer ${config.WORKER_API_TOKEN}` });
+    expect(request.body).toBeUndefined();
+  });
+
   it("registers without exposing the worker credential in the body", async () => {
     const now = "2026-09-30T12:00:00.000Z";
     const fetcher = vi.fn().mockResolvedValue({

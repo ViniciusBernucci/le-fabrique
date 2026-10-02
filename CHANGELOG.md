@@ -1,11 +1,52 @@
 # Changelog
 
+## 2.69 - 2026-10-03
+OPS-004 integra FAC-012D e FAC-012E–J localmente em `developer`; checks combinados passaram após regeneração local de artefatos derivados. Aceites FAC-012C–J seguem humanos; sem push, deploy, migration, consumer ou piloto.
+
+## 2.68 - 2026-10-02
+OPS-004 fica READY para consolidar localmente os branches de worktree autorizados FAC-012D e FAC-012E–J em developer, rodar checks combinados e retirar worktrees já integrados; sem push/deploy.
+
+## 2.67 - 2026-10-02
+FAC-012J implementa preparação isolada de checkout por execução no worker, com host HTTPS allowlisted, autenticação GitHub efêmera somente após confirmar keyring, Git sem shell/config/hooks e SHA detached verificado. 203 testes, typecheck, lint e build passaram; módulo não foi ligado ao consumer, e Git/GH/keyring reais não foram usados.
+
+## 2.66 - 2026-10-02
+FAC-012J fica READY para preparar checkouts efêmeros, com root/hosts do worker configuráveis, commit exato e sem executar conteúdo do repositório; consumer e rede real permanecem desligados.
+
+## 2.65 - 2026-10-02
+FAC-012I implementa perfil de execução versionado no projeto: contexto permitido e checks explicitamente aprovados no painel, bloqueio de READY sem perfil e compilação apenas dos checks aprovados. Testes, typecheck, lint e build passaram; worker continua sem checkout operacional e consumer segue desligado.
+
+## 2.64 - 2026-10-02
+FAC-012I fica READY para configurar perfil de execução por projeto e aprovar checks/contexto explicitamente antes do gate READY; sem checkout ou execução real.
+
+## 2.63 - 2026-10-02
+FAC-012H implementa raiz de sandbox com `pivot_root`, runtime read-only, workspace isolado e remoção de capabilities. A leitura sintética de `/etc/hostname` que antes funcionava agora é negada; a suíte confirma bloqueio de host paths e mount escape.
+
+## 2.62 - 2026-10-02
+FAC-012H fica READY após teste sintético mostrar que `SandboxRunner` ainda permite ler `/etc/hostname` do host; execução de checks permanece bloqueada até troca para uma raiz isolada.
+
+## 2.61 - 2026-10-02
+FAC-012G conecta DeveloperWorkflow às rotas atuais Developer/Reviewer, selecionando adapters/modelos por função em toda chamada e falhando antes do adapter quando a rota falta; consumer permanece no probe.
+
+## 2.60 - 2026-10-02
+FAC-012G fica READY para o workflow resolver adapters/modelos independentes por função em cada chamada, mantendo o consumer e clientes reais desligados.
+
+## 2.59 - 2026-10-02
+FAC-012F implementa router de runtime sem cache/fallback usando a configuração atual da interface, valida adapter e Reviewer READ_ONLY; 185 testes, lint, typecheck e build passaram. Nenhum adapter executado.
+
+## 2.58 - 2026-10-02
+FAC-012F fica READY para ligar, como biblioteca pura, configurações atuais de agentes aos adapters suportados sem fallback nem execução.
+
+## 2.57 - 2026-10-02
+FAC-012E implementa endpoint interno de leitura versionada da configuração validada para o worker, sem credenciais e sem persistir defaults; 178 testes, lint, typecheck e build passaram. Consumer/provider permanecem desligados.
+
+## 2.56 - 2026-10-02
+FAC-012E fica READY para disponibilizar ao worker leitura interna da configuração de providers/modelos da interface, sem segredos, mudança de DB ou execução.
+
 ## 2.55 - 2026-10-02
 FAC-012D implementa passagem runtime de `allowedPaths` do snapshot para o perfil do Codex, mantém Reviewer/read-only sem escrita e nega `.git`/`.codex`; 175 testes, lint, typecheck e build passaram. Smoke test nativo no Codex CLI 0.159.2 confirmou as regras e rede local negada, sem inferência. Aguarda aceite; sem provider/consumer real.
 
 ## 2.54 - 2026-10-02
 FAC-012D fica READY para restringir a escrita do CodexAdapter aos caminhos `allowedPaths` congelados no projeto, sem ativar consumer ou chamar provider.
-
 ## 2.53 - 2026-10-02
 FAC-012C implementa política read-only por padrão e caminhos explícitos para o SandboxRunner. Lint, typecheck, 172 testes e build passaram; consumer permanece desligado porque o CLI Developer ainda não está confinado.
 

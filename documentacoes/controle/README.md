@@ -8,6 +8,8 @@ Projetos registram nome, URL do repositório e referência base. Tickets registr
 
 FAC-001A adiciona `ProjectDefinition`, configurada pelo painel sem hardcode de projeto ou piloto. Ela persiste descricao, stack externa, instrucoes, caminhos permitidos/proibidos e checks em `argv`, com contrato Zod e versao otimista. Definicao ausente e retornada como `null`; nenhum default sintetico finge inspecao. Novos READY exigem definicao e registram `projectDefinitionVersion`. Contas, providers, modelos e papeis continuam separados em `FactorySettings`.
 
+FAC-012I adiciona `executionProfile` opcional à definição: o operador lista fontes de contexto individuais dentro de caminhos permitidos e marca checks configurados para execução autônoma. A API exige perfil não vazio antes de promover ticket a READY e congela o perfil no snapshot. O worker compara fontes e checks resolvidos localmente com o snapshot e compila somente checks aprovados. Editar comando/argumentos revoga a aprovação no painel. Perfil vazio continua válido para rascunho, nunca para READY.
+
 Rotas atuais:
 
 - `GET /api/auth/session`
@@ -17,11 +19,14 @@ Rotas atuais:
 - `POST|GET /api/projects/{projectId}/tickets`
 - `POST /api/tickets/{ticketId}/ready`
 - `GET|PUT /api/settings`
+- `GET /api/internal/worker-settings` (somente `WORKER_API_TOKEN`)
 - `POST|GET /api/settings/github/verifications`
 - `POST|GET /api/settings/github/onboarding`
 - `GET /api/settings/github/onboarding/{sessionId}/challenge`
 
 FAC-011 adiciona uma configuracao administrativa singleton no PostgreSQL. O update exige `expectedVersion` e valida de forma atomica instalacoes de clientes oficiais, catalogos de modelos, atribuicoes por funcao, metadados GitHub e protecoes financeiras. Objetos sao estritos: credenciais, tokens e campos desconhecidos sao rejeitados. Os defaults nao afirmam elegibilidade — contas ficam desabilitadas, `AUTH_REQUIRED` e sem modelos ate preflight do worker. O update administrativo tambem nao pode promover estado de provider ou GitHub; essas observacoes ficam reservadas a evidencia do worker.
+
+FAC-012E expõe snapshot da configuração somente ao worker autenticado. A resposta usa contrato Zod estrito, inclui versão e instante de observação, lê sem escrita e cai em defaults inativos/version 0 se a linha ainda não existir. O endpoint não expõe o registro Prisma nem inclui campos de credencial.
 
 FAC-011A permite pedir/listar verificacoes GitHub. A criacao grava `GithubVerification` e outbox na mesma transacao; start/complete ficam em rotas `/api/internal/github-verifications/{id}/...` protegidas por `WORKER_API_TOKEN`. Somente a conclusao valida do worker altera o estado observado e incrementa a versao da configuracao. Credenciais e output bruto nao pertencem a esses contratos.
 

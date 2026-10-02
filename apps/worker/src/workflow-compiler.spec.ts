@@ -21,6 +21,10 @@ const specification: ExecutionSpecification = {
       allowedPaths: ["src", "README.md"],
       forbiddenPaths: ["secrets"],
       checks: [{ name: "unit", command: "/usr/bin/npm", args: ["test", "--", "--run"] }],
+      executionProfile: {
+        contextSources: [{ path: "README.md", role: "INSTRUCTION" }],
+        approvedChecks: [{ name: "unit", command: "/usr/bin/npm", args: ["test", "--", "--run"] }],
+      },
     },
   },
   ticket: {
@@ -96,6 +100,15 @@ describe("compileWorkflowRequest", () => {
         allowedChecks: [{ name: "unit", command: "/bin/sh", args: ["-c", "npm test"] }],
       }),
     ).toThrow("Project check is not allowlisted: unit");
+  });
+
+  it("rejects a trusted context that differs from the project's approved context", () => {
+    expect(() =>
+      compileWorkflowRequest(workflowId, specification, {
+        ...profile,
+        contextSources: [{ path: "src/index.ts", role: "SOURCE" }],
+      }),
+    ).toThrow("Trusted context sources do not match the approved project profile");
   });
 
   it("rejects trusted context sources outside configured paths", () => {
