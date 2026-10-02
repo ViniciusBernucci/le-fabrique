@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.44 - 2026-10-02
+FAC-001A implementa definicao generica, persistida e versionada de projetos no painel. READY agora exige SHA e definicao; 160 testes, lint, typecheck, build e Prisma validate passaram. O piloto e as contas de IA nao foram embutidos no codigo.
+
 ## 2.43 - 2026-10-02
 FAC-001A fica READY para implementar a definicao versionada de projetos pelo painel. O incremento nao embute piloto, repositorio, comandos nem contas de IA no codigo e nao altera o Provider Manager existente.
 

@@ -7,11 +7,11 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-001A esta READY para tornar a definicao de qualquer projeto configuravel no software; FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido sem bloquear este incremento interno.
+FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-001A implementou a definicao configuravel de projetos e aguarda aceite; FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
-- FAC-001A: READY — Definicao generica e versionada de projeto no painel, sem hardcode do piloto ou de contas de IA; dependências: FAC-003, FAC-003A e FAC-011.
+- FAC-001A: AWAITING_HUMAN — Definicao generica e versionada de projeto no painel, gate de READY e codigo `148485ec5858756460b1db6f183c346854703981`; sem hardcode do piloto ou de contas de IA; dependências: FAC-003, FAC-003A e FAC-011.
 - FAC-002: DONE — Codex validado e aceito na revisão `1666ee108343563e35edb6971bea11234a62d47e`; dependências: FAC-004.
 - FAC-003: DONE — Controle web e persistência aceitos no SHA `1807330bcf7b1374fa626d9fcbfc47dd8002f433`; dependências: FAC-000.
 - FAC-003A: AWAITING_HUMAN — Gate de revisao-base exata antes de READY, barreira no dispatcher e atualizacao configuravel no painel; codigo `e65c88fd8f3bd15e3aa65773fedc945af3709def`, dependências: FAC-003 e FAC-008.

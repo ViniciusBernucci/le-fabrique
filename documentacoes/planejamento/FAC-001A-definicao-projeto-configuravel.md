@@ -1,6 +1,6 @@
 # FAC-001A — Definicao de projeto configuravel
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -53,4 +53,4 @@ FAC-003, FAC-003A e FAC-011. O FAC-003A permanece `AWAITING_HUMAN`; este increme
 
 ## Evidencias e aceite
 
-Codigo, checks e relatorio datado serao vinculados a revisoes exatas. DONE somente apos aceite da revisao documental exata.
+Ticket READY: `af30aa906fcacd54ccfd8a985558964956585760`. Codigo verificado: `148485ec5858756460b1db6f183c346854703981`. Relatorio: `documentacoes/controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md`. DONE somente apos aceite da revisao documental exata.

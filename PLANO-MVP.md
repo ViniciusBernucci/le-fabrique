@@ -13,10 +13,16 @@ Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução
 
 ## FAC-001 — Contratar piloto
 Sprint: Sprint 3. Dependências: FAC-011. Esforço estimado: 1-2 dias. Status: DEFERRED.
-Descrição: Após o núcleo da plataforma estar pronto, o responsável escolhe o projeto externo; então são registrados repo, baseline, regras, caminhos e três tickets pequenos para o ensaio operacional.
+Descrição: Após o núcleo da plataforma estar pronto, o responsável escolhe o projeto externo pela interface; então repo, baseline, regras, caminhos e tickets pequenos ficam registrados no software para o ensaio operacional. Nenhuma escolha concreta entra no codigo da fabrica.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Contrato verificável e baseline reproduzido; não editar lógica fora do ticket.
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+
+## FAC-001A — Definicao configuravel de projeto
+Sprint: Sprint 3 antecipado como fundacao interna. Dependências: FAC-003, FAC-003A, FAC-011. Esforço estimado: 1 dia. Status: AWAITING_HUMAN.
+Descrição: Persistir e editar no painel a descricao, stack externa, instrucoes, caminhos e checks de qualquer projeto, mantendo contas/modelos no Centro de Configuracoes.
+Aceite: Contratos runtime, versao otimista, gate de READY e ausencia explicita de definicao; sem hardcode do piloto.
+Entregáveis: migration aditiva, API, painel, testes e documentacao vinculados ao codigo `148485ec5858756460b1db6f183c346854703981`.
 
 ## FAC-002 — Validar clientes e baseline assistido
 Sprint: Sprint 1. Dependências: FAC-004. Esforço estimado: 2-3 dias. Status: DONE.

@@ -34,6 +34,7 @@
 - [planejamento/README.md](planejamento/README.md)
 - [planejamento/2026-09-30-PLAN-001-adiamento-piloto.md](planejamento/2026-09-30-PLAN-001-adiamento-piloto.md)
 - [planejamento/FAC-003-controle-web-persistencia.md](planejamento/FAC-003-controle-web-persistencia.md)
+- [planejamento/FAC-001A-definicao-projeto-configuravel.md](planejamento/FAC-001A-definicao-projeto-configuravel.md)
 - [planejamento/FAC-003A-gate-revisao-base-ready.md](planejamento/FAC-003A-gate-revisao-base-ready.md)
 - [planejamento/FAC-004-worker-identidade.md](planejamento/FAC-004-worker-identidade.md)
 - [planejamento/FAC-002-preflight-codex.md](planejamento/FAC-002-preflight-codex.md)
@@ -56,6 +57,7 @@
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
 - [controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md](controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md)
+- [controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md](controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md)
 - [arquitetura/TECH-LEAD-HANDOFF.md](arquitetura/TECH-LEAD-HANDOFF.md)
 
 - [arquitetura/ADR-003-stack-typescript.md](arquitetura/ADR-003-stack-typescript.md)

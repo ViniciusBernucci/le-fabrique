@@ -10,3 +10,4 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Sandbox, worktree e snapshot sao limites diferentes](sandbox-worktree-snapshot.md)
 - [Lease, fencing e checkpoint cobrem falhas diferentes](leases-fencing-checkpoints.md)
 - [Baseline, regressao e review sao sinais diferentes](baseline-regressao-review.md)
+- [Definicao de projeto e uma fronteira configuravel](definicao-projeto-configuravel.md)

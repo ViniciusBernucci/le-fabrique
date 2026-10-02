@@ -6,11 +6,14 @@ A API NestJS expõe health sem autenticação e protege as rotas administrativas
 
 Projetos registram nome, URL do repositório e referência base. Tickets registram objetivo, critérios, estado e versão otimista. FAC-003A permite trocar a referencia por um SHA Git minusculo de 40 caracteres com comparacao otimista. A transição `DRAFT -> READY` so grava ticket e `ticket.ready.v1` quando esse SHA ja esta resolvido; falha de elegibilidade ocorre antes de qualquer mutacao. A chave `ticket:{id}:ready` impede evento duplicado em retry.
 
+FAC-001A adiciona `ProjectDefinition`, configurada pelo painel sem hardcode de projeto ou piloto. Ela persiste descricao, stack externa, instrucoes, caminhos permitidos/proibidos e checks em `argv`, com contrato Zod e versao otimista. Definicao ausente e retornada como `null`; nenhum default sintetico finge inspecao. Novos READY exigem definicao e registram `projectDefinitionVersion`. Contas, providers, modelos e papeis continuam separados em `FactorySettings`.
+
 Rotas atuais:
 
 - `GET /api/auth/session`
 - `POST|GET /api/projects`
 - `PATCH /api/projects/{projectId}/base-revision`
+- `GET|PUT /api/projects/{projectId}/definition`
 - `POST|GET /api/projects/{projectId}/tickets`
 - `POST /api/tickets/{ticketId}/ready`
 - `GET|PUT /api/settings`
