@@ -42,6 +42,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 - OPS-003: AWAITING_HUMAN — Aceites FAC-012A/B registrados; bind loopback e migration corretiva integrados em `e09204c5205af047d79bcd7d530a1acd1db563ca`, migration não aplicada.
 - OPS-004: AWAITING_HUMAN — merges locais D e E–J e limpeza pós-merge documentados em `documentacoes/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md`; sem push/deploy.
+- OPS-005: READY — preparar worker host dedicado para compatibilidade com `systemd-run --user`, retirar consumidor fixture do caminho Compose padrão e manter API/Redis apenas em loopback; sem iniciar/alterar serviços. Ticket: `documentacoes/planejamento/OPS-005-worker-host-sandbox.md`.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.
 

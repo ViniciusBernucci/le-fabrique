@@ -21,4 +21,6 @@ FAC-012J implementado em biblioteca isolada; aguarda aceite humano. Prepara chec
 
 OPS-004 foi executado localmente: FAC-012D e FAC-012E–J foram integrados em `developer`, os checks combinados passaram e as worktrees D/OPS-004 foram removidas após prova de ancestry e limpeza. Branch refs foram preservadas. Aguarda revisão humana; não implica aceite dos tickets nem push/deploy.
 
+OPS-005 está READY para disponibilizar um caminho de serviço worker dedicado no host da VPS, onde o `systemd-run --user` do sandbox pode ser usado sem container privilegiado. A implementação deixará execução de ticket desligada e não alterará os serviços atualmente ativos.
+
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

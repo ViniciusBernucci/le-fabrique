@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.70 - 2026-10-03
+OPS-005 fica READY para preparar o worker host da VPS, desativar o consumidor fixture no Compose padrão e manter API/Redis privados em loopback. Sem alteração de serviço ativo, instalação, provider ou piloto.
+
 ## 2.69 - 2026-10-03
 OPS-004 integra FAC-012D e FAC-012E–J localmente em `developer`; checks combinados passaram após regeneração local de artefatos derivados. Aceites FAC-012C–J seguem humanos; sem push, deploy, migration, consumer ou piloto.
 
