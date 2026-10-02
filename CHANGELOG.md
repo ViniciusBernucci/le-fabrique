@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.48 - 2026-10-02
+FAC-012B fica READY para compilar snapshot READY em pedido de workflow validado, exigindo perfil de checkout/allowlist confiável injetado; consumer, provider, piloto e execução permanecem desligados.
+
 ## 2.47 - 2026-10-02
 FAC-012A implementa snapshot imutavel de projeto, definicao e ticket no evento READY, com invariantes cruzadas e bloqueio de eventos legados incompletos. Passaram 163 testes, lint, typecheck, build e Prisma validate; nenhum piloto/provider foi executado e a revisao aguarda aceite.
 

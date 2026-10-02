@@ -54,6 +54,7 @@
 - [planejamento/FAC-011C-verificacao-repositorio-github.md](planejamento/FAC-011C-verificacao-repositorio-github.md)
 - [planejamento/FAC-011D-criacao-pull-request-gate-humano.md](planejamento/FAC-011D-criacao-pull-request-gate-humano.md)
 - [planejamento/FAC-012A-especificacao-execucao-imutavel.md](planejamento/FAC-012A-especificacao-execucao-imutavel.md)
+- [planejamento/FAC-012B-compilador-workflow-configuravel.md](planejamento/FAC-012B-compilador-workflow-configuravel.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
