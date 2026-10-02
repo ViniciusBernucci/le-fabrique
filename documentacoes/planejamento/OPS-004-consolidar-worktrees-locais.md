@@ -12,7 +12,7 @@ Consolidar em `developer` os branches FAC-012D e FAC-012E–J que o responsável
 2. FAC-012D (`439e95429b81a4bd12e01c0d501d9241a18393ee`) e FAC-012J/ancestrais (`17fed5bd2d55eaa4dc4eb23d607cd98893f6c674`) são integrados à branch local `developer` sem perda de conteúdo; conflitos, se houver, são resolvidos e revisados por critério/arquivo.
 3. Suíte total, typecheck, lint, build e diff-check passam na revisão exata resultante de `developer`.
 4. D e J permanecem `AWAITING_HUMAN`; o merge local não equivale a aceite. A/B e OPS-003 permanecem registrados como aceitos/integrados.
-5. Remover somente os worktrees D e J quando estiverem limpos e todos os seus commits estiverem na ancestralidade de `developer`; preservar refs de branches locais e qualquer trabalho não integrado.
+5. Worktrees D e OPS-004 (que hospedava a branch de consolidação/J) removidas após confirmar estado limpo e ancestralidade integral; refs locais preservadas.
 6. Não fazer push, deploy, migration, acessar banco/fila/provider/rede Git ou iniciar consumer/piloto.
 
 ## Execução e evidências
@@ -22,6 +22,7 @@ Consolidar em `developer` os branches FAC-012D e FAC-012E–J que o responsável
 - Suíte, typecheck, lint, build e `git diff --check` passaram após regenerar artefatos locais de contratos, Prisma e runtime. Nenhuma migration ou serviço foi iniciado.
 - Relatório operacional: `documentacoes/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md`.
 - A revisão humana deste exato resultado continua pendente; merges não alteram aceite de FAC-012C–J.
+- A lista final de worktrees contém somente `/home/vinicius/le-fabrique`; remoções executadas sem `--force`.
 
 ## Baseline, caminhos e limites
 

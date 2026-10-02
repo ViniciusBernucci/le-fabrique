@@ -23,6 +23,7 @@
 - [operacao/2026-10-02-FAC-012F-rota-agente-configurada.md](operacao/2026-10-02-FAC-012F-rota-agente-configurada.md)
 - [operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md](operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md)
 - [operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md](operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md)
+- [operacao/2026-10-03-OPS-004-consolidacao-worktrees.md](operacao/2026-10-03-OPS-004-consolidacao-worktrees.md)
 - [configuracao/README.md](configuracao/README.md)
 - [configuracao/2026-10-01-FAC-011-centro-configuracoes.md](configuracao/2026-10-01-FAC-011-centro-configuracoes.md)
 - [configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md](configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md)

@@ -25,3 +25,5 @@ Todo novo endpoint, evento de outbox, payload de fila ou checkpoint precisa de s
 ## Evidência
 
 Os testes de `packages/contracts`, da API e do worker exercitam payloads válidos e rejeitam entradas inválidas. Ver também `documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md` para o snapshot interno do worker; a fundação original está em `documentacoes/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md`.
+
+Na integração entre worktrees, regenere artefatos derivados na ordem de dependência antes de tratar falhas de resolução como regressão. Aqui, `npm test` inicialmente carregou `dist` e Prisma Client defasados compartilhados entre worktrees; `npm run db:generate` e builds de contracts/runtime corrigiram o estado local sem tocar o banco. Em seguida, valide a árvore combinada e só remova worktrees limpas cujos SHAs sejam ancestrais do destino. Esse procedimento foi aplicado aos merges FAC-012D e E–J em `developer` pelo OPS-004.
