@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   completeGithubOnboardingSchema,
+  completeGithubPullRequestSchema,
   completeGithubRepositoryVerificationSchema,
   completeGithubVerificationSchema,
   contextBuildRequestSchema,
@@ -10,6 +11,7 @@ import {
   factoryConfigurationSchema,
   githubOnboardingChallengeSchema,
   githubOnboardingJobSchema,
+  githubPullRequestJobSchema,
   githubRepositoryVerificationJobSchema,
   githubVerificationJobSchema,
   healthResponseSchema,
@@ -513,6 +515,37 @@ describe("shared contracts", () => {
         isPrivate: null,
         isArchived: null,
         message: "failed",
+      }),
+    ).toThrow();
+  });
+
+  it("binds pull request jobs to approved immutable fields", () => {
+    const job = {
+      schemaVersion: 1 as const,
+      eventId: crypto.randomUUID(),
+      requestId: crypto.randomUUID(),
+      approvalDigest: "a".repeat(64),
+      host: "github.com",
+      owner: "fixture-owner",
+      repository: "fixture-repository",
+      baseBranch: "main",
+      headBranch: "feature/gated-pr",
+      title: "Create gated pull request",
+      body: "Synthetic body",
+      draft: true,
+    };
+    expect(githubPullRequestJobSchema.parse(job)).toEqual(job);
+    expect(() => githubPullRequestJobSchema.parse({ ...job, merge: true })).toThrow();
+    expect(() => githubPullRequestJobSchema.parse({ ...job, owner: "owner/other" })).toThrow();
+    expect(() => githubPullRequestJobSchema.parse({ ...job, baseBranch: "../main" })).toThrow();
+    expect(() =>
+      completeGithubPullRequestSchema.parse({
+        workerId: crypto.randomUUID(),
+        status: "FAILED",
+        disposition: "CREATED",
+        pullRequestNumber: 1,
+        pullRequestUrl: "https://github.com/fixture-owner/fixture-repository/pull/1",
+        message: "invalid partial failure",
       }),
     ).toThrow();
   });

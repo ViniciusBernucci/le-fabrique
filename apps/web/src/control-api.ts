@@ -6,15 +6,19 @@ import {
   factorySettingsSchema,
   type GithubOnboardingChallenge,
   type GithubOnboardingSession,
+  type GithubPullRequest,
   type GithubRepositoryVerification,
   type GithubVerification,
   githubOnboardingChallengeSchema,
   githubOnboardingSessionListSchema,
   githubOnboardingSessionSchema,
+  githubPullRequestListSchema,
+  githubPullRequestSchema,
   githubRepositoryVerificationListSchema,
   githubRepositoryVerificationSchema,
   githubVerificationListSchema,
   githubVerificationSchema,
+  type PrepareGithubPullRequest,
   type Project,
   type ProviderOnboardingChallenge,
   type ProviderOnboardingSession,
@@ -110,6 +114,49 @@ export async function requestGithubRepositoryVerification(
 ): Promise<GithubRepositoryVerification> {
   return githubRepositoryVerificationSchema.parse(
     await request("/settings/github/repository-verifications", token, { method: "POST" }),
+  );
+}
+
+export async function listGithubPullRequests(token: string): Promise<GithubPullRequest[]> {
+  return githubPullRequestListSchema.parse(await request("/settings/github/pull-requests", token));
+}
+
+export async function prepareGithubPullRequest(
+  token: string,
+  input: PrepareGithubPullRequest,
+): Promise<GithubPullRequest> {
+  return githubPullRequestSchema.parse(
+    await request("/settings/github/pull-requests", token, {
+      method: "POST",
+      body: JSON.stringify(input),
+    }),
+  );
+}
+
+export async function approveGithubPullRequest(
+  token: string,
+  pullRequest: GithubPullRequest,
+): Promise<GithubPullRequest> {
+  return githubPullRequestSchema.parse(
+    await request(`/settings/github/pull-requests/${pullRequest.id}/approve`, token, {
+      method: "POST",
+      body: JSON.stringify({
+        expectedVersion: pullRequest.version,
+        approvalDigest: pullRequest.approvalDigest,
+      }),
+    }),
+  );
+}
+
+export async function cancelGithubPullRequest(
+  token: string,
+  pullRequest: GithubPullRequest,
+): Promise<GithubPullRequest> {
+  return githubPullRequestSchema.parse(
+    await request(`/settings/github/pull-requests/${pullRequest.id}/cancel`, token, {
+      method: "POST",
+      body: JSON.stringify({ expectedVersion: pullRequest.version }),
+    }),
   );
 }
 

@@ -12,6 +12,15 @@ import {
 } from "./github-onboarding.dispatcher";
 import { GithubOnboardingService } from "./github-onboarding.service";
 import {
+  GithubPullRequestAdminController,
+  GithubPullRequestWorkerController,
+} from "./github-pull-request.controller";
+import {
+  GITHUB_PULL_REQUEST_QUEUE,
+  GithubPullRequestDispatcher,
+} from "./github-pull-request.dispatcher";
+import { GithubPullRequestService } from "./github-pull-request.service";
+import {
   GithubRepositoryVerificationAdminController,
   GithubRepositoryVerificationWorkerController,
 } from "./github-repository-verification.controller";
@@ -63,6 +72,8 @@ import { SettingsService } from "./settings.service";
     GithubOnboardingWorkerController,
     GithubRepositoryVerificationAdminController,
     GithubRepositoryVerificationWorkerController,
+    GithubPullRequestAdminController,
+    GithubPullRequestWorkerController,
   ],
   providers: [
     AdminAuthGuard,
@@ -78,6 +89,8 @@ import { SettingsService } from "./settings.service";
     GithubOnboardingDispatcher,
     GithubRepositoryVerificationService,
     GithubRepositoryVerificationDispatcher,
+    GithubPullRequestService,
+    GithubPullRequestDispatcher,
     {
       provide: PROVIDER_VERIFICATION_QUEUE,
       useFactory: () => {
@@ -143,6 +156,21 @@ import { SettingsService } from "./settings.service";
       useFactory: () => {
         const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
         return new Queue("le-fabrique.github-repository-verification", {
+          connection: {
+            host: redisUrl.hostname,
+            port: Number(redisUrl.port || 6379),
+            username: redisUrl.username || undefined,
+            password: redisUrl.password || undefined,
+            db: Number(redisUrl.pathname.slice(1) || 0),
+          },
+        });
+      },
+    },
+    {
+      provide: GITHUB_PULL_REQUEST_QUEUE,
+      useFactory: () => {
+        const redisUrl = new URL(process.env.REDIS_URL ?? "redis://127.0.0.1:6379");
+        return new Queue("le-fabrique.github-pull-request", {
           connection: {
             host: redisUrl.hostname,
             port: Number(redisUrl.port || 6379),

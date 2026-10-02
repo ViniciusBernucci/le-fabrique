@@ -1,5 +1,6 @@
 import type {
   GithubOnboardingJob,
+  GithubPullRequestJob,
   GithubRepositoryVerificationJob,
   GithubVerificationJob,
   OrchestrationJob,
@@ -14,6 +15,10 @@ import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
 } from "./github-onboarding.processor";
+import {
+  cancelGithubPullRequestProcesses,
+  processGithubPullRequest,
+} from "./github-pull-request.processor";
 import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
 import { processOrchestrationFixture } from "./orchestration.processor";
@@ -135,6 +140,21 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
+  const githubPullRequestWorker = new Worker<GithubPullRequestJob>(
+    "le-fabrique.github-pull-request",
+    async (job) => processGithubPullRequest(job.data, control),
+    {
+      concurrency: 1,
+      connection: {
+        host: redisUrl.hostname,
+        port: Number(redisUrl.port || 6379),
+        username: redisUrl.username || undefined,
+        password: redisUrl.password || undefined,
+        db: Number(redisUrl.pathname.slice(1) || 0),
+        maxRetriesPerRequest: null,
+      },
+    },
+  );
 
   let stopping = false;
   const shutdown = async (reason: string): Promise<void> => {
@@ -143,6 +163,7 @@ async function bootstrap(): Promise<void> {
     stopHeartbeat();
     cancelProviderOnboardingProcesses();
     cancelGithubOnboardingProcesses();
+    cancelGithubPullRequestProcesses();
     console.info("worker stopping", { reason });
     await Promise.all([
       probeWorker.close(),
@@ -152,6 +173,7 @@ async function bootstrap(): Promise<void> {
       githubVerificationWorker.close(),
       githubOnboardingWorker.close(),
       githubRepositoryVerificationWorker.close(),
+      githubPullRequestWorker.close(),
     ]);
     process.exit(reason === "control-unavailable" ? 1 : 0);
   };
@@ -185,6 +207,9 @@ async function bootstrap(): Promise<void> {
       jobId: job?.id,
       error: error.message,
     }),
+  );
+  githubPullRequestWorker.on("failed", (job, error) =>
+    console.error("GitHub pull request failed", { jobId: job?.id, error: error.message }),
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));

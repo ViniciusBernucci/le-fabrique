@@ -4,6 +4,7 @@ import type {
   FactorySettings,
   GithubOnboardingChallenge,
   GithubOnboardingSession,
+  GithubPullRequest,
   GithubRepositoryVerification,
   GithubVerification,
   ProviderInstallation,
@@ -13,14 +14,18 @@ import type {
 } from "@le-fabrique/contracts";
 import { useEffect, useMemo, useState } from "react";
 import {
+  approveGithubPullRequest,
+  cancelGithubPullRequest,
   getFactorySettings,
   getGithubOnboardingChallenge,
   getProviderOnboardingChallenge,
   listGithubOnboardingSessions,
+  listGithubPullRequests,
   listGithubRepositoryVerifications,
   listGithubVerifications,
   listProviderOnboardingSessions,
   listProviderVerifications,
+  prepareGithubPullRequest,
   requestGithubOnboarding,
   requestGithubRepositoryVerification,
   requestGithubVerification,
@@ -48,6 +53,11 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [githubRepositoryVerifications, setGithubRepositoryVerifications] = useState<
     GithubRepositoryVerification[]
   >([]);
+  const [githubPullRequests, setGithubPullRequests] = useState<GithubPullRequest[]>([]);
+  const [pullRequestHead, setPullRequestHead] = useState("");
+  const [pullRequestTitle, setPullRequestTitle] = useState("");
+  const [pullRequestBody, setPullRequestBody] = useState("");
+  const [pullRequestDraft, setPullRequestDraft] = useState(true);
   const [githubOnboardingChallenges, setGithubOnboardingChallenges] = useState<
     Record<string, GithubOnboardingChallenge>
   >({});
@@ -70,16 +80,28 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       listGithubVerifications(token),
       listGithubOnboardingSessions(token),
       listGithubRepositoryVerifications(token),
+      listGithubPullRequests(token),
     ])
-      .then(([data, history, sessions, githubHistory, githubSessions, repositoryHistory]) => {
-        setSettings(data);
-        setDraft(structuredClone(data.configuration));
-        setVerifications(history);
-        setOnboardingSessions(sessions);
-        setGithubVerifications(githubHistory);
-        setGithubOnboardingSessions(githubSessions);
-        setGithubRepositoryVerifications(repositoryHistory);
-      })
+      .then(
+        ([
+          data,
+          history,
+          sessions,
+          githubHistory,
+          githubSessions,
+          repositoryHistory,
+          pullRequests,
+        ]) => {
+          setSettings(data);
+          setDraft(structuredClone(data.configuration));
+          setVerifications(history);
+          setOnboardingSessions(sessions);
+          setGithubVerifications(githubHistory);
+          setGithubOnboardingSessions(githubSessions);
+          setGithubRepositoryVerifications(repositoryHistory);
+          setGithubPullRequests(pullRequests);
+        },
+      )
       .catch(() => onMessage("Falha ao carregar as configurações."));
   }, [onMessage, token]);
 
@@ -218,11 +240,20 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     return () => clearInterval(timer);
   }, [githubRepositoryVerifications, token]);
 
+  useEffect(() => {
+    if (!githubPullRequests.some((item) => ["APPROVED", "RUNNING"].includes(item.status))) return;
+    const timer = setInterval(() => {
+      void listGithubPullRequests(token).then(setGithubPullRequests);
+    }, 3_000);
+    return () => clearInterval(timer);
+  }, [githubPullRequests, token]);
+
   const summary = useMemo(() => (settings ? configurationSummary(settings) : null), [settings]);
   const latestGithubOnboarding = githubOnboardingSessions[0];
   const currentGithubChallenge = latestGithubOnboarding
     ? githubOnboardingChallenges[latestGithubOnboarding.id]
     : undefined;
+  const latestGithubPullRequest = githubPullRequests[0];
 
   function updateInstallation(index: number, patch: Partial<ProviderInstallation>) {
     setDraft((current) => {
@@ -374,6 +405,51 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       onMessage("Verificação somente-leitura do repositório enviada ao worker.");
     } catch {
       onMessage("Não foi possível verificar o repositório GitHub salvo.");
+    }
+  }
+
+  async function preparePullRequest() {
+    try {
+      const request = await prepareGithubPullRequest(token, {
+        headBranch: pullRequestHead,
+        title: pullRequestTitle,
+        body: pullRequestBody,
+        draft: pullRequestDraft,
+      });
+      setGithubPullRequests((current) => [
+        request,
+        ...current.filter((item) => item.id !== request.id),
+      ]);
+      onMessage("PR preparado. Revise o payload e aprove em um segundo ato.");
+    } catch {
+      onMessage("Não foi possível preparar o PR; confirme configuração e leitura do repositório.");
+    }
+  }
+
+  async function approvePullRequest(request: GithubPullRequest) {
+    if (!window.confirm(`Criar PR ${request.headBranch} → ${request.baseBranch}?`)) return;
+    try {
+      const updated = await approveGithubPullRequest(token, request);
+      setGithubPullRequests((current) => [
+        updated,
+        ...current.filter((item) => item.id !== updated.id),
+      ]);
+      onMessage("PR aprovado; o worker verificará escrita antes de criar.");
+    } catch {
+      onMessage("A aprovação ficou obsoleta ou o alvo deixou de ser elegível.");
+    }
+  }
+
+  async function cancelPullRequest(request: GithubPullRequest) {
+    try {
+      const updated = await cancelGithubPullRequest(token, request);
+      setGithubPullRequests((current) => [
+        updated,
+        ...current.filter((item) => item.id !== updated.id),
+      ]);
+      onMessage("Preparação de PR cancelada sem side effect.");
+    } catch {
+      onMessage("Não foi possível cancelar esta preparação.");
     }
   }
 
@@ -861,6 +937,100 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
           >
             Verificar repositório salvo (somente leitura)
           </button>
+          <div className="onboarding-status">
+            <p>
+              <strong>Pull request sob aprovação humana</strong>
+            </p>
+            <div className="form-grid">
+              <label>
+                Branch de origem
+                <input
+                  value={pullRequestHead}
+                  onChange={(event) => setPullRequestHead(event.target.value)}
+                  placeholder="feature/minha-alteracao"
+                />
+              </label>
+              <label>
+                Título
+                <input
+                  value={pullRequestTitle}
+                  onChange={(event) => setPullRequestTitle(event.target.value)}
+                  maxLength={200}
+                />
+              </label>
+            </div>
+            <label>
+              Descrição
+              <textarea
+                value={pullRequestBody}
+                onChange={(event) => setPullRequestBody(event.target.value)}
+                maxLength={10 * 1024}
+                rows={5}
+              />
+            </label>
+            <label className="switch-row compact">
+              <input
+                type="checkbox"
+                checked={pullRequestDraft}
+                onChange={(event) => setPullRequestDraft(event.target.checked)}
+              />
+              <span>Criar como draft</span>
+            </label>
+            <button
+              className="secondary-action account-action"
+              type="button"
+              onClick={preparePullRequest}
+              disabled={
+                settings.configuration.github.state !== "CONNECTED" ||
+                !settings.configuration.github.pullRequestCreationEnabled ||
+                pullRequestHead.trim() === "" ||
+                pullRequestTitle.trim() === "" ||
+                githubPullRequests.some((item) =>
+                  ["PREPARED", "APPROVED", "RUNNING"].includes(item.status),
+                )
+              }
+            >
+              Preparar PR para revisão
+            </button>
+            {latestGithubPullRequest ? (
+              <div className="verification-line">
+                <p>
+                  Pedido: <strong>{statusLabel(latestGithubPullRequest.status)}</strong>
+                  {` · ${latestGithubPullRequest.headBranch} → ${latestGithubPullRequest.baseBranch}`}
+                  {` · digest ${latestGithubPullRequest.approvalDigest.slice(0, 12)}`}
+                </p>
+                <p>{latestGithubPullRequest.title}</p>
+                {latestGithubPullRequest.pullRequestUrl ? (
+                  <a
+                    href={latestGithubPullRequest.pullRequestUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Abrir PR #{latestGithubPullRequest.pullRequestNumber}
+                  </a>
+                ) : null}
+                {latestGithubPullRequest.message ? <p>{latestGithubPullRequest.message}</p> : null}
+                {latestGithubPullRequest.status === "PREPARED" ? (
+                  <div>
+                    <button
+                      className="secondary-action account-action"
+                      type="button"
+                      onClick={() => approvePullRequest(latestGithubPullRequest)}
+                    >
+                      Aprovar e enviar ao worker
+                    </button>
+                    <button
+                      className="secondary-action account-action"
+                      type="button"
+                      onClick={() => cancelPullRequest(latestGithubPullRequest)}
+                    >
+                      Cancelar preparação
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         </section>
 
         <section className="panel safety-card">

@@ -1,6 +1,7 @@
 import { arch, platform } from "node:os";
 import type {
   CompleteGithubOnboarding,
+  CompleteGithubPullRequest,
   CompleteGithubRepositoryVerification,
   CompleteGithubVerification,
   CompleteProviderOnboarding,
@@ -15,6 +16,7 @@ import type {
 } from "@le-fabrique/contracts";
 import {
   githubOnboardingSessionSchema,
+  githubPullRequestSchema,
   githubRepositoryVerificationSchema,
   githubVerificationSchema,
   orchestrationClaimSchema,
@@ -58,6 +60,7 @@ export class ControlClient {
             "github-cli-verification",
             "github-device-onboarding",
             "github-repository-read-verification",
+            "github-pull-request-gated-create",
           ],
           os: platform(),
           arch: arch(),
@@ -203,6 +206,27 @@ export class ControlClient {
   ) {
     return githubRepositoryVerificationSchema.parse(
       await this.request(`/internal/github-repository-verifications/${verificationId}/complete`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async startGithubPullRequest(requestId: string) {
+    return githubPullRequestSchema.parse(
+      await this.request(`/internal/github-pull-requests/${requestId}/start`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async completeGithubPullRequest(
+    requestId: string,
+    input: Omit<CompleteGithubPullRequest, "workerId">,
+  ) {
+    return githubPullRequestSchema.parse(
+      await this.request(`/internal/github-pull-requests/${requestId}/complete`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

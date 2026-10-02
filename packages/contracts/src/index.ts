@@ -763,6 +763,150 @@ export type CompleteGithubRepositoryVerification = z.infer<
   typeof completeGithubRepositoryVerificationSchema
 >;
 
+export const githubBranchNameSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(200)
+  .regex(/^[A-Za-z0-9._/-]+$/)
+  .refine(
+    (value) =>
+      !value.startsWith("-") &&
+      !value.startsWith("/") &&
+      !value.startsWith(".") &&
+      !value.endsWith("/") &&
+      !value.endsWith(".") &&
+      !value.includes("..") &&
+      !value.includes("//"),
+    "Invalid GitHub branch name",
+  );
+export const githubOwnerNameSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$/);
+export const githubRepositoryNameSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .max(100)
+  .regex(/^[A-Za-z0-9_.-]+$/)
+  .refine((value) => value !== "." && value !== "..", "Invalid GitHub repository name");
+
+export const githubPullRequestStatusSchema = z.enum([
+  "PREPARED",
+  "APPROVED",
+  "RUNNING",
+  "COMPLETED",
+  "FAILED",
+  "CANCELLED",
+]);
+export type GithubPullRequestStatus = z.infer<typeof githubPullRequestStatusSchema>;
+export const githubPullRequestDispositionSchema = z.enum(["CREATED", "EXISTING"]);
+export type GithubPullRequestDisposition = z.infer<typeof githubPullRequestDispositionSchema>;
+
+export const prepareGithubPullRequestSchema = z
+  .object({
+    headBranch: githubBranchNameSchema,
+    title: z.string().trim().min(1).max(200),
+    body: z.string().max(10 * 1024),
+    draft: z.boolean(),
+  })
+  .strict();
+export type PrepareGithubPullRequest = z.infer<typeof prepareGithubPullRequestSchema>;
+
+export const githubPullRequestSchema = z
+  .object({
+    id: z.uuid(),
+    version: z.number().int().positive(),
+    host: githubSettingsSchema.shape.host,
+    owner: githubOwnerNameSchema,
+    repository: githubRepositoryNameSchema,
+    baseBranch: githubBranchNameSchema,
+    headBranch: githubBranchNameSchema,
+    title: z.string().trim().min(1).max(200),
+    body: z.string().max(10 * 1024),
+    draft: z.boolean(),
+    approvalDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    status: githubPullRequestStatusSchema,
+    workerId: z.uuid().nullable(),
+    disposition: githubPullRequestDispositionSchema.nullable(),
+    pullRequestNumber: z.number().int().positive().nullable(),
+    pullRequestUrl: z.url().max(500).nullable(),
+    message: z.string().trim().min(1).max(240).nullable(),
+    createdAt: z.iso.datetime(),
+    approvedAt: z.iso.datetime().nullable(),
+    startedAt: z.iso.datetime().nullable(),
+    completedAt: z.iso.datetime().nullable(),
+    cancelledAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+export type GithubPullRequest = z.infer<typeof githubPullRequestSchema>;
+export const githubPullRequestListSchema = z.array(githubPullRequestSchema);
+
+export const approveGithubPullRequestSchema = z
+  .object({
+    expectedVersion: z.number().int().positive(),
+    approvalDigest: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+export type ApproveGithubPullRequest = z.infer<typeof approveGithubPullRequestSchema>;
+export const cancelGithubPullRequestSchema = z
+  .object({ expectedVersion: z.number().int().positive() })
+  .strict();
+
+export const githubPullRequestJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    eventId: z.uuid(),
+    requestId: z.uuid(),
+    approvalDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    host: githubSettingsSchema.shape.host,
+    owner: githubOwnerNameSchema,
+    repository: githubRepositoryNameSchema,
+    baseBranch: githubBranchNameSchema,
+    headBranch: githubBranchNameSchema,
+    title: z.string().trim().min(1).max(200),
+    body: z.string().max(10 * 1024),
+    draft: z.boolean(),
+  })
+  .strict();
+export type GithubPullRequestJob = z.infer<typeof githubPullRequestJobSchema>;
+
+export const startGithubPullRequestSchema = z.object({ workerId: z.uuid() }).strict();
+export const completeGithubPullRequestSchema = z
+  .object({
+    workerId: z.uuid(),
+    status: z.enum(["COMPLETED", "FAILED"]),
+    disposition: githubPullRequestDispositionSchema.nullable(),
+    pullRequestNumber: z.number().int().positive().nullable(),
+    pullRequestUrl: z.url().max(500).nullable(),
+    message: z.string().trim().min(1).max(240),
+  })
+  .strict()
+  .superRefine((result, context) => {
+    const hasResult =
+      result.disposition !== null &&
+      result.pullRequestNumber !== null &&
+      result.pullRequestUrl !== null;
+    if (result.status === "COMPLETED" && !hasResult) {
+      context.addIssue({ code: "custom", message: "Completed pull request requires exact result" });
+    }
+    if (result.status === "FAILED" && hasResult) {
+      context.addIssue({ code: "custom", message: "Failed pull request cannot expose a result" });
+    }
+    if (
+      result.status === "FAILED" &&
+      [result.disposition, result.pullRequestNumber, result.pullRequestUrl].some(
+        (value) => value !== null,
+      )
+    ) {
+      context.addIssue({ code: "custom", message: "Failed pull request cannot be partial" });
+    }
+  });
+export type CompleteGithubPullRequest = z.infer<typeof completeGithubPullRequestSchema>;
+
 export const providerOnboardingStatusSchema = z.enum([
   "PENDING",
   "RUNNING",

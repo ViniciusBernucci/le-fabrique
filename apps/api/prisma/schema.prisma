@@ -94,6 +94,15 @@ enum GithubRepositoryVerificationStatus {
   FAILED
 }
 
+enum GithubPullRequestStatus {
+  PREPARED
+  APPROVED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -308,4 +317,33 @@ model GithubRepositoryVerification {
   @@index([status, createdAt])
   @@index([host, owner, repository, baseBranch, createdAt])
   @@map("github_repository_verifications")
+}
+
+model GithubPullRequest {
+  id                String                  @id @default(uuid()) @db.Uuid
+  version           Int                     @default(1)
+  host              String
+  owner             String
+  repository        String
+  baseBranch        String                  @map("base_branch")
+  headBranch        String                  @map("head_branch")
+  title             String
+  body              String
+  draft             Boolean                 @default(true)
+  approvalDigest    String                  @map("approval_digest")
+  status            GithubPullRequestStatus @default(PREPARED)
+  workerId          String?                 @db.Uuid @map("worker_id")
+  disposition       String?
+  pullRequestNumber Int?                    @map("pull_request_number")
+  pullRequestUrl    String?                 @map("pull_request_url")
+  message           String?
+  createdAt         DateTime                @default(now()) @map("created_at")
+  approvedAt        DateTime?               @map("approved_at")
+  startedAt         DateTime?               @map("started_at")
+  completedAt       DateTime?               @map("completed_at")
+  cancelledAt       DateTime?               @map("cancelled_at")
+
+  @@index([status, createdAt])
+  @@index([host, owner, repository, baseBranch, headBranch, createdAt])
+  @@map("github_pull_requests")
 }
