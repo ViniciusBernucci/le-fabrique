@@ -63,6 +63,7 @@
 - [planejamento/FAC-012C-politica-escrita-sandbox.md](planejamento/FAC-012C-politica-escrita-sandbox.md)
 - [planejamento/FAC-012E-configuracao-runtime-worker.md](planejamento/FAC-012E-configuracao-runtime-worker.md)
 - [planejamento/FAC-012F-rota-agente-configurada.md](planejamento/FAC-012F-rota-agente-configurada.md)
+- [planejamento/FAC-012G-workflow-rotas-por-funcao.md](planejamento/FAC-012G-workflow-rotas-por-funcao.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)

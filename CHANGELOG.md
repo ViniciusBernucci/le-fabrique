@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.60 - 2026-10-02
+FAC-012G fica READY para o workflow resolver adapters/modelos independentes por função em cada chamada, mantendo o consumer e clientes reais desligados.
+
 ## 2.59 - 2026-10-02
 FAC-012F implementa router de runtime sem cache/fallback usando a configuração atual da interface, valida adapter e Reviewer READ_ONLY; 185 testes, lint, typecheck e build passaram. Nenhum adapter executado.
 
