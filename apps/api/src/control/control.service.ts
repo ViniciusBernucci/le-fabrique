@@ -190,6 +190,14 @@ export class ControlService {
       if (!ticket.project.definition) {
         throw new ConflictException("Project definition must be configured before READY");
       }
+      const definition = projectDefinitionInputSchema.parse(
+        ticket.project.definition.configuration,
+      );
+      if (!definition.executionProfile) {
+        throw new ConflictException(
+          "Project execution profile with approved context and checks is required before READY",
+        );
+      }
       const executionSpecification = executionSpecificationSchema.parse({
         schemaVersion: 1,
         project: {
@@ -198,7 +206,7 @@ export class ControlService {
           repoUrl: ticket.project.repoUrl,
           baseRevision: baseRevision.data,
           definitionVersion: ticket.project.definition.version,
-          definition: projectDefinitionInputSchema.parse(ticket.project.definition.configuration),
+          definition,
         },
         ticket: {
           id: ticket.id,

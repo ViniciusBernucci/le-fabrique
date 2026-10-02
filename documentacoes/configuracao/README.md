@@ -1,5 +1,7 @@
 # Centro de configuracoes
 
+Os checks do perfil de execução pertencem à definição de cada projeto, não às contas/rotas de IA. O operador aprova individualmente os checks autônomos e enumera arquivos de contexto; alteração de nome/comando/argv invalida a aprovação correspondente. O Centro de Configurações continua sendo a única fonte para instalação de clientes, contas e modelos.
+
 Status: Centro e integracao GitHub ACEITOS ate FAC-011D, revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; provas reais continuam futuras.
 
 ## Funcionamento atual

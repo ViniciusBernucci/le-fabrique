@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+Perfis de projeto não selecionam contas, modelos ou providers. A cada execução, o worker deve continuar resolvendo essas escolhas pela configuração atual do Centro de Configurações e comparando-as com os adapters instalados/elegíveis; FAC-012I não liga o consumer nem altera autenticação.
+
 FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. A política não é confinamento do processo Developer CLI; ver relatório operacional e manter consumer desativado até essa lacuna ser fechada.
 
 ## Decisão obrigatória da stack - revisão 2.3

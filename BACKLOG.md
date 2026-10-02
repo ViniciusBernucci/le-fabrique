@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C/E/F/G/H implementados e aguardando aceite humano; FAC-012D está em branch isolada e também aguarda aceite. O consumer real permanece desligado. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
+FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C/E/F/G/H/I implementados e aguardando aceite humano; FAC-012D está em branch isolada e também aguarda aceite. O consumer real permanece desligado. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -35,8 +35,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - FAC-012F: AWAITING_HUMAN — router sem cache usa cada snapshot da interface para selecionar papel, instalação/modelo e adapter; sem fallback e Reviewer obrigatoriamente `READ_ONLY`. Código `950f3b62651b1e918bae09d89996af0d95e9fbee`, relatório `documentacoes/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md`. Biblioteca não conectada ao consumer nem executada.
 - FAC-012G: AWAITING_HUMAN — `DeveloperWorkflow` resolve adapter/modelo e permissão por função em cada chamada, inclusive correções; rota ausente e Reviewer com escrita falham sem executar cliente. Implementado em `e1e9828` e `4bed978`; relatório `documentacoes/operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md`. Consumer segue no probe.
 - FAC-012H: AWAITING_HUMAN — `SandboxRunner` agora pivota para rootfs mínimo e remove capabilities antes de checks; teste antes/depois prova que host `/etc`, home, `/var`, cgroup e mount escape não ficam acessíveis, sem perder workspace escopado, temporários, runtime `/usr`, rede bloqueada e quiescência. Nenhum provider ou consumer foi usado; relatório operacional FAC-012H.
-- FAC-012I: READY — adicionar perfil de execução por projeto na interface para fontes de contexto e checks aprovados, bloquear READY sem ele e compilar somente os checks aprovados do snapshot.
-- FAC-012H: READY — fechar exposição do filesystem do host no `SandboxRunner`, usando raiz isolada e provando host paths inacessíveis, escrita escopada e temporários; sem provider ou consumer.
+- FAC-012I: AWAITING_HUMAN — perfil versionado por projeto configura fontes de contexto e checks aprovados; READY exige ambos e o compilador cruza o snapshot com perfil confiável. Evidências e limites em `documentacoes/operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md`.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 - OPS-003: AWAITING_HUMAN — Aceites FAC-012A/B registrados; bind loopback e migration corretiva integrados em `e09204c5205af047d79bcd7d530a1acd1db563ca`, migration não aplicada.

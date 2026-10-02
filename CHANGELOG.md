@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.65 - 2026-10-02
+FAC-012I implementa perfil de execução versionado no projeto: contexto permitido e checks explicitamente aprovados no painel, bloqueio de READY sem perfil e compilação apenas dos checks aprovados. Testes, typecheck, lint e build passaram; worker continua sem checkout operacional e consumer segue desligado.
+
 ## 2.64 - 2026-10-02
 FAC-012I fica READY para configurar perfil de execução por projeto e aprovar checks/contexto explicitamente antes do gate READY; sem checkout ou execução real.
 

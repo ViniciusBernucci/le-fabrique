@@ -68,6 +68,7 @@
 - [planejamento/FAC-012H-isolamento-raiz-sandbox.md](planejamento/FAC-012H-isolamento-raiz-sandbox.md)
 - [planejamento/FAC-012I-perfil-execucao-projeto.md](planejamento/FAC-012I-perfil-execucao-projeto.md)
 - [operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md](operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md)
+- [operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md](operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
@@ -75,6 +76,7 @@
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
 - [controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md](controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md)
 - [controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md](controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md)
+- [controle/2026-10-02-FAC-012I-perfil-execucao-projeto.md](controle/2026-10-02-FAC-012I-perfil-execucao-projeto.md)
 - [arquitetura/TECH-LEAD-HANDOFF.md](arquitetura/TECH-LEAD-HANDOFF.md)
 
 - [arquitetura/ADR-003-stack-typescript.md](arquitetura/ADR-003-stack-typescript.md)

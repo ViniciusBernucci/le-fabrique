@@ -8,6 +8,8 @@ Projetos registram nome, URL do repositório e referência base. Tickets registr
 
 FAC-001A adiciona `ProjectDefinition`, configurada pelo painel sem hardcode de projeto ou piloto. Ela persiste descricao, stack externa, instrucoes, caminhos permitidos/proibidos e checks em `argv`, com contrato Zod e versao otimista. Definicao ausente e retornada como `null`; nenhum default sintetico finge inspecao. Novos READY exigem definicao e registram `projectDefinitionVersion`. Contas, providers, modelos e papeis continuam separados em `FactorySettings`.
 
+FAC-012I adiciona `executionProfile` opcional à definição: o operador lista fontes de contexto individuais dentro de caminhos permitidos e marca checks configurados para execução autônoma. A API exige perfil não vazio antes de promover ticket a READY e congela o perfil no snapshot. O worker compara fontes e checks resolvidos localmente com o snapshot e compila somente checks aprovados. Editar comando/argumentos revoga a aprovação no painel. Perfil vazio continua válido para rascunho, nunca para READY.
+
 Rotas atuais:
 
 - `GET /api/auth/session`

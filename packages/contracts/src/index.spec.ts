@@ -88,7 +88,36 @@ describe("shared contracts", () => {
       forbiddenPaths: ["secrets"],
       checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
     };
-    expect(projectDefinitionInputSchema.parse(definition)).toEqual(definition);
+    expect(projectDefinitionInputSchema.parse(definition)).toEqual({
+      ...definition,
+      executionProfile: null,
+    });
+    const approvedDefinition = {
+      ...definition,
+      executionProfile: {
+        contextSources: [{ path: "src/main.ts", role: "SOURCE" }],
+        approvedChecks: definition.checks,
+      },
+    };
+    expect(projectDefinitionInputSchema.parse(approvedDefinition)).toEqual(approvedDefinition);
+    expect(() =>
+      projectDefinitionInputSchema.parse({
+        ...approvedDefinition,
+        executionProfile: {
+          ...approvedDefinition.executionProfile,
+          contextSources: [{ path: "secrets/token", role: "SOURCE" }],
+        },
+      }),
+    ).toThrow();
+    expect(() =>
+      projectDefinitionInputSchema.parse({
+        ...approvedDefinition,
+        executionProfile: {
+          ...approvedDefinition.executionProfile,
+          approvedChecks: [{ ...definition.checks[0], args: ["install"] }],
+        },
+      }),
+    ).toThrow();
     expect(() =>
       projectDefinitionInputSchema.parse({ ...definition, allowedPaths: ["../outside"] }),
     ).toThrow();

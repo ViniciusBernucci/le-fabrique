@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012I exige perfil de execução versionado no projeto antes de READY. O compilador cruza contexto e checks do snapshot com a resolução confiável local. A implementação não fornece ainda checkout local, identidade de serviço validada nem integração do workflow real ao consumidor da fila; manter consumer no probe.
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.

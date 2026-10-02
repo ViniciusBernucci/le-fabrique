@@ -1,8 +1,13 @@
-import type { Project, ProjectCheck } from "@le-fabrique/contracts";
+import type { Project, ProjectCheck, ProjectExecutionProfile } from "@le-fabrique/contracts";
 import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
 import { getProjectDefinition, putProjectDefinition } from "./control-api";
-import { parseCheckArguments, parsePathLines } from "./project-definition-view-model";
+import {
+  formatContextSourceLines,
+  parseCheckArguments,
+  parseContextSourceLines,
+  parsePathLines,
+} from "./project-definition-view-model";
 
 type EditableCheck = ProjectCheck & { id: string; argsText: string };
 
@@ -19,11 +24,13 @@ export function ProjectDefinitionPanel({
   project,
   onMessage,
   onVersion,
+  onProfileReady,
 }: {
   token: string;
   project: Project | undefined;
   onMessage: (message: string) => void;
   onVersion: (version: number | null) => void;
+  onProfileReady: (ready: boolean) => void;
 }) {
   const [version, setVersion] = useState(0);
   const [summary, setSummary] = useState("");
@@ -32,9 +39,12 @@ export function ProjectDefinitionPanel({
   const [allowedPaths, setAllowedPaths] = useState("");
   const [forbiddenPaths, setForbiddenPaths] = useState("");
   const [checks, setChecks] = useState<EditableCheck[]>([emptyCheck()]);
+  const [contextSources, setContextSources] = useState("");
+  const [approvedCheckIds, setApprovedCheckIds] = useState<string[]>([]);
 
   useEffect(() => {
     onVersion(null);
+    onProfileReady(false);
     if (!project) return;
     getProjectDefinition(token, project.id)
       .then((definition) => {
@@ -44,19 +54,41 @@ export function ProjectDefinitionPanel({
         setInstructions(definition?.instructions ?? "");
         setAllowedPaths(definition?.allowedPaths.join("\n") ?? "");
         setForbiddenPaths(definition?.forbiddenPaths.join("\n") ?? "");
-        setChecks(
-          definition?.checks.map((check) => ({
-            ...check,
-            id: crypto.randomUUID(),
-            argsText: JSON.stringify(check.args),
-          })) ?? [emptyCheck()],
-        );
+        const loadedChecks = definition?.checks.map((check) => ({
+          ...check,
+          id: crypto.randomUUID(),
+          argsText: JSON.stringify(check.args),
+        })) ?? [emptyCheck()];
+        setChecks(loadedChecks);
+        const profileSources = definition?.executionProfile?.contextSources ?? [];
+        const profileChecks = definition?.executionProfile?.approvedChecks ?? [];
+        setContextSources(formatContextSourceLines(profileSources));
+        const matchingApprovedIds = loadedChecks
+          .filter((check) =>
+            profileChecks.some(
+              (approved) =>
+                approved.name === check.name &&
+                approved.command === check.command &&
+                JSON.stringify(approved.args) === JSON.stringify(check.args),
+            ),
+          )
+          .map((check) => check.id);
+        setApprovedCheckIds(matchingApprovedIds);
+        onProfileReady(profileSources.length > 0 && matchingApprovedIds.length > 0);
         onVersion(definition?.version ?? null);
       })
       .catch(() => onMessage("Falha ao carregar a definição do projeto."));
-  }, [onMessage, onVersion, project, token]);
+  }, [onMessage, onProfileReady, onVersion, project, token]);
 
   function updateCheck(index: number, patch: Partial<EditableCheck>) {
+    const current = checks[index];
+    if (
+      current &&
+      (patch.name !== undefined || patch.command !== undefined || patch.argsText !== undefined)
+    ) {
+      setApprovedCheckIds((ids) => ids.filter((id) => id !== current.id));
+      onProfileReady(false);
+    }
     setChecks((current) =>
       current.map((check, checkIndex) => (checkIndex === index ? { ...check, ...patch } : check)),
     );
@@ -66,24 +98,51 @@ export function ProjectDefinitionPanel({
     event.preventDefault();
     if (!project) return;
     try {
+      const savedChecks = checks.map(({ name, command, argsText }) => ({
+        name,
+        command,
+        args: parseCheckArguments(argsText),
+      }));
+      const approvedChecks = checks
+        .filter((check) => approvedCheckIds.includes(check.id))
+        .map(({ name, command, argsText }) => ({
+          name,
+          command,
+          args: parseCheckArguments(argsText),
+        }));
+      const parsedContextSources = parseContextSourceLines(contextSources);
+      const executionProfile: ProjectExecutionProfile | null =
+        approvedChecks.length > 0 && parsedContextSources.length > 0
+          ? { contextSources: parsedContextSources, approvedChecks }
+          : null;
       const saved = await putProjectDefinition(token, project.id, version, {
         summary,
         externalStack,
         instructions,
         allowedPaths: parsePathLines(allowedPaths),
         forbiddenPaths: parsePathLines(forbiddenPaths),
-        checks: checks.map(({ name, command, argsText }) => ({
-          name,
-          command,
-          args: parseCheckArguments(argsText),
-        })),
+        checks: savedChecks,
+        executionProfile,
       });
       setVersion(saved.version);
       onVersion(saved.version);
+      onProfileReady(
+        Boolean(
+          saved.executionProfile?.contextSources.length &&
+            saved.executionProfile.approvedChecks.length,
+        ),
+      );
       onMessage(`Definição do projeto salva na versão ${saved.version}.`);
     } catch {
       onMessage("Definição inválida ou alterada por outra sessão; revise e recarregue.");
     }
+  }
+
+  function toggleApprovedCheck(check: EditableCheck, approved: boolean) {
+    setApprovedCheckIds((ids) =>
+      approved ? [...ids, check.id] : ids.filter((id) => id !== check.id),
+    );
+    onProfileReady(false);
   }
 
   return (
@@ -144,7 +203,8 @@ export function ProjectDefinitionPanel({
           </div>
           <h3>Checks de baseline e validação</h3>
           <p className="muted">
-            Executável e argumentos são armazenados separadamente; nenhum shell é usado.
+            Executável e argumentos são armazenados separadamente; nenhum shell é usado. Alterar
+            nome, executável ou argv remove a aprovação anterior.
           </p>
           {checks.map((check, index) => (
             <div className="check-row" key={check.id}>
@@ -174,13 +234,23 @@ export function ProjectDefinitionPanel({
                   required
                 />
               </label>
+              <label className="check-approval">
+                <input
+                  type="checkbox"
+                  checked={approvedCheckIds.includes(check.id)}
+                  onChange={(event) => toggleApprovedCheck(check, event.target.checked)}
+                />
+                Aprovar este check para execução autônoma
+              </label>
               {checks.length > 1 && (
                 <button
                   className="secondary-action"
                   type="button"
-                  onClick={() =>
-                    setChecks((current) => current.filter((_, item) => item !== index))
-                  }
+                  onClick={() => {
+                    setApprovedCheckIds((ids) => ids.filter((id) => id !== check.id));
+                    onProfileReady(false);
+                    setChecks((current) => current.filter((_, item) => item !== index));
+                  }}
                 >
                   Remover
                 </button>
@@ -196,6 +266,22 @@ export function ProjectDefinitionPanel({
               Adicionar check
             </button>
           )}
+          <h3>Contexto permitido para os agentes</h3>
+          <p className="muted">
+            Informe arquivos individuais, um por linha, no formato <code>caminho | PAPEL</code>.
+            Cada caminho precisa estar permitido acima e fora dos caminhos proibidos.
+          </p>
+          <label>
+            Fontes do contexto
+            <textarea
+              value={contextSources}
+              onChange={(event) => {
+                setContextSources(event.target.value);
+                onProfileReady(false);
+              }}
+              placeholder="README.md | INSTRUCTION\nsrc/index.ts | SOURCE\ntests/app.test.ts | TEST"
+            />
+          </label>
           <button type="submit">Salvar definição</button>
         </>
       )}
