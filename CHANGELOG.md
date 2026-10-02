@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.72 - 2026-10-03
+FAC-012K implementa primitiva isolada para renovar lease com fencing token, abortar e aguardar confirmação de parada quando a autoridade é perdida; 211 testes, typecheck, lint e build passaram. Consumer, provider e checkout reais continuam desligados; aguarda revisão humana.
+
 ## 2.70 - 2026-10-03
 FAC-012K fica READY para preparar renovação de lease e cancelamento conservador no worker, sem conectar o consumer ou executar trabalho real.
 

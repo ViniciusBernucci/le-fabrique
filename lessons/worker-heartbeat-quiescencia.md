@@ -13,3 +13,9 @@ OPS-001 separa tres sinais que antes apareciam juntos no terminal:
 - resultado de job: um job sintetico antigo pode falhar por revisao-base ausente mesmo com o consumidor pronto.
 
 Retry infinito esconderia indisponibilidade, enquanto retry de 401 apenas atrasaria a descoberta de credencial incorreta. Por isso `registerWithRetry` classifica a falha, mantem o ultimo erro e permite testes sem espera real. O exemplo do repositorio comprova sucesso na terceira tentativa, esgotamento na terceira tentativa do teste reduzido e falha imediata para HTTP 401.
+
+## Lease por tentativa exige renovação e parada comprovada
+
+FAC-012K acrescenta `LeaseGuard` como primitiva independente do heartbeat do processo. A guarda agenda renovações com o fencing token da tentativa e usa a expiração retornada pela API; resposta de erro, expiração ou renovação que não termina a tempo aborta o `AbortSignal` da operação e chama `stopWriter`. O resultado só marca `writerQuiescent` quando esse callback retorna `true`. Mesmo então, a Promise da operação precisa terminar antes de `execute` rejeitar com `LeaseAuthorityLostError`; timeout não é atalho para liberar o writer.
+
+Exemplo de composição futura (não ligado ao consumer): `new LeaseGuard({ fencingToken: claim.fencingToken, leaseDurationMs: 90_000, initialLeaseExpiresAt: claim.leaseExpiresAt, renew: async (token) => control.renew(claim.attemptId, { fencingToken: token, leaseDurationMs: 90_000 }), stopWriter: () => runtime.cancelAndConfirmTree(workflowId) }).execute((signal) => workflow.execute(request, signal))`. O contrato de integração precisa demonstrar que o cancelamento fecha a árvore sandbox/CLI e que `workflow.execute` observa o sinal; testes sintéticos da primitiva não comprovam essas duas capacidades.

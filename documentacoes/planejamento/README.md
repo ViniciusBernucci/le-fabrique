@@ -19,7 +19,7 @@ FAC-012I está implementado e aguarda aceite humano: contexto e checks explicita
 
 FAC-012J implementado em biblioteca isolada; aguarda aceite humano. Prepara checkout em root privado a partir do SHA do evento e usa credencial GitHub oficial efêmera após provar keyring, sem expor token. Não foi integrado ao consumer nem exercitado com rede/credenciais reais.
 
-FAC-012K está READY para implementar uma primitiva isolada de lease viva e cancelamento conservador; consumer segue desligado, sem provider, checkout ou fila real.
+FAC-012K implementa uma primitiva isolada de lease viva e cancelamento conservador; aguarda aceite humano e segue desligada do consumer, sem provider, checkout ou fila real.
 
 OPS-004 foi executado localmente: FAC-012D e FAC-012E–J foram integrados em `developer`, os checks combinados passaram e as worktrees D/OPS-004 foram removidas após prova de ancestry e limpeza. Branch refs foram preservadas. Aguarda revisão humana; não implica aceite dos tickets nem push/deploy.
 

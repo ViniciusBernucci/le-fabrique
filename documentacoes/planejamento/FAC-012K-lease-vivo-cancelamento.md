@@ -1,5 +1,5 @@
 # FAC-012K - Lease vivo e cancelamento conservador
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 Fornecer ao worker uma primitiva reutilizável para renovar o lease de uma tentativa durante uma operação assíncrona e solicitar parada do writer imediatamente quando a renovação falhar.
@@ -32,4 +32,4 @@ FAC-008 (lease/fencing/checkpoint) e OPS-005 como preparação host futura; nenh
 Código/testes do worker; relatório operacional datado; README operacional, índice, changelog, backlog e lesson `worker-heartbeat-quiescencia.md` atualizados.
 
 ## Evidências e aceite
-READY em 2026-10-03. Implementação e checks pendentes. Aceite humano da revisão exata obrigatório antes de integrar ou ligar ao consumer.
+READY em 2026-10-03; código implementado na revisão `8f254e8`. Evidências e limitações em `documentacoes/operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md`. Aceite humano da revisão documental exata obrigatório antes de integrar ou ligar ao consumer.
