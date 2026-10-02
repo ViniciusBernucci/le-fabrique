@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.54 - 2026-10-02
+FAC-012D fica READY para restringir a escrita do CodexAdapter aos caminhos `allowedPaths` congelados no projeto, sem ativar consumer ou chamar provider.
+
 ## 2.53 - 2026-10-02
 FAC-012C implementa política read-only por padrão e caminhos explícitos para o SandboxRunner. Lint, typecheck, 172 testes e build passaram; consumer permanece desligado porque o CLI Developer ainda não está confinado.
 

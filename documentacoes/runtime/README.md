@@ -1,6 +1,6 @@
 # Agent Runtime Gateway e Provider Manager
 
-FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. A política não é confinamento do processo Developer CLI; ver relatório operacional e manter consumer desativado até essa lacuna ser fechada.
+FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. CodexAdapter também aplica sandbox nativo customizado com rede desligada; sua permissão de escrita ainda é toda a raiz (`.`), sem respeitar `allowedPaths`. FAC-012D fecha essa lacuna no perfil do Codex. O isolamento de credenciais sob a identidade real de worker permanece sem verificação operacional.
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
