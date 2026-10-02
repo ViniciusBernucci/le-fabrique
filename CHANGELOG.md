@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.50 - 2026-10-02
+OPS-003 fica READY para registrar os aceites explícitos FAC-012A/B e reconciliar bind local da porta de origem e migration Prisma corretiva, sem aplicar migration ou fazer deploy.
+
 ## 2.49 - 2026-10-02
 FAC-012B implementa compilador puro de snapshot para DeveloperWorkflowRequest, com vínculo exato de checkout, allowlist argv, fontes dentro dos caminhos permitidos e limites confiáveis injetados. Lint, typecheck, 169 testes e build passaram; consumer real permanece desligado e escrita por caminho ainda requer enforcement no sandbox.
 

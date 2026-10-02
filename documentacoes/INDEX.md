@@ -57,6 +57,7 @@
 - [planejamento/FAC-012A-especificacao-execucao-imutavel.md](planejamento/FAC-012A-especificacao-execucao-imutavel.md)
 - [planejamento/FAC-012B-compilador-workflow-configuravel.md](planejamento/FAC-012B-compilador-workflow-configuravel.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
+- [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)
