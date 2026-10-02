@@ -81,3 +81,5 @@ OPS-001 faz o launcher raiz carregar `.env` e limita o registro inicial a 30 ten
 FAC-012E fornece ao worker somente leitura interna da configuração da interface, com autenticação `WORKER_API_TOKEN`, schema estrito, versão e defaults não persistidos inativos. Testes usam Prisma/fetch simulados; nenhum banco ou serviço real foi consultado e o consumer continua no probe.
 
 FAC-012F resolve a rota configurada em cada chamada e valida adapter/permissões sem executar o cliente. Testes usam snapshots e adapters sintéticos; o loop BullMQ permanece no probe.
+
+FAC-012G conecta o workflow à resolução independente de Developer e Reviewer por chamada. Testes usam adapters/routing sintéticos, inclusive providers e modelos diferentes; a fila segue no probe e nenhum cliente real foi iniciado.

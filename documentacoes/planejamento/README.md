@@ -10,6 +10,6 @@ FAC-012E implementa leitura interna versionada e sem segredos das contas/modelos
 
 FAC-012F implementado no commit `950f3b62651b1e918bae09d89996af0d95e9fbee`; aguarda aceite humano. Resolve Developer/Reviewer da configuração atual sem cache/fallback, mas ainda não está conectado ao consumer nem executa adapters.
 
-FAC-012G está READY para ligar o `DeveloperWorkflow` às rotas Developer/Reviewer configuradas independentemente, sem integrar a fila nem executar clientes.
+FAC-012G implementado após a base `03d7a9b` e aguarda aceite humano. O workflow consulta rotas Developer/Reviewer independentemente, sem integrar a fila nem executar clientes.
 
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

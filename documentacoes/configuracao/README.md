@@ -47,6 +47,8 @@ O painel nao recebe senha, token, cookie ou cache de autenticacao. Claude e Anti
 
 FAC-010C consome a escolha de conta, modelo e permissao feita em `Funcionarios digitais`. A rota so existe quando a atribuicao esta habilitada, a instalacao esta habilitada e `AVAILABLE`, o modelo pertence ao catalogo e o provider possui adapter. Claude Console/API, autenticacao ambigua e Antigravity sem adapter falham fechado; nenhuma troca silenciosa substitui a escolha configurada.
 
+FAC-012G conecta essa configuração ao workflow: Developer e Reviewer consultam suas funções separadamente em cada chamada, usando a conta/modelo selecionados na interface. O router não troca para outra conta se a opção estiver indisponível; a execução real ainda não está ligada à fila.
+
 ## Verificacao GitHub CLI
 
 FAC-011A adiciona `Verificar GitHub CLI`. Pedido e outbox sao atomicos; a API nao executa cliente. O worker usa o binario fixo `gh`, remove variaveis de token e consulta somente `--version` e `auth status --hostname <host> --json hosts`. O painel recebe estado, versao e mensagem controlada, nunca JSON bruto, login, scopes ou origem/token.

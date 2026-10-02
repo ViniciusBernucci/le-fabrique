@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.61 - 2026-10-02
+FAC-012G conecta DeveloperWorkflow às rotas atuais Developer/Reviewer, selecionando adapters/modelos por função em toda chamada e falhando antes do adapter quando a rota falta; consumer permanece no probe.
+
 ## 2.60 - 2026-10-02
 FAC-012G fica READY para o workflow resolver adapters/modelos independentes por função em cada chamada, mantendo o consumer e clientes reais desligados.
 

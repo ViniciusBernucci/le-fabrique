@@ -16,6 +16,8 @@ No FAC-012E, o worker recebe um DTO dedicado (`workerConfigurationSnapshotSchema
 
 No FAC-012F, a decisão usa uma nova leitura para cada rota e devolve junto a versão/observação de settings; assim não há cache de modelo nem troca silenciosa quando a configuração muda. O router confere também que o adapter injetado tem o mesmo `name` do provider roteado. `REVIEWER` com `WORKSPACE_WRITE` é inválido em vez de ser corrigido silenciosamente.
 
+No FAC-012G, não basta validar a rota em uma camada e depois deixar o workflow usar um adapter/modelo capturados antes: `DeveloperWorkflow` resolve novamente por função antes de cada invocação, inclusive correções, e contabiliza o provider retornado pelo router no `RuntimeGuard`. A rota Reviewer continua read-only; a falha não inicia o adapter. O enum de resultado recebe `RUNTIME_ROUTE_UNAVAILABLE` para representar esse bloqueio sem sobrecarregar erro de execução ou veredito inválido.
+
 ## Quando repetir
 
 Todo novo endpoint, evento de outbox, payload de fila ou checkpoint precisa de schema versionado na fronteira. Validação de runtime deve acontecer antes de persistir ou executar o dado. Interfaces internas sem entrada externa podem permanecer apenas em `packages/runtime`.
