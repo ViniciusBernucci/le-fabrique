@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.63 - 2026-10-02
+FAC-012H implementa raiz de sandbox com `pivot_root`, runtime read-only, workspace isolado e remoção de capabilities. A leitura sintética de `/etc/hostname` que antes funcionava agora é negada; a suíte confirma bloqueio de host paths e mount escape.
+
 ## 2.62 - 2026-10-02
 FAC-012H fica READY após teste sintético mostrar que `SandboxRunner` ainda permite ler `/etc/hostname` do host; execução de checks permanece bloqueada até troca para uma raiz isolada.
 

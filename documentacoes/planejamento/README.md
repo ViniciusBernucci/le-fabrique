@@ -12,6 +12,6 @@ FAC-012F implementado no commit `950f3b62651b1e918bae09d89996af0d95e9fbee`; agua
 
 FAC-012G implementado após a base `03d7a9b` e aguarda aceite humano. O workflow consulta rotas Developer/Reviewer independentemente, sem integrar a fila nem executar clientes.
 
-FAC-012H está READY para ocultar a raiz do host dos comandos de check: prova sintética demonstrou que o sandbox atual ainda lê `/etc/hostname` apesar da árvore do projeto estar read-only.
+FAC-012H implementado em branch isolada; aguarda revisão/aceite humano. O sandbox agora troca para uma raiz mínima e testes sintéticos bloqueiam leitura do host e tentativa de remontar o workspace.
 
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

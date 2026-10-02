@@ -1,6 +1,6 @@
 # Infraestrutura atual
 
-FAC-012C endurece o `SandboxRunner`: workspace read-only por padrão, com caminhos graváveis explícitos validados antes da execução. Consulte o relatório operacional FAC-012C; essa alteração não confina o processo do CLI Developer e não autoriza ativar o consumer real.
+FAC-012C endurece o `SandboxRunner`: workspace read-only por padrão, com caminhos graváveis explícitos validados antes da execução. FAC-012H faz pivot para uma raiz mínima antes de iniciar checks: `/usr` fica read-only, workspace é montado em `/mnt`, e raiz antiga, home, `/run`, `/var` e `/sys` do host não ficam acessíveis. O processo roda sem capabilities e com `no-new-privileges`. Isso não confina o Developer CLI (FAC-012D separado) nem autoriza ativar o consumer real.
 
 Status: bootstrap do FAC-000 e sandbox/snapshots do FAC-007 aceitos. Implantação em VPS NÃO REALIZADA.
 
@@ -45,4 +45,4 @@ OPS-003 versiona uma migration que remove defaults PostgreSQL de UUID gerados pe
 
 ## Sandbox atual
 
-FAC-007 implementa worktree detached, unidade systemd de usuario com cgroup, namespaces Linux sem root e snapshot local com patch binario/untracked verificados por SHA-256. O comando enxerga o workspace como `/mnt`; home, `/run`, temporarios gravaveis e rede externa sao substituidos. O supervisor confiavel continua fora do namespace para operar Git e artefatos. Integracao ao worker e persistencia pertencem ao FAC-008.
+FAC-007 implementa worktree detached, unidade systemd de usuario com cgroup e snapshot local com patch binario/untracked verificados por SHA-256. FAC-012H complementa os namespaces com raiz isolada: apenas runtime `/usr` somente leitura, workspace `/mnt`, `/proc` da execução, devices mínimos e temporários isolados são montados; raiz antiga é desanexada antes do processo não confiável iniciar. O supervisor confiavel continua fora do namespace para operar Git e artefatos. Integracao ao worker e persistencia pertencem ao FAC-008.
