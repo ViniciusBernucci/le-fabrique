@@ -1,9 +1,10 @@
 import { spawn } from "node:child_process";
-import { lstat, realpath, stat } from "node:fs/promises";
-import { isAbsolute, relative, resolve } from "node:path";
+import { realpath, stat } from "node:fs/promises";
+import { isAbsolute, resolve } from "node:path";
 import type { SandboxCommandRequest, SandboxCommandResult } from "@le-fabrique/contracts";
 import { sandboxCommandRequestSchema, sandboxCommandResultSchema } from "@le-fabrique/contracts";
 import { runProcess } from "./process-utils";
+import { validateWorkspaceWritablePaths } from "./workspace-write-policy";
 
 const allowedEnvironmentNames = new Set(["CI", "LANG", "LC_ALL", "NODE_ENV", "TZ"]);
 
@@ -45,7 +46,7 @@ export class SandboxRunner {
     const workspace = await realpath(request.workspacePath);
     if (!(await stat(workspace)).isDirectory())
       throw new Error("Sandbox workspace must be a directory");
-    await validateWritablePaths(workspace, request.writablePaths);
+    await validateWorkspaceWritablePaths(workspace, request.writablePaths);
     const startedAt = this.now().toISOString();
     const unitName = `le-fabrique-${request.executionId.replaceAll("-", "")}.service`;
     const environment = Buffer.from(JSON.stringify(request.environment), "utf8").toString(
@@ -179,31 +180,6 @@ export class SandboxRunner {
       environment: controlEnvironment(),
     }).catch(() => null);
     return result?.exitCode !== 0 || result.stdout.toString("utf8").trim() !== "active";
-  }
-}
-
-async function validateWritablePaths(
-  workspace: string,
-  writablePaths: readonly string[],
-): Promise<void> {
-  for (const writablePath of writablePaths) {
-    const segments = writablePath.split("/");
-    const candidate = resolve(workspace, ...segments);
-    const relativePath = relative(workspace, candidate);
-    if (!relativePath || relativePath.startsWith("..") || isAbsolute(relativePath)) {
-      throw new Error("Sandbox writable path must remain inside the workspace");
-    }
-    let current = workspace;
-    for (const [index, segment] of segments.entries()) {
-      current = resolve(current, segment);
-      const details = await lstat(current).catch(() => null);
-      if (!details) throw new Error(`Sandbox writable path does not exist: ${writablePath}`);
-      if (details.isSymbolicLink())
-        throw new Error(`Sandbox writable path contains a symbolic link: ${writablePath}`);
-      if (index < segments.length - 1 && !details.isDirectory()) {
-        throw new Error(`Sandbox writable path parent is not a directory: ${writablePath}`);
-      }
-    }
   }
 }
 

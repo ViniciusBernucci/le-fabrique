@@ -51,7 +51,12 @@ process.stdin.on("end", () => {
   const profilePresent = args.some(
     (value) => value.includes('":root"="deny"') && value.includes("network={ enabled=false }"),
   );
-  const access = args.some((value) => value.includes('"."="write"')) ? "write" : "read";
+  const permissionsArgument =
+    args.find((value) => value.startsWith("permissions.lefabrique=")) || "";
+  const writablePaths = [...permissionsArgument.matchAll(/"([^"]+)"="write"/g)]
+    .map((match) => match[1])
+    .filter((path) => path !== ".");
+  const access = writablePaths.length > 0 ? writablePaths.join(",") : "read";
   console.log(JSON.stringify({ type: "thread.started", thread_id: "synthetic-thread" }));
   console.log(
     JSON.stringify({

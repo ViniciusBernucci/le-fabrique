@@ -4,6 +4,7 @@ import {
   type DeveloperWorkflowRequest,
   developerWorkflowRequestSchema,
   type ExecutionSpecification,
+  executionSpecificationSchema,
   runtimeGuardPolicySchema,
   runtimeLimitsSchema,
   sandboxLimitsSchema,
@@ -60,11 +61,12 @@ export function compileWorkflowRequest(
   specification: ExecutionSpecification,
   untrustedProfile: TrustedWorkflowProfile,
 ): DeveloperWorkflowRequest {
+  const executionSpecification = executionSpecificationSchema.parse(specification);
   const profile = trustedWorkflowProfileSchema.parse(untrustedProfile);
   if (
-    profile.projectId !== specification.project.id ||
-    profile.repositoryUrl !== specification.project.repoUrl ||
-    profile.baseRevision !== specification.project.baseRevision
+    profile.projectId !== executionSpecification.project.id ||
+    profile.repositoryUrl !== executionSpecification.project.repoUrl ||
+    profile.baseRevision !== executionSpecification.project.baseRevision
   ) {
     throw new Error("Trusted workflow profile does not match execution specification");
   }
@@ -74,10 +76,10 @@ export function compileWorkflowRequest(
       !source.path.startsWith("/") &&
       !source.path.includes("\\") &&
       !source.path.split("/").some((segment) => segment === ".." || segment === ".");
-    const allowed = specification.project.definition.allowedPaths.some((path) =>
+    const allowed = executionSpecification.project.definition.allowedPaths.some((path) =>
       pathIsWithin(source.path, path),
     );
-    const forbidden = specification.project.definition.forbiddenPaths.some((path) =>
+    const forbidden = executionSpecification.project.definition.forbiddenPaths.some((path) =>
       pathsOverlap(source.path, path),
     );
     if (!normalized || !allowed || forbidden) {
@@ -99,24 +101,25 @@ export function compileWorkflowRequest(
   });
 
   const objective = [
-    specification.ticket.objective,
-    `Project summary: ${specification.project.definition.summary}`,
-    `External stack: ${specification.project.definition.externalStack}`,
-    `Project instructions: ${specification.project.definition.instructions}`,
-    `Allowed paths: ${specification.project.definition.allowedPaths.join(", ")}`,
-    `Forbidden paths: ${specification.project.definition.forbiddenPaths.join(", ") || "none"}`,
+    executionSpecification.ticket.objective,
+    `Project summary: ${executionSpecification.project.definition.summary}`,
+    `External stack: ${executionSpecification.project.definition.externalStack}`,
+    `Project instructions: ${executionSpecification.project.definition.instructions}`,
+    `Allowed paths: ${executionSpecification.project.definition.allowedPaths.join(", ")}`,
+    `Forbidden paths: ${executionSpecification.project.definition.forbiddenPaths.join(", ") || "none"}`,
   ].join("\n\n");
 
   return developerWorkflowRequestSchema.parse({
     schemaVersion: 1,
     workflowId,
     repositoryPath: profile.repositoryPath,
-    baseRevision: specification.project.baseRevision,
+    baseRevision: executionSpecification.project.baseRevision,
     objective,
-    acceptanceCriteria: specification.ticket.acceptanceCriteria,
+    acceptanceCriteria: executionSpecification.ticket.acceptanceCriteria,
     contextSources: profile.contextSources,
     contextLimits: profile.contextLimits,
     checks,
+    writablePaths: executionSpecification.project.definition.allowedPaths,
     guardPolicy: profile.guardPolicy,
     runtimeLimits: profile.runtimeLimits,
     sandboxLimits: profile.sandboxLimits,

@@ -100,12 +100,29 @@ function pathsOverlap(left: string, right: string): boolean {
   return left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
 }
 
+function isWritableProjectPath(path: string): boolean {
+  return !path.split("/").some((segment) => segment === ".git" || segment === ".codex");
+}
+
+export const projectWritablePathsSchema = z
+  .array(projectRelativePathSchema.refine(isWritableProjectPath))
+  .max(100)
+  .default([])
+  .refine((paths) => new Set(paths).size === paths.length, "Writable paths must be unique")
+  .refine(
+    (paths) =>
+      paths.every((path, index) =>
+        paths.slice(index + 1).every((other) => !pathsOverlap(path, other)),
+      ),
+    "Writable paths must not overlap",
+  );
+
 export const projectDefinitionInputSchema = z
   .object({
     summary: z.string().trim().min(1).max(4000),
     externalStack: z.string().trim().min(1).max(2000),
     instructions: z.string().trim().min(1).max(8000),
-    allowedPaths: z.array(projectRelativePathSchema).min(1).max(100),
+    allowedPaths: z.array(projectRelativePathSchema.refine(isWritableProjectPath)).min(1).max(100),
     forbiddenPaths: z.array(projectRelativePathSchema).max(100),
     checks: z.array(projectCheckSchema).min(1).max(20),
   })
@@ -232,6 +249,7 @@ export const runtimeExecutionRequestSchema = z.object({
   workspacePath: z.string().trim().min(1).max(4096),
   prompt: z.string().trim().min(1).max(200_000),
   permissionMode: runtimePermissionModeSchema,
+  writablePaths: projectWritablePathsSchema,
   modelRequested: z.string().trim().min(1).max(120).nullable().default(null),
   limits: runtimeLimitsSchema,
 });
@@ -1277,22 +1295,7 @@ export const sandboxCommandRequestSchema = z.object({
   command: z.string().trim().min(1).max(4096),
   args: z.array(z.string().max(16_384)).max(200),
   environment: z.record(z.string().regex(/^[A-Z_][A-Z0-9_]*$/), z.string().max(16_384)).default({}),
-  writablePaths: z
-    .array(projectRelativePathSchema.refine((path) => !path.split("/").includes(".git")))
-    .max(100)
-    .default([])
-    .refine((paths) => new Set(paths).size === paths.length, "Writable paths must be unique")
-    .refine(
-      (paths) =>
-        paths.every((path, index) =>
-          paths.slice(index + 1).every((other) => {
-            const overlaps = (left: string, right: string) =>
-              left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
-            return !overlaps(path, other);
-          }),
-        ),
-      "Writable paths must not overlap",
-    ),
+  writablePaths: projectWritablePathsSchema,
   limits: sandboxLimitsSchema,
 });
 export type SandboxCommandRequest = z.infer<typeof sandboxCommandRequestSchema>;
@@ -1517,6 +1520,7 @@ export const developerWorkflowRequestSchema = z.object({
   contextSources: z.array(contextSourceRequestSchema).min(1).max(500),
   contextLimits: contextLimitsSchema,
   checks: z.array(workflowCheckCommandSchema).min(1).max(20),
+  writablePaths: projectWritablePathsSchema,
   guardPolicy: runtimeGuardPolicySchema,
   runtimeLimits: runtimeLimitsSchema,
   sandboxLimits: sandboxLimitsSchema,

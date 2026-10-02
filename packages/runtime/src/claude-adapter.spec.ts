@@ -18,6 +18,7 @@ function request(
     workspacePath: workspace,
     prompt,
     permissionMode: "READ_ONLY",
+    writablePaths: [],
     modelRequested: null,
     limits: { timeoutMs: 2_000, maxLogBytes: 16_384 },
     ...overrides,

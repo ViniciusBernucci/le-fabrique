@@ -24,6 +24,7 @@ function request(maxCorrectionRounds = 2, maxAttempts = 6): DeveloperWorkflowReq
     contextSources: [{ path: "README.md", role: "INSTRUCTION" }],
     contextLimits: { maxFiles: 10, maxFileBytes: 10_000, maxTotalBytes: 20_000 },
     checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"], environment: {} }],
+    writablePaths: ["src"],
     guardPolicy: {
       schemaVersion: 1,
       maxAttempts,
@@ -191,8 +192,12 @@ describe("DeveloperWorkflow", () => {
     ]);
     expect(deps.adapter.execute.mock.calls[0]?.[0]).toMatchObject({
       permissionMode: "WORKSPACE_WRITE",
+      writablePaths: ["src"],
     });
-    expect(deps.adapter.execute.mock.calls[1]?.[0]).toMatchObject({ permissionMode: "READ_ONLY" });
+    expect(deps.adapter.execute.mock.calls[1]?.[0]).toMatchObject({
+      permissionMode: "READ_ONLY",
+      writablePaths: [],
+    });
   });
 
   it("runs one bounded correction after a new regression", async () => {
