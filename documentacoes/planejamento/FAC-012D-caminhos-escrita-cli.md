@@ -1,6 +1,6 @@
 # FAC-012D — Restringir escrita do CLI aos caminhos do projeto
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -9,7 +9,7 @@ Levar a lista `allowedPaths` congelada no snapshot do projeto até o perfil nati
 ## Critérios de aceite
 
 1. Contratos de workflow/runtime carregam caminhos graváveis relativos, vazios por padrão, únicos, não sobrepostos e sem segmentos `.git`/`.codex`.
-2. `compileWorkflowRequest` obtém os caminhos exclusivamente de `executionSpecification.project.definition.allowedPaths` e os valida também contra `forbiddenPaths`.
+2. `compileWorkflowRequest` valida o snapshot imutável em runtime, obtém caminhos exclusivamente de `executionSpecification.project.definition.allowedPaths` e rejeita definições inválidas/sobrepostas a `forbiddenPaths`.
 3. Developer recebe a allowlist; Reviewer e `READ_ONLY` não recebem escrita mesmo que o request tente incluí-la.
 4. CodexAdapter gera um único perfil `permissions.lefabrique`: raiz do workspace read-only, somente caminhos autorizados graváveis, `.git`/`.codex` negados, rede desligada. Não combinar `default_permissions` com `--sandbox`/`sandbox_mode`.
 5. Testes de contratos, compilador, argumentos/perfil do adapter e workflow demonstram os caminhos propagados e a falha fechada do default vazio; nenhum provider real é chamado.
@@ -27,3 +27,9 @@ FAC-012C endureceu os comandos do `SandboxRunner`. Separadamente, `CodexAdapter`
 ## Fora de escopo
 
 Ativação do consumer BullMQ, roteamento/configuração de provider no READY, checkout/clonagem, preflight de cobrança/login, suporte a Claude e prova com modelo real. A decisão de piloto continua manual.
+
+## Implementação e evidência
+
+Implementado em `packages/contracts`, `packages/runtime` e `apps/worker`. O perfil Codex mantém leitura da raiz do workspace, libera escrita somente em paths permitidos existentes e sem symlinks e nega `.git`/`.codex`; rede permanece desligada. O Reviewer recebe `READ_ONLY` e lista vazia. Paths inválidos falham antes de iniciar o CLI. O compilador agora faz parse runtime do snapshot completo e rejeita sobreposição permitido/proibido.
+
+Ver relatório `documentacoes/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md`. Lint, typecheck, 175 testes, build e `git diff --check` passaram. Evidência é sintética/local: não foi feita inferência real, teste sob usuário do serviço, integração de Claude nem ativação do consumer. Aguarda revisão/aceite humano; não fazer merge/deploy até aceite aplicável.
