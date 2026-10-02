@@ -12,10 +12,12 @@ O pacote disponibiliza fonte ESM ao Vite para permitir tree-shaking e compila Co
 
 No FAC-011, objetos `.strict()` fazem parte da fronteira de seguranca: um campo `token` enviado junto a uma instalacao e rejeitado, em vez de ser silenciosamente persistido. A validacao cruzada tambem comprova que o modelo pertence ao catalogo da conta habilitada, modelos/funcoes nao se repetem e todas as funcoes aparecem. O servico aplica ainda uma regra contextual que o schema isolado nao conhece: `AVAILABLE` e `CONNECTED` nao podem ser promovidos pelo update administrativo, pois exigem evidencia do worker.
 
+No FAC-012E, o worker recebe um DTO dedicado (`workerConfigurationSnapshotSchema`) em vez do registro Prisma. O endpoint interno retorna `{version, observedAt, configuration}`; versão `0` deixa explícito que defaults inativos ainda não foram persistidos. O GET usa `findUnique`, sem criar estado, e `WorkerAuthGuard`; segredos adicionais falham no parse estrito.
+
 ## Quando repetir
 
 Todo novo endpoint, evento de outbox, payload de fila ou checkpoint precisa de schema versionado na fronteira. Validação de runtime deve acontecer antes de persistir ou executar o dado. Interfaces internas sem entrada externa podem permanecer apenas em `packages/runtime`.
 
 ## Evidência
 
-Os testes de `packages/contracts`, da API e do worker exercitam payloads válidos e rejeitam entradas inválidas. A entrega correspondente está em `documentacoes/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md`.
+Os testes de `packages/contracts`, da API e do worker exercitam payloads válidos e rejeitam entradas inválidas. Ver também `documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md` para o snapshot interno do worker; a fundação original está em `documentacoes/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md`.

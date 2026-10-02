@@ -1,6 +1,6 @@
 # FAC-012E — Leitura interna da configuração de runtime pelo worker
 
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 
@@ -27,3 +27,7 @@ A API administrativa existente continua autenticada por `ADMIN_API_TOKEN`; o nov
 ## Fora de escopo
 
 Roteamento de job, checkout/clonagem, execução de workflows, início de provider, habilitar BullMQ, revisar frescor de evidência `AVAILABLE`, GitHub write/PR, mudanças UI ou migration. A decisão do piloto continua manual.
+
+## Implementação e evidências
+
+Implementado no código `4aca1e10085f047712766f51ca7e4e749508a7a9`; relatório operacional `documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md`. Endpoint e client foram cobertos por mocks, testes de schema/auth; lint, typecheck, 178 testes, build e `git diff --check` passaram. Não houve acesso ao banco/fila real, mudança de configuração, consumer, provider ou migration. Aguarda revisão/aceite humano.

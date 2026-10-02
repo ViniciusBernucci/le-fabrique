@@ -12,6 +12,8 @@ O painel administrativo possui as areas `Operacao` e `Configuracoes`. O Centro d
 
 A API autenticada expoe `GET /api/settings` e `PUT /api/settings`. A configuracao e um singleton PostgreSQL versionado; a atualizacao exige `expectedVersion` e rejeita gravacao obsoleta. Os contratos Zod estritos validam relacoes: IDs, modelos e funcoes unicos, modelo pertencente a uma instalacao habilitada, conta/modelo selecionados juntos e owner/repository do GitHub preenchidos juntos. Estados observados de provider e GitHub nao podem ser alterados pelo update administrativo: pertencem a evidencia futura do worker.
 
+FAC-012E adiciona `GET /api/internal/worker-settings`, protegido por `WORKER_API_TOKEN`, que retorna apenas `version`, `observedAt` e a configuração validada. Não transporta credenciais, e versão `0` com defaults inativos representa a ausência de linha persistida sem fazer `upsert`. O worker valida a mesma resposta via `workerConfigurationSnapshotSchema`; esse bridge ainda não conecta o consumer nem seleciona/executa provider.
+
 ## Seguranca e limites
 
 Credenciais nao fazem parte do schema, do DTO, da tabela ou da interface. Fluxos de login suportados sao executados pelo worker confiavel usando o cliente oficial. O browser recebe somente desafios efemeros permitidos, metadados e estados sanitizados. Estado `AVAILABLE` nao pode ser inferido pelo cadastro: os defaults ficam desabilitados, `AUTH_REQUIRED` e sem modelos ate preflight real.

@@ -17,11 +17,14 @@ Rotas atuais:
 - `POST|GET /api/projects/{projectId}/tickets`
 - `POST /api/tickets/{ticketId}/ready`
 - `GET|PUT /api/settings`
+- `GET /api/internal/worker-settings` (somente `WORKER_API_TOKEN`)
 - `POST|GET /api/settings/github/verifications`
 - `POST|GET /api/settings/github/onboarding`
 - `GET /api/settings/github/onboarding/{sessionId}/challenge`
 
 FAC-011 adiciona uma configuracao administrativa singleton no PostgreSQL. O update exige `expectedVersion` e valida de forma atomica instalacoes de clientes oficiais, catalogos de modelos, atribuicoes por funcao, metadados GitHub e protecoes financeiras. Objetos sao estritos: credenciais, tokens e campos desconhecidos sao rejeitados. Os defaults nao afirmam elegibilidade — contas ficam desabilitadas, `AUTH_REQUIRED` e sem modelos ate preflight do worker. O update administrativo tambem nao pode promover estado de provider ou GitHub; essas observacoes ficam reservadas a evidencia do worker.
+
+FAC-012E expõe snapshot da configuração somente ao worker autenticado. A resposta usa contrato Zod estrito, inclui versão e instante de observação, lê sem escrita e cai em defaults inativos/version 0 se a linha ainda não existir. O endpoint não expõe o registro Prisma nem inclui campos de credencial.
 
 FAC-011A permite pedir/listar verificacoes GitHub. A criacao grava `GithubVerification` e outbox na mesma transacao; start/complete ficam em rotas `/api/internal/github-verifications/{id}/...` protegidas por `WORKER_API_TOKEN`. Somente a conclusao valida do worker altera o estado observado e incrementa a versao da configuracao. Credenciais e output bruto nao pertencem a esses contratos.
 

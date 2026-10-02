@@ -30,6 +30,8 @@ FAC-012A faz o job carregar `executionSpecification`, copia estrita e autocontid
 
 FAC-012B adiciona `compileWorkflowRequest`: perfil validado e injetado pelo worker precisa casar projeto/URL/SHA; comandos são comparados por nome, executável e argv exatos; fontes de contexto respeitam caminhos permitidos/proibidos. Limites e modelo nullable também vêm do perfil, sem hardcode. Esta biblioteca pura não está conectada à fila. Caminhos de escrita ainda não são impostos pelo sandbox, então execução real permanece bloqueada.
 
+FAC-012E adiciona `ControlClient.getWorkerConfiguration()` para buscar `GET /internal/worker-settings`, conferir versão/observedAt e validar `FactoryConfiguration` no contrato compartilhado. O endpoint requer token do worker e retorna defaults inativos sem persistir se ainda não houver settings. Ainda não existe conexão entre esse método, resolução de rota e consumer de execução.
+
 O preflight FAC-010 observou Claude Code deslogado e Antigravity incapaz de listar modelos sem login. Claude e candidato preferencial somente depois de login Claude App por assinatura e confirmacao de extras desligados; Console/API nao e elegivel. Ate la, roteamento e handoff permanecem planejados.
 
 FAC-010C implementa `ClaudeAdapter`, rota por funcionario e `ProviderHandoff` como bibliotecas testadas. O handoff recebe apenas evidencia terminal minima, objetivo/aceite e snapshot; exige parada confirmada, snapshot posterior ao processo e mesma base, autoriza a troca no RuntimeGuard e restaura em nova worktree. O consumidor real permanece no probe ate existir perfil allowlisted de repositorio/comandos e provider autenticado.

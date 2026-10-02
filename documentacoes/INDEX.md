@@ -18,6 +18,7 @@
 - [operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md](operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md)
 - [operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md](operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md)
 - [operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md](operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md)
+- [operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md](operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md)
 - [operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md](operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md)
 - [configuracao/README.md](configuracao/README.md)
 - [configuracao/2026-10-01-FAC-011-centro-configuracoes.md](configuracao/2026-10-01-FAC-011-centro-configuracoes.md)

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.57 - 2026-10-02
+FAC-012E implementa endpoint interno de leitura versionada da configuração validada para o worker, sem credenciais e sem persistir defaults; 178 testes, lint, typecheck e build passaram. Consumer/provider permanecem desligados.
+
 ## 2.56 - 2026-10-02
 FAC-012E fica READY para disponibilizar ao worker leitura interna da configuração de providers/modelos da interface, sem segredos, mudança de DB ou execução.
 
