@@ -1,6 +1,6 @@
 # FAC-011D — Criacao de pull request sob gate humano
 
-Status: AWAITING_HUMAN
+Status: DONE
 
 ## Objetivo
 
@@ -70,3 +70,7 @@ FAC-011D cria ou reconcilia somente o PR aprovado. Tornar draft pronto, revisar,
 - Codigo verificado: `29c4931f74eedb134150fbb12add2d520d68022d`.
 - Relatorio: `documentacoes/configuracao/2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md`.
 - Estado real: fixtures aprovadas; `gh` ausente, migration nao aplicada e nenhum PR remoto criado.
+
+## Aceite
+
+Entrega aceita explicitamente pelo responsavel em 2026-10-02 na revisao documental exata `76df60bbad4eac78b5d87fad8c2e79282355bf8c`.

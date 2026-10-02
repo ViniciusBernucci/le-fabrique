@@ -1,6 +1,6 @@
 # Centro de configuracoes
 
-Status: Centro, verificacao, login e leitura GitHub ACEITOS ate FAC-011C; PR com gate humano IMPLEMENTADO no FAC-011D e aguardando aceite.
+Status: Centro e integracao GitHub ACEITOS ate FAC-011D, revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; provas reais continuam futuras.
 
 ## Funcionamento atual
 

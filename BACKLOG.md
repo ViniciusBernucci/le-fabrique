@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C foram aceitos; FAC-011D implementa PR com gate e aguarda aceite. FAC-010 esta WAITING_PROVIDER. O piloto externo permanece adiado.
+FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-010 esta WAITING_PROVIDER. O piloto externo permanece adiado; o ensaio manual revelou ajustes de bootstrap local a corrigir antes de novas features.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -24,7 +24,7 @@ FAC-000 e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C foram aceitos; FAC-011D im
 - FAC-011A: DONE — Verificacao GitHub CLI aceita na revisao `dce2e676a91b5ffaeb246afeea2cc699e60aff9d`; dependência: FAC-011.
 - FAC-011B: DONE — Login GitHub web/device aceito na revisao `3ac8b39de9024576df5c5709022bb4a01e5ea6a5`; dependência: FAC-011A.
 - FAC-011C: DONE — Verificacao somente-leitura de repositorio/branch aceita na revisao `8fd38781652fac187d0f5a419eb336c15e94b816`; dependência: FAC-011B. `gh` e integracao real permanecem nao verificados.
-- FAC-011D: AWAITING_HUMAN — Gate em duas etapas, prova de push, reconciliacao e criacao de PR implementados no codigo `29c4931f74eedb134150fbb12add2d520d68022d`; dependência: FAC-011C. Prova real e merge permanecem pendentes.
+- FAC-011D: DONE — Gate em duas etapas, prova de push, reconciliacao e criacao de PR aceitos na revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`; dependência: FAC-011C. Prova real e merge permanecem pendentes.
 - FAC-012: PLANEJADO — Piloto, dez tickets e operação; dependências: FAC-001, FAC-011.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 

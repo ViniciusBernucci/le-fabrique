@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.37 - 2026-10-02
+FAC-011D aceito pelo responsavel na revisao `76df60bbad4eac78b5d87fad8c2e79282355bf8c`. PR sob gate humano esta concluido em codigo; prova real permanece futura e o proximo incremento trata falhas observadas no bootstrap local.
+
 ## 2.36 - 2026-10-02
 FAC-011D implementa preparacao e aprovacao exata de PR, outbox somente no gate, prova `permissions.push`, reconciliacao e `gh pr create` limitado, sem merge/push. Passaram 143 testes, lint, typecheck, build e Prisma; `gh` segue ausente, nenhuma escrita real ocorreu e aguarda aceite.
 
