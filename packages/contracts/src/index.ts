@@ -1561,6 +1561,7 @@ export const developerWorkflowResultSchema = z.object({
   reason: z.enum([
     "APPROVED",
     "RUNTIME_GUARD",
+    "RUNTIME_ROUTE_UNAVAILABLE",
     "DEVELOPER_FAILED",
     "CHECK_UNQUIESCED",
     "CHECK_REGRESSION",

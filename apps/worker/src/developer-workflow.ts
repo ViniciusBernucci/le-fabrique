@@ -16,18 +16,18 @@ import {
 } from "@le-fabrique/contracts";
 import type {
   ContextBuilder,
-  RuntimeAdapter,
   RuntimeGuard,
   SandboxRunner,
   SnapshotManager,
   WorkspaceManager,
 } from "@le-fabrique/runtime";
+import type { ConfiguredAgentRouter } from "./configured-agent-router";
 
 interface DeveloperWorkflowDependencies {
   workspaceManager: Pick<WorkspaceManager, "create">;
   contextBuilder: Pick<ContextBuilder, "build">;
   guard: Pick<RuntimeGuard, "initialState" | "authorizeAttempt" | "recordFailure">;
-  adapter: Pick<RuntimeAdapter, "execute">;
+  agentRouter: Pick<ConfiguredAgentRouter, "resolve">;
   sandbox: Pick<SandboxRunner, "execute">;
   snapshots: Pick<SnapshotManager, "capture">;
   createId?: () => string;
@@ -93,9 +93,24 @@ export class DeveloperWorkflow {
     let feedback = "No previous review feedback.";
 
     for (let round = 0; round <= request.maxCorrectionRounds; round += 1) {
+      let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
+      try {
+        developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
+      } catch (error) {
+        return this.result(
+          request,
+          workspace,
+          context.manifest,
+          progress,
+          "FAILED",
+          "RUNTIME_ROUTE_UNAVAILABLE",
+          error instanceof Error ? error.message : "Developer runtime route is unavailable",
+          round,
+        );
+      }
       const developerAuthorization = this.dependencies.guard.authorizeAttempt(
         progress.guardState,
-        "codex",
+        developerRuntime.route.provider,
       );
       progress.guardState = developerAuthorization.state;
       if (developerAuthorization.action === "PAUSE") {
@@ -111,7 +126,7 @@ export class DeveloperWorkflow {
         );
       }
 
-      const developer = await this.dependencies.adapter.execute({
+      const developer = await developerRuntime.adapter.execute({
         schemaVersion: 1,
         executionId: this.createId(),
         workspacePath: workspace.workspacePath,
@@ -119,8 +134,8 @@ export class DeveloperWorkflow {
           developerPrompt(request, context.content, feedback, round),
           "Developer",
         ),
-        permissionMode: "WORKSPACE_WRITE",
-        modelRequested: request.modelRequested,
+        permissionMode: developerRuntime.route.permissionMode,
+        modelRequested: developerRuntime.route.model,
         limits: request.runtimeLimits,
       });
       progress.developerExecutions += 1;
@@ -198,9 +213,36 @@ export class DeveloperWorkflow {
         continue;
       }
 
+      let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
+      try {
+        reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
+      } catch (error) {
+        return this.result(
+          request,
+          workspace,
+          context.manifest,
+          progress,
+          "FAILED",
+          "RUNTIME_ROUTE_UNAVAILABLE",
+          error instanceof Error ? error.message : "Reviewer runtime route is unavailable",
+          round,
+        );
+      }
+      if (reviewerRuntime.route.permissionMode !== "READ_ONLY") {
+        return this.result(
+          request,
+          workspace,
+          context.manifest,
+          progress,
+          "FAILED",
+          "RUNTIME_ROUTE_UNAVAILABLE",
+          "Reviewer runtime route must be READ_ONLY",
+          round,
+        );
+      }
       const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
         progress.guardState,
-        "codex",
+        reviewerRuntime.route.provider,
       );
       progress.guardState = reviewerAuthorization.state;
       if (reviewerAuthorization.action === "PAUSE") {
@@ -215,7 +257,7 @@ export class DeveloperWorkflow {
           round,
         );
       }
-      const reviewer = await this.dependencies.adapter.execute({
+      const reviewer = await reviewerRuntime.adapter.execute({
         schemaVersion: 1,
         executionId: this.createId(),
         workspacePath: workspace.workspacePath,
@@ -223,8 +265,8 @@ export class DeveloperWorkflow {
           reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
           "Reviewer",
         ),
-        permissionMode: "READ_ONLY",
-        modelRequested: request.modelRequested,
+        permissionMode: reviewerRuntime.route.permissionMode,
+        modelRequested: reviewerRuntime.route.model,
         limits: request.runtimeLimits,
       });
       progress.reviewerExecutions += 1;
