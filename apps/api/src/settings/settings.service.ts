@@ -2,6 +2,8 @@ import {
   type FactoryConfiguration,
   type FactorySettings,
   factoryConfigurationSchema,
+  type WorkerConfigurationSnapshot,
+  workerConfigurationSnapshotSchema,
 } from "@le-fabrique/contracts";
 import { BadRequestException, ConflictException, Inject, Injectable } from "@nestjs/common";
 import type { FactorySettings as FactorySettingsRecord, Prisma } from "@prisma/client";
@@ -65,6 +67,17 @@ export class SettingsService {
         update: {},
       }),
     );
+  }
+
+  async getWorkerConfigurationSnapshot(now = new Date()): Promise<WorkerConfigurationSnapshot> {
+    const settings = await this.prisma.factorySettings.findUnique({ where: { id: SETTINGS_ID } });
+    return workerConfigurationSnapshotSchema.parse({
+      version: settings?.version ?? 0,
+      observedAt: now.toISOString(),
+      configuration: settings
+        ? factoryConfigurationSchema.parse(settings.configuration)
+        : createDefaultFactoryConfiguration(),
+    });
   }
 
   async update(

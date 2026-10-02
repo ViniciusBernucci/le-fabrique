@@ -29,6 +29,7 @@ import {
   runtimeGuardPolicySchema,
   sandboxCommandRequestSchema,
   updateProjectBaseRevisionSchema,
+  workerConfigurationSnapshotSchema,
   workerProbeJobSchema,
   workerRegistrationSchema,
 } from "./index.js";
@@ -517,6 +518,18 @@ describe("shared contracts", () => {
           },
         ],
       }),
+    ).toThrow();
+  });
+
+  it("validates the worker settings snapshot and rejects extra credential fields", () => {
+    const snapshot = {
+      version: 0,
+      observedAt: "2026-10-02T12:00:00.000Z",
+      configuration: validConfiguration,
+    };
+    expect(workerConfigurationSnapshotSchema.parse(snapshot)).toEqual(snapshot);
+    expect(() =>
+      workerConfigurationSnapshotSchema.parse({ ...snapshot, credential: "must-not-enter-dto" }),
     ).toThrow();
   });
 

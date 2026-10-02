@@ -547,6 +547,15 @@ export const factorySettingsSchema = z
   .strict();
 export type FactorySettings = z.infer<typeof factorySettingsSchema>;
 
+export const workerConfigurationSnapshotSchema = z
+  .object({
+    version: z.number().int().nonnegative(),
+    observedAt: z.iso.datetime(),
+    configuration: factoryConfigurationSchema,
+  })
+  .strict();
+export type WorkerConfigurationSnapshot = z.infer<typeof workerConfigurationSnapshotSchema>;
+
 export const updateFactorySettingsSchema = z
   .object({
     expectedVersion: z.number().int().positive(),
