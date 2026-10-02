@@ -16,6 +16,7 @@ CodexAdapter gera o perfil nomeado `permissions.lefabrique` com workspace legív
 - `npm run build`: passou nos cinco workspaces, incluindo Vite production build.
 - `git diff --check`: passou.
 - Verificação das regras geradas por fixture sintética confirma somente subpaths específicos como write, raiz como read, ausência de API keys herdadas e rede desabilitada. Isso comprova argumentos/configuração emitidos, não comportamento efetivo do CLI instalado durante uma inferência real.
+- Verificação nativa adicional em `codex-cli 0.159.2`: `codex sandbox -P lefabrique` executou processos locais sintéticos usando o mesmo formato de perfil, sem inferência, login ou requisição ao provider. Confirmou escrita autorizada em `packages/runtime/src` (`WRITE_ALLOWED`); tentativas em `documentacoes/` e na raiz foram `EROFS`; leitura de `.git` e de sentinel sintético `.codex` foi `EACCES`. Um servidor TCP local, aberto exclusivamente pela fixture, foi inacessível pelo sandbox (`EPERM`) com `network.enabled=false`. Os arquivos de prova foram removidos e a worktree permaneceu limpa. Isso verifica aplicação pelo sandbox nativo no usuário interativo, mas não autenticação/isolamento da identidade systemd do worker.
 
 ## Diff sanitizado
 
@@ -26,7 +27,7 @@ CodexAdapter gera o perfil nomeado `permissions.lefabrique` com workspace legív
 
 ## Limitações e próximos passos
 
-1. A configuração efetiva precisa de prova controlada sob a identidade real do serviço antes de ligar o consumer. A sessão Codex do usuário interativo não prova autenticação/acesso do worker.
+1. O perfil foi exercitado pelo sandbox nativo sob o usuário interativo, mas precisa de prova controlada sob a identidade real do serviço antes de ligar o consumer. A sessão Codex do usuário interativo não prova autenticação/acesso do worker.
 2. ClaudeAdapter não aplica ainda a mesma allowlist granular; FAC-012D só restringe Codex. O consumer segue desligado, portanto a rota elegível e seus controles operacionais permanecem pendentes.
 3. A pasta gravável é verificada antes do spawn, mas processos concorrentes poderiam alterar paths depois da verificação. Worktrees precisam permanecer sob writer único/lease/fencing já definidos; ainda requer integração do consumer real.
 4. Piloto externo e credenciais/modelos continuam configurados pelo operador na interface, sem valores hardcoded. O piloto é escolha manual posterior.

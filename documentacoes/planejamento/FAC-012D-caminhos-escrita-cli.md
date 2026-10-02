@@ -14,7 +14,7 @@ Levar a lista `allowedPaths` congelada no snapshot do projeto até o perfil nati
 4. CodexAdapter gera um único perfil `permissions.lefabrique`: raiz do workspace read-only, somente caminhos autorizados graváveis, `.git`/`.codex` negados, rede desligada. Não combinar `default_permissions` com `--sandbox`/`sandbox_mode`.
 5. Testes de contratos, compilador, argumentos/perfil do adapter e workflow demonstram os caminhos propagados e a falha fechada do default vazio; nenhum provider real é chamado.
 6. Lint, typecheck, testes, build e `git diff --check` passam.
-7. Não ligar consumer, não usar banco/fila, não autenticar, clonar projeto ou iniciar modelo.
+7. Não ligar consumer, não usar banco/fila, não autenticar, clonar projeto ou iniciar modelo. É permitido testar o sandbox nativo com `codex sandbox` e fixture local sem modelo/provider.
 
 ## Baseline, arquivos e limites
 
@@ -32,4 +32,4 @@ Ativação do consumer BullMQ, roteamento/configuração de provider no READY, c
 
 Implementado em `packages/contracts`, `packages/runtime` e `apps/worker`. O perfil Codex mantém leitura da raiz do workspace, libera escrita somente em paths permitidos existentes e sem symlinks e nega `.git`/`.codex`; rede permanece desligada. O Reviewer recebe `READ_ONLY` e lista vazia. Paths inválidos falham antes de iniciar o CLI. O compilador agora faz parse runtime do snapshot completo e rejeita sobreposição permitido/proibido.
 
-Ver relatório `documentacoes/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md`. Lint, typecheck, 175 testes, build e `git diff --check` passaram. Evidência é sintética/local: não foi feita inferência real, teste sob usuário do serviço, integração de Claude nem ativação do consumer. Aguarda revisão/aceite humano; não fazer merge/deploy até aceite aplicável.
+Ver relatório `documentacoes/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md`. Lint, typecheck, 175 testes, build e `git diff --check` passaram. Codex CLI 0.159.2 também aplicou o perfil em fixture nativa sem inferência: escrita autorizada passou, escrita raiz/documentação e leitura `.git`/`.codex` foram bloqueadas, e conexão loopback foi bloqueada. Evidência segue local/interativa: não foi feita inferência real, teste sob usuário do serviço, integração de Claude nem ativação do consumer. Aguarda revisão/aceite humano; não fazer merge/deploy até aceite aplicável.

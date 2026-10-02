@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2.55 - 2026-10-02
-FAC-012D implementa passagem runtime de `allowedPaths` do snapshot para o perfil do Codex, mantém Reviewer/read-only sem escrita e nega `.git`/`.codex`; 175 testes, lint, typecheck e build passaram. Aguarda aceite; sem provider/consumer real.
+FAC-012D implementa passagem runtime de `allowedPaths` do snapshot para o perfil do Codex, mantém Reviewer/read-only sem escrita e nega `.git`/`.codex`; 175 testes, lint, typecheck e build passaram. Smoke test nativo no Codex CLI 0.159.2 confirmou as regras e rede local negada, sem inferência. Aguarda aceite; sem provider/consumer real.
 
 ## 2.54 - 2026-10-02
 FAC-012D fica READY para restringir a escrita do CodexAdapter aos caminhos `allowedPaths` congelados no projeto, sem ativar consumer ou chamar provider.
