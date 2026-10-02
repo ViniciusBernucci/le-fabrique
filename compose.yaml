@@ -22,6 +22,8 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
     networks: [backend]
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -46,36 +48,14 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
     networks: [edge, backend]
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
       interval: 15s
       timeout: 5s
       retries: 10
-    read_only: true
-    tmpfs: [/tmp]
-    security_opt: [no-new-privileges:true]
-    restart: unless-stopped
-
-  worker:
-    build:
-      context: .
-      dockerfile: infrastructure/Dockerfile.worker
-    environment:
-      NODE_ENV: production
-      REDIS_URL: redis://redis:6379
-      WORKER_CONCURRENCY: 1
-      CONTROL_API_URL: http://api:3000/api
-      WORKER_API_TOKEN: ${WORKER_API_TOKEN:?configure WORKER_API_TOKEN}
-      WORKER_ID: ${WORKER_ID:?configure WORKER_ID}
-      WORKER_NAME: control-worker-1
-      WORKER_HEARTBEAT_INTERVAL_MS: 5000
-    depends_on:
-      api:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    networks: [backend]
     read_only: true
     tmpfs: [/tmp]
     security_opt: [no-new-privileges:true]

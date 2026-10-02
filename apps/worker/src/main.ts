@@ -3,7 +3,6 @@ import type {
   GithubPullRequestJob,
   GithubRepositoryVerificationJob,
   GithubVerificationJob,
-  OrchestrationJob,
   ProviderOnboardingJob,
   ProviderVerificationJob,
   WorkerProbeJob,
@@ -21,7 +20,6 @@ import {
 } from "./github-pull-request.processor";
 import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
-import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
 import {
   cancelProviderOnboardingProcesses,
@@ -47,21 +45,6 @@ async function bootstrap(): Promise<void> {
   const probeWorker = new Worker<WorkerProbeJob, ProbeResult>(
     "le-fabrique.probe",
     async (job) => processProbe(job.data),
-    {
-      concurrency: config.WORKER_CONCURRENCY,
-      connection: {
-        host: redisUrl.hostname,
-        port: Number(redisUrl.port || 6379),
-        username: redisUrl.username || undefined,
-        password: redisUrl.password || undefined,
-        db: Number(redisUrl.pathname.slice(1) || 0),
-        maxRetriesPerRequest: null,
-      },
-    },
-  );
-  const orchestrationWorker = new Worker<OrchestrationJob, { runId: string; attemptId: string }>(
-    "le-fabrique.execution",
-    async (job) => processOrchestrationFixture(job.data, control),
     {
       concurrency: config.WORKER_CONCURRENCY,
       connection: {
@@ -176,7 +159,6 @@ async function bootstrap(): Promise<void> {
     console.info("worker stopping", { reason });
     await Promise.all([
       probeWorker.close(),
-      orchestrationWorker.close(),
       providerVerificationWorker.close(),
       providerOnboardingWorker.close(),
       githubVerificationWorker.close(),
@@ -195,9 +177,6 @@ async function bootstrap(): Promise<void> {
   probeWorker.on("ready", () => console.info("worker ready", { workerId: config.WORKER_ID }));
   probeWorker.on("failed", (job, error) =>
     console.error("probe job failed", { jobId: job?.id, error: error.message }),
-  );
-  orchestrationWorker.on("failed", (job, error) =>
-    console.error("orchestration probe failed", { jobId: job?.id, error: error.message }),
   );
   providerVerificationWorker.on("failed", (job, error) =>
     console.error("provider verification failed", { jobId: job?.id, error: error.message }),
