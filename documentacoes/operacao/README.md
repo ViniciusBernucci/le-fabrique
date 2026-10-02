@@ -23,6 +23,8 @@ FAC-009 implementa `DeveloperWorkflow` como coordenador injetavel no worker. Ele
 
 FAC-012B compila snapshot FAC-012A em `DeveloperWorkflowRequest` após reconciliar projeto/URL/SHA contra perfil confiável do worker. Checks configurados precisam corresponder exatamente a uma allowlist em argv; fontes de contexto ficam em caminhos permitidos e fora dos proibidos. Limites e modelo entram por configuração validada, não por hardcode. O compilador ainda não é chamado pelo consumer.
 
+FAC-012C torna o `SandboxRunner` read-only por padrão: o contrato aceita caminhos graváveis relativos explícitos, e o runner rejeita caminhos ausentes, fora da raiz ou com symlinks antes de iniciar. O launcher monta o workspace somente leitura e abre apenas os caminhos selecionados. Checks do workflow usam lista vazia. Esta barreira vale para comandos executados pelo SandboxRunner, não para o processo do CLI Developer; manter o consumer desligado até confinar também esse writer e provar inacessibilidade às credenciais oficiais.
+
 O coordenador ainda nao substitui o probe BullMQ. FAC-001A fornece a definicao versionada desejada de repositorio, caminhos e checks, mas o worker ainda precisa traduzi-la para um perfil local confiavel/allowlist e associar o repositorio clonado. Ativar antes disso aceitaria configuracao administrativa sem a reconciliacao do executor. O FAC-010 pode reutilizar o resultado e snapshots, mas nao deve contornar esse gate.
 
 FAC-010 esta WAITING_PROVIDER. Claude Code e Antigravity estao instalados, mas deslogados; o worker nao deve tentar login, copiar credenciais ou cair para API. Sem segundo provider elegivel, preservar snapshots/checkpoints e aguardar intervencao humana.

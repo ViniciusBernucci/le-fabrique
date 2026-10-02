@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012C endurece o `SandboxRunner`: workspace read-only por padrão, com caminhos graváveis explícitos validados antes da execução. Consulte o relatório operacional FAC-012C; essa alteração não confina o processo do CLI Developer e não autoriza ativar o consumer real.
+
 Status: bootstrap do FAC-000 e sandbox/snapshots do FAC-007 aceitos. Implantação em VPS NÃO REALIZADA.
 
 ## Componentes
