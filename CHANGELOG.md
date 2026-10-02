@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.70 - 2026-10-03
+FAC-012K fica READY para preparar renovação de lease e cancelamento conservador no worker, sem conectar o consumer ou executar trabalho real.
+
 ## 2.69 - 2026-10-03
 OPS-004 integra FAC-012D e FAC-012E–J localmente em `developer`; checks combinados passaram após regeneração local de artefatos derivados. Aceites FAC-012C–J seguem humanos; sem push, deploy, migration, consumer ou piloto.
 
