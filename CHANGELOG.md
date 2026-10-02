@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.58 - 2026-10-02
+FAC-012F fica READY para ligar, como biblioteca pura, configurações atuais de agentes aos adapters suportados sem fallback nem execução.
+
 ## 2.57 - 2026-10-02
 FAC-012E implementa endpoint interno de leitura versionada da configuração validada para o worker, sem credenciais e sem persistir defaults; 178 testes, lint, typecheck e build passaram. Consumer/provider permanecem desligados.
 
