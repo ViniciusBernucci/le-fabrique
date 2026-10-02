@@ -18,4 +18,6 @@ FAC-012I está implementado e aguarda aceite humano: contexto e checks explicita
 
 FAC-012J implementado em biblioteca isolada; aguarda aceite humano. Prepara checkout em root privado a partir do SHA do evento e usa credencial GitHub oficial efêmera após provar keyring, sem expor token. Não foi integrado ao consumer nem exercitado com rede/credenciais reais.
 
+OPS-004 está READY para integrar localmente D e E–J em `developer`, verificar a árvore combinada e remover worktrees já consolidados. Não implica aceite dos tickets nem push/deploy.
+
 Resultados de fixtures sintéticas comprovam contratos e infraestrutura da fábrica, mas não contam como entrega ou aceite do piloto externo.

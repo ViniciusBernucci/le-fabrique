@@ -73,6 +73,7 @@
 - [operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md](operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md)
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
+- [planejamento/OPS-004-consolidar-worktrees-locais.md](planejamento/OPS-004-consolidar-worktrees-locais.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)

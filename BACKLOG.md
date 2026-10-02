@@ -40,6 +40,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - FAC-013: PLANEJADO — Terceiro adapter e QA UI; dependências: FAC-012.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 - OPS-003: AWAITING_HUMAN — Aceites FAC-012A/B registrados; bind loopback e migration corretiva integrados em `e09204c5205af047d79bcd7d530a1acd1db563ca`, migration não aplicada.
+- OPS-004: READY — consolidar em developer os branches D e E–J previamente autorizados, validar a árvore combinada e remover worktrees somente depois de prova de ancestry/clean; sem push/deploy.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.68 - 2026-10-02
+OPS-004 fica READY para consolidar localmente os branches de worktree autorizados FAC-012D e FAC-012E–J em developer, rodar checks combinados e retirar worktrees já integrados; sem push/deploy.
+
 ## 2.67 - 2026-10-02
 FAC-012J implementa preparação isolada de checkout por execução no worker, com host HTTPS allowlisted, autenticação GitHub efêmera somente após confirmar keyring, Git sem shell/config/hooks e SHA detached verificado. 203 testes, typecheck, lint e build passaram; módulo não foi ligado ao consumer, e Git/GH/keyring reais não foram usados.
 

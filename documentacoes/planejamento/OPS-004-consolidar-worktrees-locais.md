@@ -1,0 +1,24 @@
+# OPS-004 — Consolidar worktrees locais autorizados
+
+Status: READY
+
+## Objetivo
+
+Consolidar em `developer` os branches FAC-012D e FAC-012E–J que o responsável pediu para integrar, executar verificações sobre a árvore combinada e retirar somente worktrees já integrados. Preservar os branches locais e os status de aceite humano; não publicar remotos.
+
+## Critérios de aceite
+
+1. Antes do merge, origem `developer`, worktrees/branches, SHAs, estado limpo e ancestry FAC-012A/B/OPS-003 estão verificados e registrados.
+2. FAC-012D (`439e95429b81a4bd12e01c0d501d9241a18393ee`) e FAC-012J/ancestrais (`17fed5bd2d55eaa4dc4eb23d607cd98893f6c674`) são integrados à branch local `developer` sem perda de conteúdo; conflitos, se houver, são resolvidos e revisados por critério/arquivo.
+3. Suíte total, typecheck, lint, build e diff-check passam na revisão exata resultante de `developer`.
+4. D e J permanecem `AWAITING_HUMAN`; o merge local não equivale a aceite. A/B e OPS-003 permanecem registrados como aceitos/integrados.
+5. Remover somente os worktrees D e J quando estiverem limpos e todos os seus commits estiverem na ancestralidade de `developer`; preservar refs de branches locais e qualquer trabalho não integrado.
+6. Não fazer push, deploy, migration, acessar banco/fila/provider/rede Git ou iniciar consumer/piloto.
+
+## Baseline, caminhos e limites
+
+`developer` em `a6fdf9ce57cc2293ddf310198204ea1093db9522`; D em `439e95429b81a4bd12e01c0d501d9241a18393ee`; J em `17fed5bd2d55eaa4dc4eb23d607cd98893f6c674`. Worktrees: `/home/vinicius/le-fabrique`, `/home/vinicius/le-fabrique-fac-012d`, `/home/vinicius/le-fabrique-fac-012f`. Execução local apenas; sem provider elegível ou gastos.
+
+## Provider elegível
+
+Nenhum; integração Git local e checks determinísticos apenas.
