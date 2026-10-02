@@ -7,7 +7,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 
-FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C/D/E/F/G/H/I/J estão implementados e aguardam aceite humano. FAC-012D restringe o Codex, mas não cobre Claude nem comprova isolamento sob identidade real. O consumer real permanece desligado. FAC-010 esta WAITING_PROVIDER. O projeto externo permanece indefinido.
+FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos. FAC-012A/B foram aceitos em 2026-10-02; OPS-003 registra os aceites e consolida deltas autorizados. FAC-012C/D/E/F/G/H/I/J estão implementados e aguardam aceite humano. OPS-005 removeu o consumidor fixture do código e preparou um unit host, ainda não instalado; a execução real continua desligada. FAC-012D restringe o Codex, mas não cobre Claude nem comprova isolamento sob identidade real. FAC-010 está WAITING_PROVIDER. O projeto externo permanece indefinido.
 
 - FAC-000: DONE — Bootstrap TypeScript e Docker aceito no SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f`; dependências: ADR-002 e ADR-003.
 - FAC-001: DEFERRED — Definir contrato do piloto externo após o núcleo da plataforma; dependências: FAC-011.
@@ -42,7 +42,7 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - OPS-001: DONE — `.env` carregado no comando raiz, registro inicial com retry transitorio limitado e bootstrap usando migrations versionadas; aceito na revisao `7c1d1dcb44ab3464085aad729ae2b5dbdc473057`, dependências: FAC-000 e FAC-004.
 - OPS-003: AWAITING_HUMAN — Aceites FAC-012A/B registrados; bind loopback e migration corretiva integrados em `e09204c5205af047d79bcd7d530a1acd1db563ca`, migration não aplicada.
 - OPS-004: AWAITING_HUMAN — merges locais D e E–J e limpeza pós-merge documentados em `documentacoes/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md`; sem push/deploy.
-- OPS-005: READY — preparar worker host dedicado para compatibilidade com `systemd-run --user`, retirar consumidor fixture do caminho Compose padrão e manter API/Redis apenas em loopback; sem iniciar/alterar serviços. Ticket: `documentacoes/planejamento/OPS-005-worker-host-sandbox.md`.
+- OPS-005: AWAITING_HUMAN — worker host systemd preparado, APIs/Redis somente em loopback e consumidor fixture retirado do `main.ts`. Implementação `8f3dbda`; relatório `documentacoes/infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md`. Não instalado; worker container antigo continua ativo até janela manual.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.
 

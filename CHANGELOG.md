@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.71 - 2026-10-03
+OPS-005 prepara unit systemd para worker dedicado host na VPS, restringe API/Redis ao loopback e remove o consumidor de fixture da fila de execução. 206 testes, typecheck, lint, build, Compose config e systemd-analyze passaram; nenhum serviço ativo foi alterado, e OPS-005 aguarda aceite humano.
+
 ## 2.70 - 2026-10-03
 OPS-005 fica READY para preparar o worker host da VPS, desativar o consumidor fixture no Compose padrão e manter API/Redis privados em loopback. Sem alteração de serviço ativo, instalação, provider ou piloto.
 

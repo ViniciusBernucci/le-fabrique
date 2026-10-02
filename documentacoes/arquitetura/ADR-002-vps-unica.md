@@ -10,3 +10,6 @@ Independência do MacBook e operação centralizada. Maior VPS, sessões pessoai
 Login oficial headless e em identidade de serviço; termos/cobrança compatíveis; teste de segredo inacessível; build/testes dentro do envelope; cancelamento/lease, reboot e restauração. Não houve implantação nesta revisão.
 ## Evolução
 Preservar contratos de worker para futura separação se risco, carga ou disponibilidade justificarem. Não exigir segundo servidor no MVP.
+
+## Detalhamento operacional (OPS-005)
+O worker continua processo Node/TypeScript na mesma VPS, mas roda como usuário systemd dedicado do host para que `systemd-run --user` e namespaces do sandbox sejam disponíveis sem container privilegiado. Docker Compose mantém web, API, PostgreSQL e Redis. API/Redis expõem portas somente em loopback para o worker host; o unit, ainda não instalado, recebe credenciais por env file externo. O consumidor de execução permanece ausente até integração real do workflow e aceites/gates operacionais próprios.
