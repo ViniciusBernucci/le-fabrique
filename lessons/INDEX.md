@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012X aplica indisponibilidade distinta de correção, sem supor stop: [lifecycle CLI](lifecycle-processo-cli.md).
+
 FAC-012W aplica budgets raw/JSON/HTTP consistentes e leitura bounded: [contratos runtime](contratos-runtime-monorepo.md).
 
 FAC-012V aplica identidade por instalação distinta de confinamento: [perfis de cliente](perfis-permissao-cliente-cli.md).

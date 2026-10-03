@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012X persiste WAITING_PROVIDER com checkpoint/resultado coerentes e permite resume existente somente por stop/bundle/versão/fence exatos; painel explica autenticação/cota/configuração e confirmação de novo orçamento. Nenhum retry automático. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).
+
 FAC-012W amplia artifact para 8 MiB JSON/6 MiB raw, sem truncar e com hashes/guard/fencing inalterados. Parser API aceita envelope bounded, painel integral/escapado informa teto. 387 testes/checks; transporte interno por loopback, nenhum upload público ampliado. [Evidências](2026-10-03-FAC-012W-artefatos-ampliados.md).
 
 FAC-012U: POST `/api/runs/:id/recover-finalization` solicita outbox FINALIZATION_ONLY sob auth/versão/tentativa. REQUESTED não é prova; worker reenvia journal/reconcile sem claim/IA. Unknown permanece bloqueado; conclusão vista pelo status do run. [Relatório](2026-10-03-FAC-012U-recuperacao-finalizacao.md).

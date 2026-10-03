@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012X versiona enum RunStatus.WAITING_PROVIDER; migration aditiva não aplicada. TicketStatus já possui o valor. Preservar status/resultado/checkpoint/artifact/journal no backup; não remover enum/dados ao reverter cliente. Nenhuma operação real. [Relatório](../operacao/2026-10-03-FAC-012X-espera-provider.md).
+
 FAC-012W configura teto JSON API 8 MiB+4096 bytes, DTO 8 MiB/6 MiB raw; transporte worker→API loopback, proxy público mantém limites/bloqueio internal. Considerar memória/concurrency operacional; nenhum serviço alterado nem migração. Retenção/backup manuais, sem apagar artefatos. [Relatório](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
 
 FAC-012V adiciona WORKER_PROVIDER_ROOT no env host: raiz canônica existente 0700/owner serviço, separada de checkout/execução e fora do repositório; não provisionada neste ticket. Clientes usam filhos privados por instalação, nenhum cache antigo copiado. Claude escrita bloqueada até confinamento granular. [Relatório](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).

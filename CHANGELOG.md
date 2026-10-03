@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.87 - 2026-10-03
+
+FAC-012X conecta auth/cota/busy à espera persistida por provider, com stop/snapshot/journal antes de finalização fenced. Sem correções/retries de IA para provider indisponível; retomada explícita por evidência. 399 testes/checks, migration não aplicada, aceite pendente.
+
 ## 2.86 - 2026-10-03
 
 FAC-012W amplia bundles worker/API/painel para 8 MiB JSON/6 MiB raw, sem truncamento, mantendo hashes/gates e leitura bounded. HTTP aceita envelope limitado e rejeita excessos com 413; 387 testes/checks, aceite pendente, sem operação real.

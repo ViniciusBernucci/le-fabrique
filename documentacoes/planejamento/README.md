@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012X (`345e8ef`, 399 testes/checks), AWAITING_HUMAN: espera por auth/cota/busy com stop/snapshot/persistência e retomada explícita. Próximos: handoff automático, confinamento Claude e docs técnicas. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).
+
 FAC-012W (`2a1ae96`, 387 testes/checks), AWAITING_HUMAN: artefatos até 8 MiB JSON/6 MiB raw no fluxo worker/API/painel. Próximos: handoff/WAITING_PROVIDER, confinamento Claude e docs técnicas; operação/backup manuais. [Evidências](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
 
 FAC-012V (`22f6375`, 380 testes/checks), AWAITING_HUMAN: identidade oficial privada por instalação no login/status/runtime. Claude escrita bloqueada; próximos: confinamento/handoff/WAITING_PROVIDER, docs técnicas e transporte maior. [Evidências](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).

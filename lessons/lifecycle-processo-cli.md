@@ -1,5 +1,7 @@
 # Lifecycle seguro de um cliente CLI
 
+FAC-012X distingue falha de código e indisponibilidade de provider. `DeveloperWorkflow.waitForProvider` exige quiescência, captura snapshot e retorna WAITING_PROVIDER; AUTH_REQUIRED/RATE_LIMITED/PROVIDER_BUSY não consomem loops de correção. Rejeição com stop unknown continua propagando/bloqueando, mesmo se o texto mencionar auth. Typed ProviderUnavailableError evita classificar configuração/segurança inválidas como espera. Processor/journal/API compartilham outcome/checkpoint para não perder o motivo na finalização.
+
 FAC-012R demonstra que Set vazio não prova quiescência: rejeição de execução/check desconhecido deixa flag terminationUnknown sticky. Só AbortSignal após término conhecido permite capturar snapshot e publicar CANCELLED com observações parciais. `execution.processor` lança InterruptionEvidenceError se workflow iniciado não retornar evidência, mesmo que cancelActive seja true; não completa com snapshot inventado.
 
 ## Conceito aplicado

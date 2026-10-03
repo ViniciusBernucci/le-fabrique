@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012X: AWAITING_HUMAN — espera provider com stop/snapshot e retomada explícita, código `345e8ef`, 399 testes/checks; migration não aplicada. [Relatório](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).
+
 - FAC-012W: AWAITING_HUMAN — entrega íntegra ampliada 8 MiB JSON/6 MiB raw, código `2a1ae96`, 387 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
 
 - FAC-012V: AWAITING_HUMAN — identidade privada por instalação UI no login/status/runtime, código `22f6375`, 380 testes/checks. Claude escrita bloqueada; [relatório](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).

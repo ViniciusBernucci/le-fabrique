@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012X — espera por provider](operacao/2026-10-03-FAC-012X-espera-provider.md)
+- [Ticket FAC-012X](planejamento/FAC-012X-espera-provider.md)
+
 - [FAC-012W — artefatos ampliados](controle/2026-10-03-FAC-012W-artefatos-ampliados.md)
 - [Ticket FAC-012W](planejamento/FAC-012W-artefatos-ampliados.md)
 

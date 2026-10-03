@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012X integra WAITING_PROVIDER após parada/snapshot conhecidos, com auth/cota/busy sem retry/login automático e retomada explícita pelo painel. 399 testes/checks; migration não aplicada, handoff/confinamento Claude/docs técnicas pendentes. [Evidências](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).
+
 FAC-012W entrega bundles até 8 MiB JSON/6 MiB raw sem truncar, com HTTP bounded/hash/UI integral. 387 testes/checks; providers/handoff/confinamento Claude/docs técnicas seguem pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
 
 FAC-012V liga clientes oficiais à instalação configurada na UI, com stores/ambientes privados e 380 testes/checks. Claude escrita bloqueada até prova granular; MVP/providers/handoff/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
