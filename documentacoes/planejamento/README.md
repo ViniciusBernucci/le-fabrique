@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012Q AWAITING_HUMAN (`bfd8532`): relatório de entrega e aceite exato no painel, 306 testes. Documentação técnica dentro do projeto não é gerada por esse relatório; interrupção/recovery, controles e provider/handoff/identidades ainda pendentes.
+
 FAC-012P implementado (`739cff0`), AWAITING_HUMAN: diff/bundle íntegro limitado no painel, 289 testes. Próximas lacunas: documentação/gate, aprovação/controles, interrupção/recuperação e provider/handoff/identidades.
 
 FAC-012O AWAITING_HUMAN (`016a5ef`): journal pré-API e redelivery testados, 266 testes. Próximo: entrega de diff/artefatos e comandos explícitos de recuperação; interrupção antes do journal segue pendente.

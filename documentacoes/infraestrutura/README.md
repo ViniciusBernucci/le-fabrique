@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012Q versiona runs.approval JSONB/RunStatus.DONE, não aplica migration. Preservar registro de aceite/documento na restauração; enum aditivo não tem rollback destrutivo automático. [Evidências](../controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+
 FAC-012P versiona migration aditiva de artifact JSONB/artifact_digest em attempts; não aplicada. Preservar snapshots/journal fora do namespace e dados persistidos; sem limpeza automática. Transporte limitado 64 KiB para tickets pequenos. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012C endurece o `SandboxRunner`: workspace read-only por padrão, com caminhos graváveis explícitos validados antes da execução. FAC-012H faz pivot para uma raiz mínima antes de iniciar checks: `/usr` fica read-only, workspace é montado em `/mnt`, e raiz antiga, home, `/run`, `/var` e `/sys` do host não ficam acessíveis. O processo roda sem capabilities e com `no-new-privileges`. Isso não confina o Developer CLI (FAC-012D separado) nem autoriza ativar o consumer real.

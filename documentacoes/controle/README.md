@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012Q: GET `/api/runs/:id/delivery` gera Markdown/gate a partir de READY congelado/evidências; POST `/api/runs/:id/approve-delivery` AdminAuthGuard/expectedVersion/attempt/deliveryDigest registra aceite exato e só então DONE em run/ticket. Checks/review/bundle/stop precisam coincidir, replay igual não duplica; stale falha. Painel exige confirmar critérios/diff/docs e loadedVersion atual. Relatório não substitui documentação técnica no projeto. [Evidências](2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+
 FAC-012P: POST interno `/api/internal/orchestration/attempts/:id/artifact` (WorkerAuthGuard) persiste bundle estrito/imutável/fenced após relatório correspondente. GET `/api/runs/:runId/attempts/:attemptId/artifact` (AdminAuthGuard) confere vínculo e retorna artifact nullable. Painel carrega sob demanda com abort, diff escapado/download JSON; não executa patch. Migration não aplicada, teto 64 KiB. [Relatório](2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012N adiciona POST interno de reconciliação por tentativa, WorkerAuthGuard e payload estrito workerId/fence, response state nullable. Não é comando administrativo de retry nem prova de parada fornecida pelo painel. Completar não pode reescrever terminal/outcome divergente ou estado humano. [Evidências](../operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).

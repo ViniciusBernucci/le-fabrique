@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.80 - 2026-10-03
+
+FAC-012Q gera relatório de entrega por READY imutável/evidências e vincula aceite humano explícito a resultado+bundle+documento exatos. Gate exige stop/review/checks; stale rejeitado, replay idempotente, DONE só após ação humana. 306 testes/checks passaram; migration approval/RunStatus.DONE não aplicada. Documentação técnica interna do projeto e controles de execução pendentes.
+
 ## 2.79 - 2026-10-03
 
 FAC-012P entrega patch/untracked íntegros ao painel com download JSON sob demanda, DTO 64 KiB, hashes e bloqueio de padrões conhecidos de segredo. Artifact fenced/imutável antes de checkpoint/complete; falha preserva journal. 289 testes/checks passaram, migration não aplicada; aceite humano pendente.

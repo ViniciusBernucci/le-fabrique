@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012Q acrescenta estado Run DONE e approval persistido somente após aceite humano exato; worker nunca faz essa promoção e N impede regressão de estados humanos. Relatório usa evidências, não comando/check/cliente na API; sem merge/deploy. Migration não aplicada. [Evidências](../controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+
 FAC-012P: finalização normal exige bundle do último snapshot antes de checkpoint/complete. ArtifactReader lê só UUID em snapshots privado e verifica manifesto/patch/untracked, recusa symlink/segredos conhecidos/limites. Teto JSON 64 KiB (bytes originais 48.000); oversized preserva journal e falha sem truncar. Não há cleanup automático. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012O: resultado normal parado é preservado em `WORKER_EXECUTION_ROOT/result-journal` (0700/0600, hash, até 128 KiB, fsync/publicação sem overwrite) antes de report/checkpoint/complete. Redelivery lê antes de claim e reenvia com fence original, sem IA. Root privado fora de workspaces; nenhuma limpeza automática. Interrupção pré-retorno e retry de jobs FAILED não estão cobertos. [Relatório](2026-10-03-FAC-012O-journal-resultados.md).

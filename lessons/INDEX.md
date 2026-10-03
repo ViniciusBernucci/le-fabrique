@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012Q aplica revisão exata de patch/resultado/documentação e baseline no gate; [evidências](../documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md), exemplos na lesson baseline/review.
+
 FAC-012P aplica integridade de bytes além de schemas e distingue limite/scan de garantia universal; exemplo na lesson contratos, [evidências](../documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012O aplica journal antes de HTTP e distingue recuperar finalização de reexecutar IA; [evidências](../documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md), exemplo na lesson leases/fencing.

@@ -1,6 +1,6 @@
 # FAC-012Q — Documentação e aceite exato da entrega
 
-Status: READY. Data: 2026-10-03. Baseline: `3ff8bdd`. Branch/worktree: `feat/fac-012q-delivery-gate`, `/home/vinicius/le-fabrique-fac-012q`.
+Status: AWAITING_HUMAN. Código `bfd853265360c27f5112063bc7f8ab9ba49b03a9`; 306 testes/checks passaram. Data: 2026-10-03. Baseline: `3ff8bdd`. Branch/worktree: `feat/fac-012q-delivery-gate`, `/home/vinicius/le-fabrique-fac-012q`.
 
 ## Objetivo e escopo
 

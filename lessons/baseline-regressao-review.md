@@ -1,5 +1,7 @@
 # Baseline, regressao e review sao sinais diferentes
 
+FAC-012Q adiciona gate administrativo real: `RunDeliveryService` cruza checks aprovados congelados com baseline/pós e exige report APPROVE, chamadas concluídas, checkpoint parado e artefato íntegro. Flag preExisting sem falha da baseline não passa. Documento determinístico registra limites; humano aceita digest exato que vincula resultado/bundle/documento, nunca só SHA HEAD (patch não commitado não muda HEAD). Replay aceito não duplica versões, outro conteúdo invalida aceite.
+
 Um check vermelho depois da alteracao nao prova regressao se o mesmo check ja falhava na revisao-base. No FAC-009, cada comando confiavel roda antes do Developer e depois de cada rodada; o resultado posterior recebe `preExisting=true` somente pelo mesmo nome de check. Falha nova bloqueia review, enquanto falha anterior permanece visivel para decisao humana.
 
 Exit code zero do cliente tambem nao prova o ticket. O coordenador exige runtime concluido, ausencia de regressao e veredito JSON valido de uma segunda execucao `READ_ONLY`. Mesmo `APPROVE` produz `AWAITING_HUMAN`, preservando o aceite humano da revisao exata.

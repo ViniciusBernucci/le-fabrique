@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012Q adiciona relatório de entrega e aceite humano ligado a hashes exatos de resultado/bundle/documento. DONE só após confirmação explícita do operador, sem merge/deploy. 306 testes/checks; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+
 FAC-012P adiciona diff completo e download de bundle do último snapshot (até 64 KiB, sem truncar). Worker/API verificam hashes; falha de entrega impede conclusão. 289 testes/checks; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012O preserva resultado antes da API em journal local privado; redelivery recupera sem executar IA novamente. 266 testes/checks passaram; não recupera writer desconhecido. [Evidências](documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md).

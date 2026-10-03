@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012Q — documentação e aceite](controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md)
+- [Ticket FAC-012Q](planejamento/FAC-012Q-documentacao-aceite-entrega.md)
+
 - [FAC-012P — artefatos no painel](controle/2026-10-03-FAC-012P-artefatos-painel.md)
 - [Ticket FAC-012P](planejamento/FAC-012P-artefatos-painel.md)
 

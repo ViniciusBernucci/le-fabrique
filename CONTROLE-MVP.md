@@ -29,8 +29,8 @@ FAC-012A/B estão DONE com aceites registrados. FAC-012C–M e OPS-003/004/005/0
 2. Preservar progresso/snapshot quando workflow interrompe antes de retornar e agendar recuperação explícita de jobs FAILED. FAC-012N reconcilia checkpoint parado/complete; FAC-012O preserva resultado normal pré-API e o reenvia em redelivery sem novo writer/IA. Writer desconhecido permanece bloqueado.
 3. Ligar auth/cota/WAITING_PROVIDER e handoff ao consumer, usando configuração/elegibilidade atuais e parada comprovada. As bibliotecas não constituem esse fluxo integrado.
 4. Isolar credenciais por instalação para múltiplas contas. Interface configura instalações, mas runtime ainda usa um adapter por provider sob a mesma identidade. Provar confinamento Claude antes de escrita elegível.
-5. Completar pausa/cancelamento/retomada e aprovação de resultado exato pela interface. Shutdown interno e gate de PR não substituem controle de runs.
-6. Integrar documentação à entrega do projeto com evidências e gate verificável. Workflow atual termina após checks/Reviewer, sem implementar esse gate completo.
+5. Completar pausa/cancelamento/retomada pela interface. FAC-012Q já exige aceite humano de resultado+bundle+documento exatos antes de DONE; shutdown interno não substitui comandos de runs.
+6. Atualizar/gatear documentação técnica dentro do repositório externo conforme regras do projeto. FAC-012Q já gera relatório de entrega com evidências e gate do aceite, mas esse relatório não modifica README/ADRs/lessons do projeto nem comprova semanticamente todos os critérios.
 
 Evidência das lacunas: `apps/api/src/control/control.controller.ts`, `apps/api/src/orchestration/orchestration.controller.ts`, `apps/worker/src/main.ts`, `execution.processor.ts`, `developer-workflow.ts` e `apps/web/src/App.tsx`. O MVP não está concluído enquanto essas pendências persistirem.
 
