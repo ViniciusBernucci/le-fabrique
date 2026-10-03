@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012M. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012R. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,12 +21,12 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–M e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–R e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## O que falta no software
 
 1. Transporte de artefatos grandes e retenção operacional: FAC-012P já mostra diff completo e baixa patch/untracked do último snapshot dentro do teto explícito 64 KiB, sem truncar. Retenção/backup e entrega além do teto seguem pendentes; hashes/tamanhos são verificados.
-2. Preservar progresso/snapshot quando workflow interrompe antes de retornar e agendar recuperação explícita de jobs FAILED. FAC-012N reconcilia checkpoint parado/complete; FAC-012O preserva resultado normal pré-API e o reenvia em redelivery sem novo writer/IA. Writer desconhecido permanece bloqueado.
+2. Recuperação explícita de jobs FAILED/crash abrupto e retomada segura. FAC-012N reconcilia checkpoint parado/complete; O preserva pré-API em journal; R captura progresso/snapshot em AbortSignal com parada comprovada. Crash abrupto/writer desconhecido permanece bloqueado, sem reexecução por suposição.
 3. Ligar auth/cota/WAITING_PROVIDER e handoff ao consumer, usando configuração/elegibilidade atuais e parada comprovada. As bibliotecas não constituem esse fluxo integrado.
 4. Isolar credenciais por instalação para múltiplas contas. Interface configura instalações, mas runtime ainda usa um adapter por provider sob a mesma identidade. Provar confinamento Claude antes de escrita elegível.
 5. Completar pausa/cancelamento/retomada pela interface. FAC-012Q já exige aceite humano de resultado+bundle+documento exatos antes de DONE; shutdown interno não substitui comandos de runs.
@@ -40,4 +40,4 @@ Escolher/cadastrar piloto, autenticar clientes sob identidade de serviço, confi
 
 ## Próximo incremento
 
-Recuperação e transporte seguro de diff/artefatos para revisão. FAC-012M está AWAITING_HUMAN no código `14ae5ba`, com 240 testes e checks locais. [Relatório](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Um ticket READY e um writer por incremento; testes não comprovam identidade de serviço/provider/cobrança real.
+Comandos administrativos de run e retomada segura, seguidos de provider/handoff/identidades e gate de documentação técnica. N–R integrados localmente: reconciliação, journal, bundle limitado, relatório/aceite exato e interrupções comprovadas. Última evidência R: 315 testes/checks, [relatório](documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.

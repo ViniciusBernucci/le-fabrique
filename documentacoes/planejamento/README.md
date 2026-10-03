@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012R implementado (`abfb033`), AWAITING_HUMAN, 315 testes/checks. Interrupções cooperativas preservadas; abruptas continuam bloqueadas. Próximos: comandos de run/retomada e providers/identidades/handoff/docs do projeto.
+
 FAC-012Q AWAITING_HUMAN (`bfd8532`): relatório de entrega e aceite exato no painel, 306 testes. Documentação técnica dentro do projeto não é gerada por esse relatório; interrupção/recovery, controles e provider/handoff/identidades ainda pendentes.
 
 FAC-012P implementado (`739cff0`), AWAITING_HUMAN: diff/bundle íntegro limitado no painel, 289 testes. Próximas lacunas: documentação/gate, aprovação/controles, interrupção/recuperação e provider/handoff/identidades.

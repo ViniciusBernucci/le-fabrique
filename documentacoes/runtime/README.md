@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012R mantém término unknown sticky mesmo após callbacks saírem do Set. AbortSignal conhecido gera CANCELLED/INTERRUPTED com observações/snapshot posterior à parada; não inicia outra chamada. Falha de captura não fabrica evidência nem liberação. [Evidências](../operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
+
 FAC-012P conecta exportação de snapshot ao consumer/journal, sem chamar IA para transportar artefatos. Falha de transporte não é aprovação; resultado/artefatos permanecem preservados para recuperação. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
 FAC-012O adiciona journal ao consumer: somente resultado retornado com stop conhecido; sem prompt/workspace/credentials. Recupera finalização em redelivery sem iniciar adapter; não retoma sessão ou writer. [Evidências](../operacao/2026-10-03-FAC-012O-journal-resultados.md).

@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012R — snapshot de interrupção](operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md)
+- [Ticket FAC-012R](planejamento/FAC-012R-snapshot-interrupcao.md)
+
 - [FAC-012Q — documentação e aceite](controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md)
 - [Ticket FAC-012Q](planejamento/FAC-012Q-documentacao-aceite-entrega.md)
 

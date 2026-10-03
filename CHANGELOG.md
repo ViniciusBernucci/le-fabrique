@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.81 - 2026-10-03
+
+FAC-012R preserva observações/snapshot em AbortSignal após parada comprovada, journal CANCELLED e reconciliação coerente. Unknown fica sticky; ausência/falha de evidência mantém fence. 315 testes/checks verdes. Crash abrupto/retomada e providers/controles/docs técnicas pendentes; aguarda aceite humano.
+
 ## 2.80 - 2026-10-03
 
 FAC-012Q gera relatório de entrega por READY imutável/evidências e vincula aceite humano explícito a resultado+bundle+documento exatos. Gate exige stop/review/checks; stale rejeitado, replay idempotente, DONE só após ação humana. 306 testes/checks passaram; migration approval/RunStatus.DONE não aplicada. Documentação técnica interna do projeto e controles de execução pendentes.

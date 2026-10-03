@@ -1,5 +1,7 @@
 # Lifecycle seguro de um cliente CLI
 
+FAC-012R demonstra que Set vazio não prova quiescência: rejeição de execução/check desconhecido deixa flag terminationUnknown sticky. Só AbortSignal após término conhecido permite capturar snapshot e publicar CANCELLED com observações parciais. `execution.processor` lança InterruptionEvidenceError se workflow iniciado não retornar evidência, mesmo que cancelActive seja true; não completa com snapshot inventado.
+
 ## Conceito aplicado
 
 Executar um cliente oficial exige controlar o processo, nao apenas interpretar sua resposta. O gateway precisa distinguir pedido de cancelamento, timeout, excesso de logs, falha do provider e resultado incompleto, encerrando a arvore antes de liberar outro writer.

@@ -1,6 +1,6 @@
 # FAC-012R — Snapshot de interrupção comprovada
 
-Status: READY. Data: 2026-10-03. Baseline: `297d308`. Branch/worktree: `feat/fac-012r-interruption-snapshot`, `/home/vinicius/le-fabrique-fac-012r`.
+Status: AWAITING_HUMAN. Código `abfb033a041818131b1d05cfe71735f18e78f7e2`; 315 testes/checks passaram. Data: 2026-10-03. Baseline: `297d308`. Branch/worktree: `feat/fac-012r-interruption-snapshot`, `/home/vinicius/le-fabrique-fac-012r`.
 
 ## Objetivo e escopo
 

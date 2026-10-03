@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012R preserva interrupção de workflow já materializado/contextualizado: stop conhecido → snapshot novo/observações → journal → result/artifact → checkpoint/complete CANCELLED. Unknown sticky ou ausência/falha de evidência deixa fence bloqueado, sem novo writer. Crash abrupto/retry administrativo/retomada seguem pendentes. [Relatório](2026-10-03-FAC-012R-snapshot-interrupcao.md).
+
 FAC-012Q acrescenta estado Run DONE e approval persistido somente após aceite humano exato; worker nunca faz essa promoção e N impede regressão de estados humanos. Relatório usa evidências, não comando/check/cliente na API; sem merge/deploy. Migration não aplicada. [Evidências](../controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
 
 FAC-012P: finalização normal exige bundle do último snapshot antes de checkpoint/complete. ArtifactReader lê só UUID em snapshots privado e verifica manifesto/patch/untracked, recusa symlink/segredos conhecidos/limites. Teto JSON 64 KiB (bytes originais 48.000); oversized preserva journal e falha sem truncar. Não há cleanup automático. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
