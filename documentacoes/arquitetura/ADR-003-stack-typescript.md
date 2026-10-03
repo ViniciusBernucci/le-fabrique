@@ -39,3 +39,5 @@ FAC-012AD expõe observações operacionais administrativas sem projeto, em snap
 FAC-012AE implementa o SSE previsto: eventos de invalidação sanitizados por projeto, sequência bigint decimal persistida em linha transacional bloqueada até commit; não substituir por nextval/ordem de alocação. Triggers registram mudanças atomically, Bearer no cabeçalho e Last-Event-ID na retomada, HTTP permanece fallback. [Evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md).
 
 FAC-012AF implementa tooling offline de backup, não execução na API: dump congelado + evidências privadas, AES-256-GCM/chave externa e staging novo. PostgreSQL continua autoridade; prova sintética real restaura events/cursor/índice e Git snapshot. Não altera topologia nem storage externo. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+
+FAC-012AG materializa kill switch conservador de agendamento: estado PostgreSQL versionado/default paused, share lock na admissão e PAUSE em renew; BullMQ entrega pausada/reconciliada sem apagar intent. Pedido não comprova stop; deferred job ainda sem writer não consome execução. [Evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md).

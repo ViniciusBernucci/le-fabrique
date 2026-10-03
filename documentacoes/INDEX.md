@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AG — pausa global](controle/2026-10-03-FAC-012AG-pausa-global.md)
+- [Ticket FAC-012AG](planejamento/FAC-012AG-pausa-global.md)
+
 - [FAC-012AF — backup/restauração](operacao/2026-10-03-FAC-012AF-backup-restauracao.md)
 - [Ticket FAC-012AF](planejamento/FAC-012AF-backup-restauracao.md)
 

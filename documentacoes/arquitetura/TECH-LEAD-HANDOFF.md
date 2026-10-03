@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Atualizado pelo FAC-012AF em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AF; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 501 testes internos + 8 PostgreSQL passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
+Atualizado pelo FAC-012AG em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AG; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 519 testes + 10 PostgreSQL + 2 Redis passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
 
 ## Fronteiras e contratos
 
@@ -15,7 +15,7 @@ Atualizado pelo FAC-012AF em 2026-10-03. Controle/worker/workflow, resultados/ar
 
 ## Sequência recomendada
 
-1. Concluir lacunas internas auditadas: implementar pausa global/kill switch de agendamento na UI; backups/restore sintéticos implementados no AF, SSE no AE.
+1. Concluir lacunas internas auditadas: fechar followup de capacidade global ocupada pré-claim sem perder jobs; pausa global AG, backup AF e SSE AE implementados.
 2. Revisar incrementos exatos e preparar operação com dados sintéticos. Login/preflight do usuário do serviço e confirmação financeira dependem do responsável; prosseguir desenvolvimento independente.
 3. Ativação/implantação em janela autorizada, sem inferir elegibilidade. Piloto pode ser escolhido posteriormente pela interface.
 

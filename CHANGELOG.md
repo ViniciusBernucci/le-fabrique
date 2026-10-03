@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AG
+
+Default pausa global PostgreSQL, versão otimista e UI; claim/renew honram autoridade, dispatcher sincroniza BullMQ e gap de claim pausado adia job sem FAILED. 531 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+
 ## 2026-10-03 — FAC-012AF
 
 Backup AES-256-GCM bounded/allowlist e staging novo sem overwrite; roundtrip de PostgreSQL e snapshot Git reais. 501 testes internos + 8 PostgreSQL verificados, sem dependência de piloto. [Relatório](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).

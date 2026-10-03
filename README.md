@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012AG acrescenta pausa global versionada na UI/DB, queue preservada e jobs adiados em recusa pré-claim de pausa. 519 testes + 10 PostgreSQL + 2 Redis passaram. Piloto não é requisito. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+
 FAC-012AF acrescenta backup criptografado/verificação/staging exclusivo de dump/snapshots/journal; roundtrip PostgreSQL e snapshot Git reais passaram. 501 testes internos verificados + 8 PostgreSQL. Piloto independente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
 FAC-012AE adiciona eventos SSE autenticados, cursor persistido e reconnect para atualizar tickets/runs, com fallback HTTP. 485 testes + 7 PostgreSQL passaram. Próximo interno: backup/restauração; nenhum piloto exigido. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).

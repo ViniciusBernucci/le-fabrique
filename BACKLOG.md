@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup interno: preservar jobs pré-claim quando capacidade global está ocupada. [Relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+
 - FAC-012AF: AWAITING_HUMAN — backup/restauração em `7de9041`, 501 testes internos + 8 PostgreSQL; sem storage externo/serviço real. Próximo interno: pausa global pela interface. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
 - FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Próximo: backup/restauração sintéticos. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
