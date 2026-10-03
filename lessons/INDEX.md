@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012O aplica journal antes de HTTP e distingue recuperar finalização de reexecutar IA; [evidências](../documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md), exemplo na lesson leases/fencing.
+
 FAC-012N amplia a lesson de leases/fencing com reconciliação serializável sem retry de IA; [evidências](../documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
 
 FAC-012M aplica DTO estrito/minimizado com desconhecidos explícitos e evidência imutável sem liberar writer; exemplos nas lessons de contratos e leases, [relatório](../documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).

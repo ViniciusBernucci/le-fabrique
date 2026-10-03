@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012O — journal de resultados](operacao/2026-10-03-FAC-012O-journal-resultados.md)
+- [Ticket FAC-012O](planejamento/FAC-012O-journal-resultados.md)
+
 - [FAC-012N — reconciliação de checkpoint](operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md)
 - [Ticket FAC-012N](planejamento/FAC-012N-reconciliacao-checkpoint.md)
 

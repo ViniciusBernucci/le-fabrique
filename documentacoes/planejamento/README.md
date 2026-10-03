@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012O AWAITING_HUMAN (`016a5ef`): journal pré-API e redelivery testados, 266 testes. Próximo: entrega de diff/artefatos e comandos explícitos de recuperação; interrupção antes do journal segue pendente.
+
 FAC-012N implementado (`94b5d64`) e AWAITING_HUMAN: reconciliação após checkpoint parado, 257 testes. Próximo: journal de resultado local antes da persistência remota; demais lacunas seguem no controle do MVP.
 
 FAC-012M está AWAITING_HUMAN: histórico e resultado estruturado no painel implementados em `14ae5ba`, 240 testes/checks verdes. Diff completo, recuperação/handoff/isolamento e comandos de run continuam pendentes no [controle do MVP](../../CONTROLE-MVP.md). FAC-012L liga workflow ao consumer no código, com gate false; descrições antigas abaixo de biblioteca/probe são históricas.

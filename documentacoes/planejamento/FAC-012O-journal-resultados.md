@@ -1,6 +1,6 @@
 # FAC-012O — Journal de resultados antes da API
 
-Status: READY. Data: 2026-10-03. Baseline: `0f96dd3`. Branch/worktree: `feat/fac-012o-result-journal`, `/home/vinicius/le-fabrique-fac-012o`.
+Status: AWAITING_HUMAN. Código `016a5ef088e5e46c178b4558ffdf4a6bec0d8bea`; 266 testes/checks passaram. Data: 2026-10-03. Baseline: `0f96dd3`. Branch/worktree: `feat/fac-012o-result-journal`, `/home/vinicius/le-fabrique-fac-012o`.
 
 ## Objetivo e escopo
 

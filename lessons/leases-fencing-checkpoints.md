@@ -1,5 +1,7 @@
 # Lease, fencing e checkpoint cobrem falhas diferentes
 
+FAC-012O aplica write-ahead da finalização: `ResultJournal.save` publica intenção parada antes do HTTP. Depois de falha de upload, uma instância nova lê relatório/hash do job e usa mesmo fence sem claim/IA. fsync/hardlink exclusivo impede publicar arquivo parcial/sobrescrever evidência. Journal só existe após retorno/parada, nunca substitui prova de quiescência de execução interrompida. Teste `execution.processor.spec.ts` demonstra reinício sintético.
+
 FAC-012N aplica reconciliação, não retry: replay chama `OrchestrationService.reconcile`, deriva outcome do checkpoint imutável e exige stop persistido, relatório/digest/snapshot compatíveis. `completeTransaction` recusa outro outcome terminal e estados humanos; a transação serializável preserva leitura e escrita juntas. Nenhum cliente de IA é reexecutado.
 
 No FAC-012M, `ExecutionResultsService.report` só grava result/resultDigest, autenticando worker e fencing atual. Mesmo relatório retorna receipt; digest divergente falha. Isso preserva evidência, não quiescência: `stoppedConfirmed` e lease não são atualizados. `execution.processor` envia relatório antes de checkpoint/complete; indisponibilidade deixa reconciliação pendente em vez de declarar sucesso sem evidência.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.78 - 2026-10-03
+
+FAC-012O preserva resultado normal em journal privado/atômico/fsync antes da API; redelivery recupera same attempt/fence sem IA/claim/checkout. 266 testes/checks passaram. Sem limpeza automática; interrupção antes de retorno e agendamento de retry pendentes. Aguarda aceite humano.
+
 ## 2.77 - 2026-10-03
 
 FAC-012N reconcilia replay após checkpoint parado sem novo writer/IA; deriva outcome da evidência, valida digest/snapshot e preserva estados terminais/humanos. 257 testes/checks locais passaram; nenhum serviço/banco alterado. Resultado não persistido e interrupção desconhecida seguem pendentes; AWAITING_HUMAN.
