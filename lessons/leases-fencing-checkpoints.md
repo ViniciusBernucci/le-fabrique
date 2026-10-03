@@ -1,5 +1,7 @@
 # Lease, fencing e checkpoint cobrem falhas diferentes
 
+FAC-012S separa intenção administrativa de parada física: RunControlService apenas grava pedido; LeaseGuard aborta/espera stop, workflow captura depois, consumer entrega antes de concluir. run-control.spec.ts prova que pedido não altera status/fence/stop; execution.processor.spec.ts prova que unknown não libera tentativa. PAUSED manual não é PAUSED_LIMIT e confirmação UI é vinculada à versão.
+
 FAC-012O aplica write-ahead da finalização: `ResultJournal.save` publica intenção parada antes do HTTP. Depois de falha de upload, uma instância nova lê relatório/hash do job e usa mesmo fence sem claim/IA. fsync/hardlink exclusivo impede publicar arquivo parcial/sobrescrever evidência. Journal só existe após retorno/parada, nunca substitui prova de quiescência de execução interrompida. Teste `execution.processor.spec.ts` demonstra reinício sintético.
 
 FAC-012N aplica reconciliação, não retry: replay chama `OrchestrationService.reconcile`, deriva outcome do checkpoint imutável e exige stop persistido, relatório/digest/snapshot compatíveis. `completeTransaction` recusa outro outcome terminal e estados humanos; a transação serializável preserva leitura e escrita juntas. Nenhum cliente de IA é reexecutado.

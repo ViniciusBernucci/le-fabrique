@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012S versiona PAUSED e runs.control_action nullable com constraint PAUSE|CANCEL; migration não aplicada. Preservar pedidos/evidências em backup; atualização operacional só em janela autorizada/writer parado. [Relatório](../controle/2026-10-03-FAC-012S-comandos-run.md).
+
 FAC-012Q versiona runs.approval JSONB/RunStatus.DONE, não aplica migration. Preservar registro de aceite/documento na restauração; enum aditivo não tem rollback destrutivo automático. [Evidências](../controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
 
 FAC-012P versiona migration aditiva de artifact JSONB/artifact_digest em attempts; não aplicada. Preservar snapshots/journal fora do namespace e dados persistidos; sem limpeza automática. Transporte limitado 64 KiB para tickets pequenos. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).

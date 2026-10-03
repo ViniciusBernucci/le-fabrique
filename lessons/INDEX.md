@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012S aplica intenção administrativa versus stop físico e confirmação por versão: [leases/fencing](leases-fencing-checkpoints.md).
+
 FAC-012R aplica término unknown sticky e separa cancelamento comprovado de preservação de evidência; exemplo na lesson lifecycle, [evidências](../documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
 
 FAC-012Q aplica revisão exata de patch/resultado/documentação e baseline no gate; [evidências](../documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md), exemplos na lesson baseline/review.

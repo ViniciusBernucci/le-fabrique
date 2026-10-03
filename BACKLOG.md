@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012S: AWAITING_HUMAN — pausa/cancelamento no painel com stop/snapshot/journal, código `be4e2ff`, 336 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md).
+
 - FAC-012R: AWAITING_HUMAN — snapshot/observações de interrupção conhecida e término unknown sticky, código `abfb033`, 315 testes/checks; [relatório](documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
 
 - FAC-012Q: AWAITING_HUMAN — relatório determinístico de entrega/aceite exato no painel, código `bfd8532`, 306 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).

@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012S — comandos de run](controle/2026-10-03-FAC-012S-comandos-run.md)
+- [Ticket FAC-012S](planejamento/FAC-012S-comandos-run.md)
+
 - [FAC-012R — snapshot de interrupção](operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md)
 - [Ticket FAC-012R](planejamento/FAC-012R-snapshot-interrupcao.md)
 

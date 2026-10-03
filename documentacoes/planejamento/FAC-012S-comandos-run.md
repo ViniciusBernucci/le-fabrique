@@ -1,6 +1,6 @@
 # FAC-012S — Pausa e cancelamento administrativos
 
-Status: READY. Data: 2026-10-03. Baseline: `4be88df`; 315 testes passaram no FAC-012R. Branch/worktree: `feat/fac-012s-run-control`, `/home/vinicius/le-fabrique-fac-012s`.
+Status: AWAITING_HUMAN. Código `be4e2ff75b0ea43ec3042e7c5b681bace152557e`; 336 testes/checks passaram. Data: 2026-10-03. Baseline: `4be88df`; 315 testes passaram no FAC-012R. Branch/worktree: `feat/fac-012s-run-control`, `/home/vinicius/le-fabrique-fac-012s`.
 
 ## Objetivo, caminhos e limites
 

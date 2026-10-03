@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.82 - 2026-10-03
+
+FAC-012S conecta pausa/cancelamento autenticado/otimista no painel à renew do worker. Pedido não libera writer; stop/snapshot/journal antes de PAUSED/CANCELLED. 336 testes/checks passaram; migration versionada. Retomada/MVP completo pendentes; aceite humano separado.
+
 ## 2.81 - 2026-10-03
 
 FAC-012R preserva observações/snapshot em AbortSignal após parada comprovada, journal CANCELLED e reconciliação coerente. Unknown fica sticky; ausência/falha de evidência mantém fence. 315 testes/checks verdes. Crash abrupto/retomada e providers/controles/docs técnicas pendentes; aguarda aceite humano.
