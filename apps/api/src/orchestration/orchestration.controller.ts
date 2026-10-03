@@ -4,6 +4,8 @@ import {
   orchestrationClaimSchema,
   orchestrationCompleteRequestSchema,
   orchestrationLeaseRequestSchema,
+  orchestrationReconcileRequestSchema,
+  orchestrationReconcileResultSchema,
   orchestrationStateSchema,
 } from "@le-fabrique/contracts";
 import {
@@ -59,6 +61,16 @@ export class OrchestrationController {
   async complete(@Param("attemptId", ParseUUIDPipe) attemptId: string, @Body() body: unknown) {
     return orchestrationStateSchema.parse(
       await this.orchestration.complete(attemptId, parse(orchestrationCompleteRequestSchema, body)),
+    );
+  }
+
+  @Post("attempts/:attemptId/reconcile")
+  async reconcile(@Param("attemptId", ParseUUIDPipe) attemptId: string, @Body() body: unknown) {
+    return orchestrationReconcileResultSchema.parse(
+      await this.orchestration.reconcile(
+        attemptId,
+        parse(orchestrationReconcileRequestSchema, body),
+      ),
     );
   }
 }

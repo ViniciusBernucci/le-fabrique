@@ -1,12 +1,18 @@
+import { createHash } from "node:crypto";
 import type {
   OrchestrationCheckpointRequest,
   OrchestrationClaim,
   OrchestrationClaimRequest,
   OrchestrationCompleteRequest,
   OrchestrationLeaseRequest,
+  OrchestrationReconcileRequest,
   OrchestrationState,
 } from "@le-fabrique/contracts";
-import { orchestrationClaimSchema, orchestrationStateSchema } from "@le-fabrique/contracts";
+import {
+  executionResultReportSchema,
+  orchestrationClaimSchema,
+  orchestrationStateSchema,
+} from "@le-fabrique/contracts";
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import type { Attempt, Prisma, Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
@@ -160,46 +166,113 @@ export class OrchestrationService {
     attemptId: string,
     input: OrchestrationCompleteRequest,
   ): Promise<OrchestrationState> {
-    return this.prisma.$transaction(async (transaction) => {
-      const attempt = await this.currentAttempt(transaction, attemptId, input, true);
-      const checkpoint = await transaction.checkpoint.findUnique({ where: { attemptId } });
-      if (!checkpoint?.stoppedConfirmed) {
-        throw new ConflictException("Completion requires a stopped checkpoint");
-      }
-      if (attempt.run.status === input.outcome && attempt.status !== "RUNNING") {
-        return orchestrationStateSchema.parse({
-          runId: attempt.runId,
-          attemptId,
-          status: input.outcome,
-          stoppedConfirmed: true,
-        });
-      }
-      const attemptStatus =
-        input.outcome === "VALIDATING"
-          ? "COMPLETED"
-          : input.outcome === "CANCELLED"
-            ? "CANCELLED"
-            : input.outcome === "PAUSED_LIMIT"
-              ? "STOPPED"
-              : "FAILED";
-      await transaction.attempt.update({
-        where: { id: attemptId },
-        data: { status: attemptStatus, stoppedConfirmed: true, completedAt: new Date() },
-      });
-      await transaction.run.update({
-        where: { id: attempt.runId },
-        data: { status: input.outcome, version: { increment: 1 } },
-      });
-      await transaction.ticket.update({
-        where: { id: attempt.run.ticketId },
-        data: { status: input.outcome, version: { increment: 1 } },
-      });
+    return this.prisma.$transaction(
+      async (transaction) => await this.completeTransaction(transaction, attemptId, input),
+      { isolationLevel: "Serializable" },
+    );
+  }
+
+  async reconcile(attemptId: string, input: OrchestrationReconcileRequest) {
+    return this.prisma.$transaction(
+      async (transaction) => {
+        const attempt = await this.currentAttempt(transaction, attemptId, input, true);
+        const checkpoint = await transaction.checkpoint.findUnique({ where: { attemptId } });
+        if (
+          !attempt.stoppedConfirmed ||
+          !checkpoint?.stoppedConfirmed ||
+          checkpoint.reason === "PROGRESS"
+        )
+          return { state: null };
+        const outcome =
+          checkpoint.reason === "COMPLETED"
+            ? "VALIDATING"
+            : checkpoint.reason === "PAUSED"
+              ? "PAUSED_LIMIT"
+              : checkpoint.reason === "CANCELLED"
+                ? "CANCELLED"
+                : "FAILED";
+        if (attempt.result || outcome === "VALIDATING" || outcome === "PAUSED_LIMIT") {
+          const parsed = executionResultReportSchema.safeParse(attempt.result);
+          if (!parsed.success)
+            throw new ConflictException("Recovery requires a valid persisted result");
+          const result = parsed.data;
+          const digest = createHash("sha256").update(JSON.stringify(result)).digest("hex");
+          const snapshot = result.snapshots.at(-1);
+          const expectedOutcome =
+            result.status === "AWAITING_HUMAN" &&
+            result.reason === "APPROVED" &&
+            result.review?.verdict === "APPROVE"
+              ? "VALIDATING"
+              : result.status === "PAUSED_LIMIT"
+                ? "PAUSED_LIMIT"
+                : "FAILED";
+          if (
+            result.workflowId !== attemptId ||
+            attempt.resultDigest !== digest ||
+            expectedOutcome !== outcome ||
+            result.checks.some((check) => !check.stoppedConfirmed) ||
+            checkpoint.snapshotId !== (snapshot?.snapshotId ?? null) ||
+            checkpoint.patchHash !== (snapshot?.manifestHash ?? null) ||
+            (snapshot &&
+              (checkpoint.baseRevision !== snapshot.baseRevision ||
+                checkpoint.codeRevision !== snapshot.headRevision))
+          )
+            throw new ConflictException("Persisted result does not match checkpoint");
+        }
+        return {
+          state: await this.completeTransaction(transaction, attemptId, { ...input, outcome }),
+        };
+      },
+      { isolationLevel: "Serializable" },
+    );
+  }
+
+  private async completeTransaction(
+    transaction: Prisma.TransactionClient,
+    attemptId: string,
+    input: OrchestrationCompleteRequest,
+  ): Promise<OrchestrationState> {
+    const attempt = await this.currentAttempt(transaction, attemptId, input, true);
+    const checkpoint = await transaction.checkpoint.findUnique({ where: { attemptId } });
+    if (!checkpoint?.stoppedConfirmed) {
+      throw new ConflictException("Completion requires a stopped checkpoint");
+    }
+    if (attempt.run.status === input.outcome && attempt.status !== "RUNNING") {
       return orchestrationStateSchema.parse({
         runId: attempt.runId,
         attemptId,
         status: input.outcome,
         stoppedConfirmed: true,
       });
+    }
+    if (attempt.run.status !== "RUNNING" || !["RUNNING", "STOPPED"].includes(attempt.status)) {
+      throw new ConflictException("Completion cannot rewrite terminal or human-controlled state");
+    }
+    const attemptStatus =
+      input.outcome === "VALIDATING"
+        ? "COMPLETED"
+        : input.outcome === "CANCELLED"
+          ? "CANCELLED"
+          : input.outcome === "PAUSED_LIMIT"
+            ? "STOPPED"
+            : "FAILED";
+    await transaction.attempt.update({
+      where: { id: attemptId },
+      data: { status: attemptStatus, stoppedConfirmed: true, completedAt: new Date() },
+    });
+    await transaction.run.update({
+      where: { id: attempt.runId },
+      data: { status: input.outcome, version: { increment: 1 } },
+    });
+    await transaction.ticket.update({
+      where: { id: attempt.run.ticketId },
+      data: { status: input.outcome, version: { increment: 1 } },
+    });
+    return orchestrationStateSchema.parse({
+      runId: attempt.runId,
+      attemptId,
+      status: input.outcome,
+      stoppedConfirmed: true,
     });
   }
 

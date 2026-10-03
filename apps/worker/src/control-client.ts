@@ -23,6 +23,7 @@ import {
   githubRepositoryVerificationSchema,
   githubVerificationSchema,
   orchestrationClaimSchema,
+  orchestrationReconcileResultSchema,
   orchestrationStateSchema,
   providerOnboardingSessionSchema,
   providerVerificationSchema,
@@ -116,6 +117,15 @@ export class ControlClient {
       await this.request(`/internal/orchestration/attempts/${attemptId}/result`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async reconcile(attemptId: string, fencingToken: number) {
+    return orchestrationReconcileResultSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/reconcile`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID, fencingToken }),
       }),
     );
   }

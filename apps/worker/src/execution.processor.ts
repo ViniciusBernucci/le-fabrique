@@ -17,7 +17,10 @@ export interface ExecutionWorkflow {
 }
 
 export interface ExecutionProcessorDependencies {
-  control: Pick<ControlClient, "claim" | "renew" | "checkpoint" | "complete" | "reportResult">;
+  control: Pick<
+    ControlClient,
+    "claim" | "renew" | "checkpoint" | "complete" | "reportResult" | "reconcile"
+  >;
   leaseDurationMs: number;
   prepareCheckout: (
     job: OrchestrationJob,
@@ -72,11 +75,12 @@ export async function processOrchestrationExecution(
 
   const claim = await dependencies.control.claim(job, dependencies.leaseDurationMs);
   if (claim.replayed) {
+    const { state } = await dependencies.control.reconcile(claim.attemptId, claim.fencingToken);
     return {
       runId: claim.runId,
       attemptId: claim.attemptId,
       replayed: true,
-      status: "REPLAY_SKIPPED",
+      status: state?.status ?? "REPLAY_SKIPPED",
       workflowStatus: null,
       reason: null,
       snapshotId: null,

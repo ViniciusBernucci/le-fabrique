@@ -1580,6 +1580,19 @@ export const orchestrationStateSchema = z.object({
 });
 export type OrchestrationState = z.infer<typeof orchestrationStateSchema>;
 
+export const orchestrationReconcileRequestSchema = z
+  .object({
+    workerId: z.uuid(),
+    fencingToken: z.number().int().positive(),
+  })
+  .strict();
+export type OrchestrationReconcileRequest = z.infer<typeof orchestrationReconcileRequestSchema>;
+export const orchestrationReconcileResultSchema = z
+  .object({
+    state: orchestrationStateSchema.nullable(),
+  })
+  .strict();
+
 export const workflowCheckCommandSchema = z.object({
   name: z.string().trim().min(1).max(120),
   command: z.string().trim().min(1).max(4096),

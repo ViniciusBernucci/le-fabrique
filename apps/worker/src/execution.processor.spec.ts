@@ -116,6 +116,7 @@ function dependencies() {
   const attemptId = crypto.randomUUID();
   const runId = crypto.randomUUID();
   const control = {
+    reconcile: vi.fn().mockResolvedValue({ state: null }),
     reportResult: vi.fn().mockResolvedValue({ attemptId, digest: "f".repeat(64) }),
     claim: vi.fn().mockResolvedValue({
       runId,
@@ -317,5 +318,38 @@ describe("processOrchestrationExecution", () => {
     );
     expect(deps.control.checkpoint).not.toHaveBeenCalled();
     expect(deps.control.complete).not.toHaveBeenCalled();
+  });
+
+  it("reconciles a stopped replay without starting checkout or AI", async () => {
+    const deps = dependencies();
+    const claim = await deps.control.claim();
+    deps.control.claim.mockResolvedValue({ ...claim, replayed: true });
+    deps.control.reconcile.mockResolvedValue({
+      state: {
+        runId: claim.runId,
+        attemptId: claim.attemptId,
+        status: "VALIDATING",
+        stoppedConfirmed: true,
+      },
+    } as never);
+    await expect(processOrchestrationExecution(job(), deps.input)).resolves.toMatchObject({
+      status: "VALIDATING",
+      replayed: true,
+    });
+    expect(deps.control.reconcile).toHaveBeenCalledWith(claim.attemptId, 4);
+    expect(deps.input.prepareCheckout).not.toHaveBeenCalled();
+    expect(deps.workflow.execute).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
+  });
+
+  it("propagates replay reconciliation failures without new work", async () => {
+    const deps = dependencies();
+    const claim = await deps.control.claim();
+    deps.control.claim.mockResolvedValue({ ...claim, replayed: true });
+    deps.control.reconcile.mockRejectedValue(new Error("control unavailable"));
+    await expect(processOrchestrationExecution(job(), deps.input)).rejects.toThrow(
+      "control unavailable",
+    );
+    expect(deps.input.prepareCheckout).not.toHaveBeenCalled();
   });
 });
