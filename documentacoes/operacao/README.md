@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012N: replay chama endpoint interno `/api/internal/orchestration/attempts/:id/reconcile` sob WorkerAuthGuard/fence atual. Só conclui com attempt/checkpoint parados; relatório COMPLETED/PAUSED validado/digest coerente. Sem prova retorna state null; sem checkout/IA/retry. Nenhuma regressão de estados humanos. [Relatório](2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+
 FAC-012M (`14ae5ba`) entrega relatório persistido antes de concluir e consultas/painel somente leitura. 240 testes e checks locais; migration apenas versionada, gate false, nenhum serviço atualizado. [Evidências](../controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Passagens históricas de probe/consumer não integrado foram superadas no código por FAC-012L; operação real continua desabilitada.
 
 OPS-006 integrou o trabalho local OPS-005/K/L e removeu seus worktrees após prova de ancestry/limpeza. [Relatório](2026-10-03-OPS-006-integracao-local-controle-mvp.md) e [controle do MVP](../../CONTROLE-MVP.md) distinguem código, aceites e operação manual. Serviços ativos não foram atualizados.

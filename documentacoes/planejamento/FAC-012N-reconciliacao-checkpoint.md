@@ -1,6 +1,6 @@
 # FAC-012N — Reconciliação após checkpoint
 
-Status: READY. Data: 2026-10-03. Baseline: `f3b9b058c58ffbee09950f27a9147fd93e583521`.
+Status: AWAITING_HUMAN. Data: 2026-10-03. Código: `94b5d641030072ef1f06e2b815eec0bec7f7880d`; 257 testes/checks passaram. Baseline: `f3b9b058c58ffbee09950f27a9147fd93e583521`.
 Branch/worktree: `feat/fac-012n-reconcile`, `/home/vinicius/le-fabrique-fac-012n`.
 
 ## Objetivo e escopo

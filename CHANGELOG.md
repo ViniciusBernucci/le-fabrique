@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.77 - 2026-10-03
+
+FAC-012N reconcilia replay após checkpoint parado sem novo writer/IA; deriva outcome da evidência, valida digest/snapshot e preserva estados terminais/humanos. 257 testes/checks locais passaram; nenhum serviço/banco alterado. Resultado não persistido e interrupção desconhecida seguem pendentes; AWAITING_HUMAN.
+
 ## 2.76 - 2026-10-03
 
 FAC-012M persiste resultados imutáveis/fenced antes de concluir e expõe histórico/checks/revisão/metadados/chamadas no painel. DTO minimizado 64 KiB e polling cancelável. 240 testes, typecheck/build/lint/Prisma validate passaram. Migration não aplicada; diff completo/recuperação pendentes; aguarda aceite humano. Sem piloto/push/deploy.

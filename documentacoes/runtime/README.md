@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012N recupera apenas a conclusão após checkpoint parado persistido; replay não inicia adapter, checkout ou workflow. Retomar execução e preservar resultado ainda não persistido continuam pendentes. [Evidências](../operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+
 FAC-012M registra observações por chamada (papel, instalação configurada, provider, configuração/versionamento, modelo solicitado/efetivo, status, uso e timestamps) sem prompt/session/stdout. Null permanece desconhecido. Identidade autenticada por instalação não está comprovada por esse registro. Relatório público omite caminhos e é persistido antes de checkpoint/complete; falha de persistência impede conclusão. [Evidências](../controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).
 
 ## Estado atual — FAC-012L

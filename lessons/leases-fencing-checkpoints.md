@@ -1,5 +1,7 @@
 # Lease, fencing e checkpoint cobrem falhas diferentes
 
+FAC-012N aplica reconciliação, não retry: replay chama `OrchestrationService.reconcile`, deriva outcome do checkpoint imutável e exige stop persistido, relatório/digest/snapshot compatíveis. `completeTransaction` recusa outro outcome terminal e estados humanos; a transação serializável preserva leitura e escrita juntas. Nenhum cliente de IA é reexecutado.
+
 No FAC-012M, `ExecutionResultsService.report` só grava result/resultDigest, autenticando worker e fencing atual. Mesmo relatório retorna receipt; digest divergente falha. Isso preserva evidência, não quiescência: `stoppedConfirmed` e lease não são atualizados. `execution.processor` envia relatório antes de checkpoint/complete; indisponibilidade deixa reconciliação pendente em vez de declarar sucesso sem evidência.
 
 Lease limita por quanto tempo o controle considera um writer vigente. Fencing token identifica a tentativa atual e faz a API recusar escrita atrasada. Nenhum dos dois prova que um processo local morreu: no FAC-008, lease vencido sem `stoppedConfirmed` leva run e ticket a `BLOCKED_RECOVERY`, sem entregar o workspace a outro writer.

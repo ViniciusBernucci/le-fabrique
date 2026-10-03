@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012N — reconciliação de checkpoint](operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md)
+- [Ticket FAC-012N](planejamento/FAC-012N-reconciliacao-checkpoint.md)
+
 - [FAC-012M — resultados no painel](controle/2026-10-03-FAC-012M-resultados-execucao-painel.md)
 - [Ticket FAC-012M](planejamento/FAC-012M-resultados-execucao-painel.md)
 

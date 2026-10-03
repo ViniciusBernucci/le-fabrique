@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012N: AWAITING_HUMAN — reconciliação de checkpoint parado no replay sem checkout/IA; código `94b5d64`, 257 testes/checks locais. [Relatório](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+
 - FAC-012M: AWAITING_HUMAN — resultados persistidos/fenced e histórico no painel, código `14ae5ba`, 240 testes/checks locais. Migration não aplicada; diff completo/recuperação pendentes. [Relatório](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).
 
 Estado atual consolidado em [CONTROLE-MVP.md](CONTROLE-MVP.md). OPS-006 integrou OPS-005/FAC-012K/L localmente e retirou worktrees comprovadamente integrados; pendências de software permanecem explícitas.

@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012N fecha replay entre checkpoint parado e complete; não retoma IA nem writer desconhecido. 257 testes/checks passaram. [Evidências](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+
 FAC-012M (`14ae5ba`) adiciona resultados persistidos por tentativa/fencing e histórico de execuções no painel: checks, revisão, metadados de snapshots e chamadas/modelos observados. 240 testes e checks locais passaram; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Diff completo, recuperação e operação real seguem pendentes.
 
 ## Decisão obrigatória da stack - revisão 2.3
