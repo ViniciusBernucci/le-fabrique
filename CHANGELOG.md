@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AE
+
+Eventos minimizados de projeto persistidos em transação, SSE Bearer retomável e atualização do painel com polling fallback/proxy sem buffering. 492 verificações passaram. [Relatório](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
 ## 2026-10-03 — FAC-012AD
 
 Estado da fábrica sem projeto: heartbeat recente/stale, tentativas sem stop e proteção global válida; novo claim recusa índice ausente. 465 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).

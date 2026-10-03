@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012AE aplica cursor transacional em ordem de commit e invalidação SSE retomável: [outbox/idempotência](outbox-idempotencia.md).
+
 FAC-012AD aplica observação atual distinta de prontidão/parada: [heartbeat/quiescência](worker-heartbeat-quiescencia.md).
 
 FAC-012AC aplica exclusão persistida global independente de leases por run/concurrency: [leases/fencing](leases-fencing-checkpoints.md).

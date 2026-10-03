@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Próximo: backup/restauração sintéticos. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
 - FAC-012AD: AWAITING_HUMAN — painel/endpoint operacional e guard fail-closed em `6277a81`; 461 testes + 4 PostgreSQL. Próximo interno: SSE autenticado/retomável; piloto independente. [Relatório](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
 - FAC-012AC: AWAITING_HUMAN — exclusão global em `143f3d6`, 445 testes + 3 PostgreSQL; migration somente efêmera. Piloto não bloqueia MVP. [Relatório](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).

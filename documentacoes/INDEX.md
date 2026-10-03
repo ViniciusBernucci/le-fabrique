@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AE — eventos de projeto](controle/2026-10-03-FAC-012AE-eventos-projeto.md)
+- [Ticket FAC-012AE](planejamento/FAC-012AE-eventos-projeto.md)
+
 - [FAC-012AD — painel operacional](controle/2026-10-03-FAC-012AD-painel-operacao.md)
 - [Ticket FAC-012AD](planejamento/FAC-012AD-painel-operacao.md)
 

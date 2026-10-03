@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Atualizado pelo FAC-012AD em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AD; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 461 testes + 4 PostgreSQL passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
+Atualizado pelo FAC-012AE em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AE; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 485 testes + 7 PostgreSQL passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
 
 ## Fronteiras e contratos
 
@@ -15,7 +15,7 @@ Atualizado pelo FAC-012AD em 2026-10-03. Controle/worker/workflow, resultados/ar
 
 ## Sequência recomendada
 
-1. Concluir lacunas internas auditadas: eventos SSE autenticados/retomáveis do ADR-003, preservar fallback HTTP e verificar recuperação/backup sem projeto externo.
+1. Concluir lacunas internas auditadas: verificar ferramentas de recuperação/backup sem projeto externo; SSE do ADR-003 implementado no AE com HTTP fallback.
 2. Revisar incrementos exatos e preparar operação com dados sintéticos. Login/preflight do usuário do serviço e confirmação financeira dependem do responsável; prosseguir desenvolvimento independente.
 3. Ativação/implantação em janela autorizada, sem inferir elegibilidade. Piloto pode ser escolhido posteriormente pela interface.
 
@@ -25,4 +25,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Preflights reais sob UID do serviço, confirmação financeira, keyring/PR remoto, implantação/backup externo/restauração/reboot continuam não verificados. Isso não impede implementação interna. SSE ainda pendente; painel de runs, gate documental e composição do consumer já implementados, contrariando o handoff antigo. Multiusuário/rotação avançada não foram incluídos implicitamente no MVP de administrador único. [Estado detalhado](../../CONTROLE-MVP.md).
+Preflights reais sob UID do serviço, confirmação financeira, keyring/PR remoto, implantação/backup externo/restauração/reboot continuam não verificados. Isso não impede implementação interna. SSE implementado no AE; painel de runs, gate documental e composição do consumer já implementados, contrariando o handoff antigo. Multiusuário/rotação avançada não foram incluídos implicitamente no MVP de administrador único. [Estado detalhado](../../CONTROLE-MVP.md).

@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012AE requer migration de project_events/cursors/triggers para SSE; painel conserva HTTP fallback se indisponível. Backup deve incluir eventos/cursors; sem retention automática. Proxy streaming sem buffering, heartbeat 1 s e idle client 15 s. [Evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
 FAC-012AD mostra operação sem piloto: heartbeat até 180 s recente, futuro inconsistente e tentativas sem stop continuam bloqueadas mesmo com lease vencida. Índice global inválido impede novos claims; painel não fabrica prontidão de IA. [Evidências](../controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
 FAC-012AC impede novo claim em qualquer run enquanto houver tentativa sem stop confirmado. Não limpar por lease/status; banco incoerente bloqueia migration e exige diagnóstico. `npm run test:postgres` prova exclusão em banco efêmero, sem serviço real. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).

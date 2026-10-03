@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012AE adiciona eventos SSE autenticados, cursor persistido e reconnect para atualizar tickets/runs, com fallback HTTP. 485 testes + 7 PostgreSQL passaram. Próximo interno: backup/restauração; nenhum piloto exigido. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
 FAC-012AD mostra heartbeat/stop/índice global no painel sem projeto e recusa novo claim sem proteção válida. 461 testes + 4 PostgreSQL passaram. Piloto não é requisito do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
 FAC-012AC impõe um writer global na API/PostgreSQL, inclusive entre tickets distintos; 445 testes + 3 de PostgreSQL real passaram. Piloto externo é experimento opcional posterior e não bloqueia conclusão do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).

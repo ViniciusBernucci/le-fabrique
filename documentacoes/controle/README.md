@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012AE adiciona GET /api/projects/:projectId/events e events/stream administrativos: páginas até 100, cursor bigint string, SSE Last-Event-ID e invalidação minimizada transacional; tickets/runs atualizam com polling fallback. [Evidências](2026-10-03-FAC-012AE-eventos-projeto.md).
+
 FAC-012AD adiciona GET /api/operation administrativo e painel Estado da fábrica sem projeto. DTO minimizado, heartbeat stale não vira offline por escrita; ausência de índice global válido bloqueia claim novo. [Evidências](2026-10-03-FAC-012AD-painel-operacao.md).
 
 FAC-012AC exige ausência global de tentativa sem parada antes de claim novo; índice PostgreSQL fecha corrida entre runs. Replay preservado, lease vencida não libera. 445 testes + 3 PostgreSQL; [evidências](2026-10-03-FAC-012AC-writer-global.md).

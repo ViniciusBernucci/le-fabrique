@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012AE versiona eventos/cursors por projeto e triggers PostgreSQL, testados apenas em banco efêmero. Nginx streaming route usa buffering/cache off, sintaxe validada sem deploy. Preservar triggers/check constraints não representáveis no schema Prisma em migrations futuras. [Evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
 FAC-012AC versiona índice único parcial `attempts_single_unconfirmed_writer`; migration recusa conflitos antigos, não fabrica parada. Aplicada só em PostgreSQL efêmero; futuras migrations devem preservar índice não representável no schema Prisma. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).
 
 FAC-012X versiona enum RunStatus.WAITING_PROVIDER; migration aditiva não aplicada. TicketStatus já possui o valor. Preservar status/resultado/checkpoint/artifact/journal no backup; não remover enum/dados ao reverter cliente. Nenhuma operação real. [Relatório](../operacao/2026-10-03-FAC-012X-espera-provider.md).

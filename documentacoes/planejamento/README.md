@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012AE IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AE-eventos-projeto.md), [evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md). 485 testes + 7 PostgreSQL; próximo interno backup/restauração, sem piloto.
+
 FAC-012AD IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AD-painel-operacao.md), [evidências](../controle/2026-10-03-FAC-012AD-painel-operacao.md). 461 testes + 4 PostgreSQL; próxima lacuna de software: SSE previsto no ADR-003.
 
 FAC-012AC IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AC-writer-global.md), [evidências](../controle/2026-10-03-FAC-012AC-writer-global.md). 445 testes + 3 PostgreSQL. Piloto externo não é requisito de conclusão do software.
