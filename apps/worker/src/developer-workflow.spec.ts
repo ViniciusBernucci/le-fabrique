@@ -215,7 +215,7 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
-  it("cancels a live runtime on lease loss and confirms quiescence before rejecting", async () => {
+  it("cancels a live runtime and confirms quiescence before preserving interruption", async () => {
     const deps = dependencies(
       [runtimeResult(crypto.randomUUID(), "unused")],
       [checkResult("COMPLETED")],
@@ -234,7 +234,7 @@ describe("DeveloperWorkflow", () => {
     await vi.waitFor(() => expect(deps.execute).toHaveBeenCalledOnce());
 
     controller.abort();
-    await expect(execution).rejects.toThrow("Developer workflow was cancelled");
+    await expect(execution).resolves.toMatchObject({ status: "CANCELLED", reason: "INTERRUPTED" });
     await expect(workflow.cancelActive()).resolves.toBe(true);
     expect(deps.codex.cancel).toHaveBeenCalledOnce();
   });
@@ -437,5 +437,78 @@ describe("DeveloperWorkflow", () => {
       reviewerExecutions: 0,
     });
     expect(deps.execute).toHaveBeenCalledTimes(1);
+  });
+
+  it("preserves aborted baseline and captures only after known termination", async () => {
+    const stop = new AbortController();
+    const deps = dependencies([], []);
+    deps.sandbox.execute.mockImplementation(async () => {
+      stop.abort();
+      return checkResult("TIMED_OUT", true);
+    });
+    const result = await new DeveloperWorkflow(deps).execute(request(), stop.signal);
+    expect(result).toMatchObject({
+      status: "CANCELLED",
+      reason: "INTERRUPTED",
+      developerExecutions: 0,
+      checks: [{ phase: "BASELINE", status: "TIMED_OUT", stoppedConfirmed: true }],
+    });
+    expect(result.snapshots).toHaveLength(1);
+    expect(deps.execute).not.toHaveBeenCalled();
+    expect(deps.sandbox.execute).toHaveBeenCalledBefore(deps.snapshots.capture);
+  });
+
+  it("keeps cancelled Developer observation and patch without starting Reviewer", async () => {
+    const stop = new AbortController();
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    deps.execute.mockImplementation(async () => {
+      stop.abort();
+      return runtimeResult(crypto.randomUUID(), null, "CANCELLED");
+    });
+    const result = await new DeveloperWorkflow(deps).execute(request(), stop.signal);
+    expect(result).toMatchObject({
+      status: "CANCELLED",
+      developerExecutions: 1,
+      reviewerExecutions: 0,
+      runtimeObservations: [{ role: "DEVELOPER", status: "CANCELLED" }],
+    });
+    expect(result.snapshots).toHaveLength(1);
+    expect(deps.execute).toHaveBeenCalledTimes(1);
+    expect(deps.execute).toHaveBeenCalledBefore(deps.snapshots.capture);
+  });
+
+  it("never forgets unknown sandbox termination when the callback is removed", async () => {
+    const stop = new AbortController();
+    const deps = dependencies([], []);
+    deps.sandbox.execute.mockImplementation(async () => {
+      stop.abort();
+      return checkResult("TIMED_OUT", false);
+    });
+    const workflow = new DeveloperWorkflow(deps);
+    await expect(workflow.execute(request(), stop.signal)).rejects.toThrow();
+    expect(await workflow.cancelActive()).toBe(false);
+    expect(deps.snapshots.capture).not.toHaveBeenCalled();
+  });
+
+  it("treats rejected client execution as unknown instead of empty-set quiescence", async () => {
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    deps.execute.mockRejectedValue(new Error("unknown process"));
+    const workflow = new DeveloperWorkflow(deps);
+    await expect(workflow.execute(request())).rejects.toThrow("unknown process");
+    expect(await workflow.cancelActive()).toBe(false);
+    expect(deps.snapshots.capture).not.toHaveBeenCalled();
+  });
+
+  it("propagates interruption snapshot failure instead of fabricating cancelled evidence", async () => {
+    const stop = new AbortController();
+    const deps = dependencies([], []);
+    deps.sandbox.execute.mockImplementation(async () => {
+      stop.abort();
+      return checkResult("TIMED_OUT", true);
+    });
+    deps.snapshots.capture.mockRejectedValue(new Error("snapshot unavailable"));
+    await expect(new DeveloperWorkflow(deps).execute(request(), stop.signal)).rejects.toThrow(
+      "snapshot unavailable",
+    );
   });
 });

@@ -155,4 +155,20 @@ describe("stopped checkpoint reconciliation", () => {
       controller.reconcile(attemptId, { ...input, outcome: "VALIDATING" }),
     ).rejects.toThrow("Invalid orchestration payload");
   });
+
+  it("reconciles cancelled report/snapshot without false validation", async () => {
+    const f = fixture();
+    approve(f);
+    const result = executionResultReportSchema.parse({
+      ...(f.attempt.result as object),
+      status: "CANCELLED",
+      reason: "INTERRUPTED",
+    });
+    f.attempt.result = result;
+    f.attempt.resultDigest = createHash("sha256").update(JSON.stringify(result)).digest("hex");
+    f.checkpoint.reason = "CANCELLED";
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "CANCELLED" },
+    });
+  });
 });

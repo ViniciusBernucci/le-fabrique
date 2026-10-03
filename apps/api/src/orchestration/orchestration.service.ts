@@ -199,13 +199,15 @@ export class OrchestrationService {
           const digest = createHash("sha256").update(JSON.stringify(result)).digest("hex");
           const snapshot = result.snapshots.at(-1);
           const expectedOutcome =
-            result.status === "AWAITING_HUMAN" &&
-            result.reason === "APPROVED" &&
-            result.review?.verdict === "APPROVE"
-              ? "VALIDATING"
-              : result.status === "PAUSED_LIMIT"
-                ? "PAUSED_LIMIT"
-                : "FAILED";
+            result.status === "CANCELLED"
+              ? "CANCELLED"
+              : result.status === "AWAITING_HUMAN" &&
+                  result.reason === "APPROVED" &&
+                  result.review?.verdict === "APPROVE"
+                ? "VALIDATING"
+                : result.status === "PAUSED_LIMIT"
+                  ? "PAUSED_LIMIT"
+                  : "FAILED";
           if (
             result.workflowId !== attemptId ||
             attempt.resultDigest !== digest ||

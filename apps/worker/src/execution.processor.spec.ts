@@ -3,7 +3,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import type { DeveloperWorkflowResult, OrchestrationJob } from "@le-fabrique/contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { processOrchestrationExecution, WriterQuiescenceError } from "./execution.processor";
+import {
+  InterruptionEvidenceError,
+  processOrchestrationExecution,
+  WriterQuiescenceError,
+} from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
 import { ResultJournal } from "./result-journal";
@@ -312,14 +316,13 @@ describe("processOrchestrationExecution", () => {
       await new Promise<void>((resolve) =>
         signal.addEventListener("abort", () => resolve(), { once: true }),
       );
-      signal.throwIfAborted();
-      return approvedWorkflow(deps.attemptId);
+      return { ...approvedWorkflow(deps.attemptId), status: "CANCELLED", reason: "INTERRUPTED" };
     });
     const pending = processOrchestrationExecution(job(), deps.input, stop.signal);
     await vi.waitFor(() => expect(deps.workflow.execute).toHaveBeenCalledOnce());
     stop.abort();
-    await expect(pending).resolves.toMatchObject({ status: "CANCELLED", reason: "WORKER_STOPPED" });
-    expect(deps.workflow.cancelActive).toHaveBeenCalledBefore(deps.control.checkpoint);
+    await expect(pending).resolves.toMatchObject({ status: "CANCELLED", reason: "INTERRUPTED" });
+    expect(deps.input.journal.save).toHaveBeenCalledBefore(deps.control.checkpoint);
   });
 
   it("does not complete when result persistence fails", async () => {
@@ -430,4 +433,32 @@ describe("processOrchestrationExecution", () => {
       expect(deps.control.complete).not.toHaveBeenCalled();
     },
   );
+
+  it("does not release stopped work if workflow cannot return preservation evidence", async () => {
+    const deps = dependencies();
+    deps.workflow.execute.mockRejectedValue(new Error("snapshot failed"));
+    await expect(processOrchestrationExecution(job(), deps.input)).rejects.toBeInstanceOf(
+      InterruptionEvidenceError,
+    );
+    expect(deps.control.checkpoint).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
+  });
+
+  it("journals cancelled partial work after proven lease loss", async () => {
+    vi.useFakeTimers();
+    const deps = dependencies();
+    deps.input.leaseDurationMs = 15_000;
+    deps.control.renew.mockRejectedValue(new Error("lease lost"));
+    deps.workflow.execute.mockImplementation(async (signal: AbortSignal) => {
+      await new Promise<void>((resolve) =>
+        signal.addEventListener("abort", () => resolve(), { once: true }),
+      );
+      return { ...approvedWorkflow(deps.attemptId), status: "CANCELLED", reason: "INTERRUPTED" };
+    });
+    const pending = processOrchestrationExecution(job(), deps.input);
+    await vi.advanceTimersByTimeAsync(5_000);
+    await expect(pending).resolves.toMatchObject({ status: "CANCELLED", reason: "LEASE_LOST" });
+    expect(deps.input.journal.save).toHaveBeenCalledBefore(deps.control.reportResult);
+    expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
+  });
 });

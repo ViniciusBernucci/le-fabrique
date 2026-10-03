@@ -126,4 +126,16 @@ describe("immutable private result journal", () => {
     ).rejects.toThrow();
     expect(await f.journal.load(f.job)).toBeNull();
   });
+
+  it("preserves cancelled stopped evidence without reclassifying it as failure", async () => {
+    const f = await fixture();
+    const intent = {
+      ...f.intent,
+      outcome: "CANCELLED" as const,
+      checkpoint: { ...f.intent.checkpoint, reason: "CANCELLED" as const },
+      result: { ...f.intent.result, status: "CANCELLED" as const, reason: "INTERRUPTED" as const },
+    };
+    await f.journal.save(f.job, intent);
+    expect(await f.journal.load(f.job)).toEqual(intent);
+  });
 });

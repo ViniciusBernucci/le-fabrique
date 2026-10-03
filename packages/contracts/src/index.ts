@@ -1777,7 +1777,7 @@ export type WorkflowRuntimeObservation = z.infer<typeof workflowRuntimeObservati
 export const developerWorkflowResultSchema = z.object({
   schemaVersion: z.literal(1),
   workflowId: z.uuid(),
-  status: z.enum(["AWAITING_HUMAN", "PAUSED_LIMIT", "FAILED"]),
+  status: z.enum(["AWAITING_HUMAN", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
   reason: z.enum([
     "APPROVED",
     "RUNTIME_GUARD",
@@ -1787,6 +1787,7 @@ export const developerWorkflowResultSchema = z.object({
     "CHECK_REGRESSION",
     "REVIEW_REJECTED",
     "REVIEW_INVALID",
+    "INTERRUPTED",
   ]),
   workspace: workspaceCreateResultSchema,
   contextManifest: contextManifestSchema,

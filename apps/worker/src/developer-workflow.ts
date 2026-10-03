@@ -51,6 +51,7 @@ const MAX_PROMPT_CHARS = 200_000;
 export class DeveloperWorkflow {
   private readonly createId: () => string;
   private readonly activeCancellations = new Set<() => Promise<boolean>>();
+  private terminationUnknown = false;
 
   constructor(private readonly dependencies: DeveloperWorkflowDependencies) {
     this.createId = dependencies.createId ?? randomUUID;
@@ -60,6 +61,7 @@ export class DeveloperWorkflow {
     input: DeveloperWorkflowRequest,
     signal?: AbortSignal,
   ): Promise<DeveloperWorkflowResult> {
+    if (this.terminationUnknown) throw new Error("Previous process termination is unknown");
     throwIfAborted(signal);
     const request = developerWorkflowRequestSchema.parse(input);
     const workspace = await this.dependencies.workspaceManager.create({
@@ -84,126 +86,18 @@ export class DeveloperWorkflow {
       review: null,
       runtimeObservations: [],
     };
-    const baseline = await this.runChecks(request, workspace, "BASELINE", 0, new Set(), signal);
-    progress.checks.push(...baseline);
-    if (baseline.some((check) => !check.stoppedConfirmed)) {
-      return this.result(
+    let activeRound = 0;
+    try {
+      const baseline = await this.runChecks(
         request,
         workspace,
-        context.manifest,
-        progress,
-        "FAILED",
-        "CHECK_UNQUIESCED",
-        "Baseline check termination was not confirmed",
+        "BASELINE",
         0,
-      );
-    }
-    const baselineFailures = new Set(
-      baseline.filter((check) => !checkPassed(check)).map((check) => check.name),
-    );
-    let feedback = "No previous review feedback.";
-
-    for (let round = 0; round <= request.maxCorrectionRounds; round += 1) {
-      throwIfAborted(signal);
-      let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
-      try {
-        developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
-      } catch {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "FAILED",
-          "RUNTIME_ROUTE_UNAVAILABLE",
-          "Configured Developer runtime route is unavailable",
-          round,
-        );
-      }
-      const developerAuthorization = this.dependencies.guard.authorizeAttempt(
-        progress.guardState,
-        developerRuntime.route.provider,
-      );
-      progress.guardState = developerAuthorization.state;
-      if (developerAuthorization.action === "PAUSE") {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "RUNTIME_GUARD",
-          `Developer blocked by ${developerAuthorization.reason ?? "runtime guard"}`,
-          round,
-        );
-      }
-      if (progress.developerExecutions >= developerRuntime.maxAttempts) {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "RUNTIME_GUARD",
-          "Configured Developer attempt limit was reached",
-          round,
-        );
-      }
-
-      const developer = await this.executeRuntime(
-        developerRuntime.adapter,
-        {
-          schemaVersion: 1,
-          executionId: this.createId(),
-          workspacePath: workspace.workspacePath,
-          prompt: boundedPrompt(
-            developerPrompt(request, context.content, feedback, round),
-            "Developer",
-          ),
-          permissionMode: developerRuntime.route.permissionMode,
-          writablePaths: request.writablePaths,
-          modelRequested: developerRuntime.route.model,
-          limits: {
-            ...request.runtimeLimits,
-            timeoutMs: Math.min(request.runtimeLimits.timeoutMs, developerRuntime.timeoutMs),
-          },
-        },
+        new Set(),
         signal,
+        (check) => progress.checks.push(check),
       );
-      progress.developerExecutions += 1;
-      progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
-      if (developer.status !== "COMPLETED") {
-        const failure = this.dependencies.guard.recordFailure(
-          progress.guardState,
-          runtimeFailureFingerprint("developer", developer),
-        );
-        progress.guardState = failure.state;
-        if (failure.action === "PAUSE" || round === request.maxCorrectionRounds) {
-          return this.result(
-            request,
-            workspace,
-            context.manifest,
-            progress,
-            "PAUSED_LIMIT",
-            "DEVELOPER_FAILED",
-            developer.error?.message ?? "Developer execution failed",
-            round,
-          );
-        }
-        feedback = `Developer failed safely: ${developer.error?.code ?? developer.status}.`;
-        continue;
-      }
-
-      const postChecks = await this.runChecks(
-        request,
-        workspace,
-        "POST_CHANGE",
-        round,
-        baselineFailures,
-        signal,
-      );
-      progress.checks.push(...postChecks);
-      if (postChecks.some((check) => !check.stoppedConfirmed)) {
+      if (baseline.some((check) => !check.stoppedConfirmed)) {
         return this.result(
           request,
           workspace,
@@ -211,181 +105,325 @@ export class DeveloperWorkflow {
           progress,
           "FAILED",
           "CHECK_UNQUIESCED",
-          "Post-change check termination was not confirmed",
-          round,
+          "Baseline check termination was not confirmed",
+          0,
         );
       }
-      const snapshot = await this.dependencies.snapshots.capture({
-        schemaVersion: 1,
-        workspacePath: workspace.workspacePath,
-        limits: request.snapshotLimits,
-      });
-      progress.snapshots.push(snapshot.manifest);
-      const regressions = postChecks.filter((check) => !checkPassed(check) && !check.preExisting);
-      if (regressions.length > 0) {
-        const fingerprint = `checks:${regressions
-          .map((check) => check.name)
-          .sort()
-          .join(",")}`;
-        const failure = this.dependencies.guard.recordFailure(progress.guardState, fingerprint);
-        progress.guardState = failure.state;
-        if (failure.action === "PAUSE" || round === request.maxCorrectionRounds) {
+      const baselineFailures = new Set(
+        baseline.filter((check) => !checkPassed(check)).map((check) => check.name),
+      );
+      let feedback = "No previous review feedback.";
+
+      for (let round = 0; round <= request.maxCorrectionRounds; round += 1) {
+        activeRound = round;
+        throwIfAborted(signal);
+        let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
+        try {
+          developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
+        } catch {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "FAILED",
+            "RUNTIME_ROUTE_UNAVAILABLE",
+            "Configured Developer runtime route is unavailable",
+            round,
+          );
+        }
+        const developerAuthorization = this.dependencies.guard.authorizeAttempt(
+          progress.guardState,
+          developerRuntime.route.provider,
+        );
+        progress.guardState = developerAuthorization.state;
+        if (developerAuthorization.action === "PAUSE") {
           return this.result(
             request,
             workspace,
             context.manifest,
             progress,
             "PAUSED_LIMIT",
-            "CHECK_REGRESSION",
-            `New check failures: ${regressions.map((check) => check.name).join(", ")}`,
+            "RUNTIME_GUARD",
+            `Developer blocked by ${developerAuthorization.reason ?? "runtime guard"}`,
             round,
           );
         }
-        feedback = `Fix only these new check failures: ${regressions
-          .map((check) => check.name)
-          .join(", ")}.`;
-        continue;
-      }
+        if (progress.developerExecutions >= developerRuntime.maxAttempts) {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "PAUSED_LIMIT",
+            "RUNTIME_GUARD",
+            "Configured Developer attempt limit was reached",
+            round,
+          );
+        }
 
-      let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
-      try {
-        reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
-      } catch {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "FAILED",
-          "RUNTIME_ROUTE_UNAVAILABLE",
-          "Configured Reviewer runtime route is unavailable",
-          round,
-        );
-      }
-      if (reviewerRuntime.route.permissionMode !== "READ_ONLY") {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "FAILED",
-          "RUNTIME_ROUTE_UNAVAILABLE",
-          "Reviewer runtime route must be READ_ONLY",
-          round,
-        );
-      }
-      if (progress.reviewerExecutions >= reviewerRuntime.maxAttempts) {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "RUNTIME_GUARD",
-          "Configured Reviewer attempt limit was reached",
-          round,
-        );
-      }
-      const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
-        progress.guardState,
-        reviewerRuntime.route.provider,
-      );
-      progress.guardState = reviewerAuthorization.state;
-      if (reviewerAuthorization.action === "PAUSE") {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "RUNTIME_GUARD",
-          `Reviewer blocked by ${reviewerAuthorization.reason ?? "runtime guard"}`,
-          round,
-        );
-      }
-      const reviewer = await this.executeRuntime(
-        reviewerRuntime.adapter,
-        {
-          schemaVersion: 1,
-          executionId: this.createId(),
-          workspacePath: workspace.workspacePath,
-          prompt: boundedPrompt(
-            reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
-            "Reviewer",
-          ),
-          permissionMode: reviewerRuntime.route.permissionMode,
-          writablePaths: [],
-          modelRequested: reviewerRuntime.route.model,
-          limits: {
-            ...request.runtimeLimits,
-            timeoutMs: Math.min(request.runtimeLimits.timeoutMs, reviewerRuntime.timeoutMs),
+        const developer = await this.executeRuntime(
+          developerRuntime.adapter,
+          {
+            schemaVersion: 1,
+            executionId: this.createId(),
+            workspacePath: workspace.workspacePath,
+            prompt: boundedPrompt(
+              developerPrompt(request, context.content, feedback, round),
+              "Developer",
+            ),
+            permissionMode: developerRuntime.route.permissionMode,
+            writablePaths: request.writablePaths,
+            modelRequested: developerRuntime.route.model,
+            limits: {
+              ...request.runtimeLimits,
+              timeoutMs: Math.min(request.runtimeLimits.timeoutMs, developerRuntime.timeoutMs),
+            },
           },
-        },
-        signal,
-      );
-      progress.reviewerExecutions += 1;
-      progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
-      const review = parseReview(reviewer);
-      if (!review) {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "FAILED",
-          "REVIEW_INVALID",
-          reviewer.status === "COMPLETED"
-            ? "Reviewer returned an invalid structured verdict"
-            : (reviewer.error?.message ?? "Reviewer execution failed"),
-          round,
+          signal,
         );
-      }
-      progress.review = review;
-      if (review.verdict === "APPROVE") {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "AWAITING_HUMAN",
-          "APPROVED",
-          "Developer, checks and independent review completed",
-          round,
-        );
-      }
-      if (round === request.maxCorrectionRounds) {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "REVIEW_REJECTED",
-          review.summary,
-          round,
-        );
-      }
-      const reviewFailure = this.dependencies.guard.recordFailure(
-        progress.guardState,
-        `review:${[review.summary, ...review.findings].join("|")}`.slice(0, 200),
-      );
-      progress.guardState = reviewFailure.state;
-      if (reviewFailure.action === "PAUSE") {
-        return this.result(
-          request,
-          workspace,
-          context.manifest,
-          progress,
-          "PAUSED_LIMIT",
-          "REVIEW_REJECTED",
-          review.summary,
-          round,
-        );
-      }
-      feedback = [review.summary, ...review.findings].join("\n");
-    }
+        progress.developerExecutions += 1;
+        progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
+        throwIfAborted(signal);
+        if (developer.status !== "COMPLETED") {
+          const failure = this.dependencies.guard.recordFailure(
+            progress.guardState,
+            runtimeFailureFingerprint("developer", developer),
+          );
+          progress.guardState = failure.state;
+          if (failure.action === "PAUSE" || round === request.maxCorrectionRounds) {
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "PAUSED_LIMIT",
+              "DEVELOPER_FAILED",
+              developer.error?.message ?? "Developer execution failed",
+              round,
+            );
+          }
+          feedback = `Developer failed safely: ${developer.error?.code ?? developer.status}.`;
+          continue;
+        }
 
-    throw new Error("Workflow exhausted without a terminal result");
+        const postChecks = await this.runChecks(
+          request,
+          workspace,
+          "POST_CHANGE",
+          round,
+          baselineFailures,
+          signal,
+          (check) => progress.checks.push(check),
+        );
+        if (postChecks.some((check) => !check.stoppedConfirmed)) {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "FAILED",
+            "CHECK_UNQUIESCED",
+            "Post-change check termination was not confirmed",
+            round,
+          );
+        }
+        const snapshot = await this.dependencies.snapshots.capture({
+          schemaVersion: 1,
+          workspacePath: workspace.workspacePath,
+          limits: request.snapshotLimits,
+        });
+        progress.snapshots.push(snapshot.manifest);
+        const regressions = postChecks.filter((check) => !checkPassed(check) && !check.preExisting);
+        if (regressions.length > 0) {
+          const fingerprint = `checks:${regressions
+            .map((check) => check.name)
+            .sort()
+            .join(",")}`;
+          const failure = this.dependencies.guard.recordFailure(progress.guardState, fingerprint);
+          progress.guardState = failure.state;
+          if (failure.action === "PAUSE" || round === request.maxCorrectionRounds) {
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "PAUSED_LIMIT",
+              "CHECK_REGRESSION",
+              `New check failures: ${regressions.map((check) => check.name).join(", ")}`,
+              round,
+            );
+          }
+          feedback = `Fix only these new check failures: ${regressions
+            .map((check) => check.name)
+            .join(", ")}.`;
+          continue;
+        }
+
+        let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
+        try {
+          reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
+        } catch {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "FAILED",
+            "RUNTIME_ROUTE_UNAVAILABLE",
+            "Configured Reviewer runtime route is unavailable",
+            round,
+          );
+        }
+        if (reviewerRuntime.route.permissionMode !== "READ_ONLY") {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "FAILED",
+            "RUNTIME_ROUTE_UNAVAILABLE",
+            "Reviewer runtime route must be READ_ONLY",
+            round,
+          );
+        }
+        if (progress.reviewerExecutions >= reviewerRuntime.maxAttempts) {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "PAUSED_LIMIT",
+            "RUNTIME_GUARD",
+            "Configured Reviewer attempt limit was reached",
+            round,
+          );
+        }
+        const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
+          progress.guardState,
+          reviewerRuntime.route.provider,
+        );
+        progress.guardState = reviewerAuthorization.state;
+        if (reviewerAuthorization.action === "PAUSE") {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "PAUSED_LIMIT",
+            "RUNTIME_GUARD",
+            `Reviewer blocked by ${reviewerAuthorization.reason ?? "runtime guard"}`,
+            round,
+          );
+        }
+        const reviewer = await this.executeRuntime(
+          reviewerRuntime.adapter,
+          {
+            schemaVersion: 1,
+            executionId: this.createId(),
+            workspacePath: workspace.workspacePath,
+            prompt: boundedPrompt(
+              reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
+              "Reviewer",
+            ),
+            permissionMode: reviewerRuntime.route.permissionMode,
+            writablePaths: [],
+            modelRequested: reviewerRuntime.route.model,
+            limits: {
+              ...request.runtimeLimits,
+              timeoutMs: Math.min(request.runtimeLimits.timeoutMs, reviewerRuntime.timeoutMs),
+            },
+          },
+          signal,
+        );
+        progress.reviewerExecutions += 1;
+        progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
+        throwIfAborted(signal);
+        const review = parseReview(reviewer);
+        if (!review) {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "FAILED",
+            "REVIEW_INVALID",
+            reviewer.status === "COMPLETED"
+              ? "Reviewer returned an invalid structured verdict"
+              : (reviewer.error?.message ?? "Reviewer execution failed"),
+            round,
+          );
+        }
+        progress.review = review;
+        if (review.verdict === "APPROVE") {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "AWAITING_HUMAN",
+            "APPROVED",
+            "Developer, checks and independent review completed",
+            round,
+          );
+        }
+        if (round === request.maxCorrectionRounds) {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "PAUSED_LIMIT",
+            "REVIEW_REJECTED",
+            review.summary,
+            round,
+          );
+        }
+        const reviewFailure = this.dependencies.guard.recordFailure(
+          progress.guardState,
+          `review:${[review.summary, ...review.findings].join("|")}`.slice(0, 200),
+        );
+        progress.guardState = reviewFailure.state;
+        if (reviewFailure.action === "PAUSE") {
+          return this.result(
+            request,
+            workspace,
+            context.manifest,
+            progress,
+            "PAUSED_LIMIT",
+            "REVIEW_REJECTED",
+            review.summary,
+            round,
+          );
+        }
+        feedback = [review.summary, ...review.findings].join("\n");
+      }
+
+      throw new Error("Workflow exhausted without a terminal result");
+    } catch (error) {
+      if (
+        !signal?.aborted ||
+        !(await this.cancelActive()) ||
+        progress.checks.some((check) => !check.stoppedConfirmed)
+      )
+        throw error;
+      const snapshot = await this.dependencies.snapshots.capture({
+        schemaVersion: 1,
+        workspacePath: workspace.workspacePath,
+        limits: request.snapshotLimits,
+      });
+      progress.snapshots = [...progress.snapshots, snapshot.manifest].slice(-3);
+      return this.result(
+        request,
+        workspace,
+        context.manifest,
+        progress,
+        "CANCELLED",
+        "INTERRUPTED",
+        "Execution interrupted after confirmed stop; snapshot and partial observations preserved",
+        activeRound,
+      );
+    }
   }
 
   private async runChecks(
@@ -395,6 +433,7 @@ export class DeveloperWorkflow {
     round: number,
     baselineFailures: ReadonlySet<string>,
     signal?: AbortSignal,
+    onObservation?: (check: WorkflowCheckObservation) => void,
   ): Promise<WorkflowCheckObservation[]> {
     const observations: WorkflowCheckObservation[] = [];
     for (const check of request.checks) {
@@ -412,7 +451,7 @@ export class DeveloperWorkflow {
         },
         signal,
       );
-      observations.push({
+      const observation: WorkflowCheckObservation = {
         name: check.name,
         phase,
         round,
@@ -420,7 +459,10 @@ export class DeveloperWorkflow {
         exitCode: result.exitCode,
         stoppedConfirmed: result.stoppedConfirmed,
         preExisting: phase === "POST_CHANGE" && baselineFailures.has(check.name),
-      });
+      };
+      observations.push(observation);
+      onObservation?.(observation);
+      throwIfAborted(signal);
     }
     return observations;
   }
@@ -429,7 +471,7 @@ export class DeveloperWorkflow {
     const results = await Promise.all(
       [...this.activeCancellations].map((cancel) => cancel().catch(() => false)),
     );
-    return results.every(Boolean);
+    return !this.terminationUnknown && results.every(Boolean);
   }
 
   private async executeRuntime(
@@ -461,8 +503,10 @@ export class DeveloperWorkflow {
     try {
       const result = await execution;
       settled = true;
-      throwIfAborted(signal);
       return result;
+    } catch (error) {
+      this.terminationUnknown = true;
+      throw error;
     } finally {
       settled = true;
       signal?.removeEventListener("abort", onAbort);
@@ -488,8 +532,11 @@ export class DeveloperWorkflow {
     this.activeCancellations.add(cancel);
     try {
       const result = await execution;
-      throwIfAborted(signal);
+      if (!result.stoppedConfirmed) this.terminationUnknown = true;
       return result;
+    } catch (error) {
+      this.terminationUnknown = true;
+      throw error;
     } finally {
       this.activeCancellations.delete(cancel);
     }

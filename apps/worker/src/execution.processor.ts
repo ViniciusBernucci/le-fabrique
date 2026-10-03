@@ -67,6 +67,12 @@ export class WriterQuiescenceError extends Error {
     this.name = "WriterQuiescenceError";
   }
 }
+export class InterruptionEvidenceError extends Error {
+  constructor() {
+    super("Execution stopped without recoverable workflow evidence; attempt remains fenced");
+    this.name = "InterruptionEvidenceError";
+  }
+}
 
 export async function processOrchestrationExecution(
   payload: OrchestrationJob,
@@ -126,6 +132,11 @@ export async function processOrchestrationExecution(
   } catch (error) {
     if (error instanceof LeaseAuthorityLostError) {
       if (!error.writerQuiescent) throw new WriterQuiescenceError();
+      if (workflowResult?.status === "CANCELLED") {
+        const preserved = await finalizeWorkflowResult(workflowResult, job, claim, dependencies);
+        return { ...preserved, reason: "LEASE_LOST" };
+      }
+      if (workflow) throw new InterruptionEvidenceError();
       const checkpoint = await dependencies.control.checkpoint(claim.attemptId, {
         fencingToken: claim.fencingToken,
         baseRevision: specification.project.baseRevision,
@@ -154,6 +165,7 @@ export async function processOrchestrationExecution(
 
     const stopped = workflow ? await workflow.cancelActive().catch(() => false) : true;
     if (!stopped) throw new WriterQuiescenceError();
+    if (workflow) throw new InterruptionEvidenceError();
     const outcome = shutdownSignal?.aborted ? "CANCELLED" : "FAILED";
     const checkpoint = await dependencies.control.checkpoint(claim.attemptId, {
       fencingToken: claim.fencingToken,
@@ -181,6 +193,17 @@ export async function processOrchestrationExecution(
     );
   }
 
+  return await finalizeWorkflowResult(workflowResult, job, claim, dependencies);
+}
+
+async function finalizeWorkflowResult(
+  workflowResult: DeveloperWorkflowResult,
+  job: OrchestrationJob,
+  claim: OrchestrationClaim,
+  dependencies: ExecutionProcessorDependencies,
+): Promise<ExecutionProcessorResult> {
+  const specification = job.executionSpecification;
+  if (!specification) throw new Error("Immutable execution specification missing");
   const latestSnapshot = workflowResult.snapshots.at(-1);
   const stoppedConfirmed = workflowResult.checks.every((check) => check.stoppedConfirmed);
   if (!stoppedConfirmed) throw new WriterQuiescenceError();
@@ -200,11 +223,14 @@ export async function processOrchestrationExecution(
   });
   const approved =
     workflowResult.status === "AWAITING_HUMAN" && workflowResult.reason === "APPROVED";
-  const checkpointReason = approved
-    ? "COMPLETED"
-    : workflowResult.status === "PAUSED_LIMIT"
-      ? "PAUSED"
-      : "FAILED";
+  const checkpointReason =
+    workflowResult.status === "CANCELLED"
+      ? "CANCELLED"
+      : approved
+        ? "COMPLETED"
+        : workflowResult.status === "PAUSED_LIMIT"
+          ? "PAUSED"
+          : "FAILED";
   const checkpoint = {
     baseRevision: specification.project.baseRevision,
     codeRevision: latestSnapshot?.headRevision ?? workflowResult.workspace.revision,
@@ -214,11 +240,14 @@ export async function processOrchestrationExecution(
     stoppedConfirmed,
   } as const;
 
-  const outcome = approved
-    ? "VALIDATING"
-    : workflowResult.status === "PAUSED_LIMIT"
-      ? "PAUSED_LIMIT"
-      : "FAILED";
+  const outcome =
+    workflowResult.status === "CANCELLED"
+      ? "CANCELLED"
+      : approved
+        ? "VALIDATING"
+        : workflowResult.status === "PAUSED_LIMIT"
+          ? "PAUSED_LIMIT"
+          : "FAILED";
   const intent: ResultFinalizationIntent = {
     runId: claim.runId,
     attemptId: claim.attemptId,
