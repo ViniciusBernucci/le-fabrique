@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012AD aplica observação atual distinta de prontidão/parada: [heartbeat/quiescência](worker-heartbeat-quiescencia.md).
+
 FAC-012AC aplica exclusão persistida global independente de leases por run/concurrency: [leases/fencing](leases-fencing-checkpoints.md).
 
 FAC-012AB aplica prova de composição com Git/sandbox/journal reais e portas externas sintéticas: [sandbox/worktree/snapshot](sandbox-worktree-snapshot.md).

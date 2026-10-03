@@ -33,3 +33,5 @@ FAC-012Z: política documental versionada por projeto segue contratos runtime/UI
 FAC-012AA implementa perfil Claude por caminho e preflight oficial opt-in sob UID do serviço; factory exige prova privada current/fingerprint, preservada fora de credenciais/workspaces. Não alterou topologia ou ativou provider/serviço. Prova real continua requisito operacional; fixtures não substituem isolamento/financeiro/identidade verificados.
 
 FAC-012AC materializa o limite global já aprovado de um writer: consulta de admissão e índice PostgreSQL único parcial em stopped_confirmed=false. Concorrência de consumidores e lease por run não substituem essa exclusão. Stop comprovado libera, expiração/status não; conflitos antigos impedem migration sem auto-repair. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).
+
+FAC-012AD expõe observações operacionais administrativas sem projeto, em snapshot read-only RepeatableRead. Guard estrutural do índice global é compartilhado entre observação e claim; ausência bloqueia nova execução. Heartbeat é sinal recente, não prova de autenticação ou stop. [Evidências](../controle/2026-10-03-FAC-012AD-painel-operacao.md).

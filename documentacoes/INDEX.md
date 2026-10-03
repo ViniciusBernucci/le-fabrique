@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AD — painel operacional](controle/2026-10-03-FAC-012AD-painel-operacao.md)
+- [Ticket FAC-012AD](planejamento/FAC-012AD-painel-operacao.md)
+
 - [FAC-012AC — writer global](controle/2026-10-03-FAC-012AC-writer-global.md)
 - [Ticket FAC-012AC](planejamento/FAC-012AC-writer-global.md)
 

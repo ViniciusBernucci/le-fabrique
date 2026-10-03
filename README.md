@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012AD mostra heartbeat/stop/índice global no painel sem projeto e recusa novo claim sem proteção válida. 461 testes + 4 PostgreSQL passaram. Piloto não é requisito do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+
 FAC-012AC impõe um writer global na API/PostgreSQL, inclusive entre tickets distintos; 445 testes + 3 de PostgreSQL real passaram. Piloto externo é experimento opcional posterior e não bloqueia conclusão do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
 
 FAC-012AB verifica cinco cenários integrados com Git/sandbox/snapshots/journal reais e portas externas sintéticas: entrega, restore, handoff, replay e bloqueios. 438 testes passaram; MVP operacional continua pendente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).

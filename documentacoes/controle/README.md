@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012AD adiciona GET /api/operation administrativo e painel Estado da fábrica sem projeto. DTO minimizado, heartbeat stale não vira offline por escrita; ausência de índice global válido bloqueia claim novo. [Evidências](2026-10-03-FAC-012AD-painel-operacao.md).
+
 FAC-012AC exige ausência global de tentativa sem parada antes de claim novo; índice PostgreSQL fecha corrida entre runs. Replay preservado, lease vencida não libera. 445 testes + 3 PostgreSQL; [evidências](2026-10-03-FAC-012AC-writer-global.md).
 
 FAC-012Z: Definição do projeto configura arquivos Markdown/relatório/seções em `executionProfile.documentation`. Novos READY exigem política; arquivos precisam estar permitidos. Painel de resultados e relatório público mostram hashes/gate; aceite exige evidências PASS para conjunto exato e manifesto final, além de checks/revisão/bundle/stop existentes. Legados permanecem legíveis. [Evidências](2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).

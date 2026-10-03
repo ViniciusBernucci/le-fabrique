@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012AC. Estado: IMPLEMENTAÇÃO INTERNA VERIFICADA / VALIDAÇÃO OPERACIONAL PENDENTE. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012AD. Estado: IMPLEMENTAÇÃO INTERNA VERIFICADA / VALIDAÇÃO OPERACIONAL PENDENTE. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,7 +21,7 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB/AC e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB/AC/AD e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## Estado do software e gates de operação
 
@@ -40,8 +40,8 @@ Para ativação real: autenticar clientes sob identidade de serviço, confirmar 
 
 ## Próxima etapa dependente do responsável
 
-Prova oficial de confinamento/financeiro/identidade de serviço e ativação em janela autorizada são etapas operacionais; nenhum piloto é exigido. Código/gate de confinamento implementado no AA; documentação técnica implementada no Z. FAC-012AB verificou a composição interna com Git/sandbox/snapshot/journal reais e portas externas sintéticas, sem encontrar regressão de produção. A revisão do software encontrou exclusão global de writer ainda ausente, corrigida no AC. Continuar a auditoria de funcionalidades da fábrica, sem encerrar desenvolvimento pela ausência de piloto. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência AB: 438 testes, [relatório](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
+Prova oficial de confinamento/financeiro/identidade de serviço e ativação em janela autorizada são etapas operacionais; nenhum piloto é exigido. Código/gate de confinamento implementado no AA; documentação técnica implementada no Z. FAC-012AB verificou a composição interna com Git/sandbox/snapshot/journal reais e portas externas sintéticas, sem encontrar regressão de produção. A revisão do software encontrou exclusão global de writer ainda ausente, corrigida no AC. Continuar a auditoria de funcionalidades da fábrica, sem encerrar desenvolvimento pela ausência de piloto. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência AD: 461 testes + 4 PostgreSQL, [relatório](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md). Próximo interno: eventos SSE autenticados/retomáveis previstos no ADR-003; fallback HTTP já existe. Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
 
-Retomada deste desenvolvimento está em `fix/fac-012ac-global-writer`, `/home/vinicius/le-fabrique-fac-012ac`, com Z/AA/AB por ancestry. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Pergunta atual é somente sobre usuário de serviço/clientes para preparação operacional; não solicitar piloto para prosseguir. Não inferir login ou elegibilidade financeira.
+Retomada deste desenvolvimento está em `feat/fac-012ad-operation-panel`, `/home/vinicius/le-fabrique-fac-012ad`, com Z/AA/AB/AC por ancestry. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Pergunta atual é somente sobre usuário de serviço/clientes para preparação operacional; não solicitar piloto para prosseguir. Não inferir login ou elegibilidade financeira.
 
 FAC-012AC: claim exige ausência global de tentativa sem parada confirmada; índice único parcial fecha a disputa entre transações. Lease/status não liberam exclusão. Migration aplicada somente no banco efêmero de teste, nunca nos serviços existentes.

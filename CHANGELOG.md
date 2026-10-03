@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AD
+
+Estado da fábrica sem projeto: heartbeat recente/stale, tentativas sem stop e proteção global válida; novo claim recusa índice ausente. 465 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+
 ## 2026-10-03 — FAC-012AC
 
 Claim consulta writer global; índice parcial garante exclusão concorrente entre runs, sem liberar por lease/status. 448 verificações passaram; piloto removido dos requisitos de conclusão do software nos documentos atuais. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).

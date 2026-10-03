@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. FAC-011D implementa PR sob gate humano e aguarda aceite. `gh` ainda nao esta instalado; nenhuma escrita real foi feita. O loop de tickets continua no probe sintetico. FAC-010 aguarda Claude real e o piloto externo permanece adiado.
+Atualizado pelo FAC-012AD em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AD; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 461 testes + 4 PostgreSQL passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
 
 ## Fronteiras e contratos
 
@@ -15,10 +15,9 @@ FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão DONE. FAC-011D im
 
 ## Sequência recomendada
 
-1. Revisar e aceitar a revisao exata FAC-011D.
-2. Instalar/configurar clientes e repetir preflights reais de Claude e GitHub.
-3. Ligar o coordenador FAC-009 ao consumer somente depois de existir perfil local confiavel de repositorio/comandos.
-4. Definir manualmente o piloto em FAC-001 e executar o ensaio real em FAC-012.
+1. Concluir lacunas internas auditadas: eventos SSE autenticados/retomáveis do ADR-003, preservar fallback HTTP e verificar recuperação/backup sem projeto externo.
+2. Revisar incrementos exatos e preparar operação com dados sintéticos. Login/preflight do usuário do serviço e confirmação financeira dependem do responsável; prosseguir desenvolvimento independente.
+3. Ativação/implantação em janela autorizada, sem inferir elegibilidade. Piloto pode ser escolhido posteriormente pela interface.
 
 ## Restrições para os próximos tickets
 
@@ -26,4 +25,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam instalacao/login/preflights reais, keyring comprovado, prova remota de PR, perfil operacional que liga o coordenador FAC-009 ao consumer, gate documental automatizado, painel de runs/SSE, rotacao/multiusuario, backups restauraveis e piloto real. Adapter Claude e handoff existem como bibliotecas aceitas, mas a composicao possui apenas prova sintetica e ainda nao comprova um ticket real ponta a ponta.
+Preflights reais sob UID do serviço, confirmação financeira, keyring/PR remoto, implantação/backup externo/restauração/reboot continuam não verificados. Isso não impede implementação interna. SSE ainda pendente; painel de runs, gate documental e composição do consumer já implementados, contrariando o handoff antigo. Multiusuário/rotação avançada não foram incluídos implicitamente no MVP de administrador único. [Estado detalhado](../../CONTROLE-MVP.md).
