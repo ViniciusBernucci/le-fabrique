@@ -11,6 +11,8 @@ import { ExecutionResultsService } from "./execution-results.service";
 import { OrchestrationController } from "./orchestration.controller";
 import { OrchestrationService } from "./orchestration.service";
 import { ORCHESTRATION_QUEUE, OutboxDispatcher } from "./outbox-dispatcher";
+import { RunControlController } from "./run-control.controller";
+import { RunControlService } from "./run-control.service";
 import { RunDeliveryController } from "./run-delivery.controller";
 import { RunDeliveryService } from "./run-delivery.service";
 
@@ -20,6 +22,7 @@ import { RunDeliveryService } from "./run-delivery.service";
     RunResultsController,
     WorkerExecutionResultsController,
     RunDeliveryController,
+    RunControlController,
   ],
   providers: [
     WorkerAuthGuard,
@@ -27,6 +30,7 @@ import { RunDeliveryService } from "./run-delivery.service";
     ExecutionResultsService,
     ExecutionArtifactsService,
     RunDeliveryService,
+    RunControlService,
     OrchestrationService,
     OutboxDispatcher,
     {

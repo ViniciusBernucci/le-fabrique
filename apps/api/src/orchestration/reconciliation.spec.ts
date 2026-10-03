@@ -78,6 +78,31 @@ function approve(f: ReturnType<typeof fixture>) {
   });
 }
 describe("stopped checkpoint reconciliation", () => {
+  it("reconciles manual pause from the exact persisted report", async () => {
+    const f = fixture();
+    approve(f);
+    const report = executionResultReportSchema.parse({
+      ...(f.attempt.result as object),
+      status: "PAUSED",
+      reason: "OPERATOR_PAUSED",
+    });
+    f.attempt.result = report;
+    f.attempt.resultDigest = createHash("sha256").update(JSON.stringify(report)).digest("hex");
+    f.checkpoint.reason = "OPERATOR_PAUSED";
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "PAUSED" },
+    });
+    expect(f.tx.run.update).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ controlAction: null }) }),
+    );
+  });
+  it("reconciles a pause before workflow materialization without inventing a report", async () => {
+    const f = fixture();
+    f.checkpoint.reason = "OPERATOR_PAUSED";
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "PAUSED" },
+    });
+  });
   it("finishes a failed setup from persisted stop proof in a serializable transaction", async () => {
     const f = fixture();
     await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({

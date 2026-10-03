@@ -36,8 +36,10 @@ import {
   providerOnboardingSessionSchema,
   providerVerificationListSchema,
   providerVerificationSchema,
+  type RequestRunControl,
   type RunDetail,
   type RunSummary,
+  runControlReceiptSchema,
   runDeliveryStateSchema,
   runDetailSchema,
   runListSchema,
@@ -148,6 +150,20 @@ export async function getExecutionArtifact(
 export async function getRunDelivery(token: string, runId: string, signal?: AbortSignal) {
   return runDeliveryStateSchema.parse(
     await request(`/runs/${encodeURIComponent(runId)}/delivery`, token, { signal }),
+  );
+}
+export async function requestRunControl(
+  token: string,
+  runId: string,
+  input: RequestRunControl,
+  signal?: AbortSignal,
+) {
+  return runControlReceiptSchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}/control`, token, {
+      method: "POST",
+      body: JSON.stringify(input),
+      signal,
+    }),
   );
 }
 export async function approveRunDelivery(

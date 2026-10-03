@@ -9,7 +9,7 @@ import type {
 } from "@le-fabrique/contracts";
 import { executionResultReportSchema, orchestrationJobSchema } from "@le-fabrique/contracts";
 import type { ControlClient } from "./control-client";
-import { LeaseAuthorityLostError, LeaseGuard } from "./lease-guard";
+import { ExecutionControlRequestedError, LeaseAuthorityLostError, LeaseGuard } from "./lease-guard";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
 import type { ResultFinalizationIntent, ResultJournalPort } from "./result-journal";
 import type { TrustedWorkflowProfile } from "./workflow-compiler";
@@ -130,13 +130,22 @@ export async function processOrchestrationExecution(
       return workflowResult;
     });
   } catch (error) {
-    if (error instanceof LeaseAuthorityLostError) {
+    if (
+      error instanceof LeaseAuthorityLostError ||
+      error instanceof ExecutionControlRequestedError
+    ) {
       if (!error.writerQuiescent) throw new WriterQuiescenceError();
-      if (workflowResult?.status === "CANCELLED") {
+      const manual = error instanceof ExecutionControlRequestedError;
+      if (
+        (manual && workflowResult) ||
+        workflowResult?.status === "CANCELLED" ||
+        workflowResult?.status === "PAUSED"
+      ) {
         const preserved = await finalizeWorkflowResult(workflowResult, job, claim, dependencies);
-        return { ...preserved, reason: "LEASE_LOST" };
+        return manual ? preserved : { ...preserved, reason: "LEASE_LOST" };
       }
       if (workflow) throw new InterruptionEvidenceError();
+      const outcome = manual && error.action === "PAUSE" ? "PAUSED" : "CANCELLED";
       const checkpoint = await dependencies.control.checkpoint(claim.attemptId, {
         fencingToken: claim.fencingToken,
         baseRevision: specification.project.baseRevision,
@@ -144,12 +153,12 @@ export async function processOrchestrationExecution(
           workflowResult?.snapshots.at(-1)?.headRevision ?? specification.project.baseRevision,
         snapshotId: workflowResult?.snapshots.at(-1)?.snapshotId ?? null,
         patchHash: workflowResult?.snapshots.at(-1)?.manifestHash ?? null,
-        reason: "CANCELLED",
+        reason: outcome === "PAUSED" ? "OPERATOR_PAUSED" : "CANCELLED",
         stoppedConfirmed: true,
       });
       const completed = await dependencies.control.complete(claim.attemptId, {
         fencingToken: claim.fencingToken,
-        outcome: "CANCELLED",
+        outcome,
       });
       return resultFromState(
         checkpoint.runId,
@@ -157,7 +166,11 @@ export async function processOrchestrationExecution(
         completed.status,
         false,
         null,
-        "LEASE_LOST",
+        manual
+          ? error.action === "PAUSE"
+            ? "OPERATOR_PAUSED"
+            : "OPERATOR_CANCELLED"
+          : "LEASE_LOST",
         null,
         null,
       );
@@ -228,9 +241,11 @@ async function finalizeWorkflowResult(
       ? "CANCELLED"
       : approved
         ? "COMPLETED"
-        : workflowResult.status === "PAUSED_LIMIT"
-          ? "PAUSED"
-          : "FAILED";
+        : workflowResult.status === "PAUSED"
+          ? "OPERATOR_PAUSED"
+          : workflowResult.status === "PAUSED_LIMIT"
+            ? "PAUSED"
+            : "FAILED";
   const checkpoint = {
     baseRevision: specification.project.baseRevision,
     codeRevision: latestSnapshot?.headRevision ?? workflowResult.workspace.revision,
@@ -245,9 +260,11 @@ async function finalizeWorkflowResult(
       ? "CANCELLED"
       : approved
         ? "VALIDATING"
-        : workflowResult.status === "PAUSED_LIMIT"
-          ? "PAUSED_LIMIT"
-          : "FAILED";
+        : workflowResult.status === "PAUSED"
+          ? "PAUSED"
+          : workflowResult.status === "PAUSED_LIMIT"
+            ? "PAUSED_LIMIT"
+            : "FAILED";
   const intent: ResultFinalizationIntent = {
     runId: claim.runId,
     attemptId: claim.attemptId,

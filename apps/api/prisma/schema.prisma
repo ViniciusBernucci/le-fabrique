@@ -18,6 +18,7 @@ enum TicketStatus {
   AWAITING_HUMAN
   DONE
   WAITING_PROVIDER
+  PAUSED
   PAUSED_LIMIT
   PAUSED_RESOURCE
   BLOCKED_RECOVERY
@@ -42,6 +43,7 @@ enum RunStatus {
   RUNNING
   VALIDATING
   DONE
+  PAUSED
   PAUSED_LIMIT
   BLOCKED_RECOVERY
   FAILED
@@ -157,6 +159,7 @@ model Run {
   ticket             Ticket      @relation(fields: [ticketId], references: [id], onDelete: Restrict)
   attempts           Attempt[]
   approval           Json?
+  controlAction      String?     @map("control_action")
 
   @@index([status, updatedAt])
   @@map("runs")

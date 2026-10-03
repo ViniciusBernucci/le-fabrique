@@ -25,6 +25,7 @@ import type {
   WorkspaceManager,
 } from "@le-fabrique/runtime";
 import type { ConfiguredAgentRouter } from "./configured-agent-router";
+import { operatorControlAction } from "./lease-guard";
 
 interface DeveloperWorkflowDependencies {
   workspaceManager: Pick<WorkspaceManager, "create">;
@@ -418,8 +419,12 @@ export class DeveloperWorkflow {
         workspace,
         context.manifest,
         progress,
-        "CANCELLED",
-        "INTERRUPTED",
+        operatorControlAction(signal) === "PAUSE" ? "PAUSED" : "CANCELLED",
+        operatorControlAction(signal) === "PAUSE"
+          ? "OPERATOR_PAUSED"
+          : operatorControlAction(signal) === "CANCEL"
+            ? "OPERATOR_CANCELLED"
+            : "INTERRUPTED",
         "Execution interrupted after confirmed stop; snapshot and partial observations preserved",
         activeRound,
       );

@@ -69,6 +69,7 @@ export class ExecutionResultsService {
     if (!run) throw new NotFoundException("Run not found");
     return runDetailSchema.parse({
       ...mapSummary(run),
+      controlAction: run.controlAction ?? null,
       attempts: run.attempts.map((attempt) => ({
         id: attempt.id,
         sequence: attempt.sequence,

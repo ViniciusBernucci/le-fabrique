@@ -439,6 +439,23 @@ describe("DeveloperWorkflow", () => {
     expect(deps.execute).toHaveBeenCalledTimes(1);
   });
 
+  it.each(["PAUSE", "CANCEL"] as const)("preserves %s as an operator request", async (action) => {
+    const { ExecutionControlRequestedError } = await import("./lease-guard");
+    const stop = new AbortController();
+    const deps = dependencies([], []);
+    deps.sandbox.execute.mockImplementation(async () => {
+      stop.abort(new ExecutionControlRequestedError(action, false));
+      return checkResult("TIMED_OUT", true);
+    });
+    const result = await new DeveloperWorkflow(deps).execute(request(), stop.signal);
+    expect(result).toMatchObject({
+      status: action === "PAUSE" ? "PAUSED" : "CANCELLED",
+      reason: action === "PAUSE" ? "OPERATOR_PAUSED" : "OPERATOR_CANCELLED",
+    });
+    expect(result.snapshots).toHaveLength(1);
+    expect(deps.execute).not.toHaveBeenCalled();
+  });
+
   it("preserves aborted baseline and captures only after known termination", async () => {
     const stop = new AbortController();
     const deps = dependencies([], []);

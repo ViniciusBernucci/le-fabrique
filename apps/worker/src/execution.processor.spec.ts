@@ -144,7 +144,7 @@ function dependencies() {
     complete: vi.fn(
       async (
         _id: string,
-        input: { outcome: "VALIDATING" | "CANCELLED" | "FAILED" | "PAUSED_LIMIT" },
+        input: { outcome: "VALIDATING" | "CANCELLED" | "FAILED" | "PAUSED" | "PAUSED_LIMIT" },
       ) => ({ runId, attemptId, status: input.outcome, stoppedConfirmed: true }),
     ),
   };
@@ -444,6 +444,36 @@ describe("processOrchestrationExecution", () => {
     expect(deps.control.complete).not.toHaveBeenCalled();
   });
 
+  it.each(["PAUSE", "CANCEL"] as const)(
+    "preserves operator %s before acknowledging completion",
+    async (action) => {
+      vi.useFakeTimers();
+      const deps = dependencies();
+      deps.input.leaseDurationMs = 15_000;
+      deps.control.renew.mockResolvedValue({
+        leaseExpiresAt: new Date(Date.now() + 30_000).toISOString(),
+        controlAction: action,
+      });
+      deps.workflow.execute.mockImplementation(async (signal: AbortSignal) => {
+        await new Promise<void>((resolve) =>
+          signal.addEventListener("abort", () => resolve(), { once: true }),
+        );
+        return {
+          ...approvedWorkflow(deps.attemptId),
+          status: action === "PAUSE" ? "PAUSED" : "CANCELLED",
+          reason: action === "PAUSE" ? "OPERATOR_PAUSED" : "OPERATOR_CANCELLED",
+        };
+      });
+      const pending = processOrchestrationExecution(job(), deps.input);
+      await vi.advanceTimersByTimeAsync(5_000);
+      await expect(pending).resolves.toMatchObject({
+        status: action === "PAUSE" ? "PAUSED" : "CANCELLED",
+      });
+      expect(deps.input.journal.save).toHaveBeenCalledBefore(deps.control.reportResult);
+      expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
+    },
+  );
+
   it("journals cancelled partial work after proven lease loss", async () => {
     vi.useFakeTimers();
     const deps = dependencies();
@@ -460,5 +490,28 @@ describe("processOrchestrationExecution", () => {
     await expect(pending).resolves.toMatchObject({ status: "CANCELLED", reason: "LEASE_LOST" });
     expect(deps.input.journal.save).toHaveBeenCalledBefore(deps.control.reportResult);
     expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
+  });
+
+  it("keeps operator stop fenced when writer termination is unknown", async () => {
+    vi.useFakeTimers();
+    const deps = dependencies();
+    deps.input.leaseDurationMs = 15_000;
+    deps.control.renew.mockResolvedValue({
+      leaseExpiresAt: new Date(Date.now() + 30_000).toISOString(),
+      controlAction: "PAUSE",
+    });
+    deps.workflow.cancelActive.mockResolvedValue(false);
+    deps.workflow.execute.mockImplementation(async (signal: AbortSignal) => {
+      await new Promise<void>((resolve) =>
+        signal.addEventListener("abort", () => resolve(), { once: true }),
+      );
+      return { ...approvedWorkflow(deps.attemptId), status: "PAUSED", reason: "OPERATOR_PAUSED" };
+    });
+    const pending = processOrchestrationExecution(job(), deps.input);
+    const rejected = expect(pending).rejects.toBeInstanceOf(WriterQuiescenceError);
+    await vi.advanceTimersByTimeAsync(5_000);
+    await rejected;
+    expect(deps.input.journal.save).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
   });
 });

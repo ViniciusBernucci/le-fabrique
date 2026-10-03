@@ -6,6 +6,66 @@ const expiry = (ms: number) => new Date(Date.now() + ms).toISOString();
 describe("LeaseGuard", () => {
   afterEach(() => vi.useRealTimers());
 
+  it.each(["PAUSE", "CANCEL"] as const)(
+    "handles %s without mislabelling lease loss",
+    async (action) => {
+      vi.useFakeTimers();
+      const stopWriter = vi.fn(async () => true);
+      const guard = new LeaseGuard({
+        fencingToken: 7,
+        leaseDurationMs: 30_000,
+        initialLeaseExpiresAt: expiry(30_000),
+        renewalIntervalMs: 5_000,
+        renew: async () => ({ leaseExpiresAt: expiry(30_000), controlAction: action }),
+        stopWriter,
+      });
+      let reason: unknown;
+      const operation = guard.execute(async (signal) => {
+        await new Promise<void>((resolve) =>
+          signal.addEventListener(
+            "abort",
+            () => {
+              reason = signal.reason;
+              resolve();
+            },
+            { once: true },
+          ),
+        );
+      });
+      const rejected = expect(operation).rejects.toMatchObject({
+        name: "ExecutionControlRequestedError",
+        action,
+        writerQuiescent: true,
+      });
+      await vi.advanceTimersByTimeAsync(5_000);
+      await rejected;
+      expect(reason).toMatchObject({ action });
+      expect(stopWriter).toHaveBeenCalledOnce();
+      expect(vi.getTimerCount()).toBe(0);
+    },
+  );
+
+  it("does not confirm operator cancellation when stop is unknown", async () => {
+    vi.useFakeTimers();
+    const guard = new LeaseGuard({
+      fencingToken: 7,
+      leaseDurationMs: 30_000,
+      initialLeaseExpiresAt: expiry(30_000),
+      renewalIntervalMs: 5_000,
+      renew: async () => ({ leaseExpiresAt: expiry(30_000), controlAction: "CANCEL" }),
+      stopWriter: async () => false,
+    });
+    const operation = guard.execute(async (signal) => {
+      await new Promise<void>((resolve) => signal.addEventListener("abort", () => resolve()));
+    });
+    const rejected = expect(operation).rejects.toMatchObject({
+      name: "ExecutionControlRequestedError",
+      writerQuiescent: false,
+    });
+    await vi.advanceTimersByTimeAsync(5_000);
+    await rejected;
+  });
+
   it("renews periodically and stops the timer when work completes", async () => {
     vi.useFakeTimers();
     const renew = vi.fn(async () => ({ leaseExpiresAt: expiry(30_000) }));

@@ -4,6 +4,7 @@ import { ArtifactPanel } from "./ArtifactPanel";
 import { getRun, listRuns } from "./control-api";
 import { DeliveryPanel } from "./DeliveryPanel";
 import { pollResource } from "./poll-resource";
+import { RunControlPanel } from "./RunControlPanel";
 
 const statusLabels: Record<string, string> = {
   WAITING_WORKER: "Aguardando executor",
@@ -14,6 +15,7 @@ const statusLabels: Record<string, string> = {
   FAILED: "Falhou",
   CANCELLED: "Cancelada",
   PAUSED_LIMIT: "Pausada por limite",
+  PAUSED: "Pausada pelo operador",
   BLOCKED_RECOVERY: "Recuperação necessária",
   WAITING_PROVIDER: "Aguardando IA",
   AUTH_REQUIRED: "Login necessário",
@@ -109,6 +111,7 @@ export function RunResultView({ run, token }: { run: RunDetail; token?: string }
     <div className="run-details">
       <h3>{run.title}</h3>
       <p>{statusLabels[run.status] ?? run.status}</p>
+      {token && <RunControlPanel key={run.id} token={token} run={run} />}
       {token && <DeliveryPanel key={run.id} token={token} runId={run.id} version={run.version} />}
       {run.attempts.map((attempt) => (
         <article key={attempt.id}>

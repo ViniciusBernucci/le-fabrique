@@ -110,17 +110,23 @@ export class OrchestrationService {
 
   async renew(attemptId: string, input: OrchestrationLeaseRequest): Promise<OrchestrationClaim> {
     const now = new Date();
-    return this.prisma.$transaction(async (transaction) => {
-      const attempt = await this.currentAttempt(transaction, attemptId, input);
-      if (attempt.status !== "RUNNING" || attempt.leaseExpiresAt <= now) {
-        throw new ConflictException("Lease already expired");
-      }
-      const updated = await transaction.attempt.update({
-        where: { id: attempt.id },
-        data: { leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs) },
-      });
-      return mapClaim(updated, false);
-    });
+    return this.prisma.$transaction(
+      async (transaction) => {
+        const attempt = await this.currentAttempt(transaction, attemptId, input);
+        if (attempt.status !== "RUNNING" || attempt.leaseExpiresAt <= now) {
+          throw new ConflictException("Lease already expired");
+        }
+        const updated = await transaction.attempt.update({
+          where: { id: attempt.id },
+          data: { leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs) },
+        });
+        return {
+          ...mapClaim(updated, false),
+          controlAction: attempt.run.controlAction as "PAUSE" | "CANCEL" | null,
+        };
+      },
+      { isolationLevel: "Serializable" },
+    );
   }
 
   async checkpoint(
@@ -186,12 +192,19 @@ export class OrchestrationService {
         const outcome =
           checkpoint.reason === "COMPLETED"
             ? "VALIDATING"
-            : checkpoint.reason === "PAUSED"
-              ? "PAUSED_LIMIT"
-              : checkpoint.reason === "CANCELLED"
-                ? "CANCELLED"
-                : "FAILED";
-        if (attempt.result || outcome === "VALIDATING" || outcome === "PAUSED_LIMIT") {
+            : checkpoint.reason === "OPERATOR_PAUSED"
+              ? "PAUSED"
+              : checkpoint.reason === "PAUSED"
+                ? "PAUSED_LIMIT"
+                : checkpoint.reason === "CANCELLED"
+                  ? "CANCELLED"
+                  : "FAILED";
+        if (
+          attempt.result ||
+          outcome === "VALIDATING" ||
+          outcome === "PAUSED_LIMIT" ||
+          (outcome === "PAUSED" && checkpoint.snapshotId)
+        ) {
           const parsed = executionResultReportSchema.safeParse(attempt.result);
           if (!parsed.success)
             throw new ConflictException("Recovery requires a valid persisted result");
@@ -205,9 +218,11 @@ export class OrchestrationService {
                   result.reason === "APPROVED" &&
                   result.review?.verdict === "APPROVE"
                 ? "VALIDATING"
-                : result.status === "PAUSED_LIMIT"
-                  ? "PAUSED_LIMIT"
-                  : "FAILED";
+                : result.status === "PAUSED"
+                  ? "PAUSED"
+                  : result.status === "PAUSED_LIMIT"
+                    ? "PAUSED_LIMIT"
+                    : "FAILED";
           if (
             result.workflowId !== attemptId ||
             attempt.resultDigest !== digest ||
@@ -255,7 +270,7 @@ export class OrchestrationService {
         ? "COMPLETED"
         : input.outcome === "CANCELLED"
           ? "CANCELLED"
-          : input.outcome === "PAUSED_LIMIT"
+          : input.outcome === "PAUSED_LIMIT" || input.outcome === "PAUSED"
             ? "STOPPED"
             : "FAILED";
     await transaction.attempt.update({
@@ -264,7 +279,7 @@ export class OrchestrationService {
     });
     await transaction.run.update({
       where: { id: attempt.runId },
-      data: { status: input.outcome, version: { increment: 1 } },
+      data: { status: input.outcome, controlAction: null, version: { increment: 1 } },
     });
     await transaction.ticket.update({
       where: { id: attempt.run.ticketId },

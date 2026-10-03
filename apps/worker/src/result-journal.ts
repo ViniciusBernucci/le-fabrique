@@ -32,17 +32,21 @@ const intentSchema = z
         ? "CANCELLED"
         : approved
           ? "VALIDATING"
-          : intent.result.status === "PAUSED_LIMIT"
-            ? "PAUSED_LIMIT"
-            : "FAILED";
+          : intent.result.status === "PAUSED"
+            ? "PAUSED"
+            : intent.result.status === "PAUSED_LIMIT"
+              ? "PAUSED_LIMIT"
+              : "FAILED";
     const reason =
       outcome === "CANCELLED"
         ? "CANCELLED"
         : approved
           ? "COMPLETED"
-          : outcome === "PAUSED_LIMIT"
-            ? "PAUSED"
-            : "FAILED";
+          : outcome === "PAUSED"
+            ? "OPERATOR_PAUSED"
+            : outcome === "PAUSED_LIMIT"
+              ? "PAUSED"
+              : "FAILED";
     if (
       intent.result.workflowId !== intent.attemptId ||
       !intent.checkpoint.stoppedConfirmed ||

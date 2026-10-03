@@ -2,9 +2,25 @@ export interface LeaseGuardOptions {
   fencingToken: number;
   leaseDurationMs: number;
   initialLeaseExpiresAt: string;
-  renew: (fencingToken: number) => Promise<{ leaseExpiresAt: string }>;
+  renew: (
+    fencingToken: number,
+  ) => Promise<{ leaseExpiresAt: string; controlAction?: "PAUSE" | "CANCEL" | null }>;
   stopWriter: () => Promise<boolean>;
   renewalIntervalMs?: number;
+}
+
+export class ExecutionControlRequestedError extends Error {
+  constructor(
+    readonly action: "PAUSE" | "CANCEL",
+    readonly writerQuiescent: boolean,
+  ) {
+    super(`Operator requested ${action}; writer stop ${writerQuiescent ? "confirmed" : "unknown"}`);
+    this.name = "ExecutionControlRequestedError";
+  }
+}
+
+export function operatorControlAction(signal?: AbortSignal): "PAUSE" | "CANCEL" | null {
+  return signal?.reason instanceof ExecutionControlRequestedError ? signal.reason.action : null;
 }
 
 export class LeaseAuthorityLostError extends Error {
@@ -47,20 +63,22 @@ export class LeaseGuard {
     const controller = new AbortController();
     let leaseExpiresAt = Date.parse(this.options.initialLeaseExpiresAt);
     let stopped = false;
-    let lost: LeaseAuthorityLostError | undefined;
+    let lost: LeaseAuthorityLostError | ExecutionControlRequestedError | undefined;
     let timer: ReturnType<typeof setTimeout> | undefined;
     let renewal: Promise<void> | undefined;
 
-    const loseAuthority = async (): Promise<void> => {
+    const loseAuthority = async (action?: "PAUSE" | "CANCEL"): Promise<void> => {
       if (lost) return;
-      controller.abort();
+      controller.abort(action ? new ExecutionControlRequestedError(action, false) : undefined);
       let quiescent = false;
       try {
         quiescent = await this.options.stopWriter();
       } catch {
         quiescent = false;
       }
-      lost = new LeaseAuthorityLostError(quiescent);
+      lost = action
+        ? new ExecutionControlRequestedError(action, quiescent)
+        : new LeaseAuthorityLostError(quiescent);
     };
 
     const schedule = (): void => {
@@ -85,14 +103,15 @@ export class LeaseGuard {
           Promise.resolve().then(() => this.options.renew(this.options.fencingToken)),
           timeout,
         ])
-          .then(({ leaseExpiresAt: nextExpiry }) => {
+          .then(async ({ leaseExpiresAt: nextExpiry, controlAction }) => {
             const parsedExpiry = Date.parse(nextExpiry);
             if (!Number.isFinite(parsedExpiry) || parsedExpiry <= Date.now()) {
               throw new Error("Lease renewal returned an expired lease");
             }
             leaseExpiresAt = parsedExpiry;
+            if (controlAction) await loseAuthority(controlAction);
           })
-          .catch(loseAuthority)
+          .catch(() => loseAuthority())
           .finally(() => {
             if (deadline) clearTimeout(deadline);
             renewal = undefined;
