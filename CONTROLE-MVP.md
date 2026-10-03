@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012AA. Estado: IMPLEMENTAÇÃO INTERNA VERIFICADA / VALIDAÇÃO OPERACIONAL PENDENTE. MVP operacional não concluído. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012AB. Estado: IMPLEMENTAÇÃO INTERNA VERIFICADA / VALIDAÇÃO OPERACIONAL PENDENTE. MVP operacional não concluído. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,7 +21,7 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## Estado do software e gates de operação
 
@@ -40,6 +40,6 @@ Escolher/cadastrar piloto, autenticar clientes sob identidade de serviço, confi
 
 ## Próxima etapa dependente do responsável
 
-Prova oficial de confinamento/financeiro/identidade de serviço, piloto cadastrado e ensaio operacional. Código/gate de confinamento implementado no AA; documentação técnica implementada no Z. Não há outro ticket interno READY identificado nas lacunas atuais. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência AA: 433 testes/checks, [relatório](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
+Prova oficial de confinamento/financeiro/identidade de serviço, piloto cadastrado e ensaio operacional. Código/gate de confinamento implementado no AA; documentação técnica implementada no Z. FAC-012AB verificou a composição interna com Git/sandbox/snapshot/journal reais e portas externas sintéticas, sem encontrar regressão de produção. Não há outro ticket interno READY identificado nas lacunas atuais. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência AB: 438 testes, [relatório](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
 
-Retomada deste desenvolvimento está em `feat/fac-012aa-claude-confinement`, `/home/vinicius/le-fabrique-fac-012aa`, com Z por ancestry e código AA `56f2e38`. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Pergunta sobre piloto/conta de serviço/financeiro permanece sem resposta; não inferir autorização ou elegibilidade.
+Retomada deste desenvolvimento está em `test/fac-012ab-integrated-mvp`, `/home/vinicius/le-fabrique-fac-012ab`, com Z/AA por ancestry e testes/tooling AB `1714347`. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Pergunta sobre piloto/conta de serviço/financeiro permanece sem resposta; não inferir autorização ou elegibilidade.

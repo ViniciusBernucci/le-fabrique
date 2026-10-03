@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-012AB — ensaio integrado interno](operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md)
+- [Ticket FAC-012AB](planejamento/FAC-012AB-ensaio-integrado-mvp.md)
 - [FAC-012AA — confinamento e preflight Claude](runtime/2026-10-03-FAC-012AA-confinamento-claude.md)
 - [Ticket FAC-012AA](planejamento/FAC-012AA-confinamento-claude.md)
 

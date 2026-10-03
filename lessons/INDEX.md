@@ -1,5 +1,6 @@
 # Lessons
 
+FAC-012AB aplica prova de composição com Git/sandbox/journal reais e portas externas sintéticas: [sandbox/worktree/snapshot](sandbox-worktree-snapshot.md).
 FAC-012Y diferencia troca sequencial de cliente e transferência de autoridade do writer: [lifecycle CLI](lifecycle-processo-cli.md).
 
 FAC-012X aplica indisponibilidade distinta de correção, sem supor stop: [lifecycle CLI](lifecycle-processo-cli.md).

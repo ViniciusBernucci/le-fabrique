@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AB
+
+Cinco testes de composição real do worker verificam bytes/bundle/documentação, restore/handoff e replay conservador; typecheck da integração incluído no comando raiz. 438 testes passaram, runtime inalterado. [Relatório](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 ## 2026-10-03 — FAC-012AA
 
 Claude usa perfil granular e factory exige prova privada atual de permissão nativa; preflight oficial opt-in verifica traces/canários/binário e preserva evidências. 433 testes/checks, código `56f2e38`; nenhuma prova real/ativação/piloto/deploy. [Relatório](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).

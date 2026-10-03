@@ -1,5 +1,6 @@
 # Backlog v2
 
+- FAC-012AB: AWAITING_HUMAN — ensaio integrado interno em `1714347`, 438 testes; providers/controle externos sintéticos, sem operação real. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 - FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço e piloto pendentes, sem conta real desbloqueada. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 
 - FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).

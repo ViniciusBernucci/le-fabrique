@@ -1,5 +1,6 @@
 # Operação da fábrica e worker
 
+FAC-012AB verifica composição real Git/sandbox/contexto/snapshot/bundle/journal com adapters/controle sintéticos. Cinco cenários, 438 testes; nenhum gate operacional ativado. [Evidências](2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 FAC-012Z conecta documentação técnica ao workflow real antes de Reviewer: Developer atualiza arquivos configurados, checks/snapshot/gate bounded verificam estrutura, revisão independente confere verdade e snapshot posterior invalida mudanças durante review. Ausência de política bloqueia compilação real; até duas correções continuam globais. Consumer/preflight não foram ativados. [Evidências](../controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
 FAC-012Y mantém lease/fence ao trocar cliente dentro da mesma tentativa, após parada e restauração verificadas. Novo job continua com fence novo; unknown/crash não é recuperado por suposição. Alternativas UI vazias por padrão, autenticação/preflight manuais. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
