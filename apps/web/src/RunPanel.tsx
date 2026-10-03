@@ -26,17 +26,30 @@ const statusLabels: Record<string, string> = {
   DOCS: "Documentação",
 };
 
-export function RunPanel({ token, projectId }: { token: string; projectId: string }) {
+export function RunPanel({
+  token,
+  projectId,
+  eventSequence = "0",
+}: {
+  token: string;
+  projectId: string;
+  eventSequence?: string;
+}) {
   const [runs, setRuns] = useState<RunSummary[]>([]);
   const [selected, setSelected] = useState("");
   const [detail, setDetail] = useState<RunDetail | null>(null);
   const [message, setMessage] = useState("");
   const [refresh, setRefresh] = useState(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Project identity and persisted event cursor invalidate the HTTP snapshot.
   useEffect(() => {
     setRuns([]);
     setSelected("");
     setDetail(null);
+  }, [token, projectId]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Project identity and persisted event cursor invalidate the HTTP snapshot.
+  useEffect(() => {
     setMessage(refresh > 0 ? "Atualizando execuções…" : "");
     if (!projectId) return;
     return pollResource(
@@ -50,8 +63,9 @@ export function RunPanel({ token, projectId }: { token: string; projectId: strin
       },
       () => setMessage("Falha ao carregar execuções."),
     );
-  }, [token, projectId, refresh]);
+  }, [token, projectId, refresh, eventSequence]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Project identity and persisted event cursor invalidate the HTTP snapshot.
   useEffect(() => {
     setDetail(null);
     if (!selected) return;
@@ -62,7 +76,7 @@ export function RunPanel({ token, projectId }: { token: string; projectId: strin
       },
       () => setMessage("Falha ao carregar o resultado da execução."),
     );
-  }, [token, projectId, selected]);
+  }, [token, projectId, selected, eventSequence]);
 
   return (
     <section className="panel run-panel" aria-label="Execuções do projeto">

@@ -2333,3 +2333,43 @@ export const operationStatusSchema = z
     "Writer sample must match persisted unresolved count",
   );
 export type OperationStatus = z.infer<typeof operationStatusSchema>;
+
+function isProjectEventCursor(value: string): boolean {
+  return /^(0|[1-9][0-9]{0,18})$/.test(value) && BigInt(value) <= 9_223_372_036_854_775_807n;
+}
+export const projectEventCursorSchema = z
+  .string()
+  .refine(isProjectEventCursor, "Invalid PostgreSQL event cursor");
+export const projectEventSchema = z
+  .object({
+    projectId: z.uuid(),
+    sequence: projectEventCursorSchema.refine((value) => value !== "0"),
+    kind: z.enum(["TICKET_CHANGED", "RUN_CHANGED", "ATTEMPT_CHANGED", "CHECKPOINT_CHANGED"]),
+    entityId: z.uuid(),
+    createdAt: z.iso.datetime(),
+  })
+  .strict();
+export type ProjectEvent = z.infer<typeof projectEventSchema>;
+export const projectEventPageSchema = z
+  .object({
+    projectId: z.uuid(),
+    after: projectEventCursorSchema,
+    nextCursor: projectEventCursorSchema,
+    events: z.array(projectEventSchema).max(100),
+  })
+  .strict()
+  .refine((page) => {
+    if (!isProjectEventCursor(page.after) || !isProjectEventCursor(page.nextCursor)) return false;
+    let previous = BigInt(page.after);
+    for (const event of page.events) {
+      if (
+        !isProjectEventCursor(event.sequence) ||
+        event.projectId !== page.projectId ||
+        BigInt(event.sequence) <= previous
+      )
+        return false;
+      previous = BigInt(event.sequence);
+    }
+    return previous === BigInt(page.nextCursor);
+  }, "Events must belong to project and advance cursor strictly");
+export type ProjectEventPage = z.infer<typeof projectEventPageSchema>;

@@ -115,8 +115,12 @@ export async function putProjectDefinition(
     }),
   );
 }
-export async function listTickets(token: string, projectId: string): Promise<Ticket[]> {
-  return ticketListSchema.parse(await request(`/projects/${projectId}/tickets`, token));
+export async function listTickets(
+  token: string,
+  projectId: string,
+  signal?: AbortSignal,
+): Promise<Ticket[]> {
+  return ticketListSchema.parse(await request(`/projects/${projectId}/tickets`, token, { signal }));
 }
 
 export async function listRuns(
@@ -390,4 +394,8 @@ export async function getOperationStatus(
       signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
     }),
   );
+}
+
+export function projectEventStreamUrl(projectId: string): string {
+  return `${apiUrl}/projects/${encodeURIComponent(projectId)}/events/stream`;
 }

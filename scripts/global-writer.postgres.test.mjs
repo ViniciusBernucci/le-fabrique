@@ -164,3 +164,62 @@ test("operation readiness queries the real valid exclusion definition rather tha
   await sql("DROP INDEX attempts_single_unconfirmed_writer;");
   await sql(exclusionSql);
 });
+
+test("project event cursor and invalidations roll back with the actual ticket transaction", async () => {
+  const before = await sql(
+    `SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`,
+  );
+  await sql(
+    `BEGIN; UPDATE tickets SET title='synthetic rollback' WHERE id=(SELECT ticket_id FROM runs WHERE id='${runs[0]}'); ROLLBACK;`,
+  );
+  assert.equal(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+    before,
+  );
+  assert.equal(
+    await sql(`SELECT max(sequence) FROM project_events WHERE project_id='${project}';`),
+    before,
+  );
+});
+
+test("same-project concurrent transactions persist contiguous ordered events", async () => {
+  const before = BigInt(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+  );
+  await Promise.all(
+    runs.map((run) =>
+      sql(
+        `BEGIN; UPDATE tickets SET title='${randomUUID()}' WHERE id=(SELECT ticket_id FROM runs WHERE id='${run}'); SELECT pg_sleep(0.2); COMMIT;`,
+      ),
+    ),
+  );
+  assert.equal(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+    (before + 2n).toString(),
+  );
+  assert.equal(
+    await sql(
+      `SELECT string_agg(sequence::text,',' ORDER BY sequence) FROM project_events WHERE project_id='${project}' AND sequence>${before};`,
+    ),
+    `${before + 1n},${before + 2n}`,
+  );
+});
+
+test("lease renewals do not produce project event churn but stop/status changes do", async () => {
+  const id = randomUUID();
+  await sql(insert(runs[0], id));
+  const before = BigInt(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+  );
+  await sql(`UPDATE attempts SET lease_expires_at=NOW()+INTERVAL '1 minute' WHERE id='${id}';`);
+  assert.equal(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+    before.toString(),
+  );
+  await sql(`UPDATE attempts SET status='FAILED' WHERE id='${id}';`);
+  await sql(`UPDATE attempts SET stopped_confirmed=true WHERE id='${id}';`);
+  assert.equal(
+    await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
+    (before + 2n).toString(),
+  );
+});

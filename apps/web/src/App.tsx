@@ -8,10 +8,13 @@ import {
   listProjects,
   listTickets,
   markTicketReady,
+  projectEventStreamUrl,
   updateProjectBaseRevision,
 } from "./control-api";
 import { OperationPanel } from "./OperationPanel";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
+import { pollResource } from "./poll-resource";
+import { watchProjectEvents } from "./project-events";
 import { hasExecutableBaseRevision } from "./project-view-model";
 import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
@@ -21,6 +24,7 @@ export function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState("");
+  const [eventSequence, setEventSequence] = useState("0");
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
   const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
@@ -39,11 +43,26 @@ export function App() {
     if (!selectedProject && data[0]) setSelectedProject(data[0].id);
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Project identity and persisted event cursor invalidate the HTTP snapshot.
   useEffect(() => {
     if (!authenticated || !selectedProject) return;
-    listTickets(token, selectedProject)
-      .then(setTickets)
-      .catch(() => setMessage("Falha ao carregar tickets."));
+    return pollResource(
+      (signal) => listTickets(token, selectedProject, signal),
+      setTickets,
+      () => setMessage("Falha ao carregar tickets."),
+    );
+  }, [authenticated, selectedProject, token, eventSequence]);
+
+  useEffect(() => {
+    setEventSequence("0");
+    if (!authenticated || !selectedProject) return;
+    return watchProjectEvents(
+      projectEventStreamUrl(selectedProject),
+      token,
+      selectedProject,
+      (event) => setEventSequence(event.sequence),
+      () => undefined, // HTTP polling continues when streaming is unavailable.
+    );
   }, [authenticated, selectedProject, token]);
 
   async function login(event: FormEvent) {
@@ -305,7 +324,7 @@ export function App() {
               Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
             </p>
           </section>
-          <RunPanel token={token} projectId={selectedProject} />
+          <RunPanel token={token} projectId={selectedProject} eventSequence={eventSequence} />
         </>
       )}
     </main>

@@ -116,6 +116,8 @@ model Project {
   updatedAt DateTime @updatedAt @map("updated_at")
   tickets   Ticket[]
   definition ProjectDefinition?
+  eventCursor ProjectEventCursor?
+  events ProjectEvent[]
 
   @@map("projects")
 }
@@ -370,4 +372,22 @@ model GithubPullRequest {
   @@index([status, createdAt])
   @@index([host, owner, repository, baseBranch, headBranch, createdAt])
   @@map("github_pull_requests")
+}
+
+model ProjectEventCursor {
+  projectId String @id @db.Uuid @map("project_id")
+  sequence BigInt @default(0)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  @@map("project_event_cursors")
+}
+
+model ProjectEvent {
+  projectId String @db.Uuid @map("project_id")
+  sequence BigInt
+  kind String
+  entityId String @db.Uuid @map("entity_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  @@id([projectId, sequence])
+  @@map("project_events")
 }

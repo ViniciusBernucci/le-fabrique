@@ -13,6 +13,8 @@ import { OperationStatusService } from "./operation-status.service";
 import { OrchestrationController } from "./orchestration.controller";
 import { OrchestrationService } from "./orchestration.service";
 import { ORCHESTRATION_QUEUE, OutboxDispatcher } from "./outbox-dispatcher";
+import { ProjectEventsController } from "./project-events.controller";
+import { ProjectEventsService } from "./project-events.service";
 import { RunControlController } from "./run-control.controller";
 import { RunControlService } from "./run-control.service";
 import { RunDeliveryController } from "./run-delivery.controller";
@@ -23,6 +25,7 @@ import { RunResumeService } from "./run-resume.service";
 
 @Module({
   controllers: [
+    ProjectEventsController,
     OperationStatusController,
     OrchestrationController,
     RunResultsController,
@@ -32,6 +35,7 @@ import { RunResumeService } from "./run-resume.service";
     RunRecoveryController,
   ],
   providers: [
+    ProjectEventsService,
     OperationStatusService,
     WorkerAuthGuard,
     AdminAuthGuard,
