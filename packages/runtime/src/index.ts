@@ -7,6 +7,11 @@ export {
 } from "./claude-permissions";
 export { CodexAdapter, type CodexAdapterOptions } from "./codex-adapter";
 export { ContextBuilder } from "./context-builder";
+export {
+  createEvidenceBackup,
+  restoreEvidenceBackup,
+  verifyEvidenceBackup,
+} from "./evidence-backup";
 export type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";
 export {
   RuntimeGuard,

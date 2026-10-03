@@ -2373,3 +2373,25 @@ export const projectEventPageSchema = z
     return previous === BigInt(page.nextCursor);
   }, "Events must belong to project and advance cursor strictly");
 export type ProjectEventPage = z.infer<typeof projectEventPageSchema>;
+
+export const evidenceBackupPayloadSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    createdAt: z.iso.datetime(),
+    files: z
+      .array(
+        z
+          .object({
+            path: z.string().min(1).max(1024),
+            mode: z.number().int().min(0).max(0o777),
+            sizeBytes: z.number().int().nonnegative().max(67_108_864),
+            sha256: z.string().regex(/^[a-f0-9]{64}$/),
+            contentBase64: z.string().max(89_478_488),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(4096),
+  })
+  .strict();
+export type EvidenceBackupPayload = z.infer<typeof evidenceBackupPayloadSchema>;

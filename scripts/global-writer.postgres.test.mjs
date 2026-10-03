@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { execFile, execFileSync } from "node:child_process";
-import { randomUUID } from "node:crypto";
-import { readdir, readFile } from "node:fs/promises";
+import { randomBytes, randomUUID } from "node:crypto";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { after, before, beforeEach, test } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
@@ -222,4 +223,104 @@ test("lease renewals do not produce project event churn but stop/status changes 
     await sql(`SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`),
     (before + 2n).toString(),
   );
+});
+
+test("encrypted backup restores a real custom PostgreSQL dump with project events and exclusion intact", async () => {
+  const { createEvidenceBackup, restoreEvidenceBackup, verifyEvidenceBackup } = await import(
+    "../packages/runtime/dist/evidence-backup.js"
+  );
+  const root = await mkdtemp(path.join(tmpdir(), "fac-012af-database-backup-"));
+  try {
+    const snapshots = path.join(root, "snapshots");
+    const journal = path.join(root, "journal");
+    await mkdir(snapshots, { mode: 0o700 });
+    await mkdir(journal, { mode: 0o700 });
+    const dump = execFileSync(
+      "docker",
+      ["exec", container, "pg_dump", "-U", "postgres", "-Fc", "postgres"],
+      { maxBuffer: 64 * 1024 * 1024, timeout: 20_000 },
+    );
+    const databaseDump = path.join(root, "database.dump");
+    await writeFile(databaseDump, dump, { mode: 0o600 });
+    const keyFile = path.join(root, "key");
+    await writeFile(keyFile, randomBytes(32), { mode: 0o600 });
+    const output = path.join(root, "archive.lfb");
+    const expected = await sql(
+      `SELECT count(*) FROM project_events WHERE project_id='${project}'; SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`,
+    );
+    await createEvidenceBackup({
+      databaseDump,
+      snapshots,
+      journal,
+      keyFile,
+      output,
+      servicesStopped: true,
+    });
+    assert.equal((await verifyEvidenceBackup({ archive: output, keyFile })).files, 1);
+    const destination = path.join(root, "restored");
+    await restoreEvidenceBackup({
+      archive: output,
+      keyFile,
+      destination,
+      isolatedDestination: true,
+    });
+    const restoredDump = await readFile(path.join(destination, "database.dump"));
+    assert.deepEqual(restoredDump, dump);
+    await sql("CREATE DATABASE fac_012af_restored;");
+    execFileSync(
+      "docker",
+      [
+        "exec",
+        "-i",
+        container,
+        "pg_restore",
+        "-U",
+        "postgres",
+        "-d",
+        "fac_012af_restored",
+        "--exit-on-error",
+      ],
+      { input: restoredDump, timeout: 20_000, maxBuffer: 1024 * 1024 },
+    );
+    const result = execFileSync(
+      "docker",
+      [
+        "exec",
+        "-i",
+        container,
+        "psql",
+        "-U",
+        "postgres",
+        "-d",
+        "fac_012af_restored",
+        "-v",
+        "ON_ERROR_STOP=1",
+        "-At",
+      ],
+      {
+        input: `SELECT count(*) FROM project_events WHERE project_id='${project}'; SELECT sequence FROM project_event_cursors WHERE project_id='${project}';`,
+        timeout: 20_000,
+      },
+    )
+      .toString()
+      .trim();
+    assert.equal(result, expected);
+    const guardSource = await readFile(
+      path.join(repository, "apps/api/src/orchestration/global-writer-guard.ts"),
+      "utf8",
+    );
+    const query = guardSource.match(/SELECT EXISTS[\s\S]+?AS installed/)?.[0];
+    assert.equal(
+      execFileSync(
+        "docker",
+        ["exec", "-i", container, "psql", "-U", "postgres", "-d", "fac_012af_restored", "-At"],
+        { input: query, timeout: 20_000 },
+      )
+        .toString()
+        .trim(),
+      "t",
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
