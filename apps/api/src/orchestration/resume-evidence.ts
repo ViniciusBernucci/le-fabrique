@@ -27,16 +27,20 @@ export function stoppedResumeEvidence(attempt: Attempt & { checkpoint: Checkpoin
   const { untracked, ...manifest } = artifact.manifest;
   const projected = { ...manifest, untrackedFiles: untracked.length };
   const reason =
-    result.status === "PAUSED"
-      ? "OPERATOR_PAUSED"
-      : result.status === "PAUSED_LIMIT"
-        ? "PAUSED"
-        : result.status === "CANCELLED"
-          ? "CANCELLED"
-          : "FAILED";
+    result.status === "WAITING_PROVIDER"
+      ? "WAITING_PROVIDER"
+      : result.status === "PAUSED"
+        ? "OPERATOR_PAUSED"
+        : result.status === "PAUSED_LIMIT"
+          ? "PAUSED"
+          : result.status === "CANCELLED"
+            ? "CANCELLED"
+            : "FAILED";
   if (
     !snapshot ||
-    !["PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(result.status) ||
+    !["WAITING_PROVIDER", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(
+      result.status,
+    ) ||
     result.workflowId !== attempt.id ||
     result.checks.some((check) => !check.stoppedConfirmed) ||
     digest(result) !== attempt.resultDigest ||

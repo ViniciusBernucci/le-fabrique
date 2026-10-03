@@ -31,7 +31,9 @@ export class RunResumeService {
         if (
           run.version !== input.expectedVersion ||
           run.controlAction ||
-          !["PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(run.status) ||
+          !["WAITING_PROVIDER", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(
+            run.status,
+          ) ||
           run.ticket.status !== run.status
         )
           throw new ConflictException("Run cannot resume at this version/state");

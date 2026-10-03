@@ -101,6 +101,10 @@ it("requires new attempt authorization and discloses renewed limits without auto
   expect(html).toContain("Autorizo nova tentativa");
   expect(html).toContain("reiniciam para a tentativa autorizada");
   expect(html).toContain('disabled=""');
+  run.status = "WAITING_PROVIDER";
+  expect(renderToStaticMarkup(<RunResumePanel token="synthetic" run={run} />)).toContain(
+    "Aguardando provider",
+  );
   run.status = "BLOCKED_RECOVERY";
   expect(renderToStaticMarkup(<RunResumePanel token="synthetic" run={run} />)).toBe("");
 });

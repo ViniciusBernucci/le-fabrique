@@ -26,6 +26,7 @@ import type {
   SnapshotManager,
   WorkspaceManager,
 } from "@le-fabrique/runtime";
+import { ProviderUnavailableError } from "./agent-route";
 import type { ConfiguredAgentRouter } from "./configured-agent-router";
 import { operatorControlAction } from "./lease-guard";
 
@@ -148,7 +149,9 @@ export class DeveloperWorkflow {
         let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
         try {
           developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
-        } catch {
+        } catch (error) {
+          if (error instanceof ProviderUnavailableError)
+            return this.waitForProvider(request, workspace, context.manifest, progress, round);
           return this.result(
             request,
             workspace,
@@ -214,6 +217,8 @@ export class DeveloperWorkflow {
         progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
         throwIfAborted(signal);
         if (developer.status !== "COMPLETED") {
+          if (providerNeedsIntervention(developer))
+            return this.waitForProvider(request, workspace, context.manifest, progress, round);
           const preservedFailure = await this.dependencies.snapshots.capture({
             schemaVersion: 1,
             workspacePath: workspace.workspacePath,
@@ -297,7 +302,9 @@ export class DeveloperWorkflow {
         let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
         try {
           reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
-        } catch {
+        } catch (error) {
+          if (error instanceof ProviderUnavailableError)
+            return this.waitForProvider(request, workspace, context.manifest, progress, round);
           return this.result(
             request,
             workspace,
@@ -373,6 +380,8 @@ export class DeveloperWorkflow {
         progress.reviewerExecutions += 1;
         progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
         throwIfAborted(signal);
+        if (providerNeedsIntervention(reviewer))
+          return this.waitForProvider(request, workspace, context.manifest, progress, round);
         const review = parseReview(reviewer);
         if (!review) {
           return this.result(
@@ -462,6 +471,33 @@ export class DeveloperWorkflow {
         activeRound,
       );
     }
+  }
+
+  private async waitForProvider(
+    request: DeveloperWorkflowRequest,
+    workspace: WorkspaceCreateResult,
+    manifest: DeveloperWorkflowResult["contextManifest"],
+    progress: WorkflowProgress,
+    round: number,
+  ): Promise<DeveloperWorkflowResult> {
+    if (!(await this.cancelActive()) || progress.checks.some((check) => !check.stoppedConfirmed))
+      throw new Error("Provider waiting requires confirmed stopped processes");
+    const snapshot = await this.dependencies.snapshots.capture({
+      schemaVersion: 1,
+      workspacePath: workspace.workspacePath,
+      limits: request.snapshotLimits,
+    });
+    progress.snapshots = [...progress.snapshots, snapshot.manifest].slice(-3);
+    return this.result(
+      request,
+      workspace,
+      manifest,
+      progress,
+      "WAITING_PROVIDER",
+      "PROVIDER_UNAVAILABLE",
+      "Provider requires authentication, quota or availability intervention; stopped work preserved",
+      round,
+    );
   }
 
   private async runChecks(
@@ -656,6 +692,13 @@ function parseReview(result: RuntimeExecutionResult): WorkflowReview | null {
 function boundedPrompt(prompt: string, role: string): string {
   if (prompt.length > MAX_PROMPT_CHARS) throw new Error(`${role} prompt exceeds runtime limit`);
   return prompt;
+}
+
+function providerNeedsIntervention(result: RuntimeExecutionResult): boolean {
+  return (
+    result.status !== "COMPLETED" &&
+    ["AUTH_REQUIRED", "RATE_LIMITED", "PROVIDER_BUSY"].includes(result.error?.code ?? "")
+  );
 }
 
 function developerPrompt(

@@ -226,19 +226,22 @@ export class OrchestrationService {
         )
           return { state: null };
         const outcome =
-          checkpoint.reason === "COMPLETED"
-            ? "VALIDATING"
-            : checkpoint.reason === "OPERATOR_PAUSED"
-              ? "PAUSED"
-              : checkpoint.reason === "PAUSED"
-                ? "PAUSED_LIMIT"
-                : checkpoint.reason === "CANCELLED"
-                  ? "CANCELLED"
-                  : "FAILED";
+          checkpoint.reason === "WAITING_PROVIDER"
+            ? "WAITING_PROVIDER"
+            : checkpoint.reason === "COMPLETED"
+              ? "VALIDATING"
+              : checkpoint.reason === "OPERATOR_PAUSED"
+                ? "PAUSED"
+                : checkpoint.reason === "PAUSED"
+                  ? "PAUSED_LIMIT"
+                  : checkpoint.reason === "CANCELLED"
+                    ? "CANCELLED"
+                    : "FAILED";
         if (
           attempt.result ||
           outcome === "VALIDATING" ||
           outcome === "PAUSED_LIMIT" ||
+          outcome === "WAITING_PROVIDER" ||
           (outcome === "PAUSED" && checkpoint.snapshotId)
         ) {
           const parsed = executionResultReportSchema.safeParse(attempt.result);
@@ -248,17 +251,19 @@ export class OrchestrationService {
           const digest = createHash("sha256").update(JSON.stringify(result)).digest("hex");
           const snapshot = result.snapshots.at(-1);
           const expectedOutcome =
-            result.status === "CANCELLED"
-              ? "CANCELLED"
-              : result.status === "AWAITING_HUMAN" &&
-                  result.reason === "APPROVED" &&
-                  result.review?.verdict === "APPROVE"
-                ? "VALIDATING"
-                : result.status === "PAUSED"
-                  ? "PAUSED"
-                  : result.status === "PAUSED_LIMIT"
-                    ? "PAUSED_LIMIT"
-                    : "FAILED";
+            result.status === "WAITING_PROVIDER"
+              ? "WAITING_PROVIDER"
+              : result.status === "CANCELLED"
+                ? "CANCELLED"
+                : result.status === "AWAITING_HUMAN" &&
+                    result.reason === "APPROVED" &&
+                    result.review?.verdict === "APPROVE"
+                  ? "VALIDATING"
+                  : result.status === "PAUSED"
+                    ? "PAUSED"
+                    : result.status === "PAUSED_LIMIT"
+                      ? "PAUSED_LIMIT"
+                      : "FAILED";
           if (
             result.workflowId !== attemptId ||
             attempt.resultDigest !== digest ||
@@ -339,7 +344,9 @@ export class OrchestrationService {
         ? "COMPLETED"
         : input.outcome === "CANCELLED"
           ? "CANCELLED"
-          : input.outcome === "PAUSED_LIMIT" || input.outcome === "PAUSED"
+          : input.outcome === "WAITING_PROVIDER" ||
+              input.outcome === "PAUSED_LIMIT" ||
+              input.outcome === "PAUSED"
             ? "STOPPED"
             : "FAILED";
     await transaction.attempt.update({

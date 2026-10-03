@@ -60,6 +60,16 @@ async function fixture() {
   };
 }
 describe("immutable private result journal", () => {
+  it("preserves waiting provider outcome and rejects an inconsistent checkpoint", async () => {
+    const f = await fixture();
+    f.intent.result.status = "WAITING_PROVIDER";
+    f.intent.result.reason = "PROVIDER_UNAVAILABLE";
+    f.intent.outcome = "WAITING_PROVIDER";
+    await expect(f.journal.save(f.job, f.intent)).rejects.toThrow();
+    f.intent.checkpoint.reason = "WAITING_PROVIDER";
+    await f.journal.save(f.job, f.intent);
+    expect((await f.journal.load(f.job))?.outcome).toBe("WAITING_PROVIDER");
+  });
   it("publishes durable bounded data and reads it from a new instance", async () => {
     const f = await fixture();
     await expect(f.journal.load(f.job)).resolves.toBeNull();

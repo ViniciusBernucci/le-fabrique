@@ -170,6 +170,22 @@ function fixture() {
   };
 }
 describe("explicit stopped snapshot resume", () => {
+  it("resumes waiting-provider evidence only through the same stopped snapshot gate", async () => {
+    const f = fixture();
+    f.run.status = "WAITING_PROVIDER";
+    f.ticket.status = "WAITING_PROVIDER";
+    f.attempt.checkpoint.reason = "WAITING_PROVIDER";
+    f.attempt.result = executionResultReportSchema.parse({
+      ...(f.attempt.result as object),
+      status: "WAITING_PROVIDER",
+      reason: "PROVIDER_UNAVAILABLE",
+    });
+    f.attempt.resultDigest = hash(f.attempt.result);
+    await expect(f.service.request(f.run.id, f.input)).resolves.toMatchObject({
+      status: "WAITING_WORKER",
+    });
+    expect(f.tx.attempt.create).not.toHaveBeenCalled();
+  });
   it("freezes the original objective and origin in atomic outbox before a new claim", async () => {
     const f = fixture();
     await expect(f.service.request(f.run.id, f.input)).resolves.toMatchObject({

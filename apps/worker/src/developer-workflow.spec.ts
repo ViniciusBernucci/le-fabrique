@@ -6,6 +6,7 @@ import type {
 } from "@le-fabrique/contracts";
 import { RuntimeGuard } from "@le-fabrique/runtime";
 import { describe, expect, it, vi } from "vitest";
+import { ProviderUnavailableError } from "./agent-route";
 import { DeveloperWorkflow } from "./developer-workflow";
 
 const workflowId = "00000000-0000-4000-8000-000000000010";
@@ -215,6 +216,63 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
+  it.each(["AUTH_REQUIRED", "RATE_LIMITED", "PROVIDER_BUSY"] as const)(
+    "preserves stopped Developer work and waits on %s without correction loops",
+    async (code) => {
+      const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
+      failed.error = { code, message: "synthetic provider unavailable", retryable: true };
+      const deps = dependencies([failed], [checkResult("COMPLETED")]);
+      const result = await new DeveloperWorkflow(deps).execute(request());
+      expect(result).toMatchObject({
+        status: "WAITING_PROVIDER",
+        reason: "PROVIDER_UNAVAILABLE",
+        developerExecutions: 1,
+        reviewerExecutions: 0,
+        corrections: 0,
+      });
+      expect(result.runtimeObservations[0]?.errorCode).toBe(code);
+      expect(result.snapshots).toHaveLength(1);
+      expect(deps.execute).toHaveBeenCalledOnce();
+      expect(deps.execute).toHaveBeenCalledBefore(deps.snapshots.capture);
+    },
+  );
+  it.each(["AUTH_REQUIRED", "RATE_LIMITED", "PROVIDER_BUSY"] as const)(
+    "preserves work and waits on Reviewer %s instead of invalid verdict",
+    async (code) => {
+      const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
+      failed.error = { code, message: "synthetic provider unavailable", retryable: true };
+      const deps = dependencies(
+        [runtimeResult(crypto.randomUUID(), "implemented"), failed],
+        [checkResult("COMPLETED"), checkResult("COMPLETED")],
+      );
+      const result = await new DeveloperWorkflow(deps).execute(request());
+      expect(result).toMatchObject({
+        status: "WAITING_PROVIDER",
+        developerExecutions: 1,
+        reviewerExecutions: 1,
+        corrections: 0,
+        review: null,
+      });
+      expect(result.snapshots).toHaveLength(2);
+      expect(deps.execute).toHaveBeenCalledTimes(2);
+    },
+  );
+  it("waits before a call only for typed provider unavailability, preserving clean snapshot", async () => {
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    deps.agentRouter.resolve.mockRejectedValue(new ProviderUnavailableError());
+    const result = await new DeveloperWorkflow(deps).execute(request());
+    expect(result.status).toBe("WAITING_PROVIDER");
+    expect(result.snapshots).toHaveLength(1);
+    expect(deps.execute).not.toHaveBeenCalled();
+  });
+  it("never fabricates waiting when a runtime process rejects with unknown stop", async () => {
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    deps.execute.mockRejectedValue(new Error("AUTH_REQUIRED but termination unknown"));
+    await expect(new DeveloperWorkflow(deps).execute(request())).rejects.toThrow(
+      "termination unknown",
+    );
+    expect(deps.snapshots.capture).not.toHaveBeenCalled();
+  });
   it("preserves partial writes from a failed Developer before returning a retryable pause", async () => {
     const deps = dependencies(
       [runtimeResult(crypto.randomUUID(), null, "FAILED")],

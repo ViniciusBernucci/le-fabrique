@@ -6,7 +6,7 @@ export function RunResumePanel({ token, run }: { token: string; run: RunDetail }
   const attempt = run.attempts[0];
   const attemptId = attempt?.id;
   const eligible =
-    ["PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(run.status) &&
+    ["WAITING_PROVIDER", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"].includes(run.status) &&
     !!attempt?.stoppedConfirmed &&
     !!attempt.checkpoint?.stoppedConfirmed &&
     !!attempt.result?.snapshots.length;
@@ -53,6 +53,12 @@ export function RunResumePanel({ token, run }: { token: string; run: RunDetail }
   return (
     <fieldset>
       <legend>Retomada do trabalho preservado</legend>
+      {run.status === "WAITING_PROVIDER" && (
+        <p>
+          Aguardando provider: autentique ou escolha uma instalação elegível nas configurações antes
+          de autorizar a retomada. O software não habilita gastos nem repete login automaticamente.
+        </p>
+      )}
       <p>
         Continua o objetivo original em nova tentativa com snapshot verificado. Os limites de
         chamadas/tempo reiniciam para a tentativa autorizada; contas e modelos vêm da configuração

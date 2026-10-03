@@ -282,15 +282,17 @@ async function finalizeWorkflowResult(
   const approved =
     workflowResult.status === "AWAITING_HUMAN" && workflowResult.reason === "APPROVED";
   const checkpointReason =
-    workflowResult.status === "CANCELLED"
-      ? "CANCELLED"
-      : approved
-        ? "COMPLETED"
-        : workflowResult.status === "PAUSED"
-          ? "OPERATOR_PAUSED"
-          : workflowResult.status === "PAUSED_LIMIT"
-            ? "PAUSED"
-            : "FAILED";
+    workflowResult.status === "WAITING_PROVIDER"
+      ? "WAITING_PROVIDER"
+      : workflowResult.status === "CANCELLED"
+        ? "CANCELLED"
+        : approved
+          ? "COMPLETED"
+          : workflowResult.status === "PAUSED"
+            ? "OPERATOR_PAUSED"
+            : workflowResult.status === "PAUSED_LIMIT"
+              ? "PAUSED"
+              : "FAILED";
   const checkpoint = {
     baseRevision: specification.project.baseRevision,
     codeRevision: latestSnapshot?.headRevision ?? workflowResult.workspace.revision,
@@ -301,15 +303,17 @@ async function finalizeWorkflowResult(
   } as const;
 
   const outcome =
-    workflowResult.status === "CANCELLED"
-      ? "CANCELLED"
-      : approved
-        ? "VALIDATING"
-        : workflowResult.status === "PAUSED"
-          ? "PAUSED"
-          : workflowResult.status === "PAUSED_LIMIT"
-            ? "PAUSED_LIMIT"
-            : "FAILED";
+    workflowResult.status === "WAITING_PROVIDER"
+      ? "WAITING_PROVIDER"
+      : workflowResult.status === "CANCELLED"
+        ? "CANCELLED"
+        : approved
+          ? "VALIDATING"
+          : workflowResult.status === "PAUSED"
+            ? "PAUSED"
+            : workflowResult.status === "PAUSED_LIMIT"
+              ? "PAUSED_LIMIT"
+              : "FAILED";
   const intent: ResultFinalizationIntent = {
     runId: claim.runId,
     attemptId: claim.attemptId,

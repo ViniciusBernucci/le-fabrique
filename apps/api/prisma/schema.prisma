@@ -40,6 +40,7 @@ enum WorkerStatus {
 
 enum RunStatus {
   WAITING_WORKER
+  WAITING_PROVIDER
   RUNNING
   VALIDATING
   DONE

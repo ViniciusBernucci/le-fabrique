@@ -79,6 +79,25 @@ function approve(f: ReturnType<typeof fixture>) {
   });
 }
 describe("stopped checkpoint reconciliation", () => {
+  it("reconciles stopped provider waiting only with matching persisted report", async () => {
+    const f = fixture();
+    approve(f);
+    f.checkpoint.reason = "WAITING_PROVIDER";
+    const report = executionResultReportSchema.parse({
+      ...(f.attempt.result as object),
+      status: "WAITING_PROVIDER",
+      reason: "PROVIDER_UNAVAILABLE",
+      review: null,
+    });
+    f.attempt.result = report;
+    f.attempt.resultDigest = createHash("sha256").update(JSON.stringify(report)).digest("hex");
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "WAITING_PROVIDER", stoppedConfirmed: true },
+    });
+    expect(f.tx.attempt.update).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ status: "STOPPED" }) }),
+    );
+  });
   it("recovers blocked approved work only with exact result, snapshot and artifact", async () => {
     const f = fixture();
     approve(f);

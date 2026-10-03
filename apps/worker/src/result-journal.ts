@@ -28,25 +28,29 @@ const intentSchema = z
     const approved =
       intent.result.status === "AWAITING_HUMAN" && intent.result.reason === "APPROVED";
     const outcome =
-      intent.result.status === "CANCELLED"
-        ? "CANCELLED"
-        : approved
-          ? "VALIDATING"
-          : intent.result.status === "PAUSED"
-            ? "PAUSED"
-            : intent.result.status === "PAUSED_LIMIT"
-              ? "PAUSED_LIMIT"
-              : "FAILED";
-    const reason =
-      outcome === "CANCELLED"
-        ? "CANCELLED"
-        : approved
-          ? "COMPLETED"
-          : outcome === "PAUSED"
-            ? "OPERATOR_PAUSED"
-            : outcome === "PAUSED_LIMIT"
+      intent.result.status === "WAITING_PROVIDER"
+        ? "WAITING_PROVIDER"
+        : intent.result.status === "CANCELLED"
+          ? "CANCELLED"
+          : approved
+            ? "VALIDATING"
+            : intent.result.status === "PAUSED"
               ? "PAUSED"
-              : "FAILED";
+              : intent.result.status === "PAUSED_LIMIT"
+                ? "PAUSED_LIMIT"
+                : "FAILED";
+    const reason =
+      outcome === "WAITING_PROVIDER"
+        ? "WAITING_PROVIDER"
+        : outcome === "CANCELLED"
+          ? "CANCELLED"
+          : approved
+            ? "COMPLETED"
+            : outcome === "PAUSED"
+              ? "OPERATOR_PAUSED"
+              : outcome === "PAUSED_LIMIT"
+                ? "PAUSED"
+                : "FAILED";
     if (
       intent.result.workflowId !== intent.attemptId ||
       !intent.checkpoint.stoppedConfirmed ||

@@ -13,6 +13,13 @@ const runtimeProviders: Partial<
   CLAUDE: "claude",
 };
 
+export class ProviderUnavailableError extends Error {
+  constructor() {
+    super("Configured provider installation is not available");
+    this.name = "ProviderUnavailableError";
+  }
+}
+
 export function resolveAgentRoute(input: FactoryConfiguration, role: EmployeeRole): AgentRoute {
   const configuration = factoryConfigurationSchema.parse(input);
   const assignment = configuration.assignments.find((item) => item.role === role);
@@ -23,7 +30,7 @@ export function resolveAgentRoute(input: FactoryConfiguration, role: EmployeeRol
     (item) => item.id === assignment.installationId,
   );
   if (!installation?.enabled || installation.state !== "AVAILABLE") {
-    throw new Error(`Configured installation for ${role} is not available`);
+    throw new ProviderUnavailableError();
   }
   if (role === "REVIEWER" && assignment.permissionMode !== "READ_ONLY") {
     throw new Error("Reviewer route must be READ_ONLY");

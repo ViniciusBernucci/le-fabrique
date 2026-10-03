@@ -1723,6 +1723,7 @@ export type OrchestrationLeaseRequest = z.infer<typeof orchestrationLeaseRequest
 
 export const checkpointReasonSchema = z.enum([
   "PROGRESS",
+  "WAITING_PROVIDER",
   "PAUSED",
   "OPERATOR_PAUSED",
   "CANCELLED",
@@ -1750,14 +1751,29 @@ export type OrchestrationCheckpointRequest = z.infer<typeof orchestrationCheckpo
 export const orchestrationCompleteRequestSchema = z.object({
   workerId: z.uuid(),
   fencingToken: z.number().int().positive(),
-  outcome: z.enum(["VALIDATING", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
+  outcome: z.enum([
+    "VALIDATING",
+    "WAITING_PROVIDER",
+    "PAUSED",
+    "PAUSED_LIMIT",
+    "FAILED",
+    "CANCELLED",
+  ]),
 });
 export type OrchestrationCompleteRequest = z.infer<typeof orchestrationCompleteRequestSchema>;
 
 export const orchestrationStateSchema = z.object({
   runId: z.uuid(),
   attemptId: z.uuid(),
-  status: z.enum(["RUNNING", "VALIDATING", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
+  status: z.enum([
+    "RUNNING",
+    "VALIDATING",
+    "WAITING_PROVIDER",
+    "PAUSED",
+    "PAUSED_LIMIT",
+    "FAILED",
+    "CANCELLED",
+  ]),
   stoppedConfirmed: z.boolean(),
 });
 export type OrchestrationState = z.infer<typeof orchestrationStateSchema>;
@@ -1844,11 +1860,19 @@ export type WorkflowRuntimeObservation = z.infer<typeof workflowRuntimeObservati
 export const developerWorkflowResultSchema = z.object({
   schemaVersion: z.literal(1),
   workflowId: z.uuid(),
-  status: z.enum(["AWAITING_HUMAN", "PAUSED", "PAUSED_LIMIT", "FAILED", "CANCELLED"]),
+  status: z.enum([
+    "AWAITING_HUMAN",
+    "WAITING_PROVIDER",
+    "PAUSED",
+    "PAUSED_LIMIT",
+    "FAILED",
+    "CANCELLED",
+  ]),
   reason: z.enum([
     "APPROVED",
     "RUNTIME_GUARD",
     "RUNTIME_ROUTE_UNAVAILABLE",
+    "PROVIDER_UNAVAILABLE",
     "DEVELOPER_FAILED",
     "CHECK_UNQUIESCED",
     "CHECK_REGRESSION",

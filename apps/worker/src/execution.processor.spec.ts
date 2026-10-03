@@ -182,6 +182,31 @@ function dependencies() {
 }
 
 describe("processOrchestrationExecution", () => {
+  it("journals provider waiting with artifacts before fenced checkpoint and complete", async () => {
+    const deps = dependencies();
+    const waiting = approvedWorkflow(deps.attemptId);
+    waiting.status = "WAITING_PROVIDER";
+    waiting.reason = "PROVIDER_UNAVAILABLE";
+    waiting.review = null;
+    deps.workflow.execute.mockResolvedValue(waiting);
+    const result = await processOrchestrationExecution(job(), deps.input);
+    expect(result).toMatchObject({
+      status: "WAITING_PROVIDER",
+      workflowStatus: "WAITING_PROVIDER",
+    });
+    expect(deps.input.journal.save).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        outcome: "WAITING_PROVIDER",
+        checkpoint: expect.objectContaining({ reason: "WAITING_PROVIDER", stoppedConfirmed: true }),
+      }),
+    );
+    expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
+    expect(deps.control.complete).toHaveBeenCalledWith(
+      deps.attemptId,
+      expect.objectContaining({ outcome: "WAITING_PROVIDER" }),
+    );
+  });
   afterEach(() => vi.useRealTimers());
 
   it("recovers only preserved finalization after failed upload, with no second execution", async () => {
