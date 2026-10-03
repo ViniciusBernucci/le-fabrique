@@ -2292,3 +2292,44 @@ export const providerHandoffResultSchema = z
   })
   .strict();
 export type ProviderHandoffResult = z.infer<typeof providerHandoffResultSchema>;
+
+/** Control-plane observations; never a provider eligibility or physical-stop proof. */
+export const operationStatusSchema = z
+  .object({
+    observedAt: z.iso.datetime(),
+    heartbeatMaxAgeMs: z.literal(180_000),
+    workersTruncated: z.boolean(),
+    workers: z
+      .array(
+        z
+          .object({
+            id: z.uuid(),
+            name: z.string().min(1).max(120),
+            lastHeartbeatAt: z.iso.datetime(),
+            heartbeatState: z.enum(["RECENT", "STALE", "OFFLINE", "CLOCK_SKEW"]),
+          })
+          .strict(),
+      )
+      .max(100),
+    writerGuardInstalled: z.boolean(),
+    unresolvedWriterCount: z.number().int().nonnegative(),
+    writers: z
+      .array(
+        z
+          .object({
+            attemptId: z.uuid(),
+            runId: z.uuid(),
+            workerId: z.uuid(),
+            leaseExpiresAt: z.iso.datetime(),
+            leaseState: z.enum(["ACTIVE", "EXPIRED"]),
+          })
+          .strict(),
+      )
+      .max(10),
+  })
+  .strict()
+  .refine(
+    (value) => value.writers.length === Math.min(value.unresolvedWriterCount, 10),
+    "Writer sample must match persisted unresolved count",
+  );
+export type OperationStatus = z.infer<typeof operationStatusSchema>;

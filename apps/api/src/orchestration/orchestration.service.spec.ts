@@ -42,6 +42,7 @@ describe("OrchestrationService", () => {
       completedAt: null,
     };
     const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -59,6 +60,7 @@ describe("OrchestrationService", () => {
 
   it("persists BLOCKED_RECOVERY when an expired writer did not confirm stop", async () => {
     const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -104,6 +106,7 @@ describe("OrchestrationService", () => {
       completedAt: now,
     };
     const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "VALIDATING" }),
@@ -135,6 +138,7 @@ describe("OrchestrationService", () => {
       completedAt: null,
     };
     const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -231,6 +235,7 @@ describe("global writer admission", () => {
       leaseExpiresAt: new Date(now.getTime() + 90_000),
     };
     const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi
@@ -276,6 +281,13 @@ describe("global writer admission", () => {
       expect(transaction.ticket.update).not.toHaveBeenCalled();
     },
   );
+
+  it("refuses admission if the database global writer guard is missing or invalid", async () => {
+    const { transaction, service } = fixture();
+    transaction.$queryRaw.mockResolvedValue([{ installed: false }]);
+    await expect(service.claim(claimInput())).rejects.toThrow("guard migration is unavailable");
+    expect(transaction.attempt.create).not.toHaveBeenCalled();
+  });
 
   it("admits the next writer only when no unconfirmed attempt exists globally", async () => {
     const { transaction, service } = fixture();

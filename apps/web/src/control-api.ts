@@ -20,6 +20,8 @@ import {
   githubRepositoryVerificationSchema,
   githubVerificationListSchema,
   githubVerificationSchema,
+  type OperationStatus,
+  operationStatusSchema,
   type PrepareGithubPullRequest,
   type Project,
   type ProjectDefinition,
@@ -375,5 +377,17 @@ export async function getProviderOnboardingChallenge(
 ): Promise<ProviderOnboardingChallenge> {
   return providerOnboardingChallengeSchema.parse(
     await request(`/settings/onboarding/${sessionId}/challenge`, token),
+  );
+}
+
+export async function getOperationStatus(
+  token: string,
+  signal?: AbortSignal,
+): Promise<OperationStatus> {
+  const timeout = AbortSignal.timeout(8_000);
+  return operationStatusSchema.parse(
+    await request("/operation", token, {
+      signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+    }),
   );
 }

@@ -19,6 +19,7 @@ import {
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { type Attempt, Prisma, type Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
+import { hasGlobalWriterGuard } from "./global-writer-guard";
 import { stoppedResumeEvidence } from "./resume-evidence";
 
 type AttemptWithRun = Attempt & { run: Run; checkpoint?: { stoppedConfirmed: boolean } | null };
@@ -111,6 +112,9 @@ export class OrchestrationService {
         } else if (input.resumeFrom) {
           throw new ConflictException("Resume origin is missing");
         }
+
+        if (!(await hasGlobalWriterGuard(transaction)))
+          throw new ConflictException("Global writer guard migration is unavailable");
 
         // Lease expiry, worker identity and terminal labels do not prove physical stop.
         // The partial unique PostgreSQL index also closes concurrent claim races.

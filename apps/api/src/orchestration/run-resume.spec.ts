@@ -121,6 +121,7 @@ function fixture() {
   });
   let event = { id: run.dispatchEventId, eventType: "ticket.ready.v1", payload: { ...job } };
   const tx = {
+    $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
     run: {
       findUnique: vi.fn(async () => run),
       update: vi.fn(async ({ data }) => {

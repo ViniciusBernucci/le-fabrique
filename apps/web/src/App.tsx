@@ -10,6 +10,7 @@ import {
   markTicketReady,
   updateProjectBaseRevision,
 } from "./control-api";
+import { OperationPanel } from "./OperationPanel";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { hasExecutableBaseRevision } from "./project-view-model";
 import { RunPanel } from "./RunPanel";
@@ -179,6 +180,7 @@ export function App() {
         <SettingsPanel token={token} onMessage={setMessage} />
       ) : (
         <>
+          <OperationPanel token={token} />
           <section className="columns">
             <form className="panel" onSubmit={addProject}>
               <h2>Novo projeto</h2>

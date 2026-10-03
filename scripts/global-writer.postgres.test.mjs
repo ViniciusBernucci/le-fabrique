@@ -148,3 +148,19 @@ test("migration refuses preexisting multiple unresolved writers without changing
   await sql("TRUNCATE checkpoints, attempts;");
   await sql(exclusionSql);
 });
+
+test("operation readiness queries the real valid exclusion definition rather than an index name alone", async () => {
+  const source = await readFile(
+    path.join(repository, "apps/api/src/orchestration/global-writer-guard.ts"),
+    "utf8",
+  );
+  const query = source.match(/SELECT EXISTS[\s\S]+?AS installed/)?.[0];
+  assert.ok(query, "use the actual operation query");
+  assert.equal(await sql(query), "t");
+  await sql(
+    "DROP INDEX attempts_single_unconfirmed_writer; CREATE INDEX attempts_single_unconfirmed_writer ON attempts(run_id);",
+  );
+  assert.equal(await sql(query), "f");
+  await sql("DROP INDEX attempts_single_unconfirmed_writer;");
+  await sql(exclusionSql);
+});
