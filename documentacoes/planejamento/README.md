@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012P implementado (`739cff0`), AWAITING_HUMAN: diff/bundle íntegro limitado no painel, 289 testes. Próximas lacunas: documentação/gate, aprovação/controles, interrupção/recuperação e provider/handoff/identidades.
+
 FAC-012O AWAITING_HUMAN (`016a5ef`): journal pré-API e redelivery testados, 266 testes. Próximo: entrega de diff/artefatos e comandos explícitos de recuperação; interrupção antes do journal segue pendente.
 
 FAC-012N implementado (`94b5d64`) e AWAITING_HUMAN: reconciliação após checkpoint parado, 257 testes. Próximo: journal de resultado local antes da persistência remota; demais lacunas seguem no controle do MVP.

@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012P: AWAITING_HUMAN — diff e bundle do último snapshot no painel, até 64 KiB, código `739cff0`, 289 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
+
 - FAC-012O: AWAITING_HUMAN — journal privado de resultado normal antes da API, replay sem IA; código `016a5ef`, 266 testes/checks. [Relatório](documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md).
 
 - FAC-012N: AWAITING_HUMAN — reconciliação de checkpoint parado no replay sem checkout/IA; código `94b5d64`, 257 testes/checks locais. [Relatório](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).

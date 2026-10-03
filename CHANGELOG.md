@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.79 - 2026-10-03
+
+FAC-012P entrega patch/untracked íntegros ao painel com download JSON sob demanda, DTO 64 KiB, hashes e bloqueio de padrões conhecidos de segredo. Artifact fenced/imutável antes de checkpoint/complete; falha preserva journal. 289 testes/checks passaram, migration não aplicada; aceite humano pendente.
+
 ## 2.78 - 2026-10-03
 
 FAC-012O preserva resultado normal em journal privado/atômico/fsync antes da API; redelivery recupera same attempt/fence sem IA/claim/checkout. 266 testes/checks passaram. Sem limpeza automática; interrupção antes de retorno e agendamento de retry pendentes. Aguarda aceite humano.

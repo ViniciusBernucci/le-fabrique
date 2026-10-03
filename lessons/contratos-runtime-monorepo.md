@@ -1,5 +1,7 @@
 # Contratos de runtime no monorepo TypeScript
 
+FAC-012P mostra que schema/tipo não prova bytes: `verifyExecutionArtifact` recebe decoder/hash neutros e cruza manifesto/patch/untracked/contagem/tamanho, após DTO estrito/base64 canônico/limite 64 KiB. Hashes são integridade, não prova de ausência de segredos; scanner bloqueia padrões conhecidos, sem alterar patch silenciosamente. Worker verifica arquivo real e API verifica transporte antes de persistir. Painel só escapa texto/download, sem servidor no bundle.
+
 No FAC-012M, o DTO público não reutiliza o resultado privado inteiro: remove workspace/paths, reduz untracked a contagem, limita JSON a 64 KiB e usa nested strict. Runtime observações null não viram estimativas de modelo/uso. React escapa texto de IA e polling sequencial aborta respostas antigas. Redaction de padrões conhecidos complementa minimização, sem prometer reconhecer todo segredo arbitrário.
 
 ## Conceito aplicado

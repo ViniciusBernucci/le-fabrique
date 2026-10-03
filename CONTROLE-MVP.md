@@ -25,7 +25,7 @@ FAC-012A/B estão DONE com aceites registrados. FAC-012C–M e OPS-003/004/005/0
 
 ## O que falta no software
 
-1. Expor diff completo/download e retenção segura de artefatos pelo painel. FAC-012M já entrega histórico, checks/revisão, metadados de snapshots e chamadas; hashes/contagens não substituem inspeção das alterações.
+1. Transporte de artefatos grandes e retenção operacional: FAC-012P já mostra diff completo e baixa patch/untracked do último snapshot dentro do teto explícito 64 KiB, sem truncar. Retenção/backup e entrega além do teto seguem pendentes; hashes/tamanhos são verificados.
 2. Preservar progresso/snapshot quando workflow interrompe antes de retornar e agendar recuperação explícita de jobs FAILED. FAC-012N reconcilia checkpoint parado/complete; FAC-012O preserva resultado normal pré-API e o reenvia em redelivery sem novo writer/IA. Writer desconhecido permanece bloqueado.
 3. Ligar auth/cota/WAITING_PROVIDER e handoff ao consumer, usando configuração/elegibilidade atuais e parada comprovada. As bibliotecas não constituem esse fluxo integrado.
 4. Isolar credenciais por instalação para múltiplas contas. Interface configura instalações, mas runtime ainda usa um adapter por provider sob a mesma identidade. Provar confinamento Claude antes de escrita elegível.

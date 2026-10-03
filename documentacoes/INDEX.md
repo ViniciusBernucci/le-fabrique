@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012P — artefatos no painel](controle/2026-10-03-FAC-012P-artefatos-painel.md)
+- [Ticket FAC-012P](planejamento/FAC-012P-artefatos-painel.md)
+
 - [FAC-012O — journal de resultados](operacao/2026-10-03-FAC-012O-journal-resultados.md)
 - [Ticket FAC-012O](planejamento/FAC-012O-journal-resultados.md)
 

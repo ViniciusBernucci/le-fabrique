@@ -1,6 +1,6 @@
 # FAC-012P — Diff e artefatos no painel
 
-Status: READY. Data: 2026-10-03. Baseline: `2d5a9a3`. Branch/worktree: `feat/fac-012p-artifacts`, `/home/vinicius/le-fabrique-fac-012p`.
+Status: AWAITING_HUMAN. Código `739cff001ad7c2ae53ca6719e2cbf92a11522683`; 289 testes/checks passaram. Data: 2026-10-03. Baseline: `2d5a9a3`. Branch/worktree: `feat/fac-012p-artifacts`, `/home/vinicius/le-fabrique-fac-012p`.
 
 ## Objetivo e escopo
 

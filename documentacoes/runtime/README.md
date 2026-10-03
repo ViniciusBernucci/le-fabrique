@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012P conecta exportação de snapshot ao consumer/journal, sem chamar IA para transportar artefatos. Falha de transporte não é aprovação; resultado/artefatos permanecem preservados para recuperação. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
+
 FAC-012O adiciona journal ao consumer: somente resultado retornado com stop conhecido; sem prompt/workspace/credentials. Recupera finalização em redelivery sem iniciar adapter; não retoma sessão ou writer. [Evidências](../operacao/2026-10-03-FAC-012O-journal-resultados.md).
 
 FAC-012N recupera apenas a conclusão após checkpoint parado persistido; replay não inicia adapter, checkout ou workflow. Retomar execução e preservar resultado ainda não persistido continuam pendentes. [Evidências](../operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).

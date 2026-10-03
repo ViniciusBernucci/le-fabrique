@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012P: finalização normal exige bundle do último snapshot antes de checkpoint/complete. ArtifactReader lê só UUID em snapshots privado e verifica manifesto/patch/untracked, recusa symlink/segredos conhecidos/limites. Teto JSON 64 KiB (bytes originais 48.000); oversized preserva journal e falha sem truncar. Não há cleanup automático. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).
+
 FAC-012O: resultado normal parado é preservado em `WORKER_EXECUTION_ROOT/result-journal` (0700/0600, hash, até 128 KiB, fsync/publicação sem overwrite) antes de report/checkpoint/complete. Redelivery lê antes de claim e reenvia com fence original, sem IA. Root privado fora de workspaces; nenhuma limpeza automática. Interrupção pré-retorno e retry de jobs FAILED não estão cobertos. [Relatório](2026-10-03-FAC-012O-journal-resultados.md).
 
 FAC-012N: replay chama endpoint interno `/api/internal/orchestration/attempts/:id/reconcile` sob WorkerAuthGuard/fence atual. Só conclui com attempt/checkpoint parados; relatório COMPLETED/PAUSED validado/digest coerente. Sem prova retorna state null; sem checkout/IA/retry. Nenhuma regressão de estados humanos. [Relatório](2026-10-03-FAC-012N-reconciliacao-checkpoint.md).

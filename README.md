@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012P adiciona diff completo e download de bundle do último snapshot (até 64 KiB, sem truncar). Worker/API verificam hashes; falha de entrega impede conclusão. 289 testes/checks; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
+
 FAC-012O preserva resultado antes da API em journal local privado; redelivery recupera sem executar IA novamente. 266 testes/checks passaram; não recupera writer desconhecido. [Evidências](documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md).
 
 FAC-012N fecha replay entre checkpoint parado e complete; não retoma IA nem writer desconhecido. 257 testes/checks passaram. [Evidências](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
