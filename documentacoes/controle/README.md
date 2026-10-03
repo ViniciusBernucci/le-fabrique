@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012Z: Definição do projeto configura arquivos Markdown/relatório/seções em `executionProfile.documentation`. Novos READY exigem política; arquivos precisam estar permitidos. Painel de resultados e relatório público mostram hashes/gate; aceite exige evidências PASS para conjunto exato e manifesto final, além de checks/revisão/bundle/stop existentes. Legados permanecem legíveis. [Evidências](2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
 FAC-012Y adiciona até duas alternativas explícitas por função na configuração e histórico de handoff no resultado. Defaults vazios, catálogo/referências validados; nenhuma troca para API/extras, nenhum novo writer liberado pelo painel. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 FAC-012X persiste WAITING_PROVIDER com checkpoint/resultado coerentes e permite resume existente somente por stop/bundle/versão/fence exatos; painel explica autenticação/cota/configuração e confirmação de novo orçamento. Nenhum retry automático. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).

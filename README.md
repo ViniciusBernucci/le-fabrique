@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012Z exige documentação técnica configurada no projeto antes da entrega: arquivos atualizados, gate bounded, revisão semântica e hashes do snapshot final. 422 testes/checks; Claude escrita e operação real ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
 FAC-012Y conecta alternativas de conta/modelo na UI ao handoff seguro por auth/cota/busy: stop → snapshot → nova worktree → restore/contexto, com limites e lease/fence preservados. Sem conta fixa/fallback pago. Claude escrita e docs técnicas continuam pendentes. [Evidências](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 FAC-012X integra WAITING_PROVIDER após parada/snapshot conhecidos, com auth/cota/busy sem retry/login automático e retomada explícita pelo painel. 399 testes/checks; migration não aplicada, handoff/confinamento Claude/docs técnicas pendentes. [Evidências](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).

@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012Z IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012Z-gate-documentacao-tecnica.md), [evidências](../controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md). Código `9c48dd9`; 422 testes; aceite exato pendente.
+
 FAC-012Y implementa handoff configurado; AWAITING_HUMAN, sem prova operacional. Pendências de software: confinamento Claude e documentação técnica externa. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 FAC-012X (`345e8ef`, 399 testes/checks), AWAITING_HUMAN: espera por auth/cota/busy com stop/snapshot/persistência e retomada explícita. Próximos: handoff automático, confinamento Claude e docs técnicas. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).

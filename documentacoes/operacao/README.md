@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012Z conecta documentação técnica ao workflow real antes de Reviewer: Developer atualiza arquivos configurados, checks/snapshot/gate bounded verificam estrutura, revisão independente confere verdade e snapshot posterior invalida mudanças durante review. Ausência de política bloqueia compilação real; até duas correções continuam globais. Consumer/preflight não foram ativados. [Evidências](../controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
 FAC-012Y mantém lease/fence ao trocar cliente dentro da mesma tentativa, após parada e restauração verificadas. Novo job continua com fence novo; unknown/crash não é recuperado por suposição. Alternativas UI vazias por padrão, autenticação/preflight manuais. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 FAC-012X conecta espera por auth/cota/busy no consumer: stop conhecido → snapshot → journal/result/artifact/checkpoint → WAITING_PROVIDER; retomada humana existente por evidência/configuração atual. Unknown não fabrica espera, nenhum retry/login/gasto automático. 399 testes/checks, migration não aplicada. [Relatório](2026-10-03-FAC-012X-espera-provider.md).

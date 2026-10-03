@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012Y. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012Z. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,7 +21,7 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–Y e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## O que falta no software
 
@@ -30,7 +30,7 @@ FAC-012A/B estão DONE com aceites registrados. FAC-012C–Y e OPS-003/004/005/0
 3. Auth/cota/WAITING_PROVIDER IMPLEMENTADOS no X; handoff IMPLEMENTADO no Y: alternativas conta/modelo explícitas na UI, stop/snapshot/restauração/contexto em outra worktree antes de próxima chamada. Reviewer read-only, budgets/lease/fence preservados; zero alternativas por padrão, máximo duas trocas sem gasto extra. Preflight real é manual; erro de segurança não vira fallback, unknown não libera writer.
 4. Identidade por instalação IMPLEMENTADA no V: login/status/runtime usam stores privados e factory da rota UI atual, sem adapter global por provider/segredos do controle no ambiente. Autenticação/preflight de serviço manual. Escrita Claude bloqueada; falta provar confinamento granular para torná-la elegível.
 5. Comandos de interface IMPLEMENTADOS para evidência conhecida: S solicita PAUSE/CANCEL e T retoma snapshot íntegro/parado, com confirmação explícita de orçamento da nova tentativa. Q exige aceite exato antes de DONE. Unknown/crash não oferecem retomada cega; recuperação de finalização segue item 2.
-6. Atualizar/gatear documentação técnica dentro do repositório externo conforme regras do projeto. FAC-012Q já gera relatório de entrega com evidências e gate do aceite, mas esse relatório não modifica README/ADRs/lessons do projeto nem comprova semanticamente todos os critérios.
+6. Gate documental técnico IMPLEMENTADO no Z: operador configura arquivos/seções, Developer atualiza documentos do projeto, gate estrutural exige mudanças/referências/hashes e Reviewer verifica conteúdo/critério. Snapshot posterior deve ser byte-equivalente; controle cruza evidência com manifesto final. Não substitui aceite humano ou prova operacional.
 
 Evidência das lacunas: `apps/api/src/control/control.controller.ts`, `apps/api/src/orchestration/orchestration.controller.ts`, `apps/worker/src/main.ts`, `execution.processor.ts`, `developer-workflow.ts` e `apps/web/src/App.tsx`. O MVP não está concluído enquanto essas pendências persistirem.
 
@@ -40,4 +40,4 @@ Escolher/cadastrar piloto, autenticar clientes sob identidade de serviço, confi
 
 ## Próximo incremento
 
-Confinamento Claude e gate de documentação técnica. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência Y: 411 testes/checks, [relatório](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
+Confinamento Claude e verificação operacional. Gate documental implementado no Z. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência Z: 422 testes/checks, [relatório](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.

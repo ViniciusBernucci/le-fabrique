@@ -42,3 +42,5 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Baseline, regressao e review sao sinais diferentes](baseline-regressao-review.md)
 - [Definicao de projeto e compilacao com fronteiras confiaveis](definicao-projeto-configuravel.md)
 - [Checkout confiavel separa credencial e conteudo externo](checkout-confiavel.md)
+
+FAC-012Z amplia [baseline/regressão/review](baseline-regressao-review.md) com gate documental estrutural e revisão semântica ligados ao snapshot final.

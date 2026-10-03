@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012Z — gate documental técnico](controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md)
+- [Ticket FAC-012Z](planejamento/FAC-012Z-gate-documentacao-tecnica.md)
+
 - [FAC-012Y — handoff configurado](handoff/2026-10-03-FAC-012Y-handoff-configurado.md)
 - [Ticket FAC-012Y](planejamento/FAC-012Y-handoff-configurado.md)
 

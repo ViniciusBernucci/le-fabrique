@@ -9,3 +9,5 @@ Exit code zero do cliente tambem nao prova o ticket. O coordenador exige runtime
 Quiescencia precede classificacao. Se o SandboxRunner nao confirma que um baseline ou check posterior terminou, o fluxo retorna `CHECK_UNQUIESCED` antes de abrir Developer, capturar snapshot ou iniciar correcao. Uma falha conhecida nao autoriza dois processos concorrentes.
 
 Comandos de check pertencem ao request confiavel e entram como argv; mensagens do Developer ou Reviewer nunca se tornam shell. Os testes em `apps/worker/src/developer-workflow.spec.ts` usam portas sinteticas e comprovam baseline preexistente, regressao corrigida, review invalido, limite de tentativas e falha repetida.
+
+FAC-012Z distingue presença/estrutura e verdade técnica: `documentation-gate.ts` valida documentos alterados/seguros, seções e referências mínimas, publicando hashes vinculados ao snapshot. `DeveloperWorkflow` exige Reviewer independente sobre conteúdo e recaptura após review para impedir aprovação de diff mutado. `RunDeliveryService` cruza conjunto obrigatório e manifesto final antes do aceite; PASS estrutural não declara critérios semanticamente cobertos.

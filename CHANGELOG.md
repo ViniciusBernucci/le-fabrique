@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012Z
+
+Política documental pela interface; READY/compilador exigem configuração; workflow valida alteração/estrutura/hashes, Reviewer confere semântica e mutação durante review invalida aprovação. Controle cruza conjunto/manifesto antes do aceite. Código `9c48dd9`, 422 testes/checks, sem operação/deploy. [Relatório](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
 ## 2.88 - 2026-10-03
 
 FAC-012Y permite alternativas explícitas na UI e handoff sequencial seguro de Developer/Reviewer, sem sessão privada/fallback pago/reset de limites. 411 testes/checks; evidências em resultado/painel, Claude escrita/docs técnicas pendentes, aceite separado.

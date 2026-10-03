@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
 - FAC-012Y: AWAITING_HUMAN — alternativas UI/handoff no workflow real, código `f66a923`, 411 testes/checks; limites/stop/snapshot/restore/lease preservados, sem operação real. [Relatório](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 - FAC-012X: AWAITING_HUMAN — espera provider com stop/snapshot e retomada explícita, código `345e8ef`, 399 testes/checks; migration não aplicada. [Relatório](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).

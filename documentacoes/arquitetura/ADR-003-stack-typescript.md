@@ -27,3 +27,5 @@ CPU intensa e builds ficam fora do event loop da API. Medir RSS, heap, cgroup, O
 Mantidos mínimo 4 vCPU/8 GB/120 GB, bom 8 vCPU/16 GB/200 GB e ideal 8 vCPU/32 GB/300 GB, um executor inicial e sem GPU. Revisar capacidade apenas com medições.
 ## Estado da entrega
 Atualização documental de planejamento; nenhum serviço implementado ou implantado. Mantidos assinaturas oficiais, API/extras desligados, handoff, documentação por domínio, diffs, lessons e aceite humano.
+
+FAC-012Z: política documental versionada por projeto segue contratos runtime/UI/READY. Worker executa gate bounded após stop/checks e exige revisão semântica/snapshot inalterado; API apenas cruza hashes/conjunto com evidência persistida, sem executar código. Compatibilidade de leitura dos registros antigos preservada, novos jobs exigem política.
