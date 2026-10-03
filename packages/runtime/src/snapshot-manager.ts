@@ -1,9 +1,11 @@
 import { createHash, randomUUID } from "node:crypto";
+import { constants } from "node:fs";
 import {
   chmod,
   copyFile,
   lstat,
   mkdir,
+  open,
   readFile,
   realpath,
   rm,
@@ -117,16 +119,20 @@ export class SnapshotManager {
     const snapshot = workspaceSnapshotSchema.parse(snapshotInput);
     const artifactPath = await realpath(snapshot.artifactPath);
     const root = await this.ensureRoot();
-    if (!artifactPath.startsWith(`${root}${sep}`)) throw new Error("Snapshot escaped its root");
+    if (
+      artifactPath !== resolve(root, snapshot.manifest.snapshotId) ||
+      artifactPath !== resolve(snapshot.artifactPath)
+    )
+      throw new Error("Snapshot escaped its root or contains a symlink");
     const storedManifest = workspaceSnapshotManifestSchema.parse(
-      JSON.parse(await readFile(resolve(artifactPath, "manifest.json"), "utf8")),
+      JSON.parse((await readSnapshotFile(resolve(artifactPath, "manifest.json"))).toString("utf8")),
     );
     if (JSON.stringify(storedManifest) !== JSON.stringify(snapshot.manifest)) {
       throw new Error("Snapshot manifest does not match the stored artifact");
     }
     verifyManifestHash(storedManifest);
     const patchPath = resolve(artifactPath, "tracked.patch");
-    const patch = await readFile(patchPath);
+    const patch = await readSnapshotFile(patchPath);
     if (
       hash(patch) !== storedManifest.patchSha256 ||
       patch.byteLength !== storedManifest.patchBytes
@@ -136,7 +142,7 @@ export class SnapshotManager {
     const sourceFiles = new Map<string, Buffer>();
     for (const entry of storedManifest.untracked) {
       validateRelativePath(entry.path);
-      const bytes = await readFile(resolve(artifactPath, "untracked", entry.path));
+      const bytes = await readSnapshotFile(resolve(artifactPath, "untracked", entry.path));
       if (bytes.byteLength !== entry.sizeBytes || hash(bytes) !== entry.sha256) {
         throw new Error(`Snapshot untracked file failed integrity verification: ${entry.path}`);
       }
@@ -150,13 +156,27 @@ export class SnapshotManager {
     if (await gitText(workspace, ["status", "--porcelain", "--untracked-files=all"])) {
       throw new Error("Restore target must be clean");
     }
+    for (const entry of storedManifest.untracked)
+      await validateRestoreParents(workspace, entry.path);
     if (patch.byteLength > 0) {
+      await runChecked("/usr/bin/git", [
+        "-C",
+        workspace,
+        "apply",
+        "--check",
+        "--binary",
+        patchPath,
+      ]);
       await runChecked("/usr/bin/git", ["-C", workspace, "apply", "--binary", patchPath]);
     }
     for (const entry of storedManifest.untracked) {
+      await validateRestoreParents(workspace, entry.path);
       const target = resolve(workspace, entry.path);
       await mkdir(dirname(target), { recursive: true, mode: 0o700 });
-      await writeFile(target, sourceFiles.get(entry.path) as Buffer, { mode: entry.mode });
+      await writeFile(target, sourceFiles.get(entry.path) as Buffer, {
+        mode: entry.mode,
+        flag: "wx",
+      });
       await chmod(target, entry.mode);
     }
     return snapshotRestoreResultSchema.parse({
@@ -204,9 +224,52 @@ function validateRelativePath(path: string): void {
     !path ||
     isAbsolute(path) ||
     path.includes("\\") ||
-    path.split("/").some((segment) => !segment || segment === "." || segment === "..")
+    path
+      .split("/")
+      .some(
+        (segment) =>
+          !segment ||
+          segment === "." ||
+          segment === ".." ||
+          segment === ".git" ||
+          segment === ".codex",
+      )
   ) {
     throw new Error(`Unsafe snapshot path: ${path}`);
+  }
+}
+
+async function readSnapshotFile(filePath: string): Promise<Buffer> {
+  if ((await realpath(filePath)) !== filePath) throw new Error("Snapshot symlink blocked");
+  const file = await open(
+    filePath,
+    constants.O_RDONLY | constants.O_NOFOLLOW | constants.O_NONBLOCK,
+  );
+  try {
+    if (!(await file.stat()).isFile()) throw new Error("Snapshot entry must be a regular file");
+    return await file.readFile();
+  } finally {
+    await file.close();
+  }
+}
+
+async function validateRestoreParents(workspace: string, relativePath: string): Promise<void> {
+  validateRelativePath(relativePath);
+  const segments = relativePath.split("/");
+  let current = workspace;
+  for (const segment of segments) {
+    current = resolve(current, segment);
+    try {
+      const metadata = await lstat(current);
+      if (
+        metadata.isSymbolicLink() ||
+        (current !== resolve(workspace, relativePath) && !metadata.isDirectory())
+      )
+        throw new Error("Unsafe restore target ancestor");
+    } catch (error) {
+      if (error instanceof Error && "code" in error && error.code === "ENOENT") continue;
+      throw error;
+    }
   }
 }
 

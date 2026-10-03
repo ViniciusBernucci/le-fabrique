@@ -35,7 +35,7 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
 
   async dispatchOnce(): Promise<number> {
     const events = await this.prisma.outboxEvent.findMany({
-      where: { status: "PENDING", eventType: "ticket.ready.v1" },
+      where: { status: "PENDING", eventType: { in: ["ticket.ready.v1", "run.resume.v1"] } },
       orderBy: { createdAt: "asc" },
       take: 20,
     });

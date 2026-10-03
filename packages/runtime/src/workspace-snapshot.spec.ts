@@ -1,4 +1,14 @@
-import { chmod, mkdtemp, readFile, rm, stat, symlink, writeFile } from "node:fs/promises";
+import {
+  chmod,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rename,
+  rm,
+  stat,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -36,6 +46,59 @@ afterEach(async () => {
 });
 
 describe("WorkspaceManager and SnapshotManager", () => {
+  it("rejects symlinked snapshot bytes even when their hashes match", async () => {
+    const workspaces = new WorkspaceManager(workspaceRoot);
+    const source = await workspaces.create({
+      executionId: crypto.randomUUID(),
+      repositoryPath: repository,
+      revision: baseRevision,
+    });
+    const snapshots = new SnapshotManager(snapshotRoot);
+    const snapshot = await snapshots.capture({
+      schemaVersion: 1,
+      workspacePath: source.workspacePath,
+      limits: { maxUntrackedFiles: 10, maxArtifactBytes: 10000 },
+    });
+    const patch = resolve(snapshot.artifactPath, "tracked.patch");
+    await rename(patch, resolve(fixtureRoot, "preserved.patch"));
+    await symlink(resolve(fixtureRoot, "preserved.patch"), patch);
+    const target = await workspaces.create({
+      executionId: crypto.randomUUID(),
+      repositoryPath: repository,
+      revision: baseRevision,
+    });
+    await expect(snapshots.restore(snapshot, target.workspacePath)).rejects.toThrow("symlink");
+  });
+  it("does not follow tracked symlink ancestors when restoring untracked files", async () => {
+    await mkdir(resolve(fixtureRoot, "outside"));
+    await symlink(resolve(fixtureRoot, "outside"), resolve(repository, "alias"));
+    await git(repository, "add", "alias");
+    await git(repository, "commit", "-m", "synthetic symlink baseline");
+    const revision = await git(repository, "rev-parse", "HEAD");
+    const workspaces = new WorkspaceManager(workspaceRoot);
+    const source = await workspaces.create({
+      executionId: crypto.randomUUID(),
+      repositoryPath: repository,
+      revision,
+    });
+    await rm(resolve(source.workspacePath, "alias"));
+    await mkdir(resolve(source.workspacePath, "alias"));
+    await writeFile(resolve(source.workspacePath, "alias/new.txt"), "must remain confined");
+    const snapshots = new SnapshotManager(snapshotRoot);
+    const snapshot = await snapshots.capture({
+      schemaVersion: 1,
+      workspacePath: source.workspacePath,
+      limits: { maxUntrackedFiles: 10, maxArtifactBytes: 10000 },
+    });
+    const target = await workspaces.create({
+      executionId: crypto.randomUUID(),
+      repositoryPath: repository,
+      revision,
+    });
+    await expect(snapshots.restore(snapshot, target.workspacePath)).rejects.toThrow("ancestor");
+    await expect(readFile(resolve(fixtureRoot, "outside/new.txt"))).rejects.toThrow();
+    expect(await git(target.workspacePath, "status", "--porcelain")).toBe("");
+  });
   it("creates a detached worktree without moving the base branch", async () => {
     const workspace = await new WorkspaceManager(workspaceRoot).create({
       executionId: crypto.randomUUID(),

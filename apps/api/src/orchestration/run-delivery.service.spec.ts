@@ -167,6 +167,18 @@ function fixture() {
   return { service, run, attempt, tx, prisma, specification };
 }
 describe("RunDeliveryService", () => {
+  it("accepts the frozen original specification on an explicit resume event", async () => {
+    const f = fixture();
+    f.tx.outboxEvent.findUnique.mockResolvedValue({
+      eventType: "run.resume.v1",
+      payload: { executionSpecification: f.specification },
+    });
+    await expect(f.service.get(f.run.id)).resolves.toMatchObject({
+      reason: null,
+      accepted: false,
+      delivery: expect.any(Object),
+    });
+  });
   it("generates bound Markdown from READY rather than mutable ticket data", async () => {
     const f = fixture();
     const state = await f.service.get(f.run.id);

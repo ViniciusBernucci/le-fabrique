@@ -101,7 +101,7 @@ describe("administrative run control", () => {
     );
     expect(requestRunControlSchema.safeParse({ ...f.input, action: "RESUME" }).success).toBe(false);
     expect(Reflect.getMetadata("__guards__", RunControlController)).toContain(AdminAuthGuard);
-    const controller = new RunControlController(f.service);
+    const controller = new RunControlController(f.service, {} as never);
     expect(() => controller.request(f.run.id, { action: "PAUSE" })).toThrow("Invalid run control");
   });
 });

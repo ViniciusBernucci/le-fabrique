@@ -189,7 +189,11 @@ export class RunDeliveryService {
     const specification = executionSpecificationSchema.safeParse(
       (event?.payload as Record<string, unknown> | undefined)?.executionSpecification,
     );
-    if (event?.eventType !== "ticket.ready.v1" || !specification.success)
+    if (
+      !event ||
+      !["ticket.ready.v1", "run.resume.v1"].includes(event.eventType) ||
+      !specification.success
+    )
       return blocked("EVIDENCE_MISSING");
     const spec = specification.data;
     if (

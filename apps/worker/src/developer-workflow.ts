@@ -10,11 +10,13 @@ import type {
   WorkflowReview,
   WorkflowRuntimeObservation,
   WorkspaceCreateResult,
+  WorkspaceSnapshot,
 } from "@le-fabrique/contracts";
 import {
   developerWorkflowRequestSchema,
   developerWorkflowResultSchema,
   workflowReviewSchema,
+  workspaceSnapshotSchema,
 } from "@le-fabrique/contracts";
 import type {
   ContextBuilder,
@@ -33,7 +35,7 @@ interface DeveloperWorkflowDependencies {
   guard: Pick<RuntimeGuard, "initialState" | "authorizeAttempt" | "recordFailure">;
   agentRouter: Pick<ConfiguredAgentRouter, "resolve">;
   sandbox: Pick<SandboxRunner, "execute">;
-  snapshots: Pick<SnapshotManager, "capture">;
+  snapshots: Pick<SnapshotManager, "capture"> & Partial<Pick<SnapshotManager, "restore">>;
   createId?: () => string;
 }
 
@@ -61,16 +63,24 @@ export class DeveloperWorkflow {
   async execute(
     input: DeveloperWorkflowRequest,
     signal?: AbortSignal,
+    resumeInput?: WorkspaceSnapshot,
   ): Promise<DeveloperWorkflowResult> {
     if (this.terminationUnknown) throw new Error("Previous process termination is unknown");
     throwIfAborted(signal);
     const request = developerWorkflowRequestSchema.parse(input);
+    const resume = resumeInput ? workspaceSnapshotSchema.parse(resumeInput) : null;
+    if (
+      resume &&
+      (resume.manifest.baseRevision !== request.baseRevision ||
+        !this.dependencies.snapshots.restore)
+    )
+      throw new Error("Resume requires verified same-base snapshot and restore support");
     const workspace = await this.dependencies.workspaceManager.create({
       executionId: request.workflowId,
       repositoryPath: request.repositoryPath,
       revision: request.baseRevision,
     });
-    const context = await this.dependencies.contextBuilder.build({
+    let context = await this.dependencies.contextBuilder.build({
       schemaVersion: 1,
       workspacePath: workspace.workspacePath,
       baseRevision: workspace.revision,
@@ -113,7 +123,24 @@ export class DeveloperWorkflow {
       const baselineFailures = new Set(
         baseline.filter((check) => !checkPassed(check)).map((check) => check.name),
       );
-      let feedback = "No previous review feedback.";
+      if (resume) {
+        throwIfAborted(signal);
+        const restore = this.dependencies.snapshots.restore;
+        if (!restore) throw new Error("Snapshot restoration unavailable");
+        await restore.call(this.dependencies.snapshots, resume, workspace.workspacePath);
+        progress.snapshots = [resume.manifest];
+        throwIfAborted(signal);
+        context = await this.dependencies.contextBuilder.build({
+          schemaVersion: 1,
+          workspacePath: workspace.workspacePath,
+          baseRevision: workspace.revision,
+          sources: request.contextSources,
+          limits: request.contextLimits,
+        });
+      }
+      let feedback = resume
+        ? `Continue the preserved work from verified snapshot ${resume.manifest.snapshotId}, manifest ${resume.manifest.manifestHash}. Do not reapply its patch. Validate all original criteria and preserved changes; clean-base baseline was measured before restore.`
+        : "No previous review feedback.";
 
       for (let round = 0; round <= request.maxCorrectionRounds; round += 1) {
         activeRound = round;
@@ -187,6 +214,12 @@ export class DeveloperWorkflow {
         progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
         throwIfAborted(signal);
         if (developer.status !== "COMPLETED") {
+          const preservedFailure = await this.dependencies.snapshots.capture({
+            schemaVersion: 1,
+            workspacePath: workspace.workspacePath,
+            limits: request.snapshotLimits,
+          });
+          progress.snapshots = [...progress.snapshots, preservedFailure.manifest].slice(-3);
           const failure = this.dependencies.guard.recordFailure(
             progress.guardState,
             runtimeFailureFingerprint("developer", developer),
@@ -234,7 +267,7 @@ export class DeveloperWorkflow {
           workspacePath: workspace.workspacePath,
           limits: request.snapshotLimits,
         });
-        progress.snapshots.push(snapshot.manifest);
+        progress.snapshots = [...progress.snapshots, snapshot.manifest].slice(-3);
         const regressions = postChecks.filter((check) => !checkPassed(check) && !check.preExisting);
         if (regressions.length > 0) {
           const fingerprint = `checks:${regressions

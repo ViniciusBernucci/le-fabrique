@@ -15,6 +15,7 @@ import { RunControlController } from "./run-control.controller";
 import { RunControlService } from "./run-control.service";
 import { RunDeliveryController } from "./run-delivery.controller";
 import { RunDeliveryService } from "./run-delivery.service";
+import { RunResumeService } from "./run-resume.service";
 
 @Module({
   controllers: [
@@ -31,6 +32,7 @@ import { RunDeliveryService } from "./run-delivery.service";
     ExecutionArtifactsService,
     RunDeliveryService,
     RunControlService,
+    RunResumeService,
     OrchestrationService,
     OutboxDispatcher,
     {

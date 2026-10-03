@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import path from "node:path";
 import type {
   GithubOnboardingJob,
@@ -136,7 +137,26 @@ async function bootstrap(): Promise<void> {
                   snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),
                 });
                 return {
-                  execute: (signal) => workflow.execute(request, signal),
+                  execute: async (signal) => {
+                    const resume = job.data.resumeFrom;
+                    if (!resume) return workflow.execute(request, signal);
+                    const artifact = await new ArtifactReader(
+                      path.join(executionConfig.root, "snapshots"),
+                    ).read(resume.snapshot);
+                    if (
+                      createHash("sha256").update(JSON.stringify(artifact)).digest("hex") !==
+                      resume.artifactDigest
+                    )
+                      throw new Error("Resume artifact digest mismatch");
+                    return workflow.execute(request, signal, {
+                      artifactPath: path.join(
+                        executionConfig.root,
+                        "snapshots",
+                        resume.snapshot.snapshotId,
+                      ),
+                      manifest: artifact.manifest,
+                    });
+                  },
                   cancelActive: () => workflow.cancelActive(),
                 };
               },

@@ -37,6 +37,7 @@ import {
   providerVerificationListSchema,
   providerVerificationSchema,
   type RequestRunControl,
+  type RequestRunResume,
   type RunDetail,
   type RunSummary,
   runControlReceiptSchema,
@@ -160,6 +161,20 @@ export async function requestRunControl(
 ) {
   return runControlReceiptSchema.parse(
     await request(`/runs/${encodeURIComponent(runId)}/control`, token, {
+      method: "POST",
+      body: JSON.stringify(input),
+      signal,
+    }),
+  );
+}
+export async function requestRunResume(
+  token: string,
+  runId: string,
+  input: RequestRunResume,
+  signal?: AbortSignal,
+) {
+  return runSummarySchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}/resume`, token, {
       method: "POST",
       body: JSON.stringify(input),
       signal,

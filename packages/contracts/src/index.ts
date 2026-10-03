@@ -1588,6 +1588,20 @@ export const executionSpecificationSchema = z
   .strict();
 export type ExecutionSpecification = z.infer<typeof executionSpecificationSchema>;
 
+export const resumeEvidenceSchema = z
+  .object({
+    attemptId: z.uuid(),
+    fencingToken: z.number().int().positive(),
+    resultDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    artifactDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    snapshot: workspaceSnapshotManifestSchema
+      .omit({ untracked: true })
+      .extend({ untrackedFiles: z.number().int().nonnegative() })
+      .strict(),
+  })
+  .strict();
+export type ResumeEvidence = z.infer<typeof resumeEvidenceSchema>;
+
 const orchestrationJobFieldsSchema = z.object({
   schemaVersion: z.literal(1),
   eventId: z.uuid(),
@@ -1597,6 +1611,7 @@ const orchestrationJobFieldsSchema = z.object({
   baseRevision: gitCommitShaSchema.nullable().default(null),
   projectDefinitionVersion: z.number().int().positive().nullable().default(null),
   executionSpecification: executionSpecificationSchema.nullable().default(null),
+  resumeFrom: resumeEvidenceSchema.optional(),
 });
 
 function validateExecutionSpecificationConsistency(
@@ -1604,6 +1619,16 @@ function validateExecutionSpecificationConsistency(
   context: z.RefinementCtx,
 ): void {
   const specification = job.executionSpecification;
+  if (
+    job.resumeFrom &&
+    (!specification || job.resumeFrom.snapshot.baseRevision !== job.baseRevision)
+  ) {
+    context.addIssue({
+      code: "custom",
+      path: ["resumeFrom"],
+      message: "Resume requires the original immutable base",
+    });
+  }
   if (!specification) return;
   const mismatches = [
     [specification.project.id !== job.projectId, "projectId"],
@@ -1982,6 +2007,14 @@ export const requestRunControlSchema = z
   })
   .strict();
 export type RequestRunControl = z.infer<typeof requestRunControlSchema>;
+export const requestRunResumeSchema = z
+  .object({
+    expectedVersion: z.number().int().positive(),
+    attemptId: z.uuid(),
+    artifactDigest: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+export type RequestRunResume = z.infer<typeof requestRunResumeSchema>;
 export const runControlReceiptSchema = z
   .object({
     runId: z.uuid(),

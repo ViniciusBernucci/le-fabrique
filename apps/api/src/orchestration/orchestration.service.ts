@@ -11,11 +11,13 @@ import type {
 import {
   executionResultReportSchema,
   orchestrationClaimSchema,
+  orchestrationJobSchema,
   orchestrationStateSchema,
 } from "@le-fabrique/contracts";
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import type { Attempt, Prisma, Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
+import { stoppedResumeEvidence } from "./resume-evidence";
 
 type AttemptWithRun = Attempt & { run: Run; checkpoint?: { stoppedConfirmed: boolean } | null };
 
@@ -48,6 +50,18 @@ export class OrchestrationService {
           throw new ConflictException("Dispatch event belongs to another ticket");
         }
 
+        if (input.resumeFrom) {
+          const event = await transaction.outboxEvent.findUnique({ where: { id: input.eventId } });
+          if (event?.eventType !== "run.resume.v1")
+            throw new ConflictException("Resume intent is not authorized");
+          const frozen = orchestrationJobSchema
+            .strict()
+            .parse({ schemaVersion: 1, eventId: event.id, ...(event.payload as object) });
+          const { workerId: _worker, leaseDurationMs: _lease, ...job } = input;
+          if (JSON.stringify(orchestrationJobSchema.strict().parse(job)) !== JSON.stringify(frozen))
+            throw new ConflictException("Resume job differs from the authorized immutable intent");
+        }
+
         const latest = await transaction.attempt.findFirst({
           where: { runId: run.id },
           orderBy: { sequence: "desc" },
@@ -72,8 +86,28 @@ export class OrchestrationService {
             return { claim: null, blocked: true };
           }
         }
-        if (latest) {
+        const isResumeOrigin = latest && input.resumeFrom?.attemptId === latest.id;
+        if (isResumeOrigin) {
+          if (
+            run.status !== "WAITING_WORKER" ||
+            ticket.status !== "WAITING_WORKER" ||
+            !latest.stoppedConfirmed ||
+            latest.fencingToken !== run.nextFencingToken
+          )
+            throw new ConflictException("Resume origin is not safely claimable");
+          const origin = await transaction.attempt.findUnique({
+            where: { id: latest.id },
+            include: { checkpoint: true },
+          });
+          if (
+            !origin ||
+            JSON.stringify(stoppedResumeEvidence(origin)) !== JSON.stringify(input.resumeFrom)
+          )
+            throw new ConflictException("Resume origin evidence changed");
+        } else if (latest) {
           return { claim: mapClaim(latest, true), blocked: false };
+        } else if (input.resumeFrom) {
+          throw new ConflictException("Resume origin is missing");
         }
 
         const fencingToken = run.nextFencingToken + 1;

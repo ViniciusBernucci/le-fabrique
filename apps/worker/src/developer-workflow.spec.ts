@@ -215,6 +215,76 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
+  it("preserves partial writes from a failed Developer before returning a retryable pause", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), null, "FAILED")],
+      [checkResult("COMPLETED")],
+    );
+    const result = await new DeveloperWorkflow(deps).execute(request(0));
+    expect(result).toMatchObject({ status: "PAUSED_LIMIT", reason: "DEVELOPER_FAILED" });
+    expect(result.snapshots).toHaveLength(1);
+    expect(deps.execute).toHaveBeenCalledBefore(deps.snapshots.capture);
+  });
+  it("measures clean baseline before restore, rebuilds context and continues preserved work", async () => {
+    const deps = dependencies(
+      [
+        runtimeResult(crypto.randomUUID(), "preserved work completed"),
+        runtimeResult(crypto.randomUUID(), approved),
+      ],
+      [checkResult("COMPLETED"), checkResult("COMPLETED")],
+    );
+    const restore = vi.fn(async () => ({
+      snapshotId: snapshot(1).manifest.snapshotId,
+      workspacePath,
+      baseRevision,
+      patchApplied: true,
+      untrackedFilesRestored: 0,
+    }));
+    const result = await new DeveloperWorkflow({
+      ...deps,
+      snapshots: { ...deps.snapshots, restore },
+    }).execute(request(), undefined, snapshot(1));
+    expect(result.status).toBe("AWAITING_HUMAN");
+    expect(deps.sandbox.execute).toHaveBeenCalledBefore(restore);
+    expect(restore).toHaveBeenCalledBefore(deps.execute);
+    expect(deps.contextBuilder.build).toHaveBeenCalledTimes(2);
+    expect(deps.contextBuilder.build.mock.invocationCallOrder[1]).toBeGreaterThan(
+      restore.mock.invocationCallOrder[0] ?? 0,
+    );
+    expect(deps.execute.mock.calls[0]?.[0].prompt).toContain("Do not reapply its patch");
+  });
+  it("never reclassifies preserved regression as a preexisting baseline failure", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "still failing")],
+      [checkResult("COMPLETED"), checkResult("FAILED")],
+    );
+    const restore = vi.fn(async () => ({
+      snapshotId: snapshot(1).manifest.snapshotId,
+      workspacePath,
+      baseRevision,
+      patchApplied: true,
+      untrackedFilesRestored: 0,
+    }));
+    const result = await new DeveloperWorkflow({
+      ...deps,
+      snapshots: { ...deps.snapshots, restore },
+    }).execute(request(0), undefined, snapshot(1));
+    expect(result.reason).toBe("CHECK_REGRESSION");
+    expect(result.checks.at(-1)?.preExisting).toBe(false);
+    expect(result.reviewerExecutions).toBe(0);
+  });
+  it("starts no agent after restore failure or mismatched base", async () => {
+    const deps = dependencies([], [checkResult("COMPLETED")]);
+    const restore = vi.fn().mockRejectedValue(new Error("restore integrity failure"));
+    const workflow = new DeveloperWorkflow({ ...deps, snapshots: { ...deps.snapshots, restore } });
+    await expect(workflow.execute(request(), undefined, snapshot(1))).rejects.toThrow(
+      "restore integrity",
+    );
+    expect(deps.execute).not.toHaveBeenCalled();
+    const wrong = snapshot(1);
+    wrong.manifest.baseRevision = "f".repeat(40);
+    await expect(workflow.execute(request(), undefined, wrong)).rejects.toThrow("same-base");
+  });
   it("cancels a live runtime and confirms quiescence before preserving interruption", async () => {
     const deps = dependencies(
       [runtimeResult(crypto.randomUUID(), "unused")],
