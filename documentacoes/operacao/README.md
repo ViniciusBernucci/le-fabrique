@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012V: configurar WORKER_PROVIDER_ROOT separado, existente/canônico, owner serviço e 0700 antes de login/status pela UI. Cada provider/ID tem home/store/cache privados; não copiar login antigo. Consumer usa factory por instalação sem herdar segredos do controle/API; Claude escrita bloqueada. [Relatório](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+
 FAC-012U publica recovery separado de jobs FAILED: identidade original → journal parado/result/artifact/checkpoint → reconcile; sem journal apenas reconcilia prova existente, sem checkout/IA/novo fence. BLOCKED_RECOVERY só conclui com stop/evidências íntegras; unknown não se libera por lease. [Relatório](../controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
 
 FAC-012T conecta retomada explícita via run.resume.v1: intenção imutável, claim fenced após stop/evidência, ArtifactReader, baseline limpo → restore → contexto reconstruído → workflow. Redelivery não cria writer; unknown/crash sem prova bloqueados. Developer FAILED conhecido preserva snapshot. [Relatório](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).

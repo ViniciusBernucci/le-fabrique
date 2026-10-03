@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012U. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012V. Estado: EM DESENVOLVIMENTO. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,14 +21,14 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–U e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–V e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## O que falta no software
 
 1. Transporte de artefatos grandes e retenção operacional: FAC-012P já mostra diff completo e baixa patch/untracked do último snapshot dentro do teto explícito 64 KiB, sem truncar. Retenção/backup e entrega além do teto seguem pendentes; hashes/tamanhos são verificados.
 2. Recuperação de finalização IMPLEMENTADA no U: pedido UI/outbox FINALIZATION_ONLY reenvia journal parado/reconcile sem IA/novo writer. N/O/R/S/T preservam/reconciliam/retomam estado conhecido. Hard crash/writer desconhecido permanece bloqueado, sem reexecução por suposição; confirmação física pós-crash pertence operação manual, nunca liberação cega pela interface.
 3. Ligar auth/cota/WAITING_PROVIDER e handoff ao consumer, usando configuração/elegibilidade atuais e parada comprovada. As bibliotecas não constituem esse fluxo integrado.
-4. Isolar credenciais por instalação para múltiplas contas. Interface configura instalações, mas runtime ainda usa um adapter por provider sob a mesma identidade. Provar confinamento Claude antes de escrita elegível.
+4. Identidade por instalação IMPLEMENTADA no V: login/status/runtime usam stores privados e factory da rota UI atual, sem adapter global por provider/segredos do controle no ambiente. Autenticação/preflight de serviço manual. Escrita Claude bloqueada; falta provar confinamento granular para torná-la elegível.
 5. Comandos de interface IMPLEMENTADOS para evidência conhecida: S solicita PAUSE/CANCEL e T retoma snapshot íntegro/parado, com confirmação explícita de orçamento da nova tentativa. Q exige aceite exato antes de DONE. Unknown/crash não oferecem retomada cega; recuperação de finalização segue item 2.
 6. Atualizar/gatear documentação técnica dentro do repositório externo conforme regras do projeto. FAC-012Q já gera relatório de entrega com evidências e gate do aceite, mas esse relatório não modifica README/ADRs/lessons do projeto nem comprova semanticamente todos os critérios.
 
@@ -40,4 +40,4 @@ Escolher/cadastrar piloto, autenticar clientes sob identidade de serviço, confi
 
 ## Próximo incremento
 
-Provider/identidades/handoff, gate de documentação técnica e transporte maior. N–U integram reconciliação, journal, bundle limitado, relatório/aceite exato, interrupções, comandos, retomada segura e recovery apenas de finalização. Última evidência U: 370 testes/checks, [relatório](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
+Provider/confinamento/handoff, gate de documentação técnica e transporte maior. N–V integram recuperação, journal/bundle limitado, relatório/aceite, interrupções, controles, retomada e identidade por instalação. Última evidência V: 380 testes/checks, [relatório](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md). Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.

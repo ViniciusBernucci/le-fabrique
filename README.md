@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012V liga clientes oficiais à instalação configurada na UI, com stores/ambientes privados e 380 testes/checks. Claude escrita bloqueada até prova granular; MVP/providers/handoff/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+
 FAC-012U recupera entrega preservada sem repetir IA, 370 testes/checks. Crash unknown não inicia outro writer; provider/identidades/handoff, docs técnicas e transporte maior pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
 
 FAC-012T implementa retomada explícita de snapshot parado/íntegro pelo painel, objetivo original e fence novo, 355 testes/checks. Recovery de finalização/providers/identidades/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).

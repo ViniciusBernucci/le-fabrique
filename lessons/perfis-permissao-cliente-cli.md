@@ -14,6 +14,8 @@ O cliente confiavel ainda precisa acessar sua autenticacao para falar com o forn
 
 ## Limite
 
+FAC-012V separa seleção de conta e confinamento: `ProviderIdentityManager` deriva stores privados do ID escolhido na UI e fornece ambiente allowlisted comum ao login/status/runtime. `ConfiguredAgentRouter` chama factory por rota em vez de um adapter global por marca; testes com duas contas do mesmo provider provam essa distinção. Diretórios privados não isolam código do mesmo UID; escrita Claude permanece bloqueada até prova granular, sem supor que configurar conta significa sandbox comprovado.
+
 Esse perfil nao substitui cgroups, timeout, kill da arvore de processos, worktree isolada ou bloqueio de sockets. Esses controles pertencem aos tickets de runtime e sandbox.
 
 No FAC-010C, o perfil Claude combina `safe-mode`, `restricted`, MCP estrito, browser desligado, sessao nao persistida e prompts de permissao `none`. Read-only expoe apenas leitura/busca; workspace-write acrescenta somente Edit/Write. O ambiente remove tambem token/base URL e seletores AWS/Bedrock/Vertex/Foundry. Como configuracao administrada ainda pode existir fora do processo, elegibilidade exige `authMethod` de assinatura explicitamente reconhecido e `apiProvider=firstParty`; qualquer ambiguidade falha fechado.

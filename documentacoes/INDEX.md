@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012V — identidade por instalação](runtime/2026-10-03-FAC-012V-identidades-instalacoes.md)
+- [Ticket FAC-012V](planejamento/FAC-012V-identidades-instalacoes.md)
+
 - [FAC-012U — recuperação de finalização](controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md)
 - [Ticket FAC-012U](planejamento/FAC-012U-recuperacao-finalizacao.md)
 

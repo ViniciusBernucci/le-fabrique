@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.85 - 2026-10-03
+
+FAC-012V liga clientes oficiais à identidade privada da instalação selecionada na UI, com ambiente allowlisted e Codex file/ChatGPT. Sem credencial global compartilhada no consumer; Claude escrita bloqueada até prova granular. 380 testes/checks; nenhum login/deploy, aceite pendente.
+
 ## 2.84 - 2026-10-03
 
 FAC-012U adiciona recovery administrativo FINALIZATION_ONLY via outbox/consumer, journal/reconcile sem claim/IA. BLOCKED_RECOVERY só conclui com stop/evidência íntegra; unknown não libera writer. 370 testes/checks passaram; operação/manual/MVP restante explícitos.

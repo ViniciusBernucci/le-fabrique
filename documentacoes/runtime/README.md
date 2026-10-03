@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012V liga login/status/runtime a stores privados por instalação escolhida na UI. Factory consulta rota atual, ambiente allowlisted sem credenciais do controle/API; Codex file/ChatGPT, Claude escrita bloqueada até prova granular. 380 testes/checks; preflight real não executado. [Evidências](2026-10-03-FAC-012V-identidades-instalacoes.md).
+
 FAC-012T retoma por estado externo, nunca sessão privada: baseline antes de restore, contexto depois, regressão preservada não preexistente. Restore recusa symlinks/controle/dirty/base divergente; falha não inicia cliente. Developer com falha terminal conhecida captura progresso. [Evidências](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
 
 FAC-012R mantém término unknown sticky mesmo após callbacks saírem do Set. AbortSignal conhecido gera CANCELLED/INTERRUPTED com observações/snapshot posterior à parada; não inicia outra chamada. Falha de captura não fabrica evidência nem liberação. [Evidências](../operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).

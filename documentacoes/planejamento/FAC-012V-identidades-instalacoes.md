@@ -1,6 +1,6 @@
 # FAC-012V — Identidade privada por instalação
 
-Status: READY. Data: 2026-10-03. Baseline `65be5ab`, 370 testes/checks no U. Branch/worktree: `feat/fac-012v-provider-identities`, `/home/vinicius/le-fabrique-fac-012v`.
+Status: AWAITING_HUMAN. Data: 2026-10-03. Código `22f6375522355bfd22150a1d8fa4c1375fced1d8`, 380 testes/checks passaram. Baseline `65be5ab`, 370 testes/checks no U. Branch/worktree: `feat/fac-012v-provider-identities`, `/home/vinicius/le-fabrique-fac-012v`. [Evidências](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
 
 Objetivo: ligar instalação escolhida na interface a armazenamento oficial privado distinto, comum a login, verificação e execução. Nenhum usuário/modelo/token hardcoded; não copiar autenticação existente. Raiz operacional explícita fora de checkout/execução, binários confiáveis locais. Codex usa CODEX_HOME/file; Claude usa CLAUDE_CONFIG_DIR em Linux. Claude com escrita fica bloqueado até prova granular, não presumida por esta feature.
 

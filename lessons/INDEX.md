@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012V aplica identidade por instalação distinta de confinamento: [perfis de cliente](perfis-permissao-cliente-cli.md).
+
 FAC-012U aplica retry de entrega distinto de execução: [leases/fencing](leases-fencing-checkpoints.md).
 
 FAC-012T aplica retomada por estado externo/baseline pré-restore: [snapshots](sandbox-worktree-snapshot.md).

@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012V: AWAITING_HUMAN — identidade privada por instalação UI no login/status/runtime, código `22f6375`, 380 testes/checks. Claude escrita bloqueada; [relatório](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+
 - FAC-012U: AWAITING_HUMAN — recuperação de journal/checkpoint sem IA/novo writer, código `9d4a4f1`, 370 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
 
 - FAC-012T: AWAITING_HUMAN — retomada explícita parada/íntegra, objetivo congelado, novo fence e baseline pré-restore; código `42e7037`, 355 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
