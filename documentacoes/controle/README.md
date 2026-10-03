@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012W amplia artifact para 8 MiB JSON/6 MiB raw, sem truncar e com hashes/guard/fencing inalterados. Parser API aceita envelope bounded, painel integral/escapado informa teto. 387 testes/checks; transporte interno por loopback, nenhum upload público ampliado. [Evidências](2026-10-03-FAC-012W-artefatos-ampliados.md).
+
 FAC-012U: POST `/api/runs/:id/recover-finalization` solicita outbox FINALIZATION_ONLY sob auth/versão/tentativa. REQUESTED não é prova; worker reenvia journal/reconcile sem claim/IA. Unknown permanece bloqueado; conclusão vista pelo status do run. [Relatório](2026-10-03-FAC-012U-recuperacao-finalizacao.md).
 
 FAC-012T: POST `/api/runs/:id/resume` confirma versão/origem/digest e exige stop/resultado/bundle/checkpoint íntegros. Outbox congela objetivo original; claim cria fence novo só para intenção exata. UI confirma nova tentativa/limites e preserva histórico. [Relatório](2026-10-03-FAC-012T-retomada-snapshot.md).

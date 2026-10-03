@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012W configura teto JSON API 8 MiB+4096 bytes, DTO 8 MiB/6 MiB raw; transporte worker→API loopback, proxy público mantém limites/bloqueio internal. Considerar memória/concurrency operacional; nenhum serviço alterado nem migração. Retenção/backup manuais, sem apagar artefatos. [Relatório](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
 FAC-012V adiciona WORKER_PROVIDER_ROOT no env host: raiz canônica existente 0700/owner serviço, separada de checkout/execução e fora do repositório; não provisionada neste ticket. Clientes usam filhos privados por instalação, nenhum cache antigo copiado. Claude escrita bloqueada até confinamento granular. [Relatório](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
 
 FAC-012S versiona PAUSED e runs.control_action nullable com constraint PAUSE|CANCEL; migration não aplicada. Preservar pedidos/evidências em backup; atualização operacional só em janela autorizada/writer parado. [Relatório](../controle/2026-10-03-FAC-012S-comandos-run.md).

@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012W amplia entrega para 8 MiB JSON/6 MiB raw e valida totais/tamanhos antes de leituras bounded; mantém hashes e journal. Excesso preservado, não aprovado. [Evidências](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
 FAC-012V liga login/status/runtime a stores privados por instalação escolhida na UI. Factory consulta rota atual, ambiente allowlisted sem credenciais do controle/API; Codex file/ChatGPT, Claude escrita bloqueada até prova granular. 380 testes/checks; preflight real não executado. [Evidências](2026-10-03-FAC-012V-identidades-instalacoes.md).
 
 FAC-012T retoma por estado externo, nunca sessão privada: baseline antes de restore, contexto depois, regressão preservada não preexistente. Restore recusa symlinks/controle/dirty/base divergente; falha não inicia cliente. Developer com falha terminal conhecida captura progresso. [Evidências](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).

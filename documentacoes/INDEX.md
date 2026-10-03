@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012W — artefatos ampliados](controle/2026-10-03-FAC-012W-artefatos-ampliados.md)
+- [Ticket FAC-012W](planejamento/FAC-012W-artefatos-ampliados.md)
+
 - [FAC-012V — identidade por instalação](runtime/2026-10-03-FAC-012V-identidades-instalacoes.md)
 - [Ticket FAC-012V](planejamento/FAC-012V-identidades-instalacoes.md)
 

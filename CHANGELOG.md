@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.86 - 2026-10-03
+
+FAC-012W amplia bundles worker/API/painel para 8 MiB JSON/6 MiB raw, sem truncamento, mantendo hashes/gates e leitura bounded. HTTP aceita envelope limitado e rejeita excessos com 413; 387 testes/checks, aceite pendente, sem operação real.
+
 ## 2.85 - 2026-10-03
 
 FAC-012V liga clientes oficiais à identidade privada da instalação selecionada na UI, com ambiente allowlisted e Codex file/ChatGPT. Sem credencial global compartilhada no consumer; Claude escrita bloqueada até prova granular. 380 testes/checks; nenhum login/deploy, aceite pendente.

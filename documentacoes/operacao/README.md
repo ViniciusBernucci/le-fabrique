@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012W supera o teto histórico 64 KiB: bundle até 8 MiB JSON/6 MiB conteúdo, incluindo base64/metadados no teto JSON; API aceita envelope +4096 bytes. Excesso preserva evidências e não aprova. Nenhuma retenção/cleanup automática; backup manual inclui stores/journal/snapshots/banco sem exportar tokens. [Relatório](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
 FAC-012V: configurar WORKER_PROVIDER_ROOT separado, existente/canônico, owner serviço e 0700 antes de login/status pela UI. Cada provider/ID tem home/store/cache privados; não copiar login antigo. Consumer usa factory por instalação sem herdar segredos do controle/API; Claude escrita bloqueada. [Relatório](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
 
 FAC-012U publica recovery separado de jobs FAILED: identidade original → journal parado/result/artifact/checkpoint → reconcile; sem journal apenas reconcilia prova existente, sem checkout/IA/novo fence. BLOCKED_RECOVERY só conclui com stop/evidências íntegras; unknown não se libera por lease. [Relatório](../controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).

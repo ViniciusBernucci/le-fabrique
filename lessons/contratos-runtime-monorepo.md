@@ -24,6 +24,8 @@ No FAC-012G, não basta validar a rota em uma camada e depois deixar o workflow 
 
 ## Quando repetir
 
+FAC-012W distingue orçamento raw, JSON/base64 e envelope HTTP: constants compartilhadas alimentam DTO, reader e parser. Ampliar só o schema deixaria o default HTTP 100 KiB bloquear artefatos; testes Nest reais aceitaram perto do teto e rejeitaram excesso com 413. Reader soma tamanhos antes de ler e limita buffers por tamanho esperado, pois stat seguido de readFile não impõe limite durante crescimento. Base64 usa roundtrip canônico sem regex recursiva em strings multi-megabyte.
+
 Todo novo endpoint, evento de outbox, payload de fila ou checkpoint precisa de schema versionado na fronteira. Validação de runtime deve acontecer antes de persistir ou executar o dado. Interfaces internas sem entrada externa podem permanecer apenas em `packages/runtime`.
 
 ## Evidência

@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012W entrega bundles até 8 MiB JSON/6 MiB raw sem truncar, com HTTP bounded/hash/UI integral. 387 testes/checks; providers/handoff/confinamento Claude/docs técnicas seguem pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
 FAC-012V liga clientes oficiais à instalação configurada na UI, com stores/ambientes privados e 380 testes/checks. Claude escrita bloqueada até prova granular; MVP/providers/handoff/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
 
 FAC-012U recupera entrega preservada sem repetir IA, 370 testes/checks. Crash unknown não inicia outro writer; provider/identidades/handoff, docs técnicas e transporte maior pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
