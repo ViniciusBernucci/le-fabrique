@@ -8,6 +8,7 @@ import type {
   SandboxCommandResult,
   WorkflowCheckObservation,
   WorkflowReview,
+  WorkflowRuntimeObservation,
   WorkspaceCreateResult,
 } from "@le-fabrique/contracts";
 import {
@@ -42,6 +43,7 @@ interface WorkflowProgress {
   checks: WorkflowCheckObservation[];
   snapshots: DeveloperWorkflowResult["snapshots"];
   review: WorkflowReview | null;
+  runtimeObservations: WorkflowRuntimeObservation[];
 }
 
 const MAX_PROMPT_CHARS = 200_000;
@@ -80,6 +82,7 @@ export class DeveloperWorkflow {
       checks: [],
       snapshots: [],
       review: null,
+      runtimeObservations: [],
     };
     const baseline = await this.runChecks(request, workspace, "BASELINE", 0, new Set(), signal);
     progress.checks.push(...baseline);
@@ -168,6 +171,7 @@ export class DeveloperWorkflow {
         signal,
       );
       progress.developerExecutions += 1;
+      progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
       if (developer.status !== "COMPLETED") {
         const failure = this.dependencies.guard.recordFailure(
           progress.guardState,
@@ -320,6 +324,7 @@ export class DeveloperWorkflow {
         signal,
       );
       progress.reviewerExecutions += 1;
+      progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
       const review = parseReview(reviewer);
       if (!review) {
         return this.result(
@@ -515,12 +520,35 @@ export class DeveloperWorkflow {
       snapshots: progress.snapshots,
       review: progress.review,
       diagnostic: diagnostic.slice(0, 1000),
+      runtimeObservations: progress.runtimeObservations,
     });
   }
 }
 
 function throwIfAborted(signal?: AbortSignal): void {
   if (signal?.aborted) throw new Error("Developer workflow was cancelled");
+}
+
+function observeRuntime(
+  role: "DEVELOPER" | "REVIEWER",
+  runtime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>,
+  result: RuntimeExecutionResult,
+): WorkflowRuntimeObservation {
+  return {
+    executionId: result.executionId,
+    role,
+    installationId: runtime.route.installationId,
+    provider: runtime.route.provider,
+    modelRequested: result.modelRequested,
+    modelEffective: result.modelEffective,
+    configurationVersion: runtime.configurationVersion,
+    configurationObservedAt: runtime.configurationObservedAt,
+    status: result.status,
+    errorCode: result.error?.code ?? null,
+    usage: result.usage,
+    startedAt: result.startedAt,
+    finishedAt: result.finishedAt,
+  };
 }
 
 function checkPassed(check: WorkflowCheckObservation): boolean {

@@ -12,6 +12,7 @@ import {
 } from "./control-api";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { hasExecutableBaseRevision } from "./project-view-model";
+import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
 
 export function App() {
@@ -302,6 +303,7 @@ export function App() {
               Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
             </p>
           </section>
+          <RunPanel token={token} projectId={selectedProject} />
         </>
       )}
     </main>

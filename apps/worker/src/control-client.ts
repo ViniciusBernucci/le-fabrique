@@ -13,9 +13,11 @@ import type {
   OrchestrationJob,
   OrchestrationLeaseRequest,
   ProviderOnboardingChallenge,
+  ReportExecutionResult,
   WorkerConfigurationSnapshot,
 } from "@le-fabrique/contracts";
 import {
+  executionResultReceiptSchema,
   githubOnboardingSessionSchema,
   githubPullRequestSchema,
   githubRepositoryVerificationSchema,
@@ -103,6 +105,15 @@ export class ControlClient {
   async renew(attemptId: string, input: Omit<OrchestrationLeaseRequest, "workerId">) {
     return orchestrationClaimSchema.parse(
       await this.request(`/internal/orchestration/attempts/${attemptId}/lease`, {
+        method: "POST",
+        body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
+      }),
+    );
+  }
+
+  async reportResult(attemptId: string, input: Omit<ReportExecutionResult, "workerId">) {
+    return executionResultReceiptSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/result`, {
         method: "POST",
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),

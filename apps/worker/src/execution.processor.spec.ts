@@ -49,10 +49,10 @@ function job(): OrchestrationJob {
   };
 }
 
-function approvedWorkflow(): DeveloperWorkflowResult {
+function approvedWorkflow(workflowId = crypto.randomUUID()): DeveloperWorkflowResult {
   return {
     schemaVersion: 1,
-    workflowId: crypto.randomUUID(),
+    workflowId,
     status: "AWAITING_HUMAN",
     reason: "APPROVED",
     workspace: {
@@ -108,6 +108,7 @@ function approvedWorkflow(): DeveloperWorkflowResult {
     corrections: 0,
     review: { schemaVersion: 1, verdict: "APPROVE", summary: "Synthetic review", findings: [] },
     diagnostic: "Synthetic workflow completed",
+    runtimeObservations: [],
   };
 }
 
@@ -115,6 +116,7 @@ function dependencies() {
   const attemptId = crypto.randomUUID();
   const runId = crypto.randomUUID();
   const control = {
+    reportResult: vi.fn().mockResolvedValue({ attemptId, digest: "f".repeat(64) }),
     claim: vi.fn().mockResolvedValue({
       runId,
       attemptId,
@@ -137,7 +139,7 @@ function dependencies() {
     ),
   };
   const workflow = {
-    execute: vi.fn().mockResolvedValue(approvedWorkflow()),
+    execute: vi.fn().mockResolvedValue(approvedWorkflow(attemptId)),
     cancelActive: vi.fn().mockResolvedValue(true),
   };
   return {
@@ -175,6 +177,7 @@ describe("processOrchestrationExecution", () => {
       reason: "APPROVED",
     });
     expect(deps.control.checkpoint).toHaveBeenCalledBefore(deps.control.complete);
+    expect(deps.control.reportResult).toHaveBeenCalledBefore(deps.control.checkpoint);
     expect(deps.control.checkpoint).toHaveBeenCalledWith(
       deps.attemptId,
       expect.objectContaining({
@@ -218,7 +221,7 @@ describe("processOrchestrationExecution", () => {
       await new Promise<void>((resolve) =>
         signal.addEventListener("abort", () => resolve(), { once: true }),
       );
-      return approvedWorkflow();
+      return approvedWorkflow(deps.attemptId);
     });
     deps.workflow.cancelActive.mockResolvedValue(false);
     const pending = processOrchestrationExecution(job(), deps.input);
@@ -231,7 +234,7 @@ describe("processOrchestrationExecution", () => {
   it.each(["FAILED", "PAUSED_LIMIT"] as const)("maps %s without false approval", async (status) => {
     const deps = dependencies();
     deps.workflow.execute.mockResolvedValue({
-      ...approvedWorkflow(),
+      ...approvedWorkflow(deps.attemptId),
       status,
       reason: "RUNTIME_ROUTE_UNAVAILABLE",
     });
@@ -262,7 +265,7 @@ describe("processOrchestrationExecution", () => {
 
   it("does not release an attempt when a completed check lacks stop evidence", async () => {
     const deps = dependencies();
-    const result = approvedWorkflow();
+    const result = approvedWorkflow(deps.attemptId);
     result.checks = result.checks.map((check) => ({ ...check, stoppedConfirmed: false }));
     deps.workflow.execute.mockResolvedValue(result);
     await expect(processOrchestrationExecution(job(), deps.input)).rejects.toBeInstanceOf(
@@ -297,12 +300,22 @@ describe("processOrchestrationExecution", () => {
         signal.addEventListener("abort", () => resolve(), { once: true }),
       );
       signal.throwIfAborted();
-      return approvedWorkflow();
+      return approvedWorkflow(deps.attemptId);
     });
     const pending = processOrchestrationExecution(job(), deps.input, stop.signal);
     await vi.waitFor(() => expect(deps.workflow.execute).toHaveBeenCalledOnce());
     stop.abort();
     await expect(pending).resolves.toMatchObject({ status: "CANCELLED", reason: "WORKER_STOPPED" });
     expect(deps.workflow.cancelActive).toHaveBeenCalledBefore(deps.control.checkpoint);
+  });
+
+  it("does not complete when result persistence fails", async () => {
+    const deps = dependencies();
+    deps.control.reportResult.mockRejectedValue(new Error("result unavailable"));
+    await expect(processOrchestrationExecution(job(), deps.input)).rejects.toThrow(
+      "result unavailable",
+    );
+    expect(deps.control.checkpoint).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
   });
 });

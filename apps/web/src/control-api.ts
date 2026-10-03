@@ -34,6 +34,10 @@ import {
   providerOnboardingSessionSchema,
   providerVerificationListSchema,
   providerVerificationSchema,
+  type RunDetail,
+  type RunSummary,
+  runDetailSchema,
+  runListSchema,
   type Ticket,
   ticketListSchema,
   ticketSchema,
@@ -102,6 +106,26 @@ export async function putProjectDefinition(
 }
 export async function listTickets(token: string, projectId: string): Promise<Ticket[]> {
   return ticketListSchema.parse(await request(`/projects/${projectId}/tickets`, token));
+}
+
+export async function listRuns(
+  token: string,
+  projectId: string,
+  signal?: AbortSignal,
+): Promise<RunSummary[]> {
+  return runListSchema.parse(
+    await request(`/runs?projectId=${encodeURIComponent(projectId)}`, token, { signal }),
+  );
+}
+
+export async function getRun(
+  token: string,
+  runId: string,
+  signal?: AbortSignal,
+): Promise<RunDetail> {
+  return runDetailSchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}`, token, { signal }),
+  );
 }
 export async function createTicket(
   token: string,

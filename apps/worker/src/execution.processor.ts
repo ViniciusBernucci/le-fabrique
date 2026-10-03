@@ -5,7 +5,7 @@ import type {
   OrchestrationJob,
   OrchestrationState,
 } from "@le-fabrique/contracts";
-import { orchestrationJobSchema } from "@le-fabrique/contracts";
+import { executionResultReportSchema, orchestrationJobSchema } from "@le-fabrique/contracts";
 import type { ControlClient } from "./control-client";
 import { LeaseAuthorityLostError, LeaseGuard } from "./lease-guard";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
@@ -17,7 +17,7 @@ export interface ExecutionWorkflow {
 }
 
 export interface ExecutionProcessorDependencies {
-  control: Pick<ControlClient, "claim" | "renew" | "checkpoint" | "complete">;
+  control: Pick<ControlClient, "claim" | "renew" | "checkpoint" | "complete" | "reportResult">;
   leaseDurationMs: number;
   prepareCheckout: (
     job: OrchestrationJob,
@@ -170,6 +170,24 @@ export async function processOrchestrationExecution(
   const latestSnapshot = workflowResult.snapshots.at(-1);
   const stoppedConfirmed = workflowResult.checks.every((check) => check.stoppedConfirmed);
   if (!stoppedConfirmed) throw new WriterQuiescenceError();
+  const {
+    workspace: _workspace,
+    contextManifest: _context,
+    guardState: _guard,
+    snapshots,
+    ...publicResult
+  } = workflowResult;
+  const result = executionResultReportSchema.parse({
+    ...publicResult,
+    snapshots: snapshots.map(({ untracked, ...manifest }) => ({
+      ...manifest,
+      untrackedFiles: untracked.length,
+    })),
+  });
+  await dependencies.control.reportResult(claim.attemptId, {
+    fencingToken: claim.fencingToken,
+    result,
+  });
   const approved =
     workflowResult.status === "AWAITING_HUMAN" && workflowResult.reason === "APPROVED";
   const checkpointReason = approved

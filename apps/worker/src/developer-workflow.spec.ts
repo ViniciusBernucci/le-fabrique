@@ -256,6 +256,22 @@ describe("DeveloperWorkflow", () => {
       reviewerExecutions: 1,
       corrections: 0,
     });
+    expect(result.runtimeObservations).toEqual([
+      expect.objectContaining({
+        role: "DEVELOPER",
+        installationId: "developer-installation",
+        modelRequested: "codex-model-selected-in-ui",
+        modelEffective: null,
+        usage: null,
+      }),
+      expect.objectContaining({
+        role: "REVIEWER",
+        installationId: "reviewer-installation",
+        modelRequested: "claude-model-selected-in-ui",
+        modelEffective: null,
+        usage: null,
+      }),
+    ]);
     expect(result.checks).toEqual([
       expect.objectContaining({ phase: "BASELINE", preExisting: false, status: "FAILED" }),
       expect.objectContaining({ phase: "POST_CHANGE", preExisting: true, status: "FAILED" }),

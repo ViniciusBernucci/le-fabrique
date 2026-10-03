@@ -173,6 +173,8 @@ model Attempt {
   completedAt      DateTime?     @map("completed_at")
   run              Run           @relation(fields: [runId], references: [id], onDelete: Restrict)
   checkpoint       Checkpoint?
+  result           Json?
+  resultDigest     String?       @map("result_digest")
 
   @@unique([runId, sequence])
   @@unique([runId, fencingToken])

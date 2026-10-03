@@ -1627,6 +1627,25 @@ export const workflowReviewSchema = z.object({
 });
 export type WorkflowReview = z.infer<typeof workflowReviewSchema>;
 
+export const workflowRuntimeObservationSchema = z
+  .object({
+    executionId: z.uuid(),
+    role: z.enum(["DEVELOPER", "REVIEWER"]),
+    installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    provider: runtimeProviderSchema,
+    modelRequested: z.string().max(120).transform(redactExecutionReportText).nullable(),
+    modelEffective: z.string().max(120).transform(redactExecutionReportText).nullable(),
+    configurationVersion: z.number().int().nonnegative(),
+    configurationObservedAt: z.iso.datetime(),
+    status: runtimeExecutionResultSchema.shape.status,
+    errorCode: runtimeExecutionResultSchema.shape.error.unwrap().shape.code.nullable(),
+    usage: runtimeUsageSchema.strict().nullable(),
+    startedAt: z.iso.datetime(),
+    finishedAt: z.iso.datetime(),
+  })
+  .strict();
+export type WorkflowRuntimeObservation = z.infer<typeof workflowRuntimeObservationSchema>;
+
 export const developerWorkflowResultSchema = z.object({
   schemaVersion: z.literal(1),
   workflowId: z.uuid(),
@@ -1651,8 +1670,130 @@ export const developerWorkflowResultSchema = z.object({
   snapshots: z.array(workspaceSnapshotManifestSchema).max(3),
   review: workflowReviewSchema.nullable(),
   diagnostic: z.string().trim().min(1).max(1000),
+  runtimeObservations: z.array(workflowRuntimeObservationSchema).max(10).default([]),
 });
 export type DeveloperWorkflowResult = z.infer<typeof developerWorkflowResultSchema>;
+
+/** Minimize known credential/path patterns in untrusted model text before publishing it. */
+export function redactExecutionReportText(value: string): string {
+  return value
+    .replace(/\bBearer\s+[^\s"'<>]+/gi, "Bearer [redacted]")
+    .replace(
+      /\b(?:sk-[A-Za-z0-9_-]{10,}|gh[pousr]_[A-Za-z0-9_]{10,}|github_pat_[A-Za-z0-9_]{10,})/g,
+      "[redacted]",
+    )
+    .replace(
+      /\b(?:[A-Z_]*(?:API_KEY|OAUTH_TOKEN)|GH_TOKEN|GITHUB_TOKEN|ADMIN_API_TOKEN|WORKER_API_TOKEN)\s*[:=]\s*["']?[^\s"'<>]+/gi,
+      "[credential redacted]",
+    )
+    .replace(/\/(?:home|root|var|etc|opt|srv|run|tmp)\/[^\s"'<>]+/g, "[host path]");
+}
+const publicReportText = (max: number) =>
+  z
+    .string()
+    .trim()
+    .min(1)
+    .max(max)
+    .transform((value) => redactExecutionReportText(value).slice(0, max));
+
+export const executionResultReportSchema = developerWorkflowResultSchema
+  .omit({
+    workspace: true,
+    contextManifest: true,
+    guardState: true,
+  })
+  .extend({
+    diagnostic: publicReportText(1000),
+    checks: z
+      .array(workflowCheckObservationSchema.extend({ name: publicReportText(120) }).strict())
+      .max(80),
+    snapshots: z
+      .array(
+        workspaceSnapshotManifestSchema
+          .omit({ untracked: true })
+          .extend({
+            untrackedFiles: z.number().int().nonnegative(),
+          })
+          .strict(),
+      )
+      .max(3),
+    review: workflowReviewSchema
+      .extend({
+        summary: publicReportText(4000),
+        findings: z.array(publicReportText(1000)).max(20),
+      })
+      .strict()
+      .nullable(),
+  })
+  .strict()
+  .refine(
+    (report) => new TextEncoder().encode(JSON.stringify(report)).byteLength <= 65_536,
+    "Execution report exceeds 64 KiB",
+  );
+export type ExecutionResultReport = z.infer<typeof executionResultReportSchema>;
+
+export const reportExecutionResultSchema = z
+  .object({
+    workerId: z.uuid(),
+    fencingToken: z.number().int().positive(),
+    result: executionResultReportSchema,
+  })
+  .strict();
+export type ReportExecutionResult = z.infer<typeof reportExecutionResultSchema>;
+export const executionResultReceiptSchema = z
+  .object({
+    attemptId: z.uuid(),
+    digest: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+
+export const runSummarySchema = z
+  .object({
+    id: z.uuid(),
+    ticketId: z.uuid(),
+    projectId: z.uuid(),
+    title: z.string().max(160),
+    status: ticketStatusSchema,
+    version: z.number().int().positive(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+export type RunSummary = z.infer<typeof runSummarySchema>;
+export const runListSchema = z.array(runSummarySchema).max(50);
+export const runAttemptSchema = z
+  .object({
+    id: z.uuid(),
+    sequence: z.number().int().positive(),
+    status: z.enum(["RUNNING", "STOPPED", "COMPLETED", "FAILED", "CANCELLED"]),
+    stoppedConfirmed: z.boolean(),
+    startedAt: z.iso.datetime(),
+    completedAt: z.iso.datetime().nullable(),
+    result: executionResultReportSchema.nullable(),
+    resultDigest: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .nullable(),
+    checkpoint: z
+      .object({
+        baseRevision: gitCommitShaSchema,
+        codeRevision: gitCommitShaSchema.nullable(),
+        snapshotId: z.uuid().nullable(),
+        patchHash: z
+          .string()
+          .regex(/^[a-f0-9]{64}$/)
+          .nullable(),
+        stoppedConfirmed: z.boolean(),
+        reason: checkpointReasonSchema,
+      })
+      .strict()
+      .nullable(),
+  })
+  .strict();
+export const runDetailSchema = runSummarySchema
+  .extend({ attempts: z.array(runAttemptSchema).max(50) })
+  .strict();
+export type RunDetail = z.infer<typeof runDetailSchema>;
 
 export const agentRouteSchema = z
   .object({
