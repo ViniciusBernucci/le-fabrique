@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012Y adiciona até duas alternativas explícitas por função na configuração e histórico de handoff no resultado. Defaults vazios, catálogo/referências validados; nenhuma troca para API/extras, nenhum novo writer liberado pelo painel. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
+
 FAC-012X persiste WAITING_PROVIDER com checkpoint/resultado coerentes e permite resume existente somente por stop/bundle/versão/fence exatos; painel explica autenticação/cota/configuração e confirmação de novo orçamento. Nenhum retry automático. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).
 
 FAC-012W amplia artifact para 8 MiB JSON/6 MiB raw, sem truncar e com hashes/guard/fencing inalterados. Parser API aceita envelope bounded, painel integral/escapado informa teto. 387 testes/checks; transporte interno por loopback, nenhum upload público ampliado. [Evidências](2026-10-03-FAC-012W-artefatos-ampliados.md).

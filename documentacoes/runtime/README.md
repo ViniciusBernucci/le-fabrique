@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012Y integra alternativas UI ao workflow: chamada terminal indisponível → stop → snapshot → nova worktree/restore/contexto → rota revalidada. Máximo dois handoffs sem reset de budgets; Reviewer read-only, factory segura não vira fallback. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
+
 FAC-012X trata indisponibilidade tipada da instalação e AUTH_REQUIRED/RATE_LIMITED/PROVIDER_BUSY em Developer/Reviewer como WAITING_PROVIDER depois de stop/snapshot. Não gasta correções repetindo IA; config/segurança/unknown não viram espera falsa. Handoff automático separado. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).
 
 FAC-012W amplia entrega para 8 MiB JSON/6 MiB raw e valida totais/tamanhos antes de leituras bounded; mantém hashes e journal. Excesso preservado, não aprovado. [Evidências](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).

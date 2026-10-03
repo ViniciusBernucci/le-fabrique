@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012Y diferencia troca sequencial de cliente e transferência de autoridade do writer: [lifecycle CLI](lifecycle-processo-cli.md).
+
 FAC-012X aplica indisponibilidade distinta de correção, sem supor stop: [lifecycle CLI](lifecycle-processo-cli.md).
 
 FAC-012W aplica budgets raw/JSON/HTTP consistentes e leitura bounded: [contratos runtime](contratos-runtime-monorepo.md).

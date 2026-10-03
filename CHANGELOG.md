@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.88 - 2026-10-03
+
+FAC-012Y permite alternativas explícitas na UI e handoff sequencial seguro de Developer/Reviewer, sem sessão privada/fallback pago/reset de limites. 411 testes/checks; evidências em resultado/painel, Claude escrita/docs técnicas pendentes, aceite separado.
+
 ## 2.87 - 2026-10-03
 
 FAC-012X conecta auth/cota/busy à espera persistida por provider, com stop/snapshot/journal antes de finalização fenced. Sem correções/retries de IA para provider indisponível; retomada explícita por evidência. 399 testes/checks, migration não aplicada, aceite pendente.

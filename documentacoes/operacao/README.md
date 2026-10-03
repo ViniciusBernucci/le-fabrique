@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012Y mantém lease/fence ao trocar cliente dentro da mesma tentativa, após parada e restauração verificadas. Novo job continua com fence novo; unknown/crash não é recuperado por suposição. Alternativas UI vazias por padrão, autenticação/preflight manuais. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
+
 FAC-012X conecta espera por auth/cota/busy no consumer: stop conhecido → snapshot → journal/result/artifact/checkpoint → WAITING_PROVIDER; retomada humana existente por evidência/configuração atual. Unknown não fabrica espera, nenhum retry/login/gasto automático. 399 testes/checks, migration não aplicada. [Relatório](2026-10-03-FAC-012X-espera-provider.md).
 
 FAC-012W supera o teto histórico 64 KiB: bundle até 8 MiB JSON/6 MiB conteúdo, incluindo base64/metadados no teto JSON; API aceita envelope +4096 bytes. Excesso preserva evidências e não aprova. Nenhuma retenção/cleanup automática; backup manual inclui stores/journal/snapshots/banco sem exportar tokens. [Relatório](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).

@@ -20,6 +20,8 @@ Transações PostgreSQL e outbox registram mudanças/dispatch. Dispatcher public
 API não executa clientes ou builds dentro da requisição. Worker usa spawn/execFile assíncronos com argv explícito e shell desativado; prompts por stdin quando suportado. Implementar backpressure, limites de logs, timeout e término da árvore/grupo de processos. Novo writer exige confirmação de quiescência do anterior.
 Separação de processos não basta para isolamento: preservar usuários/redes/volumes distintos, sandboxes, credenciais inacessíveis ao código e ausência de Docker socket no piloto. Clientes oficiais autenticados na VPS continuam sujeitos ao preflight.
 ## Verificação e operação
+FAC-012Y distingue handoff interno de cliente e transferência de writer: o mesmo worker mantém lease/fence e exclusão global durante stop/snapshot/restore em outra worktree, sem liberar claim. Novo job/retomada exige confirmação de stop e fence novo. Alternativas são configuração explícita, limitadas e revalidadas; não há sessão privada compartilhada/reset de budgets/fallback pago. Snapshot intermediário local não promete recuperação após crash anterior à publicação; unknown continua BLOCKED_RECOVERY.
+
 Checks: typecheck, lint, builds de web/API/worker e testes relevantes. Integração cobre contratos inválidos, jobs duplicados, crash/reinício, timeout, handoff, gate documental e aprovação obsoleta; UI conforme critérios do ticket.
 CPU intensa e builds ficam fora do event loop da API. Medir RSS, heap, cgroup, OOM, disco e latência sob carga; limitar retenção/logs. Toolchains PHP/.NET/outras entram somente quando o piloto exigir.
 Mantidos mínimo 4 vCPU/8 GB/120 GB, bom 8 vCPU/16 GB/200 GB e ideal 8 vCPU/32 GB/300 GB, um executor inicial e sem GPU. Revisar capacidade apenas com medições.

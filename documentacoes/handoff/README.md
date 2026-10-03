@@ -1,6 +1,8 @@
 # Checkpoint e troca de provider
 
-FAC-012T implementa retomada HUMANA, não handoff automático: última tentativa parada com hashes/bundle/checkpoint, nova intenção/outbox/fence e worktree, baseline pré-restore e contexto pós-restore. Configuração atual resolve contas/modelos; sem sessão privada. Crash unknown e handoff automático permanecem pendentes. [Relatório](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+FAC-012Y integra handoff automático de cliente dentro da tentativa por alternativas explícitas na UI: stop → snapshot → worktree/restore/contexto → rota atual. Máximo dois handoffs sem reset de budgets, Reviewer read-only; mesmo worker mantém lease/fence e exclusão global. Ausência de alternativa aguarda X; unknown bloqueia. [Relatório](2026-10-03-FAC-012Y-handoff-configurado.md).
+
+FAC-012T continua a retomada HUMANA: última tentativa parada com hashes/bundle/checkpoint, nova intenção/outbox/fence e worktree, baseline pré-restore e contexto pós-restore. Configuração atual resolve contas/modelos; sem sessão privada. Crash unknown permanece bloqueado. [Relatório](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
@@ -14,9 +16,9 @@ Um writer ativo por workspace. Estado externo é a memória compartilhada: Postg
 1. Solicitar pausa e bloquear novas ferramentas/etapas. Se cliente não pode pausar, cancelar árvore e aguardar término comprovado.
 2. Supervisor coleta status Git, base/code SHA, diff binário quando aplicável e lista de untracked; exclui segredos e dependências. Fazer snapshot verificável mesmo que o agente não consiga gerar resumo após esgotar cota.
 3. Persistir artefatos com hashes e checkpoint. Commit WIP só se permitido no repo e conteúdo revisado; alternativamente guardar patch + untracked. Commit sozinho não cobre arquivos não rastreados.
-4. Confirmar envio/recuperabilidade, liberar lock anterior e emitir novo fencing_token. Novo job rejeita eventos do token antigo.
+4. Quando transferir autoridade para novo job/writer, confirmar envio/recuperabilidade, liberar lock anterior e emitir novo fencing_token. Novo job rejeita eventos do token antigo. No handoff interno Y não se libera lock nem se cria writer: o mesmo worker conserva lease/fence, troca apenas cliente após stop e restaura artefato local verificado. Crash antes de publicar continua sem recuperação automática desse snapshot intermediário.
 5. Novo provider lê checkpoint, confere revisão e patch, reexecuta checks pertinentes e continua somente próximos passos. Não reaplicar patch já presente.
-6. Registrar handoff, motivo, origem/destino, duração e resultado. Limite proposto de dois handoffs; depois pausa com diagnóstico.
+6. Registrar handoff, motivo, origem/destino e evidência de snapshot/tempo/resultado. Y limita a dois handoffs e também aos budgets por função/globais; sem destino elegível retorna WAITING_PROVIDER, budgets interrompem com PAUSED_LIMIT. Histórico de preparação não prova chamada/sucesso do destino; consultar observações efetivas.
 ## Corrida de recuperação
 Lease expirado na VPS não prova que processo local morreu. Durante partição de rede, o worker deve se auto-interromper antes de vencer sua janela de lease. Controle não envia outro writer ao mesmo workspace até confirmação de quiescência; sem confirmação, manter BLOCKED_RECOVERY. Não considerar fencing_token suficiente para impedir dois processos editando arquivos locais.
 Heartbeat proposto 15s, lease 90s; worker precisa parar antes de expirar, incluindo margem de encerramento. Valores devem ser ensaiados. Supervisor sem lease não inicia comandos. Cancelamento registra resultado desconhecido caso não possa confirmar término.
