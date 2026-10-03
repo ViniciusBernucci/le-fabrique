@@ -60,7 +60,10 @@ export function ArtifactView({ artifact }: { artifact: ExecutionArtifact }) {
   }
   return (
     <div className="execution-artifact">
-      <p>Bundle íntegro: patch Git e arquivos novos em base64. Baixar não aplica as alterações.</p>
+      <p>
+        Bundle íntegro: patch Git e arquivos novos em base64 (até 8 MiB JSON / 6 MiB de conteúdo,
+        incluindo metadados no teto JSON). Baixar não aplica as alterações.
+      </p>
       <button type="button" onClick={download}>
         Baixar bundle JSON
       </button>

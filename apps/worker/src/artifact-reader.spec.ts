@@ -44,6 +44,32 @@ async function fixture() {
   };
 }
 describe("ArtifactReader", () => {
+  it("refuses inconsistent declared totals before reading artifact content", async () => {
+    const f = await fixture();
+    await writeFile(
+      path.join(f.snapshot.artifactPath, "manifest.json"),
+      JSON.stringify({ ...f.snapshot.manifest, totalArtifactBytes: 1 }),
+    );
+    await expect(f.reader.read({ ...f.report, totalArtifactBytes: 1 })).rejects.toThrow(
+      "declared sizes",
+    );
+  });
+  it("delivers a real Git snapshot above the former 64 KiB limit without truncation", async () => {
+    const f = await fixture();
+    const repo = path.join(f.root, "repo");
+    const content = Buffer.alloc(256 * 1024, 0x61);
+    await writeFile(path.join(repo, "asset.bin"), content);
+    const captured = await new SnapshotManager(f.snapshots).capture({
+      schemaVersion: 1,
+      workspacePath: repo,
+      limits: { maxUntrackedFiles: 10, maxArtifactBytes: 1024 * 1024 },
+    });
+    const { untracked, ...manifest } = captured.manifest;
+    const artifact = await f.reader.read({ ...manifest, untrackedFiles: untracked.length });
+    const file = artifact.files.find((entry) => entry.path === "asset.bin");
+    if (!file) throw new Error("Missing fixture asset");
+    expect(Buffer.from(file.dataBase64, "base64")).toEqual(content);
+  });
   it("exports an actual Git patch and untracked file with exact integrity", async () => {
     const f = await fixture();
     const artifact = await f.reader.read(f.report);

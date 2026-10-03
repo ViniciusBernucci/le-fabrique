@@ -1451,11 +1451,19 @@ const artifactRelativePathSchema = z
       path.split("/").every((segment) => segment !== "" && segment !== "." && segment !== ".."),
     "Unsafe artifact path",
   );
+export const ARTIFACT_JSON_MAX_BYTES = 8 * 1024 * 1024;
+export const ARTIFACT_RAW_MAX_BYTES = 6 * 1024 * 1024;
+export const ARTIFACT_HTTP_MAX_BYTES = ARTIFACT_JSON_MAX_BYTES + 4096;
 const artifactBase64Schema = z
   .string()
-  .max(87_384)
-  .regex(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+  .max(ARTIFACT_JSON_MAX_BYTES)
   .refine((value) => {
+    if (
+      value.length > ARTIFACT_JSON_MAX_BYTES ||
+      value.length % 4 !== 0 ||
+      /[^A-Za-z0-9+/=]/.test(value)
+    )
+      return false;
     try {
       return btoa(atob(value)) === value;
     } catch {
@@ -1481,8 +1489,13 @@ export const executionArtifactSchema = z
   })
   .strict()
   .superRefine((artifact, context) => {
-    if (new TextEncoder().encode(JSON.stringify(artifact)).length > 65_536)
-      context.addIssue({ code: "custom", message: "Artifact JSON exceeds 64 KiB delivery limit" });
+    if (artifact.manifest.totalArtifactBytes > ARTIFACT_RAW_MAX_BYTES)
+      context.addIssue({
+        code: "custom",
+        message: "Artifact raw bytes exceed 6 MiB delivery limit",
+      });
+    if (new TextEncoder().encode(JSON.stringify(artifact)).length > ARTIFACT_JSON_MAX_BYTES)
+      context.addIssue({ code: "custom", message: "Artifact JSON exceeds 8 MiB delivery limit" });
   });
 export type ExecutionArtifact = z.infer<typeof executionArtifactSchema>;
 export const reportExecutionArtifactSchema = z

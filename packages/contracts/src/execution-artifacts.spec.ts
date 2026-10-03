@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
-import { executionArtifactSchema, verifyExecutionArtifact } from "./index";
+import { ARTIFACT_RAW_MAX_BYTES, executionArtifactSchema, verifyExecutionArtifact } from "./index";
 
 const hash = (bytes: Uint8Array) => createHash("sha256").update(bytes).digest("hex");
 function bundle(
@@ -65,6 +65,20 @@ describe("execution artifact contract", () => {
     expect(() =>
       executionArtifactSchema.parse({ ...bundle(), workspacePath: "/private" }),
     ).toThrow();
-    expect(() => bundle("x".repeat(50_000))).toThrow("64 KiB");
+    expect(() => bundle("x".repeat(ARTIFACT_RAW_MAX_BYTES + 1))).toThrow("delivery limit");
+  });
+  it("delivers a multi-megabyte binary untracked file with exact hashes", () => {
+    const artifact = bundle(
+      "x".repeat(1024 * 1024),
+      "src/asset.bin",
+      "\u0000\u00ff".repeat(512 * 1024),
+    );
+    expect(new TextEncoder().encode(JSON.stringify(artifact)).length).toBeGreaterThan(65_536);
+    expect(() => verify(artifact)).not.toThrow();
+  });
+  it("retains the encoded JSON limit even when raw bytes fit", () => {
+    expect(() => bundle("x".repeat(ARTIFACT_RAW_MAX_BYTES - 10), "src/new.ts", "")).toThrow(
+      "8 MiB",
+    );
   });
 });

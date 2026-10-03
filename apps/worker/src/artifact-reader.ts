@@ -3,6 +3,8 @@ import { constants } from "node:fs";
 import { lstat, open, realpath } from "node:fs/promises";
 import path from "node:path";
 import {
+  ARTIFACT_JSON_MAX_BYTES,
+  ARTIFACT_RAW_MAX_BYTES,
   type ExecutionArtifact,
   type ExecutionResultReport,
   executionArtifactSchema,
@@ -45,14 +47,18 @@ export class ArtifactReader {
       )
         throw new Error("Artifact does not match persisted snapshot");
     }
-    if (manifest.totalArtifactBytes > 48_000 || untracked.length > 1000)
+    if (manifest.totalArtifactBytes > ARTIFACT_RAW_MAX_BYTES || untracked.length > 1000)
       throw new Error("Artifact exceeds bounded delivery limit");
-    const patch = await readSafe(path.join(directory, "tracked.patch"));
+    const declaredBytes =
+      manifest.patchBytes + untracked.reduce((total, entry) => total + entry.sizeBytes, 0);
+    if (declaredBytes !== manifest.totalArtifactBytes || declaredBytes > ARTIFACT_RAW_MAX_BYTES)
+      throw new Error("Artifact declared sizes exceed bounded delivery limit");
+    const patch = await readSafe(path.join(directory, "tracked.patch"), manifest.patchBytes);
     const files = [];
     for (const entry of untracked) {
       // Shared DTO validates traversal before resolving the file.
       executionArtifactSchema.shape.files.element.shape.path.parse(entry.path);
-      const bytes = await readSafe(path.join(directory, "untracked", entry.path));
+      const bytes = await readSafe(path.join(directory, "untracked", entry.path), entry.sizeBytes);
       files.push({ path: entry.path, dataBase64: bytes.toString("base64") });
     }
     const artifact = executionArtifactSchema.parse({
@@ -69,7 +75,7 @@ export class ArtifactReader {
     return artifact;
   }
 }
-async function readSafe(filePath: string): Promise<Buffer> {
+async function readSafe(filePath: string, expectedBytes?: number): Promise<Buffer> {
   if ((await realpath(filePath)) !== filePath) throw new Error("Artifact symlink blocked");
   const file = await open(
     filePath,
@@ -77,10 +83,25 @@ async function readSafe(filePath: string): Promise<Buffer> {
   );
   try {
     const metadata = await file.stat();
-    if (!metadata.isFile() || metadata.size > 65_536 || metadata.uid !== process.getuid?.())
+    if (
+      !metadata.isFile() ||
+      metadata.size > ARTIFACT_JSON_MAX_BYTES ||
+      metadata.uid !== process.getuid?.()
+    )
       throw new Error("Unsafe artifact file");
-    const bytes = await file.readFile();
-    if (bytes.length > 65_536) throw new Error("Artifact file limit exceeded");
+    if (expectedBytes !== undefined && metadata.size !== expectedBytes)
+      throw new Error("Artifact file integrity mismatch");
+    const buffer = Buffer.alloc((expectedBytes ?? ARTIFACT_JSON_MAX_BYTES) + 1);
+    let offset = 0;
+    while (offset < buffer.length) {
+      const { bytesRead } = await file.read(buffer, offset, buffer.length - offset, offset);
+      if (bytesRead === 0) break;
+      offset += bytesRead;
+    }
+    const bytes = buffer.subarray(0, offset);
+    if (bytes.length > ARTIFACT_JSON_MAX_BYTES) throw new Error("Artifact file limit exceeded");
+    if (expectedBytes !== undefined && bytes.length !== expectedBytes)
+      throw new Error("Artifact file integrity mismatch");
     return bytes;
   } finally {
     await file.close();
