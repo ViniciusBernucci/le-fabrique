@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço e piloto pendentes, sem conta real desbloqueada. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+
 - FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
 - FAC-012Y: AWAITING_HUMAN — alternativas UI/handoff no workflow real, código `f66a923`, 411 testes/checks; limites/stop/snapshot/restore/lease preservados, sem operação real. [Relatório](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).

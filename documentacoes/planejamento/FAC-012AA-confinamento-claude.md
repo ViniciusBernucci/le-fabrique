@@ -1,5 +1,7 @@
 # FAC-012AA — Perfil granular e preflight Claude
 
-Status: READY. Data: 2026-10-03. Baseline `ca41328`; worktree `/home/vinicius/le-fabrique-fac-012aa`, branch `feat/fac-012aa-claude-confinement`, exclusiva sem outro writer. Handoff limpo, SHA/patch/untracked conferidos.
+Status: IMPLEMENTADO / AWAITING_HUMAN. Data: 2026-10-03. Baseline `ca41328`; worktree `/home/vinicius/le-fabrique-fac-012aa`, branch `feat/fac-012aa-claude-confinement`, exclusiva sem outro writer. Handoff limpo, SHA/patch/untracked conferidos.
 
 Objetivo: substituir acceptEdits por dontAsk + regras Edit apenas para caminhos autorizados/canônicos, negar metadados/credenciais, manter ferramentas sem shell/MCP/customizações; preparar prova opt-in com cliente oficial/assinatura na identidade de serviço e elegibilidade vinculada a evidência privada, versão/binário/política. Nenhuma evidência sintética desbloqueia serviço real. Caminhos runtime/worker/scripts/testes/docs runtime/operação/planejamento/ADRs/lessons/índices. Critérios: regras não ampliam caminhos/padrões/symlinks; escrita sem prova continua bloqueada; CLI alterado invalida prova; preflight exige tentativas reais/negações e hashes de canários, não mensagem do modelo; testes/checks/docs exatos. Provider da fábrica nenhum neste incremento, fixtures; execução real depende de assinatura/login/financeiro humano. Um writer, até duas correções; sem conta/modelo fixos, API/extras/login/migrations/piloto/push/merge/deploy.
+
+Código `56f2e38d2d204418bb594d3679a753057f8e4589`, 433 testes/checks; [relatório](../runtime/2026-10-03-FAC-012AA-confinamento-claude.md). Prova oficial da identidade de serviço e aceite humano exato pendentes.

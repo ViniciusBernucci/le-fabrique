@@ -29,3 +29,5 @@ Mantidos mínimo 4 vCPU/8 GB/120 GB, bom 8 vCPU/16 GB/200 GB e ideal 8 vCPU/32 G
 Atualização documental de planejamento; nenhum serviço implementado ou implantado. Mantidos assinaturas oficiais, API/extras desligados, handoff, documentação por domínio, diffs, lessons e aceite humano.
 
 FAC-012Z: política documental versionada por projeto segue contratos runtime/UI/READY. Worker executa gate bounded após stop/checks e exige revisão semântica/snapshot inalterado; API apenas cruza hashes/conjunto com evidência persistida, sem executar código. Compatibilidade de leitura dos registros antigos preservada, novos jobs exigem política.
+
+FAC-012AA implementa perfil Claude por caminho e preflight oficial opt-in sob UID do serviço; factory exige prova privada current/fingerprint, preservada fora de credenciais/workspaces. Não alterou topologia ou ativou provider/serviço. Prova real continua requisito operacional; fixtures não substituem isolamento/financeiro/identidade verificados.

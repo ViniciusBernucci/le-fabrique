@@ -130,3 +130,24 @@ FAC-012F resolve a rota configurada em cada chamada e valida adapter/permissões
 FAC-012G conecta o workflow à resolução independente de Developer e Reviewer por chamada. Testes usam adapters/routing sintéticos, inclusive providers e modelos diferentes; o workflow ainda não está na fila e nenhum cliente real foi iniciado.
 
 FAC-012H troca a raiz do `SandboxRunner` antes do check, monta apenas `/usr` read-only e o workspace, desanexa a raiz host, oculta home/`/run`/`/var`/cgroup, cria devices/temporários mínimos e remove capabilities antes de `exec`. A prova que inicialmente lia `/etc/hostname` agora falha; também falham symlink para host, acesso a socket, rede e remount do workspace. Teste rodou no usuário interativo atual, não sob identidade systemd de produção. Consumer e CLI Developer continuam desligados.
+
+
+## Preflight granular Claude — FAC-012AA
+
+IMPLEMENTADO como comando opt-in; NÃO EXECUTADO no serviço. Primeiro confirmar stop físico do worker/árvore anterior, origem oficial do CLI suportado 2.1.285, UID e root privado separados dos workspaces. Instalação/modelo precisam ser os IDs escolhidos no painel. Login é oficial/humano sob o mesmo UID/store, extras/créditos/autorecharge desligados; não exportar auth/token nem herdar overrides API/cloud. Ter Node/dependências incluindo tsx, contratos/runtime buildados (`npm ci`, `npm run db:generate`, `npm run build` sem aplicar migrations).
+
+Após essas confirmações, sob o UID do serviço e usando valores reais verificados (não valores de exemplo):
+
+```bash
+npm run preflight:claude -- \
+  --provider-root "$WORKER_PROVIDER_ROOT" \
+  --installation "$CLAUDE_INSTALLATION_ID" \
+  --binary "$WORKER_CLAUDE_BINARY" \
+  --model "$CLAUDE_MODEL_ID" \
+  --confirm-subscription-only \
+  --confirm-worker-stopped
+```
+
+Flags são confirmação humana, não detecção financeira/stop. Uma chamada de assinatura com teto 180 s/1 MiB, sem retry ou conta/modelo fixos; não usar conta real enquanto financeiro desconhecido. PASS exige traces nativos e bytes de canários, não finalMessage. Prova privada `claude-<id>/confinement.json` vincula UID/ID/CLI hash/política/data/casos; factory revalida antes de cada writer. Prova antiga preservada como superseded antes do ensaio de ferramentas. FAIL indica estágio controlado e mantém escrita bloqueada; não restaurar prova antiga/forjar JSON para contornar. Não salvar raw auth/prompts/events.
+
+Lock `.claude-confinement-preflight.lock` é exclusivo no root e removido após término conhecido. Crash pode conservá-lo: verificar fisicamente árvore/parada e preservar checkpoint antes de intervenção manual; não limpar por idade. Fixtures/saída sanitizada são evidência operacional, preservar antes de limpeza autorizada. Só após prova/aceites instalar/ativar serviço em janela autorizada; implantação não faz parte deste comando. [Relatório e limites](../runtime/2026-10-03-FAC-012AA-confinamento-claude.md).

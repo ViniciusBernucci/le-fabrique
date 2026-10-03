@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AA
+
+Claude usa perfil granular e factory exige prova privada atual de permissão nativa; preflight oficial opt-in verifica traces/canários/binário e preserva evidências. 433 testes/checks, código `56f2e38`; nenhuma prova real/ativação/piloto/deploy. [Relatório](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+
 ## 2026-10-03 — FAC-012Z
 
 Política documental pela interface; READY/compilador exigem configuração; workflow valida alteração/estrutura/hashes, Reviewer confere semântica e mutação durante review invalida aprovação. Controle cruza conjunto/manifesto antes do aceite. Código `9c48dd9`, 422 testes/checks, sem operação/deploy. [Relatório](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).

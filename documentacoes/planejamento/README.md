@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012AA IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AA-confinamento-claude.md), [evidências](../runtime/2026-10-03-FAC-012AA-confinamento-claude.md). Código `56f2e38`; 433 testes/checks; validação nativa do serviço e aceite pendentes.
+
 FAC-012Z IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012Z-gate-documentacao-tecnica.md), [evidências](../controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md). Código `9c48dd9`; 422 testes; aceite exato pendente.
 
 FAC-012Y implementa handoff configurado; AWAITING_HUMAN, sem prova operacional. Pendências de software: confinamento Claude e documentação técnica externa. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).

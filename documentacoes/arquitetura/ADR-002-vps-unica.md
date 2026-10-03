@@ -16,3 +16,5 @@ Preservar contratos de worker para futura separação se risco, carga ou disponi
 
 ## Detalhamento operacional (OPS-005)
 O worker continua processo Node/TypeScript na mesma VPS, mas roda como usuário systemd dedicado do host para que `systemd-run --user` e namespaces do sandbox sejam disponíveis sem container privilegiado. Docker Compose mantém web, API, PostgreSQL e Redis. API/Redis expõem portas somente em loopback para o worker host; o unit, ainda não instalado, recebe credenciais por env file externo. O consumidor de execução permanece ausente até integração real do workflow e aceites/gates operacionais próprios.
+
+FAC-012AA implementa perfil Claude por caminho e preflight oficial opt-in sob UID do serviço; factory exige prova privada current/fingerprint, preservada fora de credenciais/workspaces. Não alterou topologia ou ativou provider/serviço. Prova real continua requisito operacional; fixtures não substituem isolamento/financeiro/identidade verificados.

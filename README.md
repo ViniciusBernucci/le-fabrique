@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012AA implementa perfil Claude por caminho e preflight opt-in com prova privada vinculada ao binário/UID/instalação; nenhuma prova real emitida. Junto do Z fecha o código das lacunas mapeadas, com 433 testes/checks. MVP operacional/aceite/piloto/implantação ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+
 FAC-012Z exige documentação técnica configurada no projeto antes da entrega: arquivos atualizados, gate bounded, revisão semântica e hashes do snapshot final. 422 testes/checks; Claude escrita e operação real ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
 FAC-012Y conecta alternativas de conta/modelo na UI ao handoff seguro por auth/cota/busy: stop → snapshot → nova worktree → restore/contexto, com limites e lease/fence preservados. Sem conta fixa/fallback pago. Claude escrita e docs técnicas continuam pendentes. [Evidências](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).

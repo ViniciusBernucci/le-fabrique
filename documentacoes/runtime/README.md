@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012AA usa dontAsk + allow Edit absoluta por caminho, metadata deny, sem Bash/MCP/customizações; factory Claude writer exige prova privada current do UID/instalação/CLI 2.1.285/fingerprint/política, sete dias e 14 negações. `npm run preflight:claude` prepara ensaio oficial opt-in; fixtures não comprovam permissões reais e nenhuma instalação real foi desbloqueada. [Evidências](2026-10-03-FAC-012AA-confinamento-claude.md).
+
 FAC-012Y integra alternativas UI ao workflow: chamada terminal indisponível → stop → snapshot → nova worktree/restore/contexto → rota revalidada. Máximo dois handoffs sem reset de budgets; Reviewer read-only, factory segura não vira fallback. [Evidências](../handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
 FAC-012X trata indisponibilidade tipada da instalação e AUTH_REQUIRED/RATE_LIMITED/PROVIDER_BUSY em Developer/Reviewer como WAITING_PROVIDER depois de stop/snapshot. Não gasta correções repetindo IA; config/segurança/unknown não viram espera falsa. Handoff automático separado. [Evidências](../operacao/2026-10-03-FAC-012X-espera-provider.md).

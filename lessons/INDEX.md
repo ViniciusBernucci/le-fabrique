@@ -44,3 +44,5 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 - [Checkout confiavel separa credencial e conteudo externo](checkout-confiavel.md)
 
 FAC-012Z amplia [baseline/regressão/review](baseline-regressao-review.md) com gate documental estrutural e revisão semântica ligados ao snapshot final.
+
+FAC-012AA amplia [perfis de permissão](perfis-permissao-cliente-cli.md) com allow literal, elegibilidade por prova privada e distinção entre teste do algoritmo e confinamento nativo.

@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AA — confinamento e preflight Claude](runtime/2026-10-03-FAC-012AA-confinamento-claude.md)
+- [Ticket FAC-012AA](planejamento/FAC-012AA-confinamento-claude.md)
+
 - [FAC-012Z — gate documental técnico](controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md)
 - [Ticket FAC-012Z](planejamento/FAC-012Z-gate-documentacao-tecnica.md)
 
