@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012AF aplica backup autenticado/staging e restore real distintos de snapshot/parada: [sandbox/snapshot](sandbox-worktree-snapshot.md).
+
 FAC-012AE aplica cursor transacional em ordem de commit e invalidação SSE retomável: [outbox/idempotência](outbox-idempotencia.md).
 
 FAC-012AD aplica observação atual distinta de prontidão/parada: [heartbeat/quiescência](worker-heartbeat-quiescencia.md).

@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012AF prova pg_dump custom → backup criptografado → staging → pg_restore em DB sintética, preservando eventos/cursor/índice. Chave separada, fontes offline/privadas e restore nunca sobrescreve destino. Storage externo/RPO/RTO não comprovados. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+
 FAC-012AE versiona eventos/cursors por projeto e triggers PostgreSQL, testados apenas em banco efêmero. Nginx streaming route usa buffering/cache off, sintaxe validada sem deploy. Preservar triggers/check constraints não representáveis no schema Prisma em migrations futuras. [Evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md).
 
 FAC-012AC versiona índice único parcial `attempts_single_unconfirmed_writer`; migration recusa conflitos antigos, não fabrica parada. Aplicada só em PostgreSQL efêmero; futuras migrations devem preservar índice não representável no schema Prisma. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).

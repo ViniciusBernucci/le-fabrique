@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012AF IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AF-backup-restauracao.md), [evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md). 501 testes internos + 8 PostgreSQL; próximo pausa global/kill switch de agendamento na UI.
+
 FAC-012AE IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AE-eventos-projeto.md), [evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md). 485 testes + 7 PostgreSQL; próximo interno backup/restauração, sem piloto.
 
 FAC-012AD IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AD-painel-operacao.md), [evidências](../controle/2026-10-03-FAC-012AD-painel-operacao.md). 461 testes + 4 PostgreSQL; próxima lacuna de software: SSE previsto no ADR-003.

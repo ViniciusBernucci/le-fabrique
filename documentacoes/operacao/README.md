@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012AF fornece npm run backup create/verify/restore para dump/snapshots/journal congelados, chave externa privada, confirmação de serviço parado e staging novo. Sem dump/restore automático de ambiente existente. [Comandos e evidências](2026-10-03-FAC-012AF-backup-restauracao.md).
+
 FAC-012AE requer migration de project_events/cursors/triggers para SSE; painel conserva HTTP fallback se indisponível. Backup deve incluir eventos/cursors; sem retention automática. Proxy streaming sem buffering, heartbeat 1 s e idle client 15 s. [Evidências](../controle/2026-10-03-FAC-012AE-eventos-projeto.md).
 
 FAC-012AD mostra operação sem piloto: heartbeat até 180 s recente, futuro inconsistente e tentativas sem stop continuam bloqueadas mesmo com lease vencida. Índice global inválido impede novos claims; painel não fabrica prontidão de IA. [Evidências](../controle/2026-10-03-FAC-012AD-painel-operacao.md).

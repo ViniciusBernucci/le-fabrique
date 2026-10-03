@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AF — backup/restauração](operacao/2026-10-03-FAC-012AF-backup-restauracao.md)
+- [Ticket FAC-012AF](planejamento/FAC-012AF-backup-restauracao.md)
+
 - [FAC-012AE — eventos de projeto](controle/2026-10-03-FAC-012AE-eventos-projeto.md)
 - [Ticket FAC-012AE](planejamento/FAC-012AE-eventos-projeto.md)
 
