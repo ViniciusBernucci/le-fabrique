@@ -15,6 +15,8 @@ import { RunControlController } from "./run-control.controller";
 import { RunControlService } from "./run-control.service";
 import { RunDeliveryController } from "./run-delivery.controller";
 import { RunDeliveryService } from "./run-delivery.service";
+import { RunRecoveryController } from "./run-recovery.controller";
+import { RunRecoveryService } from "./run-recovery.service";
 import { RunResumeService } from "./run-resume.service";
 
 @Module({
@@ -24,6 +26,7 @@ import { RunResumeService } from "./run-resume.service";
     WorkerExecutionResultsController,
     RunDeliveryController,
     RunControlController,
+    RunRecoveryController,
   ],
   providers: [
     WorkerAuthGuard,
@@ -33,6 +36,7 @@ import { RunResumeService } from "./run-resume.service";
     RunDeliveryService,
     RunControlService,
     RunResumeService,
+    RunRecoveryService,
     OrchestrationService,
     OutboxDispatcher,
     {

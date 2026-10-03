@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import path from "node:path";
 import type {
+  FinalizationRecoveryJob,
   GithubOnboardingJob,
   GithubPullRequestJob,
   GithubRepositoryVerificationJob,
@@ -25,7 +26,7 @@ import { loadWorkerConfig } from "./config";
 import { ConfiguredAgentRouter } from "./configured-agent-router";
 import { ControlClient, registerWithRetry, startHeartbeat } from "./control-client";
 import { DeveloperWorkflow } from "./developer-workflow";
-import { processOrchestrationExecution } from "./execution.processor";
+import { processFinalizationRecovery, processOrchestrationExecution } from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
 import {
   cancelGithubOnboardingProcesses,
@@ -84,12 +85,20 @@ async function bootstrap(): Promise<void> {
     },
   );
   const orchestrationWorker = config.WORKER_EXECUTION_ENABLED
-    ? new Worker<OrchestrationJob>(
+    ? new Worker<OrchestrationJob | FinalizationRecoveryJob>(
         "le-fabrique.execution",
         async (job) => {
           if (!executionConfig) throw new Error("Execution consumer configuration is unavailable");
+          if ("mode" in job.data)
+            return processFinalizationRecovery(job.data, config.WORKER_ID, {
+              control,
+              journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
+              readArtifact: (snapshot) =>
+                new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
+            });
+          const executionJob = job.data;
           return await processOrchestrationExecution(
-            job.data,
+            executionJob,
             {
               control,
               journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
@@ -138,7 +147,7 @@ async function bootstrap(): Promise<void> {
                 });
                 return {
                   execute: async (signal) => {
-                    const resume = job.data.resumeFrom;
+                    const resume = executionJob.resumeFrom;
                     if (!resume) return workflow.execute(request, signal);
                     const artifact = await new ArtifactReader(
                       path.join(executionConfig.root, "snapshots"),

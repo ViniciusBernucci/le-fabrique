@@ -5,6 +5,7 @@ import type { DeveloperWorkflowResult, OrchestrationJob } from "@le-fabrique/con
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   InterruptionEvidenceError,
+  processFinalizationRecovery,
   processOrchestrationExecution,
   WriterQuiescenceError,
 } from "./execution.processor";
@@ -182,6 +183,99 @@ function dependencies() {
 
 describe("processOrchestrationExecution", () => {
   afterEach(() => vi.useRealTimers());
+
+  it("recovers only preserved finalization after failed upload, with no second execution", async () => {
+    const deps = dependencies();
+    const originalJob = job();
+    deps.control.reportResult.mockRejectedValueOnce(new Error("upload failed"));
+    await expect(processOrchestrationExecution(originalJob, deps.input)).rejects.toThrow(
+      "upload failed",
+    );
+    const intent = deps.input.journal.save.mock.calls[0]?.[1];
+    if (!intent) throw new Error("Missing preserved intent");
+    deps.input.journal.load.mockResolvedValue(intent);
+    const workerId = crypto.randomUUID();
+    deps.control.reconcile.mockResolvedValue({
+      state: {
+        runId: intent.runId,
+        attemptId: intent.attemptId,
+        status: "VALIDATING",
+        stoppedConfirmed: true,
+      },
+    });
+    const recovered = await processFinalizationRecovery(
+      {
+        schemaVersion: 1,
+        mode: "FINALIZATION_ONLY",
+        eventId: crypto.randomUUID(),
+        runId: intent.runId,
+        attemptId: intent.attemptId,
+        workerId,
+        fencingToken: intent.fencingToken,
+        originalJob,
+      },
+      workerId,
+      deps.input,
+    );
+    expect(recovered).toMatchObject({ recovered: true, status: "VALIDATING" });
+    expect(deps.control.claim).toHaveBeenCalledOnce();
+    expect(deps.input.prepareCheckout).toHaveBeenCalledOnce();
+    expect(deps.workflow.execute).toHaveBeenCalledOnce();
+    expect(deps.control.complete).not.toHaveBeenCalled();
+    expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
+  });
+
+  it("leaves missing evidence unresolved without claim, checkout, AI or stop assertion", async () => {
+    const deps = dependencies();
+    const workerId = crypto.randomUUID();
+    const result = await processFinalizationRecovery(
+      {
+        schemaVersion: 1,
+        mode: "FINALIZATION_ONLY",
+        eventId: crypto.randomUUID(),
+        runId: crypto.randomUUID(),
+        attemptId: deps.attemptId,
+        workerId,
+        fencingToken: 1,
+        originalJob: job(),
+      },
+      workerId,
+      deps.input,
+    );
+    expect(result).toMatchObject({ recovered: false, status: "EVIDENCE_REQUIRED" });
+    expect(deps.control.claim).not.toHaveBeenCalled();
+    expect(deps.input.prepareCheckout).not.toHaveBeenCalled();
+    expect(deps.workflow.execute).not.toHaveBeenCalled();
+    expect(deps.control.checkpoint).not.toHaveBeenCalled();
+  });
+
+  it("refuses another worker and a mismatched journal before reporting", async () => {
+    const deps = dependencies();
+    const workerId = crypto.randomUUID();
+    const recovery = {
+      schemaVersion: 1 as const,
+      mode: "FINALIZATION_ONLY" as const,
+      eventId: crypto.randomUUID(),
+      runId: crypto.randomUUID(),
+      attemptId: deps.attemptId,
+      workerId,
+      fencingToken: 1,
+      originalJob: job(),
+    };
+    await expect(
+      processFinalizationRecovery(recovery, crypto.randomUUID(), deps.input),
+    ).rejects.toThrow("original worker");
+    expect(deps.input.journal.load).not.toHaveBeenCalled();
+    deps.input.journal.load.mockResolvedValue({
+      runId: crypto.randomUUID(),
+      attemptId: recovery.attemptId,
+      fencingToken: 1,
+    });
+    await expect(processFinalizationRecovery(recovery, workerId, deps.input)).rejects.toThrow(
+      "Journal does not match",
+    );
+    expect(deps.control.reportResult).not.toHaveBeenCalled();
+  });
 
   it("runs the immutable job and checkpoints before completing as VALIDATING", async () => {
     const deps = dependencies();

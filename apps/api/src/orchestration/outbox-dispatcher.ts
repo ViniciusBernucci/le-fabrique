@@ -1,4 +1,4 @@
-import { orchestrationJobSchema } from "@le-fabrique/contracts";
+import { finalizationRecoveryJobSchema, orchestrationJobSchema } from "@le-fabrique/contracts";
 import { Inject, Injectable, type OnModuleDestroy, type OnModuleInit } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 
@@ -35,7 +35,10 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
 
   async dispatchOnce(): Promise<number> {
     const events = await this.prisma.outboxEvent.findMany({
-      where: { status: "PENDING", eventType: { in: ["ticket.ready.v1", "run.resume.v1"] } },
+      where: {
+        status: "PENDING",
+        eventType: { in: ["ticket.ready.v1", "run.resume.v1", "run.finalization-recovery.v1"] },
+      },
       orderBy: { createdAt: "asc" },
       take: 20,
     });
@@ -43,25 +46,36 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
     for (const event of events) {
       try {
         const storedPayload = event.payload as Record<string, unknown>;
-        const payload = orchestrationJobSchema.parse({
-          schemaVersion: 1,
-          eventId: event.id,
-          ...storedPayload,
-          ticketVersion: storedPayload.ticketVersion ?? storedPayload.version,
-          baseRevision: storedPayload.baseRevision ?? null,
-          executionSpecification: storedPayload.executionSpecification ?? null,
-        });
-        if (payload.baseRevision === null) {
+        const recovery = event.eventType === "run.finalization-recovery.v1";
+        const payload = recovery
+          ? finalizationRecoveryJobSchema.parse({ ...storedPayload, eventId: event.id })
+          : orchestrationJobSchema.parse({
+              schemaVersion: 1,
+              eventId: event.id,
+              ...storedPayload,
+              ticketVersion: storedPayload.ticketVersion ?? storedPayload.version,
+              baseRevision: storedPayload.baseRevision ?? null,
+              executionSpecification: storedPayload.executionSpecification ?? null,
+            });
+        if (!recovery && "baseRevision" in payload && payload.baseRevision === null) {
           throw new Error("Ticket execution requires an exact base revision");
         }
-        if (payload.executionSpecification === null) {
+        if (
+          !recovery &&
+          "executionSpecification" in payload &&
+          payload.executionSpecification === null
+        ) {
           throw new Error("Ticket execution requires an immutable execution specification");
         }
-        await this.queue.add("ticket.execute.v1", payload, {
-          jobId: event.id,
-          removeOnComplete: false,
-          removeOnFail: false,
-        });
+        await this.queue.add(
+          recovery ? "run.recover-finalization.v1" : "ticket.execute.v1",
+          payload,
+          {
+            jobId: event.id,
+            removeOnComplete: false,
+            removeOnFail: false,
+          },
+        );
         const updated = await this.prisma.outboxEvent.updateMany({
           where: { id: event.id, status: "PENDING" },
           data: { status: "PUBLISHED", publishedAt: new Date(), attempts: { increment: 1 } },

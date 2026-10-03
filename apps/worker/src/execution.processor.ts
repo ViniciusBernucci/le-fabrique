@@ -3,11 +3,16 @@ import type {
   ExecutionArtifact,
   ExecutionResultReport,
   ExecutionSpecification,
+  FinalizationRecoveryJob,
   OrchestrationClaim,
   OrchestrationJob,
   OrchestrationState,
 } from "@le-fabrique/contracts";
-import { executionResultReportSchema, orchestrationJobSchema } from "@le-fabrique/contracts";
+import {
+  executionResultReportSchema,
+  finalizationRecoveryJobSchema,
+  orchestrationJobSchema,
+} from "@le-fabrique/contracts";
 import type { ControlClient } from "./control-client";
 import { ExecutionControlRequestedError, LeaseAuthorityLostError, LeaseGuard } from "./lease-guard";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
@@ -72,6 +77,46 @@ export class InterruptionEvidenceError extends Error {
     super("Execution stopped without recoverable workflow evidence; attempt remains fenced");
     this.name = "InterruptionEvidenceError";
   }
+}
+
+export async function processFinalizationRecovery(
+  payload: FinalizationRecoveryJob,
+  workerId: string,
+  dependencies: Pick<ExecutionProcessorDependencies, "journal" | "control" | "readArtifact">,
+) {
+  const job = finalizationRecoveryJobSchema.parse(payload);
+  if (job.workerId !== workerId) throw new Error("Recovery requires the original worker identity");
+  const intent = await dependencies.journal.load(job.originalJob);
+  if (intent) {
+    if (
+      intent.runId !== job.runId ||
+      intent.attemptId !== job.attemptId ||
+      intent.fencingToken !== job.fencingToken
+    )
+      throw new Error("Journal does not match the authorized recovery attempt");
+    await dependencies.control.reportResult(intent.attemptId, {
+      fencingToken: intent.fencingToken,
+      result: intent.result,
+    });
+    const snapshot = intent.result.snapshots.at(-1);
+    if (snapshot)
+      await dependencies.control.reportArtifact(
+        intent.attemptId,
+        intent.fencingToken,
+        await dependencies.readArtifact(snapshot),
+      );
+    await dependencies.control.checkpoint(intent.attemptId, {
+      ...intent.checkpoint,
+      fencingToken: intent.fencingToken,
+    });
+  }
+  const { state } = await dependencies.control.reconcile(job.attemptId, job.fencingToken);
+  return {
+    runId: job.runId,
+    attemptId: job.attemptId,
+    recovered: state !== null,
+    status: state?.status ?? "EVIDENCE_REQUIRED",
+  };
 }
 
 export async function processOrchestrationExecution(

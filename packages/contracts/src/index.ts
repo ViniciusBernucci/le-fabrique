@@ -1656,6 +1656,32 @@ export const orchestrationJobSchema = orchestrationJobFieldsSchema.superRefine(
 );
 export type OrchestrationJob = z.infer<typeof orchestrationJobSchema>;
 
+export const finalizationRecoveryJobSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    mode: z.literal("FINALIZATION_ONLY"),
+    eventId: z.uuid(),
+    runId: z.uuid(),
+    attemptId: z.uuid(),
+    workerId: z.uuid(),
+    fencingToken: z.number().int().positive(),
+    originalJob: orchestrationJobSchema.strict(),
+  })
+  .strict();
+export type FinalizationRecoveryJob = z.infer<typeof finalizationRecoveryJobSchema>;
+export const requestRunRecoverySchema = z
+  .object({ expectedVersion: z.number().int().positive(), attemptId: z.uuid() })
+  .strict();
+export type RequestRunRecovery = z.infer<typeof requestRunRecoverySchema>;
+export const runRecoveryReceiptSchema = z
+  .object({
+    runId: z.uuid(),
+    attemptId: z.uuid(),
+    eventId: z.uuid(),
+    status: z.literal("REQUESTED"),
+  })
+  .strict();
+
 export const orchestrationClaimRequestSchema = orchestrationJobFieldsSchema
   .extend({
     workerId: z.uuid(),

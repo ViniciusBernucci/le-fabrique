@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import {
+  executionArtifactSchema,
   executionResultReportSchema,
   orchestrationReconcileRequestSchema,
 } from "@le-fabrique/contracts";
@@ -78,6 +79,75 @@ function approve(f: ReturnType<typeof fixture>) {
   });
 }
 describe("stopped checkpoint reconciliation", () => {
+  it("recovers blocked approved work only with exact result, snapshot and artifact", async () => {
+    const f = fixture();
+    approve(f);
+    f.attempt.run.status = "BLOCKED_RECOVERY";
+    const core = {
+      schemaVersion: 1,
+      snapshotId: crypto.randomUUID(),
+      baseRevision: "a".repeat(40),
+      headRevision: "a".repeat(40),
+      patchBytes: 0,
+      patchSha256: createHash("sha256").update("").digest("hex"),
+      untracked: [],
+      totalArtifactBytes: 0,
+      createdAt: new Date().toISOString(),
+    };
+    const artifact = executionArtifactSchema.parse({
+      schemaVersion: 1,
+      manifest: {
+        ...core,
+        manifestHash: createHash("sha256").update(JSON.stringify(core)).digest("hex"),
+      },
+      patchBase64: "",
+      files: [],
+    });
+    const { untracked: _untracked, ...manifest } = artifact.manifest;
+    const report = executionResultReportSchema.parse({
+      ...(f.attempt.result as object),
+      snapshots: [{ ...manifest, untrackedFiles: 0 }],
+    });
+    Object.assign(f.attempt, {
+      result: report,
+      resultDigest: createHash("sha256").update(JSON.stringify(report)).digest("hex"),
+      artifact,
+      artifactDigest: createHash("sha256").update(JSON.stringify(artifact)).digest("hex"),
+    });
+    Object.assign(f.checkpoint, {
+      baseRevision: manifest.baseRevision,
+      codeRevision: manifest.headRevision,
+      snapshotId: manifest.snapshotId,
+      patchHash: manifest.manifestHash,
+    });
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "VALIDATING", stoppedConfirmed: true },
+    });
+  });
+  it("can reconcile blocked setup only after persisted stop proof", async () => {
+    const f = fixture();
+    f.attempt.run.status = "BLOCKED_RECOVERY";
+    await expect(f.service.reconcile(attemptId, input)).resolves.toMatchObject({
+      state: { status: "FAILED" },
+    });
+  });
+  it("keeps a blocked unknown writer blocked regardless of expired authority", async () => {
+    const f = fixture();
+    f.attempt.run.status = "BLOCKED_RECOVERY";
+    f.attempt.stoppedConfirmed = false;
+    await expect(f.service.reconcile(attemptId, input)).resolves.toEqual({ state: null });
+    expect(f.tx.run.update).not.toHaveBeenCalled();
+  });
+  it("cannot directly complete blocked state or reconcile its snapshot without verified artifact", async () => {
+    const f = fixture();
+    approve(f);
+    f.attempt.run.status = "BLOCKED_RECOVERY";
+    await expect(
+      f.service.complete(attemptId, { ...input, outcome: "VALIDATING" }),
+    ).rejects.toThrow("cannot rewrite");
+    await expect(f.service.reconcile(attemptId, input)).rejects.toThrow();
+    expect(f.tx.run.update).not.toHaveBeenCalled();
+  });
   it("reconciles manual pause from the exact persisted report", async () => {
     const f = fixture();
     approve(f);

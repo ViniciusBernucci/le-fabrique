@@ -37,6 +37,7 @@ import {
   providerVerificationListSchema,
   providerVerificationSchema,
   type RequestRunControl,
+  type RequestRunRecovery,
   type RequestRunResume,
   type RunDetail,
   type RunSummary,
@@ -44,6 +45,7 @@ import {
   runDeliveryStateSchema,
   runDetailSchema,
   runListSchema,
+  runRecoveryReceiptSchema,
   runSummarySchema,
   type Ticket,
   ticketListSchema,
@@ -175,6 +177,20 @@ export async function requestRunResume(
 ) {
   return runSummarySchema.parse(
     await request(`/runs/${encodeURIComponent(runId)}/resume`, token, {
+      method: "POST",
+      body: JSON.stringify(input),
+      signal,
+    }),
+  );
+}
+export async function requestRunRecovery(
+  token: string,
+  runId: string,
+  input: RequestRunRecovery,
+  signal?: AbortSignal,
+) {
+  return runRecoveryReceiptSchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}/recover-finalization`, token, {
       method: "POST",
       body: JSON.stringify(input),
       signal,

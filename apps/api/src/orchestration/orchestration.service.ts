@@ -9,10 +9,12 @@ import type {
   OrchestrationState,
 } from "@le-fabrique/contracts";
 import {
+  executionArtifactSchema,
   executionResultReportSchema,
   orchestrationClaimSchema,
   orchestrationJobSchema,
   orchestrationStateSchema,
+  verifyExecutionArtifact,
 } from "@le-fabrique/contracts";
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import type { Attempt, Prisma, Run } from "@prisma/client";
@@ -269,9 +271,36 @@ export class OrchestrationService {
                 checkpoint.codeRevision !== snapshot.headRevision))
           )
             throw new ConflictException("Persisted result does not match checkpoint");
+          if (attempt.run.status === "BLOCKED_RECOVERY" && snapshot) {
+            const artifact = executionArtifactSchema.parse(attempt.artifact);
+            verifyExecutionArtifact(
+              artifact,
+              (encoded) => Buffer.from(encoded, "base64"),
+              (bytes) => createHash("sha256").update(bytes).digest("hex"),
+            );
+            const { untracked, ...manifest } = artifact.manifest;
+            const projected = { ...manifest, untrackedFiles: untracked.length };
+            if (
+              createHash("sha256").update(JSON.stringify(artifact)).digest("hex") !==
+                attempt.artifactDigest ||
+              Object.keys(projected).some(
+                (key) =>
+                  projected[key as keyof typeof projected] !==
+                  snapshot[key as keyof typeof snapshot],
+              )
+            )
+              throw new ConflictException(
+                "Blocked recovery artifact does not match the stopped result",
+              );
+          }
         }
         return {
-          state: await this.completeTransaction(transaction, attemptId, { ...input, outcome }),
+          state: await this.completeTransaction(
+            transaction,
+            attemptId,
+            { ...input, outcome },
+            true,
+          ),
         };
       },
       { isolationLevel: "Serializable" },
@@ -282,6 +311,7 @@ export class OrchestrationService {
     transaction: Prisma.TransactionClient,
     attemptId: string,
     input: OrchestrationCompleteRequest,
+    reconciledStop = false,
   ): Promise<OrchestrationState> {
     const attempt = await this.currentAttempt(transaction, attemptId, input, true);
     const checkpoint = await transaction.checkpoint.findUnique({ where: { attemptId } });
@@ -296,7 +326,12 @@ export class OrchestrationService {
         stoppedConfirmed: true,
       });
     }
-    if (attempt.run.status !== "RUNNING" || !["RUNNING", "STOPPED"].includes(attempt.status)) {
+    const provenBlocked =
+      reconciledStop && attempt.run.status === "BLOCKED_RECOVERY" && attempt.stoppedConfirmed;
+    if (
+      (attempt.run.status !== "RUNNING" && !provenBlocked) ||
+      !["RUNNING", "STOPPED"].includes(attempt.status)
+    ) {
       throw new ConflictException("Completion cannot rewrite terminal or human-controlled state");
     }
     const attemptStatus =
