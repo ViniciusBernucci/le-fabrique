@@ -48,6 +48,7 @@ interface WorkflowProgress {
   snapshots: DeveloperWorkflowResult["snapshots"];
   review: WorkflowReview | null;
   runtimeObservations: WorkflowRuntimeObservation[];
+  handoffs: NonNullable<DeveloperWorkflowResult["handoffs"]>;
 }
 
 const MAX_PROMPT_CHARS = 200_000;
@@ -76,7 +77,7 @@ export class DeveloperWorkflow {
         !this.dependencies.snapshots.restore)
     )
       throw new Error("Resume requires verified same-base snapshot and restore support");
-    const workspace = await this.dependencies.workspaceManager.create({
+    let workspace = await this.dependencies.workspaceManager.create({
       executionId: request.workflowId,
       repositoryPath: request.repositoryPath,
       revision: request.baseRevision,
@@ -97,8 +98,11 @@ export class DeveloperWorkflow {
       snapshots: [],
       review: null,
       runtimeObservations: [],
+      handoffs: [],
     };
     let activeRound = 0;
+    const unavailableInstallations = new Set<string>();
+    let pendingDeveloperRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>> | undefined;
     try {
       const baseline = await this.runChecks(
         request,
@@ -148,7 +152,12 @@ export class DeveloperWorkflow {
         throwIfAborted(signal);
         let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
         try {
-          developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
+          developerRuntime =
+            pendingDeveloperRuntime ??
+            (await this.dependencies.agentRouter.resolve("DEVELOPER", [
+              ...unavailableInstallations,
+            ]));
+          pendingDeveloperRuntime = undefined;
         } catch (error) {
           if (error instanceof ProviderUnavailableError)
             return this.waitForProvider(request, workspace, context.manifest, progress, round);
@@ -217,8 +226,42 @@ export class DeveloperWorkflow {
         progress.runtimeObservations.push(observeRuntime("DEVELOPER", developerRuntime, developer));
         throwIfAborted(signal);
         if (developer.status !== "COMPLETED") {
-          if (providerNeedsIntervention(developer))
+          if (providerNeedsIntervention(developer)) {
+            const restored =
+              progress.developerExecutions < developerRuntime.maxAttempts
+                ? await this.tryHandoff(
+                    request,
+                    progress,
+                    "DEVELOPER",
+                    developerRuntime,
+                    developer,
+                    workspace,
+                    unavailableInstallations,
+                    signal,
+                  )
+                : null;
+            if (restored) {
+              if ("failure" in restored)
+                return this.result(
+                  request,
+                  workspace,
+                  context.manifest,
+                  progress,
+                  "FAILED",
+                  "RUNTIME_ROUTE_UNAVAILABLE",
+                  "Safe handoff restoration failed; source snapshot preserved",
+                  round,
+                );
+              workspace = restored.workspace;
+              context = restored.context;
+              pendingDeveloperRuntime = restored.runtime;
+              feedback =
+                "Continue the verified restored changes after a stopped provider handoff; do not reapply the patch. Preserve original scope and all criteria.";
+              round -= 1;
+              continue;
+            }
             return this.waitForProvider(request, workspace, context.manifest, progress, round);
+          }
           const preservedFailure = await this.dependencies.snapshots.capture({
             schemaVersion: 1,
             workspacePath: workspace.workspacePath,
@@ -299,89 +342,137 @@ export class DeveloperWorkflow {
           continue;
         }
 
-        let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
-        try {
-          reviewerRuntime = await this.dependencies.agentRouter.resolve("REVIEWER");
-        } catch (error) {
-          if (error instanceof ProviderUnavailableError)
-            return this.waitForProvider(request, workspace, context.manifest, progress, round);
-          return this.result(
-            request,
-            workspace,
-            context.manifest,
-            progress,
-            "FAILED",
-            "RUNTIME_ROUTE_UNAVAILABLE",
-            "Configured Reviewer runtime route is unavailable",
-            round,
+        let reviewer: RuntimeExecutionResult;
+        let pendingReviewerRuntime:
+          | Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>
+          | undefined;
+        while (true) {
+          let reviewerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
+          try {
+            reviewerRuntime =
+              pendingReviewerRuntime ??
+              (await this.dependencies.agentRouter.resolve("REVIEWER", [
+                ...unavailableInstallations,
+              ]));
+            pendingReviewerRuntime = undefined;
+          } catch (error) {
+            if (error instanceof ProviderUnavailableError)
+              return this.waitForProvider(request, workspace, context.manifest, progress, round);
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "FAILED",
+              "RUNTIME_ROUTE_UNAVAILABLE",
+              "Configured Reviewer runtime route is unavailable",
+              round,
+            );
+          }
+          if (reviewerRuntime.route.permissionMode !== "READ_ONLY") {
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "FAILED",
+              "RUNTIME_ROUTE_UNAVAILABLE",
+              "Reviewer runtime route must be READ_ONLY",
+              round,
+            );
+          }
+          if (progress.reviewerExecutions >= reviewerRuntime.maxAttempts) {
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "PAUSED_LIMIT",
+              "RUNTIME_GUARD",
+              "Configured Reviewer attempt limit was reached",
+              round,
+            );
+          }
+          const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
+            progress.guardState,
+            reviewerRuntime.route.provider,
           );
-        }
-        if (reviewerRuntime.route.permissionMode !== "READ_ONLY") {
-          return this.result(
-            request,
-            workspace,
-            context.manifest,
-            progress,
-            "FAILED",
-            "RUNTIME_ROUTE_UNAVAILABLE",
-            "Reviewer runtime route must be READ_ONLY",
-            round,
-          );
-        }
-        if (progress.reviewerExecutions >= reviewerRuntime.maxAttempts) {
-          return this.result(
-            request,
-            workspace,
-            context.manifest,
-            progress,
-            "PAUSED_LIMIT",
-            "RUNTIME_GUARD",
-            "Configured Reviewer attempt limit was reached",
-            round,
-          );
-        }
-        const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
-          progress.guardState,
-          reviewerRuntime.route.provider,
-        );
-        progress.guardState = reviewerAuthorization.state;
-        if (reviewerAuthorization.action === "PAUSE") {
-          return this.result(
-            request,
-            workspace,
-            context.manifest,
-            progress,
-            "PAUSED_LIMIT",
-            "RUNTIME_GUARD",
-            `Reviewer blocked by ${reviewerAuthorization.reason ?? "runtime guard"}`,
-            round,
-          );
-        }
-        const reviewer = await this.executeRuntime(
-          reviewerRuntime.adapter,
-          {
-            schemaVersion: 1,
-            executionId: this.createId(),
-            workspacePath: workspace.workspacePath,
-            prompt: boundedPrompt(
-              reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
-              "Reviewer",
-            ),
-            permissionMode: reviewerRuntime.route.permissionMode,
-            writablePaths: [],
-            modelRequested: reviewerRuntime.route.model,
-            limits: {
-              ...request.runtimeLimits,
-              timeoutMs: Math.min(request.runtimeLimits.timeoutMs, reviewerRuntime.timeoutMs),
+          progress.guardState = reviewerAuthorization.state;
+          if (reviewerAuthorization.action === "PAUSE") {
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "PAUSED_LIMIT",
+              "RUNTIME_GUARD",
+              `Reviewer blocked by ${reviewerAuthorization.reason ?? "runtime guard"}`,
+              round,
+            );
+          }
+          reviewer = await this.executeRuntime(
+            reviewerRuntime.adapter,
+            {
+              schemaVersion: 1,
+              executionId: this.createId(),
+              workspacePath: workspace.workspacePath,
+              prompt: boundedPrompt(
+                reviewerPrompt(
+                  request,
+                  context.content,
+                  postChecks,
+                  snapshot.manifest.manifestHash,
+                ),
+                "Reviewer",
+              ),
+              permissionMode: reviewerRuntime.route.permissionMode,
+              writablePaths: [],
+              modelRequested: reviewerRuntime.route.model,
+              limits: {
+                ...request.runtimeLimits,
+                timeoutMs: Math.min(request.runtimeLimits.timeoutMs, reviewerRuntime.timeoutMs),
+              },
             },
-          },
-          signal,
-        );
-        progress.reviewerExecutions += 1;
-        progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
-        throwIfAborted(signal);
-        if (providerNeedsIntervention(reviewer))
-          return this.waitForProvider(request, workspace, context.manifest, progress, round);
+            signal,
+          );
+          progress.reviewerExecutions += 1;
+          progress.runtimeObservations.push(observeRuntime("REVIEWER", reviewerRuntime, reviewer));
+          throwIfAborted(signal);
+          if (providerNeedsIntervention(reviewer)) {
+            const restored =
+              progress.reviewerExecutions < reviewerRuntime.maxAttempts
+                ? await this.tryHandoff(
+                    request,
+                    progress,
+                    "REVIEWER",
+                    reviewerRuntime,
+                    reviewer,
+                    workspace,
+                    unavailableInstallations,
+                    signal,
+                  )
+                : null;
+            if (restored) {
+              if ("failure" in restored)
+                return this.result(
+                  request,
+                  workspace,
+                  context.manifest,
+                  progress,
+                  "FAILED",
+                  "RUNTIME_ROUTE_UNAVAILABLE",
+                  "Safe handoff restoration failed; source snapshot preserved",
+                  round,
+                );
+              workspace = restored.workspace;
+              context = restored.context;
+              pendingReviewerRuntime = restored.runtime;
+              continue;
+            }
+            return this.waitForProvider(request, workspace, context.manifest, progress, round);
+          }
+          break;
+        }
         const review = parseReview(reviewer);
         if (!review) {
           return this.result(
@@ -470,6 +561,80 @@ export class DeveloperWorkflow {
         "Execution interrupted after confirmed stop; snapshot and partial observations preserved",
         activeRound,
       );
+    }
+  }
+
+  private async tryHandoff(
+    request: DeveloperWorkflowRequest,
+    progress: WorkflowProgress,
+    role: "DEVELOPER" | "REVIEWER",
+    source: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>,
+    execution: RuntimeExecutionResult,
+    workspace: WorkspaceCreateResult,
+    excluded: Set<string>,
+    signal?: AbortSignal,
+  ) {
+    excluded.add(source.route.installationId);
+    if (!this.dependencies.snapshots.restore || progress.handoffs.length >= 2) return null;
+    throwIfAborted(signal);
+    if (!(await this.cancelActive()) || progress.checks.some((check) => !check.stoppedConfirmed))
+      throw new Error("Handoff requires confirmed stopped processes");
+    const snapshot = await this.dependencies.snapshots.capture({
+      schemaVersion: 1,
+      workspacePath: workspace.workspacePath,
+      limits: request.snapshotLimits,
+    });
+    progress.snapshots = [...progress.snapshots, snapshot.manifest].slice(-3);
+    if (
+      snapshot.manifest.baseRevision !== request.baseRevision ||
+      Date.parse(snapshot.manifest.createdAt) < Date.parse(execution.finishedAt)
+    )
+      throw new Error("Handoff snapshot predates stopped source or has another base");
+    throwIfAborted(signal);
+    try {
+      const eligible = await this.dependencies.agentRouter.resolve(role, [...excluded]);
+      if (excluded.has(eligible.route.installationId)) return null;
+      if (role === "REVIEWER" && eligible.route.permissionMode !== "READ_ONLY")
+        throw new Error("Handoff reviewer must remain read-only");
+      const restoredWorkspace = await this.dependencies.workspaceManager.create({
+        executionId: this.createId(),
+        repositoryPath: request.repositoryPath,
+        revision: request.baseRevision,
+      });
+      if (
+        restoredWorkspace.workspacePath === workspace.workspacePath ||
+        restoredWorkspace.revision !== request.baseRevision
+      )
+        throw new Error("Handoff requires a new worktree");
+      await this.dependencies.snapshots.restore(snapshot, restoredWorkspace.workspacePath);
+      throwIfAborted(signal);
+      const restoredContext = await this.dependencies.contextBuilder.build({
+        schemaVersion: 1,
+        workspacePath: restoredWorkspace.workspacePath,
+        baseRevision: restoredWorkspace.revision,
+        sources: request.contextSources,
+        limits: request.contextLimits,
+      });
+      const target = await this.dependencies.agentRouter.resolve(role, [...excluded]);
+      if (excluded.has(target.route.installationId))
+        throw new Error("Handoff target returned excluded installation");
+      if (role === "REVIEWER" && target.route.permissionMode !== "READ_ONLY")
+        throw new Error("Handoff reviewer must remain read-only");
+      progress.handoffs.push({
+        role,
+        fromInstallationId: source.route.installationId,
+        toInstallationId: target.route.installationId,
+        sourceExecutionId: execution.executionId,
+        reason: execution.error?.code as "AUTH_REQUIRED" | "RATE_LIMITED" | "PROVIDER_BUSY",
+        snapshotId: snapshot.manifest.snapshotId,
+        manifestHash: snapshot.manifest.manifestHash,
+        createdAt: new Date().toISOString(),
+      });
+      return { workspace: restoredWorkspace, context: restoredContext, runtime: target };
+    } catch (error) {
+      throwIfAborted(signal);
+      if (error instanceof ProviderUnavailableError) return null;
+      return { failure: true as const };
     }
   }
 
@@ -642,6 +807,7 @@ export class DeveloperWorkflow {
       review: progress.review,
       diagnostic: diagnostic.slice(0, 1000),
       runtimeObservations: progress.runtimeObservations,
+      handoffs: progress.handoffs,
     });
   }
 }

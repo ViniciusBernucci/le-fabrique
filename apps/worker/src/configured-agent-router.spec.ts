@@ -4,6 +4,7 @@ import type {
   RuntimeProvider,
   WorkerConfigurationSnapshot,
 } from "@le-fabrique/contracts";
+import { factoryConfigurationSchema } from "@le-fabrique/contracts";
 import type { RuntimeAdapter } from "@le-fabrique/runtime";
 import { describe, expect, it, vi } from "vitest";
 import { ConfiguredAgentRouter } from "./configured-agent-router";
@@ -118,6 +119,53 @@ function adapter(provider: RuntimeProvider): RuntimeAdapter {
 }
 
 describe("ConfiguredAgentRouter", () => {
+  it("uses only explicitly configured alternative accounts and keeps the role limits", async () => {
+    const config = configuration({ developerState: "AUTH_REQUIRED" });
+    const assignment = config.assignments.find((item) => item.role === "DEVELOPER");
+    if (!assignment) throw new Error("Missing fixture assignment");
+    const control = { getWorkerConfiguration: vi.fn(async () => snapshot(14, config)) };
+    const router = new ConfiguredAgentRouter(control as never, {
+      codex: adapter("codex"),
+      claude: adapter("claude"),
+    });
+    await expect(router.resolve("DEVELOPER")).rejects.toThrow("not available");
+    assignment.alternatives = [{ installationId: "claude-installation", model: "claude-model" }];
+    await expect(router.resolve("DEVELOPER")).resolves.toMatchObject({
+      route: {
+        installationId: "claude-installation",
+        model: "claude-model",
+        permissionMode: "WORKSPACE_WRITE",
+      },
+      maxAttempts: 2,
+      timeoutMs: 30 * 60 * 1000,
+    });
+    await expect(router.resolve("DEVELOPER", ["claude-installation"])).rejects.toThrow(
+      "not available",
+    );
+  });
+  it.each(["duplicate", "missing", "model", "too-many", "without-primary"])(
+    "rejects invalid alternative configuration: %s",
+    (invalid) => {
+      const config = configuration();
+      const assignment = config.assignments.find((item) => item.role === "DEVELOPER");
+      if (!assignment) throw new Error("Missing fixture assignment");
+      assignment.alternatives = [{ installationId: "claude-installation", model: "claude-model" }];
+      if (invalid === "duplicate")
+        assignment.alternatives[0] = {
+          installationId: "codex-installation",
+          model: "codex-model-a",
+        };
+      if (invalid === "missing") assignment.alternatives[0].installationId = "unknown-installation";
+      if (invalid === "model") assignment.alternatives[0].model = "unknown-model";
+      if (invalid === "too-many")
+        assignment.alternatives.push(...assignment.alternatives, ...assignment.alternatives);
+      if (invalid === "without-primary") {
+        assignment.installationId = null;
+        assignment.model = null;
+      }
+      expect(factoryConfigurationSchema.safeParse(config).success).toBe(false);
+    },
+  );
   it("constructs the adapter for each currently selected installation, including same-provider accounts", async () => {
     const first = configuration();
     const second = configuration();

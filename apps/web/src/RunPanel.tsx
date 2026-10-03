@@ -211,6 +211,13 @@ export function RunResultView({ run, token }: { run: RunDetail; token?: string }
                 ))
               )}
               <h4>Versões preservadas</h4>
+              {(attempt.result.handoffs ?? []).map((handoff) => (
+                <p key={handoff.snapshotId}>
+                  Handoff {handoff.role}: {handoff.fromInstallationId} → {handoff.toInstallationId}{" "}
+                  · {handoff.reason} · snapshot <code>{handoff.snapshotId}</code> · SHA{" "}
+                  <code>{handoff.manifestHash}</code>
+                </p>
+              ))}
               {attempt.result.snapshots.map((snapshot) => (
                 <div key={snapshot.snapshotId} className="run-snapshot">
                   <p>

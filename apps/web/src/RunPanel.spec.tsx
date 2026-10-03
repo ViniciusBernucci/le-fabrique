@@ -35,6 +35,18 @@ it("shows unknown model/usage without inferring success or rendering model HTML"
           corrections: 0,
           checks: [],
           snapshots: [],
+          handoffs: [
+            {
+              role: "DEVELOPER",
+              fromInstallationId: "first-account",
+              toInstallationId: "second-account",
+              sourceExecutionId: crypto.randomUUID(),
+              reason: "RATE_LIMITED",
+              snapshotId: crypto.randomUUID(),
+              manifestHash: "c".repeat(64),
+              createdAt: timestamp,
+            },
+          ],
           review: {
             schemaVersion: 1,
             verdict: "APPROVE",
@@ -69,4 +81,7 @@ it("shows unknown model/usage without inferring success or rendering model HTML"
   expect(html).toContain("Uso não informado pelo cliente");
   expect(html).toContain("&lt;script&gt;");
   expect(html).not.toContain("<script>");
+  expect(html).toContain("first-account");
+  expect(html).toContain("second-account");
+  expect(html).toContain("RATE_LIMITED");
 });

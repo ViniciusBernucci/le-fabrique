@@ -216,6 +216,158 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
+  it("does not reset the total call budget when handing off to another account", async () => {
+    const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
+    failed.error = { code: "PROVIDER_BUSY", message: "busy", retryable: true };
+    const deps = dependencies([failed], [checkResult("COMPLETED")], 1);
+    const original = deps.agentRouter.resolve.getMockImplementation();
+    deps.agentRouter.resolve.mockImplementation(async (role, excluded: string[] = []) => {
+      const runtime = await original?.(role);
+      if (!runtime) throw new Error("Missing fixture route");
+      if (excluded.length) runtime.route.installationId = "approved-alternative";
+      return runtime;
+    });
+    deps.workspaceManager.create
+      .mockResolvedValueOnce({
+        executionId: workflowId,
+        workspacePath,
+        revision: baseRevision,
+        detached: true,
+      })
+      .mockResolvedValue({
+        executionId: crypto.randomUUID(),
+        workspacePath: `${workspacePath}-handoff`,
+        revision: baseRevision,
+        detached: true,
+      });
+    const restore = vi.fn(async () => ({
+      snapshotId: snapshot(1).manifest.snapshotId,
+      workspacePath: `${workspacePath}-handoff`,
+      baseRevision,
+      patchApplied: true,
+      untrackedFilesRestored: 0,
+    }));
+    const result = await new DeveloperWorkflow({
+      ...deps,
+      snapshots: { ...deps.snapshots, restore },
+    }).execute(request(2, 1));
+    expect(result.status).toBe("PAUSED_LIMIT");
+    expect(result.handoffs).toHaveLength(1);
+    expect(deps.execute).toHaveBeenCalledOnce();
+    expect(result.snapshots).toHaveLength(1);
+  });
+  it.each(["DEVELOPER", "REVIEWER"] as const)(
+    "restores stopped %s work in another worktree before the explicitly configured alternative",
+    async (role) => {
+      const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
+      failed.error = { code: "RATE_LIMITED", message: "quota reached", retryable: true };
+      const deps = dependencies(
+        role === "DEVELOPER"
+          ? [
+              failed,
+              runtimeResult(crypto.randomUUID(), "done"),
+              runtimeResult(crypto.randomUUID(), approved),
+            ]
+          : [
+              runtimeResult(crypto.randomUUID(), "done"),
+              failed,
+              runtimeResult(crypto.randomUUID(), approved),
+            ],
+        [checkResult("COMPLETED"), checkResult("COMPLETED")],
+      );
+      const original = deps.agentRouter.resolve.getMockImplementation();
+      deps.agentRouter.resolve.mockImplementation(
+        async (requestedRole, excluded: string[] = []) => {
+          const runtime = await original?.(requestedRole);
+          if (!runtime) throw new Error("Missing fixture route");
+          if (excluded.includes(runtime.route.installationId))
+            runtime.route.installationId = `${requestedRole.toLowerCase()}-approved-alternative`;
+          return runtime;
+        },
+      );
+      deps.workspaceManager.create
+        .mockResolvedValueOnce({
+          executionId: workflowId,
+          workspacePath,
+          revision: baseRevision,
+          detached: true,
+        })
+        .mockResolvedValue({
+          executionId: crypto.randomUUID(),
+          workspacePath: `${workspacePath}-handoff`,
+          revision: baseRevision,
+          detached: true,
+        });
+      const restore = vi.fn(async () => ({
+        snapshotId: snapshot(1).manifest.snapshotId,
+        workspacePath: `${workspacePath}-handoff`,
+        baseRevision,
+        patchApplied: true,
+        untrackedFilesRestored: 0,
+      }));
+      const result = await new DeveloperWorkflow({
+        ...deps,
+        snapshots: { ...deps.snapshots, restore },
+      }).execute(request());
+      expect(result.status).toBe("AWAITING_HUMAN");
+      expect(result.corrections).toBe(0);
+      expect(result.developerExecutions).toBe(role === "DEVELOPER" ? 2 : 1);
+      expect(result.reviewerExecutions).toBe(role === "REVIEWER" ? 2 : 1);
+      expect(result.handoffs).toEqual([
+        expect.objectContaining({
+          role,
+          sourceExecutionId: failed.executionId,
+          reason: "RATE_LIMITED",
+          toInstallationId: `${role.toLowerCase()}-approved-alternative`,
+        }),
+      ]);
+      expect(deps.workspaceManager.create).toHaveBeenCalledTimes(2);
+      expect(deps.contextBuilder.build).toHaveBeenCalledTimes(2);
+      expect(deps.sandbox.execute).toHaveBeenCalledTimes(2);
+      expect(restore).toHaveBeenCalledOnce();
+      const fallbackCall = role === "DEVELOPER" ? 1 : 2;
+      expect(restore.mock.invocationCallOrder[0]).toBeLessThan(
+        deps.execute.mock.invocationCallOrder[fallbackCall] ?? 0,
+      );
+      expect(result.runtimeObservations[fallbackCall]?.installationId).toBe(
+        `${role.toLowerCase()}-approved-alternative`,
+      );
+    },
+  );
+  it("preserves source evidence and starts no alternative after restoration failure", async () => {
+    const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
+    failed.error = { code: "AUTH_REQUIRED", message: "expired", retryable: false };
+    const deps = dependencies([failed], [checkResult("COMPLETED")]);
+    const original = deps.agentRouter.resolve.getMockImplementation();
+    deps.agentRouter.resolve.mockImplementation(async (role, excluded: string[] = []) => {
+      const runtime = await original?.(role);
+      if (!runtime) throw new Error("Missing fixture route");
+      if (excluded.length) runtime.route.installationId = "approved-alternative";
+      return runtime;
+    });
+    deps.workspaceManager.create
+      .mockResolvedValueOnce({
+        executionId: workflowId,
+        workspacePath,
+        revision: baseRevision,
+        detached: true,
+      })
+      .mockResolvedValue({
+        executionId: crypto.randomUUID(),
+        workspacePath: `${workspacePath}-handoff`,
+        revision: baseRevision,
+        detached: true,
+      });
+    const restore = vi.fn().mockRejectedValue(new Error("integrity failure"));
+    const result = await new DeveloperWorkflow({
+      ...deps,
+      snapshots: { ...deps.snapshots, restore },
+    }).execute(request());
+    expect(result.status).toBe("FAILED");
+    expect(result.snapshots).toHaveLength(1);
+    expect(result.handoffs).toEqual([]);
+    expect(deps.execute).toHaveBeenCalledOnce();
+  });
   it.each(["AUTH_REQUIRED", "RATE_LIMITED", "PROVIDER_BUSY"] as const)(
     "preserves stopped Developer work and waits on %s without correction loops",
     async (code) => {

@@ -33,7 +33,13 @@ import {
   requestProviderVerification,
   updateFactorySettings,
 } from "./control-api";
-import { configurationSummary, providerLabels, roleLabels } from "./settings-view-model";
+import { HandoffAlternatives } from "./HandoffAlternatives";
+import {
+  configurationSummary,
+  providerLabels,
+  pruneAssignmentAlternatives,
+  roleLabels,
+} from "./settings-view-model";
 
 type SettingsPanelProps = { token: string; onMessage: (message: string) => void };
 
@@ -271,7 +277,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
           ? { ...assignment, enabled: false, installationId: null, model: null }
           : assignment,
       );
-      return { ...current, installations, assignments };
+      return {
+        ...current,
+        installations,
+        assignments: assignments.map((assignment) =>
+          pruneAssignmentAlternatives(assignment, installations),
+        ),
+      };
     });
   }
 
@@ -281,7 +293,10 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       const assignments = [...current.assignments];
       const assignment = assignments[index];
       if (!assignment) return current;
-      assignments[index] = { ...assignment, ...patch };
+      assignments[index] = pruneAssignmentAlternatives(
+        { ...assignment, ...patch },
+        current.installations,
+      );
       return { ...current, assignments };
     });
   }
@@ -317,8 +332,17 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             installations: current.installations.filter((item) => item.id !== installationId),
             assignments: current.assignments.map((assignment) =>
               assignment.installationId === installationId
-                ? { ...assignment, enabled: false, installationId: null, model: null }
-                : assignment,
+                ? {
+                    ...assignment,
+                    enabled: false,
+                    installationId: null,
+                    model: null,
+                    alternatives: [],
+                  }
+                : pruneAssignmentAlternatives(
+                    assignment,
+                    current.installations.filter((item) => item.id !== installationId),
+                  ),
             ),
           }
         : current,
@@ -724,6 +748,11 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                       )}
                   </select>
                 </label>
+                <HandoffAlternatives
+                  assignment={assignment}
+                  installations={draft.installations}
+                  onChange={(alternatives) => updateAssignment(index, { alternatives })}
+                />
                 <label>
                   Permissão
                   <select

@@ -535,6 +535,17 @@ export const agentAssignmentSchema = z
     permissionMode: runtimePermissionModeSchema,
     timeoutMinutes: z.number().int().min(1).max(30),
     maxAttempts: z.number().int().min(1).max(2),
+    alternatives: z
+      .array(
+        z
+          .object({
+            installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+            model: z.string().trim().min(1).max(120),
+          })
+          .strict(),
+      )
+      .max(2)
+      .optional(),
   })
   .strict();
 export type AgentAssignment = z.infer<typeof agentAssignmentSchema>;
@@ -610,6 +621,24 @@ export const factoryConfigurationSchema = z
         });
       }
       roles.add(assignment.role);
+      const targets = new Set(assignment.installationId ? [assignment.installationId] : []);
+      for (const alternative of assignment.alternatives ?? []) {
+        const target = installations.get(alternative.installationId);
+        if (
+          !assignment.installationId ||
+          !assignment.model ||
+          targets.has(alternative.installationId) ||
+          !target?.enabled ||
+          !target.models.includes(alternative.model)
+        )
+          context.addIssue({
+            code: "custom",
+            message:
+              "Handoff alternatives require distinct enabled installations and allowed models",
+            path: ["assignments", index, "alternatives"],
+          });
+        targets.add(alternative.installationId);
+      }
       if ((assignment.installationId === null) !== (assignment.model === null)) {
         context.addIssue({
           code: "custom",
@@ -1857,6 +1886,23 @@ export const workflowRuntimeObservationSchema = z
   .strict();
 export type WorkflowRuntimeObservation = z.infer<typeof workflowRuntimeObservationSchema>;
 
+export const workflowHandoffSchema = z
+  .object({
+    role: z.enum(["DEVELOPER", "REVIEWER"]),
+    fromInstallationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    toInstallationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+    sourceExecutionId: z.uuid(),
+    reason: z.enum(["AUTH_REQUIRED", "RATE_LIMITED", "PROVIDER_BUSY"]),
+    snapshotId: z.uuid(),
+    manifestHash: z.string().regex(/^[a-f0-9]{64}$/),
+    createdAt: z.iso.datetime(),
+  })
+  .strict()
+  .refine(
+    (handoff) => handoff.fromInstallationId !== handoff.toInstallationId,
+    "Handoff requires another installation",
+  );
+
 export const developerWorkflowResultSchema = z.object({
   schemaVersion: z.literal(1),
   workflowId: z.uuid(),
@@ -1893,6 +1939,7 @@ export const developerWorkflowResultSchema = z.object({
   review: workflowReviewSchema.nullable(),
   diagnostic: z.string().trim().min(1).max(1000),
   runtimeObservations: z.array(workflowRuntimeObservationSchema).max(10).default([]),
+  handoffs: z.array(workflowHandoffSchema).max(2).optional(),
 });
 export type DeveloperWorkflowResult = z.infer<typeof developerWorkflowResultSchema>;
 

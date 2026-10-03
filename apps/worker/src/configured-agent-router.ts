@@ -20,7 +20,10 @@ export class ConfiguredAgentRouter {
       | ((route: AgentRoute) => Promise<RuntimeAdapter>),
   ) {}
 
-  async resolve(role: EmployeeRole): Promise<ConfiguredAgentRuntime> {
+  async resolve(
+    role: EmployeeRole,
+    excludedInstallations: readonly string[] = [],
+  ): Promise<ConfiguredAgentRuntime> {
     const snapshot = await this.control.getWorkerConfiguration();
     const financialSafety = snapshot.configuration.financialSafety;
     if (
@@ -34,7 +37,7 @@ export class ConfiguredAgentRouter {
     }
     const assignment = snapshot.configuration.assignments.find((item) => item.role === role);
     if (!assignment) throw new Error(`No configured assignment for ${role}`);
-    const route = resolveAgentRoute(snapshot.configuration, role);
+    const route = resolveAgentRoute(snapshot.configuration, role, excludedInstallations);
     const adapter =
       typeof this.adapters === "function"
         ? await this.adapters(route)
