@@ -6,6 +6,7 @@ import {
   FactorySchedulingPausedError,
   registerWithRetry,
   startHeartbeat,
+  WriterAdmissionDeferredError,
 } from "./control-client";
 
 const config: WorkerConfig = {
@@ -174,4 +175,35 @@ it("maps only pre-claim HTTP 423 to a factory pause that preserves the job", asy
       executionSpecification: null,
     }),
   ).rejects.toBeInstanceOf(FactorySchedulingPausedError);
+});
+
+it.each([429, 409, 500])(
+  "classifies pre-claim response %s without retrying unknown failures",
+  async (status) => {
+    const client = new ControlClient(
+      config,
+      vi.fn().mockResolvedValue({ ok: false, status }) as never,
+    );
+    const pending = client.claim({
+      schemaVersion: 1,
+      eventId: crypto.randomUUID(),
+      projectId: crypto.randomUUID(),
+      ticketId: crypto.randomUUID(),
+      ticketVersion: 1,
+      baseRevision: "a".repeat(40),
+      executionSpecification: null,
+    });
+    await expect(pending).rejects.toBeInstanceOf(
+      status === 429 ? WriterAdmissionDeferredError : ControlRequestError,
+    );
+  },
+);
+it("does not convert a lease 429 to safe admission deferral", async () => {
+  const client = new ControlClient(
+    config,
+    vi.fn().mockResolvedValue({ ok: false, status: 429 }) as never,
+  );
+  await expect(
+    client.renew(crypto.randomUUID(), { fencingToken: 1, leaseDurationMs: 90_000 }),
+  ).rejects.toBeInstanceOf(ControlRequestError);
 });

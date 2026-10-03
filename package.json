@@ -26,7 +26,8 @@
     "typecheck:integration": "tsc -p tsconfig.integration.json",
     "test:postgres": "node --test scripts/global-writer.postgres.test.mjs",
     "backup": "tsx scripts/evidence-backup.ts",
-    "test:redis": "npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && node --test scripts/factory-pause.redis.test.mjs"
+    "test:redis": "npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && node --test scripts/factory-pause.redis.test.mjs",
+    "pretest": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

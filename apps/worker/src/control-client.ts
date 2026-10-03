@@ -106,6 +106,8 @@ export class ControlClient {
     } catch (error) {
       if (error instanceof ControlRequestError && error.status === 423)
         throw new FactorySchedulingPausedError();
+      if (error instanceof ControlRequestError && error.status === 429)
+        throw new WriterAdmissionDeferredError();
       throw error;
     }
   }
@@ -312,7 +314,14 @@ export class ControlClient {
   }
 }
 
-export class FactorySchedulingPausedError extends Error {
+export class WriterAdmissionDeferredError extends Error {
+  constructor(message = "Global writer capacity is occupied before admission") {
+    super(message);
+    this.name = "WriterAdmissionDeferredError";
+  }
+}
+
+export class FactorySchedulingPausedError extends WriterAdmissionDeferredError {
   constructor() {
     super("Factory scheduling is paused before writer admission");
     this.name = "FactorySchedulingPausedError";

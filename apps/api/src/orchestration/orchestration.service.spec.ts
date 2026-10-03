@@ -300,7 +300,10 @@ describe("global writer admission", () => {
           stoppedConfirmed: false,
         },
       ]);
-      await expect(service.claim(claimInput())).rejects.toThrow("Global writer termination");
+      await expect(service.claim(claimInput())).rejects.toMatchObject({
+        status: 429,
+        response: { code: "WRITER_BUSY" },
+      });
       expect(transaction.attempt.findMany).toHaveBeenCalledWith({
         where: { stoppedConfirmed: false },
         select: { id: true },
@@ -344,7 +347,7 @@ describe("global writer admission", () => {
     expect(transaction.attempt.create).toHaveBeenCalledOnce();
   });
 
-  it("maps PostgreSQL's concurrent unique exclusion to a conflict", async () => {
+  it("defers PostgreSQL's concurrent unique exclusion before admission", async () => {
     const { transaction, service } = fixture();
     transaction.attempt.create.mockRejectedValue(
       new Prisma.PrismaClientKnownRequestError("synthetic concurrent writer", {
@@ -352,7 +355,10 @@ describe("global writer admission", () => {
         clientVersion: "6.12.0",
       }),
     );
-    await expect(service.claim(claimInput())).rejects.toBeInstanceOf(ConflictException);
+    await expect(service.claim(claimInput())).rejects.toMatchObject({
+      status: 429,
+      response: { code: "WRITER_BUSY" },
+    });
     expect(transaction.run.update).not.toHaveBeenCalled();
     expect(transaction.ticket.update).not.toHaveBeenCalled();
   });
@@ -401,3 +407,21 @@ it.each([
     ).toBe(expected);
   },
 );
+
+it("defers only confirmed Serializable rollback during admission", async () => {
+  const error = new Prisma.PrismaClientKnownRequestError("synthetic rollback", {
+    code: "P2034",
+    clientVersion: "6.12.0",
+  });
+  const prisma = { $transaction: vi.fn().mockRejectedValue(error) };
+  const service = new OrchestrationService(prisma as never);
+  await expect(service.claim(claimInput())).rejects.toMatchObject({
+    status: 429,
+    response: { code: "WRITER_BUSY" },
+  });
+});
+it("never retries ambiguous admission transport or commit failures", async () => {
+  const error = new Error("synthetic ambiguous commit response");
+  const prisma = { $transaction: vi.fn().mockRejectedValue(error) };
+  await expect(new OrchestrationService(prisma as never).claim(claimInput())).rejects.toBe(error);
+});

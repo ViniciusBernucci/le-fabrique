@@ -26,7 +26,7 @@ import { ControlClient, registerWithRetry, startHeartbeat } from "./control-clie
 import { DeveloperWorkflow } from "./developer-workflow";
 import { processFinalizationRecovery, processOrchestrationExecution } from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
-import { deferFactoryPausedExecution } from "./factory-pause";
+import { deferWriterAdmission } from "./factory-pause";
 import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
@@ -104,7 +104,7 @@ async function bootstrap(): Promise<void> {
                 new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
             });
           const executionJob = job.data;
-          return await deferFactoryPausedExecution(
+          return await deferWriterAdmission(
             () =>
               processOrchestrationExecution(
                 executionJob,

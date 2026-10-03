@@ -2,7 +2,9 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type { DeveloperWorkflowResult, OrchestrationJob } from "@le-fabrique/contracts";
+import { DelayedError } from "bullmq";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { WriterAdmissionDeferredError } from "./control-client";
 import {
   InterruptionEvidenceError,
   processFinalizationRecovery,
@@ -10,6 +12,7 @@ import {
   WriterQuiescenceError,
 } from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
+import { deferWriterAdmission } from "./factory-pause";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
 import { ResultJournal } from "./result-journal";
 
@@ -414,6 +417,32 @@ describe("processOrchestrationExecution", () => {
     );
     expect(deps.control.checkpoint).not.toHaveBeenCalled();
     expect(deps.control.complete).not.toHaveBeenCalled();
+  });
+
+  it("delays capacity refusal before any checkout and later runs the same intent once", async () => {
+    const deps = dependencies();
+    const payload = job();
+    deps.control.claim.mockRejectedValueOnce(new WriterAdmissionDeferredError());
+    const defer = vi.fn().mockResolvedValue(undefined);
+    const execute = () => processOrchestrationExecution(payload, deps.input);
+    await expect(deferWriterAdmission(execute, defer)).rejects.toBeInstanceOf(DelayedError);
+    expect(deps.input.prepareCheckout).not.toHaveBeenCalled();
+    expect(deps.input.createProfile).not.toHaveBeenCalled();
+    expect(deps.workflow.execute).not.toHaveBeenCalled();
+    expect(deps.control.renew).not.toHaveBeenCalled();
+    expect(deps.control.reportResult).not.toHaveBeenCalled();
+    expect(deps.control.checkpoint).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
+    await expect(deferWriterAdmission(execute, defer)).resolves.toMatchObject({
+      replayed: false,
+      status: "VALIDATING",
+    });
+    expect(deps.control.claim).toHaveBeenCalledTimes(2);
+    expect(deps.control.claim).toHaveBeenNthCalledWith(1, payload, deps.input.leaseDurationMs);
+    expect(deps.control.claim).toHaveBeenNthCalledWith(2, payload, deps.input.leaseDurationMs);
+    expect(deps.input.createProfile).toHaveBeenCalledOnce();
+    expect(deps.workflow.execute).toHaveBeenCalledOnce();
+    expect(defer).toHaveBeenCalledOnce();
   });
 
   it("propagates claim conflicts without starting checkout", async () => {

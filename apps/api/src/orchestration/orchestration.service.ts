@@ -16,7 +16,14 @@ import {
   orchestrationStateSchema,
   verifyExecutionArtifact,
 } from "@le-fabrique/contracts";
-import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { type Attempt, Prisma, type Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
 import { factorySchedulingPause, requireFactoryScheduling } from "./factory-scheduling-guard";
@@ -31,135 +38,148 @@ export class OrchestrationService {
 
   async claim(input: OrchestrationClaimRequest): Promise<OrchestrationClaim> {
     const now = new Date();
-    const result = await this.prisma.$transaction(
-      async (transaction) => {
-        const worker = await transaction.workerIdentity.findUnique({
-          where: { id: input.workerId },
-        });
-        if (worker?.status !== "ONLINE") throw new NotFoundException("Worker unavailable");
-        const ticket = await transaction.ticket.findUnique({ where: { id: input.ticketId } });
-        if (!ticket) throw new NotFoundException("Ticket not found");
-        if (ticket.projectId !== input.projectId) {
-          throw new ConflictException("Ticket belongs to another project");
-        }
-        let run = await transaction.run.findUnique({ where: { dispatchEventId: input.eventId } });
-        if (!run) {
-          if (ticket.status !== "READY" || ticket.version !== input.ticketVersion) {
-            throw new ConflictException("Ticket is not claimable at this version");
-          }
-          run = await transaction.run.create({
-            data: { ticketId: ticket.id, dispatchEventId: input.eventId },
+    const result = await this.prisma
+      .$transaction(
+        async (transaction) => {
+          const worker = await transaction.workerIdentity.findUnique({
+            where: { id: input.workerId },
           });
-        } else if (run.ticketId !== input.ticketId) {
-          throw new ConflictException("Dispatch event belongs to another ticket");
-        }
-
-        if (input.resumeFrom) {
-          const event = await transaction.outboxEvent.findUnique({ where: { id: input.eventId } });
-          if (event?.eventType !== "run.resume.v1")
-            throw new ConflictException("Resume intent is not authorized");
-          const frozen = orchestrationJobSchema
-            .strict()
-            .parse({ schemaVersion: 1, eventId: event.id, ...(event.payload as object) });
-          const { workerId: _worker, leaseDurationMs: _lease, ...job } = input;
-          if (JSON.stringify(orchestrationJobSchema.strict().parse(job)) !== JSON.stringify(frozen))
-            throw new ConflictException("Resume job differs from the authorized immutable intent");
-        }
-
-        const latest = await transaction.attempt.findFirst({
-          where: { runId: run.id },
-          orderBy: { sequence: "desc" },
-        });
-        const active = latest?.status === "RUNNING" ? latest : null;
-        if (active) {
-          if (active.leaseExpiresAt > now) {
-            if (active.workerId !== input.workerId) {
-              throw new ConflictException("Run already has an active writer");
+          if (worker?.status !== "ONLINE") throw new NotFoundException("Worker unavailable");
+          const ticket = await transaction.ticket.findUnique({ where: { id: input.ticketId } });
+          if (!ticket) throw new NotFoundException("Ticket not found");
+          if (ticket.projectId !== input.projectId) {
+            throw new ConflictException("Ticket belongs to another project");
+          }
+          let run = await transaction.run.findUnique({ where: { dispatchEventId: input.eventId } });
+          if (!run) {
+            if (ticket.status !== "READY" || ticket.version !== input.ticketVersion) {
+              throw new ConflictException("Ticket is not claimable at this version");
             }
-            return { claim: mapClaim(active, true), blocked: false };
-          }
-          if (!active.stoppedConfirmed) {
-            await transaction.run.update({
-              where: { id: run.id },
-              data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
+            run = await transaction.run.create({
+              data: { ticketId: ticket.id, dispatchEventId: input.eventId },
             });
-            await transaction.ticket.update({
-              where: { id: ticket.id },
-              data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
-            });
-            return { claim: null, blocked: true };
+          } else if (run.ticketId !== input.ticketId) {
+            throw new ConflictException("Dispatch event belongs to another ticket");
           }
-        }
-        const isResumeOrigin = latest && input.resumeFrom?.attemptId === latest.id;
-        if (isResumeOrigin) {
-          if (
-            run.status !== "WAITING_WORKER" ||
-            ticket.status !== "WAITING_WORKER" ||
-            !latest.stoppedConfirmed ||
-            latest.fencingToken !== run.nextFencingToken
-          )
-            throw new ConflictException("Resume origin is not safely claimable");
-          const origin = await transaction.attempt.findUnique({
-            where: { id: latest.id },
-            include: { checkpoint: true },
+
+          if (input.resumeFrom) {
+            const event = await transaction.outboxEvent.findUnique({
+              where: { id: input.eventId },
+            });
+            if (event?.eventType !== "run.resume.v1")
+              throw new ConflictException("Resume intent is not authorized");
+            const frozen = orchestrationJobSchema
+              .strict()
+              .parse({ schemaVersion: 1, eventId: event.id, ...(event.payload as object) });
+            const { workerId: _worker, leaseDurationMs: _lease, ...job } = input;
+            if (
+              JSON.stringify(orchestrationJobSchema.strict().parse(job)) !== JSON.stringify(frozen)
+            )
+              throw new ConflictException(
+                "Resume job differs from the authorized immutable intent",
+              );
+          }
+
+          const latest = await transaction.attempt.findFirst({
+            where: { runId: run.id },
+            orderBy: { sequence: "desc" },
           });
-          if (
-            !origin ||
-            JSON.stringify(stoppedResumeEvidence(origin)) !== JSON.stringify(input.resumeFrom)
-          )
-            throw new ConflictException("Resume origin evidence changed");
-        } else if (latest) {
-          return { claim: mapClaim(latest, true), blocked: false };
-        } else if (input.resumeFrom) {
-          throw new ConflictException("Resume origin is missing");
-        }
+          const active = latest?.status === "RUNNING" ? latest : null;
+          if (active) {
+            if (active.leaseExpiresAt > now) {
+              if (active.workerId !== input.workerId) {
+                throw new ConflictException("Run already has an active writer");
+              }
+              return { claim: mapClaim(active, true), blocked: false };
+            }
+            if (!active.stoppedConfirmed) {
+              await transaction.run.update({
+                where: { id: run.id },
+                data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
+              });
+              await transaction.ticket.update({
+                where: { id: ticket.id },
+                data: { status: "BLOCKED_RECOVERY", version: { increment: 1 } },
+              });
+              return { claim: null, blocked: true };
+            }
+          }
+          const isResumeOrigin = latest && input.resumeFrom?.attemptId === latest.id;
+          if (isResumeOrigin) {
+            if (
+              run.status !== "WAITING_WORKER" ||
+              ticket.status !== "WAITING_WORKER" ||
+              !latest.stoppedConfirmed ||
+              latest.fencingToken !== run.nextFencingToken
+            )
+              throw new ConflictException("Resume origin is not safely claimable");
+            const origin = await transaction.attempt.findUnique({
+              where: { id: latest.id },
+              include: { checkpoint: true },
+            });
+            if (
+              !origin ||
+              JSON.stringify(stoppedResumeEvidence(origin)) !== JSON.stringify(input.resumeFrom)
+            )
+              throw new ConflictException("Resume origin evidence changed");
+          } else if (latest) {
+            return { claim: mapClaim(latest, true), blocked: false };
+          } else if (input.resumeFrom) {
+            throw new ConflictException("Resume origin is missing");
+          }
 
-        await requireFactoryScheduling(transaction);
-        if (!(await hasGlobalWriterGuard(transaction)))
-          throw new ConflictException("Global writer guard migration is unavailable");
+          await requireFactoryScheduling(transaction);
+          if (!(await hasGlobalWriterGuard(transaction)))
+            throw new ConflictException("Global writer guard migration is unavailable");
 
-        // Lease expiry, worker identity and terminal labels do not prove physical stop.
-        // The partial unique PostgreSQL index also closes concurrent claim races.
-        const unresolvedWriters = await transaction.attempt.findMany({
-          where: { stoppedConfirmed: false },
-          select: { id: true },
-          take: 1,
-        });
-        if (unresolvedWriters.length > 0)
-          throw new ConflictException("Global writer termination is not confirmed");
+          // Lease expiry, worker identity and terminal labels do not prove physical stop.
+          // The partial unique PostgreSQL index also closes concurrent claim races.
+          const unresolvedWriters = await transaction.attempt.findMany({
+            where: { stoppedConfirmed: false },
+            select: { id: true },
+            take: 1,
+          });
+          if (unresolvedWriters.length > 0)
+            throw writerBusy("Global writer termination is not confirmed");
 
-        const fencingToken = run.nextFencingToken + 1;
-        const attempt = await transaction.attempt
-          .create({
+          const fencingToken = run.nextFencingToken + 1;
+          const attempt = await transaction.attempt
+            .create({
+              data: {
+                runId: run.id,
+                workerId: input.workerId,
+                sequence: fencingToken,
+                fencingToken,
+                leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs),
+              },
+            })
+            .catch((error: unknown) => {
+              if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
+                throw writerBusy("Global writer already claimed concurrently");
+              throw error;
+            });
+          await transaction.run.update({
+            where: { id: run.id },
             data: {
-              runId: run.id,
-              workerId: input.workerId,
-              sequence: fencingToken,
-              fencingToken,
-              leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs),
+              status: "RUNNING",
+              nextFencingToken: fencingToken,
+              version: { increment: 1 },
             },
-          })
-          .catch((error: unknown) => {
-            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
-              throw new ConflictException("Global writer already claimed concurrently");
-            throw error;
           });
-        await transaction.run.update({
-          where: { id: run.id },
-          data: {
-            status: "RUNNING",
-            nextFencingToken: fencingToken,
-            version: { increment: 1 },
-          },
-        });
-        await transaction.ticket.update({
-          where: { id: ticket.id },
-          data: { status: "RUNNING", version: { increment: 1 } },
-        });
-        return { claim: mapClaim(attempt, false), blocked: false };
-      },
-      { isolationLevel: "Serializable" },
-    );
+          await transaction.ticket.update({
+            where: { id: ticket.id },
+            data: { status: "RUNNING", version: { increment: 1 } },
+          });
+          return { claim: mapClaim(attempt, false), blocked: false };
+        },
+        { isolationLevel: "Serializable" },
+      )
+      .catch((error: unknown) => {
+        // P2034 confirms transaction rollback; ambiguous transport/commit failures propagate.
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2034")
+          throw writerBusy("Writer admission transaction conflicted; no authority was granted");
+        throw error;
+      });
     if (result.blocked || !result.claim) {
       throw new ConflictException("Previous writer termination is not confirmed");
     }
@@ -429,4 +449,8 @@ function mapClaim(attempt: Attempt, replayed: boolean): OrchestrationClaim {
     leaseExpiresAt: attempt.leaseExpiresAt.toISOString(),
     replayed,
   });
+}
+
+function writerBusy(message: string): HttpException {
+  return new HttpException({ code: "WRITER_BUSY", message }, HttpStatus.TOO_MANY_REQUESTS);
 }

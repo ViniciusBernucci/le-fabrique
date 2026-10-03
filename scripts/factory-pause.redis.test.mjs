@@ -8,7 +8,10 @@ import { setTimeout as delay } from "node:timers/promises";
 const require = createRequire(import.meta.url);
 const { Queue, Worker } = require("bullmq");
 const { OutboxDispatcher } = require("../apps/api/dist/orchestration/outbox-dispatcher.js");
-const { FactorySchedulingPausedError } = require("../apps/worker/dist/control-client.js");
+const {
+  FactorySchedulingPausedError,
+  WriterAdmissionDeferredError,
+} = require("../apps/worker/dist/control-client.js");
 const { deferFactoryPausedExecution } = require("../apps/worker/dist/factory-pause.js");
 const container = `fac-012ag-redis-${randomUUID()}`;
 let created = false;
@@ -150,47 +153,49 @@ test("dispatcher pauses a real BullMQ queue and resumes preserved jobs without d
   }
 });
 
-test("pre-claim pause moves a real active job to delayed without attemptsMade or failed state", async () => {
-  const queueName = `factory-gap-${randomUUID()}`;
-  const queue = new Queue(queueName, { connection });
-  let paused = true;
-  let executed = 0;
-  let failed = 0;
-  const worker = new Worker(
-    queueName,
-    (job, token) =>
-      deferFactoryPausedExecution(
-        async () => {
-          if (paused) throw new FactorySchedulingPausedError();
-          executed++;
-          return { synthetic: true };
-        },
-        () => job.moveToDelayed(Date.now() + 300, token),
-      ),
-    { connection, concurrency: 1 },
-  );
-  worker.on("failed", () => {
-    failed++;
-  });
-  try {
-    const job = await queue.add(
-      "synthetic-gap",
-      {},
-      { jobId: randomUUID(), removeOnComplete: false, removeOnFail: false },
+for (const admissionError of [FactorySchedulingPausedError, WriterAdmissionDeferredError]) {
+  test(`pre-claim ${admissionError.name} moves a real active job to delayed without attemptsMade or failed state`, async () => {
+    const queueName = `factory-gap-${randomUUID()}`;
+    const queue = new Queue(queueName, { connection });
+    let paused = true;
+    let executed = 0;
+    let failed = 0;
+    const worker = new Worker(
+      queueName,
+      (job, token) =>
+        deferFactoryPausedExecution(
+          async () => {
+            if (paused) throw new admissionError();
+            executed++;
+            return { synthetic: true };
+          },
+          () => job.moveToDelayed(Date.now() + 300, token),
+        ),
+      { connection, concurrency: 1 },
     );
-    await until(async () => (await job.getState()) === "delayed");
-    await queue.pause();
-    assert.equal((await queue.getJob(job.id)).attemptsMade, 0);
-    assert.equal(executed, 0);
-    assert.equal(failed, 0);
-    paused = false;
-    await queue.resume();
-    await until(async () => (await job.getState()) === "completed");
-    assert.equal(executed, 1);
-    assert.equal(failed, 0);
-    assert.equal((await queue.getJob(job.id)).attemptsMade, 1);
-  } finally {
-    await worker.close();
-    await queue.close();
-  }
-});
+    worker.on("failed", () => {
+      failed++;
+    });
+    try {
+      const job = await queue.add(
+        "synthetic-gap",
+        {},
+        { jobId: randomUUID(), removeOnComplete: false, removeOnFail: false },
+      );
+      await until(async () => (await job.getState()) === "delayed");
+      await queue.pause();
+      assert.equal((await queue.getJob(job.id)).attemptsMade, 0);
+      assert.equal(executed, 0);
+      assert.equal(failed, 0);
+      paused = false;
+      await queue.resume();
+      await until(async () => (await job.getState()) === "completed");
+      assert.equal(executed, 1);
+      assert.equal(failed, 0);
+      assert.equal((await queue.getJob(job.id)).attemptsMade, 1);
+    } finally {
+      await worker.close();
+      await queue.close();
+    }
+  });
+}
