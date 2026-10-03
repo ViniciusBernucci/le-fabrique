@@ -22,6 +22,13 @@ const workerEnvironmentSchema = z
       .max(4096)
       .refine((root) => path.isAbsolute(root) && path.resolve(root) !== path.parse(root).root)
       .optional(),
+    WORKER_PROVIDER_ROOT: z
+      .string()
+      .trim()
+      .min(1)
+      .max(4096)
+      .refine((root) => path.isAbsolute(root) && path.resolve(root) !== path.parse(root).root)
+      .optional(),
     WORKER_CHECKOUT_ROOT: z
       .string()
       .trim()
@@ -40,7 +47,31 @@ const workerEnvironmentSchema = z
     WORKER_LEASE_DURATION_MS: z.coerce.number().int().min(15_000).max(300_000).default(90_000),
   })
   .superRefine((config, context) => {
+    if (config.WORKER_PROVIDER_ROOT) {
+      const providerRoot = path.resolve(config.WORKER_PROVIDER_ROOT);
+      for (const other of [config.WORKER_EXECUTION_ROOT, config.WORKER_CHECKOUT_ROOT]) {
+        if (!other) continue;
+        const otherRoot = path.resolve(other);
+        if (
+          providerRoot === otherRoot ||
+          providerRoot.startsWith(`${otherRoot}${path.sep}`) ||
+          otherRoot.startsWith(`${providerRoot}${path.sep}`)
+        ) {
+          context.addIssue({
+            code: "custom",
+            path: ["WORKER_PROVIDER_ROOT"],
+            message: "Provider root must be separate from code and execution",
+          });
+        }
+      }
+    }
     if (!config.WORKER_EXECUTION_ENABLED) return;
+    if (!config.WORKER_PROVIDER_ROOT)
+      context.addIssue({
+        code: "custom",
+        path: ["WORKER_PROVIDER_ROOT"],
+        message: "Required when real execution is enabled",
+      });
     if (!config.WORKER_EXECUTION_ROOT) {
       context.addIssue({
         code: "custom",

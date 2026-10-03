@@ -12,8 +12,6 @@ import type {
   WorkerProbeJob,
 } from "@le-fabrique/contracts";
 import {
-  ClaudeAdapter,
-  CodexAdapter,
   ContextBuilder,
   RuntimeGuard,
   SandboxRunner,
@@ -39,11 +37,17 @@ import {
 import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
+import { ProviderIdentityManager } from "./provider-identity";
 import {
   cancelProviderOnboardingProcesses,
   processProviderOnboarding,
+  runCodexDeviceLogin,
 } from "./provider-onboarding.processor";
-import { processProviderVerification } from "./provider-verification.processor";
+import {
+  inspectProvider,
+  processProviderVerification,
+  runVerificationCommand,
+} from "./provider-verification.processor";
 import { prepareRepositoryCheckout } from "./repository-checkout";
 import { ResultJournal } from "./result-journal";
 import { compileWorkflowRequest } from "./workflow-compiler";
@@ -67,8 +71,10 @@ async function bootstrap(): Promise<void> {
 
   const redisUrl = new URL(config.REDIS_URL);
   const executionStop = new AbortController();
-  const codexAdapter = new CodexAdapter({ binaryPath: config.WORKER_CODEX_BINARY });
-  const claudeAdapter = new ClaudeAdapter({ binaryPath: config.WORKER_CLAUDE_BINARY });
+  const identities = new ProviderIdentityManager(config.WORKER_PROVIDER_ROOT, {
+    CODEX: config.WORKER_CODEX_BINARY,
+    CLAUDE: config.WORKER_CLAUDE_BINARY,
+  });
   const probeWorker = new Worker<WorkerProbeJob, ProbeResult>(
     "le-fabrique.probe",
     async (job) => processProbe(job.data),
@@ -138,10 +144,9 @@ async function bootstrap(): Promise<void> {
                   ),
                   contextBuilder: new ContextBuilder(),
                   guard: new RuntimeGuard(request.guardPolicy),
-                  agentRouter: new ConfiguredAgentRouter(control, {
-                    codex: codexAdapter,
-                    claude: claudeAdapter,
-                  }),
+                  agentRouter: new ConfiguredAgentRouter(control, (route) =>
+                    identities.adapter(route),
+                  ),
                   sandbox: new SandboxRunner(),
                   snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),
                 });
@@ -188,7 +193,14 @@ async function bootstrap(): Promise<void> {
     : null;
   const providerVerificationWorker = new Worker<ProviderVerificationJob>(
     "le-fabrique.provider-verification",
-    async (job) => processProviderVerification(job.data, control),
+    async (job) =>
+      processProviderVerification(job.data, control, async (binary, args) =>
+        runVerificationCommand(
+          binary,
+          args,
+          await identities.prepare(job.data.provider, job.data.installationId),
+        ),
+      ),
     {
       concurrency: 1,
       connection: {
@@ -203,7 +215,25 @@ async function bootstrap(): Promise<void> {
   );
   const providerOnboardingWorker = new Worker<ProviderOnboardingJob>(
     "le-fabrique.provider-onboarding",
-    async (job) => processProviderOnboarding(job.data, control),
+    async (job) =>
+      processProviderOnboarding(
+        job.data,
+        control,
+        async (expiresAt, sink) =>
+          runCodexDeviceLogin(
+            expiresAt,
+            sink,
+            await identities.prepare("CODEX", job.data.installationId),
+          ),
+        async (provider) =>
+          inspectProvider(provider, async (binary, args) =>
+            runVerificationCommand(
+              binary,
+              args,
+              await identities.prepare(provider, job.data.installationId),
+            ),
+          ),
+      ),
     {
       concurrency: 1,
       connection: {

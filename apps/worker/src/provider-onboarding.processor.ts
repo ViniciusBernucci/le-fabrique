@@ -7,6 +7,7 @@ import type {
 import { providerOnboardingChallengeSchema } from "@le-fabrique/contracts";
 import { sanitizeSubscriptionEnvironment } from "@le-fabrique/runtime";
 import type { ControlClient } from "./control-client";
+import type { ProviderIdentity } from "./provider-identity";
 import { inspectProvider } from "./provider-verification.processor";
 
 type LoginResult = { exitCode: number | null; challengePublished: boolean };
@@ -38,15 +39,21 @@ export function extractCodexDeviceChallenge(
 export async function runCodexDeviceLogin(
   expiresAt: string,
   challengeSink: ChallengeSink,
+  identity?: ProviderIdentity,
 ): Promise<LoginResult> {
   return await new Promise((resolve, reject) => {
-    const environment = sanitizeSubscriptionEnvironment(process.env).environment;
-    const child = spawn("codex", ["login", "--device-auth"], {
-      env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", ...environment },
-      detached: process.platform !== "win32",
-      shell: false,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
+    const environment =
+      identity?.environment ?? sanitizeSubscriptionEnvironment(process.env).environment;
+    const child = spawn(
+      identity?.binaryPath ?? "codex",
+      [...(identity?.binaryArgsPrefix ?? []), "login", "--device-auth"],
+      {
+        env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", ...environment },
+        detached: process.platform !== "win32",
+        shell: false,
+        stdio: ["ignore", "pipe", "pipe"],
+      },
+    );
     const chunks: Buffer[] = [];
     let bytes = 0;
     let settled = false;

@@ -2,6 +2,13 @@ import { describe, expect, it, vi } from "vitest";
 import { inspectProvider, processProviderVerification } from "./provider-verification.processor";
 
 describe("provider verification", () => {
+  it("refuses API and ambiguous Codex authentication despite a successful exit", async () => {
+    for (const stdout of ["Logged in using an API key", "OK"]) {
+      await expect(
+        inspectProvider("CODEX", async () => ({ exitCode: 0, stdout, stderr: "" })),
+      ).resolves.toMatchObject({ providerState: "ERROR" });
+    }
+  });
   it("maps a logged-out Claude client without persisting raw output", async () => {
     const runner = vi.fn(async (_binary: string, args: readonly string[]) =>
       args.includes("--version")

@@ -118,6 +118,28 @@ function adapter(provider: RuntimeProvider): RuntimeAdapter {
 }
 
 describe("ConfiguredAgentRouter", () => {
+  it("constructs the adapter for each currently selected installation, including same-provider accounts", async () => {
+    const first = configuration();
+    const second = configuration();
+    const installation = second.installations.find((item) => item.id === "codex-installation");
+    const assignment = second.assignments.find((item) => item.role === "DEVELOPER");
+    if (!installation || !assignment) throw new Error("Missing fixture installation");
+    installation.id = "codex-second-account";
+    assignment.installationId = installation.id;
+    const getWorkerConfiguration = vi
+      .fn()
+      .mockResolvedValueOnce(snapshot(12, first))
+      .mockResolvedValueOnce(snapshot(13, second));
+    const factory = vi.fn(async () => adapter("codex"));
+    const router = new ConfiguredAgentRouter({ getWorkerConfiguration } as never, factory);
+    await router.resolve("DEVELOPER");
+    await router.resolve("DEVELOPER");
+    expect(
+      factory.mock.calls.map(
+        (call) => (call as unknown as [{ installationId: string }])[0].installationId,
+      ),
+    ).toEqual(["codex-installation", "codex-second-account"]);
+  });
   it("resolves the latest UI-selected account/model and reads settings on each call", async () => {
     const getWorkerConfiguration = vi
       .fn()

@@ -15,7 +15,9 @@ export interface ConfiguredAgentRuntime {
 export class ConfiguredAgentRouter {
   constructor(
     private readonly control: Pick<ControlClient, "getWorkerConfiguration">,
-    private readonly adapters: Partial<Record<RuntimeProvider, RuntimeAdapter>>,
+    private readonly adapters:
+      | Partial<Record<RuntimeProvider, RuntimeAdapter>>
+      | ((route: AgentRoute) => Promise<RuntimeAdapter>),
   ) {}
 
   async resolve(role: EmployeeRole): Promise<ConfiguredAgentRuntime> {
@@ -33,7 +35,10 @@ export class ConfiguredAgentRouter {
     const assignment = snapshot.configuration.assignments.find((item) => item.role === role);
     if (!assignment) throw new Error(`No configured assignment for ${role}`);
     const route = resolveAgentRoute(snapshot.configuration, role);
-    const adapter = this.adapters[route.provider];
+    const adapter =
+      typeof this.adapters === "function"
+        ? await this.adapters(route)
+        : this.adapters[route.provider];
     if (!adapter)
       throw new Error(`Configured runtime adapter for ${route.provider} is unavailable`);
     if (adapter.name !== route.provider) {

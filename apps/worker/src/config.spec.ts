@@ -37,6 +37,7 @@ describe("worker configuration", () => {
       ...workerEnvironment,
       WORKER_EXECUTION_ENABLED: "true",
       WORKER_EXECUTION_ROOT: "/var/lib/le-fabrique-worker/execution",
+      WORKER_PROVIDER_ROOT: "/var/lib/le-fabrique-worker/providers",
       WORKER_CHECKOUT_ROOT: "/var/lib/le-fabrique-worker/checkouts",
       WORKER_REPOSITORY_HOSTS: "github.com",
     });
@@ -58,6 +59,7 @@ describe("worker configuration", () => {
       ...workerEnvironment,
       WORKER_EXECUTION_ENABLED: "true",
       WORKER_EXECUTION_ROOT: "/srv/execution",
+      WORKER_PROVIDER_ROOT: "/srv/providers",
       WORKER_CHECKOUT_ROOT: "/srv/checkouts",
       WORKER_REPOSITORY_HOSTS: "github.com",
     };
@@ -65,5 +67,19 @@ describe("worker configuration", () => {
       loadWorkerConfig({ ...enabled, WORKER_CHECKOUT_ROOT: "/srv/execution/checkouts" }),
     ).toThrow();
     expect(() => loadWorkerConfig({ ...enabled, WORKER_CODEX_BINARY: "codex" })).toThrow();
+  });
+
+  it("requires a separate non-root provider store before execution", () => {
+    const enabled = {
+      ...workerEnvironment,
+      WORKER_EXECUTION_ENABLED: "true",
+      WORKER_EXECUTION_ROOT: "/srv/execution",
+      WORKER_CHECKOUT_ROOT: "/srv/checkouts",
+      WORKER_REPOSITORY_HOSTS: "github.com",
+    };
+    expect(() => loadWorkerConfig(enabled)).toThrow();
+    for (const root of ["/", "providers", "/srv", "/srv/execution/accounts", "/srv/checkouts"]) {
+      expect(() => loadWorkerConfig({ ...enabled, WORKER_PROVIDER_ROOT: root })).toThrow();
+    }
   });
 });

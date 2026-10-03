@@ -9,6 +9,7 @@ import {
   sanitizeSubscriptionEnvironment,
 } from "@le-fabrique/runtime";
 import type { ControlClient } from "./control-client";
+import type { ProviderIdentity } from "./provider-identity";
 
 type CommandResult = { exitCode: number | null; stdout: string; stderr: string };
 type Runner = (binary: string, args: readonly string[]) => Promise<CommandResult>;
@@ -29,15 +30,21 @@ const profiles: Record<
 export async function runVerificationCommand(
   binary: string,
   args: readonly string[],
+  identity?: ProviderIdentity,
 ): Promise<CommandResult> {
   return await new Promise((resolve, reject) => {
-    const environment = sanitizeSubscriptionEnvironment(process.env).environment;
-    const child = spawn(binary, [...args], {
-      env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", ...environment },
-      detached: process.platform !== "win32",
-      shell: false,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
+    const environment =
+      identity?.environment ?? sanitizeSubscriptionEnvironment(process.env).environment;
+    const child = spawn(
+      identity?.binaryPath ?? binary,
+      [...(identity?.binaryArgsPrefix ?? []), ...args],
+      {
+        env: { PATH: process.env.PATH ?? "/usr/local/bin:/usr/bin:/bin", ...environment },
+        detached: process.platform !== "win32",
+        shell: false,
+        stdio: ["ignore", "pipe", "pipe"],
+      },
+    );
     const chunks: { stdout: Buffer[]; stderr: Buffer[] } = { stdout: [], stderr: [] };
     let bytes = 0;
     let settled = false;
@@ -114,6 +121,18 @@ export async function inspectProvider(
         cliVersion,
         observedModels: [],
         message: "Official client requires authentication",
+      };
+    }
+    if (
+      provider === "CODEX" &&
+      !/logged in using chatgpt/i.test(`${status.stdout}\n${status.stderr}`)
+    ) {
+      return {
+        status: "COMPLETED",
+        providerState: "ERROR",
+        cliVersion,
+        observedModels: [],
+        message: "Client authentication mode is not subscription eligible",
       };
     }
     const observedModels =
