@@ -2,20 +2,20 @@
 
 ## Estado atual
 
-Atualizado pelo FAC-012AG em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AG; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 519 testes + 10 PostgreSQL + 2 Redis passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
+Atualizado pelo FAC-012AH em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AH; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 528 testes + 10 PostgreSQL + 3 Redis passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
 
 ## Fronteiras e contratos
 
 - O painel consome somente contratos exportados por `packages/contracts` e acessa a API pelo proxy `/api`.
 - A API controla HTTP e persistência; não executa clientes, builds ou testes.
-- O worker é um processo separado e o único ponto futuro de execução de jobs.
+- O worker é um processo separado e o único ponto de execução de jobs, com consumer real implementado sob gate.
 - `packages/contracts` valida payloads em runtime com Zod.
-- `packages/runtime` define portas para adapters futuros sem importar implementações ou credenciais.
+- `packages/runtime` define portas e adapters oficiais; credenciais não são exportadas para controle/painel.
 - PostgreSQL é a fonte de verdade; Redis/BullMQ transporta trabalho e não substitui outbox, leases ou fencing.
 
 ## Sequência recomendada
 
-1. Concluir lacunas internas auditadas: fechar followup de capacidade global ocupada pré-claim sem perder jobs; pausa global AG, backup AF e SSE AE implementados.
+1. Escopo interno auditado implementado/verificado: followup de capacidade AH, pausa global AG, backup AF e SSE AE fechados; revisar os commits exatos.
 2. Revisar incrementos exatos e preparar operação com dados sintéticos. Login/preflight do usuário do serviço e confirmação financeira dependem do responsável; prosseguir desenvolvimento independente.
 3. Ativação/implantação em janela autorizada, sem inferir elegibilidade. Piloto pode ser escolhido posteriormente pela interface.
 

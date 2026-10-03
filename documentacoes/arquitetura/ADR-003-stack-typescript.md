@@ -41,3 +41,5 @@ FAC-012AE implementa o SSE previsto: eventos de invalidação sanitizados por pr
 FAC-012AF implementa tooling offline de backup, não execução na API: dump congelado + evidências privadas, AES-256-GCM/chave externa e staging novo. PostgreSQL continua autoridade; prova sintética real restaura events/cursor/índice e Git snapshot. Não altera topologia nem storage externo. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
 FAC-012AG materializa kill switch conservador de agendamento: estado PostgreSQL versionado/default paused, share lock na admissão e PAUSE em renew; BullMQ entrega pausada/reconciliada sem apagar intent. Pedido não comprova stop; deferred job ainda sem writer não consome execução. [Evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md).
+
+FAC-012AH: PostgreSQL mantém exclusão global; 429 pré-claim por capacidade/rollback conhecido produz delayed BullMQ sem consumo de tentativa. Não converter falha de lease/execução/commit ambíguo em retry. Nenhum cliente/check executado pela API. [Evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md).

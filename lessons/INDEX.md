@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012AH aplica retry pré-autoridade distinto de repetir execução: [leases/fencing](leases-fencing-checkpoints.md).
+
 FAC-012AG aplica pausa de autoridade distinta de entrega/stop e deferral pré-claim: [leases/fencing](leases-fencing-checkpoints.md).
 
 FAC-012AF aplica backup autenticado/staging e restore real distintos de snapshot/parada: [sandbox/snapshot](sandbox-worktree-snapshot.md).

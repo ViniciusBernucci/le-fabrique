@@ -1,17 +1,19 @@
 # Backlog v2
 
-- FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup interno: preservar jobs pré-claim quando capacidade global está ocupada. [Relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+- FAC-012AH: AWAITING_HUMAN — código `f2d80f1`, 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; revisão humana/ativação operacionais separadas do software e do piloto. [Relatório](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
-- FAC-012AF: AWAITING_HUMAN — backup/restauração em `7de9041`, 501 testes internos + 8 PostgreSQL; sem storage externo/serviço real. Próximo interno: pausa global pela interface. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+- FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup de capacidade fechado pelo FAC-012AH. [Relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
 
-- FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Próximo: backup/restauração sintéticos. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+- FAC-012AF: AWAITING_HUMAN — backup/restauração em `7de9041`, 501 testes internos + 8 PostgreSQL; sem storage externo/serviço real. Pausa global implementada no FAC-012AG. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
-- FAC-012AD: AWAITING_HUMAN — painel/endpoint operacional e guard fail-closed em `6277a81`; 461 testes + 4 PostgreSQL. Próximo interno: SSE autenticado/retomável; piloto independente. [Relatório](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+- FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Backup/restauração implementados no FAC-012AF. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
+- FAC-012AD: AWAITING_HUMAN — painel/endpoint operacional e guard fail-closed em `6277a81`; 461 testes + 4 PostgreSQL. SSE implementado no FAC-012AE; piloto independente. [Relatório](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
 - FAC-012AC: AWAITING_HUMAN — exclusão global em `143f3d6`, 445 testes + 3 PostgreSQL; migration somente efêmera. Piloto não bloqueia MVP. [Relatório](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
 
 - FAC-012AB: AWAITING_HUMAN — ensaio integrado interno em `1714347`, 438 testes; providers/controle externos sintéticos, sem operação real. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
-- FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço e piloto pendentes, sem conta real desbloqueada. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+- FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço pendente, sem conta real desbloqueada; piloto opcional separado. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 
 - FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 

@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012AH IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AH-admissao-capacidade.md), [evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md). 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; piloto não é dependência. Aceite/ativação separados.
+
 FAC-012AG IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AG-pausa-global.md), [evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md). 519 testes + 10 PostgreSQL + 2 Redis. Followup capacidade pré-claim, nenhum piloto.
 
 FAC-012AF IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AF-backup-restauracao.md), [evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md). 501 testes internos + 8 PostgreSQL; próximo pausa global/kill switch de agendamento na UI.

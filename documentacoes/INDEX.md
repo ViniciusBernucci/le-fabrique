@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012AH — admissão/capacidade e estado interno MVP](controle/2026-10-03-FAC-012AH-admissao-capacidade.md)
+- [Ticket FAC-012AH](planejamento/FAC-012AH-admissao-capacidade.md)
+
 - [FAC-012AG — pausa global](controle/2026-10-03-FAC-012AG-pausa-global.md)
 - [Ticket FAC-012AG](planejamento/FAC-012AG-pausa-global.md)
 

@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012AH: writer global ocupado mantém próximos jobs delayed; somente parada comprovada libera capacidade. Não limpar jobs/índice ou usar expiração como stop. Pretest prepara pacotes internos. MVP interno verificado; contas/UID/financeiro/ativação continuam operação própria, sem piloto requerido. [Evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
+
 FAC-012AG: pausa global pela interface mantém jobs/outbox; ativos recebem PAUSE via renew e preservam snapshot/journal. Queue pausa também recovery enfileirado; finalização direta aceita evidência existente. Retomar agendamento não retoma run terminal/unknown nem ativa gate env/auth. [Evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md).
 
 FAC-012AF fornece npm run backup create/verify/restore para dump/snapshots/journal congelados, chave externa privada, confirmação de serviço parado e staging novo. Sem dump/restore automático de ambiente existente. [Comandos e evidências](2026-10-03-FAC-012AF-backup-restauracao.md).

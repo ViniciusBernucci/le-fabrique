@@ -1,6 +1,6 @@
 # Controle do MVP — Le Fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012AG. Estado: IMPLEMENTAÇÃO INTERNA VERIFICADA / VALIDAÇÃO OPERACIONAL PENDENTE. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012AH. Estado: MVP DE SOFTWARE IMPLEMENTADO/VERIFICADO / ACEITE E ATIVAÇÃO OPERACIONAL PENDENTES. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 
@@ -21,7 +21,7 @@ Escopo autorizado: concluir código/verificações internas sem piloto externo, 
 | Infraestrutura | Compose controle/bancos e template host worker dedicado | OPS-005; serviço não instalado |
 | Git local | D–J consolidados; K/L e OPS-005 integrados pelo OPS-006 após checks | ancestry/relatório OPS-006 |
 
-FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB/AC/AD/AE/AF/AG e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
+FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB/AC/AD/AE/AF/AG/AH e OPS-003/004/005/006 aguardam revisão humana; merge local não altera aceite. APIs de IA, extras, recarga e fallback pago permanecem proibidos.
 
 ## Estado do software e gates de operação
 
@@ -32,16 +32,29 @@ FAC-012A/B estão DONE com aceites registrados. FAC-012C–Z/AA/AB/AC/AD/AE/AF/A
 5. Comandos de interface IMPLEMENTADOS para evidência conhecida: S solicita PAUSE/CANCEL e T retoma snapshot íntegro/parado, com confirmação explícita de orçamento da nova tentativa. Q exige aceite exato antes de DONE. Unknown/crash não oferecem retomada cega; recuperação de finalização segue item 2.
 6. Gate documental técnico IMPLEMENTADO no Z: operador configura arquivos/seções, Developer atualiza documentos do projeto, gate estrutural exige mudanças/referências/hashes e Reviewer verifica conteúdo/critério. Snapshot posterior deve ser byte-equivalente; controle cruza evidência com manifesto final. Não substitui aceite humano ou prova operacional.
 
-Evidência das lacunas: `apps/api/src/control/control.controller.ts`, `apps/api/src/orchestration/orchestration.controller.ts`, `apps/worker/src/main.ts`, `execution.processor.ts`, `developer-workflow.ts` e `apps/web/src/App.tsx`. O MVP não está concluído enquanto essas pendências persistirem.
+Evidência da implementação: `apps/api/src/control/control.controller.ts`, `apps/api/src/orchestration/orchestration.controller.ts`, `apps/worker/src/main.ts`, `execution.processor.ts`, `developer-workflow.ts` e `apps/web/src/App.tsx`. O escopo interno auditado está implementado e verificado; estes arquivos não representam pendências de desenvolvimento. Operação real e aceite exato permanecem distintos.
 
 ## Passos manuais do responsável
 
 Para ativação real: autenticar clientes sob identidade de serviço, confirmar extras desligados, provisionar/ativar host worker/serviços, aplicar migrations, publicar Git/deploy e validar operação/backup/restauração. Não executados neste incremento. Piloto ausente não bloqueia desenvolvimento, conclusão do software, preparação ou validação da operação com dados sintéticos.
 
-## Próxima etapa dependente do responsável
+## Conclusão interna e operação posterior
 
-Prova oficial de confinamento/financeiro/identidade de serviço e ativação em janela autorizada são etapas operacionais; nenhum piloto é exigido. Código/gate de confinamento implementado no AA; documentação técnica implementada no Z. FAC-012AB verificou a composição interna com Git/sandbox/snapshot/journal reais e portas externas sintéticas, sem encontrar regressão de produção. A revisão do software encontrou exclusão global de writer ainda ausente, corrigida no AC. Continuar a auditoria de funcionalidades da fábrica, sem encerrar desenvolvimento pela ausência de piloto. N–Y integram recuperação, entrega ampliada, relatório/aceite, controles/retomada, identidades, espera e handoff configurado. Última evidência AG: 519 testes + 10 PostgreSQL + 2 Redis, [relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md). Pausa global/SSE/backup implementados; followup interno: preservar jobs em recusa pré-claim por capacidade global ocupada. Um ticket READY e um writer; sem prova de serviço/provider/cobrança real.
+FAC-012AB verificou a composição com Git/sandbox/snapshot/journal reais e portas externas sintéticas. A auditoria seguinte fechou exclusão global AC, observação sem projeto AD, SSE AE, backup/restauração AF, pausa global AG e jobs aguardando capacidade AH. Última revisão de código `f2d80f1671ac8b0c76a5c76f35be4ce626fcab6d`: **528 testes + 10 PostgreSQL + 3 Redis passaram**, typecheck/lint/build/diff verificados; único warning de lint anterior. [Evidências finais](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
-Retomada deste desenvolvimento está em `feat/fac-012ag-factory-pause`, `/home/vinicius/le-fabrique-fac-012ag`, com Z/AA/AB/AC/AD/AE/AF por ancestry. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Pergunta atual é somente sobre usuário de serviço/clientes para preparação operacional; não solicitar piloto para prosseguir. Não inferir login ou elegibilidade financeira.
+A fábrica recebe projetos pela interface posteriormente. Desenvolver um projeto externo não é requisito para construir, concluir ou validar internamente o software que fará isso. Nenhuma lacuna interna concreta permanece aberta nesta auditoria; novo problema deve ganhar ticket verificável, sem transformar piloto ou login em impedimento ao desenvolvimento.
 
-FAC-012AC: claim exige ausência global de tentativa sem parada confirmada; índice único parcial fecha a disputa entre transações. Lease/status não liberam exclusão. Migration aplicada somente no banco efêmero de teste, nunca nos serviços existentes.
+Retomada está em `fix/fac-012ah-admission-capacity`, `/home/vinicius/le-fabrique-fac-012ah`, com Z/AA/AB/AC/AD/AE/AF/AG por ancestry. Root `developer` permanece limpo em `745ce2d`; não houve merge/push/deploy. Outros processos no root não permitem comprovar writer parado para integração segura; worktree atual tem writer único e todos os commits disponíveis para revisão. Não inferir aceite humano desta revisão.
+
+Próxima fase operacional: confirmar usuário Linux de serviço/clientes oficiais, autenticação/prova nativa/financeiro sob esse UID; integrar/implantar em janela autorizada e validar reboot/backup externo/operabilidade. Pergunta sobre usuário/clientes já enviada enquanto o código avançava; sem resposta ainda. Nenhuma conta real desbloqueada ou cobrança habilitada. Piloto externo continua opcional posterior.
+
+## Incrementos de confiabilidade atuais
+
+- AC: claim exige ausência global de tentativa sem stop; índice único parcial fecha corrida entre runs. Lease/status não liberam exclusão.
+- AD: heartbeat, writer sem stop e índice em painel sem projeto; falta de índice impede claim.
+- AE: eventos minimizados persistidos por commit, SSE autenticado/retomável e HTTP fallback.
+- AF: backup criptografado e staging exclusivo, roundtrip PostgreSQL e restauração de snapshot Git comprovados internamente.
+- AG: pausa global default true/versionada, claim protegido por lock, PAUSE no renew e queue conserva intents; pedido não afirma stop.
+- AH: recusa conhecida anterior à autoridade aguarda capacidade sem perder job/consumir tentativa; falhas posteriores/ambíguas propagam.
+
+Migrations desses incrementos só foram aplicadas em PostgreSQL efêmero de teste. Serviço dedicado/ativação e dados existentes permanecem como antes. Rollback preserva índice/pausa/eventos/evidências e exige escritor parado; não remover dados automaticamente.

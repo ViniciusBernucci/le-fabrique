@@ -1,5 +1,7 @@
 # Plano do MVP v2
 
+Estado 2026-10-03/FAC-012AH: escopo interno MVP implementado e verificado, 528 testes + 10 PostgreSQL + 3 Redis. [CONTROLE-MVP.md](CONTROLE-MVP.md) separa software, aceite e ativação. Piloto/dez tickets externos são experimento opcional posterior, jamais requisito para desenvolvimento ou conclusão da fábrica.
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
@@ -123,8 +125,8 @@ Registrar todos os dez tickets, inclusive fracassos. Meta 8/10 em até duas corr
 
 ## Infraestrutura obrigatória do MVP
 Toda execução fica na mesma VPS; MacBook não é dependência. Assinaturas autenticadas nos clientes oficiais da VPS. Estimativas: Mínimo 4 vCPU/8 GB/120 GB; Bom recomendado 8 vCPU/16 GB/200 GB; Ideal 8 vCPU/32 GB/300 GB. Sem GPU. Um executor inicial em todos os perfis.
-FAC-002 valida compatibilidade, login, extras desativados e baseline sintético na VPS. FAC-003 preserva a separação de redes/volumes na aplicação. O perfil contratado e os limites reais serão registrados antes de qualquer deploy autorizado. FAC-004 testa serviço/credenciais após reboot. FAC-007 prova que código não lê credenciais/controle. FAC-012 mede o piloto real, painel sob build, OOM/I/O/disco e restauração externa.
-Aceite de infraestrutura: specs reais documentadas; checks do piloto cabem no envelope; sem OOM no ensaio; bancos privados; segredo inacessível ao código; nenhum efeito duplicado após reinício; backup externo restaurável. Na ocorrência de falha de capacidade, otimizar/subir perfil antes de ampliar concorrência.
+FAC-002 valida compatibilidade, login, extras desativados e baseline sintético na VPS. FAC-003 preserva a separação de redes/volumes na aplicação. O perfil contratado e os limites reais serão registrados antes de qualquer deploy autorizado. FAC-004 testa serviço/credenciais após reboot. FAC-007 prova que código não lê credenciais/controle. A validação operacional mede painel sob build, OOM/I/O/disco e restauração externa com dados sintéticos; FAC-012 mede projeto externo apenas no experimento opcional.
+Aceite de infraestrutura: specs reais documentadas; checks sintéticos da fábrica cabem no envelope; sem OOM no ensaio; bancos privados; segredo inacessível ao código; nenhum efeito duplicado após reinício; backup externo restaurável. Na ocorrência de falha de capacidade, otimizar/subir perfil antes de ampliar concorrência.
 Perfil Bom é recomendação de engenharia, não contratação autorizada. Preços, fornecedor e acesso ainda precisam ser informados para provisionar. Detalhamento em documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md.
 
 ## Stack obrigatória da fábrica - revisão 2.3

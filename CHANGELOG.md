@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AH
+
+Recusa pré-claim por capacidade/rollback conhecido preserva job delayed sem tentativa/IA; falhas posteriores propagam. Bootstrap de npm test reproduzível. 541 verificações passaram; MVP interno verificado, piloto independente. [Evidências](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
+
 ## 2026-10-03 — FAC-012AG
 
 Default pausa global PostgreSQL, versão otimista e UI; claim/renew honram autoridade, dispatcher sincroniza BullMQ e gap de claim pausado adia job sem FAILED. 531 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).

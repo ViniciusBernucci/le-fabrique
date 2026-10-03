@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+MVP de software IMPLEMENTADO/VERIFICADO em `fix/fac-012ah-admission-capacity` (FAC-012AH, `f2d80f1`): 528 testes + 10 PostgreSQL + 3 Redis passaram. Piloto externo opcional, sem dependência para concluir a fábrica. Aceite/ativação operacional são etapas próprias pendentes. [Estado atual](CONTROLE-MVP.md), [evidências](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md). Parágrafos por incremento abaixo preservam a evolução histórica; use o estado atual para pendências.
+
 FAC-012AG acrescenta pausa global versionada na UI/DB, queue preservada e jobs adiados em recusa pré-claim de pausa. 519 testes + 10 PostgreSQL + 2 Redis passaram. Piloto não é requisito. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
 
 FAC-012AF acrescenta backup criptografado/verificação/staging exclusivo de dump/snapshots/journal; roundtrip PostgreSQL e snapshot Git reais passaram. 501 testes internos verificados + 8 PostgreSQL. Piloto independente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).

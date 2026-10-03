@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012AH: claim responde 429/WRITER_BUSY por capacidade global/rollback conhecido antes de autoridade. Worker adia job sem FAILED/attemptsMade; 409/lease/execução/ambiguidade propagam. 528 testes + 10 PostgreSQL + 3 Redis. [Evidências](2026-10-03-FAC-012AH-admissao-capacidade.md).
+
 FAC-012AG adiciona PUT /api/operation/scheduling (paused/expectedVersion) e estado no painel. Default pausado; claim usa FOR SHARE/423, renew pede PAUSE sem sobrescrever CANCEL; não afirma stop. [Evidências](2026-10-03-FAC-012AG-pausa-global.md).
 
 FAC-012AE adiciona GET /api/projects/:projectId/events e events/stream administrativos: páginas até 100, cursor bigint string, SSE Last-Event-ID e invalidação minimizada transacional; tickets/runs atualizam com polling fallback. [Evidências](2026-10-03-FAC-012AE-eventos-projeto.md).
