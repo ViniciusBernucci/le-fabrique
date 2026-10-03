@@ -35,7 +35,8 @@ export class SandboxRunner {
     this.killGraceMs = options.killGraceMs ?? 200;
   }
 
-  async execute(input: SandboxCommandRequest): Promise<SandboxCommandResult> {
+  async execute(input: SandboxCommandRequest, signal?: AbortSignal): Promise<SandboxCommandResult> {
+    if (signal?.aborted) throw new Error("Sandbox command was cancelled before start");
     const request = sandboxCommandRequestSchema.parse(input);
     if (this.active) throw new Error("SandboxRunner already has an active command");
     if (!isAbsolute(request.command)) throw new Error("Sandbox command must be absolute");
@@ -90,7 +91,7 @@ export class SandboxRunner {
     ];
     this.active = true;
     try {
-      return await this.runUnit(request, unitName, args, startedAt);
+      return await this.runUnit(request, unitName, args, startedAt, signal);
     } finally {
       this.active = false;
     }
@@ -101,6 +102,7 @@ export class SandboxRunner {
     unitName: string,
     args: string[],
     startedAt: string,
+    signal?: AbortSignal,
   ): Promise<SandboxCommandResult> {
     return await new Promise<SandboxCommandResult>((resolvePromise, reject) => {
       const child = spawn(this.systemdRunPath, args, {
@@ -109,9 +111,9 @@ export class SandboxRunner {
       });
       let stdout: Buffer<ArrayBufferLike> = Buffer.alloc(0);
       let stderr: Buffer<ArrayBufferLike> = Buffer.alloc(0);
-      let reason: "timeout" | "log-limit" | null = null;
+      let reason: "timeout" | "log-limit" | "cancel" | null = null;
       let terminating = false;
-      const terminate = async (nextReason: "timeout" | "log-limit"): Promise<void> => {
+      const terminate = async (nextReason: "timeout" | "log-limit" | "cancel"): Promise<void> => {
         if (terminating) return;
         terminating = true;
         reason = nextReason;
@@ -135,18 +137,25 @@ export class SandboxRunner {
       child.stderr.on("data", (chunk: Buffer) => {
         stderr = append(stderr, chunk);
       });
-      child.once("error", reject);
+      child.once("error", (error) => {
+        signal?.removeEventListener("abort", cancel);
+        reject(error);
+      });
       const timeout = setTimeout(() => void terminate("timeout"), request.limits.timeoutMs);
       timeout.unref();
+      const cancel = () => void terminate("cancel");
+      signal?.addEventListener("abort", cancel, { once: true });
+      if (signal?.aborted) cancel();
       child.once("close", async (exitCode) => {
         clearTimeout(timeout);
+        signal?.removeEventListener("abort", cancel);
         const stoppedConfirmed = await this.isStopped(unitName);
         const status =
           reason === "timeout"
             ? "TIMED_OUT"
             : reason === "log-limit"
               ? "LOG_LIMIT"
-              : exitCode === 0
+              : reason !== "cancel" && exitCode === 0
                 ? "COMPLETED"
                 : "FAILED";
         resolvePromise(
@@ -179,7 +188,12 @@ export class SandboxRunner {
     const result = await runProcess(this.systemctlPath, ["--user", "is-active", unitName], {
       environment: controlEnvironment(),
     }).catch(() => null);
-    return result?.exitCode !== 0 || result.stdout.toString("utf8").trim() !== "active";
+    if (!result) return false;
+    const state = result.stdout.toString("utf8").trim();
+    return (
+      (result.exitCode === 3 && ["inactive", "failed"].includes(state)) ||
+      (result.exitCode === 4 && state === "unknown")
+    );
   }
 }
 

@@ -137,6 +137,8 @@ describe("ConfiguredAgentRouter", () => {
       adapter: codex,
       configurationVersion: 4,
       configurationObservedAt: observedAt,
+      timeoutMs: 30 * 60_000,
+      maxAttempts: 2,
     });
     await expect(router.resolve("DEVELOPER")).resolves.toMatchObject({
       route: { model: "codex-model-b" },
@@ -221,5 +223,18 @@ describe("ConfiguredAgentRouter", () => {
     );
 
     await expect(router.resolve("DEVELOPER")).rejects.toThrow("adapter does not match codex");
+  });
+
+  it("fails closed if saved financial settings enable API, paid usage, or fallback", async () => {
+    const unsafeConfiguration = configuration();
+    unsafeConfiguration.financialSafety.extraUsageEnabled = true;
+    const router = new ConfiguredAgentRouter(
+      { getWorkerConfiguration: async () => snapshot(11, unsafeConfiguration) } as never,
+      { codex: adapter("codex") },
+    );
+
+    await expect(router.resolve("DEVELOPER")).rejects.toThrow(
+      "Execution requires API, paid extras and fallback to remain disabled",
+    );
   });
 });

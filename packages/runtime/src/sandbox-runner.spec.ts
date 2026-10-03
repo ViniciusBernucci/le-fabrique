@@ -2,7 +2,7 @@ import { mkdtemp, readFile, rm, stat, symlink, writeFile } from "node:fs/promise
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import type { SandboxCommandRequest } from "@le-fabrique/contracts";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SandboxRunner } from "./sandbox-runner";
 
 let workspace = "";
@@ -171,4 +171,42 @@ setInterval(() => {}, 1000);
       new SandboxRunner().execute(request({ environment: { OPENAI_API_KEY: "denied" } })),
     ).rejects.toThrow("environment key denied");
   });
+
+  it("does not confirm quiescence when systemd state cannot be observed", async () => {
+    await writeFile(resolve(workspace, "probe.cjs"), "console.log('synthetic check');");
+    const result = await new SandboxRunner({
+      systemctlPath: "/missing-le-fabrique-systemctl",
+    }).execute(request());
+    expect(result.status).toBe("COMPLETED");
+    expect(result.stoppedConfirmed).toBe(false);
+  }, 15_000);
+
+  it("cancels the unit and its descendants before confirming stop", async () => {
+    await writeFile(
+      resolve(workspace, "probe.cjs"),
+      `
+const fs = require("node:fs");
+const { spawn } = require("node:child_process");
+spawn(process.execPath, ["-e", 'setInterval(() => require("node:fs").appendFileSync("/mnt/heartbeat", "x"), 20)']);
+fs.writeFileSync("/mnt/started", "yes");
+setInterval(() => {}, 1000);
+`,
+    );
+    await writeFile(resolve(workspace, "started"), "");
+    await writeFile(resolve(workspace, "heartbeat"), "");
+    const controller = new AbortController();
+    const execution = new SandboxRunner({ killGraceMs: 100 }).execute(
+      request({ writablePaths: ["started", "heartbeat"] }),
+      controller.signal,
+    );
+    await vi.waitFor(
+      async () => expect(await readFile(resolve(workspace, "started"), "utf8")).toBe("yes"),
+      { timeout: 3000 },
+    );
+    controller.abort();
+    await expect(execution).resolves.toMatchObject({ status: "FAILED", stoppedConfirmed: true });
+    const size = (await stat(resolve(workspace, "heartbeat"))).size;
+    await new Promise((resolvePromise) => setTimeout(resolvePromise, 150));
+    expect((await stat(resolve(workspace, "heartbeat"))).size).toBe(size);
+  }, 15_000);
 });

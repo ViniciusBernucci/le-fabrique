@@ -1,3 +1,4 @@
+import path from "node:path";
 import type {
   GithubOnboardingJob,
   GithubPullRequestJob,
@@ -8,9 +9,22 @@ import type {
   ProviderVerificationJob,
   WorkerProbeJob,
 } from "@le-fabrique/contracts";
+import {
+  ClaudeAdapter,
+  CodexAdapter,
+  ContextBuilder,
+  RuntimeGuard,
+  SandboxRunner,
+  SnapshotManager,
+  WorkspaceManager,
+} from "@le-fabrique/runtime";
 import { Worker } from "bullmq";
 import { loadWorkerConfig } from "./config";
+import { ConfiguredAgentRouter } from "./configured-agent-router";
 import { ControlClient, registerWithRetry, startHeartbeat } from "./control-client";
+import { DeveloperWorkflow } from "./developer-workflow";
+import { processOrchestrationExecution } from "./execution.processor";
+import { createTrustedWorkflowProfile } from "./execution-profile";
 import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
@@ -21,16 +35,20 @@ import {
 } from "./github-pull-request.processor";
 import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
-import { processOrchestrationFixture } from "./orchestration.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
 import {
   cancelProviderOnboardingProcesses,
   processProviderOnboarding,
 } from "./provider-onboarding.processor";
 import { processProviderVerification } from "./provider-verification.processor";
+import { prepareRepositoryCheckout } from "./repository-checkout";
+import { compileWorkflowRequest } from "./workflow-compiler";
 
 async function bootstrap(): Promise<void> {
   const config = loadWorkerConfig();
+  const executionConfig = config.WORKER_EXECUTION_ENABLED
+    ? requireExecutionConfig(config.WORKER_EXECUTION_ROOT, config.WORKER_CHECKOUT_ROOT)
+    : null;
   const control = new ControlClient(config);
   await registerWithRetry(control, {
     maxAttempts: 30,
@@ -44,6 +62,9 @@ async function bootstrap(): Promise<void> {
   });
 
   const redisUrl = new URL(config.REDIS_URL);
+  const executionStop = new AbortController();
+  const codexAdapter = new CodexAdapter({ binaryPath: config.WORKER_CODEX_BINARY });
+  const claudeAdapter = new ClaudeAdapter({ binaryPath: config.WORKER_CLAUDE_BINARY });
   const probeWorker = new Worker<WorkerProbeJob, ProbeResult>(
     "le-fabrique.probe",
     async (job) => processProbe(job.data),
@@ -59,21 +80,78 @@ async function bootstrap(): Promise<void> {
       },
     },
   );
-  const orchestrationWorker = new Worker<OrchestrationJob, { runId: string; attemptId: string }>(
-    "le-fabrique.execution",
-    async (job) => processOrchestrationFixture(job.data, control),
-    {
-      concurrency: config.WORKER_CONCURRENCY,
-      connection: {
-        host: redisUrl.hostname,
-        port: Number(redisUrl.port || 6379),
-        username: redisUrl.username || undefined,
-        password: redisUrl.password || undefined,
-        db: Number(redisUrl.pathname.slice(1) || 0),
-        maxRetriesPerRequest: null,
-      },
-    },
-  );
+  const orchestrationWorker = config.WORKER_EXECUTION_ENABLED
+    ? new Worker<OrchestrationJob>(
+        "le-fabrique.execution",
+        async (job) => {
+          if (!executionConfig) throw new Error("Execution consumer configuration is unavailable");
+          return await processOrchestrationExecution(
+            job.data,
+            {
+              control,
+              leaseDurationMs: config.WORKER_LEASE_DURATION_MS,
+              prepareCheckout: async (payload, claim, signal) => {
+                if (!payload.executionSpecification) {
+                  throw new Error("Execution job lacks a READY specification");
+                }
+                return await prepareRepositoryCheckout(
+                  {
+                    projectId: payload.projectId,
+                    workflowId: claim.attemptId,
+                    repositoryUrl: payload.executionSpecification.project.repoUrl,
+                    baseRevision: payload.executionSpecification.project.baseRevision,
+                  },
+                  {
+                    root: executionConfig.checkoutRoot,
+                    allowedHosts: config.WORKER_REPOSITORY_HOSTS,
+                  },
+                  undefined,
+                  signal,
+                );
+              },
+              createProfile: (payload, checkout) => {
+                if (!payload.executionSpecification) {
+                  throw new Error("Execution job lacks a READY specification");
+                }
+                return createTrustedWorkflowProfile(payload.executionSpecification, checkout);
+              },
+              createWorkflow: (profile, specification, workflowId) => {
+                const request = compileWorkflowRequest(workflowId, specification, profile);
+                const workflow = new DeveloperWorkflow({
+                  workspaceManager: new WorkspaceManager(
+                    path.join(executionConfig.root, "workspaces"),
+                  ),
+                  contextBuilder: new ContextBuilder(),
+                  guard: new RuntimeGuard(request.guardPolicy),
+                  agentRouter: new ConfiguredAgentRouter(control, {
+                    codex: codexAdapter,
+                    claude: claudeAdapter,
+                  }),
+                  sandbox: new SandboxRunner(),
+                  snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),
+                });
+                return {
+                  execute: (signal) => workflow.execute(request, signal),
+                  cancelActive: () => workflow.cancelActive(),
+                };
+              },
+            },
+            executionStop.signal,
+          );
+        },
+        {
+          concurrency: 1,
+          connection: {
+            host: redisUrl.hostname,
+            port: Number(redisUrl.port || 6379),
+            username: redisUrl.username || undefined,
+            password: redisUrl.password || undefined,
+            db: Number(redisUrl.pathname.slice(1) || 0),
+            maxRetriesPerRequest: null,
+          },
+        },
+      )
+    : null;
   const providerVerificationWorker = new Worker<ProviderVerificationJob>(
     "le-fabrique.provider-verification",
     async (job) => processProviderVerification(job.data, control),
@@ -169,6 +247,7 @@ async function bootstrap(): Promise<void> {
   const shutdown = async (reason: string): Promise<void> => {
     if (stopping) return;
     stopping = true;
+    executionStop.abort();
     stopHeartbeat();
     cancelProviderOnboardingProcesses();
     cancelGithubOnboardingProcesses();
@@ -176,7 +255,7 @@ async function bootstrap(): Promise<void> {
     console.info("worker stopping", { reason });
     await Promise.all([
       probeWorker.close(),
-      orchestrationWorker.close(),
+      ...(orchestrationWorker ? [orchestrationWorker.close()] : []),
       providerVerificationWorker.close(),
       providerOnboardingWorker.close(),
       githubVerificationWorker.close(),
@@ -196,8 +275,11 @@ async function bootstrap(): Promise<void> {
   probeWorker.on("failed", (job, error) =>
     console.error("probe job failed", { jobId: job?.id, error: error.message }),
   );
-  orchestrationWorker.on("failed", (job, error) =>
-    console.error("orchestration probe failed", { jobId: job?.id, error: error.message }),
+  orchestrationWorker?.on("failed", (job, error) =>
+    console.error("orchestration execution failed", {
+      jobId: job?.id,
+      errorName: error.name,
+    }),
   );
   providerVerificationWorker.on("failed", (job, error) =>
     console.error("provider verification failed", { jobId: job?.id, error: error.message }),
@@ -222,6 +304,16 @@ async function bootstrap(): Promise<void> {
   );
   process.once("SIGINT", () => void shutdown("SIGINT"));
   process.once("SIGTERM", () => void shutdown("SIGTERM"));
+}
+
+function requireExecutionConfig(
+  root: string | undefined,
+  checkoutRoot: string | undefined,
+): { root: string; checkoutRoot: string } {
+  if (!root || !checkoutRoot) {
+    throw new Error("Real execution requires explicit worker and checkout roots");
+  }
+  return { root, checkoutRoot };
 }
 
 void bootstrap().catch((error: unknown) => {
