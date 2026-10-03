@@ -19,6 +19,7 @@ import {
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { type Attempt, Prisma, type Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
+import { factorySchedulingPause, requireFactoryScheduling } from "./factory-scheduling-guard";
 import { hasGlobalWriterGuard } from "./global-writer-guard";
 import { stoppedResumeEvidence } from "./resume-evidence";
 
@@ -113,6 +114,7 @@ export class OrchestrationService {
           throw new ConflictException("Resume origin is missing");
         }
 
+        await requireFactoryScheduling(transaction);
         if (!(await hasGlobalWriterGuard(transaction)))
           throw new ConflictException("Global writer guard migration is unavailable");
 
@@ -178,7 +180,11 @@ export class OrchestrationService {
         });
         return {
           ...mapClaim(updated, false),
-          controlAction: attempt.run.controlAction as "PAUSE" | "CANCEL" | null,
+          controlAction: (attempt.run.controlAction ??
+            ((await factorySchedulingPause(transaction)) ? "PAUSE" : null)) as
+            | "PAUSE"
+            | "CANCEL"
+            | null,
         };
       },
       { isolationLevel: "Serializable" },

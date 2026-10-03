@@ -6,6 +6,7 @@ import { OperationStatusView } from "./OperationPanel";
 function fixture() {
   return operationStatusSchema.parse({
     observedAt: "2026-10-03T20:00:00Z",
+    scheduling: { paused: true, version: 1, updatedAt: "2026-10-03T20:00:00Z" },
     heartbeatMaxAgeMs: 180_000,
     workersTruncated: false,
     workers: [],
@@ -67,5 +68,23 @@ it("rejects extra secret fields and inconsistent writer samples at runtime", () 
   );
   expect(operationStatusSchema.safeParse({ ...fixture(), unresolvedWriterCount: 1 }).success).toBe(
     false,
+  );
+});
+
+it("shows global scheduling controls and never claims that requesting pause proves stop", () => {
+  const state = fixture();
+  let html = renderToStaticMarkup(
+    <OperationStatusView status={state} error={false} onToggle={() => undefined} />,
+  );
+  expect(html).toContain("Retomar agendamento");
+  expect(html).toContain("parada dos ativos é solicitada");
+  if (state.scheduling) state.scheduling.paused = false;
+  html = renderToStaticMarkup(
+    <OperationStatusView status={state} error={false} onToggle={() => undefined} />,
+  );
+  expect(html).toContain("Pausar fábrica");
+  state.scheduling = null;
+  expect(renderToStaticMarkup(<OperationStatusView status={state} error={false} />)).toContain(
+    "Agendamento não inicializado",
   );
 });

@@ -324,3 +324,58 @@ test("encrypted backup restores a real custom PostgreSQL dump with project event
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test("factory scheduling defaults paused and versions cannot be clobbered", async () => {
+  assert.equal(await sql("SELECT paused FROM factory_operations WHERE id='factory';"), "t");
+  const version = await sql("SELECT version FROM factory_operations WHERE id='factory';");
+  await sql(
+    `UPDATE factory_operations SET paused=false, version=version+1 WHERE id='factory' AND version=${version};`,
+  );
+  assert.equal(await sql("SELECT paused FROM factory_operations WHERE id='factory';"), "f");
+  await sql(
+    `UPDATE factory_operations SET paused=true, version=version+1 WHERE id='factory' AND version=${version};`,
+  );
+  assert.equal(await sql("SELECT paused FROM factory_operations WHERE id='factory';"), "f");
+  await sql("UPDATE factory_operations SET paused=true,version=version+1 WHERE id='factory';");
+});
+
+test("claim's shared scheduling lock orders administrative pause after admitted writer commit", async () => {
+  await sql("UPDATE factory_operations SET paused=false,version=version+1 WHERE id='factory';");
+  const order = [];
+  const claim = sql(
+    `/* fac-012ag-claim-fixture */ BEGIN; SELECT paused FROM factory_operations WHERE id='factory' FOR SHARE; SELECT pg_sleep(2) /* fac-012ag-claim-fixture */; ${insert(runs[0])} COMMIT;`,
+  ).then(() => order.push("claim"));
+  let waiting = false;
+  for (let count = 0; count < 15; count++) {
+    if (
+      (await sql(
+        "SELECT count(*) FROM pg_stat_activity WHERE query LIKE 'SELECT pg_sleep(2)%fac-012ag-claim-fixture%' AND wait_event='PgSleep';",
+      )) === "1"
+    ) {
+      waiting = true;
+      break;
+    }
+    await delay(20);
+  }
+  assert.ok(waiting, "actual claim transaction must hold shared lock before pause");
+  const pause = sql(
+    "UPDATE factory_operations SET paused=true,version=version+1 WHERE id='factory' /* fac-012ag-pause-fixture */;",
+  ).then(() => order.push("pause"));
+  let pauseBlocked = false;
+  for (let count = 0; count < 10; count++) {
+    if (
+      (await sql(
+        "SELECT count(*) FROM pg_stat_activity WHERE query LIKE 'UPDATE factory_operations%fac-012ag-pause-fixture%' AND wait_event_type='Lock';",
+      )) === "1"
+    ) {
+      pauseBlocked = true;
+      break;
+    }
+    await delay(20);
+  }
+  assert.ok(pauseBlocked, "pause must actually wait for claim's row lock");
+  await Promise.all([claim, pause]);
+  assert.equal(order.length, 2);
+  assert.equal(await sql("SELECT paused FROM factory_operations WHERE id='factory';"), "t");
+  assert.equal(await sql("SELECT count(*) FROM attempts WHERE stopped_confirmed=false;"), "1");
+});

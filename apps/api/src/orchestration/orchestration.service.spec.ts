@@ -42,7 +42,13 @@ describe("OrchestrationService", () => {
       completedAt: null,
     };
     const transaction = {
-      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
+      $queryRaw: vi
+        .fn()
+        .mockImplementation((sql) =>
+          Promise.resolve(
+            sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: true }],
+          ),
+        ),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -60,7 +66,13 @@ describe("OrchestrationService", () => {
 
   it("persists BLOCKED_RECOVERY when an expired writer did not confirm stop", async () => {
     const transaction = {
-      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
+      $queryRaw: vi
+        .fn()
+        .mockImplementation((sql) =>
+          Promise.resolve(
+            sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: true }],
+          ),
+        ),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -106,7 +118,13 @@ describe("OrchestrationService", () => {
       completedAt: now,
     };
     const transaction = {
-      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
+      $queryRaw: vi
+        .fn()
+        .mockImplementation((sql) =>
+          Promise.resolve(
+            sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: true }],
+          ),
+        ),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "VALIDATING" }),
@@ -138,7 +156,13 @@ describe("OrchestrationService", () => {
       completedAt: null,
     };
     const transaction = {
-      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
+      $queryRaw: vi
+        .fn()
+        .mockImplementation((sql) =>
+          Promise.resolve(
+            sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: true }],
+          ),
+        ),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi.fn().mockResolvedValue({ id: ticketId, projectId, status: "RUNNING" }),
@@ -235,7 +259,13 @@ describe("global writer admission", () => {
       leaseExpiresAt: new Date(now.getTime() + 90_000),
     };
     const transaction = {
-      $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),
+      $queryRaw: vi
+        .fn()
+        .mockImplementation((sql) =>
+          Promise.resolve(
+            sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: true }],
+          ),
+        ),
       workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
       ticket: {
         findUnique: vi
@@ -284,9 +314,25 @@ describe("global writer admission", () => {
 
   it("refuses admission if the database global writer guard is missing or invalid", async () => {
     const { transaction, service } = fixture();
-    transaction.$queryRaw.mockResolvedValue([{ installed: false }]);
+    transaction.$queryRaw.mockImplementation((sql) =>
+      Promise.resolve(
+        sql[0].includes("factory_operations") ? [{ paused: false }] : [{ installed: false }],
+      ),
+    );
     await expect(service.claim(claimInput())).rejects.toThrow("guard migration is unavailable");
     expect(transaction.attempt.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects new admission with 423 during global pause without mutating writer state", async () => {
+    const { transaction, service } = fixture();
+    transaction.$queryRaw.mockImplementation((sql) =>
+      Promise.resolve(
+        sql[0].includes("factory_operations") ? [{ paused: true }] : [{ installed: true }],
+      ),
+    );
+    await expect(service.claim(claimInput())).rejects.toMatchObject({ status: 423 });
+    expect(transaction.attempt.create).not.toHaveBeenCalled();
+    expect(transaction.run.update).not.toHaveBeenCalled();
   });
 
   it("admits the next writer only when no unconfirmed attempt exists globally", async () => {
@@ -318,3 +364,40 @@ describe("global writer admission", () => {
     expect(transaction.run.update).not.toHaveBeenCalled();
   });
 });
+
+it.each([
+  { paused: true, action: null, expected: "PAUSE" },
+  { paused: true, action: "CANCEL", expected: "CANCEL" },
+  { paused: false, action: "PAUSE", expected: "PAUSE" },
+  { paused: false, action: null, expected: null },
+])(
+  "lease renew respects scheduling $paused and existing $action",
+  async ({ paused, action, expected }) => {
+    const attempt = {
+      id: attemptId,
+      runId,
+      workerId,
+      fencingToken: 1,
+      status: "RUNNING",
+      leaseExpiresAt: new Date(now.getTime() + 90_000),
+      run: { nextFencingToken: 1, controlAction: action },
+    };
+    const transaction = {
+      $queryRaw: vi.fn().mockResolvedValue([{ paused }]),
+      attempt: {
+        findUnique: vi.fn().mockResolvedValue(attempt),
+        update: vi.fn().mockResolvedValue(attempt),
+      },
+    };
+    const prisma = { $transaction: vi.fn((fn) => fn(transaction)) };
+    expect(
+      (
+        await new OrchestrationService(prisma as never).renew(attemptId, {
+          workerId,
+          fencingToken: 1,
+          leaseDurationMs: 90_000,
+        })
+      ).controlAction,
+    ).toBe(expected);
+  },
+);

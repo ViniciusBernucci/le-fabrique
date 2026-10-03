@@ -47,12 +47,18 @@ describe("OutboxDispatcher", () => {
       payload: executionPayload(),
     };
     const prisma = {
+      factoryOperation: { findUnique: vi.fn().mockResolvedValue({ paused: false }) },
       outboxEvent: {
         findMany: vi.fn().mockResolvedValue([event]),
         updateMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
     };
-    const queue = { add: vi.fn().mockResolvedValue({}), close: vi.fn() };
+    const queue = {
+      pause: vi.fn(),
+      resume: vi.fn(),
+      add: vi.fn().mockResolvedValue({}),
+      close: vi.fn(),
+    };
     const dispatcher = new OutboxDispatcher(prisma as never, queue);
 
     await expect(dispatcher.dispatchOnce()).resolves.toBe(1);
@@ -73,12 +79,15 @@ describe("OutboxDispatcher", () => {
       payload: executionPayload(),
     };
     const prisma = {
+      factoryOperation: { findUnique: vi.fn().mockResolvedValue({ paused: false }) },
       outboxEvent: {
         findMany: vi.fn().mockResolvedValue([event]),
         updateMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
     };
     const queue = {
+      pause: vi.fn(),
+      resume: vi.fn(),
       add: vi.fn().mockRejectedValue(new Error("redis unavailable")),
       close: vi.fn(),
     };
@@ -103,12 +112,13 @@ describe("OutboxDispatcher", () => {
       },
     };
     const prisma = {
+      factoryOperation: { findUnique: vi.fn().mockResolvedValue({ paused: false }) },
       outboxEvent: {
         findMany: vi.fn().mockResolvedValue([event]),
         updateMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
     };
-    const queue = { add: vi.fn(), close: vi.fn() };
+    const queue = { pause: vi.fn(), resume: vi.fn(), add: vi.fn(), close: vi.fn() };
 
     await expect(new OutboxDispatcher(prisma as never, queue).dispatchOnce()).resolves.toBe(0);
     expect(queue.add).not.toHaveBeenCalled();
@@ -130,12 +140,13 @@ describe("OutboxDispatcher", () => {
       },
     };
     const prisma = {
+      factoryOperation: { findUnique: vi.fn().mockResolvedValue({ paused: false }) },
       outboxEvent: {
         findMany: vi.fn().mockResolvedValue([event]),
         updateMany: vi.fn().mockResolvedValue({ count: 1 }),
       },
     };
-    const queue = { add: vi.fn(), close: vi.fn() };
+    const queue = { pause: vi.fn(), resume: vi.fn(), add: vi.fn(), close: vi.fn() };
 
     await expect(new OutboxDispatcher(prisma as never, queue).dispatchOnce()).resolves.toBe(0);
     expect(queue.add).not.toHaveBeenCalled();

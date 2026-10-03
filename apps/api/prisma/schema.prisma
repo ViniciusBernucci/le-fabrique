@@ -391,3 +391,11 @@ model ProjectEvent {
   @@id([projectId, sequence])
   @@map("project_events")
 }
+
+model FactoryOperation {
+  id String @id
+  paused Boolean @default(true)
+  version Int @default(1)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("factory_operations")
+}

@@ -12,6 +12,9 @@ export class OperationStatusService {
       return await this.prisma.$transaction(
         async (transaction) => {
           const now = new Date();
+          const scheduling = await transaction.factoryOperation.findUnique({
+            where: { id: "factory" },
+          });
           const workers = await transaction.workerIdentity.findMany({
             orderBy: { id: "asc" },
             take: 101,
@@ -29,6 +32,13 @@ export class OperationStatusService {
           const writerGuardInstalled = await hasGlobalWriterGuard(transaction);
           return operationStatusSchema.parse({
             observedAt: now.toISOString(),
+            scheduling: scheduling
+              ? {
+                  paused: scheduling.paused,
+                  version: scheduling.version,
+                  updatedAt: scheduling.updatedAt.toISOString(),
+                }
+              : null,
             heartbeatMaxAgeMs: 180_000,
             workersTruncated: workers.length > 100,
             workers: workers.slice(0, 100).map((worker) => {

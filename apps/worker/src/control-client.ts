@@ -96,12 +96,18 @@ export class ControlClient {
       workerId: this.config.WORKER_ID,
       leaseDurationMs,
     };
-    return orchestrationClaimSchema.parse(
-      await this.request("/internal/orchestration/claims", {
-        method: "POST",
-        body: JSON.stringify(body),
-      }),
-    );
+    try {
+      return orchestrationClaimSchema.parse(
+        await this.request("/internal/orchestration/claims", {
+          method: "POST",
+          body: JSON.stringify(body),
+        }),
+      );
+    } catch (error) {
+      if (error instanceof ControlRequestError && error.status === 423)
+        throw new FactorySchedulingPausedError();
+      throw error;
+    }
   }
 
   async renew(attemptId: string, input: Omit<OrchestrationLeaseRequest, "workerId">) {
@@ -303,6 +309,13 @@ export class ControlClient {
         body: JSON.stringify({ ...input, workerId: this.config.WORKER_ID }),
       }),
     );
+  }
+}
+
+export class FactorySchedulingPausedError extends Error {
+  constructor() {
+    super("Factory scheduling is paused before writer admission");
+    this.name = "FactorySchedulingPausedError";
   }
 }
 

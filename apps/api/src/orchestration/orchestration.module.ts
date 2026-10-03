@@ -8,6 +8,8 @@ import {
   WorkerExecutionResultsController,
 } from "./execution-results.controller";
 import { ExecutionResultsService } from "./execution-results.service";
+import { FactorySchedulingController } from "./factory-scheduling.controller";
+import { FactorySchedulingService } from "./factory-scheduling.service";
 import { OperationStatusController } from "./operation-status.controller";
 import { OperationStatusService } from "./operation-status.service";
 import { OrchestrationController } from "./orchestration.controller";
@@ -25,6 +27,7 @@ import { RunResumeService } from "./run-resume.service";
 
 @Module({
   controllers: [
+    FactorySchedulingController,
     ProjectEventsController,
     OperationStatusController,
     OrchestrationController,
@@ -35,6 +38,7 @@ import { RunResumeService } from "./run-resume.service";
     RunRecoveryController,
   ],
   providers: [
+    FactorySchedulingService,
     ProjectEventsService,
     OperationStatusService,
     WorkerAuthGuard,

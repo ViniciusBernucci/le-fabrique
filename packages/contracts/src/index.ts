@@ -2293,10 +2293,27 @@ export const providerHandoffResultSchema = z
   .strict();
 export type ProviderHandoffResult = z.infer<typeof providerHandoffResultSchema>;
 
+export const factorySchedulingStateSchema = z
+  .object({
+    paused: z.boolean(),
+    version: z.number().int().positive(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+export type FactorySchedulingState = z.infer<typeof factorySchedulingStateSchema>;
+export const updateFactorySchedulingSchema = z
+  .object({
+    paused: z.boolean(),
+    expectedVersion: z.number().int().positive(),
+  })
+  .strict();
+export type UpdateFactoryScheduling = z.infer<typeof updateFactorySchedulingSchema>;
+
 /** Control-plane observations; never a provider eligibility or physical-stop proof. */
 export const operationStatusSchema = z
   .object({
     observedAt: z.iso.datetime(),
+    scheduling: factorySchedulingStateSchema.nullable(),
     heartbeatMaxAgeMs: z.literal(180_000),
     workersTruncated: z.boolean(),
     workers: z

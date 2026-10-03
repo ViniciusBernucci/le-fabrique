@@ -3,6 +3,7 @@ import type { WorkerConfig } from "./config";
 import {
   ControlClient,
   ControlRequestError,
+  FactorySchedulingPausedError,
   registerWithRetry,
   startHeartbeat,
 } from "./control-client";
@@ -155,4 +156,22 @@ describe("ControlClient", () => {
     expect(client.register).toHaveBeenCalledOnce();
     expect(wait).not.toHaveBeenCalled();
   });
+});
+
+it("maps only pre-claim HTTP 423 to a factory pause that preserves the job", async () => {
+  const client = new ControlClient(
+    config,
+    vi.fn().mockResolvedValue({ ok: false, status: 423 }) as never,
+  );
+  await expect(
+    client.claim({
+      schemaVersion: 1,
+      eventId: crypto.randomUUID(),
+      projectId: crypto.randomUUID(),
+      ticketId: crypto.randomUUID(),
+      ticketVersion: 1,
+      baseRevision: "a".repeat(40),
+      executionSpecification: null,
+    }),
+  ).rejects.toBeInstanceOf(FactorySchedulingPausedError);
 });

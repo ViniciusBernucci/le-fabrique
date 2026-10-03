@@ -4,7 +4,9 @@ import {
   type CreateProject,
   type CreateTicket,
   executionArtifactStateSchema,
+  type FactorySchedulingState,
   type FactorySettings,
+  factorySchedulingStateSchema,
   factorySettingsSchema,
   type GithubOnboardingChallenge,
   type GithubOnboardingSession,
@@ -52,6 +54,7 @@ import {
   type Ticket,
   ticketListSchema,
   ticketSchema,
+  type UpdateFactoryScheduling,
   type UpdateFactorySettings,
 } from "@le-fabrique/contracts";
 
@@ -398,4 +401,13 @@ export async function getOperationStatus(
 
 export function projectEventStreamUrl(projectId: string): string {
   return `${apiUrl}/projects/${encodeURIComponent(projectId)}/events/stream`;
+}
+
+export async function updateFactoryScheduling(
+  token: string,
+  input: UpdateFactoryScheduling,
+): Promise<FactorySchedulingState> {
+  return factorySchedulingStateSchema.parse(
+    await request("/operation/scheduling", token, { method: "PUT", body: JSON.stringify(input) }),
+  );
 }

@@ -78,12 +78,13 @@ describe("finalization recovery request", () => {
     expect(f.tx.outboxEvent.create).toHaveBeenCalledOnce();
     const event = f.tx.outboxEvent.create.mock.calls[0]?.[0].data;
     const dispatchPrisma = {
+      factoryOperation: { findUnique: vi.fn().mockResolvedValue({ paused: false }) },
       outboxEvent: {
         findMany: vi.fn(async () => [{ ...event, attempts: 0 }]),
         updateMany: vi.fn(async () => ({ count: 1 })),
       },
     };
-    const queue = { add: vi.fn(async () => ({})), close: vi.fn() };
+    const queue = { pause: vi.fn(), resume: vi.fn(), add: vi.fn(async () => ({})), close: vi.fn() };
     await expect(new OutboxDispatcher(dispatchPrisma as never, queue).dispatchOnce()).resolves.toBe(
       1,
     );

@@ -16,6 +16,9 @@ function fixture() {
     lastHeartbeatAt: now,
   };
   const tx = {
+    factoryOperation: {
+      findUnique: vi.fn().mockResolvedValue({ paused: true, version: 1, updatedAt: now }),
+    },
     workerIdentity: { findMany: vi.fn().mockResolvedValue([worker]) },
     attempt: { count: vi.fn().mockResolvedValue(0), findMany: vi.fn().mockResolvedValue([]) },
     $queryRaw: vi.fn().mockResolvedValue([{ installed: true }]),

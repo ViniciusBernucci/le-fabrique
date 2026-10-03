@@ -10,11 +10,14 @@ export interface ExecutionQueue {
     payload: unknown,
     options: { jobId: string; removeOnComplete: boolean; removeOnFail: boolean },
   ): Promise<unknown>;
+  pause(): Promise<void>;
+  resume(): Promise<void>;
   close(): Promise<void>;
 }
 
 @Injectable()
 export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
+  private dispatching = false;
   private timer: NodeJS.Timeout | null = null;
 
   constructor(
@@ -34,6 +37,24 @@ export class OutboxDispatcher implements OnModuleInit, OnModuleDestroy {
   }
 
   async dispatchOnce(): Promise<number> {
+    if (this.dispatching) return 0;
+    this.dispatching = true;
+    try {
+      return await this.dispatchExclusive();
+    } catch {
+      return 0;
+    } finally {
+      this.dispatching = false;
+    }
+  }
+
+  private async dispatchExclusive(): Promise<number> {
+    const scheduling = await this.prisma.factoryOperation.findUnique({ where: { id: "factory" } });
+    if (!scheduling || scheduling.paused) {
+      await this.queue.pause();
+      return 0;
+    }
+    await this.queue.resume();
     const events = await this.prisma.outboxEvent.findMany({
       where: {
         status: "PENDING",

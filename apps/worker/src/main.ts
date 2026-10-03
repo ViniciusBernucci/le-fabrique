@@ -26,6 +26,7 @@ import { ControlClient, registerWithRetry, startHeartbeat } from "./control-clie
 import { DeveloperWorkflow } from "./developer-workflow";
 import { processFinalizationRecovery, processOrchestrationExecution } from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
+import { deferFactoryPausedExecution } from "./factory-pause";
 import {
   cancelGithubOnboardingProcesses,
   processGithubOnboarding,
@@ -93,7 +94,7 @@ async function bootstrap(): Promise<void> {
   const orchestrationWorker = config.WORKER_EXECUTION_ENABLED
     ? new Worker<OrchestrationJob | FinalizationRecoveryJob>(
         "le-fabrique.execution",
-        async (job) => {
+        async (job, token) => {
           if (!executionConfig) throw new Error("Execution consumer configuration is unavailable");
           if ("mode" in job.data)
             return processFinalizationRecovery(job.data, config.WORKER_ID, {
@@ -103,79 +104,83 @@ async function bootstrap(): Promise<void> {
                 new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
             });
           const executionJob = job.data;
-          return await processOrchestrationExecution(
-            executionJob,
-            {
-              control,
-              journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
-              readArtifact: (snapshot) =>
-                new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
-              leaseDurationMs: config.WORKER_LEASE_DURATION_MS,
-              prepareCheckout: async (payload, claim, signal) => {
-                if (!payload.executionSpecification) {
-                  throw new Error("Execution job lacks a READY specification");
-                }
-                return await prepareRepositoryCheckout(
-                  {
-                    projectId: payload.projectId,
-                    workflowId: claim.attemptId,
-                    repositoryUrl: payload.executionSpecification.project.repoUrl,
-                    baseRevision: payload.executionSpecification.project.baseRevision,
+          return await deferFactoryPausedExecution(
+            () =>
+              processOrchestrationExecution(
+                executionJob,
+                {
+                  control,
+                  journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
+                  readArtifact: (snapshot) =>
+                    new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
+                  leaseDurationMs: config.WORKER_LEASE_DURATION_MS,
+                  prepareCheckout: async (payload, claim, signal) => {
+                    if (!payload.executionSpecification) {
+                      throw new Error("Execution job lacks a READY specification");
+                    }
+                    return await prepareRepositoryCheckout(
+                      {
+                        projectId: payload.projectId,
+                        workflowId: claim.attemptId,
+                        repositoryUrl: payload.executionSpecification.project.repoUrl,
+                        baseRevision: payload.executionSpecification.project.baseRevision,
+                      },
+                      {
+                        root: executionConfig.checkoutRoot,
+                        allowedHosts: config.WORKER_REPOSITORY_HOSTS,
+                      },
+                      undefined,
+                      signal,
+                    );
                   },
-                  {
-                    root: executionConfig.checkoutRoot,
-                    allowedHosts: config.WORKER_REPOSITORY_HOSTS,
+                  createProfile: (payload, checkout) => {
+                    if (!payload.executionSpecification) {
+                      throw new Error("Execution job lacks a READY specification");
+                    }
+                    return createTrustedWorkflowProfile(payload.executionSpecification, checkout);
                   },
-                  undefined,
-                  signal,
-                );
-              },
-              createProfile: (payload, checkout) => {
-                if (!payload.executionSpecification) {
-                  throw new Error("Execution job lacks a READY specification");
-                }
-                return createTrustedWorkflowProfile(payload.executionSpecification, checkout);
-              },
-              createWorkflow: (profile, specification, workflowId) => {
-                const request = compileWorkflowRequest(workflowId, specification, profile);
-                const workflow = new DeveloperWorkflow({
-                  workspaceManager: new WorkspaceManager(
-                    path.join(executionConfig.root, "workspaces"),
-                  ),
-                  contextBuilder: new ContextBuilder(),
-                  guard: new RuntimeGuard(request.guardPolicy),
-                  agentRouter: new ConfiguredAgentRouter(control, (route) =>
-                    identities.adapter(route),
-                  ),
-                  sandbox: new SandboxRunner(),
-                  snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),
-                });
-                return {
-                  execute: async (signal) => {
-                    const resume = executionJob.resumeFrom;
-                    if (!resume) return workflow.execute(request, signal);
-                    const artifact = await new ArtifactReader(
-                      path.join(executionConfig.root, "snapshots"),
-                    ).read(resume.snapshot);
-                    if (
-                      createHash("sha256").update(JSON.stringify(artifact)).digest("hex") !==
-                      resume.artifactDigest
-                    )
-                      throw new Error("Resume artifact digest mismatch");
-                    return workflow.execute(request, signal, {
-                      artifactPath: path.join(
-                        executionConfig.root,
-                        "snapshots",
-                        resume.snapshot.snapshotId,
+                  createWorkflow: (profile, specification, workflowId) => {
+                    const request = compileWorkflowRequest(workflowId, specification, profile);
+                    const workflow = new DeveloperWorkflow({
+                      workspaceManager: new WorkspaceManager(
+                        path.join(executionConfig.root, "workspaces"),
                       ),
-                      manifest: artifact.manifest,
+                      contextBuilder: new ContextBuilder(),
+                      guard: new RuntimeGuard(request.guardPolicy),
+                      agentRouter: new ConfiguredAgentRouter(control, (route) =>
+                        identities.adapter(route),
+                      ),
+                      sandbox: new SandboxRunner(),
+                      snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),
                     });
+                    return {
+                      execute: async (signal) => {
+                        const resume = executionJob.resumeFrom;
+                        if (!resume) return workflow.execute(request, signal);
+                        const artifact = await new ArtifactReader(
+                          path.join(executionConfig.root, "snapshots"),
+                        ).read(resume.snapshot);
+                        if (
+                          createHash("sha256").update(JSON.stringify(artifact)).digest("hex") !==
+                          resume.artifactDigest
+                        )
+                          throw new Error("Resume artifact digest mismatch");
+                        return workflow.execute(request, signal, {
+                          artifactPath: path.join(
+                            executionConfig.root,
+                            "snapshots",
+                            resume.snapshot.snapshotId,
+                          ),
+                          manifest: artifact.manifest,
+                        });
+                      },
+                      cancelActive: () => workflow.cancelActive(),
+                    };
                   },
-                  cancelActive: () => workflow.cancelActive(),
-                };
-              },
-            },
-            executionStop.signal,
+                },
+                executionStop.signal,
+              ),
+            () => job.moveToDelayed(Date.now() + 2_000, token),
           );
         },
         {
