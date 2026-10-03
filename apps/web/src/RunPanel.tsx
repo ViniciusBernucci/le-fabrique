@@ -2,6 +2,7 @@ import type { RunDetail, RunSummary } from "@le-fabrique/contracts";
 import { useEffect, useState } from "react";
 import { ArtifactPanel } from "./ArtifactPanel";
 import { getRun, listRuns } from "./control-api";
+import { DeliveryPanel } from "./DeliveryPanel";
 import { pollResource } from "./poll-resource";
 
 const statusLabels: Record<string, string> = {
@@ -108,6 +109,7 @@ export function RunResultView({ run, token }: { run: RunDetail; token?: string }
     <div className="run-details">
       <h3>{run.title}</h3>
       <p>{statusLabels[run.status] ?? run.status}</p>
+      {token && <DeliveryPanel key={run.id} token={token} runId={run.id} version={run.version} />}
       {run.attempts.map((attempt) => (
         <article key={attempt.id}>
           <h4>Tentativa {attempt.sequence}</h4>

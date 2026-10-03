@@ -1889,6 +1889,48 @@ export const runSummarySchema = z
   .strict();
 export type RunSummary = z.infer<typeof runSummarySchema>;
 export const runListSchema = z.array(runSummarySchema).max(50);
+export const runDeliverySchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    runId: z.uuid(),
+    attemptId: z.uuid(),
+    baseRevision: gitCommitShaSchema,
+    codeRevision: gitCommitShaSchema,
+    patchHash: z.string().regex(/^[a-f0-9]{64}$/),
+    resultDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    artifactDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    documentMarkdown: z
+      .string()
+      .min(1)
+      .max(65_536)
+      .refine(
+        (value) => new TextEncoder().encode(value).byteLength <= 65_536,
+        "Delivery document exceeds 64 KiB",
+      ),
+    documentDigest: z.string().regex(/^[a-f0-9]{64}$/),
+    deliveryDigest: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+export type RunDelivery = z.infer<typeof runDeliverySchema>;
+export const runDeliveryApprovalSchema = z
+  .object({ delivery: runDeliverySchema, acceptedAt: z.iso.datetime() })
+  .strict();
+export const runDeliveryStateSchema = z
+  .object({
+    delivery: runDeliverySchema.nullable(),
+    accepted: z.boolean(),
+    reason: z.enum(["STATE_NOT_READY", "EVIDENCE_MISSING", "EVIDENCE_MISMATCH"]).nullable(),
+  })
+  .strict();
+export type RunDeliveryState = z.infer<typeof runDeliveryStateSchema>;
+export const approveRunDeliverySchema = z
+  .object({
+    expectedVersion: z.number().int().positive(),
+    attemptId: z.uuid(),
+    deliveryDigest: z.string().regex(/^[a-f0-9]{64}$/),
+  })
+  .strict();
+export type ApproveRunDelivery = z.infer<typeof approveRunDeliverySchema>;
 export const runAttemptSchema = z
   .object({
     id: z.uuid(),

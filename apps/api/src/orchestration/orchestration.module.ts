@@ -11,14 +11,22 @@ import { ExecutionResultsService } from "./execution-results.service";
 import { OrchestrationController } from "./orchestration.controller";
 import { OrchestrationService } from "./orchestration.service";
 import { ORCHESTRATION_QUEUE, OutboxDispatcher } from "./outbox-dispatcher";
+import { RunDeliveryController } from "./run-delivery.controller";
+import { RunDeliveryService } from "./run-delivery.service";
 
 @Module({
-  controllers: [OrchestrationController, RunResultsController, WorkerExecutionResultsController],
+  controllers: [
+    OrchestrationController,
+    RunResultsController,
+    WorkerExecutionResultsController,
+    RunDeliveryController,
+  ],
   providers: [
     WorkerAuthGuard,
     AdminAuthGuard,
     ExecutionResultsService,
     ExecutionArtifactsService,
+    RunDeliveryService,
     OrchestrationService,
     OutboxDispatcher,
     {

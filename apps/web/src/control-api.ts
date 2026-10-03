@@ -1,4 +1,5 @@
 import {
+  type ApproveRunDelivery,
   adminSessionSchema,
   type CreateProject,
   type CreateTicket,
@@ -37,8 +38,10 @@ import {
   providerVerificationSchema,
   type RunDetail,
   type RunSummary,
+  runDeliveryStateSchema,
   runDetailSchema,
   runListSchema,
+  runSummarySchema,
   type Ticket,
   ticketListSchema,
   ticketSchema,
@@ -140,6 +143,25 @@ export async function getExecutionArtifact(
       token,
       { signal },
     ),
+  );
+}
+export async function getRunDelivery(token: string, runId: string, signal?: AbortSignal) {
+  return runDeliveryStateSchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}/delivery`, token, { signal }),
+  );
+}
+export async function approveRunDelivery(
+  token: string,
+  runId: string,
+  input: ApproveRunDelivery,
+  signal?: AbortSignal,
+) {
+  return runSummarySchema.parse(
+    await request(`/runs/${encodeURIComponent(runId)}/approve-delivery`, token, {
+      method: "POST",
+      body: JSON.stringify(input),
+      signal,
+    }),
   );
 }
 export async function createTicket(

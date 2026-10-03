@@ -41,6 +41,7 @@ enum RunStatus {
   WAITING_WORKER
   RUNNING
   VALIDATING
+  DONE
   PAUSED_LIMIT
   BLOCKED_RECOVERY
   FAILED
@@ -155,6 +156,7 @@ model Run {
   updatedAt          DateTime    @updatedAt @map("updated_at")
   ticket             Ticket      @relation(fields: [ticketId], references: [id], onDelete: Restrict)
   attempts           Attempt[]
+  approval           Json?
 
   @@index([status, updatedAt])
   @@map("runs")
