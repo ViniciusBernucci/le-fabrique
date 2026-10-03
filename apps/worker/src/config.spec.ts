@@ -24,8 +24,24 @@ describe("worker configuration", () => {
 
   it("leaves checkout disabled in configuration until a root and host are supplied", () => {
     const config = loadWorkerConfig(workerEnvironment);
+    expect(config.WORKER_EXECUTION_ENABLED).toBe(false);
     expect(config.WORKER_CHECKOUT_ROOT).toBeUndefined();
     expect(config.WORKER_REPOSITORY_HOSTS).toEqual([]);
+  });
+
+  it("requires explicit roots and exact repository hosts before real execution can be enabled", () => {
+    expect(() =>
+      loadWorkerConfig({ ...workerEnvironment, WORKER_EXECUTION_ENABLED: "true" }),
+    ).toThrow();
+    const config = loadWorkerConfig({
+      ...workerEnvironment,
+      WORKER_EXECUTION_ENABLED: "true",
+      WORKER_EXECUTION_ROOT: "/var/lib/le-fabrique-worker/execution",
+      WORKER_CHECKOUT_ROOT: "/var/lib/le-fabrique-worker/checkouts",
+      WORKER_REPOSITORY_HOSTS: "github.com",
+    });
+    expect(config.WORKER_EXECUTION_ENABLED).toBe(true);
+    expect(config.WORKER_REPOSITORY_HOSTS).toEqual(["github.com"]);
   });
 
   it("rejects relative roots, wildcard hosts and malformed DNS names", () => {
@@ -35,5 +51,19 @@ describe("worker configuration", () => {
     expect(() => parseRepositoryHosts("*.github.com")).toThrow();
     expect(() => parseRepositoryHosts("localhost")).toThrow();
     expect(() => parseRepositoryHosts("127.0.0.1")).toThrow();
+  });
+
+  it("rejects overlapping execution/checkouts and relative provider CLI paths", () => {
+    const enabled = {
+      ...workerEnvironment,
+      WORKER_EXECUTION_ENABLED: "true",
+      WORKER_EXECUTION_ROOT: "/srv/execution",
+      WORKER_CHECKOUT_ROOT: "/srv/checkouts",
+      WORKER_REPOSITORY_HOSTS: "github.com",
+    };
+    expect(() =>
+      loadWorkerConfig({ ...enabled, WORKER_CHECKOUT_ROOT: "/srv/execution/checkouts" }),
+    ).toThrow();
+    expect(() => loadWorkerConfig({ ...enabled, WORKER_CODEX_BINARY: "codex" })).toThrow();
   });
 });

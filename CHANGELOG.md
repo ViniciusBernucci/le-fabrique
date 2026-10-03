@@ -1,10 +1,21 @@
 # Changelog
 
+## 2.74 - 2026-10-03
+FAC-012L implementa consumer real com gate desligado por padrão, checkout/SHA imutável, workflow com rotas configuradas, limites por função, lease/fencing, cancelamento e checkpoint antes de conclusão. Testes Linux comprovam cancelamento de descendente e ausência de confirmação quando systemd não pode ser consultado. Checks passaram; 227 testes finais distintos. Operação real, recuperação, artefatos no painel e handoff permanecem pendentes; aguarda aceite humano.
+
+## 2.73 - 2026-10-03
+FAC-012L fica READY para ligar com segurança o consumer real a checkout, workflow configurado, lease/fencing, quiescência e checkpoint; default desabilitado, sem provider ou piloto.
+
+## 2.72 - 2026-10-03
+FAC-012K implementa primitiva isolada para renovar lease com fencing token, abortar e aguardar confirmação de parada quando a autoridade é perdida; 211 testes, typecheck, lint e build passaram. Consumer, provider e checkout reais continuam desligados; aguarda revisão humana.
+
 ## 2.71 - 2026-10-03
 OPS-005 prepara unit systemd para worker dedicado host na VPS, restringe API/Redis ao loopback e remove o consumidor de fixture da fila de execução. 206 testes, typecheck, lint, build, Compose config e systemd-analyze passaram; nenhum serviço ativo foi alterado, e OPS-005 aguarda aceite humano.
 
-## 2.70 - 2026-10-03
-OPS-005 fica READY para preparar o worker host da VPS, desativar o consumidor fixture no Compose padrão e manter API/Redis privados em loopback. Sem alteração de serviço ativo, instalação, provider ou piloto.
+## 2.70 - 2026-10-03 — planejamento paralelo
+FAC-012K fica READY para preparar renovação de lease e cancelamento conservador no worker, sem conectar o consumer ou executar trabalho real.
+
+OPS-005 fica READY para preparar o worker host da VPS, desativar o consumidor fixture no Compose padrão e manter API/Redis privados em loopback. Sem alteração de serviço ativo, instalação, provider ou piloto. O número original de planejamento foi compartilhado pelas duas branches; ambos os registros foram preservados na integração.
 
 ## 2.69 - 2026-10-03
 OPS-004 integra FAC-012D e FAC-012E–J localmente em `developer`; checks combinados passaram após regeneração local de artefatos derivados. Aceites FAC-012C–J seguem humanos; sem push, deploy, migration, consumer ou piloto.

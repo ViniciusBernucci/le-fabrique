@@ -1,6 +1,16 @@
 # Operação da fábrica e worker
 
-OPS-004 consolidou FAC-012D e FAC-012E–J localmente em `developer`; evidências e rollback estão em `2026-10-03-OPS-004-consolidacao-worktrees.md`. OPS-005 prepara o processo confiável como serviço host; sua worktree aguarda revisão. FAC-012I exige perfil de execução versionado e FAC-012J prepara checkout seguro, ainda sem ligação ao workflow. Identidade de serviço permanece por validar; integração do workflow real à fila e leases/fencing/writer persistidos continuam pendentes. Não há consumidor ativo da fila de execução no código atual.
+## Estado atual — FAC-012L
+
+O consumer `le-fabrique.execution` compõe checkout confiável, compilador, workflow e LeaseGuard com `WORKER_EXECUTION_ENABLED=true`. O default é `false`, sem fixture consumindo essa fila; jobs aguardam. Instalação, modelo e limites Developer/Reviewer vêm da configuração atual da interface. Perda de lease e parada não comprovada impedem conclusão indevida. SIGINT/SIGTERM e falha do heartbeat abortam o trabalho antes de fechar a fila; consulta de systemd indisponível permanece desconhecida.
+
+Resultado aprovado vai a VALIDATING com checkpoint anterior a complete. Configurar raízes separadas, hosts exatos e CLIs absolutos; ativação depende de OPS-005/preflight real. Transporte de artefatos ao painel, replay recuperável e handoff automático ainda são pendentes. Ver [relatório FAC-012L](2026-10-03-FAC-012L-consumer-execucao-real.md).
+
+## Histórico dos incrementos anteriores ao FAC-012L
+
+OPS-004 consolidou FAC-012D e FAC-012E–J localmente em `developer`; evidências em `2026-10-03-OPS-004-consolidacao-worktrees.md`. OPS-005 prepara o processo host sem instalar serviço. FAC-012I/J/K inicialmente entregaram bibliotecas isoladas; FAC-012L integra essas peças sob gate desabilitado. Identidade de serviço continua sem prova operacional.
+
+FAC-012K adiciona `LeaseGuard` isolado no worker: recebe fencing token, duração/expiração da lease, função de renovação e callback de parada; passa `AbortSignal` ao trabalho e falha sem aceitar resultado quando a renovação falha ou vence. A função `stopWriter` só confirma quiescência se retornar `true`; a guarda sempre espera a operação terminar antes de propagar a perda da lease. O helper não está ligado ao consumer, e sua integração ainda precisa provar cancelamento real das árvores de processo sob a identidade do serviço.
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.

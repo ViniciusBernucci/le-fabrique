@@ -6,6 +6,8 @@ import type { ControlClient } from "./control-client";
 export interface ConfiguredAgentRuntime {
   route: AgentRoute;
   adapter: RuntimeAdapter;
+  timeoutMs: number;
+  maxAttempts: number;
   configurationVersion: number;
   configurationObservedAt: string;
 }
@@ -18,6 +20,18 @@ export class ConfiguredAgentRouter {
 
   async resolve(role: EmployeeRole): Promise<ConfiguredAgentRuntime> {
     const snapshot = await this.control.getWorkerConfiguration();
+    const financialSafety = snapshot.configuration.financialSafety;
+    if (
+      financialSafety.apiEnabled ||
+      financialSafety.extraUsageEnabled ||
+      financialSafety.paidCreditsEnabled ||
+      financialSafety.autoRechargeEnabled ||
+      financialSafety.paidFallbackEnabled
+    ) {
+      throw new Error("Execution requires API, paid extras and fallback to remain disabled");
+    }
+    const assignment = snapshot.configuration.assignments.find((item) => item.role === role);
+    if (!assignment) throw new Error(`No configured assignment for ${role}`);
     const route = resolveAgentRoute(snapshot.configuration, role);
     const adapter = this.adapters[route.provider];
     if (!adapter)
@@ -28,6 +42,8 @@ export class ConfiguredAgentRouter {
     return {
       route,
       adapter,
+      timeoutMs: assignment.timeoutMinutes * 60_000,
+      maxAttempts: assignment.maxAttempts,
       configurationVersion: snapshot.version,
       configurationObservedAt: snapshot.observedAt,
     };

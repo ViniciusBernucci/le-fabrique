@@ -128,8 +128,16 @@ function dependencies(
       modelRequested: input.modelRequested,
     };
   });
-  const codex = { name: "codex", execute };
-  const claude = { name: "claude", execute };
+  const codex = {
+    name: "codex",
+    execute,
+    cancel: vi.fn(async (executionId: string) => ({ executionId, status: "NOT_FOUND" as const })),
+  };
+  const claude = {
+    name: "claude",
+    execute,
+    cancel: vi.fn(async (executionId: string) => ({ executionId, status: "NOT_FOUND" as const })),
+  };
   return {
     workspaceManager: {
       create: vi.fn().mockResolvedValue({
@@ -174,10 +182,14 @@ function dependencies(
                 permissionMode: "READ_ONLY",
               },
         adapter: role === "DEVELOPER" ? codex : claude,
+        timeoutMs: 60_000,
+        maxAttempts: 2,
         configurationVersion: 1,
         configurationObservedAt: timestamp,
       })),
     },
+    codex,
+    claude,
     sandbox: { execute: vi.fn().mockImplementation(async () => checkResults.shift()) },
     snapshots: {
       capture: vi.fn().mockImplementation(async () => {
@@ -203,6 +215,30 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
+  it("cancels a live runtime on lease loss and confirms quiescence before rejecting", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "unused")],
+      [checkResult("COMPLETED")],
+    );
+    let resolveExecution: ((result: RuntimeExecutionResult) => void) | undefined;
+    deps.execute.mockImplementationOnce(
+      () => new Promise<RuntimeExecutionResult>((resolve) => (resolveExecution = resolve)),
+    );
+    deps.codex.cancel.mockImplementation(async (executionId) => {
+      resolveExecution?.(runtimeResult(executionId, null, "CANCELLED"));
+      return { executionId, status: "CANCELLED" as const };
+    });
+    const workflow = new DeveloperWorkflow(deps);
+    const controller = new AbortController();
+    const execution = workflow.execute(request(), controller.signal);
+    await vi.waitFor(() => expect(deps.execute).toHaveBeenCalledOnce());
+
+    controller.abort();
+    await expect(execution).rejects.toThrow("Developer workflow was cancelled");
+    await expect(workflow.cancelActive()).resolves.toBe(true);
+    expect(deps.codex.cancel).toHaveBeenCalledOnce();
+  });
+
   it("separates a pre-existing baseline failure and awaits human after independent review", async () => {
     const deps = dependencies(
       [

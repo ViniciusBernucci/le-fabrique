@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type {
   DeveloperWorkflowRequest,
   DeveloperWorkflowResult,
+  RuntimeExecutionRequest,
   RuntimeExecutionResult,
   RuntimeGuardState,
   SandboxCommandResult,
@@ -16,6 +17,7 @@ import {
 } from "@le-fabrique/contracts";
 import type {
   ContextBuilder,
+  RuntimeAdapter,
   RuntimeGuard,
   SandboxRunner,
   SnapshotManager,
@@ -46,12 +48,17 @@ const MAX_PROMPT_CHARS = 200_000;
 
 export class DeveloperWorkflow {
   private readonly createId: () => string;
+  private readonly activeCancellations = new Set<() => Promise<boolean>>();
 
   constructor(private readonly dependencies: DeveloperWorkflowDependencies) {
     this.createId = dependencies.createId ?? randomUUID;
   }
 
-  async execute(input: DeveloperWorkflowRequest): Promise<DeveloperWorkflowResult> {
+  async execute(
+    input: DeveloperWorkflowRequest,
+    signal?: AbortSignal,
+  ): Promise<DeveloperWorkflowResult> {
+    throwIfAborted(signal);
     const request = developerWorkflowRequestSchema.parse(input);
     const workspace = await this.dependencies.workspaceManager.create({
       executionId: request.workflowId,
@@ -65,6 +72,7 @@ export class DeveloperWorkflow {
       sources: request.contextSources,
       limits: request.contextLimits,
     });
+    throwIfAborted(signal);
     const progress: WorkflowProgress = {
       guardState: this.dependencies.guard.initialState(),
       developerExecutions: 0,
@@ -73,7 +81,7 @@ export class DeveloperWorkflow {
       snapshots: [],
       review: null,
     };
-    const baseline = await this.runChecks(request, workspace, "BASELINE", 0, new Set());
+    const baseline = await this.runChecks(request, workspace, "BASELINE", 0, new Set(), signal);
     progress.checks.push(...baseline);
     if (baseline.some((check) => !check.stoppedConfirmed)) {
       return this.result(
@@ -93,6 +101,7 @@ export class DeveloperWorkflow {
     let feedback = "No previous review feedback.";
 
     for (let round = 0; round <= request.maxCorrectionRounds; round += 1) {
+      throwIfAborted(signal);
       let developerRuntime: Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>;
       try {
         developerRuntime = await this.dependencies.agentRouter.resolve("DEVELOPER");
@@ -125,20 +134,39 @@ export class DeveloperWorkflow {
           round,
         );
       }
+      if (progress.developerExecutions >= developerRuntime.maxAttempts) {
+        return this.result(
+          request,
+          workspace,
+          context.manifest,
+          progress,
+          "PAUSED_LIMIT",
+          "RUNTIME_GUARD",
+          "Configured Developer attempt limit was reached",
+          round,
+        );
+      }
 
-      const developer = await developerRuntime.adapter.execute({
-        schemaVersion: 1,
-        executionId: this.createId(),
-        workspacePath: workspace.workspacePath,
-        prompt: boundedPrompt(
-          developerPrompt(request, context.content, feedback, round),
-          "Developer",
-        ),
-        permissionMode: developerRuntime.route.permissionMode,
-        writablePaths: request.writablePaths,
-        modelRequested: developerRuntime.route.model,
-        limits: request.runtimeLimits,
-      });
+      const developer = await this.executeRuntime(
+        developerRuntime.adapter,
+        {
+          schemaVersion: 1,
+          executionId: this.createId(),
+          workspacePath: workspace.workspacePath,
+          prompt: boundedPrompt(
+            developerPrompt(request, context.content, feedback, round),
+            "Developer",
+          ),
+          permissionMode: developerRuntime.route.permissionMode,
+          writablePaths: request.writablePaths,
+          modelRequested: developerRuntime.route.model,
+          limits: {
+            ...request.runtimeLimits,
+            timeoutMs: Math.min(request.runtimeLimits.timeoutMs, developerRuntime.timeoutMs),
+          },
+        },
+        signal,
+      );
       progress.developerExecutions += 1;
       if (developer.status !== "COMPLETED") {
         const failure = this.dependencies.guard.recordFailure(
@@ -168,6 +196,7 @@ export class DeveloperWorkflow {
         "POST_CHANGE",
         round,
         baselineFailures,
+        signal,
       );
       progress.checks.push(...postChecks);
       if (postChecks.some((check) => !check.stoppedConfirmed)) {
@@ -241,6 +270,18 @@ export class DeveloperWorkflow {
           round,
         );
       }
+      if (progress.reviewerExecutions >= reviewerRuntime.maxAttempts) {
+        return this.result(
+          request,
+          workspace,
+          context.manifest,
+          progress,
+          "PAUSED_LIMIT",
+          "RUNTIME_GUARD",
+          "Configured Reviewer attempt limit was reached",
+          round,
+        );
+      }
       const reviewerAuthorization = this.dependencies.guard.authorizeAttempt(
         progress.guardState,
         reviewerRuntime.route.provider,
@@ -258,19 +299,26 @@ export class DeveloperWorkflow {
           round,
         );
       }
-      const reviewer = await reviewerRuntime.adapter.execute({
-        schemaVersion: 1,
-        executionId: this.createId(),
-        workspacePath: workspace.workspacePath,
-        prompt: boundedPrompt(
-          reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
-          "Reviewer",
-        ),
-        permissionMode: reviewerRuntime.route.permissionMode,
-        writablePaths: [],
-        modelRequested: reviewerRuntime.route.model,
-        limits: request.runtimeLimits,
-      });
+      const reviewer = await this.executeRuntime(
+        reviewerRuntime.adapter,
+        {
+          schemaVersion: 1,
+          executionId: this.createId(),
+          workspacePath: workspace.workspacePath,
+          prompt: boundedPrompt(
+            reviewerPrompt(request, context.content, postChecks, snapshot.manifest.manifestHash),
+            "Reviewer",
+          ),
+          permissionMode: reviewerRuntime.route.permissionMode,
+          writablePaths: [],
+          modelRequested: reviewerRuntime.route.model,
+          limits: {
+            ...request.runtimeLimits,
+            timeoutMs: Math.min(request.runtimeLimits.timeoutMs, reviewerRuntime.timeoutMs),
+          },
+        },
+        signal,
+      );
       progress.reviewerExecutions += 1;
       const review = parseReview(reviewer);
       if (!review) {
@@ -341,19 +389,24 @@ export class DeveloperWorkflow {
     phase: WorkflowCheckObservation["phase"],
     round: number,
     baselineFailures: ReadonlySet<string>,
+    signal?: AbortSignal,
   ): Promise<WorkflowCheckObservation[]> {
     const observations: WorkflowCheckObservation[] = [];
     for (const check of request.checks) {
-      const result: SandboxCommandResult = await this.dependencies.sandbox.execute({
-        schemaVersion: 1,
-        executionId: this.createId(),
-        workspacePath: workspace.workspacePath,
-        command: check.command,
-        args: check.args,
-        environment: check.environment,
-        writablePaths: [],
-        limits: request.sandboxLimits,
-      });
+      throwIfAborted(signal);
+      const result: SandboxCommandResult = await this.executeSandbox(
+        {
+          schemaVersion: 1,
+          executionId: this.createId(),
+          workspacePath: workspace.workspacePath,
+          command: check.command,
+          args: check.args,
+          environment: check.environment,
+          writablePaths: [],
+          limits: request.sandboxLimits,
+        },
+        signal,
+      );
       observations.push({
         name: check.name,
         phase,
@@ -365,6 +418,76 @@ export class DeveloperWorkflow {
       });
     }
     return observations;
+  }
+
+  async cancelActive(): Promise<boolean> {
+    const results = await Promise.all(
+      [...this.activeCancellations].map((cancel) => cancel().catch(() => false)),
+    );
+    return results.every(Boolean);
+  }
+
+  private async executeRuntime(
+    adapter: RuntimeAdapter,
+    request: RuntimeExecutionRequest,
+    signal?: AbortSignal,
+  ): Promise<RuntimeExecutionResult> {
+    throwIfAborted(signal);
+    let settled = false;
+    let cancellation: Promise<boolean> | undefined;
+    const execution = Promise.resolve().then(() => adapter.execute(request));
+    const cancel = (): Promise<boolean> => {
+      cancellation ??= (async () => {
+        while (!settled) {
+          const result = await adapter.cancel(request.executionId).catch(() => null);
+          if (result?.status === "CANCELLED") {
+            await execution.catch(() => undefined);
+            return true;
+          }
+          if (!settled) await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+        return true;
+      })();
+      return cancellation;
+    };
+    const onAbort = () => void cancel();
+    this.activeCancellations.add(cancel);
+    signal?.addEventListener("abort", onAbort, { once: true });
+    try {
+      const result = await execution;
+      settled = true;
+      throwIfAborted(signal);
+      return result;
+    } finally {
+      settled = true;
+      signal?.removeEventListener("abort", onAbort);
+      this.activeCancellations.delete(cancel);
+    }
+  }
+
+  private async executeSandbox(
+    input: Parameters<SandboxRunner["execute"]>[0],
+    signal?: AbortSignal,
+  ): Promise<SandboxCommandResult> {
+    throwIfAborted(signal);
+    const execution = Promise.resolve().then(() =>
+      this.dependencies.sandbox.execute(input, signal),
+    );
+    const cancel = async (): Promise<boolean> => {
+      try {
+        return (await execution).stoppedConfirmed;
+      } catch {
+        return false;
+      }
+    };
+    this.activeCancellations.add(cancel);
+    try {
+      const result = await execution;
+      throwIfAborted(signal);
+      return result;
+    } finally {
+      this.activeCancellations.delete(cancel);
+    }
   }
 
   private result(
@@ -394,6 +517,10 @@ export class DeveloperWorkflow {
       diagnostic: diagnostic.slice(0, 1000),
     });
   }
+}
+
+function throwIfAborted(signal?: AbortSignal): void {
+  if (signal?.aborted) throw new Error("Developer workflow was cancelled");
 }
 
 function checkPassed(check: WorkflowCheckObservation): boolean {
