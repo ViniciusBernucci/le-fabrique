@@ -42,6 +42,7 @@ import {
 } from "./provider-onboarding.processor";
 import { processProviderVerification } from "./provider-verification.processor";
 import { prepareRepositoryCheckout } from "./repository-checkout";
+import { ResultJournal } from "./result-journal";
 import { compileWorkflowRequest } from "./workflow-compiler";
 
 async function bootstrap(): Promise<void> {
@@ -89,6 +90,7 @@ async function bootstrap(): Promise<void> {
             job.data,
             {
               control,
+              journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
               leaseDurationMs: config.WORKER_LEASE_DURATION_MS,
               prepareCheckout: async (payload, claim, signal) => {
                 if (!payload.executionSpecification) {

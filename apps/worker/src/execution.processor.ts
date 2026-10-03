@@ -9,6 +9,7 @@ import { executionResultReportSchema, orchestrationJobSchema } from "@le-fabriqu
 import type { ControlClient } from "./control-client";
 import { LeaseAuthorityLostError, LeaseGuard } from "./lease-guard";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
+import type { ResultFinalizationIntent, ResultJournalPort } from "./result-journal";
 import type { TrustedWorkflowProfile } from "./workflow-compiler";
 
 export interface ExecutionWorkflow {
@@ -17,6 +18,7 @@ export interface ExecutionWorkflow {
 }
 
 export interface ExecutionProcessorDependencies {
+  journal: ResultJournalPort;
   control: Pick<
     ControlClient,
     "claim" | "renew" | "checkpoint" | "complete" | "reportResult" | "reconcile"
@@ -72,6 +74,9 @@ export async function processOrchestrationExecution(
   if (!job.baseRevision || !specification) {
     throw new Error("Execution job is missing its immutable READY specification");
   }
+
+  const preserved = await dependencies.journal.load(job);
+  if (preserved) return await finalizePreserved(preserved, dependencies.control, true);
 
   const claim = await dependencies.control.claim(job, dependencies.leaseDurationMs);
   if (claim.replayed) {
@@ -188,10 +193,6 @@ export async function processOrchestrationExecution(
       untrackedFiles: untracked.length,
     })),
   });
-  await dependencies.control.reportResult(claim.attemptId, {
-    fencingToken: claim.fencingToken,
-    result,
-  });
   const approved =
     workflowResult.status === "AWAITING_HUMAN" && workflowResult.reason === "APPROVED";
   const checkpointReason = approved
@@ -199,34 +200,58 @@ export async function processOrchestrationExecution(
     : workflowResult.status === "PAUSED_LIMIT"
       ? "PAUSED"
       : "FAILED";
-  const checkpoint = await dependencies.control.checkpoint(claim.attemptId, {
-    fencingToken: claim.fencingToken,
+  const checkpoint = {
     baseRevision: specification.project.baseRevision,
     codeRevision: latestSnapshot?.headRevision ?? workflowResult.workspace.revision,
     snapshotId: latestSnapshot?.snapshotId ?? null,
     patchHash: latestSnapshot?.manifestHash ?? null,
     reason: checkpointReason,
     stoppedConfirmed,
-  });
+  } as const;
 
   const outcome = approved
     ? "VALIDATING"
     : workflowResult.status === "PAUSED_LIMIT"
       ? "PAUSED_LIMIT"
       : "FAILED";
-  const completed = await dependencies.control.complete(claim.attemptId, {
+  const intent: ResultFinalizationIntent = {
+    runId: claim.runId,
+    attemptId: claim.attemptId,
     fencingToken: claim.fencingToken,
+    result,
+    checkpoint,
     outcome,
+  };
+  await dependencies.journal.save(job, intent);
+  return await finalizePreserved(intent, dependencies.control, false);
+}
+
+async function finalizePreserved(
+  intent: ResultFinalizationIntent,
+  control: ExecutionProcessorDependencies["control"],
+  replayed: boolean,
+): Promise<ExecutionProcessorResult> {
+  await control.reportResult(intent.attemptId, {
+    fencingToken: intent.fencingToken,
+    result: intent.result,
+  });
+  const checkpoint = await control.checkpoint(intent.attemptId, {
+    ...intent.checkpoint,
+    fencingToken: intent.fencingToken,
+  });
+  const completed = await control.complete(intent.attemptId, {
+    fencingToken: intent.fencingToken,
+    outcome: intent.outcome,
   });
   return resultFromState(
     checkpoint.runId,
-    claim.attemptId,
+    intent.attemptId,
     completed.status,
-    false,
-    workflowResult.status,
-    workflowResult.reason,
-    latestSnapshot?.snapshotId ?? null,
-    latestSnapshot?.manifestHash ?? null,
+    replayed,
+    intent.result.status,
+    intent.result.reason,
+    intent.checkpoint.snapshotId,
+    intent.checkpoint.patchHash,
   );
 }
 

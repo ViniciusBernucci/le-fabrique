@@ -1,8 +1,12 @@
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import type { DeveloperWorkflowResult, OrchestrationJob } from "@le-fabrique/contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { processOrchestrationExecution, WriterQuiescenceError } from "./execution.processor";
 import { createTrustedWorkflowProfile } from "./execution-profile";
 import type { PreparedRepositoryCheckout } from "./repository-checkout";
+import { ResultJournal } from "./result-journal";
 
 const projectId = crypto.randomUUID();
 const ticketId = crypto.randomUUID();
@@ -145,6 +149,10 @@ function dependencies() {
   };
   return {
     input: {
+      journal: {
+        load: vi.fn().mockResolvedValue(null),
+        save: vi.fn().mockResolvedValue(undefined),
+      },
       control,
       leaseDurationMs: 90_000,
       prepareCheckout: vi.fn().mockResolvedValue({
@@ -351,5 +359,58 @@ describe("processOrchestrationExecution", () => {
       "control unavailable",
     );
     expect(deps.input.prepareCheckout).not.toHaveBeenCalled();
+  });
+
+  it("recovers a failed result upload after restart without claim, checkout or AI", async () => {
+    const root = await mkdtemp(path.join(tmpdir(), "fac-012o-restart-"));
+    try {
+      const deps = dependencies();
+      const payload = job();
+      const journal = new ResultJournal(root);
+      deps.control.reportResult.mockRejectedValueOnce(new Error("network unavailable"));
+      await expect(
+        processOrchestrationExecution(payload, { ...deps.input, journal }),
+      ).rejects.toThrow("network unavailable");
+      expect(deps.control.complete).not.toHaveBeenCalled();
+      const preserved = await journal.load(payload);
+      expect(preserved?.attemptId).toBe(deps.attemptId);
+      const restarted = dependencies();
+      await expect(
+        processOrchestrationExecution(payload, {
+          ...restarted.input,
+          journal: new ResultJournal(root),
+        }),
+      ).resolves.toMatchObject({ attemptId: deps.attemptId, status: "VALIDATING", replayed: true });
+      expect(restarted.control.claim).not.toHaveBeenCalled();
+      expect(restarted.input.prepareCheckout).not.toHaveBeenCalled();
+      expect(restarted.workflow.execute).not.toHaveBeenCalled();
+      expect(restarted.control.reportResult).toHaveBeenCalledWith(
+        deps.attemptId,
+        expect.objectContaining({ fencingToken: 4 }),
+      );
+      expect(await journal.load(payload)).toEqual(preserved);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
+
+  it("does not upload or complete if local journal cannot preserve the result", async () => {
+    const deps = dependencies();
+    deps.input.journal.save.mockRejectedValue(new Error("disk full"));
+    await expect(processOrchestrationExecution(job(), deps.input)).rejects.toThrow("disk full");
+    expect(deps.control.reportResult).not.toHaveBeenCalled();
+    expect(deps.control.checkpoint).not.toHaveBeenCalled();
+    expect(deps.control.complete).not.toHaveBeenCalled();
+  });
+
+  it("never journals unknown writer termination", async () => {
+    const deps = dependencies();
+    const result = approvedWorkflow(deps.attemptId);
+    result.checks[0].stoppedConfirmed = false;
+    deps.workflow.execute.mockResolvedValue(result);
+    await expect(processOrchestrationExecution(job(), deps.input)).rejects.toBeInstanceOf(
+      WriterQuiescenceError,
+    );
+    expect(deps.input.journal.save).not.toHaveBeenCalled();
   });
 });
