@@ -1,5 +1,7 @@
 # Lease, fencing e checkpoint cobrem falhas diferentes
 
+FAC-012U torna retry de entrega diferente de retry de execução: outbox FINALIZATION_ONLY aponta job original; processFinalizationRecovery não recebe portas de checkout/workflow e nunca chama claim. Reconcile pode concluir blocked somente com prova íntegra; testes de journal ausente/worker divergente/stop unknown mostram que pedido/lease não provam parada.
+
 FAC-012S separa intenção administrativa de parada física: RunControlService apenas grava pedido; LeaseGuard aborta/espera stop, workflow captura depois, consumer entrega antes de concluir. run-control.spec.ts prova que pedido não altera status/fence/stop; execution.processor.spec.ts prova que unknown não libera tentativa. PAUSED manual não é PAUSED_LIMIT e confirmação UI é vinculada à versão.
 
 FAC-012O aplica write-ahead da finalização: `ResultJournal.save` publica intenção parada antes do HTTP. Depois de falha de upload, uma instância nova lê relatório/hash do job e usa mesmo fence sem claim/IA. fsync/hardlink exclusivo impede publicar arquivo parcial/sobrescrever evidência. Journal só existe após retorno/parada, nunca substitui prova de quiescência de execução interrompida. Teste `execution.processor.spec.ts` demonstra reinício sintético.

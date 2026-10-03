@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012U — recuperação de finalização](controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md)
+- [Ticket FAC-012U](planejamento/FAC-012U-recuperacao-finalizacao.md)
+
 - [FAC-012T — retomada segura](controle/2026-10-03-FAC-012T-retomada-snapshot.md)
 - [Ticket FAC-012T](planejamento/FAC-012T-retomada-snapshot.md)
 

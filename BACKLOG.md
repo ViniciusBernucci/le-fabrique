@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012U: AWAITING_HUMAN — recuperação de journal/checkpoint sem IA/novo writer, código `9d4a4f1`, 370 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
+
 - FAC-012T: AWAITING_HUMAN — retomada explícita parada/íntegra, objetivo congelado, novo fence e baseline pré-restore; código `42e7037`, 355 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
 
 - FAC-012S: AWAITING_HUMAN — pausa/cancelamento no painel com stop/snapshot/journal, código `be4e2ff`, 336 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md).

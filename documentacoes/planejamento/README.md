@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012U (`9d4a4f1`, 370 testes/checks), AWAITING_HUMAN: recuperação administrativa apenas de finalização, sem reexecutar IA. Hard crash unknown continua conservadoramente bloqueado; próximos providers/identidades/handoff, docs técnicas e transporte maior.
+
 FAC-012S (`be4e2ff`, 336 testes) e T (`42e7037`, 355 testes) implementados, AWAITING_HUMAN: comandos administrativos e retomada explícita de snapshot comprovadamente parado. Próximos: recovery de finalização, provider/identidades/handoff, docs técnicas e transporte maior. [Estado atual](../../CONTROLE-MVP.md).
 
 FAC-012R implementado (`abfb033`), AWAITING_HUMAN, 315 testes/checks. Interrupções cooperativas preservadas; abruptas continuam bloqueadas. Próximos: comandos de run/retomada e providers/identidades/handoff/docs do projeto.

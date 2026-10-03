@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012U aplica retry de entrega distinto de execução: [leases/fencing](leases-fencing-checkpoints.md).
+
 FAC-012T aplica retomada por estado externo/baseline pré-restore: [snapshots](sandbox-worktree-snapshot.md).
 
 FAC-012S aplica intenção administrativa versus stop físico e confirmação por versão: [leases/fencing](leases-fencing-checkpoints.md).

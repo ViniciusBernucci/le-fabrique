@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.84 - 2026-10-03
+
+FAC-012U adiciona recovery administrativo FINALIZATION_ONLY via outbox/consumer, journal/reconcile sem claim/IA. BLOCKED_RECOVERY só conclui com stop/evidência íntegra; unknown não libera writer. 370 testes/checks passaram; operação/manual/MVP restante explícitos.
+
 ## 2.83 - 2026-10-03
 
 FAC-012T liga retomada humana de snapshot íntegro/parado à outbox/claim/fence novo, baseline limpo antes de restore/contexto reconstruído. Restauração recusa symlinks; Developer falho preserva progresso. 355 testes/checks; sem operação real/handoff automático, aceite pendente.
