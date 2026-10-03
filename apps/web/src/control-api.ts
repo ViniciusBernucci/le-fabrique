@@ -2,6 +2,7 @@ import {
   adminSessionSchema,
   type CreateProject,
   type CreateTicket,
+  executionArtifactStateSchema,
   type FactorySettings,
   factorySettingsSchema,
   type GithubOnboardingChallenge,
@@ -125,6 +126,20 @@ export async function getRun(
 ): Promise<RunDetail> {
   return runDetailSchema.parse(
     await request(`/runs/${encodeURIComponent(runId)}`, token, { signal }),
+  );
+}
+export async function getExecutionArtifact(
+  token: string,
+  runId: string,
+  attemptId: string,
+  signal?: AbortSignal,
+) {
+  return executionArtifactStateSchema.parse(
+    await request(
+      `/runs/${encodeURIComponent(runId)}/attempts/${encodeURIComponent(attemptId)}/artifact`,
+      token,
+      { signal },
+    ),
   );
 }
 export async function createTicket(

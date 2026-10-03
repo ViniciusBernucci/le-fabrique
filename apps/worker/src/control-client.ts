@@ -6,6 +6,7 @@ import type {
   CompleteGithubVerification,
   CompleteProviderOnboarding,
   CompleteProviderVerification,
+  ExecutionArtifact,
   GithubOnboardingChallenge,
   OrchestrationCheckpointRequest,
   OrchestrationClaimRequest,
@@ -126,6 +127,15 @@ export class ControlClient {
       await this.request(`/internal/orchestration/attempts/${attemptId}/reconcile`, {
         method: "POST",
         body: JSON.stringify({ workerId: this.config.WORKER_ID, fencingToken }),
+      }),
+    );
+  }
+
+  async reportArtifact(attemptId: string, fencingToken: number, artifact: ExecutionArtifact) {
+    return executionResultReceiptSchema.parse(
+      await this.request(`/internal/orchestration/attempts/${attemptId}/artifact`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID, fencingToken, artifact }),
       }),
     );
   }

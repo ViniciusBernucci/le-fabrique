@@ -120,6 +120,7 @@ function dependencies() {
   const attemptId = crypto.randomUUID();
   const runId = crypto.randomUUID();
   const control = {
+    reportArtifact: vi.fn().mockResolvedValue({ attemptId, digest: "f".repeat(64) }),
     reconcile: vi.fn().mockResolvedValue({ state: null }),
     reportResult: vi.fn().mockResolvedValue({ attemptId, digest: "f".repeat(64) }),
     claim: vi.fn().mockResolvedValue({
@@ -149,6 +150,7 @@ function dependencies() {
   };
   return {
     input: {
+      readArtifact: vi.fn().mockResolvedValue({}),
       journal: {
         load: vi.fn().mockResolvedValue(null),
         save: vi.fn().mockResolvedValue(undefined),
@@ -187,6 +189,8 @@ describe("processOrchestrationExecution", () => {
     });
     expect(deps.control.checkpoint).toHaveBeenCalledBefore(deps.control.complete);
     expect(deps.control.reportResult).toHaveBeenCalledBefore(deps.control.checkpoint);
+    expect(deps.control.reportResult).toHaveBeenCalledBefore(deps.control.reportArtifact);
+    expect(deps.control.reportArtifact).toHaveBeenCalledBefore(deps.control.checkpoint);
     expect(deps.control.checkpoint).toHaveBeenCalledWith(
       deps.attemptId,
       expect.objectContaining({
@@ -413,4 +417,17 @@ describe("processOrchestrationExecution", () => {
     );
     expect(deps.input.journal.save).not.toHaveBeenCalled();
   });
+
+  it.each(["read", "upload"])(
+    "preserves journal without completing when artifact %s fails",
+    async (mode) => {
+      const deps = dependencies();
+      if (mode === "read") deps.input.readArtifact.mockRejectedValue(new Error("artifact blocked"));
+      else deps.control.reportArtifact.mockRejectedValue(new Error("artifact unavailable"));
+      await expect(processOrchestrationExecution(job(), deps.input)).rejects.toThrow("artifact");
+      expect(deps.input.journal.save).toHaveBeenCalledOnce();
+      expect(deps.control.checkpoint).not.toHaveBeenCalled();
+      expect(deps.control.complete).not.toHaveBeenCalled();
+    },
+  );
 });

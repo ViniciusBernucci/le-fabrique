@@ -1437,6 +1437,121 @@ export const workspaceSnapshotSchema = z.object({
 });
 export type WorkspaceSnapshot = z.infer<typeof workspaceSnapshotSchema>;
 
+const artifactRelativePathSchema = z
+  .string()
+  .min(1)
+  .max(4096)
+  .refine(
+    (path) =>
+      !path.startsWith("/") &&
+      !path.includes("\\") &&
+      [...path].every((char) => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127) &&
+      !/^[A-Za-z]:/.test(path) &&
+      path.split("/").every((segment) => segment !== "" && segment !== "." && segment !== ".."),
+    "Unsafe artifact path",
+  );
+const artifactBase64Schema = z
+  .string()
+  .max(87_384)
+  .regex(/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/)
+  .refine((value) => {
+    try {
+      return btoa(atob(value)) === value;
+    } catch {
+      return false;
+    }
+  }, "Noncanonical artifact base64");
+export const executionArtifactSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    manifest: workspaceSnapshotManifestSchema
+      .extend({
+        untracked: z
+          .array(snapshotUntrackedEntrySchema.extend({ path: artifactRelativePathSchema }).strict())
+          .max(1000),
+      })
+      .strict(),
+    patchBase64: artifactBase64Schema,
+    files: z
+      .array(
+        z.object({ path: artifactRelativePathSchema, dataBase64: artifactBase64Schema }).strict(),
+      )
+      .max(1000),
+  })
+  .strict()
+  .superRefine((artifact, context) => {
+    if (new TextEncoder().encode(JSON.stringify(artifact)).length > 65_536)
+      context.addIssue({ code: "custom", message: "Artifact JSON exceeds 64 KiB delivery limit" });
+  });
+export type ExecutionArtifact = z.infer<typeof executionArtifactSchema>;
+export const reportExecutionArtifactSchema = z
+  .object({
+    workerId: z.uuid(),
+    fencingToken: z.number().int().positive(),
+    artifact: executionArtifactSchema,
+  })
+  .strict();
+export const executionArtifactStateSchema = z
+  .object({ artifact: executionArtifactSchema.nullable() })
+  .strict();
+
+/** Platform-neutral verifier: decoding/hashing ports keep server imports out of the panel. */
+export function verifyExecutionArtifact(
+  artifact: ExecutionArtifact,
+  decode: (base64: string) => Uint8Array,
+  digest: (bytes: Uint8Array) => string,
+): void {
+  const { manifestHash, ...core } = artifact.manifest;
+  if (digest(new TextEncoder().encode(JSON.stringify(core))) !== manifestHash)
+    throw new Error("Artifact manifest integrity mismatch");
+  const patch = decode(artifact.patchBase64);
+  if (
+    patch.length !== artifact.manifest.patchBytes ||
+    digest(patch) !== artifact.manifest.patchSha256
+  )
+    throw new Error("Artifact patch integrity mismatch");
+  const files = new Map(artifact.files.map((file) => [file.path, file.dataBase64]));
+  if (files.size !== artifact.files.length || files.size !== artifact.manifest.untracked.length)
+    throw new Error("Artifact file set mismatch");
+  let total = patch.length;
+  const decoder = new TextDecoder();
+  const sensitive =
+    /-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|\bBearer\s+[A-Za-z0-9._~-]+|\b(?:sk-|ghp_|github_pat_)[A-Za-z0-9_-]{12,}|\b(?:OPENAI_API_KEY|CODEX_API_KEY|ANTHROPIC_API_KEY|WORKER_API_TOKEN|ADMIN_API_TOKEN)\s*[=:]\s*["']?[^\s"']+/i;
+  if (sensitive.test(decoder.decode(patch)))
+    throw new Error("Known sensitive artifact content blocked");
+  if (
+    decoder
+      .decode(patch)
+      .split("\n")
+      .some(
+        (line) =>
+          /^(?:diff --git |--- |\+\+\+ )/.test(line) &&
+          /\/(?:auth\.json|credentials(?:\.json)?|id_rsa|id_ed25519|\.env(?:\.(?!example(?:\s|$))[^\s/]+)?)(?=[\s"/]|$)/i.test(
+            line,
+          ),
+      )
+  )
+    throw new Error("Sensitive tracked artifact path blocked");
+  for (const entry of artifact.manifest.untracked) {
+    if (
+      /(?:^|\/)(?:auth\.json|credentials(?:\.json)?|id_rsa|id_ed25519|\.env(?:\.(?!example$)[^/]+)?)(?:$|\/)/i.test(
+        entry.path,
+      )
+    )
+      throw new Error("Sensitive artifact path blocked");
+    const encoded = files.get(entry.path);
+    if (encoded === undefined) throw new Error("Artifact file missing");
+    const bytes = decode(encoded);
+    total += bytes.length;
+    if (bytes.length !== entry.sizeBytes || digest(bytes) !== entry.sha256)
+      throw new Error("Artifact file integrity mismatch");
+    if (sensitive.test(decoder.decode(bytes)))
+      throw new Error("Known sensitive artifact content blocked");
+  }
+  if (total !== artifact.manifest.totalArtifactBytes)
+    throw new Error("Artifact total size mismatch");
+}
+
 export const snapshotRestoreResultSchema = z.object({
   snapshotId: z.uuid(),
   workspacePath: z.string().min(1).max(4096),

@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { Queue } from "bullmq";
 import { AdminAuthGuard } from "../control/admin-auth.guard";
 import { WorkerAuthGuard } from "../worker-identity/worker-auth.guard";
+import { ExecutionArtifactsService } from "./execution-artifacts.service";
 import {
   RunResultsController,
   WorkerExecutionResultsController,
@@ -17,6 +18,7 @@ import { ORCHESTRATION_QUEUE, OutboxDispatcher } from "./outbox-dispatcher";
     WorkerAuthGuard,
     AdminAuthGuard,
     ExecutionResultsService,
+    ExecutionArtifactsService,
     OrchestrationService,
     OutboxDispatcher,
     {

@@ -533,3 +533,14 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+.execution-artifact pre {
+  max-height: 28rem;
+  overflow: auto;
+  padding: 1rem;
+  background: #121b2a;
+  color: #e3edf8;
+  white-space: pre;
+}
+.execution-artifact code {
+  overflow-wrap: anywhere;
+}

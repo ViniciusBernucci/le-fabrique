@@ -19,6 +19,7 @@ import {
   WorkspaceManager,
 } from "@le-fabrique/runtime";
 import { Worker } from "bullmq";
+import { ArtifactReader } from "./artifact-reader";
 import { loadWorkerConfig } from "./config";
 import { ConfiguredAgentRouter } from "./configured-agent-router";
 import { ControlClient, registerWithRetry, startHeartbeat } from "./control-client";
@@ -91,6 +92,8 @@ async function bootstrap(): Promise<void> {
             {
               control,
               journal: new ResultJournal(path.join(executionConfig.root, "result-journal")),
+              readArtifact: (snapshot) =>
+                new ArtifactReader(path.join(executionConfig.root, "snapshots")).read(snapshot),
               leaseDurationMs: config.WORKER_LEASE_DURATION_MS,
               prepareCheckout: async (payload, claim, signal) => {
                 if (!payload.executionSpecification) {

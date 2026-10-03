@@ -1,5 +1,7 @@
 import type {
   DeveloperWorkflowResult,
+  ExecutionArtifact,
+  ExecutionResultReport,
   ExecutionSpecification,
   OrchestrationClaim,
   OrchestrationJob,
@@ -19,9 +21,12 @@ export interface ExecutionWorkflow {
 
 export interface ExecutionProcessorDependencies {
   journal: ResultJournalPort;
+  readArtifact: (
+    snapshot: ExecutionResultReport["snapshots"][number],
+  ) => Promise<ExecutionArtifact>;
   control: Pick<
     ControlClient,
-    "claim" | "renew" | "checkpoint" | "complete" | "reportResult" | "reconcile"
+    "claim" | "renew" | "checkpoint" | "complete" | "reportResult" | "reconcile" | "reportArtifact"
   >;
   leaseDurationMs: number;
   prepareCheckout: (
@@ -76,7 +81,7 @@ export async function processOrchestrationExecution(
   }
 
   const preserved = await dependencies.journal.load(job);
-  if (preserved) return await finalizePreserved(preserved, dependencies.control, true);
+  if (preserved) return await finalizePreserved(preserved, dependencies, true);
 
   const claim = await dependencies.control.claim(job, dependencies.leaseDurationMs);
   if (claim.replayed) {
@@ -223,18 +228,26 @@ export async function processOrchestrationExecution(
     outcome,
   };
   await dependencies.journal.save(job, intent);
-  return await finalizePreserved(intent, dependencies.control, false);
+  return await finalizePreserved(intent, dependencies, false);
 }
 
 async function finalizePreserved(
   intent: ResultFinalizationIntent,
-  control: ExecutionProcessorDependencies["control"],
+  dependencies: ExecutionProcessorDependencies,
   replayed: boolean,
 ): Promise<ExecutionProcessorResult> {
+  const { control } = dependencies;
   await control.reportResult(intent.attemptId, {
     fencingToken: intent.fencingToken,
     result: intent.result,
   });
+  const snapshot = intent.result.snapshots.at(-1);
+  if (snapshot)
+    await control.reportArtifact(
+      intent.attemptId,
+      intent.fencingToken,
+      await dependencies.readArtifact(snapshot),
+    );
   const checkpoint = await control.checkpoint(intent.attemptId, {
     ...intent.checkpoint,
     fencingToken: intent.fencingToken,

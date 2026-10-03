@@ -1,5 +1,6 @@
 import type { RunDetail, RunSummary } from "@le-fabrique/contracts";
 import { useEffect, useState } from "react";
+import { ArtifactPanel } from "./ArtifactPanel";
 import { getRun, listRuns } from "./control-api";
 import { pollResource } from "./poll-resource";
 
@@ -91,14 +92,18 @@ export function RunPanel({ token, projectId }: { token: string; projectId: strin
               </button>
             ))}
           </fieldset>
-          {detail ? <RunResultView run={detail} /> : <p className="muted">Carregando resultado…</p>}
+          {detail ? (
+            <RunResultView run={detail} token={token} />
+          ) : (
+            <p className="muted">Carregando resultado…</p>
+          )}
         </div>
       )}
     </section>
   );
 }
 
-export function RunResultView({ run }: { run: RunDetail }) {
+export function RunResultView({ run, token }: { run: RunDetail; token?: string }) {
   return (
     <div className="run-details">
       <h3>{run.title}</h3>
@@ -106,6 +111,14 @@ export function RunResultView({ run }: { run: RunDetail }) {
       {run.attempts.map((attempt) => (
         <article key={attempt.id}>
           <h4>Tentativa {attempt.sequence}</h4>
+          {token && (
+            <ArtifactPanel
+              key={`${run.id}-${attempt.id}`}
+              token={token}
+              runId={run.id}
+              attemptId={attempt.id}
+            />
+          )}
           <p className="muted">
             {attempt.stoppedConfirmed ? "Parada confirmada" : "Parada ainda não confirmada"}
           </p>

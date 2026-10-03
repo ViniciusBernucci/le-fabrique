@@ -91,7 +91,10 @@ describe("ExecutionResultsService", () => {
     expect(Reflect.getMetadata("__guards__", WorkerExecutionResultsController)).toEqual([
       WorkerAuthGuard,
     ]);
-    const controller = new WorkerExecutionResultsController({ report: vi.fn() } as never);
+    const controller = new WorkerExecutionResultsController(
+      { report: vi.fn() } as never,
+      {} as never,
+    );
     expect(() =>
       controller.report(attemptId, {
         workerId,

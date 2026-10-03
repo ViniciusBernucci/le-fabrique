@@ -175,6 +175,8 @@ model Attempt {
   checkpoint       Checkpoint?
   result           Json?
   resultDigest     String?       @map("result_digest")
+  artifact         Json?
+  artifactDigest   String?       @map("artifact_digest")
 
   @@unique([runId, sequence])
   @@unique([runId, fencingToken])
