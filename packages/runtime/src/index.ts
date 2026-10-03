@@ -1,5 +1,10 @@
 export { ClaudeAdapter, type ClaudeAdapterOptions } from "./claude-adapter";
 export { classifyClaudeSubscriptionStatus } from "./claude-auth";
+export {
+  CLAUDE_CONFINEMENT_POLICY,
+  type ClaudePermissionObservation,
+  claudePermissionSettings,
+} from "./claude-permissions";
 export { CodexAdapter, type CodexAdapterOptions } from "./codex-adapter";
 export { ContextBuilder } from "./context-builder";
 export type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";

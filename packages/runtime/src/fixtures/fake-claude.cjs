@@ -47,6 +47,14 @@ process.stdin.on("end", () => {
     );
     process.exit(1);
   }
+  if (prompt === "permission-observer") {
+    process.stdout.write(
+      `${JSON.stringify({ type: "assistant", message: { content: [{ type: "tool_use", id: "probe-one", name: "Write", input: { file_path: "/synthetic/blocked", content: "private text" } }] } })}\n`,
+    );
+    process.stdout.write(
+      `${JSON.stringify({ type: "user", message: { content: [{ type: "tool_result", tool_use_id: "probe-one", is_error: true, content: "Permission denied: private detail" }] } })}\n`,
+    );
+  }
   const keysPresent = Boolean(
     process.env.ANTHROPIC_API_KEY ||
       process.env.ANTHROPIC_AUTH_TOKEN ||
@@ -71,6 +79,14 @@ process.stdin.on("end", () => {
     !args.includes("--dangerously-skip-permissions");
   const tools = args[args.indexOf("--tools") + 1] || "";
   const access = tools.includes("Write") ? "write" : "read";
+  const settings = JSON.parse(args[args.indexOf("--settings") + 1] || "{}");
+  if (
+    access === "write" &&
+    (args[args.indexOf("--permission-mode") + 1] !== "dontAsk" ||
+      !settings.permissions?.allow?.length ||
+      settings.permissions.allow.some((rule) => !rule.startsWith("Edit(//")))
+  )
+    process.exit(2);
   process.stdout.write(
     `${JSON.stringify({ type: "system", subtype: "init", session_id: "synthetic-claude-session", model: "synthetic-claude" })}\n`,
   );

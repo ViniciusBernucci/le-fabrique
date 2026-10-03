@@ -21,6 +21,7 @@ import {
   runtimeUsageSchema,
 } from "@le-fabrique/contracts";
 import { classifyClaudeSubscriptionStatus } from "./claude-auth";
+import { type ClaudePermissionObservation, claudePermissionSettings } from "./claude-permissions";
 import type { RuntimeAdapter, RuntimeEventSink } from "./runtime-adapter";
 import { sanitizeSubscriptionEnvironment } from "./runtime-guard";
 
@@ -45,6 +46,8 @@ export interface ClaudeAdapterOptions {
   forceKillAfterMs?: number;
   probeTimeoutMs?: number;
   now?: () => Date;
+  /** Trusted preflight only; never forwarded to runtime event/control sinks. */
+  permissionObserver?: (observation: ClaudePermissionObservation) => void;
 }
 
 const capabilities = [
@@ -65,6 +68,7 @@ export class ClaudeAdapter implements RuntimeAdapter {
   private readonly forceKillAfterMs: number;
   private readonly probeTimeoutMs: number;
   private readonly now: () => Date;
+  private readonly permissionObserver?: ClaudeAdapterOptions["permissionObserver"];
   private readonly active = new Map<string, ActiveExecution>();
 
   constructor(options: ClaudeAdapterOptions = {}) {
@@ -74,6 +78,7 @@ export class ClaudeAdapter implements RuntimeAdapter {
     this.forceKillAfterMs = options.forceKillAfterMs ?? 2_000;
     this.probeTimeoutMs = options.probeTimeoutMs ?? 5_000;
     this.now = options.now ?? (() => new Date());
+    this.permissionObserver = options.permissionObserver;
   }
 
   async execute(
@@ -98,7 +103,14 @@ export class ClaudeAdapter implements RuntimeAdapter {
       });
     }
 
-    const child = spawn(this.binaryPath, this.executionArguments(request), {
+    const settings = await claudePermissionSettings(request).catch(() => null);
+    if (!settings)
+      return this.failureResult(request, startedAt, null, {
+        code: "TOOL_DENIED",
+        message: "Claude writable scope is unsafe or unsupported",
+        retryable: false,
+      });
+    const child = spawn(this.binaryPath, this.executionArguments(request, settings), {
       cwd: workspace,
       env: this.subscriptionEnvironment(),
       detached: process.platform !== "win32",
@@ -150,6 +162,7 @@ export class ClaudeAdapter implements RuntimeAdapter {
           terminate("result-unknown");
           return;
         }
+        this.observePermissions(event);
         if (typeof event.session_id === "string") providerSessionId = event.session_id;
         if (typeof event.model === "string") modelEffective = event.model;
         if (event.type === "assistant" && this.isRecord(event.message)) {
@@ -300,7 +313,10 @@ export class ClaudeAdapter implements RuntimeAdapter {
     return resolved;
   }
 
-  private executionArguments(request: RuntimeExecutionRequest): string[] {
+  private executionArguments(
+    request: RuntimeExecutionRequest,
+    settings: Awaited<ReturnType<typeof claudePermissionSettings>>,
+  ): string[] {
     const write = request.permissionMode === "WORKSPACE_WRITE";
     const args = [
       ...this.binaryArgsPrefix,
@@ -316,12 +332,71 @@ export class ClaudeAdapter implements RuntimeAdapter {
       "--permission-prompts",
       "none",
       "--permission-mode",
-      write ? "acceptEdits" : "plan",
+      write ? "dontAsk" : "plan",
+      "--settings",
+      JSON.stringify(settings),
       "--tools",
       write ? "Read,Edit,Write,Glob,Grep" : "Read,Glob,Grep",
     ];
     if (request.modelRequested) args.push("--model", request.modelRequested);
     return args;
+  }
+
+  private observePermissions(event: Record<string, unknown>): void {
+    if (
+      !this.permissionObserver ||
+      !this.isRecord(event.message) ||
+      !Array.isArray(event.message.content)
+    )
+      return;
+    for (const block of event.message.content) {
+      if (!this.isRecord(block)) continue;
+      let observation: ClaudePermissionObservation | null = null;
+      if (
+        event.type === "assistant" &&
+        block.type === "tool_use" &&
+        typeof block.id === "string" &&
+        typeof block.name === "string" &&
+        this.isRecord(block.input) &&
+        typeof block.input.file_path === "string"
+      )
+        observation = {
+          kind: "attempt",
+          id: block.id.slice(0, 200),
+          name: block.name.slice(0, 80),
+          path: block.input.file_path.slice(0, 4096),
+        };
+      if (
+        event.type === "user" &&
+        block.type === "tool_result" &&
+        typeof block.tool_use_id === "string"
+      ) {
+        const contents =
+          typeof block.content === "string"
+            ? block.content
+            : Array.isArray(block.content)
+              ? block.content
+                  .filter((item) => this.isRecord(item) && typeof item.text === "string")
+                  .map((item) => item.text)
+                  .join(" ")
+              : "";
+        observation = {
+          kind: "result",
+          id: block.tool_use_id.slice(0, 200),
+          error: block.is_error === true,
+          denied:
+            block.is_error === true &&
+            /denied|permission|not allowed|not.*granted/i.test(contents.slice(0, 16_384)),
+        };
+      }
+      if (observation) {
+        try {
+          this.permissionObserver(observation);
+        } catch {
+          /* Observer cannot own lifecycle. */
+        }
+      }
+    }
   }
 
   private subscriptionEnvironment(): NodeJS.ProcessEnv {

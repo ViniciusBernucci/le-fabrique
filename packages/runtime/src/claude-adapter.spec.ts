@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 import type { RuntimeEvent, RuntimeExecutionRequest } from "@le-fabrique/contracts";
@@ -54,6 +54,26 @@ afterEach(async () => {
 });
 
 describe("ClaudeAdapter", () => {
+  it("reports minimal correlated permissions to trusted preflight without exposing them as runtime events", async () => {
+    const observations: unknown[] = [];
+    const events: RuntimeEvent[] = [];
+    const instance = new ClaudeAdapter({
+      binaryPath: process.execPath,
+      binaryArgsPrefix: [fixture],
+      permissionObserver: (observation) => observations.push(observation),
+    });
+    const result = await instance.execute(request("permission-observer"), (event) =>
+      events.push(event),
+    );
+    expect(result.status).toBe("COMPLETED");
+    expect(observations).toEqual([
+      { kind: "attempt", id: "probe-one", name: "Write", path: "/synthetic/blocked" },
+      { kind: "result", id: "probe-one", error: true, denied: true },
+    ]);
+    expect(JSON.stringify(events)).not.toContain("/synthetic/blocked");
+    expect(JSON.stringify(observations)).not.toContain("private");
+  });
+
   it("uses a restricted read-only profile and sanitizes stream events", async () => {
     const events: RuntimeEvent[] = [];
     const result = await adapter().execute(request("hello"), (event) => events.push(event));
@@ -80,8 +100,13 @@ describe("ClaudeAdapter", () => {
   });
 
   it("allows file tools only for workspace-write", async () => {
+    await writeFile(resolve(workspace, "result.txt"), "baseline");
     const result = await adapter().execute(
-      request("write", { permissionMode: "WORKSPACE_WRITE", modelRequested: "synthetic-model" }),
+      request("write", {
+        permissionMode: "WORKSPACE_WRITE",
+        writablePaths: ["result.txt"],
+        modelRequested: "synthetic-model",
+      }),
     );
     expect(result.finalMessage).toBe("prompt=write;keys=false;profile=true;access=write");
     expect(result.modelRequested).toBe("synthetic-model");

@@ -3,6 +3,8 @@ import path from "node:path";
 import type { AgentRoute, SettingsProvider } from "@le-fabrique/contracts";
 import { ClaudeAdapter, CodexAdapter, type RuntimeAdapter } from "@le-fabrique/runtime";
 
+import { requireClaudeConfinementProof } from "./claude-confinement";
+
 export interface ProviderIdentity {
   binaryPath: string;
   binaryArgsPrefix: readonly string[];
@@ -55,12 +57,18 @@ export class ProviderIdentityManager {
   }
 
   async adapter(route: AgentRoute): Promise<RuntimeAdapter> {
-    if (route.provider === "claude" && route.permissionMode !== "READ_ONLY")
-      throw new Error("Claude writing requires verified granular confinement");
     const identity = await this.prepare(
       route.provider === "codex" ? "CODEX" : "CLAUDE",
       route.installationId,
     );
+    if (route.provider === "claude" && route.permissionMode !== "READ_ONLY") {
+      if (!this.root) throw new Error("Private provider root is required");
+      await requireClaudeConfinementProof(
+        path.resolve(this.root),
+        route.installationId,
+        identity.binaryPath,
+      );
+    }
     return route.provider === "codex" ? new CodexAdapter(identity) : new ClaudeAdapter(identity);
   }
 }
