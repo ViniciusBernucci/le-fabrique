@@ -1,5 +1,7 @@
 # Sandbox, worktree e snapshot sao limites diferentes
 
+OPS-006 aplica outra fronteira: o gestor systemd e o usuário do serviço não são a mesma identidade. `%U` em system unit representa o gestor (0), independentemente de `User=`; o template deixa XDG_RUNTIME_DIR/DBus no env externo para o UID real provisionado. Verificação sintática não detecta sozinha essa divergência operacional. A integração Git também não inicia o serviço; seus testes não provam autenticação/isolamento da futura identidade dedicada.
+
 Worktree separa revisoes e escritores, mas nao protege credenciais do mesmo usuario. No FAC-007, `WorkspaceManager` cria o checkout detached na revisao exata; `SandboxRunner` aplica o limite de processo com cgroup e namespaces. A fixture comprovou que home, controle e Docker socket somem, em vez de confiar apenas em uma instrucao ao comando.
 
 Lifecycle precisa pertencer ao cgroup. Matar somente o wrapper `systemd-run` poderia deixar filhos. O runner sinaliza a unidade com `KillMode=control-group`, escala para `SIGKILL` e consulta o estado antes de afirmar `stoppedConfirmed`. O teste do heartbeat verifica o efeito depois do retorno.

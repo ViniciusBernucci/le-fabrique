@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+OPS-006 integrou o trabalho local OPS-005/K/L e removeu seus worktrees após prova de ancestry/limpeza. [Relatório](2026-10-03-OPS-006-integracao-local-controle-mvp.md) e [controle do MVP](../../CONTROLE-MVP.md) distinguem código, aceites e operação manual. Serviços ativos não foram atualizados.
+
 ## Estado atual — FAC-012L
 
 O consumer `le-fabrique.execution` compõe checkout confiável, compilador, workflow e LeaseGuard com `WORKER_EXECUTION_ENABLED=true`. O default é `false`, sem fixture consumindo essa fila; jobs aguardam. Instalação, modelo e limites Developer/Reviewer vêm da configuração atual da interface. Perda de lease e parada não comprovada impedem conclusão indevida. SIGINT/SIGTERM e falha do heartbeat abortam o trabalho antes de fechar a fila; consulta de systemd indisponível permanece desconhecida.

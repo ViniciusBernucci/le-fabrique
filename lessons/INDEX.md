@@ -1,5 +1,7 @@
 # Lessons
 
+OPS-006 atualiza a lesson de sandbox/worktree com identidade do user manager e separação entre integração Git e ativação operacional; [evidências](../documentacoes/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md).
+
 FAC-012L aplica heartbeat/quiescência, lifecycle CLI e checkout confiável ao consumer gated; os conceitos existentes foram atualizados, sem criar lessons duplicadas. [Evidências](../documentacoes/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md).
 Documentos de conceitos serão preenchidos conforme implementação real. Este kit é planejamento; não inventa exemplos como se executados. Usar templates/LESSON.md e incluir links de revisão/entrega. Conceitos previstos: lifecycle CLI, leases/fencing, worktree/snapshot, contexto determinístico, idempotência, isolamento e cota observada.
 

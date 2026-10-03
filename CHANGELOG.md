@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.75 - 2026-10-03
+OPS-006 consolida OPS-005/FAC-012K/L localmente em developer, resolve conflitos preservando gate/host worker e corrige UID do user manager no env externo. 227 testes, lint, typecheck, build, Compose/systemd config e diff check passaram. Worktrees K/L/OPS-005 retirados após ancestry/limpeza; refs preservadas. CONTROLE-MVP.md lista funcionalidades/lacunas; aceites A/B reconciliados no plano. Sem push/deploy/piloto.
+
 ## 2.74 - 2026-10-03
 FAC-012L implementa consumer real com gate desligado por padrão, checkout/SHA imutável, workflow com rotas configuradas, limites por função, lease/fencing, cancelamento e checkpoint antes de conclusão. Testes Linux comprovam cancelamento de descendente e ausência de confirmação quando systemd não pode ser consultado. Checks passaram; 227 testes finais distintos. Operação real, recuperação, artefatos no painel e handoff permanecem pendentes; aguarda aceite humano.
 

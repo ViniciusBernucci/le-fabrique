@@ -1,5 +1,7 @@
 # Backlog v2
 
+Estado atual consolidado em [CONTROLE-MVP.md](CONTROLE-MVP.md). OPS-006 integrou OPS-005/FAC-012K/L localmente e retirou worktrees comprovadamente integrados; pendências de software permanecem explícitas.
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
@@ -47,6 +49,8 @@ FAC-000, FAC-001A e FAC-002 a FAC-009 estão DONE. FAC-011A/B/C/D foram aceitos.
 - OPS-005: AWAITING_HUMAN — worker host systemd preparado, APIs/Redis somente em loopback e consumidor fixture retirado do `main.ts`. Implementação `8f3dbda`; relatório `documentacoes/infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md`. Não instalado; worker container antigo continua ativo até janela manual.
 
 Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recomendado.
+
+- OPS-006: AWAITING_HUMAN — integração local OPS-005/K/L, correção do env/user manager e controle atual do MVP; 227 testes/checks combinados passaram. Código `26e412d`; sem push/deploy. Relatório `documentacoes/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md`.
 
 ## Stack obrigatória da fábrica - revisão 2.3
 React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.

@@ -1,6 +1,6 @@
 # OPS-006 — Integração local e controle do MVP
 
-Status: READY. Data: 2026-10-03.
+Status: AWAITING_HUMAN. Data: 2026-10-03.
 Baseline: `ce93b20440c3f7ecc216ae6513396596cdf9a76e` (`developer`).
 Branch/worktree: `ops/ops-006-final-local-integration`, `/home/vinicius/le-fabrique-ops-006`.
 
@@ -28,3 +28,5 @@ Conflitos em main/env/docs são esperados. Um writer, até duas rodadas de corre
 ## Entregáveis
 
 Relatório `documentacoes/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md`, `CONTROLE-MVP.md`, README/índice/backlog/changelog e lessons pertinentes. DONE somente após aceite humano da revisão exata; integração local é autorizada separadamente.
+
+Implementação/integracão: `26e412d`; 227 testes e checks combinados passaram. OPS-005/K/L comprovadamente integrados em developer; worktrees respectivos removidos, refs preservadas. Ver [relatório](../operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md).

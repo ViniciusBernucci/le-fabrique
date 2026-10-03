@@ -95,10 +95,12 @@ Aceite: Configuracao versionada rejeita segredo e relacoes invalidas; unknown/au
 Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
 
 ## FAC-012A — Especificacao imutavel de execucao
-Sprint: Sprint 3, fundacao interna. Dependências: FAC-001A, FAC-003A, FAC-008. Esforço estimado: 1 dia. Status: AWAITING_HUMAN.
+Sprint: Sprint 3, fundacao interna. Dependências: FAC-001A, FAC-003A, FAC-008. Esforço estimado: 1 dia. Status: DONE.
 Descrição: Congelar projeto, definicao e ticket no evento READY para que a execucao futura nao dependa de configuracao mutavel.
 Aceite: Snapshot estrito, invariantes cruzadas, montagem transacional e bloqueio de legado incompleto, sem iniciar piloto/provider.
 Entregáveis: contratos, controle, dispatcher, probe, testes e documentacao vinculados ao codigo `3b6f3e4624b5935e4fe6ea067406c631a6b0ec32`.
+
+Aceite registrado pelo OPS-003 na revisão documental `3ef3d543b98fb48226714787315f4de947fa6dd9`. FAC-012B também está DONE na revisão `3e28363b0642f8e05840bb649b681e3837e1e015`; C–L aguardam aceite humano. O estado detalhado atual do MVP está em [CONTROLE-MVP.md](CONTROLE-MVP.md), sem incluir piloto/implantação no escopo automático.
 
 ## FAC-012 — Dez tickets e operação
 Sprint: Sprint 3. Dependências: FAC-001, FAC-011. Esforço estimado: 2-3 dias. Status: PLANEJADO.
