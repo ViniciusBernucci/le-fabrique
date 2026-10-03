@@ -77,6 +77,8 @@
 - [planejamento/OPS-001-bootstrap-desenvolvimento-local.md](planejamento/OPS-001-bootstrap-desenvolvimento-local.md)
 - [planejamento/OPS-003-consolidacao-revisoes-aceitas.md](planejamento/OPS-003-consolidacao-revisoes-aceitas.md)
 - [planejamento/OPS-004-consolidar-worktrees-locais.md](planejamento/OPS-004-consolidar-worktrees-locais.md)
+- [planejamento/OPS-005-worker-host-sandbox.md](planejamento/OPS-005-worker-host-sandbox.md)
+- [infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md](infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md)
 - [operacao/2026-09-30-FAC-004-worker-identidade.md](operacao/2026-09-30-FAC-004-worker-identidade.md)
 - [controle/README.md](controle/README.md)
 - [controle/2026-09-30-FAC-003-controle-web-persistencia.md](controle/2026-09-30-FAC-003-controle-web-persistencia.md)

@@ -1,0 +1,40 @@
+[Unit]
+Description=Le Fabrique trusted worker
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=le-fabrique-worker
+Group=le-fabrique-worker
+WorkingDirectory=/opt/le-fabrique
+EnvironmentFile=/etc/le-fabrique/worker.env
+Environment=HOME=/var/lib/le-fabrique-worker
+Environment=XDG_RUNTIME_DIR=/run/user/%U
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/node /opt/le-fabrique/apps/worker/dist/main.js
+Restart=on-failure
+RestartSec=5s
+UMask=0077
+StateDirectory=le-fabrique-worker
+StateDirectoryMode=0700
+RuntimeDirectory=le-fabrique-worker
+RuntimeDirectoryMode=0700
+ProtectSystem=strict
+ProtectHome=tmpfs
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target
