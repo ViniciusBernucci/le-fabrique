@@ -134,6 +134,29 @@ export function RunResultView({ run, token }: { run: RunDetail; token?: string }
           {attempt.result ? (
             <>
               <p>{attempt.result.diagnostic}</p>
+              {attempt.result.documentation && (
+                <div>
+                  <h4>Documentação técnica</h4>
+                  <p>
+                    Gate estrutural:{" "}
+                    {attempt.result.documentation.status === "PASS" ? "Aprovado" : "Incompleto"}. O
+                    conteúdo depende da revisão independente e do aceite humano.
+                  </p>
+                  <p>
+                    Snapshot: <code>{attempt.result.documentation.snapshotHash}</code>
+                  </p>
+                  <ul>
+                    {attempt.result.documentation.files.map((file) => (
+                      <li key={file.path}>
+                        {file.path}: <code>{file.sha256}</code>
+                      </li>
+                    ))}
+                  </ul>
+                  {attempt.result.documentation.findings.length > 0 && (
+                    <p>{attempt.result.documentation.findings.join(", ")}</p>
+                  )}
+                </div>
+              )}
               <h4>Verificações</h4>
               <div className="run-table">
                 <table>

@@ -100,6 +100,40 @@ describe("shared contracts", () => {
       },
     };
     expect(projectDefinitionInputSchema.parse(approvedDefinition)).toEqual(approvedDefinition);
+    for (const requiredFiles of [
+      ["../README.md"],
+      ["secrets/README.md"],
+      ["src/.git/config.md"],
+      ["src/README.md", "src/README.md"],
+    ]) {
+      expect(() =>
+        projectDefinitionInputSchema.parse({
+          ...approvedDefinition,
+          executionProfile: {
+            ...approvedDefinition.executionProfile,
+            documentation: {
+              requiredFiles,
+              reportPath: requiredFiles[0],
+              requiredSections: ["Checks"],
+            },
+          },
+        }),
+      ).toThrow();
+    }
+    expect(
+      projectDefinitionInputSchema.parse({
+        ...approvedDefinition,
+        executionProfile: {
+          ...approvedDefinition.executionProfile,
+          documentation: {
+            requiredFiles: ["src/README.md"],
+            reportPath: "src/README.md",
+            requiredSections: ["Checks"],
+          },
+        },
+      }).executionProfile?.documentation?.reportPath,
+    ).toBe("src/README.md");
+
     expect(() =>
       projectDefinitionInputSchema.parse({
         ...approvedDefinition,

@@ -40,6 +40,11 @@ export function ProjectDefinitionPanel({
   const [forbiddenPaths, setForbiddenPaths] = useState("");
   const [checks, setChecks] = useState<EditableCheck[]>([emptyCheck()]);
   const [contextSources, setContextSources] = useState("");
+  const [docFiles, setDocFiles] = useState("");
+  const [docReport, setDocReport] = useState("");
+  const [docSections, setDocSections] = useState(
+    "Objetivo e critérios de aceite\nFuncionamento\nVerificação\nRiscos e limitações\nRollback",
+  );
   const [approvedCheckIds, setApprovedCheckIds] = useState<string[]>([]);
 
   useEffect(() => {
@@ -63,6 +68,10 @@ export function ProjectDefinitionPanel({
         const profileSources = definition?.executionProfile?.contextSources ?? [];
         const profileChecks = definition?.executionProfile?.approvedChecks ?? [];
         setContextSources(formatContextSourceLines(profileSources));
+        const documentation = definition?.executionProfile?.documentation;
+        setDocFiles(documentation?.requiredFiles.join("\n") ?? "");
+        setDocReport(documentation?.reportPath ?? "");
+        if (documentation) setDocSections(documentation.requiredSections.join("\n"));
         const matchingApprovedIds = loadedChecks
           .filter((check) =>
             profileChecks.some(
@@ -74,7 +83,9 @@ export function ProjectDefinitionPanel({
           )
           .map((check) => check.id);
         setApprovedCheckIds(matchingApprovedIds);
-        onProfileReady(profileSources.length > 0 && matchingApprovedIds.length > 0);
+        onProfileReady(
+          profileSources.length > 0 && matchingApprovedIds.length > 0 && Boolean(documentation),
+        );
         onVersion(definition?.version ?? null);
       })
       .catch(() => onMessage("Falha ao carregar a definição do projeto."));
@@ -113,7 +124,22 @@ export function ProjectDefinitionPanel({
       const parsedContextSources = parseContextSourceLines(contextSources);
       const executionProfile: ProjectExecutionProfile | null =
         approvedChecks.length > 0 && parsedContextSources.length > 0
-          ? { contextSources: parsedContextSources, approvedChecks }
+          ? {
+              contextSources: parsedContextSources,
+              approvedChecks,
+              ...(docFiles.trim() && docReport.trim() && docSections.trim()
+                ? {
+                    documentation: {
+                      requiredFiles: parsePathLines(docFiles),
+                      reportPath: docReport.trim(),
+                      requiredSections: docSections
+                        .split("\n")
+                        .map((section) => section.trim())
+                        .filter(Boolean),
+                    },
+                  }
+                : {}),
+            }
           : null;
       const saved = await putProjectDefinition(token, project.id, version, {
         summary,
@@ -129,7 +155,8 @@ export function ProjectDefinitionPanel({
       onProfileReady(
         Boolean(
           saved.executionProfile?.contextSources.length &&
-            saved.executionProfile.approvedChecks.length,
+            saved.executionProfile.approvedChecks.length &&
+            saved.executionProfile.documentation,
         ),
       );
       onMessage(`Definição do projeto salva na versão ${saved.version}.`);
@@ -280,6 +307,45 @@ export function ProjectDefinitionPanel({
                 onProfileReady(false);
               }}
               placeholder="README.md | INSTRUCTION\nsrc/index.ts | SOURCE\ntests/app.test.ts | TEST"
+            />
+          </label>
+          <h3>Documentação obrigatória para entrega</h3>
+          <p className="muted">
+            Inclua README, índice, changelog, backlog e lessons conforme as regras deste projeto.
+            Cada arquivo listado deve ser atualizado no incremento e estar nos caminhos permitidos.
+            O relatório precisa registrar a revisão base e os checks; o Reviewer confere conteúdo e
+            critérios.
+          </p>
+          <label>
+            Arquivos Markdown, um por linha
+            <textarea
+              value={docFiles}
+              onChange={(event) => {
+                setDocFiles(event.target.value);
+                onProfileReady(false);
+              }}
+              placeholder="README.md\ndocumentacoes/INDEX.md\nCHANGELOG.md\nBACKLOG.md\ndocumentacoes/entregas/atual.md"
+            />
+          </label>
+          <label>
+            Caminho do relatório
+            <input
+              value={docReport}
+              onChange={(event) => {
+                setDocReport(event.target.value);
+                onProfileReady(false);
+              }}
+              placeholder="documentacoes/entregas/atual.md"
+            />
+          </label>
+          <label>
+            Seções obrigatórias no relatório, uma por linha
+            <textarea
+              value={docSections}
+              onChange={(event) => {
+                setDocSections(event.target.value);
+                onProfileReady(false);
+              }}
             />
           </label>
           <button type="submit">Salvar definição</button>

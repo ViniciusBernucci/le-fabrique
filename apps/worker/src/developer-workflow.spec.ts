@@ -216,6 +216,77 @@ const rejected = JSON.stringify({
 });
 
 describe("DeveloperWorkflow", () => {
+  it("does not call Reviewer or approve when documentation remains incomplete", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "done")],
+      [checkResult("COMPLETED"), checkResult("COMPLETED")],
+    );
+    const input = request(0);
+    input.documentation = {
+      requiredFiles: ["src/README.md"],
+      reportPath: "src/README.md",
+      requiredSections: ["Checks"],
+    };
+    const documentationGate = vi.fn(async () => ({
+      status: "FAIL" as const,
+      snapshotHash: snapshot(1).manifest.manifestHash,
+      files: [],
+      findings: ["UNCHANGED" as const],
+    }));
+    const result = await new DeveloperWorkflow({ ...deps, documentationGate }).execute(input);
+    expect(result.status).toBe("PAUSED_LIMIT");
+    expect(result.reason).toBe("DOCUMENTATION_INCOMPLETE");
+    expect(result.reviewerExecutions).toBe(0);
+    expect(result.snapshots).toHaveLength(1);
+  });
+
+  it("requires semantic review and invalidates it if Reviewer changes the snapshot", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "done"), runtimeResult(crypto.randomUUID(), approved)],
+      [checkResult("COMPLETED"), checkResult("COMPLETED")],
+    );
+    const input = request(0);
+    input.documentation = {
+      requiredFiles: ["src/README.md"],
+      reportPath: "src/README.md",
+      requiredSections: ["Checks"],
+    };
+    const documentationGate = vi.fn(async () => ({
+      status: "PASS" as const,
+      snapshotHash: snapshot(1).manifest.manifestHash,
+      files: [{ path: "src/README.md", sha256: "a".repeat(64) }],
+      findings: [],
+    }));
+    const result = await new DeveloperWorkflow({ ...deps, documentationGate }).execute(input);
+    expect(result.reason).toBe("REVIEW_INVALID");
+    expect(deps.execute.mock.calls[1]?.[0].prompt).toContain("technical truth");
+    expect(result.status).toBe("FAILED");
+  });
+
+  it("accepts documentation only after an unchanged independent review", async () => {
+    const deps = dependencies(
+      [runtimeResult(crypto.randomUUID(), "done"), runtimeResult(crypto.randomUUID(), approved)],
+      [checkResult("COMPLETED"), checkResult("COMPLETED")],
+    );
+    deps.snapshots.capture.mockImplementation(async () => snapshot(1));
+    const input = request(0);
+    input.documentation = {
+      requiredFiles: ["src/README.md"],
+      reportPath: "src/README.md",
+      requiredSections: ["Checks"],
+    };
+    const documentationGate = vi.fn(async (_request, _workspace, hash: string) => ({
+      status: "PASS" as const,
+      snapshotHash: hash,
+      files: [{ path: "src/README.md", sha256: "a".repeat(64) }],
+      findings: [],
+    }));
+    const result = await new DeveloperWorkflow({ ...deps, documentationGate }).execute(input);
+    expect(result.status).toBe("AWAITING_HUMAN");
+    expect(documentationGate).toHaveBeenCalledTimes(2);
+    expect(result.documentation?.snapshotHash).toBe(result.snapshots.at(-1)?.manifestHash);
+  });
+
   it("does not reset the total call budget when handing off to another account", async () => {
     const failed = runtimeResult(crypto.randomUUID(), null, "FAILED");
     failed.error = { code: "PROVIDER_BUSY", message: "busy", retryable: true };

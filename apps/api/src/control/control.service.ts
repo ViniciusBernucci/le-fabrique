@@ -198,6 +198,9 @@ export class ControlService {
           "Project execution profile with approved context and checks is required before READY",
         );
       }
+      if (!definition.executionProfile.documentation) {
+        throw new ConflictException("Project documentation policy is required before READY");
+      }
       const executionSpecification = executionSpecificationSchema.parse({
         schemaVersion: 1,
         project: {

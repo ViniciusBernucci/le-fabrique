@@ -115,10 +115,51 @@ const projectExecutionContextSourceSchema = z
   })
   .strict();
 
+export const projectDocumentationPolicySchema = z
+  .object({
+    requiredFiles: z
+      .array(
+        projectRelativePathSchema.refine(
+          (file) => file.endsWith(".md") && isWritableProjectPath(file),
+        ),
+      )
+      .min(1)
+      .max(30),
+    reportPath: projectRelativePathSchema.refine(
+      (file) => file.endsWith(".md") && isWritableProjectPath(file),
+    ),
+    requiredSections: z
+      .array(
+        z
+          .string()
+          .trim()
+          .min(1)
+          .max(120)
+          .regex(/^[^\r\n#]+$/),
+      )
+      .min(1)
+      .max(20),
+  })
+  .strict()
+  .refine(
+    (policy) => new Set(policy.requiredFiles).size === policy.requiredFiles.length,
+    "Documentation paths must be unique",
+  )
+  .refine(
+    (policy) => policy.requiredFiles.includes(policy.reportPath),
+    "Report must be a required document",
+  )
+  .refine(
+    (policy) => new Set(policy.requiredSections).size === policy.requiredSections.length,
+    "Documentation sections must be unique",
+  );
+export type ProjectDocumentationPolicy = z.infer<typeof projectDocumentationPolicySchema>;
+
 export const projectExecutionProfileSchema = z
   .object({
     contextSources: z.array(projectExecutionContextSourceSchema).min(1).max(100),
     approvedChecks: z.array(projectCheckSchema).min(1).max(20),
+    documentation: projectDocumentationPolicySchema.optional(),
   })
   .strict()
   .superRefine((profile, context) => {
@@ -213,6 +254,21 @@ export const projectDefinitionInputSchema = z
           code: "custom",
           path: ["executionProfile", "contextSources", index, "path"],
           message: "Execution context must be within allowed paths and outside forbidden paths",
+        });
+      }
+    }
+
+    for (const [index, file] of (
+      definition.executionProfile.documentation?.requiredFiles ?? []
+    ).entries()) {
+      if (
+        !definition.allowedPaths.some((root) => file === root || file.startsWith(`${root}/`)) ||
+        definition.forbiddenPaths.some((root) => pathsOverlap(file, root))
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["executionProfile", "documentation", "requiredFiles", index],
+          message: "Required documentation must be writable within allowed paths",
         });
       }
     }
@@ -1845,6 +1901,7 @@ export const developerWorkflowRequestSchema = z.object({
   snapshotLimits: snapshotLimitsSchema,
   maxCorrectionRounds: z.number().int().min(0).max(2).default(2),
   modelRequested: z.string().trim().min(1).max(120).nullable().default(null),
+  documentation: projectDocumentationPolicySchema.optional(),
 });
 export type DeveloperWorkflowRequest = z.infer<typeof developerWorkflowRequestSchema>;
 
@@ -1903,6 +1960,33 @@ export const workflowHandoffSchema = z
     "Handoff requires another installation",
   );
 
+export const workflowDocumentationEvidenceSchema = z
+  .object({
+    status: z.enum(["PASS", "FAIL"]),
+    snapshotHash: z.string().regex(/^[a-f0-9]{64}$/),
+    files: z
+      .array(
+        z
+          .object({ path: projectRelativePathSchema, sha256: z.string().regex(/^[a-f0-9]{64}$/) })
+          .strict(),
+      )
+      .max(30),
+    findings: z
+      .array(
+        z.enum([
+          "MISSING_OR_UNSAFE",
+          "UNCHANGED",
+          "PLACEHOLDER",
+          "INCOMPLETE_SECTIONS",
+          "MISSING_REVISION",
+          "MISSING_CHECKS",
+        ]),
+      )
+      .max(30),
+  })
+  .strict();
+export type WorkflowDocumentationEvidence = z.infer<typeof workflowDocumentationEvidenceSchema>;
+
 export const developerWorkflowResultSchema = z.object({
   schemaVersion: z.literal(1),
   workflowId: z.uuid(),
@@ -1924,6 +2008,7 @@ export const developerWorkflowResultSchema = z.object({
     "CHECK_REGRESSION",
     "REVIEW_REJECTED",
     "REVIEW_INVALID",
+    "DOCUMENTATION_INCOMPLETE",
     "INTERRUPTED",
     "OPERATOR_PAUSED",
     "OPERATOR_CANCELLED",
@@ -1940,6 +2025,7 @@ export const developerWorkflowResultSchema = z.object({
   diagnostic: z.string().trim().min(1).max(1000),
   runtimeObservations: z.array(workflowRuntimeObservationSchema).max(10).default([]),
   handoffs: z.array(workflowHandoffSchema).max(2).optional(),
+  documentation: workflowDocumentationEvidenceSchema.optional(),
 });
 export type DeveloperWorkflowResult = z.infer<typeof developerWorkflowResultSchema>;
 

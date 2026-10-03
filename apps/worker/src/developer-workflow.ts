@@ -28,6 +28,7 @@ import type {
 } from "@le-fabrique/runtime";
 import { ProviderUnavailableError } from "./agent-route";
 import type { ConfiguredAgentRouter } from "./configured-agent-router";
+import { checkDocumentation } from "./documentation-gate";
 import { operatorControlAction } from "./lease-guard";
 
 interface DeveloperWorkflowDependencies {
@@ -37,6 +38,7 @@ interface DeveloperWorkflowDependencies {
   agentRouter: Pick<ConfiguredAgentRouter, "resolve">;
   sandbox: Pick<SandboxRunner, "execute">;
   snapshots: Pick<SnapshotManager, "capture"> & Partial<Pick<SnapshotManager, "restore">>;
+  documentationGate?: typeof checkDocumentation;
   createId?: () => string;
 }
 
@@ -48,6 +50,7 @@ interface WorkflowProgress {
   snapshots: DeveloperWorkflowResult["snapshots"];
   review: WorkflowReview | null;
   runtimeObservations: WorkflowRuntimeObservation[];
+  documentation?: DeveloperWorkflowResult["documentation"];
   handoffs: NonNullable<DeveloperWorkflowResult["handoffs"]>;
 }
 
@@ -342,6 +345,27 @@ export class DeveloperWorkflow {
           continue;
         }
 
+        if (request.documentation) {
+          progress.documentation = await (
+            this.dependencies.documentationGate ?? checkDocumentation
+          )(request, workspace.workspacePath, snapshot.manifest.manifestHash, postChecks);
+          if (progress.documentation.status !== "PASS") {
+            if (round === request.maxCorrectionRounds)
+              return this.result(
+                request,
+                workspace,
+                context.manifest,
+                progress,
+                "PAUSED_LIMIT",
+                "DOCUMENTATION_INCOMPLETE",
+                "Required technical documentation is incomplete; snapshot preserved",
+                round,
+              );
+            feedback = `Update only the required technical documentation and preserve implementation: ${progress.documentation.findings.join(", ")}. Report measured checks honestly, including prior failures. Base revision: ${request.baseRevision}.`;
+            continue;
+          }
+        }
+
         let reviewer: RuntimeExecutionResult;
         let pendingReviewerRuntime:
           | Awaited<ReturnType<ConfiguredAgentRouter["resolve"]>>
@@ -422,6 +446,7 @@ export class DeveloperWorkflow {
                   context.content,
                   postChecks,
                   snapshot.manifest.manifestHash,
+                  progress.documentation,
                 ),
                 "Reviewer",
               ),
@@ -489,6 +514,45 @@ export class DeveloperWorkflow {
           );
         }
         progress.review = review;
+        if (request.documentation) {
+          const reviewedSnapshot = await this.dependencies.snapshots.capture({
+            schemaVersion: 1,
+            workspacePath: workspace.workspacePath,
+            limits: request.snapshotLimits,
+          });
+          const previous = progress.snapshots.at(-1);
+          progress.snapshots = [...progress.snapshots, reviewedSnapshot.manifest].slice(-3);
+          if (
+            !previous ||
+            previous.patchSha256 !== reviewedSnapshot.manifest.patchSha256 ||
+            JSON.stringify(previous.untracked) !==
+              JSON.stringify(reviewedSnapshot.manifest.untracked)
+          )
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "FAILED",
+              "REVIEW_INVALID",
+              "Workspace changed during read-only review; approval invalidated",
+              round,
+            );
+          progress.documentation = await (
+            this.dependencies.documentationGate ?? checkDocumentation
+          )(request, workspace.workspacePath, reviewedSnapshot.manifest.manifestHash, postChecks);
+          if (progress.documentation.status !== "PASS")
+            return this.result(
+              request,
+              workspace,
+              context.manifest,
+              progress,
+              "FAILED",
+              "DOCUMENTATION_INCOMPLETE",
+              "Documentation changed during review; approval invalidated",
+              round,
+            );
+        }
         if (review.verdict === "APPROVE") {
           return this.result(
             request,
@@ -808,6 +872,7 @@ export class DeveloperWorkflow {
       diagnostic: diagnostic.slice(0, 1000),
       runtimeObservations: progress.runtimeObservations,
       handoffs: progress.handoffs,
+      ...(progress.documentation ? { documentation: progress.documentation } : {}),
     });
   }
 }
@@ -879,6 +944,12 @@ function developerPrompt(
     `Acceptance criteria:\n- ${request.acceptanceCriteria.join("\n- ")}`,
     `Correction round: ${round}`,
     `Prior feedback: ${feedback}`,
+    ...(request.documentation
+      ? [
+          `Required technical documentation policy: ${JSON.stringify(request.documentation)}`,
+          `Update each required document within allowed paths. Include base revision ${request.baseRevision}, objective, criteria, functioning, limitations and rollback in the report. Use Markdown headings matching its required sections. Record checks (${request.checks.map((check) => check.name).join(", ")}) only when actually measured; do not claim future supervisor checks have passed. Reviewer will verify semantic truth and criteria.`,
+        ]
+      : []),
     "Context:",
     context,
   ].join("\n\n");
@@ -889,6 +960,7 @@ function reviewerPrompt(
   context: string,
   checks: WorkflowCheckObservation[],
   snapshotHash: string,
+  documentation?: DeveloperWorkflowResult["documentation"],
 ): string {
   return [
     "Role: independent Reviewer. Do not modify files.",
@@ -896,6 +968,12 @@ function reviewerPrompt(
     `Acceptance criteria:\n- ${request.acceptanceCriteria.join("\n- ")}`,
     `Post-change checks: ${JSON.stringify(checks)}`,
     `Snapshot manifest SHA-256: ${snapshotHash}`,
+    ...(documentation
+      ? [
+          `Structural documentation evidence (not semantic approval): ${JSON.stringify(documentation)}`,
+          `Read the required project documents: ${JSON.stringify(request.documentation)}. Check their technical truth against changed code, real checks, original criteria, base revision, limits and rollback. Reject stale/false claims, missing README/index/changelog/backlog/lessons required by project rules, or uncovered criteria. Never approve merely because headings/files/hashes exist.`,
+        ]
+      : []),
     'Return only JSON matching: {"schemaVersion":1,"verdict":"APPROVE|REQUEST_CHANGES","summary":"...","findings":["..."]}',
     "Context:",
     context,

@@ -42,6 +42,11 @@ function job(): OrchestrationJob {
           forbiddenPaths: [],
           checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
           executionProfile: {
+            documentation: {
+              requiredFiles: ["src/README.md"],
+              reportPath: "src/README.md",
+              requiredSections: ["Verificação"],
+            },
             contextSources: [{ path: "src", role: "SOURCE" }],
             approvedChecks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
           },

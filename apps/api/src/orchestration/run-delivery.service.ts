@@ -202,6 +202,25 @@ export class RunDeliveryService {
       spec.project.baseRevision !== checkpoint.baseRevision
     )
       return blocked("EVIDENCE_MISMATCH");
+    const documentationPolicy = spec.project.definition.executionProfile?.documentation;
+    if (documentationPolicy) {
+      const evidence = result.documentation;
+      if (
+        !evidence ||
+        evidence.status !== "PASS" ||
+        evidence.findings.length > 0 ||
+        evidence.snapshotHash !== snapshot.manifestHash ||
+        JSON.stringify(evidence.files.map((file) => file.path).sort()) !==
+          JSON.stringify([...documentationPolicy.requiredFiles].sort()) ||
+        evidence.files.some((file) => {
+          const entry = artifact.manifest.untracked.find(
+            (candidate) => candidate.path === file.path,
+          );
+          return entry && entry.sha256 !== file.sha256;
+        })
+      )
+        return blocked("EVIDENCE_MISMATCH");
+    }
     const checks = spec.project.definition.executionProfile?.approvedChecks;
     if (
       !checks?.length ||
@@ -246,6 +265,17 @@ export class RunDeliveryService {
           `- ${text(check.name)} / ${check.phase} / rodada ${check.round}: ${check.status}, exit ${check.exitCode ?? "desconhecido"}; preexistente ${check.preExisting ? "sim" : "não"}.`,
       ),
       "",
+      ...(result.documentation
+        ? [
+            "## Documentação técnica no projeto",
+            "",
+            `Gate estrutural: ${result.documentation.status}; snapshot ${result.documentation.snapshotHash}. Revisão semântica independente registrada abaixo; aceite humano ainda necessário.`,
+            ...result.documentation.files.map(
+              (file) => `- ${text(file.path)}: SHA-256 ${file.sha256}.`,
+            ),
+            "",
+          ]
+        : []),
       "## Revisão de IA",
       "",
       text(result.review.summary),

@@ -167,6 +167,38 @@ function fixture() {
   return { service, run, attempt, tx, prisma, specification };
 }
 describe("RunDeliveryService", () => {
+  it("requires successful documentation evidence bound to the final snapshot for new policies", async () => {
+    const f = fixture();
+    const profile = f.specification.project.definition.executionProfile;
+    if (!profile) throw new Error("fixture profile required");
+    profile.documentation = {
+      requiredFiles: ["src/README.md"],
+      reportPath: "src/README.md",
+      requiredSections: ["Checks"],
+    };
+    await expect(f.service.get(f.run.id)).resolves.toMatchObject({
+      delivery: null,
+      reason: "EVIDENCE_MISMATCH",
+    });
+    f.attempt.result.documentation = {
+      status: "PASS",
+      snapshotHash: f.attempt.artifact.manifest.manifestHash,
+      files: [{ path: "src/README.md", sha256: "c".repeat(64) }],
+      findings: [],
+    };
+    f.attempt.resultDigest = hash(JSON.stringify(f.attempt.result));
+    expect((await f.service.get(f.run.id)).delivery?.documentMarkdown).toContain(
+      "Documentação técnica no projeto",
+    );
+    f.attempt.result.documentation.snapshotHash = "d".repeat(64);
+    f.attempt.resultDigest = hash(JSON.stringify(f.attempt.result));
+    await expect(f.service.get(f.run.id)).resolves.toMatchObject({
+      delivery: null,
+      reason: "EVIDENCE_MISMATCH",
+    });
+    expect(f.tx.run.update).not.toHaveBeenCalled();
+  });
+
   it("accepts the frozen original specification on an explicit resume event", async () => {
     const f = fixture();
     f.tx.outboxEvent.findUnique.mockResolvedValue({

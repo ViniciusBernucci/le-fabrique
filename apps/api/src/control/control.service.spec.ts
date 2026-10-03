@@ -10,6 +10,11 @@ const definitionInput = {
   forbiddenPaths: ["secrets"],
   checks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
   executionProfile: {
+    documentation: {
+      requiredFiles: ["src/README.md"],
+      reportPath: "src/README.md",
+      requiredSections: ["Verificação"],
+    },
     contextSources: [{ path: "src/README.md", role: "INSTRUCTION" as const }],
     approvedChecks: [{ name: "test", command: "/usr/bin/npm", args: ["test"] }],
   },
@@ -147,6 +152,24 @@ describe("ControlService", () => {
 
     await expect(new ControlService(prisma as never).markReady(draft.id, 1)).rejects.toThrow(
       "Project execution profile with approved context and checks is required before READY",
+    );
+    expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
+    expect(transaction.outboxEvent.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects READY without documentation policy before outbox or state mutation", async () => {
+    const withoutDocs = structuredClone(draft);
+    Reflect.deleteProperty(
+      withoutDocs.project.definition.configuration.executionProfile,
+      "documentation",
+    );
+    const transaction = {
+      ticket: { findUnique: vi.fn().mockResolvedValue(withoutDocs), updateMany: vi.fn() },
+      outboxEvent: { create: vi.fn() },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+    await expect(new ControlService(prisma as never).markReady(draft.id, 1)).rejects.toThrow(
+      "Project documentation policy is required before READY",
     );
     expect(transaction.ticket.updateMany).not.toHaveBeenCalled();
     expect(transaction.outboxEvent.create).not.toHaveBeenCalled();

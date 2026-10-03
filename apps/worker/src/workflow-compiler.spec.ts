@@ -22,6 +22,11 @@ const specification: ExecutionSpecification = {
       forbiddenPaths: ["secrets"],
       checks: [{ name: "unit", command: "/usr/bin/npm", args: ["test", "--", "--run"] }],
       executionProfile: {
+        documentation: {
+          requiredFiles: ["README.md"],
+          reportPath: "README.md",
+          requiredSections: ["Verificação"],
+        },
         contextSources: [{ path: "README.md", role: "INSTRUCTION" }],
         approvedChecks: [{ name: "unit", command: "/usr/bin/npm", args: ["test", "--", "--run"] }],
       },
@@ -71,6 +76,15 @@ const profile: TrustedWorkflowProfile = {
 };
 
 describe("compileWorkflowRequest", () => {
+  it("does not compile a real execution without a documentation policy", () => {
+    const legacy = structuredClone(specification);
+    if (legacy.project.definition.executionProfile)
+      delete legacy.project.definition.executionProfile.documentation;
+    expect(() => compileWorkflowRequest(workflowId, legacy, profile)).toThrow(
+      "Project documentation policy is required",
+    );
+  });
+
   it("compiles snapshot values and trusted runtime configuration into a validated request", () => {
     const request = compileWorkflowRequest(workflowId, specification, profile);
 

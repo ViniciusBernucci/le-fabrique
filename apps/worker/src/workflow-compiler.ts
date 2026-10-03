@@ -74,6 +74,8 @@ export function compileWorkflowRequest(
   const executionProfile = specification.project.definition.executionProfile;
   if (!executionProfile) throw new Error("Project execution profile is required");
 
+  if (!executionProfile.documentation) throw new Error("Project documentation policy is required");
+
   for (const source of profile.contextSources) {
     const normalized =
       !source.path.startsWith("/") &&
@@ -140,5 +142,6 @@ export function compileWorkflowRequest(
     snapshotLimits: profile.snapshotLimits,
     maxCorrectionRounds: profile.maxCorrectionRounds,
     modelRequested: profile.modelRequested,
+    documentation: executionProfile.documentation,
   });
 }
