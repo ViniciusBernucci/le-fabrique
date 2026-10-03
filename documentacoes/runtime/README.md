@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012T retoma por estado externo, nunca sessão privada: baseline antes de restore, contexto depois, regressão preservada não preexistente. Restore recusa symlinks/controle/dirty/base divergente; falha não inicia cliente. Developer com falha terminal conhecida captura progresso. [Evidências](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+
 FAC-012R mantém término unknown sticky mesmo após callbacks saírem do Set. AbortSignal conhecido gera CANCELLED/INTERRUPTED com observações/snapshot posterior à parada; não inicia outra chamada. Falha de captura não fabrica evidência nem liberação. [Evidências](../operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
 
 FAC-012P conecta exportação de snapshot ao consumer/journal, sem chamar IA para transportar artefatos. Falha de transporte não é aprovação; resultado/artefatos permanecem preservados para recuperação. [Evidências](../controle/2026-10-03-FAC-012P-artefatos-painel.md).

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.83 - 2026-10-03
+
+FAC-012T liga retomada humana de snapshot íntegro/parado à outbox/claim/fence novo, baseline limpo antes de restore/contexto reconstruído. Restauração recusa symlinks; Developer falho preserva progresso. 355 testes/checks; sem operação real/handoff automático, aceite pendente.
+
 ## 2.82 - 2026-10-03
 
 FAC-012S conecta pausa/cancelamento autenticado/otimista no painel à renew do worker. Pedido não libera writer; stop/snapshot/journal antes de PAUSED/CANCELLED. 336 testes/checks passaram; migration versionada. Retomada/MVP completo pendentes; aceite humano separado.

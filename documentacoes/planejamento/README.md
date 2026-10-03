@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012S (`be4e2ff`, 336 testes) e T (`42e7037`, 355 testes) implementados, AWAITING_HUMAN: comandos administrativos e retomada explícita de snapshot comprovadamente parado. Próximos: recovery de finalização, provider/identidades/handoff, docs técnicas e transporte maior. [Estado atual](../../CONTROLE-MVP.md).
+
 FAC-012R implementado (`abfb033`), AWAITING_HUMAN, 315 testes/checks. Interrupções cooperativas preservadas; abruptas continuam bloqueadas. Próximos: comandos de run/retomada e providers/identidades/handoff/docs do projeto.
 
 FAC-012Q AWAITING_HUMAN (`bfd8532`): relatório de entrega e aceite exato no painel, 306 testes. Documentação técnica dentro do projeto não é gerada por esse relatório; interrupção/recovery, controles e provider/handoff/identidades ainda pendentes.

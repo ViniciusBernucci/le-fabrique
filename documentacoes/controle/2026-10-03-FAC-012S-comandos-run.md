@@ -1,6 +1,6 @@
 # FAC-012S — Comandos administrativos de execução
 
-Estado: EM VERIFICAÇÃO; não aceito. Baseline `25ab4a4` (READY sobre `4be88df`). Um writer na worktree isolada, providers sintéticos, nenhuma operação em serviço/banco/fila real.
+Estado final: IMPLEMENTADO / AWAITING_HUMAN; não aceito. Baseline `25ab4a4` (READY sobre `4be88df`). Um writer na worktree isolada, providers sintéticos, nenhuma operação em serviço/banco/fila real. Correção documental de cabeçalho pelo FAC-012T; checkpoint histórico abaixo preservado.
 
 ## Checkpoint e diagnóstico após duas rodadas
 

@@ -1,6 +1,6 @@
 # FAC-012T — Retomada explícita do snapshot
 
-Status: READY. Data: 2026-10-03. Baseline `93735b0`; 336 testes/checks FAC-012S. Branch/worktree: `feat/fac-012t-resume`, `/home/vinicius/le-fabrique-fac-012t`.
+Status: AWAITING_HUMAN. Código `42e7037f81c2fe19cefee85bb64c67373b29795f`; 355 testes/checks passaram. Data: 2026-10-03. Baseline `93735b0`; 336 testes/checks FAC-012S. Branch/worktree: `feat/fac-012t-resume`, `/home/vinicius/le-fabrique-fac-012t`.
 
 Objetivo: operador solicita retomada de tentativa terminal/parada com resultado/bundle/checkpoint íntegros. Outbox congela snapshot/origem e nova intenção; claim emite fence novo somente para essa intenção e preserva histórico. Worker mede baseline limpo, restaura snapshot verificado, reconstrói contexto e continua objetivo original; não reclassifica regressão preservada como preexistente.
 

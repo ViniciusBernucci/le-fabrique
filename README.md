@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012T implementa retomada explícita de snapshot parado/íntegro pelo painel, objetivo original e fence novo, 355 testes/checks. Recovery de finalização/providers/identidades/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+
 FAC-012S adiciona pausa/cancelamento no painel com preservação após stop comprovado. 336 testes/checks; migration não aplicada. Retomada/providers/identidades/docs técnicas e operação pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md).
 
 FAC-012R preserva snapshot/observações de interrupção após stop comprovado, sem liberar writer unknown. 315 testes/checks passaram; crash abrupto, retomada, provider/handoff/identidades e documentação técnica interna ainda pendentes. [Evidências](documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).

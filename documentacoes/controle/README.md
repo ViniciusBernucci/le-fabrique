@@ -1,5 +1,7 @@
 # Controle administrativo
 
+FAC-012T: POST `/api/runs/:id/resume` confirma versão/origem/digest e exige stop/resultado/bundle/checkpoint íntegros. Outbox congela objetivo original; claim cria fence novo só para intenção exata. UI confirma nova tentativa/limites e preserva histórico. [Relatório](2026-10-03-FAC-012T-retomada-snapshot.md).
+
 FAC-012S: POST `/api/runs/:id/control` AdminAuthGuard/expectedVersion/attemptId/PAUSE|CANCEL registra intenção, não parada. Detail expõe pedido; worker lê na renew e conclui após stop/evidência. UI confirma por versão; PAUSED manual difere de PAUSED_LIMIT; retomada pendente. [Relatório](2026-10-03-FAC-012S-comandos-run.md).
 
 FAC-012R amplia relatório público com CANCELLED/INTERRUPTED e reconcile valida relatório/snapshot de cancelamento. UI pode inspecionar resultado parcial, mas Q não o torna elegível ao aceite/DONE. Sem comandos de pausa/retomada por esse incremento. [Evidências](../operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).

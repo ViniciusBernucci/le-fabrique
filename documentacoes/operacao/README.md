@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012T conecta retomada explícita via run.resume.v1: intenção imutável, claim fenced após stop/evidência, ArtifactReader, baseline limpo → restore → contexto reconstruído → workflow. Redelivery não cria writer; unknown/crash sem prova bloqueados. Developer FAILED conhecido preserva snapshot. [Relatório](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+
 FAC-012S liga PAUSE/CANCEL à renew fenced: abort tipado → stop → snapshot/journal/result/bundle/checkpoint → PAUSED/CANCELLED. Pedido não libera writer; unknown conserva fence. Pode aguardar lease/3; retomada/crash pendentes. [Relatório](../controle/2026-10-03-FAC-012S-comandos-run.md).
 
 FAC-012R preserva interrupção de workflow já materializado/contextualizado: stop conhecido → snapshot novo/observações → journal → result/artifact → checkpoint/complete CANCELLED. Unknown sticky ou ausência/falha de evidência deixa fence bloqueado, sem novo writer. Crash abrupto/retry administrativo/retomada seguem pendentes. [Relatório](2026-10-03-FAC-012R-snapshot-interrupcao.md).

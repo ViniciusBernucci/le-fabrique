@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012T — retomada segura](controle/2026-10-03-FAC-012T-retomada-snapshot.md)
+- [Ticket FAC-012T](planejamento/FAC-012T-retomada-snapshot.md)
+
 - [FAC-012S — comandos de run](controle/2026-10-03-FAC-012S-comandos-run.md)
 - [Ticket FAC-012S](planejamento/FAC-012S-comandos-run.md)
 

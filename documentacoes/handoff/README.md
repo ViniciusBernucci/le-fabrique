@@ -1,5 +1,7 @@
 # Checkpoint e troca de provider
 
+FAC-012T implementa retomada HUMANA, não handoff automático: última tentativa parada com hashes/bundle/checkpoint, nova intenção/outbox/fence e worktree, baseline pré-restore e contexto pós-restore. Configuração atual resolve contas/modelos; sem sessão privada. Crash unknown e handoff automático permanecem pendentes. [Relatório](../controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
