@@ -1,6 +1,6 @@
 # FAC-012M — Resultados de execução no painel
 
-Status: READY. Data: 2026-10-03.
+Status: AWAITING_HUMAN. Data: 2026-10-03. Código revisável: `14ae5baf9fe7b7ba98934ac581e4788e794da56c`; checks locais concluídos, sem aceite humano.
 Baseline: `d24245a83e8686373f237a2a7fcb2db6cba69746`.
 Branch/worktree: `feat/fac-012m-execution-results`, `/home/vinicius/le-fabrique-fac-012m`.
 

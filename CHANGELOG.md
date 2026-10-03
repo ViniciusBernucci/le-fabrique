@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.76 - 2026-10-03
+
+FAC-012M persiste resultados imutáveis/fenced antes de concluir e expõe histórico/checks/revisão/metadados/chamadas no painel. DTO minimizado 64 KiB e polling cancelável. 240 testes, typecheck/build/lint/Prisma validate passaram. Migration não aplicada; diff completo/recuperação pendentes; aguarda aceite humano. Sem piloto/push/deploy.
+
 ## 2.75 - 2026-10-03
 OPS-006 consolida OPS-005/FAC-012K/L localmente em developer, resolve conflitos preservando gate/host worker e corrige UID do user manager no env externo. 227 testes, lint, typecheck, build, Compose/systemd config e diff check passaram. Worktrees K/L/OPS-005 retirados após ancestry/limpeza; refs preservadas. CONTROLE-MVP.md lista funcionalidades/lacunas; aceites A/B reconciliados no plano. Sem push/deploy/piloto.
 

@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-012M registra observações por chamada (papel, instalação configurada, provider, configuração/versionamento, modelo solicitado/efetivo, status, uso e timestamps) sem prompt/session/stdout. Null permanece desconhecido. Identidade autenticada por instalação não está comprovada por esse registro. Relatório público omite caminhos e é persistido antes de checkpoint/complete; falha de persistência impede conclusão. [Evidências](../controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).
+
 ## Estado atual — FAC-012L
 
 O workflow é composto pelo consumer real com gate desabilitado por padrão. Developer/Reviewer resolvem instalação, modelo, timeout e tentativas da configuração atual a cada chamada. AbortSignal de lease/shutdown alcança clientes e checks; cancelamento aguarda término. Falha de observação de systemd nunca confirma parada. Testes Linux verificam cancelamento de descendente; clientes usam fakes. Identidade de serviço e Claude continuam sem validação operacional. Recuperação, handoff e transporte de artefatos ainda são lacunas; ver [FAC-012L](../operacao/2026-10-03-FAC-012L-consumer-execucao-real.md).

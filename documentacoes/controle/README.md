@@ -1,5 +1,9 @@
 # Controle administrativo
 
+## Atualização FAC-012M
+
+GET `/api/runs?projectId=UUID` e `/api/runs/:runId` usam AdminAuthGuard e limitam consultas a 50 registros/tentativas recentes. POST `/api/internal/orchestration/attempts/:attemptId/result` exige WorkerAuthGuard, worker/fence atuais e relatório estrito até 64 KiB. Resultado imutável não libera writer. Painel exibe histórico/checks/revisão/metadados/chamadas, polling sequencial/cancelável; desconhecidos não são estimados. Migration versionada, não aplicada; sem aprovação/retomada automática. [Relatório](2026-10-03-FAC-012M-resultados-execucao-painel.md). Passagens abaixo sobre probe/bibliotecas descrevem seus incrementos históricos; estado integrado atual é FAC-012L/M, gate desligado.
+
 Status: controle base ACEITO no FAC-003; Centro de Configuracoes ACEITO no FAC-011.
 
 A API NestJS expõe health sem autenticação e protege as rotas administrativas com um Bearer token vindo de `ADMIN_API_TOKEN`. O painel solicita esse token ao operador, mantém o valor somente durante a sessão do navegador e chama contratos validados por Zod.

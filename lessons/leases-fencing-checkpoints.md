@@ -1,5 +1,7 @@
 # Lease, fencing e checkpoint cobrem falhas diferentes
 
+No FAC-012M, `ExecutionResultsService.report` só grava result/resultDigest, autenticando worker e fencing atual. Mesmo relatório retorna receipt; digest divergente falha. Isso preserva evidência, não quiescência: `stoppedConfirmed` e lease não são atualizados. `execution.processor` envia relatório antes de checkpoint/complete; indisponibilidade deixa reconciliação pendente em vez de declarar sucesso sem evidência.
+
 Lease limita por quanto tempo o controle considera um writer vigente. Fencing token identifica a tentativa atual e faz a API recusar escrita atrasada. Nenhum dos dois prova que um processo local morreu: no FAC-008, lease vencido sem `stoppedConfirmed` leva run e ticket a `BLOCKED_RECOVERY`, sem entregar o workspace a outro writer.
 
 Idempotencia precisa cobrir o ciclo inteiro. O dispatcher usa o ID da outbox como `jobId`; run e attempt possuem restricoes unicas; claim, checkpoint e complete devolvem o estado existente quando o mesmo request reaparece. O ensaio HTTP repetiu cada etapa e terminou com uma unica linha em cada tabela.

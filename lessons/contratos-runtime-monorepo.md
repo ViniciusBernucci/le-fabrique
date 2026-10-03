@@ -1,5 +1,7 @@
 # Contratos de runtime no monorepo TypeScript
 
+No FAC-012M, o DTO público não reutiliza o resultado privado inteiro: remove workspace/paths, reduz untracked a contagem, limita JSON a 64 KiB e usa nested strict. Runtime observações null não viram estimativas de modelo/uso. React escapa texto de IA e polling sequencial aborta respostas antigas. Redaction de padrões conhecidos complementa minimização, sem prometer reconhecer todo segredo arbitrário.
+
 ## Conceito aplicado
 
 Tipos TypeScript desaparecem na execução. Por isso, compartilhar apenas interfaces entre painel, API e worker não valida dados recebidos por HTTP, fila ou variáveis de ambiente. O bootstrap centraliza schemas Zod em `packages/contracts`; os tipos são inferidos desses schemas, mantendo a validação e a tipagem na mesma fonte.

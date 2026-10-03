@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012M (`14ae5ba`) adiciona resultados persistidos por tentativa/fencing e histórico de execuções no painel: checks, revisão, metadados de snapshots e chamadas/modelos observados. 240 testes e checks locais passaram; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Diff completo, recuperação e operação real seguem pendentes.
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.

@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-012M — resultados no painel](controle/2026-10-03-FAC-012M-resultados-execucao-painel.md)
+- [Ticket FAC-012M](planejamento/FAC-012M-resultados-execucao-painel.md)
+
 - [Controle atual do MVP](../CONTROLE-MVP.md)
 - [OPS-006 — integração local e controle](operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md)
 - [Ticket OPS-006](planejamento/OPS-006-integracao-local-controle-mvp.md)
