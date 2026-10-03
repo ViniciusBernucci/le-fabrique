@@ -1,5 +1,7 @@
 # Planejamento atual
 
+FAC-012AC IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AC-writer-global.md), [evidências](../controle/2026-10-03-FAC-012AC-writer-global.md). 445 testes + 3 PostgreSQL. Piloto externo não é requisito de conclusão do software.
+
 FAC-012AB IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AB-ensaio-integrado-mvp.md), [evidências](../operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md). Revisão `1714347`; 438 testes; aceite e operação reais pendentes.
 FAC-012AA IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AA-confinamento-claude.md), [evidências](../runtime/2026-10-03-FAC-012AA-confinamento-claude.md). Código `56f2e38`; 433 testes/checks; validação nativa do serviço e aceite pendentes.
 

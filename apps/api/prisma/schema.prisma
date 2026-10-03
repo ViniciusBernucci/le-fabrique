@@ -166,6 +166,8 @@ model Run {
   @@map("runs")
 }
 
+// Raw migration FAC-012AC enforces attempts_single_unconfirmed_writer globally.
+// Prisma cannot express this partial expression index; preserve it in future migrations.
 model Attempt {
   id               String        @id @default(uuid()) @db.Uuid
   runId            String        @db.Uuid @map("run_id")

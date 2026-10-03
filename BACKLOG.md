@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-012AC: AWAITING_HUMAN — exclusão global em `143f3d6`, 445 testes + 3 PostgreSQL; migration somente efêmera. Piloto não bloqueia MVP. [Relatório](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+
 - FAC-012AB: AWAITING_HUMAN — ensaio integrado interno em `1714347`, 438 testes; providers/controle externos sintéticos, sem operação real. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 - FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço e piloto pendentes, sem conta real desbloqueada. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 

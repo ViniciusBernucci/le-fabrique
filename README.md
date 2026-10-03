@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-012AC impõe um writer global na API/PostgreSQL, inclusive entre tickets distintos; 445 testes + 3 de PostgreSQL real passaram. Piloto externo é experimento opcional posterior e não bloqueia conclusão do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+
 FAC-012AB verifica cinco cenários integrados com Git/sandbox/snapshots/journal reais e portas externas sintéticas: entrega, restore, handoff, replay e bloqueios. 438 testes passaram; MVP operacional continua pendente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 FAC-012AA implementa perfil Claude por caminho e preflight opt-in com prova privada vinculada ao binário/UID/instalação; nenhuma prova real emitida. Junto do Z fecha o código das lacunas mapeadas, com 433 testes/checks. MVP operacional/aceite/piloto/implantação ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 

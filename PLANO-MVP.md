@@ -6,13 +6,13 @@ Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real entra antes do ensaio operacional. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
-V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 define o piloto real e mede a operação. FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão implementados e aceitos. FAC-010 aguarda validacao operacional; FAC-011D implementa PR sob gate e aguarda aceite. FAC-001 foi adiado até a plataforma estar pronta.
+Um projeto, um worker, um writer. Durante a construção, fixtures e repositórios sintéticos validam o núcleo; um projeto externo real pode entrar posteriormente em um experimento separado, sem bloquear a conclusão do MVP. Sprints por objetivos de 1-2 semanas sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
+V1 valida o núcleo e um runtime; V2 testa handoff; Sprint 3 conclui o software e verifica a operação com dados sintéticos; piloto externo é experimento posterior opcional. FAC-000, FAC-002 a FAC-009, FAC-010A/B/C e FAC-011A/B/C estão implementados e aceitos. FAC-010 aguarda validacao operacional; FAC-011D implementa PR sob gate e aguarda aceite. FAC-001 foi adiado até a plataforma estar pronta.
 ## Épicos
-Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, definição do piloto real e experimento operacional. Evolução: terceiro adapter/capacidades novas.
+Sprint 1: controle, worker, preflight sintético e runtime. Sprint 2: execução recuperável e providers. Sprint 3: documentação, verificação integrada e preparação operacional sem dependência de piloto. Experimento externo: projeto escolhido posteriormente. Evolução: terceiro adapter/capacidades novas.
 
 ## FAC-001 — Contratar piloto
-Sprint: Sprint 3. Dependências: FAC-011. Esforço estimado: 1-2 dias. Status: DEFERRED.
+Sprint: Experimento externo opcional. Dependências: FAC-011. Esforço estimado: 1-2 dias. Status: DEFERRED.
 Descrição: Após o núcleo da plataforma estar pronto, o responsável escolhe o projeto externo pela interface; então repo, baseline, regras, caminhos e tickets pequenos ficam registrados no software para o ensaio operacional. Nenhuma escolha concreta entra no codigo da fabrica.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Contrato verificável e baseline reproduzido; não editar lógica fora do ticket.
@@ -102,8 +102,8 @@ Entregáveis: contratos, controle, dispatcher, probe, testes e documentacao vinc
 
 Aceite registrado pelo OPS-003 na revisão documental `3ef3d543b98fb48226714787315f4de947fa6dd9`. FAC-012B também está DONE na revisão `3e28363b0642f8e05840bb649b681e3837e1e015`; C–L aguardam aceite humano. O estado detalhado atual do MVP está em [CONTROLE-MVP.md](CONTROLE-MVP.md), sem incluir piloto/implantação no escopo automático.
 
-## FAC-012 — Dez tickets e operação
-Sprint: Sprint 3. Dependências: FAC-001, FAC-011. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+## FAC-012 — Experimento externo com dez tickets
+Sprint: Experimento externo opcional, fora do aceite do MVP de software. Dependências: FAC-001, FAC-011. Esforço estimado: 2-3 dias. Status: PLANEJADO.
 Descrição: Executar o projeto real selecionado e configurado pelo responsavel no software, incluindo dez tickets, falhas, backup/restauração, métricas de custo/espera/qualidade e retrospectiva.
 Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README atual, lessons pertinentes e backlog.
 Aceite: Dez tickets contabilizados; restauração comprovada; metas avaliadas; zero cobrança extra/API não autorizada.

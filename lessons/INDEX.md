@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-012AC aplica exclusão persistida global independente de leases por run/concurrency: [leases/fencing](leases-fencing-checkpoints.md).
+
 FAC-012AB aplica prova de composição com Git/sandbox/journal reais e portas externas sintéticas: [sandbox/worktree/snapshot](sandbox-worktree-snapshot.md).
 FAC-012Y diferencia troca sequencial de cliente e transferência de autoridade do writer: [lifecycle CLI](lifecycle-processo-cli.md).
 

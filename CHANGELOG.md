@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — FAC-012AC
+
+Claim consulta writer global; índice parcial garante exclusão concorrente entre runs, sem liberar por lease/status. 448 verificações passaram; piloto removido dos requisitos de conclusão do software nos documentos atuais. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+
 ## 2026-10-03 — FAC-012AB
 
 Cinco testes de composição real do worker verificam bytes/bundle/documentação, restore/handoff e replay conservador; typecheck da integração incluído no comando raiz. 438 testes passaram, runtime inalterado. [Relatório](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).

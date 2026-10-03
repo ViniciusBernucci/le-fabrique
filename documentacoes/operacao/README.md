@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-012AC impede novo claim em qualquer run enquanto houver tentativa sem stop confirmado. Não limpar por lease/status; banco incoerente bloqueia migration e exige diagnóstico. `npm run test:postgres` prova exclusão em banco efêmero, sem serviço real. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).
+
 FAC-012AB verifica composição real Git/sandbox/contexto/snapshot/bundle/journal com adapters/controle sintéticos. Cinco cenários, 438 testes; nenhum gate operacional ativado. [Evidências](2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 FAC-012Z conecta documentação técnica ao workflow real antes de Reviewer: Developer atualiza arquivos configurados, checks/snapshot/gate bounded verificam estrutura, revisão independente confere verdade e snapshot posterior invalida mudanças durante review. Ausência de política bloqueia compilação real; até duas correções continuam globais. Consumer/preflight não foram ativados. [Evidências](../controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
@@ -50,7 +52,7 @@ Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a st
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 ## Inicialização
-Durante a construção, confirmar políticas e usar somente fixtures sintéticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Confirmar o contrato do piloto real antes do FAC-012. Deploy do controle é uma tarefa futura autorizada separadamente.
+Durante a construção, confirmar políticas e usar somente fixtures sintéticas; instalar clientes de fontes oficiais com versões registradas; login humano nos clientes; verificar extras desligados nas contas; executar preflight; registrar worker com credencial própria de escopo mínimo e validade/rotação. Piloto externo é experimento opcional posterior e não bloqueia a conclusão/preparação operacional do MVP. Deploy do controle é uma tarefa futura autorizada separadamente.
 
 FAC-002 comprovou o Codex CLI 0.159.2 no usuario atual da VPS, com autenticacao ChatGPT, chaves de API ausentes e comandos confinados a fixtures. O teste financeiro continua humano: verificar em Settings > Usage que creditos e recarga automatica nao serao usados. O FAC-005 deve repetir a prova sob a identidade de servico que executara o adapter.
 

@@ -1,5 +1,7 @@
 # Infraestrutura atual
 
+FAC-012AC versiona índice único parcial `attempts_single_unconfirmed_writer`; migration recusa conflitos antigos, não fabrica parada. Aplicada só em PostgreSQL efêmero; futuras migrations devem preservar índice não representável no schema Prisma. [Evidências](../controle/2026-10-03-FAC-012AC-writer-global.md).
+
 FAC-012X versiona enum RunStatus.WAITING_PROVIDER; migration aditiva não aplicada. TicketStatus já possui o valor. Preservar status/resultado/checkpoint/artifact/journal no backup; não remover enum/dados ao reverter cliente. Nenhuma operação real. [Relatório](../operacao/2026-10-03-FAC-012X-espera-provider.md).
 
 FAC-012W configura teto JSON API 8 MiB+4096 bytes, DTO 8 MiB/6 MiB raw; transporte worker→API loopback, proxy público mantém limites/bloqueio internal. Considerar memória/concurrency operacional; nenhum serviço alterado nem migração. Retenção/backup manuais, sem apagar artefatos. [Relatório](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).

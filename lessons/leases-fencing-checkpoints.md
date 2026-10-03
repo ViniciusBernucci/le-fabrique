@@ -19,3 +19,5 @@ Reentrega e retry deliberado precisam ser comandos distintos. No FAC-008, um che
 Checkpoint liga recuperacao logica ao artefato do FAC-007. Ele registra base/code SHA, snapshot ou hash do patch e confirmacao de parada. A conclusao so avanca depois desse registro, evitando que uma mensagem de sucesso sem artefato recuperavel libere a etapa seguinte.
 
 Identificadores de revisao nao podem ser inventados pelo consumidor. O evento propaga `baseRevision` apenas quando o projeto ja possui SHA Git completo; sem ele, o probe falha antes de adquirir claim e preserva o ticket para reconciliacao.
+
+FAC-012AC demonstra que exclusão por run não implementa um writer global: claim consulta todas as tentativas sem stoppedConfirmed e a migration attempts_single_unconfirmed_writer usa índice parcial sobre constante. Mesmo se duas transações observarem ausência, só um insert vence no PostgreSQL. `scripts/global-writer.postgres.test.mjs` comprova corrida, lease expirada/status terminal e recusa de reabrir writer anterior; migrar dados inconsistentes recusa em vez de fabricar stop. [Evidências](../documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
