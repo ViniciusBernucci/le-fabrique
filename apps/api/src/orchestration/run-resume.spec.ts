@@ -137,6 +137,7 @@ function fixture() {
       }),
     },
     attempt: {
+      findMany: vi.fn(async () => []),
       findFirst: vi.fn(async () => attempt),
       findUnique: vi.fn(async () => attempt),
       create: vi.fn(async ({ data }) => ({ ...data, id: crypto.randomUUID() })),

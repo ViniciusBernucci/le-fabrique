@@ -17,7 +17,7 @@ import {
   verifyExecutionArtifact,
 } from "@le-fabrique/contracts";
 import { ConflictException, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import type { Attempt, Prisma, Run } from "@prisma/client";
+import { type Attempt, Prisma, type Run } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
 import { stoppedResumeEvidence } from "./resume-evidence";
 
@@ -112,16 +112,32 @@ export class OrchestrationService {
           throw new ConflictException("Resume origin is missing");
         }
 
-        const fencingToken = run.nextFencingToken + 1;
-        const attempt = await transaction.attempt.create({
-          data: {
-            runId: run.id,
-            workerId: input.workerId,
-            sequence: fencingToken,
-            fencingToken,
-            leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs),
-          },
+        // Lease expiry, worker identity and terminal labels do not prove physical stop.
+        // The partial unique PostgreSQL index also closes concurrent claim races.
+        const unresolvedWriters = await transaction.attempt.findMany({
+          where: { stoppedConfirmed: false },
+          select: { id: true },
+          take: 1,
         });
+        if (unresolvedWriters.length > 0)
+          throw new ConflictException("Global writer termination is not confirmed");
+
+        const fencingToken = run.nextFencingToken + 1;
+        const attempt = await transaction.attempt
+          .create({
+            data: {
+              runId: run.id,
+              workerId: input.workerId,
+              sequence: fencingToken,
+              fencingToken,
+              leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs),
+            },
+          })
+          .catch((error: unknown) => {
+            if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")
+              throw new ConflictException("Global writer already claimed concurrently");
+            throw error;
+          });
         await transaction.run.update({
           where: { id: run.id },
           data: {

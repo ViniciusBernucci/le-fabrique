@@ -1,4 +1,5 @@
 import { ConflictException } from "@nestjs/common";
+import { Prisma } from "@prisma/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { OrchestrationService } from "./orchestration.service";
 
@@ -212,5 +213,96 @@ describe("OrchestrationService", () => {
         stoppedConfirmed: false,
       }),
     ).rejects.toBeInstanceOf(ConflictException);
+  });
+});
+
+describe("global writer admission", () => {
+  function fixture() {
+    const attempt = {
+      id: attemptId,
+      runId,
+      workerId,
+      sequence: 1,
+      fencingToken: 1,
+      status: "RUNNING",
+      stoppedConfirmed: false,
+      startedAt: now,
+      completedAt: null,
+      leaseExpiresAt: new Date(now.getTime() + 90_000),
+    };
+    const transaction = {
+      workerIdentity: { findUnique: vi.fn().mockResolvedValue({ status: "ONLINE" }) },
+      ticket: {
+        findUnique: vi
+          .fn()
+          .mockResolvedValue({ id: ticketId, projectId, status: "READY", version: 2 }),
+        update: vi.fn(),
+      },
+      run: {
+        findUnique: vi.fn().mockResolvedValue({ id: runId, ticketId, nextFencingToken: 0 }),
+        update: vi.fn(),
+      },
+      attempt: {
+        findFirst: vi.fn().mockResolvedValue(null),
+        findMany: vi.fn().mockResolvedValue([]),
+        create: vi.fn().mockResolvedValue(attempt),
+      },
+    };
+    const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+    return { transaction, service: new OrchestrationService(prisma as never) };
+  }
+
+  it.each(["RUNNING", "STOPPED", "FAILED", "CANCELLED"])(
+    "blocks a different run with an unconfirmed %s attempt regardless of expiry or worker",
+    async (status) => {
+      const { transaction, service } = fixture();
+      transaction.attempt.findMany.mockResolvedValue([
+        {
+          id: crypto.randomUUID(),
+          status,
+          workerId: crypto.randomUUID(),
+          leaseExpiresAt: new Date(now.getTime() - 1),
+          stoppedConfirmed: false,
+        },
+      ]);
+      await expect(service.claim(claimInput())).rejects.toThrow("Global writer termination");
+      expect(transaction.attempt.findMany).toHaveBeenCalledWith({
+        where: { stoppedConfirmed: false },
+        select: { id: true },
+        take: 1,
+      });
+      expect(transaction.attempt.create).not.toHaveBeenCalled();
+      expect(transaction.run.update).not.toHaveBeenCalled();
+      expect(transaction.ticket.update).not.toHaveBeenCalled();
+    },
+  );
+
+  it("admits the next writer only when no unconfirmed attempt exists globally", async () => {
+    const { transaction, service } = fixture();
+    await expect(service.claim(claimInput())).resolves.toMatchObject({
+      replayed: false,
+      fencingToken: 1,
+    });
+    expect(transaction.attempt.create).toHaveBeenCalledOnce();
+  });
+
+  it("maps PostgreSQL's concurrent unique exclusion to a conflict", async () => {
+    const { transaction, service } = fixture();
+    transaction.attempt.create.mockRejectedValue(
+      new Prisma.PrismaClientKnownRequestError("synthetic concurrent writer", {
+        code: "P2002",
+        clientVersion: "6.12.0",
+      }),
+    );
+    await expect(service.claim(claimInput())).rejects.toBeInstanceOf(ConflictException);
+    expect(transaction.run.update).not.toHaveBeenCalled();
+    expect(transaction.ticket.update).not.toHaveBeenCalled();
+  });
+
+  it("propagates database failures without fabricating a claim", async () => {
+    const { transaction, service } = fixture();
+    transaction.attempt.create.mockRejectedValue(new Error("synthetic database failure"));
+    await expect(service.claim(claimInput())).rejects.toThrow("synthetic database failure");
+    expect(transaction.run.update).not.toHaveBeenCalled();
   });
 });

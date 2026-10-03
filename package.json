@@ -23,7 +23,8 @@
     "db:deploy": "npm run db:deploy -w @le-fabrique/api",
     "typecheck:scripts": "tsc -p tsconfig.scripts.json",
     "preflight:claude": "tsx scripts/fac-012aa-claude-preflight.ts",
-    "typecheck:integration": "tsc -p tsconfig.integration.json"
+    "typecheck:integration": "tsc -p tsconfig.integration.json",
+    "test:postgres": "node --test scripts/global-writer.postgres.test.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
