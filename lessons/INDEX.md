@@ -1,4 +1,6 @@
 # Lessons
+
+FAC-012L aplica heartbeat/quiescência, lifecycle CLI e checkout confiável ao consumer gated; os conceitos existentes foram atualizados, sem criar lessons duplicadas. [Evidências](../documentacoes/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md).
 Documentos de conceitos serão preenchidos conforme implementação real. Este kit é planejamento; não inventa exemplos como se executados. Usar templates/LESSON.md e incluir links de revisão/entrega. Conceitos previstos: lifecycle CLI, leases/fencing, worktree/snapshot, contexto determinístico, idempotência, isolamento e cota observada.
 
 - [Contratos de runtime no monorepo TypeScript](contratos-runtime-monorepo.md)

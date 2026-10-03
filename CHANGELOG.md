@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.74 - 2026-10-03
+FAC-012L implementa consumer real com gate desligado por padrão, checkout/SHA imutável, workflow com rotas configuradas, limites por função, lease/fencing, cancelamento e checkpoint antes de conclusão. Testes Linux comprovam cancelamento de descendente e ausência de confirmação quando systemd não pode ser consultado. Checks passaram; 227 testes finais distintos. Operação real, recuperação, artefatos no painel e handoff permanecem pendentes; aguarda aceite humano.
+
 ## 2.73 - 2026-10-03
 FAC-012L fica READY para ligar com segurança o consumer real a checkout, workflow configurado, lease/fencing, quiescência e checkpoint; default desabilitado, sem provider ou piloto.
 

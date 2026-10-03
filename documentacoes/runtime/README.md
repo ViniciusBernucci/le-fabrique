@@ -1,5 +1,11 @@
 # Agent Runtime Gateway e Provider Manager
 
+## Estado atual — FAC-012L
+
+O workflow é composto pelo consumer real com gate desabilitado por padrão. Developer/Reviewer resolvem instalação, modelo, timeout e tentativas da configuração atual a cada chamada. AbortSignal de lease/shutdown alcança clientes e checks; cancelamento aguarda término. Falha de observação de systemd nunca confirma parada. Testes Linux verificam cancelamento de descendente; clientes usam fakes. Identidade de serviço e Claude continuam sem validação operacional. Recuperação, handoff e transporte de artefatos ainda são lacunas; ver [FAC-012L](../operacao/2026-10-03-FAC-012L-consumer-execucao-real.md).
+
+## Histórico e componentes
+
 FAC-012C define escrita explícita e vazia por padrão para processos no `SandboxRunner`. FAC-012D restringe o perfil nativo do Codex: leitura geral do workspace, escrita apenas nos `allowedPaths` do snapshot imutável, `.git`/`.codex` negados e rede desligada. Paths autorizados precisam existir e não podem conter symlinks; paths vazios mantêm o workspace read-only. Reviewer usa lista vazia e `READ_ONLY`. Além de contratos/fixtures, o perfil passou smoke test real sem inferência pelo `codex sandbox` 0.159.2: escrita fora da allowlist (`EROFS`), leitura de `.git`/`.codex` (`EACCES`) e conexão local (`EPERM`) foram bloqueadas; detalhes sanitizados no relatório FAC-012D. Isso ainda não comprova acesso/autenticação sob a identidade real do serviço. Claude não aplica essa allowlist granular e não está coberto por FAC-012D.
 Perfis de projeto não selecionam contas, modelos ou providers. A cada execução, o worker deve continuar resolvendo essas escolhas pela configuração atual do Centro de Configurações e comparando-as com os adapters instalados/elegíveis; FAC-012I não liga o consumer nem altera autenticação.
 

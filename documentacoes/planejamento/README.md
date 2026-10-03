@@ -21,7 +21,7 @@ FAC-012J implementado em biblioteca isolada; aguarda aceite humano. Prepara chec
 
 FAC-012K implementa uma primitiva isolada de lease viva e cancelamento conservador; aguarda aceite humano e segue desligada do consumer, sem provider, checkout ou fila real.
 
-FAC-012L está READY para integrar o consumer real ponta a ponta com ativação desabilitada por padrão; desenvolvimento só usa dependências sintéticas, sem serviço/provider/piloto.
+FAC-012L implementado em `54bf483`; aguarda aceite humano. Consumer real integra checkout/workflow, rotas da interface e lease/fencing/checkpoint, desabilitado por padrão. Testes incluem cancelamento Linux do sandbox; identidade de serviço e providers reais seguem não verificados. Recuperação, artefatos no painel e handoff ainda não estão ligados ao consumer.
 
 OPS-004 foi executado localmente: FAC-012D e FAC-012E–J foram integrados em `developer`, os checks combinados passaram e as worktrees D/OPS-004 foram removidas após prova de ancestry e limpeza. Branch refs foram preservadas. Aguarda revisão humana; não implica aceite dos tickets nem push/deploy.
 

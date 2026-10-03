@@ -1,5 +1,5 @@
 # FAC-012L - Consumer de execução autônoma
-Status: READY
+Status: AWAITING_HUMAN
 
 ## Objetivo
 Conectar evento `le-fabrique.execution` ao checkout confiável, compilador de workflow, runtime configurado e protocolo de claim/lease/fencing/checkpoint, sem embutir projeto, conta ou modelo.
@@ -34,3 +34,5 @@ Composição/consumer/config do worker; testes; documentação operacional e pla
 
 ## Evidências e aceite
 READY em 2026-10-03. Escopo de integração deliberadamente sem provider/repositório externo. Aceite humano da revisão exata obrigatório antes de habilitar o consumer.
+
+Implementação: `54bf483473cc2f2c75b7d6b6d52fa151d47455dc`. Evidências/limites/rollback: [relatório FAC-012L](../operacao/2026-10-03-FAC-012L-consumer-execucao-real.md). Gate desabilitado; nenhum serviço ativado. Recuperação, artefatos no painel e handoff operacional permanecem pendentes.

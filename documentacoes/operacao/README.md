@@ -1,5 +1,13 @@
 # Operação da fábrica e worker
 
+## Estado atual — FAC-012L
+
+O consumer `le-fabrique.execution` compõe checkout confiável, compilador, workflow e LeaseGuard com `WORKER_EXECUTION_ENABLED=true`. O default é `false`, sem fixture consumindo essa fila; jobs aguardam. Instalação, modelo e limites Developer/Reviewer vêm da configuração atual da interface. Perda de lease e parada não comprovada impedem conclusão indevida. SIGINT/SIGTERM e falha do heartbeat abortam o trabalho antes de fechar a fila; consulta de systemd indisponível permanece desconhecida.
+
+Resultado aprovado vai a VALIDATING com checkpoint anterior a complete. Configurar raízes separadas, hosts exatos e CLIs absolutos; ativação depende de OPS-005/preflight real. Transporte de artefatos ao painel, replay recuperável e handoff automático ainda são pendentes. Ver [relatório FAC-012L](2026-10-03-FAC-012L-consumer-execucao-real.md).
+
+## Histórico dos incrementos anteriores ao FAC-012L
+
 OPS-004 consolidou FAC-012D e FAC-012E–J localmente em `developer`; evidências e rollback estão em `2026-10-03-OPS-004-consolidacao-worktrees.md`. FAC-012I exige perfil de execução versionado no projeto antes de READY. FAC-012J adiciona materialização segura do checkout no worker, mas o preparador ainda não é chamado pelo consumidor. Continuam pendentes identidade de serviço validada, integração do workflow real à fila e lease/fencing/writer persistidos; manter consumer no probe.
 
 FAC-012K adiciona `LeaseGuard` isolado no worker: recebe fencing token, duração/expiração da lease, função de renovação e callback de parada; passa `AbortSignal` ao trabalho e falha sem aceitar resultado quando a renovação falha ou vence. A função `stopWriter` só confirma quiescência se retornar `true`; a guarda sempre espera a operação terminar antes de propagar a perda da lease. O helper não está ligado ao consumer, e sua integração ainda precisa provar cancelamento real das árvores de processo sob a identidade do serviço.
