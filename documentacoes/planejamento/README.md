@@ -1,5 +1,6 @@
 # Planejamento atual
 
+OPS-008: correção dos comandos Prisma e favicon implementada; atualização do banco dev pendente de reconciliação do histórico e prova de stop. [Ticket](OPS-008-bootstrap-migrations-telas.md), [relatório](../infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 OPS-007 IMPLEMENTADO/AWAITING_HUMAN: integração local autorizada FAC-012Z–AH, checks e remoção das worktrees incorporadas. [Ticket](OPS-007-consolidacao-worktrees.md), [relatório](../operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
 FAC-012AH IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-012AH-admissao-capacidade.md), [evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md). 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; piloto não é dependência. Aceite/ativação separados.
 

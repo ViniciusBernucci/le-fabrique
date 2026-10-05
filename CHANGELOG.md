@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-05 — OPS-008
+
+Comandos Prisma raiz carregam `.env` explicitamente, novo db:status e favicon SVG. Diagnóstico identifica tabelas ausentes/divergência de histórico no banco dev; atualização de schema permanece pendente. [Evidências](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 ## 2026-10-05 — OPS-007
 
 Integração local FAC-012Z–AH por fast-forward, sem conflitos ou alteração funcional. Worktrees incorporadas removidas sem force, branches e aceites preservados. [Evidências](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).

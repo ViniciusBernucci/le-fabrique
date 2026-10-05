@@ -1,5 +1,6 @@
 # Backlog v2
 
+- OPS-008: AWAITING_HUMAN — comandos Prisma com `.env` raiz e favicon implementados. Falhas de telas dependem de atualizar banco dev: histórico divergente e duas tentativas sem parada confirmada; nenhuma liberação presumida. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 - OPS-007: AWAITING_HUMAN — FAC-012Z–AH integrados localmente em developer, nove worktrees funcionais removidas, branches preservadas. [Relatório](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
 - FAC-012AH: AWAITING_HUMAN — código `f2d80f1`, 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; revisão humana/ativação operacionais separadas do software e do piloto. [Relatório](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
