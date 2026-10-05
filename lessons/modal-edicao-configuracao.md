@@ -1,0 +1,7 @@
+# Edição em modal com rascunho separado
+
+FAC-013 em SettingsPanel.tsx mantém editingInstallation separado de draft. Abrir usa structuredClone; editar não muda a linha ou referências de funções. Cancelar/Escape descarta o clone e conta nova só entra na lista após persistência bem-sucedida. saveInstallation reconcilia catálogo e atribuições antes da API versionada; só fecha após retorno positivo, preservando entrada quando a requisição falha.
+
+Dialog nativo aberto por showModal fornece foco modal/fundo inerte pelo browser; aria-labelledby identifica o formulário. O estado saving bloqueia cancelamento e campos durante a requisição. A validação automatizada existente cobre build/tipos/view models, mas foco, Escape e retorno do foco ainda requerem prova de interação no navegador. Não confundir renderização estática com essa prova.
+
+[Implementação e evidências](../documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).

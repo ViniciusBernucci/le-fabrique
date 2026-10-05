@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-05 — FAC-013
+
+Contas IA listadas com configuração em modal, edição local descartável e persistência via API existente. Preservados verificação/login/remoção e atribuições. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
 ## 2026-10-05 — OPS-009
 
 Reconciliação de migration histórica no banco dev via migrate resolve --applied após conferir todos os efeitos SQL. Histórico e dados preservados, nenhuma liberação de writer. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).

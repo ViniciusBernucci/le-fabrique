@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-013 — configuração de contas IA em modal](configuracao/2026-10-05-FAC-013-modal-contas-ia.md)
+- [Ticket FAC-013](planejamento/FAC-013-modal-contas-ia.md)
 - [OPS-009 — reconciliação histórica Prisma](infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md)
 - [Ticket OPS-009](planejamento/OPS-009-reconciliar-migration-historica.md)
 - [OPS-008 — comandos Prisma e diagnóstico das telas](infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md)
