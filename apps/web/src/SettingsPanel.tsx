@@ -12,7 +12,7 @@ import type {
   ProviderOnboardingSession,
   ProviderVerification,
 } from "@le-fabrique/contracts";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   approveGithubPullRequest,
   cancelGithubPullRequest,
@@ -51,6 +51,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const [saving, setSaving] = useState(false);
+  const [editingInstallation, setEditingInstallation] = useState<ProviderInstallation | null>(null);
+  const accountDialog = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (editingInstallation && !accountDialog.current?.open) accountDialog.current?.showModal();
+    if (!editingInstallation && accountDialog.current?.open) accountDialog.current.close();
+  }, [editingInstallation]);
   const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
   const [githubVerifications, setGithubVerifications] = useState<GithubVerification[]>([]);
   const [githubOnboardingSessions, setGithubOnboardingSessions] = useState<
@@ -261,30 +268,28 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     : undefined;
   const latestGithubPullRequest = githubPullRequests[0];
 
-  function updateInstallation(index: number, patch: Partial<ProviderInstallation>) {
-    setDraft((current) => {
-      if (!current) return current;
-      const installations = [...current.installations];
-      const installation = installations[index];
-      if (!installation) return current;
-      const updated = { ...installation, ...patch };
-      installations[index] = updated;
-      const assignments = current.assignments.map((assignment) =>
+  function updateInstallation(patch: Partial<ProviderInstallation>) {
+    setEditingInstallation((current) => (current ? { ...current, ...patch } : current));
+  }
+
+  async function saveInstallation() {
+    if (!draft || !editingInstallation) return;
+    const updated = editingInstallation;
+    const installations = draft.installations.some((item) => item.id === updated.id)
+      ? draft.installations.map((item) => (item.id === updated.id ? updated : item))
+      : [...draft.installations, updated];
+    const assignments = draft.assignments.map((assignment) =>
+      pruneAssignmentAlternatives(
         assignment.installationId === updated.id &&
-        (!updated.enabled ||
-          assignment.model === null ||
-          !updated.models.includes(assignment.model))
+          (!updated.enabled ||
+            assignment.model === null ||
+            !updated.models.includes(assignment.model))
           ? { ...assignment, enabled: false, installationId: null, model: null }
           : assignment,
-      );
-      return {
-        ...current,
         installations,
-        assignments: assignments.map((assignment) =>
-          pruneAssignmentAlternatives(assignment, installations),
-        ),
-      };
-    });
+      ),
+    );
+    if (await save({ ...draft, installations, assignments })) setEditingInstallation(null);
   }
 
   function updateAssignment(index: number, patch: Partial<AgentAssignment>) {
@@ -302,29 +307,23 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   }
 
   function addInstallation() {
-    setDraft((current) => {
-      if (!current || current.installations.length >= 20) return current;
-      return {
-        ...current,
-        installations: [
-          ...current.installations,
-          {
-            id: `account-${crypto.randomUUID()}`,
-            provider: "CODEX",
-            label: "Nova conta Codex",
-            executable: "codex",
-            enabled: false,
-            state: "AUTH_REQUIRED",
-            authMode: "SUBSCRIPTION_CLI",
-            models: [],
-            defaultModel: null,
-          },
-        ],
-      };
+    if (!draft || draft.installations.length >= 20) return;
+    setEditingInstallation({
+      id: `account-${crypto.randomUUID()}`,
+      provider: "CODEX",
+      label: "Nova conta Codex",
+      executable: "codex",
+      enabled: false,
+      state: "AUTH_REQUIRED",
+      authMode: "SUBSCRIPTION_CLI",
+      models: [],
+      defaultModel: null,
     });
   }
 
   function removeInstallation(installationId: string) {
+    setEditingInstallation(null);
+    onMessage("Conta removida da lista; clique em Salvar alterações para confirmar.");
     setDraft((current) =>
       current
         ? {
@@ -349,19 +348,21 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     );
   }
 
-  async function save() {
-    if (!settings || !draft) return;
+  async function save(configuration = draft) {
+    if (!settings || !configuration) return false;
     setSaving(true);
     try {
       const updated = await updateFactorySettings(token, {
         expectedVersion: settings.version,
-        configuration: draft,
+        configuration,
       });
       setSettings(updated);
       setDraft(structuredClone(updated.configuration));
       onMessage(`Configurações salvas na versão ${updated.version}.`);
+      return true;
     } catch {
       onMessage("Configuração inválida ou desatualizada; revise os campos e recarregue.");
+      return false;
     } finally {
       setSaving(false);
     }
@@ -489,7 +490,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             Defina quem usa cada cliente e modelo. Autenticações permanecem no runtime da VPS.
           </p>
         </div>
-        <button type="button" onClick={save} disabled={saving}>
+        <button type="button" onClick={() => void save()} disabled={saving}>
           {saving ? "Salvando…" : "Salvar alterações"}
         </button>
       </section>
@@ -531,173 +532,258 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         >
           + Adicionar conta
         </button>
-        <div className="account-grid">
-          {draft.installations.map((installation, index) => (
-            <article className="account-card" key={installation.id}>
-              {(() => {
-                const latest = verifications.find(
-                  (item) => item.installationId === installation.id,
-                );
-                return latest ? (
-                  <p className="verification-line">
-                    Verificação: <strong>{latest.status}</strong>
-                    {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
-                  </p>
-                ) : null;
-              })()}
-              {(() => {
-                const session = onboardingSessions.find(
-                  (item) => item.installationId === installation.id,
-                );
-                const challenge = session ? onboardingChallenges[session.id] : undefined;
-                if (!session) return null;
-                return (
-                  <div className="onboarding-status">
-                    <p>
-                      Login: <strong>{statusLabel(session.status)}</strong>
-                    </p>
-                    {challenge ? (
-                      <div className="onboarding-challenge">
-                        <span>Abra o site oficial e informe o código temporário:</span>
-                        <a
-                          href={challenge.verificationUri}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {challenge.verificationUri}
-                        </a>
-                        <code>{challenge.userCode}</code>
-                      </div>
-                    ) : null}
-                  </div>
-                );
-              })()}
-              <div className="account-title">
-                <div
-                  className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
-                >
-                  {providerLabels[installation.provider].slice(0, 1)}
-                </div>
-                <div>
-                  <h3>{providerLabels[installation.provider]}</h3>
-                  <span>{installation.authMode}</span>
-                </div>
-                <span className={`status status--${installation.state.toLowerCase()}`}>
-                  {statusLabel(installation.state)}
+        <div className="account-list">
+          {draft.installations.length === 0 && (
+            <p className="muted">Nenhuma conta cadastrada. Adicione uma conta para começar.</p>
+          )}
+          {draft.installations.map((installation) => (
+            <button
+              type="button"
+              className="account-list-item"
+              key={installation.id}
+              onClick={() => setEditingInstallation(structuredClone(installation))}
+              aria-label={`Configurar ${installation.label}`}
+            >
+              <span
+                className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+              >
+                {providerLabels[installation.provider].slice(0, 1)}
+              </span>
+              <span className="account-list-name">
+                <strong>{installation.label}</strong>
+                <span className="account-list-detail">
+                  {providerLabels[installation.provider]} ·{" "}
+                  {installation.enabled ? "Habilitada" : "Desabilitada"}
                 </span>
-              </div>
-              <label>
-                Provider
-                <select
-                  value={installation.provider}
-                  onChange={(event) =>
-                    updateInstallation(index, {
-                      provider: event.target.value as ProviderInstallation["provider"],
-                    })
-                  }
-                >
-                  {Object.entries(providerLabels).map(([provider, label]) => (
-                    <option key={provider} value={provider}>
-                      {label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Nome da conta
-                <input
-                  value={installation.label}
-                  onChange={(event) => updateInstallation(index, { label: event.target.value })}
-                />
-              </label>
-              <label>
-                Executável
-                <input
-                  value={installation.executable}
-                  onChange={(event) =>
-                    updateInstallation(index, { executable: event.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Modelos permitidos, um por linha
-                <textarea
-                  value={installation.models.join("\n")}
-                  onChange={(event) => {
-                    const models = [
-                      ...new Set(
-                        event.target.value
-                          .split("\n")
-                          .map((item) => item.trim())
-                          .filter(Boolean),
-                      ),
-                    ];
-                    updateInstallation(index, {
-                      models,
-                      defaultModel: models.includes(installation.defaultModel ?? "")
-                        ? installation.defaultModel
-                        : (models[0] ?? null),
-                    });
-                  }}
-                />
-              </label>
-              <label>
-                Modelo padrão
-                <select
-                  value={installation.defaultModel ?? ""}
-                  onChange={(event) =>
-                    updateInstallation(index, { defaultModel: event.target.value || null })
-                  }
-                >
-                  <option value="">Nenhum</option>
-                  {installation.models.map((model) => (
-                    <option key={model} value={model}>
-                      {model}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="switch-row">
-                <input
-                  type="checkbox"
-                  checked={installation.enabled}
-                  onChange={(event) => updateInstallation(index, { enabled: event.target.checked })}
-                />
-                <span>Disponível para atribuição</span>
-              </label>
-              <button
-                className="secondary-action account-action"
-                type="button"
-                onClick={() => verify(installation.id)}
-              >
-                Verificar instalação
-              </button>
-              {installation.provider === "CODEX" &&
-              installation.enabled &&
-              installation.state === "AUTH_REQUIRED" ? (
-                <button
-                  className="secondary-action account-action"
-                  type="button"
-                  onClick={() => connect(installation.id)}
-                  disabled={onboardingSessions.some(
-                    (item) =>
-                      item.installationId === installation.id &&
-                      ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
-                  )}
-                >
-                  Conectar assinatura Codex
-                </button>
-              ) : null}
-              <button
-                className="remove-action"
-                type="button"
-                onClick={() => removeInstallation(installation.id)}
-              >
-                Remover conta
-              </button>
-            </article>
+              </span>
+              <span className={`status status--${installation.state.toLowerCase()}`}>
+                {statusLabel(installation.state)}
+              </span>
+              <span className="account-list-edit">Configurar →</span>
+            </button>
           ))}
         </div>
+        <dialog
+          ref={accountDialog}
+          className="account-dialog"
+          aria-labelledby="account-dialog-title"
+          onCancel={(event) => {
+            if (saving) event.preventDefault();
+            else setEditingInstallation(null);
+          }}
+        >
+          {editingInstallation &&
+            (() => {
+              const installation = editingInstallation;
+              return (
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    void saveInstallation();
+                  }}
+                >
+                  <div className="account-dialog-heading">
+                    <div>
+                      <p className="eyebrow">IA E CONTAS</p>
+                      <h2 id="account-dialog-title">Configurar conta</h2>
+                    </div>
+                    <button
+                      type="button"
+                      className="secondary-action"
+                      disabled={saving}
+                      onClick={() => setEditingInstallation(null)}
+                      aria-label="Fechar configuração"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <fieldset disabled={saving}>
+                    {(() => {
+                      const latest = verifications.find(
+                        (item) => item.installationId === installation.id,
+                      );
+                      return latest ? (
+                        <p className="verification-line">
+                          Verificação: <strong>{latest.status}</strong>
+                          {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
+                        </p>
+                      ) : null;
+                    })()}
+                    {(() => {
+                      const session = onboardingSessions.find(
+                        (item) => item.installationId === installation.id,
+                      );
+                      const challenge = session ? onboardingChallenges[session.id] : undefined;
+                      if (!session) return null;
+                      return (
+                        <div className="onboarding-status">
+                          <p>
+                            Login: <strong>{statusLabel(session.status)}</strong>
+                          </p>
+                          {challenge ? (
+                            <div className="onboarding-challenge">
+                              <span>Abra o site oficial e informe o código temporário:</span>
+                              <a
+                                href={challenge.verificationUri}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                              >
+                                {challenge.verificationUri}
+                              </a>
+                              <code>{challenge.userCode}</code>
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })()}
+                    <div className="account-title">
+                      <div
+                        className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+                      >
+                        {providerLabels[installation.provider].slice(0, 1)}
+                      </div>
+                      <div>
+                        <h3>{providerLabels[installation.provider]}</h3>
+                        <span>{installation.authMode}</span>
+                      </div>
+                      <span className={`status status--${installation.state.toLowerCase()}`}>
+                        {statusLabel(installation.state)}
+                      </span>
+                    </div>
+                    <label>
+                      Provider
+                      <select
+                        value={installation.provider}
+                        onChange={(event) =>
+                          updateInstallation({
+                            provider: event.target.value as ProviderInstallation["provider"],
+                          })
+                        }
+                      >
+                        {Object.entries(providerLabels).map(([provider, label]) => (
+                          <option key={provider} value={provider}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Nome da conta
+                      <input
+                        value={installation.label}
+                        onChange={(event) => updateInstallation({ label: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Executável
+                      <input
+                        value={installation.executable}
+                        onChange={(event) => updateInstallation({ executable: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Modelos permitidos, um por linha
+                      <textarea
+                        value={installation.models.join("\n")}
+                        onChange={(event) => {
+                          const models = [
+                            ...new Set(
+                              event.target.value
+                                .split("\n")
+                                .map((item) => item.trim())
+                                .filter(Boolean),
+                            ),
+                          ];
+                          updateInstallation({
+                            models,
+                            defaultModel: models.includes(installation.defaultModel ?? "")
+                              ? installation.defaultModel
+                              : (models[0] ?? null),
+                          });
+                        }}
+                      />
+                    </label>
+                    <label>
+                      Modelo padrão
+                      <select
+                        value={installation.defaultModel ?? ""}
+                        onChange={(event) =>
+                          updateInstallation({ defaultModel: event.target.value || null })
+                        }
+                      >
+                        <option value="">Nenhum</option>
+                        {installation.models.map((model) => (
+                          <option key={model} value={model}>
+                            {model}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label className="switch-row">
+                      <input
+                        type="checkbox"
+                        checked={installation.enabled}
+                        onChange={(event) => updateInstallation({ enabled: event.target.checked })}
+                      />
+                      <span>Disponível para atribuição</span>
+                    </label>
+                    <button
+                      className="secondary-action account-action"
+                      type="button"
+                      disabled={
+                        saving ||
+                        !settings.configuration.installations.some(
+                          (item) => item.id === installation.id,
+                        )
+                      }
+                      onClick={() => verify(installation.id)}
+                    >
+                      Verificar instalação
+                    </button>
+                    {installation.provider === "CODEX" &&
+                    settings.configuration.installations.some(
+                      (item) => item.id === installation.id && item.enabled,
+                    ) &&
+                    installation.state === "AUTH_REQUIRED" ? (
+                      <button
+                        className="secondary-action account-action"
+                        type="button"
+                        onClick={() => connect(installation.id)}
+                        disabled={onboardingSessions.some(
+                          (item) =>
+                            item.installationId === installation.id &&
+                            ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                        )}
+                      >
+                        Conectar assinatura Codex
+                      </button>
+                    ) : null}
+                    <button
+                      className="remove-action"
+                      type="button"
+                      disabled={!draft.installations.some((item) => item.id === installation.id)}
+                      onClick={() => removeInstallation(installation.id)}
+                    >
+                      Remover conta
+                    </button>
+                  </fieldset>
+                  <div className="account-dialog-footer">
+                    <button
+                      type="button"
+                      className="secondary-action"
+                      disabled={saving}
+                      onClick={() => setEditingInstallation(null)}
+                    >
+                      Cancelar
+                    </button>
+                    <button type="submit" disabled={saving}>
+                      {saving ? "Salvando…" : "Salvar conta"}
+                    </button>
+                  </div>
+                </form>
+              );
+            })()}
+        </dialog>
       </section>
 
       <section className="panel settings-section">
