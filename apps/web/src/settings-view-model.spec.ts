@@ -94,3 +94,28 @@ describe("observed account models", () => {
     expect(draft.installations[0]?.models).toEqual(["manual-model"]);
   });
 });
+
+describe("verification feedback", () => {
+  it("distinguishes waiting, execution, login and failed worker configuration", async () => {
+    const { providerVerificationFeedback } = await import("./settings-view-model");
+    expect(providerVerificationFeedback({ status: "PENDING" } as never)).toContain(
+      "aguardando o worker",
+    );
+    expect(providerVerificationFeedback({ status: "RUNNING" } as never)).toContain("Verificando");
+    expect(
+      providerVerificationFeedback({
+        status: "COMPLETED",
+        providerState: "AUTH_REQUIRED",
+      } as never),
+    ).toContain("conectar sua assinatura");
+    expect(
+      providerVerificationFeedback({
+        status: "FAILED",
+        message: "Private provider root missing; run providers:setup and restart npm run dev",
+      } as never),
+    ).toContain("reinicie npm run dev");
+    expect(
+      providerVerificationFeedback({ status: "FAILED", message: "private diagnostic" } as never),
+    ).not.toContain("private diagnostic");
+  });
+});

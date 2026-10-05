@@ -4,6 +4,7 @@ import type {
   FactoryConfiguration,
   FactorySettings,
   ProviderInstallation,
+  ProviderVerification,
   SettingsProvider,
 } from "@le-fabrique/contracts";
 
@@ -83,4 +84,20 @@ export function mergeObservedInstallations(
       };
     }),
   };
+}
+
+export function providerVerificationFeedback(result: ProviderVerification): string {
+  if (result.status === "PENDING") return "Verificação na fila; aguardando o worker.";
+  if (result.status === "RUNNING") return "Verificando a conta e os modelos no worker…";
+  if (
+    result.message === "Private provider root missing; run providers:setup and restart npm run dev"
+  )
+    return "O worker está sem o diretório privado das contas. Execute npm run providers:setup e reinicie npm run dev na VPS; depois verifique novamente.";
+  if (result.providerState === "AUTH_REQUIRED")
+    return "Cliente encontrado. É necessário conectar sua assinatura; habilite e salve a conta para iniciar o login.";
+  if (result.providerState === "AVAILABLE")
+    return result.message === "Subscription authenticated; model catalog unavailable, verify again"
+      ? "Conta autenticada, mas não foi possível atualizar o catálogo. Verifique novamente."
+      : `Conta autenticada. ${result.observedModels.length} modelo(s) observado(s).`;
+  return "A verificação falhou. Confira se npm run providers:setup foi executado e reinicie npm run dev na VPS. Depois tente novamente.";
 }

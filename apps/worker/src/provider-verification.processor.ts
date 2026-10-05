@@ -164,13 +164,16 @@ export async function inspectProvider(
       observedModels,
       message: "Authenticated subscription client observed",
     };
-  } catch {
+  } catch (error) {
     return {
       status: "FAILED",
       providerState: "ERROR",
       cliVersion: null,
       observedModels: [],
-      message: "Client verification failed without persisted output",
+      message:
+        error instanceof Error && error.message === "Private provider root is required"
+          ? "Private provider root missing; run providers:setup and restart npm run dev"
+          : "Client verification failed without persisted output",
     };
   }
 }

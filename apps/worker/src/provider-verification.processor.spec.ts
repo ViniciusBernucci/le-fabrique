@@ -141,3 +141,24 @@ describe("subscription model discovery", () => {
     });
   });
 });
+
+describe("private identity diagnostic", () => {
+  it("reports a missing provider root with an actionable sanitized message", async () => {
+    await expect(
+      inspectProvider("CODEX", async () => {
+        throw new Error("Private provider root is required");
+      }),
+    ).resolves.toMatchObject({
+      status: "FAILED",
+      providerState: "ERROR",
+      message: "Private provider root missing; run providers:setup and restart npm run dev",
+    });
+  });
+  it("never publishes an unknown client exception", async () => {
+    const result = await inspectProvider("CODEX", async () => {
+      throw new Error("private secret diagnostic");
+    });
+    expect(JSON.stringify(result)).not.toContain("private secret");
+    expect(result.message).toBe("Client verification failed without persisted output");
+  });
+});

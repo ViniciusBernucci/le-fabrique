@@ -39,6 +39,7 @@ import {
   configurationSummary,
   mergeObservedInstallations,
   providerLabels,
+  providerVerificationFeedback,
   pruneAssignmentAlternatives,
   roleLabels,
 } from "./settings-view-model";
@@ -58,6 +59,8 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [editingAssignment, setEditingAssignment] = useState<AgentAssignment | null>(null);
   const [editingGithub, setEditingGithub] = useState<FactoryConfiguration["github"] | null>(null);
 
+  const [requestingVerification, setRequestingVerification] = useState<string | null>(null);
+  const [verificationError, setVerificationError] = useState<string | null>(null);
   const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
   const [githubVerifications, setGithubVerifications] = useState<GithubVerification[]>([]);
   const [githubOnboardingSessions, setGithubOnboardingSessions] = useState<
@@ -167,8 +170,8 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   useEffect(() => {
     if (!verifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))) return;
     const timer = setInterval(() => {
-      void Promise.all([getFactorySettings(token), listProviderVerifications(token)]).then(
-        ([data, history]) => {
+      void Promise.all([getFactorySettings(token), listProviderVerifications(token)])
+        .then(([data, history]) => {
           setSettings(data);
           setEditingInstallation((current) =>
             current
@@ -183,8 +186,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             return mergeObservedInstallations(current, data.configuration);
           });
           setVerifications(history);
-        },
-      );
+          setVerificationError(null);
+        })
+        .catch(() =>
+          setVerificationError(
+            "Falha ao consultar o resultado. Confira a conexão com a API; a verificação solicitada continua no worker.",
+          ),
+        );
     }, 3_000);
     return () => clearInterval(timer);
   }, [token, verifications]);
@@ -386,6 +394,8 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   }
 
   async function verify(installationId: string) {
+    setRequestingVerification(installationId);
+    setVerificationError(null);
     try {
       const verification = await requestProviderVerification(token, installationId);
       setVerifications((current) => [
@@ -394,7 +404,12 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       ]);
       onMessage("Verificação enviada ao worker; nenhum prompt será executado.");
     } catch {
-      onMessage("Não foi possível solicitar a verificação desta instalação.");
+      const message =
+        "Não foi possível solicitar a verificação. Confira a conexão com a API e tente novamente.";
+      setVerificationError(message);
+      onMessage(message);
+    } finally {
+      setRequestingVerification(null);
     }
   }
 
@@ -599,15 +614,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 onClose={() => setEditingInstallation(null)}
                 onSave={() => void saveInstallation()}
               >
+                {requestingVerification === installation.id ? (
+                  <p role="status">Enviando verificação à API…</p>
+                ) : null}
+                {verificationError ? <p role="alert">{verificationError}</p> : null}
                 {(() => {
                   const latest = verifications.find(
                     (item) => item.installationId === installation.id,
                   );
                   return latest ? (
-                    <p className="verification-line">
-                      Verificação: <strong>{latest.status}</strong>
-                      {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
-                    </p>
+                    <div className="verification-line" role="status" aria-live="polite">
+                      <p>{providerVerificationFeedback(latest)}</p>
+                      {latest.cliVersion ? <p>Cliente: {latest.cliVersion}</p> : null}
+                    </div>
                   ) : null;
                 })()}
                 {(() => {
@@ -733,13 +752,27 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                   type="button"
                   disabled={
                     saving ||
+                    requestingVerification !== null ||
+                    verifications.some(
+                      (item) =>
+                        item.installationId === installation.id &&
+                        ["PENDING", "RUNNING"].includes(item.status),
+                    ) ||
                     !settings.configuration.installations.some(
                       (item) => item.id === installation.id,
                     )
                   }
                   onClick={() => verify(installation.id)}
                 >
-                  Verificar conta e modelos
+                  {requestingVerification === installation.id
+                    ? "Enviando…"
+                    : verifications.some(
+                          (item) =>
+                            item.installationId === installation.id &&
+                            ["PENDING", "RUNNING"].includes(item.status),
+                        )
+                      ? "Verificação em andamento…"
+                      : "Verificar conta e modelos"}
                 </button>
                 {installation.provider === "CODEX" &&
                 settings.configuration.installations.some(
