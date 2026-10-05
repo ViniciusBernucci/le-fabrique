@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-017 valida formato real do cliente e distingue chunks de linhas completas: [lifecycle CLI](lifecycle-processo-cli.md).
+
 FAC-016 coloca resultado das ações dentro do dialog ativo, com progresso e diagnóstico sanitizado: [modais](modal-edicao-configuracao.md).
 
 FAC-015 distingue autenticação da conta, catálogo observado e autorização de execução: [perfis de clientes](perfis-permissao-cliente-cli.md).

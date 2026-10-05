@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-017 corrige leitura do desafio colorido do Codex e abre aba de autorização a partir do clique, com link alternativo e confirmação explícita. Login real ainda depende do usuário. [Guia](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
+
 FAC-016 mostra envio/andamento/resultado da verificação dentro do modal e diagnóstico sanitizado da raiz privada. Codex real verificado com AUTH_REQUIRED; login ainda depende do usuário. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
 
 FAC-015 conecta contas de assinatura aos clientes oficiais, importa catálogo Codex e compartilha modelos nos funcionários. Setup da VPS concluído; login humano e execução operacional continuam separados. [Passo a passo](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).

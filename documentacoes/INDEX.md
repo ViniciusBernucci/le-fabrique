@@ -1,5 +1,10 @@
 # Documentação atual v2.3
 
+- [FAC-017 — login Codex](configuracao/2026-10-05-FAC-017-login-device-codex.md)
+- [FAC-017 — desafio runtime](runtime/2026-10-05-FAC-017-desafio-ansi-codex.md)
+- [FAC-017 — confirmação operacional](operacao/2026-10-05-FAC-017-confirmacao-login-codex.md)
+- [Ticket FAC-017](planejamento/FAC-017-login-device-codex.md)
+
 - [FAC-016 — feedback](configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md)
 - [FAC-016 — diagnóstico runtime](runtime/2026-10-05-FAC-016-diagnostico-raiz-privada.md)
 - [FAC-016 — ambiente dev](operacao/2026-10-05-FAC-016-env-processo-dev.md)

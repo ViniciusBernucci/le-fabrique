@@ -1,5 +1,7 @@
 # Centro de configuracoes
 
+FAC-017 reserva aba de autorização no clique Codex e navega para URL oficial ao receber desafio; mantém link manual/código e distingue sucesso confirmado de pedido iniciado. [Guia](2026-10-05-FAC-017-login-device-codex.md).
+
 FAC-016 torna envio/espera/resultado das verificações visíveis no modal e trata falha de consulta. [Guia](2026-10-05-FAC-016-feedback-verificacao-codex.md).
 
 FAC-015 integra catálogo Codex observado às contas e opções dos funcionários, com login oficial por instalação e setup privado. [Guia e limites](2026-10-05-FAC-015-contas-autenticadas-modelos.md).

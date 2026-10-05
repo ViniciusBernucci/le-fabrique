@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — FAC-017
+
+Login Codex normaliza ANSI, preserva caso/linha completa do código e abre aba de espera que segue para autorização oficial. Modal mantém link/código e confirmação explícita. [Evidências](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
+
 ## 2026-10-05 — FAC-016
 
 Verificação Codex com feedback acessível no modal, bloqueio de repetição e diagnóstico sanitizado de raiz privada ausente. Worker real respondeu AUTH_REQUIRED. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
