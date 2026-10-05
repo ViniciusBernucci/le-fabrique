@@ -1075,3 +1075,136 @@
     margin: 12px auto 0;
   }
 }
+.home-dashboard .home-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.home-dashboard .workspace-content {
+  outline: none;
+  font-size: 13px;
+}
+.home-dashboard .workspace-content .shell {
+  width: calc(100% - 40px);
+  max-width: 1280px;
+  padding: 26px 0;
+}
+.home-dashboard .workspace-content .login-shell {
+  min-height: calc(100vh - 66px);
+  padding: 24px 0;
+}
+.home-dashboard .workspace-content h1 {
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.home-dashboard .workspace-content h2 {
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+.home-dashboard .workspace-content h3 {
+  font-size: 13px;
+}
+.home-dashboard .workspace-content p {
+  font-size: 12px;
+}
+.home-dashboard .workspace-content label {
+  font-size: 12px;
+}
+.home-dashboard .workspace-content input,
+.home-dashboard .workspace-content textarea,
+.home-dashboard .workspace-content select,
+.home-dashboard .workspace-content button {
+  font-size: 13px;
+}
+.home-dashboard .workspace-content .eyebrow {
+  font-size: 10px;
+}
+.home-dashboard .workspace-content .metric-grid strong {
+  font-size: 22px;
+}
+.home-dashboard .workspace-content .panel {
+  padding: 20px;
+}
+.home-dashboard .workspace-content button {
+  background: #258bff;
+  color: #fff;
+  font-weight: 600;
+}
+.home-dashboard .workspace-content button:hover {
+  background: #419cff;
+}
+.home-dashboard .workspace-content .secondary-action,
+.home-dashboard .workspace-content .remove-action {
+  background: #102434;
+  color: #c5d3e7;
+}
+.home-dashboard .workspace-content .settings-tabs [role="tab"] {
+  background: transparent;
+}
+.home-dashboard .workspace-content .settings-tabs [aria-selected="true"] {
+  background: #1d4364;
+}
+@media (max-width: 760px) {
+  .home-dashboard .workspace-content .shell {
+    width: calc(100% - 24px);
+    padding: 20px 0;
+  }
+  .home-dashboard .workspace-content .panel {
+    padding: 14px;
+  }
+}
+
+.home-dashboard .home-brand {
+  border-radius: 0;
+}
+.home-dashboard .home-main {
+  position: relative;
+}
+.home-dashboard .home-search-results {
+  position: absolute;
+  left: 17px;
+  top: 62px;
+  width: min(502px, calc(100% - 34px));
+  padding: 10px;
+  background: #102434;
+  border: 1px solid #294456;
+  border-radius: 8px;
+  z-index: 4;
+}
+.home-dashboard .home-search-results button {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.home-dashboard .workspace-content .settings-tabs {
+  border-color: #294456;
+}
+.home-dashboard .workspace-content .settings-tabs [role="tab"] {
+  border-color: #294456;
+}
+.home-dashboard .workspace-content input,
+.home-dashboard .workspace-content select {
+  min-width: 0;
+}
+@media (max-width: 1150px) {
+  .home-dashboard .workspace-content .settings-bottom-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .home-dashboard .workspace-content .assignment-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .home-dashboard .workspace-content .assignment-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.home-dashboard .workspace-content .account-list-item {
+  background: #0b1b28;
+  color: #e5edf8;
+  font-weight: 400;
+}
+.home-dashboard .workspace-content .account-list-item:hover {
+  background: #142b3d;
+}
