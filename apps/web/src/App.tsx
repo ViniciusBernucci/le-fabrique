@@ -11,6 +11,7 @@ import {
   projectEventStreamUrl,
   updateProjectBaseRevision,
 } from "./control-api";
+import { HomeDashboard } from "./HomeDashboard";
 import { OperationPanel } from "./OperationPanel";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { pollResource } from "./poll-resource";
@@ -20,6 +21,7 @@ import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
 
 export function App() {
+  const [showHome, setShowHome] = useState(true);
   const [token, setToken] = useState(() => sessionStorage.getItem("adminToken") ?? "");
   const [authenticated, setAuthenticated] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -144,6 +146,16 @@ export function App() {
     }
   }
 
+  if (showHome)
+    return (
+      <HomeDashboard
+        onNavigate={(area) => {
+          setActiveArea(area);
+          setShowHome(false);
+        }}
+      />
+    );
+
   if (!authenticated)
     return (
       <main className="login-shell">
@@ -161,6 +173,9 @@ export function App() {
             />
           </label>
           <button type="submit">Entrar</button>
+          <button type="button" className="secondary-action" onClick={() => setShowHome(true)}>
+            Voltar ao painel inicial
+          </button>
           <p className="message" role="status">
             {message}
           </p>
@@ -180,6 +195,9 @@ export function App() {
         </p>
       </header>
       <nav className="area-nav" aria-label="Áreas do painel">
+        <button type="button" onClick={() => setShowHome(true)}>
+          Painel inicial
+        </button>
         <button
           type="button"
           className={activeArea === "control" ? "active" : ""}
