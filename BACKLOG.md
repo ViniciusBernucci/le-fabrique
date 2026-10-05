@@ -4,7 +4,7 @@
 
 
 - FAC-021: AWAITING_HUMAN — nome La fabrique e cena central 60% em `cde0cc6`, 322 testes PASS, browser na porta 5173 PASS. [Relatório](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md).
-- FAC-020A: AWAITING_HUMAN — home integrada em developer por autorização explícita, funcionamento na porta habitual verificado. [Relatório](documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md).
+- FAC-020A: AWAITING_HUMAN — home integrada em developer por autorização explícita, funcionamento na porta habitual verificado e worktree FAC-020 removida após preservar commits. [Relatório](documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md).
 
 
 - FAC-020: AWAITING_HUMAN — central de controle estática em `904d0b5`, 42 testes web e browser desktop/mobile passaram. Dados simulados; aceite visual/integração pendentes. [Relatório](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).

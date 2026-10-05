@@ -19,3 +19,6 @@ Mesmo Codex da sessão, um writer; nenhum provider adicional, acesso a credencia
 Integração/limpeza autorizadas. AWAITING_HUMAN para aceite visual da revisão; merge não equivale a DONE.
 
 Atualização posterior: `4e042a1` integrado por fast-forward, com template/fontes FAC-022. Browser na porta 5173 confirmou a home e menus persistentes. Build completo em cde0cc6 e web em 4e042a1 PASS.
+
+## Conclusão da integração e limpeza
+Em 2026-10-05, merge final fast-forward até 776a742, ancestry da feature comprovada, worktree limpa. Preview próprio PID 2345979 encerrado após conferir cwd; `git worktree remove /home/vinicius/le-fabrique-fac-020` executado sem force. `git worktree list` passou a conter somente `/home/vinicius/le-fabrique [developer]`; diretório antigo ausente e node_modules principal preservado. Branch feature preservada, sem push/deploy. Registro administrativo de encerramento feito em developer após remover a worktree, sem alterar código/evidências.

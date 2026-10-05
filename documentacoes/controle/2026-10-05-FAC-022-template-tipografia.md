@@ -29,3 +29,6 @@ Reverter 4e042a1 desfaz template/fontes e conserva nome/imagem reduzida do cde0c
 README raiz/controle/configuração, INDEX, CHANGELOG, BACKLOG, ticket, relatório e [lesson de modais/estado](../../lessons/modal-edicao-configuracao.md). Reutilizar o mesmo template na raiz preserva chrome/DOM; trocar apenas conteúdo não implica preservar rascunho de um painel desmontado. [Baseline/review](../../lessons/baseline-regressao-review.md) distingue renderização estática, browser fixture e operação real.
 ## Uso de IA e aceite
 Codex da sessão, mesmo writer, zero subagentes/handoffs/providers adicionais e nenhuma leitura/exportação de credenciais. Modelo efetivo/cota/custos não comprovados. AWAITING_HUMAN para revisão visual exata. Merge/remoção autorizados não representam aceite visual/DONE.
+
+## Conclusão da integração e limpeza
+Em 2026-10-05, merge final fast-forward até 776a742, ancestry da feature comprovada, worktree limpa. Preview próprio PID 2345979 encerrado após conferir cwd; `git worktree remove /home/vinicius/le-fabrique-fac-020` executado sem force. `git worktree list` passou a conter somente `/home/vinicius/le-fabrique [developer]`; diretório antigo ausente e node_modules principal preservado. Branch feature preservada, sem push/deploy. Registro administrativo de encerramento feito em developer após remover a worktree, sem alterar código/evidências.
