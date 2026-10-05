@@ -1,0 +1,1793 @@
+diff --git a/apps/web/src/App.tsx b/apps/web/src/App.tsx
+index a2443b1..7ef0bad 100644
+--- a/apps/web/src/App.tsx
++++ b/apps/web/src/App.tsx
+@@ -11,6 +11,7 @@ import {
+   projectEventStreamUrl,
+   updateProjectBaseRevision,
+ } from "./control-api";
++import { HomeDashboard } from "./HomeDashboard";
+ import { OperationPanel } from "./OperationPanel";
+ import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
+ import { pollResource } from "./poll-resource";
+@@ -20,6 +21,7 @@ import { RunPanel } from "./RunPanel";
+ import { SettingsPanel } from "./SettingsPanel";
+ 
+ export function App() {
++  const [showHome, setShowHome] = useState(true);
+   const [token, setToken] = useState(() => sessionStorage.getItem("adminToken") ?? "");
+   const [authenticated, setAuthenticated] = useState(false);
+   const [projects, setProjects] = useState<Project[]>([]);
+@@ -144,6 +146,16 @@ export function App() {
+     }
+   }
+ 
++  if (showHome)
++    return (
++      <HomeDashboard
++        onNavigate={(area) => {
++          setActiveArea(area);
++          setShowHome(false);
++        }}
++      />
++    );
++
+   if (!authenticated)
+     return (
+       <main className="login-shell">
+@@ -161,6 +173,9 @@ export function App() {
+             />
+           </label>
+           <button type="submit">Entrar</button>
++          <button type="button" className="secondary-action" onClick={() => setShowHome(true)}>
++            Voltar ao painel inicial
++          </button>
+           <p className="message" role="status">
+             {message}
+           </p>
+@@ -180,6 +195,9 @@ export function App() {
+         </p>
+       </header>
+       <nav className="area-nav" aria-label="Áreas do painel">
++        <button type="button" onClick={() => setShowHome(true)}>
++          Painel inicial
++        </button>
+         <button
+           type="button"
+           className={activeArea === "control" ? "active" : ""}
+diff --git a/apps/web/src/HomeDashboard.spec.tsx b/apps/web/src/HomeDashboard.spec.tsx
+new file mode 100644
+index 0000000..87623aa
+--- /dev/null
++++ b/apps/web/src/HomeDashboard.spec.tsx
+@@ -0,0 +1,23 @@
++import { renderToStaticMarkup } from "react-dom/server";
++import { expect, it } from "vitest";
++import { HomeDashboard } from "./HomeDashboard";
++
++it("identifies synthetic information and renders the local illustration without administrative data", () => {
++  const html = renderToStaticMarkup(<HomeDashboard onNavigate={() => undefined} />);
++  expect(html).toContain("Central de controle Le Fabrique");
++  expect(html).toContain("dados simulados");
++  expect(html).toContain("/images/control-room-reference.png");
++  expect(html).toContain("Mensagens importantes");
++  expect(html).not.toContain("adminToken");
++  expect(html).not.toContain("Bearer");
++});
++
++it("keeps collapsed navigation accessible and distinguishes activity from quota", () => {
++  const html = renderToStaticMarkup(<HomeDashboard onNavigate={() => undefined} />);
++  expect(html).toContain('aria-label="Projetos"');
++  expect(html).toContain('aria-label="Configurações"');
++  expect(html).toContain('aria-current="page"');
++  expect(html).toContain('aria-label="Atividade simulada de JARVIS"');
++  expect(html).toContain('aria-label="Abrir JARVIS"');
++  expect(html).toContain('aria-labelledby="home-preview-title"');
++});
+diff --git a/apps/web/src/HomeDashboard.tsx b/apps/web/src/HomeDashboard.tsx
+new file mode 100644
+index 0000000..1d10cbc
+--- /dev/null
++++ b/apps/web/src/HomeDashboard.tsx
+@@ -0,0 +1,630 @@
++import { useEffect, useRef, useState } from "react";
++import "./home-dashboard.css";
++
++export type HomeDestination = "control" | "settings";
++type IconName =
++  | "home"
++  | "folder"
++  | "robot"
++  | "content"
++  | "chart"
++  | "users"
++  | "calendar"
++  | "star"
++  | "money"
++  | "settings"
++  | "search"
++  | "bell"
++  | "help"
++  | "plus"
++  | "arrow"
++  | "clock"
++  | "cloud"
++  | "message";
++const paths: Record<IconName, string> = {
++  home: "M3 11 12 3l9 8M5 10v11h5v-7h4v7h5V10",
++  folder: "M3 7V4h7l3 3h8v14H3V7Zm0 3h18",
++  robot: "M12 3v3m-2-3h4M5 8h14v12H5V8ZM2 12v5m20-5v5M9 12v2m6-2v2m-6 3h6",
++  content: "M5 3h14v18H5V3Zm4 5h6m-6 4h6m-6 4h4",
++  chart: "M4 20v-6h3v6m4 0V9h3v11m4 0V4h3v16",
++  users:
++    "M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9v-3c0-5 14-5 14 0v3H2ZM17 4a4 4 0 0 1 0 8m2 3c3 0 3 3 3 6",
++  calendar: "M4 5h16v16H4V5ZM8 2v6m8-6v6M4 10h16",
++  star: "m12 2 3 6 7 1-5 5 1 8-6-4-6 4 1-8-5-5 7-1 3-6Z",
++  money: "M16 6c-7-5-13 4-4 6s3 11-4 6m4-16v20",
++  settings:
++    "m9 3 6 0 1 4 4 1 2 5-3 3 0 4-5 2-3-3-4 0-2-5 3-3 0-4 4-2Zm3 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z",
++  search: "M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6",
++  bell: "M5 17h14l-2-4V9a5 5 0 0 0-10 0v4l-2 4Zm5 3h4M12 2v2",
++  help: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-3 6c0-4 7-4 6 0-1 3-3 2-3 6m0 3v1",
++  plus: "M12 4v16M4 12h16",
++  arrow: "M4 12h16m-6-6 6 6-6 6",
++  clock: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4v6l4 3",
++  cloud: "M6 19h12c7-2 3-10-2-9-1-9-13-7-12 1-5 1-4 8 2 8Z",
++  message: "M3 4h18v14H8l-5 4V4Zm4 5h10m-10 4h7",
++};
++function Icon({ name }: { name: IconName }) {
++  return (
++    <svg
++      viewBox="0 0 24 24"
++      fill="none"
++      stroke="currentColor"
++      strokeWidth="1.8"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      aria-hidden="true"
++    >
++      <path d={paths[name]} />
++    </svg>
++  );
++}
++function Avatar({ robot = false }: { robot?: boolean }) {
++  return (
++    <svg className="home-avatar" viewBox="0 0 48 48" aria-hidden="true">
++      <defs>
++        <linearGradient id={robot ? "robot-bg" : "person-bg"} x2="1" y2="1">
++          <stop stopColor={robot ? "#71dcff" : "#e8ad66"} />
++          <stop offset="1" stopColor="#103553" />
++        </linearGradient>
++      </defs>
++      <circle
++        cx="24"
++        cy="24"
++        r="22"
++        fill={`url(#${robot ? "robot-bg" : "person-bg"})`}
++        stroke="#338fc5"
++        strokeWidth="2"
++      />
++      {robot ? (
++        <>
++          <path d="M16 38v-8h16v8" fill="#e9f6ff" />
++          <rect x="9" y="10" width="30" height="24" rx="10" fill="#e9f6ff" />
++          <rect x="13" y="14" width="22" height="15" rx="6" fill="#08243b" />
++          <circle cx="19" cy="21" r="3" fill="#2bc9ff" />
++          <circle cx="29" cy="21" r="3" fill="#2bc9ff" />
++          <path d="M24 6v4" stroke="#e9f6ff" strokeWidth="3" />
++        </>
++      ) : (
++        <>
++          <path d="M10 45c1-17 27-17 28 0" fill="#1d4a79" />
++          <ellipse cx="24" cy="24" rx="11" ry="13" fill="#f5bb86" />
++          <path d="M12 25C4 4 39 2 37 26l-6-10-8 2-7-3-4 10" fill="#302321" />
++          <circle cx="20" cy="25" r="1.6" fill="#202632" />
++          <circle cx="29" cy="25" r="1.6" fill="#202632" />
++          <path d="M21 32q4 3 7-1" stroke="#a45d41" strokeWidth="1.5" fill="none" />
++        </>
++      )}
++    </svg>
++  );
++}
++const navigation: { name: string; icon: IconName; destination?: HomeDestination }[] = [
++  { name: "Painel", icon: "home" },
++  { name: "Projetos", icon: "folder", destination: "control" },
++  { name: "Agentes IA", icon: "robot", destination: "settings" },
++  { name: "Conteúdos", icon: "content" },
++  { name: "Vendas", icon: "chart" },
++  { name: "CRM / Leads", icon: "users" },
++  { name: "Eventos", icon: "calendar" },
++  { name: "Oportunidades", icon: "star" },
++  { name: "Financeiro", icon: "money" },
++  { name: "Usuários", icon: "users" },
++  { name: "Configurações", icon: "settings", destination: "settings" },
++];
++const shortcuts: {
++  name: string;
++  description: string;
++  icon: IconName;
++  color: string;
++  destination?: HomeDestination;
++}[] = [
++  {
++    name: "Novo Projeto",
++    description: "Criar workspace",
++    icon: "plus",
++    color: "blue",
++    destination: "control",
++  },
++  {
++    name: "Agentes IA",
++    description: "Gerenciar agentes",
++    icon: "robot",
++    color: "silver",
++    destination: "settings",
++  },
++  { name: "Calendário", description: "Eventos e agendas", icon: "calendar", color: "red" },
++  { name: "Conteúdos", description: "Vídeos e posts", icon: "content", color: "purple" },
++  { name: "CRM / Leads", description: "Pipeline de vendas", icon: "users", color: "cyan" },
++  { name: "Financeiro", description: "Receitas e despesas", icon: "money", color: "green" },
++  {
++    name: "Oportunidades",
++    description: "Rádios, playlists, eventos",
++    icon: "star",
++    color: "yellow",
++  },
++  { name: "Relatórios", description: "Desempenho geral", icon: "chart", color: "teal" },
++  {
++    name: "Configurações",
++    description: "Sistema e integrações",
++    icon: "settings",
++    color: "silver",
++    destination: "settings",
++  },
++];
++const notifications: {
++  title: string;
++  description?: string;
++  time: string;
++  icon: IconName;
++  color: string;
++}[] = [
++  {
++    title: "Pagamento Hotmart não processado",
++    time: "Agora há pouco",
++    icon: "clock",
++    color: "red",
++  },
++  {
++    title: "Novo lead qualificado",
++    description: "João Silva · Workshop Produção Musical",
++    time: "1 hora atrás",
++    icon: "calendar",
++    color: "orange",
++  },
++  {
++    title: "Geração de conteúdo concluída",
++    description: "5 posts prontos para revisão",
++    time: "2 horas atrás",
++    icon: "cloud",
++    color: "blue",
++  },
++  {
++    title: "Relatório semanal disponível",
++    description: "Desempenho dos projetos",
++    time: "3 horas atrás",
++    icon: "chart",
++    color: "green",
++  },
++];
++const agents = [
++  {
++    name: "JARVIS",
++    role: " (Orquestrador)",
++    status: "Online",
++    progress: 100,
++    color: "green",
++    robot: true,
++  },
++  { name: "Marketing", status: "Executando tarefas", progress: 75, color: "purple" },
++  { name: "Financeiro", status: "Aguardando fila", progress: 25, color: "orange" },
++  { name: "Conteúdo", status: "Processando vídeos", progress: 60, color: "yellow" },
++  { name: "Desenvolvimento", status: "Online", progress: 90, color: "green" },
++];
++const recentProjects = [
++  {
++    name: "Meu Estúdio",
++    description: "Produção musical e cursos",
++    icon: "star" as const,
++    color: "orange",
++    status: "Ativo",
++  },
++  {
++    name: "Agência Artística",
++    description: "Divulgação e eventos",
++    icon: "star" as const,
++    color: "orange",
++    status: "Ativo",
++  },
++  {
++    name: "Le Fabrique",
++    description: "Desenvolvimento do sistema",
++    icon: "robot" as const,
++    color: "purple",
++    status: "Em desenvolvimento",
++  },
++  {
++    name: "IA ENEM",
++    description: "Plataforma educacional",
++    icon: "folder" as const,
++    color: "blue",
++    status: "Pausado",
++  },
++];
++
++export function HomeDashboard({
++  onNavigate,
++}: {
++  onNavigate: (destination: HomeDestination) => void;
++}) {
++  const [query, setQuery] = useState("");
++  const [preview, setPreview] = useState<string | null>(null);
++  const dialog = useRef<HTMLDialogElement>(null);
++  const search = useRef<HTMLInputElement>(null);
++  useEffect(() => {
++    if (preview) dialog.current?.showModal();
++  }, [preview]);
++  useEffect(() => {
++    function shortcut(event: KeyboardEvent) {
++      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
++        event.preventDefault();
++        search.current?.focus();
++      }
++    }
++    window.addEventListener("keydown", shortcut);
++    return () => window.removeEventListener("keydown", shortcut);
++  }, []);
++  const filtered = shortcuts.filter((item) =>
++    `${item.name} ${item.description}`
++      .toLocaleLowerCase("pt-BR")
++      .includes(query.toLocaleLowerCase("pt-BR")),
++  );
++  function open(name: string, destination?: HomeDestination) {
++    if (destination) onNavigate(destination);
++    else setPreview(name);
++  }
++  function panelHeading(title: string, action: () => void) {
++    return (
++      <div className="home-panel-heading">
++        <h2>{title}</h2>
++        <button type="button" onClick={action}>
++          Ver {title === "Notificações importantes" ? "todas" : "todos"}
++          <Icon name="arrow" />
++        </button>
++      </div>
++    );
++  }
++  return (
++    <div className="home-dashboard">
++      <a className="home-skip" href="#home-content">
++        Ir para o conteúdo
++      </a>
++      <aside className="home-sidebar" aria-label="Menu principal">
++        <a className="home-brand" aria-label="Le Fabrique, painel inicial" href="#home-content">
++          <svg viewBox="0 0 42 46" aria-hidden="true">
++            <path d="m21 1 17 10-17 10L4 11Z" fill="#ff8d43" />
++            <path d="m4 13 15 9v20L4 33Z" fill="#278aff" />
++            <path d="m23 22 15-9v20l-15 9Z" fill="#20dca4" />
++            <path d="m21 12 9 5-9 5-9-5Z" fill="#b04bff" />
++            <path d="m21 1 8 5-8 5-8-5Z" fill="#ff4b61" />
++          </svg>
++          <span>LE FABRIQUE</span>
++        </a>
++        <nav>
++          {navigation.map((item) => (
++            <button
++              type="button"
++              key={item.name}
++              aria-label={item.name}
++              className={item.name === "Painel" ? "is-active" : ""}
++              aria-current={item.name === "Painel" ? "page" : undefined}
++              onClick={() =>
++                item.name === "Painel" ? setQuery("") : open(item.name, item.destination)
++              }
++            >
++              <Icon name={item.icon} />
++              <span>{item.name}</span>
++            </button>
++          ))}
++        </nav>
++        <div className="home-workspace">
++          <span>Workspace de demonstração</span>
++          <div>
++            <button type="button" onClick={() => setPreview("Workspaces")}>
++              Meu Estúdio <span>⌄</span>
++            </button>
++            <button
++              type="button"
++              aria-label="Configurar workspace"
++              onClick={() => onNavigate("settings")}
++            >
++              <Icon name="settings" />
++            </button>
++          </div>
++          <button type="button" className="home-all-projects" onClick={() => onNavigate("control")}>
++            Ver todos os projetos <Icon name="arrow" />
++          </button>
++        </div>
++      </aside>
++      <div className="home-main">
++        <header className="home-topbar">
++          <label className="home-search">
++            <Icon name="search" />
++            <input
++              ref={search}
++              aria-label="Buscar atalhos no sistema"
++              value={query}
++              onChange={(event) => setQuery(event.target.value)}
++              placeholder="Buscar algo no sistema..."
++            />
++            <kbd>⌘ K</kbd>
++          </label>
++          <span className="home-demo-tag">Demonstração</span>
++          <div className="home-top-actions">
++            <button
++              type="button"
++              aria-label="Ver notificações importantes"
++              onClick={() => setPreview("Notificações importantes")}
++            >
++              <Icon name="bell" />
++              <span className="home-notification-count">4</span>
++            </button>
++            <button type="button" aria-label="Ajuda" onClick={() => setPreview("Ajuda")}>
++              <Icon name="help" />
++            </button>
++            <button
++              type="button"
++              className="home-profile"
++              onClick={() => setPreview("Perfil de demonstração")}
++            >
++              <Avatar />
++              <span>
++                <strong>Administrador</strong>
++                <small>Workspace pessoal</small>
++              </span>
++              <span>⌄</span>
++            </button>
++          </div>
++        </header>
++        <main id="home-content" className="home-columns" tabIndex={-1}>
++          <div className="home-center">
++            <h1 className="home-sr-only">Central de controle Le Fabrique</h1>
++            <section className="home-office" aria-label="Escritório virtual da equipe">
++              <img
++                src="/images/control-room-reference.png"
++                alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
++                fetchPriority="high"
++              />
++              <button
++                type="button"
++                className="home-room home-room--marketing"
++                aria-label="Abrir agente de Marketing"
++                onClick={() => onNavigate("settings")}
++              />
++              <button
++                type="button"
++                className="home-room home-room--jarvis"
++                aria-label="Abrir JARVIS"
++                onClick={() => onNavigate("settings")}
++              />
++              <button
++                type="button"
++                className="home-room home-room--finance"
++                aria-label="Abrir Financeiro"
++                onClick={() => setPreview("Financeiro")}
++              />
++              <button
++                type="button"
++                className="home-room home-room--content"
++                aria-label="Abrir Conteúdo"
++                onClick={() => setPreview("Conteúdos")}
++              />
++              <button
++                type="button"
++                className="home-room home-room--development"
++                aria-label="Abrir Desenvolvimento"
++                onClick={() => onNavigate("control")}
++              />
++              <button
++                type="button"
++                className="home-room home-room--meeting"
++                aria-label="Abrir Sala de reunião"
++                onClick={() => setPreview("Sala de reunião")}
++              />
++            </section>
++            <div className="home-center-panels">
++              <section className="home-metrics" aria-label="Indicadores de demonstração">
++                {[
++                  {
++                    title: "Projetos Ativos",
++                    value: "5",
++                    detail: "de 5 disponíveis",
++                    icon: "folder" as const,
++                    color: "blue",
++                  },
++                  {
++                    title: "Leads (30 dias)",
++                    value: "127",
++                    detail: "↑ 12%",
++                    icon: "users" as const,
++                    color: "purple",
++                  },
++                  {
++                    title: "Vendas (30 dias)",
++                    value: "R$ 12.450",
++                    detail: "↑ 18%",
++                    icon: "money" as const,
++                    color: "green",
++                  },
++                  {
++                    title: "Conteúdos Gerados",
++                    value: "48",
++                    detail: "↑ 33%",
++                    icon: "content" as const,
++                    color: "purple",
++                  },
++                ].map((metric, index) => (
++                  <article className="home-card home-metric" key={metric.title}>
++                    <span className={`home-icon-tile tone-${metric.color}`}>
++                      <Icon name={metric.icon} />
++                    </span>
++                    <div>
++                      <span>{metric.title}</span>
++                      <strong>{metric.value}</strong>
++                      <small className={index > 0 ? "home-growth" : ""}>{metric.detail}</small>
++                    </div>
++                    {index === 0 ? (
++                      <div className="home-metric-line" />
++                    ) : (
++                      <div className={`home-bars tone-${metric.color}`} aria-hidden="true">
++                        {[35, 63, 45, 72, 88, 100].map((height) => (
++                          <i key={height} style={{ height: `${height}%` }} />
++                        ))}
++                      </div>
++                    )}
++                  </article>
++                ))}
++              </section>
++              <section className="home-card home-quick">
++                <h2>Acesso rápido</h2>
++                <div className="home-shortcuts">
++                  {filtered.map((item) => (
++                    <button
++                      type="button"
++                      key={item.name}
++                      onClick={() => open(item.name, item.destination)}
++                    >
++                      <span className={`home-shortcut-icon tone-${item.color}`}>
++                        <Icon name={item.icon} />
++                      </span>
++                      <span>
++                        <strong>{item.name}</strong>
++                        <small>{item.description}</small>
++                      </span>
++                    </button>
++                  ))}
++                </div>
++                {filtered.length === 0 && (
++                  <p className="home-empty" role="status">
++                    Nenhum atalho encontrado. Tente “projetos” ou “configurações”.
++                  </p>
++                )}
++              </section>
++              <section className="home-card home-important-message">
++                <span className="home-shortcut-icon tone-blue">
++                  <Icon name="message" />
++                </span>
++                <div>
++                  <h2>Mensagens importantes</h2>
++                  <p>
++                    Seu escritório está pronto para ganhar vida. Revise as contas e a equipe para
++                    começar.
++                  </p>
++                </div>
++                <button type="button" onClick={() => onNavigate("settings")}>
++                  Configurar equipe <Icon name="arrow" />
++                </button>
++              </section>
++              <p className="home-demo-note">
++                Prévia estática · Indicadores, notificações, mensagens, projetos e status são dados
++                simulados.
++              </p>
++            </div>
++          </div>
++          <aside className="home-right" aria-label="Resumo do workspace">
++            <section className="home-card home-notifications">
++              {panelHeading("Notificações importantes", () =>
++                setPreview("Notificações importantes"),
++              )}
++              {notifications.map((item) => (
++                <button
++                  type="button"
++                  className="home-notice"
++                  key={item.title}
++                  onClick={() => setPreview(item.title)}
++                >
++                  <span className={`home-notice-icon tone-${item.color}`}>
++                    <Icon name={item.icon} />
++                  </span>
++                  <span>
++                    <strong>{item.title}</strong>
++                    {item.description && <small>{item.description}</small>}
++                    <small>{item.time}</small>
++                  </span>
++                </button>
++              ))}
++            </section>
++            <section className="home-card home-agents">
++              {panelHeading("Status dos Agentes", () => onNavigate("settings"))}
++              {agents.map((agent) => (
++                <button
++                  type="button"
++                  className="home-agent"
++                  key={agent.name}
++                  onClick={() => onNavigate("settings")}
++                >
++                  <Avatar robot={agent.robot} />
++                  <span>
++                    <strong>
++                      {agent.name}
++                      <span>{agent.role}</span>
++                    </strong>
++                    <small>
++                      <i className={`home-dot tone-${agent.color}`} />
++                      {agent.status}
++                    </small>
++                  </span>
++                  <span className="home-agent-progress">
++                    <meter
++                      aria-label={`Atividade simulada de ${agent.name}`}
++                      min={0}
++                      max={100}
++                      value={agent.progress}
++                    ></meter>
++                    <small>{agent.progress}%</small>
++                  </span>
++                </button>
++              ))}
++            </section>
++            <section className="home-card home-projects">
++              {panelHeading("Projetos recentes", () => onNavigate("control"))}
++              {recentProjects.map((project) => (
++                <button
++                  type="button"
++                  className="home-project"
++                  key={project.name}
++                  onClick={() => onNavigate("control")}
++                >
++                  <span className={`home-project-icon tone-${project.color}`}>
++                    <Icon name={project.icon} />
++                  </span>
++                  <span>
++                    <strong>{project.name}</strong>
++                    <small>{project.description}</small>
++                  </span>
++                  <small className="home-project-status">
++                    <i
++                      className={`home-dot tone-${project.status === "Ativo" ? "green" : project.status === "Pausado" ? "orange" : "blue"}`}
++                    />
++                    {project.status}
++                  </small>
++                </button>
++              ))}
++            </section>
++          </aside>
++        </main>
++      </div>
++      <dialog
++        ref={dialog}
++        className="home-preview"
++        onClose={() => setPreview(null)}
++        aria-labelledby="home-preview-title"
++      >
++        <div className="home-preview-heading">
++          <span className="home-demo-tag">Demonstração</span>
++          <form method="dialog">
++            <button type="submit" aria-label="Fechar prévia">
++              ×
++            </button>
++          </form>
++        </div>
++        <h2 id="home-preview-title">{preview}</h2>
++        {preview === "Notificações importantes" ? (
++          notifications.map((item) => (
++            <p key={item.title}>
++              <strong>{item.title}</strong>
++              <br />
++              {item.description ?? item.time}
++            </p>
++          ))
++        ) : (
++          <p>
++            Esta é uma prévia da central de controle. Os dados desta área são simulados; a
++            integração será disponibilizada em uma próxima etapa.
++          </p>
++        )}
++        <form method="dialog">
++          <button type="submit">Voltar ao painel</button>
++        </form>
++      </dialog>
++    </div>
++  );
++}
+diff --git a/apps/web/src/home-dashboard.css b/apps/web/src/home-dashboard.css
+new file mode 100644
+index 0000000..ee5e80b
+--- /dev/null
++++ b/apps/web/src/home-dashboard.css
+@@ -0,0 +1,1065 @@
++/* biome-ignore-all lint/style/noDescendingSpecificity: Selectors are scoped to distinct dashboard components; media queries intentionally override their own component styles. */
++.home-dashboard {
++  --home-bg: #071522;
++  --home-panel: #0c1d2b;
++  --home-line: #1a3245;
++  --home-muted: #a0b5ce;
++  --home-blue: #258bff;
++  min-height: 100vh;
++  background: radial-gradient(ellipse at 55% 15%, #0e2432, transparent 70%), var(--home-bg);
++  color: #f4f6ff;
++  font-family: "Segoe UI", system-ui, sans-serif;
++  font-size: 13px;
++}
++.home-dashboard button,
++.home-dashboard a,
++.home-dashboard input {
++  font: inherit;
++}
++.home-dashboard button {
++  color: inherit;
++  background: transparent;
++  border-radius: 8px;
++  font-weight: 400;
++}
++.home-dashboard button:hover {
++  background: #16344b;
++}
++.home-dashboard button:focus-visible,
++.home-dashboard a:focus-visible,
++.home-dashboard input:focus-visible {
++  outline: 2px solid #54c5ff;
++  outline-offset: 3px;
++}
++.home-dashboard svg {
++  width: 24px;
++  height: 24px;
++  flex-shrink: 0;
++}
++.home-dashboard strong {
++  font-weight: 600;
++}
++.home-dashboard small {
++  display: block;
++  color: var(--home-muted);
++  font-size: 12px;
++  line-height: 1.5;
++}
++.home-dashboard h2 {
++  margin: 0;
++  font-size: 16px;
++  font-weight: 600;
++  letter-spacing: -0.3px;
++}
++.home-dashboard p {
++  margin: 0;
++}
++.home-dashboard .home-sidebar {
++  position: fixed;
++  top: 0;
++  bottom: 0;
++  left: 0;
++  width: 234px;
++  display: flex;
++  flex-direction: column;
++  border-right: 1px solid var(--home-line);
++  background: linear-gradient(120deg, #07121e, #091925);
++  z-index: 2;
++}
++.home-dashboard .home-brand {
++  height: 66px;
++  display: flex;
++  align-items: center;
++  gap: 10px;
++  padding: 0 24px;
++  border-bottom: 1px solid var(--home-line);
++  color: #fff;
++  text-decoration: none;
++  flex-shrink: 0;
++}
++.home-dashboard .home-brand svg {
++  width: 35px;
++  height: 42px;
++}
++.home-dashboard .home-brand span {
++  font-size: 21px;
++  font-weight: 800;
++  letter-spacing: -0.8px;
++  white-space: nowrap;
++}
++.home-dashboard .home-sidebar nav {
++  padding: 17px 9px 24px;
++  display: grid;
++  gap: 7px;
++  overflow-y: auto;
++}
++.home-dashboard .home-sidebar nav button {
++  display: flex;
++  align-items: center;
++  gap: 25px;
++  text-align: left;
++  padding: 11px 16px;
++  min-height: 43px;
++  color: #c5d3e7;
++  border-left: 4px solid transparent;
++}
++.home-dashboard .home-sidebar nav button svg {
++  width: 23px;
++  height: 23px;
++}
++.home-dashboard .home-sidebar nav button.is-active {
++  background: linear-gradient(90deg, #13395c, #0b2c47);
++  border-left-color: var(--home-blue);
++  color: white;
++  font-weight: 600;
++}
++.home-dashboard .home-workspace {
++  margin-top: auto;
++  padding: 12px 17px 25px;
++  border-top: 1px solid var(--home-line);
++  color: var(--home-muted);
++  font-size: 11px;
++}
++.home-dashboard .home-workspace > div {
++  display: flex;
++  gap: 8px;
++  margin: 6px 0 10px;
++}
++.home-dashboard .home-workspace button {
++  border: 1px solid #244055;
++  padding: 8px 11px;
++}
++.home-dashboard .home-workspace > div button:first-child {
++  flex: 1;
++  display: flex;
++  justify-content: space-between;
++  color: #f4f6ff;
++  background: #102434;
++  text-align: left;
++}
++.home-dashboard .home-workspace > div button:last-child {
++  padding: 6px;
++}
++.home-dashboard .home-workspace svg {
++  width: 18px;
++  height: 18px;
++}
++.home-dashboard .home-workspace .home-all-projects {
++  width: 100%;
++  color: #3db3ff;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 6px;
++}
++.home-dashboard .home-main {
++  margin-left: 234px;
++}
++.home-dashboard .home-topbar {
++  height: 66px;
++  padding: 0 22px 0 17px;
++  margin: 0;
++  display: flex;
++  align-items: center;
++  gap: 15px;
++  border-bottom: 1px solid var(--home-line);
++  background: #071725ee;
++}
++.home-dashboard .home-search {
++  display: flex;
++  align-items: center;
++  gap: 14px;
++  margin: 0;
++  padding: 6px 12px 6px 16px;
++  width: min(502px, 44%);
++  height: 39px;
++  border: 1px solid #263f53;
++  border-radius: 8px;
++  background: linear-gradient(90deg, #122839, #102231);
++  font-weight: 400;
++}
++.home-dashboard .home-search svg {
++  width: 20px;
++  height: 20px;
++  color: #b7c8e0;
++}
++.home-dashboard .home-search input {
++  padding: 0;
++  min-width: 0;
++  outline: none;
++  border: 0;
++  border-radius: 0;
++  background: transparent;
++  font-size: 12px;
++}
++.home-dashboard .home-search input::placeholder {
++  color: #a6bed8;
++  opacity: 1;
++}
++.home-dashboard .home-search kbd {
++  flex-shrink: 0;
++  padding: 2px 6px;
++  border: 1px solid #294256;
++  border-radius: 5px;
++  font-size: 12px;
++  color: #cbd7e9;
++}
++.home-dashboard .home-demo-tag {
++  color: #a7bdd2;
++  border: 1px solid #294456;
++  padding: 4px 8px;
++  border-radius: 5px;
++  font-size: 10px;
++  letter-spacing: 0.3px;
++  white-space: nowrap;
++}
++.home-dashboard .home-top-actions {
++  margin-left: auto;
++  display: flex;
++  align-items: center;
++  gap: 15px;
++}
++.home-dashboard .home-top-actions > button {
++  position: relative;
++  display: flex;
++  align-items: center;
++  padding: 7px;
++  color: #cbd7e9;
++}
++.home-dashboard .home-notification-count {
++  position: absolute;
++  top: 0;
++  right: 0;
++  width: 18px;
++  height: 18px;
++  display: grid;
++  place-items: center;
++  border-radius: 50%;
++  background: #fa4c48;
++  color: #fff;
++  font-size: 10px;
++}
++.home-dashboard .home-top-actions .home-profile {
++  border-left: 1px solid var(--home-line);
++  border-radius: 0;
++  padding: 0 0 0 19px;
++  gap: 10px;
++  text-align: left;
++}
++.home-dashboard .home-profile > span:last-child {
++  margin-left: 22px;
++}
++.home-dashboard .home-avatar {
++  width: 47px;
++  height: 47px;
++}
++.home-dashboard .home-profile .home-avatar {
++  width: 42px;
++  height: 42px;
++}
++.home-dashboard .home-columns {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) 366px;
++  gap: 14px;
++  padding-right: 15px;
++  outline: none;
++}
++.home-dashboard .home-center {
++  min-width: 0;
++}
++.home-dashboard .home-office {
++  position: relative;
++  aspect-ratio: 906 / 558;
++  overflow: hidden;
++  isolation: isolate;
++  background: #15314a;
++}
++.home-dashboard .home-office > img {
++  position: absolute;
++  max-width: none;
++  width: 169.5364238%;
++  height: auto;
++  left: -25.8278146%;
++  top: -11.827957%;
++}
++.home-dashboard .home-room {
++  position: absolute;
++  padding: 0;
++  border-radius: 8px;
++  border: 1px solid transparent;
++  background: transparent;
++  height: 7%;
++}
++.home-dashboard .home-room:hover {
++  background: #2badff20;
++  border-color: #77d8ff;
++  box-shadow: 0 0 20px #259aff70;
++}
++.home-dashboard .home-room--marketing {
++  top: 19.4%;
++  left: 22%;
++  width: 13.5%;
++}
++.home-dashboard .home-room--jarvis {
++  top: 12.4%;
++  left: 46%;
++  width: 13.5%;
++}
++.home-dashboard .home-room--finance {
++  top: 15.8%;
++  left: 75%;
++  width: 13%;
++}
++.home-dashboard .home-room--content {
++  top: 44.8%;
++  left: 10.4%;
++  width: 13.5%;
++}
++.home-dashboard .home-room--development {
++  top: 45.8%;
++  left: 75.5%;
++  width: 18%;
++}
++.home-dashboard .home-room--meeting {
++  top: 68%;
++  left: 46.3%;
++  width: 17%;
++}
++.home-dashboard .home-center-panels {
++  padding: 16px 0 16px 14px;
++  display: grid;
++  gap: 16px;
++}
++.home-dashboard .home-card {
++  border: 1px solid var(--home-line);
++  border-radius: 11px;
++  background: linear-gradient(115deg, #0d2030, #0b1b28);
++}
++.home-dashboard .home-metrics {
++  display: grid;
++  grid-template-columns: repeat(4, minmax(0, 1fr));
++  gap: 13px;
++}
++.home-dashboard .home-metric {
++  display: flex;
++  gap: 18px;
++  padding: 12px 13px 22px;
++  min-height: 113px;
++  position: relative;
++  overflow: hidden;
++}
++.home-dashboard .home-icon-tile {
++  width: 37px;
++  height: 37px;
++  border-radius: 8px;
++  display: grid;
++  place-items: center;
++  box-shadow:
++    inset 0 2px 5px #ffffff30,
++    0 5px 12px #0003;
++}
++.home-dashboard .home-metric > div > span {
++  color: #b2c6df;
++  font-size: 12px;
++  display: block;
++  white-space: nowrap;
++  margin: 2px 0 7px;
++}
++.home-dashboard .home-metric strong {
++  display: block;
++  font-size: 23px;
++  font-weight: 700;
++  line-height: 1.2;
++  white-space: nowrap;
++}
++.home-dashboard .home-metric small {
++  margin-top: 3px;
++}
++.home-dashboard .home-metric .home-growth {
++  color: #16e091;
++  font-size: 15px;
++  font-weight: 650;
++  margin-top: 8px;
++}
++.home-dashboard .home-metric-line {
++  position: absolute;
++  bottom: 8px;
++  height: 8px;
++  left: 13px;
++  right: 13px;
++  background: #258bff;
++  border-radius: 5px;
++  box-shadow: inset 0 1px 0 #ffffff40;
++}
++.home-dashboard .home-bars {
++  position: absolute;
++  bottom: 14px;
++  right: 14px;
++  height: 46px;
++  display: flex;
++  align-items: end;
++  gap: 3px;
++  background: transparent;
++}
++.home-dashboard .home-bars i {
++  width: 5px;
++  border-radius: 2px 2px 0 0;
++  background: var(--tone);
++}
++.tone-blue {
++  --tone: #248aff;
++}
++.tone-purple {
++  --tone: #9343eb;
++}
++.tone-green {
++  --tone: #19c57c;
++}
++.tone-orange {
++  --tone: #ff8428;
++}
++.tone-red {
++  --tone: #ff4f4b;
++}
++.tone-cyan {
++  --tone: #13acf1;
++}
++.tone-teal {
++  --tone: #03bfc3;
++}
++.tone-yellow {
++  --tone: #ffc349;
++}
++.tone-silver {
++  --tone: #cad8ed;
++}
++.home-dashboard .home-icon-tile,
++.home-dashboard .home-notice-icon {
++  color: white;
++  background: var(--tone);
++  flex-shrink: 0;
++}
++.home-dashboard .home-quick {
++  padding: 14px 12px 22px;
++}
++.home-dashboard .home-quick h2 {
++  margin: 0 0 14px 2px;
++}
++.home-dashboard .home-shortcuts {
++  display: grid;
++  grid-template-columns: repeat(5, minmax(0, 1fr));
++  gap: 11px;
++}
++.home-dashboard .home-shortcuts button {
++  display: flex;
++  align-items: center;
++  gap: 14px;
++  padding: 13px 10px;
++  border: 1px solid #203d52;
++  min-height: 72px;
++  background: linear-gradient(115deg, #142b3d, #102433);
++  text-align: left;
++}
++.home-dashboard .home-shortcuts button:nth-child(n + 6) {
++  grid-column: span 1;
++}
++.home-dashboard .home-shortcuts strong {
++  display: block;
++  font-size: 12px;
++  white-space: nowrap;
++}
++.home-dashboard .home-shortcuts small {
++  font-size: 10px;
++  margin-top: 4px;
++  white-space: nowrap;
++}
++.home-dashboard .home-shortcut-icon {
++  display: grid;
++  place-items: center;
++  width: 41px;
++  height: 41px;
++  flex-shrink: 0;
++  color: var(--tone);
++}
++.home-dashboard .home-shortcut-icon svg {
++  width: 36px;
++  height: 36px;
++  stroke-width: 2.4;
++}
++.home-dashboard .home-shortcut-icon.tone-blue,
++.home-dashboard .home-shortcut-icon.tone-purple,
++.home-dashboard .home-shortcut-icon.tone-green {
++  background: var(--tone);
++  color: #fff;
++  border-radius: 50%;
++  box-shadow: inset 0 3px 6px #ffffff30;
++}
++.home-dashboard .home-shortcut-icon.tone-blue svg,
++.home-dashboard .home-shortcut-icon.tone-purple svg,
++.home-dashboard .home-shortcut-icon.tone-green svg {
++  width: 26px;
++  height: 26px;
++}
++.home-dashboard .home-shortcuts button:nth-child(n + 6) {
++  min-height: 72px;
++}
++.home-dashboard .home-important-message {
++  padding: 12px 14px;
++  display: flex;
++  align-items: center;
++  gap: 12px;
++}
++.home-dashboard .home-important-message h2 {
++  font-size: 13px;
++}
++.home-dashboard .home-important-message p {
++  margin-top: 4px;
++  font-size: 11px;
++  color: var(--home-muted);
++}
++.home-dashboard .home-important-message button {
++  margin-left: auto;
++  display: flex;
++  align-items: center;
++  gap: 7px;
++  padding: 6px;
++  color: #3bb5ff;
++  font-size: 11px;
++  white-space: nowrap;
++}
++.home-dashboard .home-important-message button svg {
++  width: 16px;
++}
++.home-dashboard .home-demo-note {
++  color: #8fa8c0;
++  font-size: 10px;
++  padding: 0 3px;
++}
++.home-dashboard .home-right {
++  padding-top: 11px;
++  display: flex;
++  flex-direction: column;
++  gap: 14px;
++  min-width: 0;
++}
++.home-dashboard .home-right > section {
++  padding: 10px 14px;
++}
++.home-dashboard .home-panel-heading {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 10px;
++  padding-bottom: 10px;
++  border-bottom: 1px solid var(--home-line);
++}
++.home-dashboard .home-panel-heading h2 {
++  font-size: 15px;
++}
++.home-dashboard .home-panel-heading button {
++  padding: 0;
++  display: flex;
++  align-items: center;
++  gap: 6px;
++  color: #34b1ff;
++  white-space: nowrap;
++  font-size: 12px;
++}
++.home-dashboard .home-panel-heading svg {
++  width: 16px;
++  height: 16px;
++}
++.home-dashboard .home-notice {
++  width: 100%;
++  display: flex;
++  align-items: center;
++  gap: 18px;
++  text-align: left;
++  padding: 10px 0;
++  border-radius: 0;
++  border-bottom: 1px solid var(--home-line);
++  min-height: 67px;
++}
++.home-dashboard .home-notice:last-child {
++  border-bottom: 0;
++}
++.home-dashboard .home-notice > span:last-child {
++  min-width: 0;
++}
++.home-dashboard .home-notice strong {
++  font-size: 13px;
++  display: block;
++  line-height: 1.45;
++  margin-bottom: 3px;
++}
++.home-dashboard .home-notice small {
++  font-size: 12px;
++}
++.home-dashboard .home-notice-icon {
++  width: 47px;
++  height: 47px;
++  border-radius: 50%;
++  display: grid;
++  place-items: center;
++  box-shadow: inset 0 2px 4px #ffffff25;
++}
++.home-dashboard .home-notice-icon svg {
++  width: 25px;
++  height: 25px;
++}
++.home-dashboard .home-agent {
++  display: flex;
++  align-items: center;
++  gap: 13px;
++  padding: 7px 0;
++  border-bottom: 1px solid var(--home-line);
++  border-radius: 0;
++  width: 100%;
++  min-height: 61px;
++  text-align: left;
++}
++.home-dashboard .home-agent:last-child {
++  border-bottom: 0;
++}
++.home-dashboard .home-agent strong {
++  display: block;
++  font-size: 12px;
++}
++.home-dashboard .home-agent strong > span {
++  font-weight: 400;
++  color: #c5d4e8;
++}
++.home-dashboard .home-agent small {
++  display: flex;
++  align-items: center;
++  gap: 8px;
++  font-size: 11px;
++  margin-top: 3px;
++  white-space: nowrap;
++}
++.home-dashboard .home-dot {
++  display: inline-block;
++  flex-shrink: 0;
++  height: 10px;
++  width: 10px;
++  border-radius: 50%;
++  background: var(--tone);
++  box-shadow: inset 0 0 0 1px #ffffff20;
++}
++.home-dashboard .home-agent-progress {
++  margin-left: auto;
++  display: flex;
++  align-items: center;
++  gap: 6px;
++  align-self: end;
++  padding-bottom: 10px;
++}
++.home-dashboard .home-agent-progress > meter {
++  display: block;
++  width: 82px;
++  height: 11px;
++  background: #1e354b;
++  border-radius: 8px;
++  overflow: hidden;
++}
++.home-dashboard .home-agent-progress meter::-webkit-meter-optimum-value {
++  display: block;
++  height: 100%;
++  background: #258aff;
++  border-radius: inherit;
++}
++.home-dashboard .home-agent-progress small {
++  min-width: 29px;
++  font-size: 11px;
++  margin: 0;
++}
++.home-dashboard .home-project {
++  display: flex;
++  width: 100%;
++  align-items: center;
++  gap: 12px;
++  padding: 6px 0;
++  text-align: left;
++  border-bottom: 1px solid var(--home-line);
++  border-radius: 0;
++}
++.home-dashboard .home-project:last-child {
++  border-bottom: 0;
++}
++.home-dashboard .home-project-icon {
++  width: 30px;
++  height: 30px;
++  flex-shrink: 0;
++  color: var(--tone);
++  background: color-mix(in srgb, var(--tone) 24%, transparent);
++  border-radius: 5px;
++  display: grid;
++  place-items: center;
++}
++.home-dashboard .home-project-icon svg {
++  width: 24px;
++  height: 24px;
++}
++.home-dashboard .home-project strong {
++  display: block;
++  font-size: 11px;
++}
++.home-dashboard .home-project small {
++  font-size: 10px;
++}
++.home-dashboard .home-project .home-project-status {
++  display: flex;
++  align-items: center;
++  gap: 6px;
++  margin-left: auto;
++  white-space: nowrap;
++}
++.home-dashboard .home-project-status .home-dot {
++  width: 9px;
++  height: 9px;
++}
++.home-dashboard .home-empty {
++  padding: 20px;
++  color: var(--home-muted);
++}
++.home-dashboard .home-preview {
++  width: min(460px, calc(100% - 32px));
++  padding: 24px;
++  color: #f4f6ff;
++  background: #0c2030;
++  border: 1px solid #2c516b;
++  border-radius: 16px;
++}
++.home-dashboard .home-preview::backdrop {
++  background: #020c18b8;
++  backdrop-filter: blur(5px);
++}
++.home-dashboard .home-preview-heading {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  margin-bottom: 18px;
++}
++.home-dashboard .home-preview-heading button {
++  padding: 0 10px;
++  font-size: 26px;
++}
++.home-dashboard .home-preview h2 {
++  margin-bottom: 16px;
++}
++.home-dashboard .home-preview p {
++  color: #b3c6db;
++  margin: 14px 0;
++}
++.home-dashboard .home-preview > form button {
++  margin-top: 12px;
++  background: #228bff;
++  padding: 10px 15px;
++}
++.home-dashboard .home-sr-only,
++.home-dashboard .home-skip {
++  position: absolute;
++  width: 1px;
++  height: 1px;
++  padding: 0;
++  margin: -1px;
++  overflow: hidden;
++  clip-path: inset(50%);
++  white-space: nowrap;
++}
++.home-dashboard .home-skip:focus {
++  position: fixed;
++  top: 8px;
++  left: 8px;
++  width: auto;
++  height: auto;
++  margin: 0;
++  padding: 10px;
++  background: #0e3459;
++  color: #fff;
++  clip-path: none;
++  z-index: 5;
++}
++@media (min-width: 1450px) {
++  .home-dashboard .home-shortcuts {
++    grid-template-columns: repeat(20, minmax(0, 1fr));
++  }
++  .home-dashboard .home-shortcuts button {
++    grid-column: span 4;
++  }
++  .home-dashboard .home-shortcuts button:nth-child(n + 6) {
++    grid-column: span 5;
++  }
++}
++@media (max-width: 1449px) {
++  .home-dashboard .home-sidebar {
++    width: 210px;
++  }
++  .home-dashboard .home-brand {
++    padding: 0 16px;
++  }
++  .home-dashboard .home-brand span {
++    font-size: 19px;
++  }
++  .home-dashboard .home-main {
++    margin-left: 210px;
++  }
++  .home-dashboard .home-columns {
++    grid-template-columns: minmax(0, 1fr) 330px;
++  }
++  .home-dashboard .home-metric {
++    gap: 9px;
++    padding-left: 10px;
++    padding-right: 10px;
++  }
++  .home-dashboard .home-metric > div > span {
++    font-size: 10px;
++  }
++  .home-dashboard .home-metric strong {
++    font-size: 20px;
++  }
++  .home-dashboard .home-bars {
++    height: 28px;
++    right: 8px;
++    opacity: 0.6;
++  }
++  .home-dashboard .home-shortcuts {
++    grid-template-columns: repeat(3, minmax(0, 1fr));
++  }
++  .home-dashboard .home-agent {
++    gap: 8px;
++  }
++  .home-dashboard .home-agent-progress > meter {
++    width: 60px;
++  }
++  .home-dashboard .home-panel-heading h2 {
++    font-size: 13px;
++  }
++}
++@media (max-width: 1150px) {
++  .home-dashboard .home-columns {
++    grid-template-columns: minmax(0, 1fr);
++    padding-right: 14px;
++  }
++  .home-dashboard .home-right {
++    display: grid;
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    padding: 0 0 20px 14px;
++  }
++  .home-dashboard .home-projects {
++    grid-column: 1 / -1;
++  }
++  .home-dashboard .home-search {
++    width: min(420px, 52%);
++  }
++  .home-dashboard .home-profile > span {
++    display: none;
++  }
++  .home-dashboard .home-top-actions {
++    gap: 7px;
++  }
++  .home-dashboard .home-topbar {
++    padding-right: 14px;
++  }
++  .home-dashboard .home-metric > div > span {
++    font-size: 11px;
++  }
++}
++@media (max-width: 760px) {
++  .home-dashboard .home-sidebar {
++    width: 66px;
++  }
++  .home-dashboard .home-brand {
++    justify-content: center;
++    padding: 0;
++  }
++  .home-dashboard .home-brand span,
++  .home-dashboard .home-sidebar nav button span,
++  .home-dashboard .home-workspace {
++    display: none;
++  }
++  .home-dashboard .home-sidebar nav {
++    padding: 14px 5px;
++    gap: 7px;
++  }
++  .home-dashboard .home-sidebar nav button {
++    justify-content: center;
++    padding: 10px 8px;
++    min-height: 45px;
++  }
++  .home-dashboard .home-main {
++    margin-left: 66px;
++  }
++  .home-dashboard .home-topbar {
++    flex-direction: row;
++    padding: 0 10px;
++    gap: 8px;
++  }
++  .home-dashboard .home-search {
++    width: auto;
++    flex: 1;
++    padding: 8px;
++    gap: 7px;
++  }
++  .home-dashboard .home-search kbd,
++  .home-dashboard .home-topbar > .home-demo-tag,
++  .home-dashboard .home-top-actions > button:nth-child(2),
++  .home-dashboard .home-top-actions .home-profile {
++    display: none;
++  }
++  .home-dashboard .home-columns {
++    padding-right: 0;
++  }
++  .home-dashboard .home-center-panels {
++    padding: 12px;
++    gap: 12px;
++  }
++  .home-dashboard .home-metrics {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    gap: 10px;
++  }
++  .home-dashboard .home-metric {
++    gap: 10px;
++    min-height: 106px;
++  }
++  .home-dashboard .home-metric strong {
++    font-size: 20px;
++  }
++  .home-dashboard .home-metric > div > span {
++    white-space: normal;
++    font-size: 10px;
++  }
++  .home-dashboard .home-metric .home-growth {
++    font-size: 13px;
++  }
++  .home-dashboard .home-bars {
++    display: none;
++  }
++  .home-dashboard .home-shortcuts {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++    gap: 8px;
++  }
++  .home-dashboard .home-shortcuts button {
++    gap: 7px;
++    padding: 9px 6px;
++  }
++  .home-dashboard .home-shortcuts strong {
++    font-size: 10px;
++  }
++  .home-dashboard .home-shortcuts small {
++    font-size: 9px;
++    white-space: normal;
++  }
++  .home-dashboard .home-shortcut-icon {
++    width: 30px;
++    height: 30px;
++  }
++  .home-dashboard .home-shortcut-icon svg {
++    width: 27px;
++    height: 27px;
++  }
++  .home-dashboard .home-important-message {
++    flex-wrap: wrap;
++    padding: 12px;
++  }
++  .home-dashboard .home-important-message > div {
++    flex: 1;
++    min-width: 140px;
++  }
++  .home-dashboard .home-important-message button {
++    margin-left: 40px;
++  }
++  .home-dashboard .home-right {
++    display: flex;
++    padding: 0 12px 20px;
++  }
++  .home-dashboard .home-right > section {
++    padding: 12px;
++  }
++  .home-dashboard .home-panel-heading h2 {
++    font-size: 12px;
++  }
++  .home-dashboard .home-panel-heading button {
++    font-size: 10px;
++  }
++  .home-dashboard .home-notice {
++    gap: 12px;
++  }
++  .home-dashboard .home-notice strong {
++    font-size: 12px;
++  }
++  .home-dashboard .home-notice small {
++    font-size: 11px;
++  }
++  .home-dashboard .home-agent-progress > meter {
++    width: 48px;
++  }
++  .home-dashboard .home-project {
++    gap: 7px;
++  }
++  .home-dashboard .home-project .home-project-status {
++    font-size: 9px;
++    white-space: normal;
++  }
++}
++@media (max-width: 380px) {
++  .home-dashboard .home-icon-tile {
++    width: 28px;
++    height: 28px;
++  }
++  .home-dashboard .home-metric {
++    gap: 6px;
++  }
++  .home-dashboard .home-metric strong {
++    font-size: 17px;
++  }
++  .home-dashboard .home-agent-progress > meter {
++    width: 30px;
++  }
++  .home-dashboard .home-agent strong > span {
++    display: none;
++  }
++  .home-dashboard .home-avatar {
++    width: 38px;
++    height: 38px;
++  }
++}
++
++.home-dashboard .home-agent-progress meter {
++  border: 0;
++  appearance: none;
++}
++.home-dashboard .home-agent-progress meter::-webkit-meter-bar {
++  background: #1e354b;
++  border: 0;
++  border-radius: 8px;
++}
++.home-dashboard .home-agent-progress meter::-moz-meter-bar {
++  background: #258aff;
++  border-radius: 8px;
++}
++@media (min-width: 761px) and (max-width: 950px) {
++  .home-dashboard .home-metrics {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++  }
++  .home-dashboard .home-right {
++    grid-template-columns: minmax(0, 1fr);
++  }
++}
++@media (max-width: 760px) {
++  .home-dashboard .home-metric {
++    flex-direction: column;
++    gap: 6px;
++  }
++  .home-dashboard .home-metric-line {
++    height: 5px;
++  }
++}
++@media (max-width: 380px) {
++  .home-dashboard .home-agent-progress > meter {
++    display: none;
++  }
++  .home-dashboard .home-agent small {
++    font-size: 10px;
++  }
++}

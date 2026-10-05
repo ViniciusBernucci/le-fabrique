@@ -1,5 +1,12 @@
 # Controle administrativo
 
+## Página inicial — FAC-020
+
+Estado IMPLEMENTADO/AWAITING_HUMAN na branch `feat/fac-020-home-dashboard`, código `904d0b5`; integração em developer pendente. O painel abre uma central estática antes do formulário de login. `HomeDashboard` concentra escritório cartoon, sidebar, busca de atalhos, métricas, notificações, mensagens, agentes e projetos, todos explicitamente demonstrativos. A home não lê API na entrada inicial. Projetos/Novo Projeto/Desenvolvimento levam à Operação; Agentes/JARVIS/Marketing/Configurações levam às configurações existentes, com autenticação administrativa preservada. Áreas futuras usam dialog de prévia, sem persistência ou jobs.
+
+O escritório reutiliza o PNG enviado pelo responsável com enquadramento em CSS; ícones e avatares são SVGs locais. A cena mantém marca/texto da referência. Percentuais indicam atividade fictícia, não cota de assinatura. Ctrl/Cmd+K foca a busca; menu colapsa e cartões se empilham no mobile. [Relatório e capturas](2026-10-05-FAC-020-central-controle-estatica.md). Nenhum contrato/backend/migration alterado; descrição de token abaixo continua aplicável às áreas administrativas.
+
+
 FAC-012AH: claim responde 429/WRITER_BUSY por capacidade global/rollback conhecido antes de autoridade. Worker adia job sem FAILED/attemptsMade; 409/lease/execução/ambiguidade propagam. 528 testes + 10 PostgreSQL + 3 Redis. [Evidências](2026-10-03-FAC-012AH-admissao-capacidade.md).
 
 FAC-012AG adiciona PUT /api/operation/scheduling (paused/expectedVersion) e estado no painel. Default pausado; claim usa FOR SHARE/423, renew pede PAUSE sem sobrescrever CANCEL; não afirma stop. [Evidências](2026-10-03-FAC-012AG-pausa-global.md).

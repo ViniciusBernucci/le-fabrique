@@ -1,5 +1,9 @@
 # Documentação atual v2.3
 
+- [FAC-020 — central de controle estática e capturas](controle/2026-10-05-FAC-020-central-controle-estatica.md)
+- [Ticket FAC-020](controle/tickets/FAC-020.md)
+
+
 FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](configuracao/2026-10-05-FAC-019-abas-configuracoes.md).

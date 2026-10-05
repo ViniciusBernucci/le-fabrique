@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-05 — FAC-020
+
+Página inicial estática inspirada na referência: escritório cartoon, navegação, métricas, notificações, mensagens e acessos rápidos. Ícones/avatares SVG, arte central PNG fornecida. Busca filtra atalhos; áreas futuras abrem prévia; telas existentes mantêm autenticação. 42 testes web e browser em seis larguras passaram. [Evidências](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+
+
 FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).

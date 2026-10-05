@@ -1,5 +1,8 @@
 # Backlog v2
 
+- FAC-020: AWAITING_HUMAN — central de controle estática em `904d0b5`, 42 testes web e browser desktop/mobile passaram. Dados simulados; aceite visual/integração pendentes. [Relatório](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+
+
 - FAC-017: AWAITING_HUMAN — desafio ANSI Codex corrigido e aba oficial/fallback implementados; confirmação humana da assinatura e visual pendentes. [Relatório](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
 
 - FAC-016: AWAITING_HUMAN — feedback de verificação no modal; 35 testes web/209 worker passaram, pedido Codex real COMPLETED/AUTH_REQUIRED. [Relatório](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).

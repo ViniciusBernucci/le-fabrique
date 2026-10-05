@@ -1,5 +1,8 @@
 # Fábrica de Software — kit v2.3
 
+FAC-020 AWAITING_HUMAN: nova tela inicial estática com escritório cartoon, notificações, mensagens, indicadores e atalhos. Dados simulados; Operação e Configurações preservam login. [Relatório/capturas](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+
+
 FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
