@@ -1,5 +1,6 @@
 # Centro de configuracoes
 
+FAC-014: funcionários digitais e GitHub também mostram resumo clicável com formulário em modal. Cancelar/Escape descarta edição da configuração; salvar persiste pela API versionada. Verificações/login/PR permanecem ações explícitas sobre configuração salva; fechar modal não desfaz pedidos enviados. [Evidências](2026-10-05-FAC-014-modais-funcionarios-github.md).
 FAC-013: IA e contas usa lista compacta com nome/provider/habilitação/estado. Clicar em conta ou Adicionar abre modal nativo; Cancelar/Escape descarta campos, Salvar conta persiste configuração corrente e fecha após sucesso. Verificação/login operam sobre conta salva; remoção exige Salvar alterações. [Relatório](2026-10-05-FAC-013-modal-contas-ia.md).
 Os checks do perfil de execução pertencem à definição de cada projeto, não às contas/rotas de IA. O operador aprova individualmente os checks autônomos e enumera arquivos de contexto; alteração de nome/comando/argv invalida a aprovação correspondente. O Centro de Configurações continua sendo a única fonte para instalação de clientes, contas e modelos.
 

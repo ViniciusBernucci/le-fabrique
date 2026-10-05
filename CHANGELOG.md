@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-05 — FAC-014
+
+Funcionários digitais e GitHub passam a resumos clicáveis e configuração em modal, compartilhado também com contas IA. Preservados limites/alternativas e ações explícitas de integração/PR. [Evidências](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
 ## 2026-10-05 — FAC-013
 
 Contas IA listadas com configuração em modal, edição local descartável e persistência via API existente. Preservados verificação/login/remoção e atribuições. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).

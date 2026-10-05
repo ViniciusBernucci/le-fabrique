@@ -1,5 +1,6 @@
 # Fábrica de Software — kit v2.3
 
+FAC-014 estende listas e configuração em modal aos funcionários digitais e ao GitHub, reutilizando o mesmo dialog das contas IA. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
 FAC-013 apresenta contas IA em lista compacta; clicar em uma conta ou Adicionar abre configuração em modal, com edição descartável e salvamento persistido. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
 OPS-009 reconciliou P3018 da migration histórica no banco dev após confirmar todos os efeitos SQL já presentes. Nove migrations ainda pendentes e duas tentativas sem stop continuam bloqueando atualização completa. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
 OPS-008: comandos raiz `npm run db:status`, `npm run db:deploy` e `npm run db:migrate` carregam explicitamente o `.env` raiz. Antes de testar telas, confira migrations: health ready prova conectividade, não compatibilidade do schema. [Diagnóstico](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).

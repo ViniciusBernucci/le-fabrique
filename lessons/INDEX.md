@@ -1,5 +1,6 @@
 # Lessons
 
+FAC-014 reutiliza [modal com rascunho separado](modal-edicao-configuracao.md) e distingue cancelar campos de desfazer uma ação externa já enviada.
 FAC-013 aplica [rascunho separado e modal de configuração](modal-edicao-configuracao.md), com salvamento versionado e limites de verificação explícitos.
 OPS-009 aplica reconciliação por efeitos SQL comprovados, preservando histórico: [baseline/review](baseline-regressao-review.md).
 OPS-008 diferencia conectividade de compatibilidade do schema e valida ambiente num subprocesso real: [baseline/review](baseline-regressao-review.md).

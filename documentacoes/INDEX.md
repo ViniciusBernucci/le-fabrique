@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-014 — modais de funcionários e GitHub](configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md)
+- [Ticket FAC-014](planejamento/FAC-014-modais-funcionarios-github.md)
 - [FAC-013 — configuração de contas IA em modal](configuracao/2026-10-05-FAC-013-modal-contas-ia.md)
 - [Ticket FAC-013](planejamento/FAC-013-modal-contas-ia.md)
 - [OPS-009 — reconciliação histórica Prisma](infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md)
