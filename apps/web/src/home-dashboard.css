@@ -269,6 +269,11 @@
 }
 .home-dashboard .home-office {
   position: relative;
+  width: 60%;
+  margin: 20px auto;
+  border-radius: 12px;
+  border: 1px solid var(--home-line);
+  box-shadow: 0 14px 40px #0004;
   aspect-ratio: 906 / 558;
   overflow: hidden;
   isolation: isolate;
@@ -1061,5 +1066,12 @@
   }
   .home-dashboard .home-agent small {
     font-size: 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-dashboard .home-office {
+    width: calc(100% - 24px);
+    margin: 12px auto 0;
   }
 }

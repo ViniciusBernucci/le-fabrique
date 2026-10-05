@@ -4,7 +4,7 @@ import { HomeDashboard } from "./HomeDashboard";
 
 it("identifies synthetic information and renders the local illustration without administrative data", () => {
   const html = renderToStaticMarkup(<HomeDashboard onNavigate={() => undefined} />);
-  expect(html).toContain("Central de controle Le Fabrique");
+  expect(html).toContain("Central de controle La fabrique");
   expect(html).toContain("dados simulados");
   expect(html).toContain("/images/control-room-reference.png");
   expect(html).toContain("Mensagens importantes");

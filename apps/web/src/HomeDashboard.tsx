@@ -215,7 +215,7 @@ const recentProjects = [
     status: "Ativo",
   },
   {
-    name: "Le Fabrique",
+    name: "La fabrique",
     description: "Desenvolvimento do sistema",
     icon: "robot" as const,
     color: "purple",
@@ -278,7 +278,7 @@ export function HomeDashboard({
         Ir para o conteúdo
       </a>
       <aside className="home-sidebar" aria-label="Menu principal">
-        <a className="home-brand" aria-label="Le Fabrique, painel inicial" href="#home-content">
+        <a className="home-brand" aria-label="La fabrique, painel inicial" href="#home-content">
           <svg viewBox="0 0 42 46" aria-hidden="true">
             <path d="m21 1 17 10-17 10L4 11Z" fill="#ff8d43" />
             <path d="m4 13 15 9v20L4 33Z" fill="#278aff" />
@@ -286,7 +286,7 @@ export function HomeDashboard({
             <path d="m21 12 9 5-9 5-9-5Z" fill="#b04bff" />
             <path d="m21 1 8 5-8 5-8-5Z" fill="#ff4b61" />
           </svg>
-          <span>LE FABRIQUE</span>
+          <span>La fabrique</span>
         </a>
         <nav>
           {navigation.map((item) => (
@@ -366,7 +366,7 @@ export function HomeDashboard({
         </header>
         <main id="home-content" className="home-columns" tabIndex={-1}>
           <div className="home-center">
-            <h1 className="home-sr-only">Central de controle Le Fabrique</h1>
+            <h1 className="home-sr-only">Central de controle La fabrique</h1>
             <section className="home-office" aria-label="Escritório virtual da equipe">
               <img
                 src="/images/control-room-reference.png"

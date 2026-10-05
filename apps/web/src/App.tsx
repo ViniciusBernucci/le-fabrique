@@ -160,7 +160,7 @@ export function App() {
     return (
       <main className="login-shell">
         <form className="panel login" onSubmit={login}>
-          <p className="eyebrow">LE FABRIQUE</p>
+          <p className="eyebrow">La fabrique</p>
           <h1>Controle da fábrica</h1>
           <label>
             Token administrativo
@@ -187,7 +187,7 @@ export function App() {
     <main className="shell">
       <header>
         <div>
-          <p className="eyebrow">LE FABRIQUE</p>
+          <p className="eyebrow">La fabrique</p>
           <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
         </div>
         <p className="message" role="status">

@@ -10,7 +10,7 @@ export class CodexLoginTab {
     tab.opener = null;
     tab.document.title = `Conectar conta ${provider}`;
     tab.document.body.textContent =
-      "Aguardando a URL oficial do provedor. Volte à Le Fabrique para consultar as instruções e o andamento do login.";
+      "Aguardando a URL oficial do provedor. Volte à La fabrique para consultar as instruções e o andamento do login.";
   }
 
   authorize(url: string): boolean {
