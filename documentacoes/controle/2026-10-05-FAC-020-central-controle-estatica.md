@@ -21,7 +21,7 @@ A entrada estática não solicita token nem chama API. Os dados são fixtures lo
 A primeira entrada administrativa continua exigindo login, mesmo que exista um token armazenado: o estado `authenticated` só é promovido pela validação existente. A home não libera writer, não inicia provider, não dispara jobs, nem aprova tickets. Voltar à home após autenticação mantém os mecanismos de polling já existentes da aplicação; a ausência de chamadas verificada no browser se refere à entrada estática antes do login.
 
 ## Alterações e diff
-[Patch textual sanitizado](evidencias/FAC-020/implementation.patch), associado à revisão `904d0b5`. O patch inclui código/CSS/testes; PNGs são revisáveis pelos próprios arquivos e hashes, não por patch textual.
+[Patch textual sanitizado](evidencias/FAC-020/implementation.patch), associado à revisão `904d0b5`. O patch usa contexto zero (`git diff --unified=0`) para não introduzir whitespace de linhas de contexto no artefato e inclui código/CSS/testes; PNGs são revisáveis pelos próprios arquivos e hashes, não por patch textual.
 
 SHA-256 do recurso fonte: `88fffabdb345ead38cf810b7f3b2bff13fe9d304da8449059ca14945cb0a11ad`.
 Captura desktop: `35d0974e5bf62406f8c8ff29b4705e5854c162a19e02b043dd80033a418f4542`.
@@ -39,6 +39,7 @@ Revisão final do código:
 | `npm run build -w @le-fabrique/web` | PASS: Vite 8.3.1, 132 módulos |
 | `npm run lint` | PASS: 250 arquivos; mesmo único aviso preexistente |
 | `git diff --check` / `git diff --cached --check` | PASS |
+| `git apply --check --unidiff-zero implementation.patch` no baseline original | PASS: patch textual aplicável, sem efetuar alterações |
 | Chromium 153.0.8010.12 / Playwright 1.63.0 | PASS: home sem API, busca/atalho/empty state, dialog/Escape/foco, login 401 sintético, retorno à home |
 | Responsividade | PASS: sem overflow horizontal em 1536, 1280, 1024, 768, 390 e 320px |
 | Inspeção visual | Executada nas [capturas desktop](evidencias/FAC-020/desktop.png) e [mobile](evidencias/FAC-020/mobile.png); composição próxima da referência |
