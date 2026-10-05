@@ -2,24 +2,22 @@
 
 ## Estado atual
 
-FAC-000 entrega a fundação executável da arquitetura aprovada. O monorepo contém painel React/Vite, API NestJS, worker Node.js, contratos Zod, interfaces de runtime, PostgreSQL/Prisma, Redis/BullMQ e Docker Compose. A implementação está na branch `feat/fac-000-typescript-foundation`, pronta para revisão e ainda sem aceite para DONE.
+Atualizado pelo FAC-012AH em 2026-10-03. Controle/worker/workflow, resultados/artefatos, retomada/recovery/handoff, docs técnicas e perfis oficiais estão implementados nas revisões Z–AH; aceites exatos pendentes registrados no BACKLOG. Consumer real composto sob gate padrão false; não há fixture consumindo fila de execução. AC garante writer global no PostgreSQL e AD permite observá-lo sem projeto. 528 testes + 10 PostgreSQL + 3 Redis passaram. Piloto externo é opcional posterior, nunca bloqueio da conclusão do MVP.
 
 ## Fronteiras e contratos
 
 - O painel consome somente contratos exportados por `packages/contracts` e acessa a API pelo proxy `/api`.
 - A API controla HTTP e persistência; não executa clientes, builds ou testes.
-- O worker é um processo separado e o único ponto futuro de execução de jobs.
+- O worker é um processo separado e o único ponto de execução de jobs, com consumer real implementado sob gate.
 - `packages/contracts` valida payloads em runtime com Zod.
-- `packages/runtime` define portas para adapters futuros sem importar implementações ou credenciais.
+- `packages/runtime` define portas e adapters oficiais; credenciais não são exportadas para controle/painel.
 - PostgreSQL é a fonte de verdade; Redis/BullMQ transporta trabalho e não substitui outbox, leases ou fencing.
 
 ## Sequência recomendada
 
-1. Revisar e aceitar FAC-000 no SHA exato da entrega.
-2. Concluir FAC-001 e FAC-002 com piloto, repositório, baseline e providers elegíveis comprovados.
-3. Implementar FAC-003 sobre os contratos e a persistência existentes.
-4. Implementar FAC-004 com identidade de serviço e protocolo interno autenticado.
-5. Evoluir runtime, contexto, sandbox, orquestração e gates na ordem FAC-005 a FAC-013.
+1. Escopo interno auditado implementado/verificado: followup de capacidade AH, pausa global AG, backup AF e SSE AE fechados; revisar os commits exatos.
+2. Revisar incrementos exatos e preparar operação com dados sintéticos. Login/preflight do usuário do serviço e confirmação financeira dependem do responsável; prosseguir desenvolvimento independente.
+3. Ativação/implantação em janela autorizada, sem inferir elegibilidade. Piloto pode ser escolhido posteriormente pela interface.
 
 ## Restrições para os próximos tickets
 
@@ -27,4 +25,4 @@ Manter um executor inicial e o limite global observável. Não expor PostgreSQL,
 
 ## Riscos abertos
 
-Ainda faltam dispatcher transacional de outbox, idempotência de jobs, leases/fencing, sandbox efetivo, sanitização de logs, autenticação administrativa e do worker, backups restauráveis e adapters validados com clientes oficiais. Esses itens não devem ser inferidos a partir do probe sintético do bootstrap.
+Preflights reais sob UID do serviço, confirmação financeira, keyring/PR remoto, implantação/backup externo/restauração/reboot continuam não verificados. Isso não impede implementação interna. SSE implementado no AE; painel de runs, gate documental e composição do consumer já implementados, contrariando o handoff antigo. Multiusuário/rotação avançada não foram incluídos implicitamente no MVP de administrador único. [Estado detalhado](../../CONTROLE-MVP.md).

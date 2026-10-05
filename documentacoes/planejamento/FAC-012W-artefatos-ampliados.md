@@ -1,0 +1,5 @@
+# FAC-012W — Transporte ampliado e limitado de artefatos
+
+Status: AWAITING_HUMAN. Data 2026-10-03. Código `2a1ae96e42ffb1c6f0f0348c88e53986e5ec7de9`, 387 testes/checks passaram. Baseline `f996169`, 380 testes/checks. Branch/worktree `feat/fac-012w-artifact-budget`, `/home/vinicius/le-fabrique-fac-012w`. [Evidências](../controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
+Objetivo: permitir entrega além de 64 KiB no fluxo existente worker/API/painel, com teto 8 MiB JSON/6 MiB bytes, limites compartilhados e HTTP compatível. Sem truncamento, sem alterar hashes/gates/journal; excesso fica preservado e não aprovado. Base64 validado sem regex recursiva em strings grandes. API não executa build/cliente; provider nenhum, fixtures. Sem produção/login/cota/migração/deploy/piloto; um writer, duas correções. Critérios: bundle >64 KiB e hashes completos, excessos/corrupção/segredos recusados, reader limitado, parser HTTP aceita envelope autorizado no teto e rejeita excesso, painel contrato compatível, checks/docs exatas. Retenção/backup operacional manual, sem apagar evidências. Rollback com worker parado preserva bundles já maiores; aceite humano separado.

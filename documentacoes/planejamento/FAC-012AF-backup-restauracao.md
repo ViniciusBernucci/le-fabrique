@@ -1,0 +1,9 @@
+# FAC-012AF — Backup criptografado e restauração isolada
+
+Status: IMPLEMENTADO / AWAITING_HUMAN. Data: 2026-10-03. Baseline `c1aa79a` (485 testes + 7 PostgreSQL). Branch `feat/fac-012af-evidence-backup`, worktree exclusiva `/home/vinicius/le-fabrique-fac-012af`, SHA/patch/untracked limpos, nenhum outro writer nela.
+
+Objetivo: ferramenta interna reproduzível para arquivar dump PostgreSQL congelado, snapshots e journal, verificar integridade e restaurar bytes em staging novo. Sem depender de piloto, conta/serviço real ou destino externo contratado.
+
+Escopo: módulo runtime offline de backup AES-256-GCM com chave privada externa, formato versionado/schema runtime/hashes/limites/allowlist, CLI create/verify/restore com confirmação de serviço parado e destino isolado, testes filesystem/crypto e roundtrip PostgreSQL real efêmero, scripts/exports/checks e documentação runtime/operação/infra/planejamento/ADRs/lessons/índices. Critérios: key nunca entra no arquivo; nenhum auth/env/home/checkout arbitrário coletado; arquivos especiais/symlinks/hardlinks/traversal/ownership/modos inseguros recusados; corrupção/chave errada falha antes de escrever; nunca overwrite; restore de DB efetivo só em instância sintética exclusiva na prova; bytes/linhas/eventcursor preservados; limites não truncam. Dump é entrada offline obtida por pg_dump com controle/worker parados, não abrir banco de produção nem guardar URL/tokens no artefato. Não prometer coerência de cópia enquanto outros processos escrevem; confirmação manual não é prova física automática. Um writer, até duas correções. Zero provider/gasto/produção/deploy/limpeza de evidências. Rollback preserva backups/key separados; aceite humano exato pendente.
+
+Resultado: 7de9041, 501 testes internos verificados + 8 PostgreSQL, crypto/Git/DB roundtrips e checks finais passaram. Duas correções documentadas. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md). Aceite exato pendente.

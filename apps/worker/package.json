@@ -13,6 +13,7 @@
     "@le-fabrique/contracts": "0.1.0",
     "@le-fabrique/runtime": "0.1.0",
     "bullmq": "6.3.10",
+    "node-pty": "1.1.0",
     "zod": "4.6.5"
   },
   "devDependencies": {

@@ -18,3 +18,13 @@ A prioridade é economizar capacidade e evitar retrabalho. Assinaturas substitue
 9. API, extra usage e créditos automáticos desligados. Aguardar cota se todos indisponíveis.
 10. Revisar resultados após dez tickets; custo atribuído, incremental, espera por cota e retrabalho separados.
 Não prometer gasto total R$0: assinaturas, VPS e energia têm custo. Não contratar plano adicional antes de medir gargalo. Preços não foram fixados no kit; preencher com cobrança real e data na configuração financeira.
+
+O FAC-006 implementa os limites locais: no maximo duas tentativas, 30 minutos de janela configurada, duas trocas de provider e pausa na segunda falha consecutiva identica. A politica validada exige assinatura, budget de API zero, fallback e extras desligados. A conta do fornecedor continua exigindo verificacao humana; configuracao local nao altera cobranca externa.
+
+No FAC-010, os clientes candidatos estavam deslogados. A documentacao oficial diferencia Claude App Pro/Max de Anthropic Console com billing de API; somente a primeira modalidade pode ser avaliada neste MVP. Nao houve login automatico, chave API, chamada, compra ou mudanca de configuracao financeira. O responsavel precisa confirmar plano e extras antes do preflight funcional.
+
+O FAC-011 torna visiveis no painel as travas `apiEnabled=false`, `extraUsageEnabled=false`, `paidCreditsEnabled=false`, `autoRechargeEnabled=false` e `paidFallbackEnabled=false`. Elas sao literais validados e nao editaveis, portanto um payload administrativo nao pode liga-las. Isso protege a fabrica, mas nao altera a conta externa do fornecedor: onboarding/preflight ainda deve confirmar que as mesmas opcoes estao desligadas no site e no cliente oficial.
+
+FAC-010B usa exclusivamente autenticacao ChatGPT do cliente Codex por device code e remove chaves de API herdadas do ambiente do processo. O fluxo nao executa prompt nem consome modelo, mas tampouco comprova configuracoes financeiras externas: extra usage, creditos e recarga automatica continuam exigindo confirmacao humana na conta antes da operacao real.
+
+FAC-010C bloqueia no processo Claude chaves/tokens, base URL, AWS, Bedrock, Vertex e Foundry herdados. Somente status first-party com metodo explicitamente de assinatura pode ficar `AVAILABLE`; Console/API e auth ambigua viram `ERROR`. O handoff respeita limite de trocas e retorna `WAITING_PROVIDER` em auth/cota, sem ativar fallback pago. Nenhuma chamada real foi feita, portanto custo/uso continuam desconhecidos.

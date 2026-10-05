@@ -1,6 +1,6 @@
 # FAC-000 - Bootstrap TypeScript da fábrica
 
-Status: PRONTO PARA REVISÃO
+Status: DONE
 
 ## Objetivo
 
@@ -45,4 +45,6 @@ Código do monorepo, configuração Docker, migration, README raiz, README de in
 
 ## Evidências e aceite
 
-Evidências serão registradas no relatório de entrega. O ticket não será marcado DONE sem revisão e aceite humano.
+As evidências de implementação estão registradas no relatório de entrega. A revisão final foi executada sobre o SHA `15c2198076a6a6afcbf2f15212ae1eaf53822b9f` em 30/09/2026, com lint, typecheck, 7 testes, build e validações das duas configurações Docker Compose aprovados. PostgreSQL e Redis estavam saudáveis e a migration `20260929000100_initial_control_plane` estava aplicada.
+
+O responsável concedeu o aceite humano explícito em 30/09/2026. O FAC-000 está DONE; alterações posteriores de código exigem nova revisão própria.

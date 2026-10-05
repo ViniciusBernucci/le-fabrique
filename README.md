@@ -1,15 +1,75 @@
 # Fábrica de Software — kit v2.3
 
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+
+FAC-017 corrige leitura do desafio colorido do Codex e abre aba de autorização a partir do clique, com link alternativo e confirmação explícita. Login real ainda depende do usuário. [Guia](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
+
+FAC-016 mostra envio/andamento/resultado da verificação dentro do modal e diagnóstico sanitizado da raiz privada. Codex real verificado com AUTH_REQUIRED; login ainda depende do usuário. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+
+FAC-015 conecta contas de assinatura aos clientes oficiais, importa catálogo Codex e compartilha modelos nos funcionários. Setup da VPS concluído; login humano e execução operacional continuam separados. [Passo a passo](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
+
+FAC-014 estende listas e configuração em modal aos funcionários digitais e ao GitHub, reutilizando o mesmo dialog das contas IA. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
+FAC-013 apresenta contas IA em lista compacta; clicar em uma conta ou Adicionar abre configuração em modal, com edição descartável e salvamento persistido. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
+OPS-009 reconciliou P3018 da migration histórica no banco dev após confirmar todos os efeitos SQL já presentes. Nove migrations ainda pendentes e duas tentativas sem stop continuam bloqueando atualização completa. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
+OPS-008: comandos raiz `npm run db:status`, `npm run db:deploy` e `npm run db:migrate` carregam explicitamente o `.env` raiz. Antes de testar telas, confira migrations: health ready prova conectividade, não compatibilidade do schema. [Diagnóstico](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
+OPS-007 integra FAC-012Z–AH na branch local `developer`, preserva branches e remove worktrees já incorporadas. Integração não altera aceites nem ativa serviços. [Relatório](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
+MVP de software IMPLEMENTADO/VERIFICADO em `fix/fac-012ah-admission-capacity` (FAC-012AH, `f2d80f1`): 528 testes + 10 PostgreSQL + 3 Redis passaram. Piloto externo opcional, sem dependência para concluir a fábrica. Aceite/ativação operacional são etapas próprias pendentes. [Estado atual](CONTROLE-MVP.md), [evidências](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md). Parágrafos por incremento abaixo preservam a evolução histórica; use o estado atual para pendências.
+
+FAC-012AG acrescenta pausa global versionada na UI/DB, queue preservada e jobs adiados em recusa pré-claim de pausa. 519 testes + 10 PostgreSQL + 2 Redis passaram. Piloto não é requisito. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+
+FAC-012AF acrescenta backup criptografado/verificação/staging exclusivo de dump/snapshots/journal; roundtrip PostgreSQL e snapshot Git reais passaram. 501 testes internos verificados + 8 PostgreSQL. Piloto independente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+
+FAC-012AE adiciona eventos SSE autenticados, cursor persistido e reconnect para atualizar tickets/runs, com fallback HTTP. 485 testes + 7 PostgreSQL passaram. Próximo interno: backup/restauração; nenhum piloto exigido. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+
+FAC-012AD mostra heartbeat/stop/índice global no painel sem projeto e recusa novo claim sem proteção válida. 461 testes + 4 PostgreSQL passaram. Piloto não é requisito do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+
+FAC-012AC impõe um writer global na API/PostgreSQL, inclusive entre tickets distintos; 445 testes + 3 de PostgreSQL real passaram. Piloto externo é experimento opcional posterior e não bloqueia conclusão do MVP. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+
+FAC-012AB verifica cinco cenários integrados com Git/sandbox/snapshots/journal reais e portas externas sintéticas: entrega, restore, handoff, replay e bloqueios. 438 testes passaram; MVP operacional continua pendente. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
+FAC-012AA implementa perfil Claude por caminho e preflight opt-in com prova privada vinculada ao binário/UID/instalação; nenhuma prova real emitida. Junto do Z fecha o código das lacunas mapeadas, com 433 testes/checks. MVP operacional/aceite/piloto/implantação ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+
+FAC-012Z exige documentação técnica configurada no projeto antes da entrega: arquivos atualizados, gate bounded, revisão semântica e hashes do snapshot final. 422 testes/checks; Claude escrita e operação real ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+
+FAC-012Y conecta alternativas de conta/modelo na UI ao handoff seguro por auth/cota/busy: stop → snapshot → nova worktree → restore/contexto, com limites e lease/fence preservados. Sem conta fixa/fallback pago. Claude escrita e docs técnicas continuam pendentes. [Evidências](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
+
+FAC-012X integra WAITING_PROVIDER após parada/snapshot conhecidos, com auth/cota/busy sem retry/login automático e retomada explícita pelo painel. 399 testes/checks; migration não aplicada, handoff/confinamento Claude/docs técnicas pendentes. [Evidências](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).
+
+FAC-012W entrega bundles até 8 MiB JSON/6 MiB raw sem truncar, com HTTP bounded/hash/UI integral. 387 testes/checks; providers/handoff/confinamento Claude/docs técnicas seguem pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+
+FAC-012V liga clientes oficiais à instalação configurada na UI, com stores/ambientes privados e 380 testes/checks. Claude escrita bloqueada até prova granular; MVP/providers/handoff/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+
+FAC-012U recupera entrega preservada sem repetir IA, 370 testes/checks. Crash unknown não inicia outro writer; provider/identidades/handoff, docs técnicas e transporte maior pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
+
+FAC-012T implementa retomada explícita de snapshot parado/íntegro pelo painel, objetivo original e fence novo, 355 testes/checks. Recovery de finalização/providers/identidades/docs técnicas/transporte maior ainda pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+
+FAC-012S adiciona pausa/cancelamento no painel com preservação após stop comprovado. 336 testes/checks; migration não aplicada. Retomada/providers/identidades/docs técnicas e operação pendentes. [Evidências](documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md).
+
+FAC-012R preserva snapshot/observações de interrupção após stop comprovado, sem liberar writer unknown. 315 testes/checks passaram; crash abrupto, retomada, provider/handoff/identidades e documentação técnica interna ainda pendentes. [Evidências](documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
+
+FAC-012Q adiciona relatório de entrega e aceite humano ligado a hashes exatos de resultado/bundle/documento. DONE só após confirmação explícita do operador, sem merge/deploy. 306 testes/checks; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+
+FAC-012P adiciona diff completo e download de bundle do último snapshot (até 64 KiB, sem truncar). Worker/API verificam hashes; falha de entrega impede conclusão. 289 testes/checks; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
+
+FAC-012O preserva resultado antes da API em journal local privado; redelivery recupera sem executar IA novamente. 266 testes/checks passaram; não recupera writer desconhecido. [Evidências](documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md).
+
+FAC-012N fecha replay entre checkpoint parado e complete; não retoma IA nem writer desconhecido. 257 testes/checks passaram. [Evidências](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+
+FAC-012M (`14ae5ba`) adiciona resultados persistidos por tentativa/fencing e histórico de execuções no painel: checks, revisão, metadados de snapshots e chamadas/modelos observados. 240 testes e checks locais passaram; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Diff completo, recuperação e operação real seguem pendentes.
+
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
 Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
-30/09/2026. A fundação TypeScript está implementada: painel React/Vite, API NestJS, worker Node.js, contratos Zod, PostgreSQL, Redis/BullMQ e Docker Compose. Clientes oficiais, autenticação e workflow completo seguem nos tickets do MVP. APIs de IA e créditos extras permanecem desligados.
+03/10/2026. Estado atual e lacunas em [CONTROLE-MVP.md](CONTROLE-MVP.md). FAC-000, FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D, FAC-012A/B e OPS-001 estão aceitos. [BACKLOG.md](BACKLOG.md) registra status/aceites; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências. Consumer real continua desabilitado; FAC-010 aguarda validação operacional Claude/GitHub. APIs de IA permanecem desligadas.
+
+FAC-012L conecta perfil de projeto, checkout, workflow e lease/fencing/checkpoint ao consumer real, desabilitado por padrão por `WORKER_EXECUTION_ENABLED=false`. OPS-005 prepara o worker host, ainda não instalado. Ambos aguardam aceite humano/preflight sob identidade de serviço. Recuperação, artefatos no painel e handoff automático continuam pendentes. Piloto externo segue manual e não está codificado. Veja [FAC-012L](documentacoes/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md).
 ## Começar
 1. Ler documentacoes/arquitetura/ARQUITETURA.md, FONTES.md e PLANO-MVP.md.
-2. Revisar FAC-000; preencher PILOTO.md e executar FAC-001/FAC-002 antes das funcionalidades do piloto.
+2. Cadastrar projetos e suas definicoes pelo painel; o projeto externo real continua indefinido ate o operador escolhe-lo. Revisar o Centro de Configuracoes FAC-011 e depois desbloquear o preflight do segundo provider conforme FAC-010; nao usar chave API como atalho.
 3. Mesclar AGENTS.md e CLAUDE.md com regras existentes; preservar escopos locais.
 4. Antigravity: ler ANTIGRAVITY.md e confirmar como a versão carrega regras; injetar explicitamente quando necessário.
 5. Seguir documentacoes/POLITICA-IA.md em toda entrega; usar templates.
@@ -29,11 +89,13 @@ cp .env.example .env
 docker compose -f compose.dev.yaml up -d
 npm ci
 npm run db:generate
-npm run db:migrate
+npm run db:deploy
 npm run dev
 ```
 
-O painel fica em `http://localhost:5173` e a API em `http://localhost:3000/api`. Para validar a composição completa, copie `.env.production.example` para `.env`, substitua todos os valores sintéticos e execute `docker compose up -d --build`. Nessa composição, somente o proxy web é publicado em `http://localhost:8080`; API, worker, PostgreSQL e Redis permanecem na rede interna.
+`npm run dev` carrega o `.env` raiz automaticamente; nao e necessario executar `source .env`. O painel fica em `http://localhost:5173` e encaminha `/api` para a API em `http://localhost:3000/api`, inclusive quando o painel e aberto pelo endereco de rede exibido pelo Vite. `db:deploy` aplica somente migrations versionadas; use `db:migrate` apenas ao criar conscientemente uma nova migration.
+
+Para validar a control plane, copie `.env.production.example` para `.env`, substitua todos os valores sintéticos e execute `docker compose up -d --build`. O proxy web fica em `http://localhost:8080`; API e Redis têm bind exclusivo em `127.0.0.1` para o worker host; PostgreSQL permanece sem porta publicada. O Compose não inicia worker. A preparação do serviço host está em [documentacoes/infraestrutura/README.md](documentacoes/infraestrutura/README.md); não instale/ative sem preflight e aceite operacional.
 
 Checks locais: `npm run lint`, `npm run typecheck`, `npm test` e `npm run build`.
 

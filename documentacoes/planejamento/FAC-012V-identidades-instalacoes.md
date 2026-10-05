@@ -1,0 +1,7 @@
+# FAC-012V — Identidade privada por instalação
+
+Status: AWAITING_HUMAN. Data: 2026-10-03. Código `22f6375522355bfd22150a1d8fa4c1375fced1d8`, 380 testes/checks passaram. Baseline `65be5ab`, 370 testes/checks no U. Branch/worktree: `feat/fac-012v-provider-identities`, `/home/vinicius/le-fabrique-fac-012v`. [Evidências](../runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+
+Objetivo: ligar instalação escolhida na interface a armazenamento oficial privado distinto, comum a login, verificação e execução. Nenhum usuário/modelo/token hardcoded; não copiar autenticação existente. Raiz operacional explícita fora de checkout/execução, binários confiáveis locais. Codex usa CODEX_HOME/file; Claude usa CLAUDE_CONFIG_DIR em Linux. Claude com escrita fica bloqueado até prova granular, não presumida por esta feature.
+
+Caminhos: worker config/router/main/processors, testes, env examples e docs runtime/operação/infraestrutura/lessons. Critérios: duas instalações não compartilham diretório; symlinks/modos inseguros/paths inválidos/raiz ausente recusados; ambiente de cliente não herda segredo do controle nem API; login/status/runtime recebem mesma identidade/binário; router consulta configuração atual; fixtures não executam IA/login; typecheck/lint/test/build e docs exatas. Sem produção, migração, login, gastos, piloto, push/deploy. Um writer, até duas correções antes de checkpoint. Provider real nenhum; elegibilidade continua configuração/preflight, gate false. Rollback com worker parado preservando stores; aceite humano separado.

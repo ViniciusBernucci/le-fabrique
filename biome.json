@@ -9,6 +9,9 @@
     "includes": [
       "apps/**",
       "packages/**",
+      "scripts/**/*.mjs",
+      "scripts/**/*.ts",
+      "scripts/**/*.cjs",
       "*.json",
       "!**/dist",
       "!**/coverage",
@@ -24,7 +27,9 @@
   },
   "linter": {
     "enabled": true,
-    "rules": { "preset": "recommended" }
+    "rules": {
+      "preset": "recommended"
+    }
   },
   "javascript": {
     "parser": {

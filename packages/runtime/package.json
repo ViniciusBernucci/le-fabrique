@@ -13,13 +13,16 @@
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && cp src/sandbox-launcher.cjs dist/sandbox-launcher.cjs",
+    "test": "vitest run src",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@le-fabrique/contracts": "0.1.0"
   },
   "devDependencies": {
-    "typescript": "5.9.3"
+    "@types/node": "26.6.3",
+    "typescript": "5.9.3",
+    "vitest": "5.0.2"
   }
 }

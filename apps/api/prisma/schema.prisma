@@ -18,6 +18,7 @@ enum TicketStatus {
   AWAITING_HUMAN
   DONE
   WAITING_PROVIDER
+  PAUSED
   PAUSED_LIMIT
   PAUSED_RESOURCE
   BLOCKED_RECOVERY
@@ -32,6 +33,80 @@ enum OutboxStatus {
   FAILED
 }
 
+enum WorkerStatus {
+  ONLINE
+  OFFLINE
+}
+
+enum RunStatus {
+  WAITING_WORKER
+  WAITING_PROVIDER
+  RUNNING
+  VALIDATING
+  DONE
+  PAUSED
+  PAUSED_LIMIT
+  BLOCKED_RECOVERY
+  FAILED
+  CANCELLED
+}
+
+enum AttemptStatus {
+  RUNNING
+  STOPPED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum ProviderVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum ProviderOnboardingStatus {
+  PENDING
+  RUNNING
+  AWAITING_USER
+  COMPLETED
+  FAILED
+  EXPIRED
+}
+
+enum GithubVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum GithubOnboardingStatus {
+  PENDING
+  RUNNING
+  AWAITING_USER
+  COMPLETED
+  FAILED
+  EXPIRED
+}
+
+enum GithubRepositoryVerificationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum GithubPullRequestStatus {
+  PREPARED
+  APPROVED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -40,8 +115,22 @@ model Project {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   tickets   Ticket[]
+  definition ProjectDefinition?
+  eventCursor ProjectEventCursor?
+  events ProjectEvent[]
 
   @@map("projects")
+}
+
+model ProjectDefinition {
+  projectId     String   @id @db.Uuid @map("project_id")
+  version       Int      @default(1)
+  configuration Json
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+
+  @@map("project_definitions")
 }
 
 model Ticket {
@@ -55,15 +144,76 @@ model Ticket {
   createdAt          DateTime     @default(now()) @map("created_at")
   updatedAt          DateTime     @updatedAt @map("updated_at")
   project            Project      @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  run                Run?
 
   @@index([projectId, status])
   @@map("tickets")
+}
+
+model Run {
+  id                 String      @id @default(uuid()) @db.Uuid
+  ticketId           String      @unique @db.Uuid @map("ticket_id")
+  dispatchEventId    String      @unique @db.Uuid @map("dispatch_event_id")
+  status             RunStatus   @default(WAITING_WORKER)
+  version            Int         @default(1)
+  nextFencingToken   Int         @default(0) @map("next_fencing_token")
+  createdAt          DateTime    @default(now()) @map("created_at")
+  updatedAt          DateTime    @updatedAt @map("updated_at")
+  ticket             Ticket      @relation(fields: [ticketId], references: [id], onDelete: Restrict)
+  attempts           Attempt[]
+  approval           Json?
+  controlAction      String?     @map("control_action")
+
+  @@index([status, updatedAt])
+  @@map("runs")
+}
+
+// Raw migration FAC-012AC enforces attempts_single_unconfirmed_writer globally.
+// Prisma cannot express this partial expression index; preserve it in future migrations.
+model Attempt {
+  id               String        @id @default(uuid()) @db.Uuid
+  runId            String        @db.Uuid @map("run_id")
+  workerId         String        @db.Uuid @map("worker_id")
+  sequence         Int
+  fencingToken     Int           @map("fencing_token")
+  status           AttemptStatus @default(RUNNING)
+  leaseExpiresAt   DateTime      @map("lease_expires_at")
+  stoppedConfirmed Boolean       @default(false) @map("stopped_confirmed")
+  startedAt        DateTime      @default(now()) @map("started_at")
+  completedAt      DateTime?     @map("completed_at")
+  run              Run           @relation(fields: [runId], references: [id], onDelete: Restrict)
+  checkpoint       Checkpoint?
+  result           Json?
+  resultDigest     String?       @map("result_digest")
+  artifact         Json?
+  artifactDigest   String?       @map("artifact_digest")
+
+  @@unique([runId, sequence])
+  @@unique([runId, fencingToken])
+  @@index([runId, status, leaseExpiresAt])
+  @@map("attempts")
+}
+
+model Checkpoint {
+  id               String   @id @default(uuid()) @db.Uuid
+  attemptId        String   @unique @db.Uuid @map("attempt_id")
+  baseRevision     String   @map("base_revision")
+  codeRevision     String?  @map("code_revision")
+  snapshotId       String?  @db.Uuid @map("snapshot_id")
+  patchHash        String?  @map("patch_hash")
+  reason           String
+  stoppedConfirmed Boolean  @map("stopped_confirmed")
+  createdAt        DateTime @default(now()) @map("created_at")
+  attempt          Attempt  @relation(fields: [attemptId], references: [id], onDelete: Restrict)
+
+  @@map("checkpoints")
 }
 
 model OutboxEvent {
   id          String       @id @default(uuid()) @db.Uuid
   aggregateId String       @db.Uuid @map("aggregate_id")
   eventType   String       @map("event_type")
+  deduplicationKey String   @unique @map("deduplication_key")
   payload     Json
   status      OutboxStatus @default(PENDING)
   attempts    Int          @default(0)
@@ -72,4 +222,180 @@ model OutboxEvent {
 
   @@index([status, createdAt])
   @@map("outbox_events")
+}
+
+model WorkerIdentity {
+  id              String       @id @db.Uuid
+  name            String
+  status          WorkerStatus @default(ONLINE)
+  capabilities    Json
+  os              String
+  arch            String
+  nodeVersion     String       @map("node_version")
+  lastHeartbeatAt DateTime     @map("last_heartbeat_at")
+  createdAt       DateTime     @default(now()) @map("created_at")
+  updatedAt       DateTime     @updatedAt @map("updated_at")
+
+  @@index([status, lastHeartbeatAt])
+  @@map("worker_identities")
+}
+
+model FactorySettings {
+  id            String   @id
+  version       Int      @default(1)
+  configuration Json
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("factory_settings")
+}
+
+model ProviderVerification {
+  id             String                     @id @default(uuid()) @db.Uuid
+  installationId String                     @map("installation_id")
+  provider       String
+  status         ProviderVerificationStatus @default(PENDING)
+  workerId       String?                    @db.Uuid @map("worker_id")
+  providerState  String?                    @map("provider_state")
+  cliVersion     String?                    @map("cli_version")
+  observedModels Json                       @default("[]") @map("observed_models")
+  message        String?
+  createdAt      DateTime                   @default(now()) @map("created_at")
+  startedAt      DateTime?                  @map("started_at")
+  completedAt    DateTime?                  @map("completed_at")
+
+  @@index([installationId, createdAt])
+  @@index([status, createdAt])
+  @@map("provider_verifications")
+}
+
+model ProviderOnboardingSession {
+  id             String                   @id @default(uuid()) @db.Uuid
+  installationId String                   @map("installation_id")
+  provider       String
+  status         ProviderOnboardingStatus @default(PENDING)
+  workerId       String?                  @db.Uuid @map("worker_id")
+  providerState  String?                  @map("provider_state")
+  message        String?
+  expiresAt      DateTime                 @map("expires_at")
+  createdAt      DateTime                 @default(now()) @map("created_at")
+  startedAt      DateTime?                @map("started_at")
+  completedAt    DateTime?                @map("completed_at")
+
+  @@index([installationId, createdAt])
+  @@index([status, createdAt])
+  @@map("provider_onboarding_sessions")
+}
+
+model GithubVerification {
+  id          String                   @id @default(uuid()) @db.Uuid
+  host        String
+  status      GithubVerificationStatus @default(PENDING)
+  workerId    String?                  @db.Uuid @map("worker_id")
+  githubState String?                  @map("github_state")
+  cliVersion  String?                  @map("cli_version")
+  message     String?
+  createdAt   DateTime                 @default(now()) @map("created_at")
+  startedAt   DateTime?                @map("started_at")
+  completedAt DateTime?                @map("completed_at")
+
+  @@index([status, createdAt])
+  @@map("github_verifications")
+}
+
+model GithubOnboardingSession {
+  id                String                   @id @default(uuid()) @db.Uuid
+  host              String
+  status            GithubOnboardingStatus   @default(PENDING)
+  workerId          String?                  @db.Uuid @map("worker_id")
+  githubState       String?                  @map("github_state")
+  credentialStorage String?                  @map("credential_storage")
+  message           String?
+  expiresAt         DateTime                 @map("expires_at")
+  createdAt         DateTime                 @default(now()) @map("created_at")
+  startedAt         DateTime?                @map("started_at")
+  completedAt       DateTime?                @map("completed_at")
+
+  @@index([status, createdAt])
+  @@map("github_onboarding_sessions")
+}
+
+model GithubRepositoryVerification {
+  id                 String                             @id @default(uuid()) @db.Uuid
+  host               String
+  owner              String
+  repository         String
+  baseBranch         String                             @map("base_branch")
+  status             GithubRepositoryVerificationStatus @default(PENDING)
+  workerId           String?                            @db.Uuid @map("worker_id")
+  access             String?
+  observedOwner      String?                            @map("observed_owner")
+  observedRepository String?                            @map("observed_repository")
+  defaultBranch      String?                            @map("default_branch")
+  observedBaseBranch String?                            @map("observed_base_branch")
+  isPrivate          Boolean?                           @map("is_private")
+  isArchived         Boolean?                           @map("is_archived")
+  message            String?
+  createdAt          DateTime                           @default(now()) @map("created_at")
+  startedAt          DateTime?                          @map("started_at")
+  completedAt        DateTime?                          @map("completed_at")
+
+  @@index([status, createdAt])
+  @@index([host, owner, repository, baseBranch, createdAt])
+  @@map("github_repository_verifications")
+}
+
+model GithubPullRequest {
+  id                String                  @id @default(uuid()) @db.Uuid
+  version           Int                     @default(1)
+  host              String
+  owner             String
+  repository        String
+  baseBranch        String                  @map("base_branch")
+  headBranch        String                  @map("head_branch")
+  title             String
+  body              String
+  draft             Boolean                 @default(true)
+  approvalDigest    String                  @map("approval_digest")
+  status            GithubPullRequestStatus @default(PREPARED)
+  workerId          String?                 @db.Uuid @map("worker_id")
+  disposition       String?
+  pullRequestNumber Int?                    @map("pull_request_number")
+  pullRequestUrl    String?                 @map("pull_request_url")
+  message           String?
+  createdAt         DateTime                @default(now()) @map("created_at")
+  approvedAt        DateTime?               @map("approved_at")
+  startedAt         DateTime?               @map("started_at")
+  completedAt       DateTime?               @map("completed_at")
+  cancelledAt       DateTime?               @map("cancelled_at")
+
+  @@index([status, createdAt])
+  @@index([host, owner, repository, baseBranch, headBranch, createdAt])
+  @@map("github_pull_requests")
+}
+
+model ProjectEventCursor {
+  projectId String @id @db.Uuid @map("project_id")
+  sequence BigInt @default(0)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  @@map("project_event_cursors")
+}
+
+model ProjectEvent {
+  projectId String @db.Uuid @map("project_id")
+  sequence BigInt
+  kind String
+  entityId String @db.Uuid @map("entity_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  project Project @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  @@id([projectId, sequence])
+  @@map("project_events")
+}
+
+model FactoryOperation {
+  id String @id
+  paused Boolean @default(true)
+  version Int @default(1)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("factory_operations")
 }
