@@ -7,3 +7,5 @@ Dialog nativo aberto por showModal fornece foco modal/fundo inerte pelo browser;
 [Implementação e evidências](../documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
 
 FAC-014 extrai SettingsModal com título por useId e cleanup do dialog, reutilizado nas três seções. editingAssignment/editingGithub isolam campos do draft global; ações de integração/PR continuam independentes do cancelamento do formulário. Fechar um modal descarta configuração local, mas não é rollback de pedidos já enviados ao worker. [Evidências](../documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
+
+FAC-016: mensagens globais podem ficar atrás do dialog nativo. SettingsPanel mantém envio/erros no modal com role=status/alert e traduz resultado por estado em providerVerificationFeedback. Confirmar API/worker separadamente evita tratar falha operacional como clique perdido. Atualização de código pelo watcher não recarrega ambiente herdado do supervisor; a causa conhecida deve ter orientação fixa sem expor erro bruto.

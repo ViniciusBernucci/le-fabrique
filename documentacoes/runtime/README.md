@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-016 identifica raiz privada ausente com mensagem fixa, preservando sanitização de erros desconhecidos. [Diagnóstico](2026-10-05-FAC-016-diagnostico-raiz-privada.md).
+
 FAC-015 consulta metadados model/list por identidade privada Codex, valida conta ChatGPT e não envia prompts. [Catálogo e evidências](2026-10-05-FAC-015-catalogo-clientes-oficiais.md).
 
 FAC-012AF exporta create/verify/restoreEvidenceBackup: offline, AES-256-GCM, dados bounded e arquivo privado/staging exclusivo, sem cliente/processo DB dentro do módulo. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md).

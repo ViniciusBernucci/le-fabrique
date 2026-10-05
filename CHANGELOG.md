@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — FAC-016
+
+Verificação Codex com feedback acessível no modal, bloqueio de repetição e diagnóstico sanitizado de raiz privada ausente. Worker real respondeu AUTH_REQUIRED. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+
 ## 2026-10-05 — FAC-015
 
 Catálogo Codex via cliente oficial, persistência/seletores de modelos sincronizados, setup privado e comando de login Claude por instalação. Sem liberação de execução ou migrations. [Evidências](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).

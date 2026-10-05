@@ -1,5 +1,7 @@
 # Backlog v2
 
+- FAC-016: AWAITING_HUMAN — feedback de verificação no modal; 35 testes web/209 worker passaram, pedido Codex real COMPLETED/AUTH_REQUIRED. [Relatório](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+
 - FAC-015: AWAITING_HUMAN — login oficial por conta, catálogo Codex integrado e modelos compartilhados; 537 testes passaram. Login real e verificação visual pendentes. [Relatório](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
 
 - FAC-014: AWAITING_HUMAN — listas e modais de funcionários digitais/GitHub implementados, validação visual humana pendente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).

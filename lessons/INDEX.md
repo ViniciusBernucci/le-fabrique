@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-016 coloca resultado das ações dentro do dialog ativo, com progresso e diagnóstico sanitizado: [modais](modal-edicao-configuracao.md).
+
 FAC-015 distingue autenticação da conta, catálogo observado e autorização de execução: [perfis de clientes](perfis-permissao-cliente-cli.md).
 
 FAC-014 reutiliza [modal com rascunho separado](modal-edicao-configuracao.md) e distingue cancelar campos de desfazer uma ação externa já enviada.

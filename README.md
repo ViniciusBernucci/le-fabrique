@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-016 mostra envio/andamento/resultado da verificação dentro do modal e diagnóstico sanitizado da raiz privada. Codex real verificado com AUTH_REQUIRED; login ainda depende do usuário. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+
 FAC-015 conecta contas de assinatura aos clientes oficiais, importa catálogo Codex e compartilha modelos nos funcionários. Setup da VPS concluído; login humano e execução operacional continuam separados. [Passo a passo](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
 
 FAC-014 estende listas e configuração em modal aos funcionários digitais e ao GitHub, reutilizando o mesmo dialog das contas IA. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).

@@ -1,5 +1,10 @@
 # Documentação atual v2.3
 
+- [FAC-016 — feedback](configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md)
+- [FAC-016 — diagnóstico runtime](runtime/2026-10-05-FAC-016-diagnostico-raiz-privada.md)
+- [FAC-016 — ambiente dev](operacao/2026-10-05-FAC-016-env-processo-dev.md)
+- [Ticket FAC-016](planejamento/FAC-016-feedback-verificacao-codex.md)
+
 - [FAC-015 — contas e modelos](configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md)
 - [FAC-015 — runtime](runtime/2026-10-05-FAC-015-catalogo-clientes-oficiais.md)
 - [FAC-015 — operação](operacao/2026-10-05-FAC-015-preparacao-assinaturas.md)

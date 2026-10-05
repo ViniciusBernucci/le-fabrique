@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-016 confirma que setup exige reinício do supervisor dev para recarregar ambiente; Codex real voltou a AUTH_REQUIRED. [Procedimento](2026-10-05-FAC-016-env-processo-dev.md).
+
 FAC-015 provisiona identidades privadas com providers:setup; login Codex no painel e Claude por providers:login. Reinício dev obrigatório após alterar .env. [Procedimento](2026-10-05-FAC-015-preparacao-assinaturas.md).
 
 OPS-008: erros 500 em definição/PR e 503 em estado operacional foram associados a tabelas ausentes no banco dev; verifique `npm run db:status`. Health ready pode estar OK com migrations pendentes. Reconciliar histórico e prova de parada antes de atualizar schema; favicon fornecido. [Relatório](../infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).

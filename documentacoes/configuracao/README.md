@@ -1,5 +1,7 @@
 # Centro de configuracoes
 
+FAC-016 torna envio/espera/resultado das verificações visíveis no modal e trata falha de consulta. [Guia](2026-10-05-FAC-016-feedback-verificacao-codex.md).
+
 FAC-015 integra catálogo Codex observado às contas e opções dos funcionários, com login oficial por instalação e setup privado. [Guia e limites](2026-10-05-FAC-015-contas-autenticadas-modelos.md).
 
 FAC-014: funcionários digitais e GitHub também mostram resumo clicável com formulário em modal. Cancelar/Escape descarta edição da configuração; salvar persiste pela API versionada. Verificações/login/PR permanecem ações explícitas sobre configuração salva; fechar modal não desfaz pedidos enviados. [Evidências](2026-10-05-FAC-014-modais-funcionarios-github.md).
