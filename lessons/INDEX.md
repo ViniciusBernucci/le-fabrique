@@ -1,5 +1,6 @@
 # Lessons
 
+OPS-009 aplica reconciliação por efeitos SQL comprovados, preservando histórico: [baseline/review](baseline-regressao-review.md).
 OPS-008 diferencia conectividade de compatibilidade do schema e valida ambiente num subprocesso real: [baseline/review](baseline-regressao-review.md).
 OPS-007 aplica prova de ancestry e identidade da árvore funcional antes de remover worktrees: [sandbox/worktree/snapshot](sandbox-worktree-snapshot.md).
 FAC-012AH aplica retry pré-autoridade distinto de repetir execução: [leases/fencing](leases-fencing-checkpoints.md).

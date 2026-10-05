@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-05 — OPS-009
+
+Reconciliação de migration histórica no banco dev via migrate resolve --applied após conferir todos os efeitos SQL. Histórico e dados preservados, nenhuma liberação de writer. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
 ## 2026-10-05 — OPS-008
 
 Comandos Prisma raiz carregam `.env` explicitamente, novo db:status e favicon SVG. Diagnóstico identifica tabelas ausentes/divergência de histórico no banco dev; atualização de schema permanece pendente. [Evidências](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).

@@ -1,5 +1,6 @@
 # Infraestrutura atual
 
+OPS-009: migration 20261002010538_reconcile_prisma_schema_drift registrada como aplicada por prova de schema; histórico antigo mantido e zero falhas ativas. Nove migrations restantes dependem de reconciliação das duas attempts sem stop. [Relatório](2026-10-05-OPS-009-reconciliar-migration-historica.md).
 OPS-008: `db:status` inspeciona migrations; `db:deploy` aplica somente quando chamado explicitamente, com `.env` raiz carregado pelo launcher. Banco dev antigo tem divergência de histórico e duas tentativas sem stop; nenhuma migration foi aplicada nesta correção. Não executar reset ou marcar stoppedConfirmed por suposição. [Relatório](2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 FAC-012AG versiona factory_operations singleton paused=true por default, versão e check constraints; aplicada só em PostgreSQL efêmero. Índice/estado DB são autoridade, queue Redis pausa entrega sem apagar jobs/volumes. [Evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md).
 

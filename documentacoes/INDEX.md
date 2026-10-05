@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [OPS-009 — reconciliação histórica Prisma](infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md)
+- [Ticket OPS-009](planejamento/OPS-009-reconciliar-migration-historica.md)
 - [OPS-008 — comandos Prisma e diagnóstico das telas](infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md)
 - [Ticket OPS-008](planejamento/OPS-008-bootstrap-migrations-telas.md)
 - [OPS-007 — consolidação local Z–AH](operacao/2026-10-05-OPS-007-consolidacao-worktrees.md)
