@@ -1,5 +1,11 @@
 # Lessons
 
+FAC-022: [template persistente e estado dos painéis](modal-edicao-configuracao.md), com identidade de nós DOM comprovada no navegador.
+
+
+FAC-020A/FAC-021: [verificar serviço ativo e nome apresentado](baseline-regressao-review.md), distinguindo integração Git, browser na porta habitual e identificadores técnicos estáveis.
+
+
 FAC-020 aplica [modais e prévias](modal-edicao-configuracao.md) e [baseline/verificação visual](baseline-regressao-review.md), com dados explicitamente simulados e foco/keyboard comprovados em browser.
 
 

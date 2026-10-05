@@ -26,7 +26,7 @@ A API não executa builds ou clientes. O worker possui somente um processador de
 - `docker compose config` e `docker compose -f compose.dev.yaml config`: aprovados.
 - Imagens de `api`, `worker` e `web`: construídas com sucesso.
 - Execução integrada: PostgreSQL, Redis e API saudáveis; worker e web em execução.
-- `GET /`: HTTP 200 com o painel Le Fabrique.
+- `GET /`: HTTP 200 com o painel La fabrique.
 - `GET /api/health/ready`: HTTP 200, banco e Redis com estado `ok`.
 - PostgreSQL: migration registrada e tabelas `_prisma_migrations`, `projects`, `tickets` e `outbox_events` presentes.
 

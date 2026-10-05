@@ -58,7 +58,7 @@ A primeira tentativa de `db:generate` encontrou o worktree sem dependencias; `np
 
 ## Referencia Orca
 
-Foram reaproveitados conceitos publicos de organizacao por secoes, ativacao de agentes, contas separadas e integracoes. Nenhum codigo ou asset foi copiado. A politica de permissoes amplas do Orca nao foi adotada porque conflita com os limites da Le Fabrique.
+Foram reaproveitados conceitos publicos de organizacao por secoes, ativacao de agentes, contas separadas e integracoes. Nenhum codigo ou asset foi copiado. A politica de permissoes amplas do Orca nao foi adotada porque conflita com os limites da La fabrique.
 
 ## Rollback e aceite
 

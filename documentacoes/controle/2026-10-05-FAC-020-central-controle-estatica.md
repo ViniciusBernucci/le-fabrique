@@ -57,7 +57,7 @@ Bibliotecas ausentes do Chromium foram baixadas/extraídas em `/tmp` para o brow
 Preview dev desta sessão: `http://127.0.0.1:5174/`, iniciado na worktree isolada. Login real/DB/worker não foram exercitados; API foi interceptada com 401 sintético para provar que o frontend preserva o bloqueio. Testes/backend/build de API e worker não executados neste ticket exclusivamente web.
 
 ## Riscos e limitações
-Dados simulados não comprovam prontidão de contas/agentes/projetos. A referência central é PNG (~2 MiB), mantém texto/marca NÚCLEOS da arte original e não é uma ilustração SVG editável; os elementos externos usam Le Fabrique. Rótulos ficam menores no mobile. Avatares vetoriais simplificados diferem da referência. Navegação é estado interno, sem novas URLs públicas. Aceite visual humano pendente.
+Dados simulados não comprovam prontidão de contas/agentes/projetos. A referência central é PNG (~2 MiB), mantém texto/marca NÚCLEOS da arte original e não é uma ilustração SVG editável; os elementos externos usam La fabrique. Rótulos ficam menores no mobile. Avatares vetoriais simplificados diferem da referência. Navegação é estado interno, sem novas URLs públicas. Aceite visual humano pendente.
 
 ## Rollback
 Antes da integração, basta voltar a usar a worktree/branch `developer`; ela permanece no baseline e sem alterações desta entrega. Após eventual integração autorizada, reverter o commit de código `904d0b5` restaura a entrada administrativa anterior. Nenhuma migration ou dado precisa ser revertido. Não foi realizado merge, deploy ou atualização do serviço original na porta 5173.
@@ -73,3 +73,6 @@ Provider da sessão: Codex. CLI instalado observado: `codex-cli 0.159.2`; `codex
 
 ## Pendências e aceite
 AWAITING_HUMAN: responsável deve revisar a composição/capturas e o código `904d0b5`. Revisão documental é o commit posterior deste relatório. Nenhum DONE presumido. Integração em developer e publicação permanecem dependentes de autorização aplicável.
+
+## Atualização posterior — FAC-020A / FAC-021
+O responsável autorizou integração em developer e remoção da worktree, e solicitou correção do nome para La fabrique e cena em 60%. Código atual cde0cc6 integrado; evidências anteriores descrevem sua revisão histórica. Correção nominal deste documento identificada pelo FAC-021; capturas/patches originais preservados. [Estado atual](2026-10-05-FAC-021-nome-escala-home.md).

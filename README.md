@@ -1,5 +1,11 @@
 # Fábrica de Software — kit v2.3
 
+FAC-022: template padrão com menus persistentes em home/login/controle/configurações e tipografia compacta. Código `4e042a1` integrado em developer/5173; dados da home continuam demonstrativos. [Relatório](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
+
+
+La fabrique: home integrada em `developer`, nome corrigido e cena central com 60% da largura anterior no desktop. [FAC-021](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md); [integração FAC-020A](documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md).
+
+
 FAC-020 AWAITING_HUMAN: nova tela inicial estática com escritório cartoon, notificações, mensagens, indicadores e atalhos. Dados simulados; Operação e Configurações preservam login. [Relatório/capturas](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
 
 
@@ -62,9 +68,9 @@ FAC-012N fecha replay entre checkpoint parado e complete; não retoma IA nem wri
 FAC-012M (`14ae5ba`) adiciona resultados persistidos por tentativa/fencing e histórico de execuções no painel: checks, revisão, metadados de snapshots e chamadas/modelos observados. 240 testes e checks locais passaram; migration não aplicada. [Evidências](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md). Diff completo, recuperação e operação real seguem pendentes.
 
 ## Decisão obrigatória da stack - revisão 2.3
-A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+A stack da própria La fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
-Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da La fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 03/10/2026. Estado atual e lacunas em [CONTROLE-MVP.md](CONTROLE-MVP.md). FAC-000, FAC-001A, FAC-002 a FAC-009, FAC-010A/B/C, FAC-011A/B/C/D, FAC-012A/B e OPS-001 estão aceitos. [BACKLOG.md](BACKLOG.md) registra status/aceites; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências. Consumer real continua desabilitado; FAC-010 aguarda validação operacional Claude/GitHub. APIs de IA permanecem desligadas.

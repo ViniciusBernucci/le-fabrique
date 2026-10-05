@@ -53,7 +53,7 @@ Permitir que o operador inicie no Centro de Configuracoes o login web/device ofi
 
 ## Provider e fontes oficiais
 
-GitHub CLI em modo `GH_CLI`. O fluxo web/device e o armazenamento pertencem ao cliente oficial. A documentacao informa que o credential store e preferido e que pode haver fallback para arquivo em texto simples; a Le Fabrique nao promovera `CONNECTED` nesse fallback.
+GitHub CLI em modo `GH_CLI`. O fluxo web/device e o armazenamento pertencem ao cliente oficial. A documentacao informa que o credential store e preferido e que pode haver fallback para arquivo em texto simples; a La fabrique nao promovera `CONNECTED` nesse fallback.
 
 - <https://cli.github.com/manual/gh_auth_login>
 - <https://cli.github.com/manual/gh_auth_status>

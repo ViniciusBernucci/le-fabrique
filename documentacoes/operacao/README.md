@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-021: marca apresentada padronizada para La fabrique; rótulos de runtime/unit corrigidos, identificadores técnicos e operações preservados. Home integrada em developer/5173 conforme FAC-020A. [Relatório](../controle/2026-10-05-FAC-021-nome-escala-home.md).
+
 FAC-018: Autenticação com keyring; implementação pronta, consentimento real e keyring Antigravity pendentes. [Relatório](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-017: só COMPLETED/AVAILABLE confirmado pelo cliente significa assinatura conectada; abrir aba não basta. [Passo a passo](2026-10-05-FAC-017-confirmacao-login-codex.md).
@@ -66,9 +68,9 @@ OPS-004 consolidou FAC-012D e FAC-012E–J localmente em `developer`; evidência
 FAC-012K adiciona `LeaseGuard` isolado no worker: recebe fencing token, duração/expiração da lease, função de renovação e callback de parada; passa `AbortSignal` ao trabalho e falha sem aceitar resultado quando a renovação falha ou vence. A função `stopWriter` só confirma quiescência se retornar `true`; a guarda sempre espera a operação terminar antes de propagar a perda da lease. O helper não está ligado ao consumer, e sua integração ainda precisa provar cancelamento real das árvores de processo sob a identidade do serviço.
 
 ## Decisão obrigatória da stack - revisão 2.3
-A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+A stack da própria La fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
-Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da La fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 ## Inicialização

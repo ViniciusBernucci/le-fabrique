@@ -1,5 +1,12 @@
 # Documentação atual v2.3
 
+- [FAC-022 — template persistente e tipografia](controle/2026-10-05-FAC-022-template-tipografia.md)
+
+
+- [FAC-021 — nome e escala da home](controle/2026-10-05-FAC-021-nome-escala-home.md)
+- [FAC-020A — integração em developer](controle/2026-10-05-FAC-020A-home-em-developer.md)
+
+
 - [FAC-020 — central de controle estática e capturas](controle/2026-10-05-FAC-020-central-controle-estatica.md)
 - [Ticket FAC-020](controle/tickets/FAC-020.md)
 

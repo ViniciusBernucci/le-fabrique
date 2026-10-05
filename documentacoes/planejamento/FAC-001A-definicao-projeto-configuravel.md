@@ -4,7 +4,7 @@ Status: DONE
 
 ## Objetivo
 
-Permitir que o operador descreva qualquer projeto externo pelo painel da fabrica, sem inserir o piloto, suas regras ou seus comandos no codigo da Le Fabrique. A definicao persistida deve ser a fonte versionada de contexto, caminhos e checks para tickets futuros.
+Permitir que o operador descreva qualquer projeto externo pelo painel da fabrica, sem inserir o piloto, suas regras ou seus comandos no codigo da La fabrique. A definicao persistida deve ser a fonte versionada de contexto, caminhos e checks para tickets futuros.
 
 ## Atual e esperado
 

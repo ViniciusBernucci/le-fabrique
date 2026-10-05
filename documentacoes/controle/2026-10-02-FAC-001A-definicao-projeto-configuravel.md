@@ -8,7 +8,7 @@ Branch / PR: `feat/fac-001a-project-definition` / sem PR
 
 ## Objetivo e criterios
 
-Permitir que o operador descreva qualquer projeto externo na propria Le Fabrique. A definicao deve permanecer ausente ate ser cadastrada e precisa reunir descricao, stack, instrucoes, caminhos e checks antes de liberar novos tickets para READY. O piloto futuro sera apenas um projeto escolhido nessa interface; nenhuma identidade concreta foi embutida no codigo.
+Permitir que o operador descreva qualquer projeto externo na propria La fabrique. A definicao deve permanecer ausente ate ser cadastrada e precisa reunir descricao, stack, instrucoes, caminhos e checks antes de liberar novos tickets para READY. O piloto futuro sera apenas um projeto escolhido nessa interface; nenhuma identidade concreta foi embutida no codigo.
 
 ## Implementacao
 

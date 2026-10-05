@@ -14,3 +14,5 @@ FAC-019: abas em SettingsPanel agrupam o mesmo estado persistido sem duplicar fo
 
 
 FAC-020: `HomeDashboard` usa dialog nativo apenas para prévias demonstrativas; dados fictícios não são importados para o estado administrativo. `preview` abre o dialog por efeito, `onClose` limpa a seleção e formulário `method="dialog"`/Escape encerram a prévia. A evidência Playwright comprova fechamento e restauração de foco ao botão Financeiro. Links existentes saem da home e usam autenticação real; clicar num projeto fictício não assume identidade de um projeto persistido. [Relatório](../documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+
+FAC-022: `App` monta DashboardLayout uma vez e muda apenas o slot central; o browser mantém referências aos nós sidebar/topbar e prova identidade em home/login/controle/configurações. Isso preserva o chrome/estado do template; o rascunho de SettingsPanel continua sujeito ao ciclo de vida do próprio painel. Fontes escopadas ao slot também alcançam o dialog nativo, medido em 16px/12px sem salvar a fixture. [Relatório](../documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).

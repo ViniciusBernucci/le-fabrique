@@ -1,5 +1,7 @@
 # Centro de configuracoes
 
+FAC-022 apresenta Configurações dentro do template padrão com menus persistentes e fontes compactas, incluindo os modais existentes. Rascunhos/salvamento/integrações preservados. [Relatório](../controle/2026-10-05-FAC-022-template-tipografia.md).
+
 FAC-018: Login Claude/Antigravity e abas; implementação pronta, consentimento real e keyring Antigravity pendentes. [Relatório](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-017 reserva aba de autorização no clique Codex e navega para URL oficial ao receber desafio; mantém link manual/código e distingue sucesso confirmado de pedido iniciado. [Guia](2026-10-05-FAC-017-login-device-codex.md).
@@ -38,7 +40,7 @@ API paga, extra usage, creditos pagos, autorecharge, fallback pago e merge perma
 
 ## Referencia funcional
 
-O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao distinta de configuracao e disponibilidade. A implementacao e identidade visual sao proprias. A Le Fabrique nao adotou o padrao de permissao irrestrita do Orca: escrita continua explicita por funcao e o runtime mantem sandbox e gates conservadores.
+O Orca inspirou a separacao entre agentes, contas e integracoes e a exibicao distinta de configuracao e disponibilidade. A implementacao e identidade visual sao proprias. A La fabrique nao adotou o padrao de permissao irrestrita do Orca: escrita continua explicita por funcao e o runtime mantem sandbox e gates conservadores.
 
 ## Proximos incrementos
 

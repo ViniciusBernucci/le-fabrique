@@ -4,7 +4,7 @@ Status: DONE
 
 ## Objetivo
 
-Criar a fundação executável do monorepo aprovado no ADR-003 para iniciar o desenvolvimento da Le Fabrique.
+Criar a fundação executável do monorepo aprovado no ADR-003 para iniciar o desenvolvimento da La fabrique.
 
 ## Atual e esperado
 

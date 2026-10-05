@@ -8,7 +8,7 @@ Criar a fundacao administravel do Centro de Configuracoes para cadastrar instala
 
 ## Contexto e referencia
 
-O responsavel determinou que contas, agentes, modelos e GitHub sejam configuraveis no software antes do segundo provider. O Orca foi usado como referencia funcional para organizacao por secoes, deteccao/ativacao de agentes, contas e integracoes; codigo, marca e identidade visual nao serao copiados. A Le Fabrique preserva seus limites mais conservadores: permissao ampla nao e padrao, credenciais ficam no runtime confiavel e APIs/extras pagos continuam bloqueados.
+O responsavel determinou que contas, agentes, modelos e GitHub sejam configuraveis no software antes do segundo provider. O Orca foi usado como referencia funcional para organizacao por secoes, deteccao/ativacao de agentes, contas e integracoes; codigo, marca e identidade visual nao serao copiados. A La fabrique preserva seus limites mais conservadores: permissao ampla nao e padrao, credenciais ficam no runtime confiavel e APIs/extras pagos continuam bloqueados.
 
 ## Escopo permitido
 

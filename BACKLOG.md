@@ -1,5 +1,12 @@
 # Backlog v2
 
+- FAC-022: AWAITING_HUMAN — template persistente e fontes compactas em `4e042a1`, 43 testes web PASS; navegação/DOM/fontes verificadas em browser na porta 5173. [Relatório](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
+
+
+- FAC-021: AWAITING_HUMAN — nome La fabrique e cena central 60% em `cde0cc6`, 322 testes PASS, browser na porta 5173 PASS. [Relatório](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md).
+- FAC-020A: AWAITING_HUMAN — home integrada em developer por autorização explícita, funcionamento na porta habitual verificado. [Relatório](documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md).
+
+
 - FAC-020: AWAITING_HUMAN — central de controle estática em `904d0b5`, 42 testes web e browser desktop/mobile passaram. Dados simulados; aceite visual/integração pendentes. [Relatório](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
 
 
@@ -60,9 +67,9 @@
 Estado atual consolidado em [CONTROLE-MVP.md](CONTROLE-MVP.md). OPS-006 integrou OPS-005/FAC-012K/L localmente e retirou worktrees comprovadamente integrados; pendências de software permanecem explícitas.
 
 ## Decisão obrigatória da stack - revisão 2.3
-A stack da própria Le Fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
+A stack da própria La fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
 Monorepo: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`. Contratos compartilhados precisam de validação em runtime. API não executa clientes, builds ou testes; o worker executa esses trabalhos com isolamento, limites e um writer inicial.
-Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da Le Fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
+Ao trabalhar na própria fábrica, aplicar esta stack. A regra de preservar a stack existente aplica-se somente a projetos EXTERNOS cadastrados para desenvolvimento pela fábrica; ela não altera a stack da La fabrique. Se o repositório da fábrica contiver implementação anterior incompatível, registrar a divergência e planejar a adaptação por etapas; não apagar código existente nem reabrir a escolha tecnológica.
 Versões exatas e comandos devem ser fixados conforme compatibilidade no bootstrap; isso não é uma nova decisão de stack. Repositório e funcionalidade do piloto externo permanecem pendentes quando não fornecidos.
 
 

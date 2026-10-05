@@ -4,7 +4,7 @@ Estado: AWAITING_HUMAN; baseline `a9aea9e`, commit funcional `6b8fe32`, implemen
 
 ## Comportamento implementado
 
-A autenticação pertence à conta do provedor, não a cada modelo. Le Fabrique utiliza os fluxos dos clientes oficiais sob identidades privadas por ID de instalação. O fluxo Codex device auth existente continua no painel; após conclusão de um login iniciado nessa tela, uma verificação é solicitada automaticamente. Também existe `Verificar conta e modelos` para atualizar manualmente.
+A autenticação pertence à conta do provedor, não a cada modelo. La fabrique utiliza os fluxos dos clientes oficiais sob identidades privadas por ID de instalação. O fluxo Codex device auth existente continua no painel; após conclusão de um login iniciado nessa tela, uma verificação é solicitada automaticamente. Também existe `Verificar conta e modelos` para atualizar manualmente.
 
 O worker autentica status ChatGPT e inicia um app-server stdio isolado, inicializa o protocolo, reconfirma `account/read` com tipo `chatgpt` e consulta `model/list` paginado. Não cria threads nem turns. Filtra entradas ocultas, valida IDs em runtime, limita catálogo a 50 modelos, saída a 1 MiB, duração a 15 segundos e paginação/cursor repetido. Erros são mensagens controladas, sem stdout/stderr ou credenciais no controle.
 

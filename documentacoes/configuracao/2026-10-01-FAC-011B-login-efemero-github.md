@@ -67,7 +67,7 @@ O codigo oficial do GitHub CLI mostra que o modo web nao interativo imprime codi
 ## Limitacoes conhecidas
 
 - Sem `gh`, credential store e conta reais, o device flow, a versao, a rede e `tokenSource` nao foram comprovados operacionalmente.
-- Se o cliente oficial gravar em `hosts.yml`, a Le Fabrique marca `ERROR` mas nao apaga a credencial nem executa logout automatico, evitando remover outra conta. O operador deve corrigir o keyring e tratar o arquivo sob a identidade de servico.
+- Se o cliente oficial gravar em `hosts.yml`, a La fabrique marca `ERROR` mas nao apaga a credencial nem executa logout automatico, evitando remover outra conta. O operador deve corrigir o keyring e tratar o arquivo sob a identidade de servico.
 - PostgreSQL/Redis/BullMQ foram cobertos com contratos e doubles, sem ensaio integrado real nesta revisao.
 - O painel passou por typecheck, testes de view model e build, mas nao por E2E/ensaio visual em navegador.
 - O login comprova autenticacao segura do host; ainda nao comprova permissao no repositorio configurado nem cria PR.

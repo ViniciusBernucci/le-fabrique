@@ -1,4 +1,4 @@
-# Controle do MVP — Le Fabrique
+# Controle do MVP — La fabrique
 
 Atualizado em 2026-10-03 pelo FAC-012AH. Estado: MVP DE SOFTWARE IMPLEMENTADO/VERIFICADO / ACEITE E ATIVAÇÃO OPERACIONAL PENDENTES. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](documentacoes/INDEX.md) reúne evidências.
 

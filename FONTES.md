@@ -15,7 +15,7 @@ Consulta inicial: 29/09/2026; autenticacao e CLI Claude Code reconferidas em 01/
 - https://codelabs.developers.google.com/agentic-ui-automation-with-antigravity — CLI e teste de UI; presença de capacidade não prova cobertura de todos os planos/modelos.
 ## Orca
 - https://www.onorca.dev/docs/settings — referencia publica das secoes de configuracao de agentes, contas e integracoes usada como inspiracao funcional no FAC-011.
-- https://www.onorca.dev/docs/agents/supported — catalogo/deteccao de clientes e customizacao por agente. A Le Fabrique nao adotou flags de bypass amplo descritas nessa pagina.
+- https://www.onorca.dev/docs/agents/supported — catalogo/deteccao de clientes e customizacao por agente. A La fabrique nao adotou flags de bypass amplo descritas nessa pagina.
 - https://github.com/stablyai/orca — implementacao publica MIT consultada para confirmar o escopo do produto; nenhum codigo ou asset foi copiado.
 ## Limites da evidência
 Não usamos preços fixos ou percentuais de quota. O tutorial técnico não comprova elegibilidade ilimitada, SLA 24/7, quota consultável programaticamente ou reset exato. Essas capacidades precisam de preflight com evidência e versão.

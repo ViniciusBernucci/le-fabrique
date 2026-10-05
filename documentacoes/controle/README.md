@@ -2,7 +2,7 @@
 
 ## Página inicial — FAC-020
 
-Estado IMPLEMENTADO/AWAITING_HUMAN na branch `feat/fac-020-home-dashboard`, código `904d0b5`; integração em developer pendente. O painel abre uma central estática antes do formulário de login. `HomeDashboard` concentra escritório cartoon, sidebar, busca de atalhos, métricas, notificações, mensagens, agentes e projetos, todos explicitamente demonstrativos. A home não lê API na entrada inicial. Projetos/Novo Projeto/Desenvolvimento levam à Operação; Agentes/JARVIS/Marketing/Configurações levam às configurações existentes, com autenticação administrativa preservada. Áreas futuras usam dialog de prévia, sem persistência ou jobs.
+Estado IMPLEMENTADO/AWAITING_HUMAN integrado em `developer`, código atual `cde0cc6` (FAC-021), com nome La fabrique e cena central desktop em 60%. O painel abre uma central estática antes do formulário de login. `HomeDashboard` concentra escritório cartoon, sidebar, busca de atalhos, métricas, notificações, mensagens, agentes e projetos, todos explicitamente demonstrativos. A home não lê API na entrada inicial. Projetos/Novo Projeto/Desenvolvimento levam à Operação; Agentes/JARVIS/Marketing/Configurações levam às configurações existentes, com autenticação administrativa preservada. Áreas futuras usam dialog de prévia, sem persistência ou jobs.
 
 O escritório reutiliza o PNG enviado pelo responsável com enquadramento em CSS; ícones e avatares são SVGs locais. A cena mantém marca/texto da referência. Percentuais indicam atividade fictícia, não cota de assinatura. Ctrl/Cmd+K foca a busca; menu colapsa e cartões se empilham no mobile. [Relatório e capturas](2026-10-05-FAC-020-central-controle-estatica.md). Nenhum contrato/backend/migration alterado; descrição de token abaixo continua aplicável às áreas administrativas.
 
@@ -86,3 +86,9 @@ FAC-003A tambem protege a fronteira do dispatcher: evento legado PENDING com `ba
 FAC-012A torna o evento READY autocontido: `executionSpecification` copia projeto, SHA, definicao completa e ticket dentro da mesma transacao. O contrato cruza IDs e versoes do snapshot com o envelope. Atualizar a definicao depois nao altera eventos anteriores, e evento legado sem snapshot nao e publicado. O responsavel aceitou FAC-012A na revisao documental `3ef3d543b98fb48226714787315f4de947fa6dd9`.
 
 FAC-012B consome esse snapshot apenas como dado de entrada de um compilador puro no worker. Perfil local confiável e allowlists não são aceitos do job; nenhum campo administrativo inicia comando por si só. O responsável aceitou FAC-012B na revisão documental `3e28363b0642f8e05840bb649b681e3837e1e015`. O consumer continua em probe até enforcement de caminhos de escrita, binding/checkout confiável, provider elegível e integração de lease/fencing serem demonstrados.
+
+FAC-020A verificou a home no Vite habitual (porta 5173). FAC-021 corrigiu a marca apresentada para La fabrique e centralizou a cena reduzida no desktop; mobile usa espaço disponível. [Evidências atuais](2026-10-05-FAC-021-nome-escala-home.md).
+
+## Template padrão — FAC-022
+
+Código atual `4e042a1`, integrado em developer. `DashboardLayout` é a raiz visual de home/login/controle/configurações: mantém menus e altera somente children do conteúdo administrativo (home é o conteúdo padrão). Sidebar marca a área atual; topbar sticky e busca permanecem disponíveis. Conteúdo interno usa h1 24px, h2 16px, h3/campos/botões 13px e texto/labels 12px, inclusive modais. Autenticação e contratos preservados. [Relatório e capturas](2026-10-05-FAC-022-template-tipografia.md).

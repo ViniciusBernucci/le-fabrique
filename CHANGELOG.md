@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-05 — FAC-022
+
+DashboardLayout como template padrão de home, login e telas administrativas. Sidebar/topbar persistem; busca global e menu ativo; fontes internas compactas compatíveis com home. [Evidências](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
+
+
+## 2026-10-05 — FAC-020A / FAC-021
+
+Home integrada em developer. Marca corrigida para La fabrique nos textos do sistema e documentação; cena desktop reduzida para 60%, centralizada, mobile legível. Correção nominal em documentos históricos identificada pelo FAC-021; artefatos de evidência preservados. [Relatório](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md).
+
+
 ## 2026-10-05 — FAC-020
 
 Página inicial estática inspirada na referência: escritório cartoon, navegação, métricas, notificações, mensagens e acessos rápidos. Ícones/avatares SVG, arte central PNG fornecida. Busca filtra atalhos; áreas futuras abrem prévia; telas existentes mantêm autenticação. 42 testes web e browser em seis larguras passaram. [Evidências](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
