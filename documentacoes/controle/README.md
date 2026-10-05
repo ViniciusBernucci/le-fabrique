@@ -92,3 +92,6 @@ FAC-020A verificou a home no Vite habitual (porta 5173). FAC-021 corrigiu a marc
 ## Template padrão — FAC-022
 
 Código atual `4e042a1`, integrado em developer. `DashboardLayout` é a raiz visual de home/login/controle/configurações: mantém menus e altera somente children do conteúdo administrativo (home é o conteúdo padrão). Sidebar marca a área atual; topbar sticky e busca permanecem disponíveis. Conteúdo interno usa h1 24px, h2 16px, h3/campos/botões 13px e texto/labels 12px, inclusive modais. Autenticação e contratos preservados. [Relatório e capturas](2026-10-05-FAC-022-template-tipografia.md).
+
+
+FAC-023: Configurações → Equipes → Skills é o cadastro de skills por projeto; Agentes permite adicionar, editar e excluir múltiplos perfis com vínculos às skills. Mantém template/fontes. [Contrato, persistência e evidências](../configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).

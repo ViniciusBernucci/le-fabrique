@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — FAC-023
+
+Equipes separa Agentes/Skills; agentes sem limite fixo de seis, cadastro de skills por projeto, instruções, vínculos e edição/exclusão persistidos. Contratos e API validam relações/projetos. [Evidências e limites](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
+
 ## 2026-10-05 — FAC-022
 
 DashboardLayout como template padrão de home, login e telas administrativas. Sidebar/topbar persistem; busca global e menu ativo; fontes internas compactas compatíveis com home. [Evidências](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).

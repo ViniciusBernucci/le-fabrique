@@ -81,3 +81,6 @@ Documentos de conceitos serão preenchidos conforme implementação real. Este k
 FAC-012Z amplia [baseline/regressão/review](baseline-regressao-review.md) com gate documental estrutural e revisão semântica ligados ao snapshot final.
 
 FAC-012AA amplia [perfis de permissão](perfis-permissao-cliente-cli.md) com allow literal, elegibilidade por prova privada e distinção entre teste do algoritmo e confinamento nativo.
+
+
+FAC-023 amplia contratos-runtime-monorepo e modal-edicao-configuracao com cadastro aditivo, vínculos por projeto, limpeza referencial e erro de gravação dentro do dialog.

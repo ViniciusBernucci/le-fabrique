@@ -123,3 +123,5 @@ Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredo
 FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
 FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+
+- FAC-023: AWAITING_HUMAN — agentes e skills por projeto; 562 testes, typecheck/lint/build e browser fixture PASS. Código a25638acde42ba50576908f1bf6725570a360a99; registro não executa novos perfis automaticamente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).

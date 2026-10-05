@@ -88,3 +88,6 @@ O painel recebe apenas owner/repositorio canonicos, branch padrao/base, visibili
 FAC-011D separa `Preparar` de `Aprovar e enviar ao worker`. Preparacao grava payload/version/digest sem outbox; aprovacao exata reconfere opt-in e leitura antes de publicar. O worker exige `permissions.push`, reconcilia PR aberto e so depois usa `gh pr create` com argv fixo e body por stdin. Draft e configuravel por pedido; merge permanece impossivel neste fluxo. Detalhes: [2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md](2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md).
 
 FAC-019: abas Contas, Integrações IA, Equipes com modais preservados. [Relatório](2026-10-05-FAC-019-abas-configuracoes.md).
+
+
+FAC-023: Equipes agora contém Agentes/Skills. Registro de múltiplos agentes e skills por projeto persiste no JSON versionado existente; vínculos validados e limpos na exclusão. Funções operacionais existentes preservadas; registro não instala nem executa skills automaticamente. [Relatório atual](2026-10-05-FAC-023-agentes-skills-projeto.md).

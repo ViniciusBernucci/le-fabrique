@@ -102,3 +102,6 @@ Uso e cotas têm unidade/fonte/observed_at/reset_at/confiança. Estado de quota,
 ## Roteamento
 Filtrar por política/capacidade e disponibilidade; ordenar pela atribuicao configurada no FAC-011 e desempenho recente; adquirir lock do writer; executar. Cada funcao pode selecionar instalacao e modelo permitido, mas o router ainda deve exigir estado/evidencia elegivel. Não usar percentuais fictícios de sucesso; aprender com ensaio registrado.
 Cache de roteamento não deve ignorar observações novas de limite. Provider indisponível não implica mudar modelo/conta silenciosamente. API só entra no catálogo quando habilitada explicitamente em política futura.
+
+
+FAC-023: contrato de FactoryConfiguration inclui projectSkills/digitalAgents opcionais e relações por projeto. Snapshot interno valida os registros; router mantém atribuições operacionais existentes, sem executar automaticamente os novos perfis/instruções. [Relatório](../configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).

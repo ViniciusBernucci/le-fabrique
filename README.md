@@ -111,3 +111,6 @@ Checks locais: `npm run lint`, `npm run typecheck`, `npm test` e `npm run build`
 ## Stack obrigatória da fábrica - revisão 2.3
 React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.
 Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredos/código servidor no painel. Outbox, idempotência, leases e fencing seguem obrigatórios: lock BullMQ não substitui exclusão do writer. API não executa builds/clientes. Executar typecheck, lint, builds e testes relevantes. Preservar a stack somente de pilotos externos; a própria fábrica segue a stack aprovada.
+
+
+FAC-023: Configurações → Equipes separa Agentes e Skills; cadastros de agentes sem limite fixo de seis e skills por projeto com instruções, edição e vínculos. [Funcionamento, evidências e limites](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).

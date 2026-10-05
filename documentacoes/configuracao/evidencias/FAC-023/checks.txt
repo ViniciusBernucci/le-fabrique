@@ -1,0 +1,11 @@
+FAC-023 / código a25638acde42ba50576908f1bf6725570a360a99 / baseline 30fbd91
+npm run typecheck: PASS (monorepo, scripts e integração)
+npm run build: PASS (contracts, runtime, API, worker, web; Vite 134 módulos)
+npm run lint: PASS (256 arquivos; 1 warning preexistente useOptionalChain)
+contracts: 51 testes / 5 arquivos PASS
+API: 185 testes / 30 arquivos PASS; baseline 183 PASS
+web: 46 testes / 18 arquivos PASS
+runtime: 65 testes / 8 arquivos PASS
+worker: 215 testes / 26 arquivos PASS
+Browser: PASS, ver browser-results.txt; fixtures, não PostgreSQL/provider real
+Falhas iniciais: cópia de dependências API aninhada e harness DOM após reload; corrigidas sem alterar implementação.
