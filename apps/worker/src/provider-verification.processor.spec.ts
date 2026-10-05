@@ -101,3 +101,43 @@ describe("provider verification", () => {
     });
   });
 });
+
+describe("subscription model discovery", () => {
+  it("only reads the catalog after proving ChatGPT subscription authentication", async () => {
+    const catalog = vi.fn().mockResolvedValue(["fixture-model"]);
+    const runner = vi.fn(async (_binary: string, args: readonly string[]) => ({
+      exitCode: 0,
+      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using an API key",
+      stderr: "",
+    }));
+    await expect(inspectProvider("CODEX", runner, catalog)).resolves.toMatchObject({
+      providerState: "ERROR",
+    });
+    expect(catalog).not.toHaveBeenCalled();
+    runner.mockImplementation(async (_binary, args) => ({
+      exitCode: 0,
+      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using ChatGPT",
+      stderr: "",
+    }));
+    await expect(inspectProvider("CODEX", runner, catalog)).resolves.toMatchObject({
+      providerState: "AVAILABLE",
+      observedModels: ["fixture-model"],
+    });
+  });
+  it("distinguishes authenticated status from a failed catalog read", async () => {
+    const runner = async (_binary: string, args: readonly string[]) => ({
+      exitCode: 0,
+      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using ChatGPT",
+      stderr: "",
+    });
+    await expect(
+      inspectProvider("CODEX", runner, async () => {
+        throw new Error("private diagnostic");
+      }),
+    ).resolves.toMatchObject({
+      providerState: "AVAILABLE",
+      observedModels: [],
+      message: "Subscription authenticated; model catalog unavailable, verify again",
+    });
+  });
+});

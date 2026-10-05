@@ -111,13 +111,29 @@ export class ProviderVerificationService {
       const updatedConfiguration: FactoryConfiguration = {
         ...configuration,
         installations: configuration.installations.map((item, index) =>
-          index === installationIndex ? { ...item, state: input.providerState } : item,
+          index === installationIndex
+            ? {
+                ...item,
+                state: input.providerState,
+                models:
+                  input.providerState === "AVAILABLE" && input.observedModels.length > 0
+                    ? [...new Set([...item.models, ...input.observedModels])].slice(0, 50)
+                    : item.models,
+                defaultModel:
+                  item.defaultModel ??
+                  (input.providerState === "AVAILABLE"
+                    ? (item.models[0] ?? input.observedModels[0] ?? null)
+                    : null),
+              }
+            : item,
         ),
       };
       await transaction.factorySettings.update({
         where: { id: "global" },
         data: {
-          configuration: updatedConfiguration as Prisma.InputJsonValue,
+          configuration: factoryConfigurationSchema.parse(
+            updatedConfiguration,
+          ) as Prisma.InputJsonValue,
           version: { increment: 1 },
         },
       });

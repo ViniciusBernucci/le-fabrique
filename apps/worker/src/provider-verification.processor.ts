@@ -88,6 +88,7 @@ export async function runVerificationCommand(
 export async function inspectProvider(
   provider: SettingsProvider,
   runner: Runner = runVerificationCommand,
+  catalog?: () => Promise<string[]>,
 ): Promise<Omit<CompleteProviderVerification, "workerId">> {
   const profile = profiles[provider];
   try {
@@ -135,7 +136,7 @@ export async function inspectProvider(
         message: "Client authentication mode is not subscription eligible",
       };
     }
-    const observedModels =
+    let observedModels =
       provider === "ANTIGRAVITY"
         ? status.stdout
             .split("\n")
@@ -143,6 +144,19 @@ export async function inspectProvider(
             .filter((line) => /^[a-zA-Z0-9][a-zA-Z0-9._/-]{1,119}$/.test(line))
             .slice(0, 50)
         : [];
+    if (provider === "CODEX" && catalog) {
+      try {
+        observedModels = await catalog();
+      } catch {
+        return {
+          status: "COMPLETED",
+          providerState: "AVAILABLE",
+          cliVersion,
+          observedModels: [],
+          message: "Subscription authenticated; model catalog unavailable, verify again",
+        };
+      }
+    }
     return {
       status: "COMPLETED",
       providerState: "AVAILABLE",
@@ -165,8 +179,9 @@ export async function processProviderVerification(
   job: ProviderVerificationJob,
   control: ControlClient,
   runner: Runner = runVerificationCommand,
+  catalog?: () => Promise<string[]>,
 ) {
   await control.startProviderVerification(job.verificationId);
-  const result = await inspectProvider(job.provider, runner);
+  const result = await inspectProvider(job.provider, runner, catalog);
   return control.completeProviderVerification(job.verificationId, result);
 }

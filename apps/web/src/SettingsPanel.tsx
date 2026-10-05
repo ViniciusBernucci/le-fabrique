@@ -12,7 +12,7 @@ import type {
   ProviderOnboardingSession,
   ProviderVerification,
 } from "@le-fabrique/contracts";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   approveGithubPullRequest,
   cancelGithubPullRequest,
@@ -37,6 +37,7 @@ import { HandoffAlternatives } from "./HandoffAlternatives";
 import { SettingsModal } from "./SettingsModal";
 import {
   configurationSummary,
+  mergeObservedInstallations,
   providerLabels,
   pruneAssignmentAlternatives,
   roleLabels,
@@ -51,6 +52,7 @@ function statusLabel(state: string) {
 export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
+  const initiatedLogins = useRef(new Set<string>());
   const [saving, setSaving] = useState(false);
   const [editingInstallation, setEditingInstallation] = useState<ProviderInstallation | null>(null);
   const [editingAssignment, setEditingAssignment] = useState<AgentAssignment | null>(null);
@@ -126,18 +128,22 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       setSettings(data);
       setDraft((current) => {
         if (!current) return current;
-        const observedStates = new Map(
-          data.configuration.installations.map((item) => [item.id, item.state]),
-        );
-        return {
-          ...current,
-          installations: current.installations.map((item) => ({
-            ...item,
-            state: observedStates.get(item.id) ?? item.state,
-          })),
-        };
+        return mergeObservedInstallations(current, data.configuration);
       });
       setOnboardingSessions(sessions);
+      for (const session of sessions) {
+        if (
+          session.status === "COMPLETED" &&
+          session.providerState === "AVAILABLE" &&
+          initiatedLogins.current.delete(session.id)
+        ) {
+          const verification = await requestProviderVerification(token, session.installationId);
+          setVerifications((current) => [
+            verification,
+            ...current.filter((item) => item.id !== verification.id),
+          ]);
+        }
+      }
       const challenges = await Promise.all(
         sessions
           .filter((item) => ["RUNNING", "AWAITING_USER"].includes(item.status))
@@ -164,18 +170,17 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       void Promise.all([getFactorySettings(token), listProviderVerifications(token)]).then(
         ([data, history]) => {
           setSettings(data);
+          setEditingInstallation((current) =>
+            current
+              ? (mergeObservedInstallations(
+                  { ...data.configuration, installations: [current] },
+                  data.configuration,
+                ).installations[0] ?? current)
+              : null,
+          );
           setDraft((current) => {
             if (!current) return current;
-            const observedStates = new Map(
-              data.configuration.installations.map((item) => [item.id, item.state]),
-            );
-            return {
-              ...current,
-              installations: current.installations.map((item) => ({
-                ...item,
-                state: observedStates.get(item.id) ?? item.state,
-              })),
-            };
+            return mergeObservedInstallations(current, data.configuration);
           });
           setVerifications(history);
         },
@@ -272,7 +277,14 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
 
   async function saveInstallation() {
     if (!draft || !editingInstallation) return;
-    const updated = editingInstallation;
+    const updated = {
+      ...editingInstallation,
+      state:
+        settings?.configuration.installations.find(
+          (item) =>
+            item.id === editingInstallation.id && item.provider === editingInstallation.provider,
+        )?.state ?? editingInstallation.state,
+    };
     const installations = draft.installations.some((item) => item.id === updated.id)
       ? draft.installations.map((item) => (item.id === updated.id ? updated : item))
       : [...draft.installations, updated];
@@ -389,6 +401,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   async function connect(installationId: string) {
     try {
       const session = await requestProviderOnboarding(token, installationId);
+      initiatedLogins.current.add(session.id);
       setOnboardingSessions((current) => [
         session,
         ...current.filter((item) => item.id !== session.id),
@@ -570,7 +583,15 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         </div>
         {editingInstallation &&
           (() => {
-            const installation = editingInstallation;
+            const installation = {
+              ...editingInstallation,
+              state:
+                settings.configuration.installations.find(
+                  (item) =>
+                    item.id === editingInstallation.id &&
+                    item.provider === editingInstallation.provider,
+                )?.state ?? editingInstallation.state,
+            };
             return (
               <SettingsModal
                 title="Configurar conta"
@@ -718,7 +739,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                   }
                   onClick={() => verify(installation.id)}
                 >
-                  Verificar instalação
+                  Verificar conta e modelos
                 </button>
                 {installation.provider === "CODEX" &&
                 settings.configuration.installations.some(
@@ -737,6 +758,24 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                   >
                     Conectar assinatura Codex
                   </button>
+                ) : null}
+                {installation.provider === "CLAUDE" ? (
+                  <p>
+                    Login da assinatura na VPS:{" "}
+                    <code>npm run providers:login -- {installation.id}</code>. Depois clique em
+                    Verificar conta e modelos. Os modelos Claude são informados no campo acima; o
+                    status oficial não fornece um catálogo.
+                  </p>
+                ) : null}
+                {installation.provider === "CODEX" ? (
+                  <p>
+                    Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
+                    modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
+                    funcionários digitais.
+                  </p>
+                ) : null}
+                {installation.provider === "ANTIGRAVITY" ? (
+                  <p>Integração de execução ainda indisponível.</p>
                 ) : null}
                 <button
                   className="remove-action"

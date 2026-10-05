@@ -28,7 +28,9 @@
     "backup": "tsx scripts/evidence-backup.ts",
     "test:redis": "npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && node --test scripts/factory-pause.redis.test.mjs",
     "pretest": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime",
-    "db:status": "node scripts/db.mjs status"
+    "db:status": "node scripts/db.mjs status",
+    "providers:setup": "tsx scripts/providers.ts setup",
+    "providers:login": "tsx scripts/providers.ts login"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",

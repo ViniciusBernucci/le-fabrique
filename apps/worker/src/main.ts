@@ -20,6 +20,7 @@ import {
 } from "@le-fabrique/runtime";
 import { Worker } from "bullmq";
 import { ArtifactReader } from "./artifact-reader";
+import { listCodexModels } from "./codex-models";
 import { loadWorkerConfig } from "./config";
 import { ConfiguredAgentRouter } from "./configured-agent-router";
 import { ControlClient, registerWithRetry, startHeartbeat } from "./control-client";
@@ -199,12 +200,18 @@ async function bootstrap(): Promise<void> {
   const providerVerificationWorker = new Worker<ProviderVerificationJob>(
     "le-fabrique.provider-verification",
     async (job) =>
-      processProviderVerification(job.data, control, async (binary, args) =>
-        runVerificationCommand(
-          binary,
-          args,
-          await identities.prepare(job.data.provider, job.data.installationId),
-        ),
+      processProviderVerification(
+        job.data,
+        control,
+        async (binary, args) =>
+          runVerificationCommand(
+            binary,
+            args,
+            await identities.prepare(job.data.provider, job.data.installationId),
+          ),
+        job.data.provider === "CODEX"
+          ? async () => listCodexModels(await identities.prepare("CODEX", job.data.installationId))
+          : undefined,
       ),
     {
       concurrency: 1,

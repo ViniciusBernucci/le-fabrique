@@ -60,3 +60,37 @@ describe("configurationSummary", () => {
     });
   });
 });
+
+describe("observed account models", () => {
+  it("preserves draft edits while making discovered models available to employee selectors", async () => {
+    const { mergeObservedInstallations } = await import("./settings-view-model");
+    const installation = {
+      id: "codex-default",
+      provider: "CODEX",
+      label: "Draft label",
+      state: "AUTH_REQUIRED",
+      models: ["manual-model"],
+      defaultModel: null,
+    };
+    const draft = { installations: [installation], assignments: [] };
+    const saved = {
+      installations: [
+        {
+          ...installation,
+          label: "Saved label",
+          state: "AVAILABLE",
+          models: ["discovered-model"],
+          defaultModel: "discovered-model",
+        },
+      ],
+    };
+    const result = mergeObservedInstallations(draft as never, saved as never);
+    expect(result.installations[0]).toMatchObject({
+      label: "Draft label",
+      state: "AVAILABLE",
+      models: ["manual-model", "discovered-model"],
+      defaultModel: "discovered-model",
+    });
+    expect(draft.installations[0]?.models).toEqual(["manual-model"]);
+  });
+});

@@ -1,6 +1,7 @@
 import type {
   AgentAssignment,
   EmployeeRole,
+  FactoryConfiguration,
   FactorySettings,
   ProviderInstallation,
   SettingsProvider,
@@ -56,5 +57,30 @@ export function configurationSummary(settings: FactorySettings) {
       (assignment) => assignment.enabled && assignment.installationId !== null,
     ).length,
     githubConnected: configuration.github.state === "CONNECTED",
+  };
+}
+
+/** Preserve local editing while incorporating verified account metadata. */
+export function mergeObservedInstallations(
+  draft: FactoryConfiguration,
+  observed: FactoryConfiguration,
+): FactoryConfiguration {
+  return {
+    ...draft,
+    installations: draft.installations.map((item) => {
+      const saved = observed.installations.find(
+        (candidate) => candidate.id === item.id && candidate.provider === item.provider,
+      );
+      if (!saved) return item;
+      const models = [...new Set([...item.models, ...saved.models])].slice(0, 50);
+      return {
+        ...item,
+        state: saved.state,
+        models,
+        defaultModel:
+          item.defaultModel ??
+          (saved.defaultModel && models.includes(saved.defaultModel) ? saved.defaultModel : null),
+      };
+    }),
   };
 }
