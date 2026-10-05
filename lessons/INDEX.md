@@ -1,5 +1,7 @@
 # Lessons
 
+FAC-015 distingue autenticação da conta, catálogo observado e autorização de execução: [perfis de clientes](perfis-permissao-cliente-cli.md).
+
 FAC-014 reutiliza [modal com rascunho separado](modal-edicao-configuracao.md) e distingue cancelar campos de desfazer uma ação externa já enviada.
 FAC-013 aplica [rascunho separado e modal de configuração](modal-edicao-configuracao.md), com salvamento versionado e limites de verificação explícitos.
 OPS-009 aplica reconciliação por efeitos SQL comprovados, preservando histórico: [baseline/review](baseline-regressao-review.md).

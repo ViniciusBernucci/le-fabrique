@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-015 consulta metadados model/list por identidade privada Codex, valida conta ChatGPT e não envia prompts. [Catálogo e evidências](2026-10-05-FAC-015-catalogo-clientes-oficiais.md).
+
 FAC-012AF exporta create/verify/restoreEvidenceBackup: offline, AES-256-GCM, dados bounded e arquivo privado/staging exclusivo, sem cliente/processo DB dentro do módulo. [Evidências](../operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
 FAC-012AA usa dontAsk + allow Edit absoluta por caminho, metadata deny, sem Bash/MCP/customizações; factory Claude writer exige prova privada current do UID/instalação/CLI 2.1.285/fingerprint/política, sete dias e 14 negações. `npm run preflight:claude` prepara ensaio oficial opt-in; fixtures não comprovam permissões reais e nenhuma instalação real foi desbloqueada. [Evidências](2026-10-03-FAC-012AA-confinamento-claude.md).

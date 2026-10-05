@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — FAC-015
+
+Catálogo Codex via cliente oficial, persistência/seletores de modelos sincronizados, setup privado e comando de login Claude por instalação. Sem liberação de execução ou migrations. [Evidências](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
+
 ## 2026-10-05 — FAC-014
 
 Funcionários digitais e GitHub passam a resumos clicáveis e configuração em modal, compartilhado também com contas IA. Preservados limites/alternativas e ações explícitas de integração/PR. [Evidências](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).

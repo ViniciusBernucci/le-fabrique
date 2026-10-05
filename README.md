@@ -1,5 +1,7 @@
 # Fábrica de Software — kit v2.3
 
+FAC-015 conecta contas de assinatura aos clientes oficiais, importa catálogo Codex e compartilha modelos nos funcionários. Setup da VPS concluído; login humano e execução operacional continuam separados. [Passo a passo](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
+
 FAC-014 estende listas e configuração em modal aos funcionários digitais e ao GitHub, reutilizando o mesmo dialog das contas IA. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
 FAC-013 apresenta contas IA em lista compacta; clicar em uma conta ou Adicionar abre configuração em modal, com edição descartável e salvamento persistido. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
 OPS-009 reconciliou P3018 da migration histórica no banco dev após confirmar todos os efeitos SQL já presentes. Nove migrations ainda pendentes e duas tentativas sem stop continuam bloqueando atualização completa. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).

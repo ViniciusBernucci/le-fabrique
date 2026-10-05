@@ -1,5 +1,10 @@
 # Documentação atual v2.3
 
+- [FAC-015 — contas e modelos](configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md)
+- [FAC-015 — runtime](runtime/2026-10-05-FAC-015-catalogo-clientes-oficiais.md)
+- [FAC-015 — operação](operacao/2026-10-05-FAC-015-preparacao-assinaturas.md)
+- [Ticket FAC-015](planejamento/FAC-015-contas-autenticadas-modelos.md)
+
 - [FAC-014 — modais de funcionários e GitHub](configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md)
 - [Ticket FAC-014](planejamento/FAC-014-modais-funcionarios-github.md)
 - [FAC-013 — configuração de contas IA em modal](configuracao/2026-10-05-FAC-013-modal-contas-ia.md)

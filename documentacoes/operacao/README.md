@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-015 provisiona identidades privadas com providers:setup; login Codex no painel e Claude por providers:login. Reinício dev obrigatório após alterar .env. [Procedimento](2026-10-05-FAC-015-preparacao-assinaturas.md).
+
 OPS-008: erros 500 em definição/PR e 503 em estado operacional foram associados a tabelas ausentes no banco dev; verifique `npm run db:status`. Health ready pode estar OK com migrations pendentes. Reconciliar histórico e prova de parada antes de atualizar schema; favicon fornecido. [Relatório](../infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 OPS-007 consolida FAC-012Z–AH na developer por fast-forward e remove as nove worktrees funcionais após verificar limpeza/ancestry. Branches e aceites permanecem preservados; serviços não foram atualizados. [Relatório](2026-10-05-OPS-007-consolidacao-worktrees.md).
 FAC-012AH: writer global ocupado mantém próximos jobs delayed; somente parada comprovada libera capacidade. Não limpar jobs/índice ou usar expiração como stop. Pretest prepara pacotes internos. MVP interno verificado; contas/UID/financeiro/ativação continuam operação própria, sem piloto requerido. [Evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
