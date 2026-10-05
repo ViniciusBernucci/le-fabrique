@@ -414,47 +414,20 @@ export function DashboardLayout({
           <main id="home-content" className="home-columns" tabIndex={-1}>
             <div className="home-center">
               <h1 className="home-sr-only">Central de controle La fabrique</h1>
-              <section className="home-office" aria-label="Escritório virtual da equipe">
-                <img
-                  src="/images/control-room-reference.png"
-                  alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
-                  fetchPriority="high"
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--marketing"
-                  aria-label="Abrir agente de Marketing"
-                  onClick={() => onNavigate("settings")}
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--jarvis"
-                  aria-label="Abrir JARVIS"
-                  onClick={() => onNavigate("settings")}
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--finance"
-                  aria-label="Abrir Financeiro"
-                  onClick={() => setPreview("Financeiro")}
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--content"
-                  aria-label="Abrir Conteúdo"
-                  onClick={() => setPreview("Conteúdos")}
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--development"
-                  aria-label="Abrir Desenvolvimento"
-                  onClick={() => onNavigate("control")}
-                />
-                <button
-                  type="button"
-                  className="home-room home-room--meeting"
-                  aria-label="Abrir Sala de reunião"
-                  onClick={() => setPreview("Sala de reunião")}
+              <section className="home-office" aria-label="Visual animado da central de controle">
+                <video
+                  src="/videos/control-room-loop.mp4"
+                  poster="/images/control-room-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  onContextMenu={(event) => event.preventDefault()}
                 />
               </section>
               <div className="home-center-panels">
@@ -551,7 +524,7 @@ export function DashboardLayout({
                   </button>
                 </section>
                 <p className="home-demo-note">
-                  Prévia estática · Indicadores, notificações, mensagens, projetos e status são
+                  Prévia demonstrativa · Indicadores, notificações, mensagens, projetos e status são
                   dados simulados.
                 </p>
               </div>

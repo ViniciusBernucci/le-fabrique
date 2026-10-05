@@ -269,66 +269,22 @@
 }
 .home-dashboard .home-office {
   position: relative;
-  width: 60%;
+  width: 42%;
   margin: 20px auto;
   border-radius: 12px;
   border: 1px solid var(--home-line);
   box-shadow: 0 14px 40px #0004;
-  aspect-ratio: 906 / 558;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   isolation: isolate;
   background: #15314a;
 }
-.home-dashboard .home-office > img {
-  position: absolute;
-  max-width: none;
-  width: 169.5364238%;
-  height: auto;
-  left: -25.8278146%;
-  top: -11.827957%;
-}
-.home-dashboard .home-room {
-  position: absolute;
-  padding: 0;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  height: 7%;
-}
-.home-dashboard .home-room:hover {
-  background: #2badff20;
-  border-color: #77d8ff;
-  box-shadow: 0 0 20px #259aff70;
-}
-.home-dashboard .home-room--marketing {
-  top: 19.4%;
-  left: 22%;
-  width: 13.5%;
-}
-.home-dashboard .home-room--jarvis {
-  top: 12.4%;
-  left: 46%;
-  width: 13.5%;
-}
-.home-dashboard .home-room--finance {
-  top: 15.8%;
-  left: 75%;
-  width: 13%;
-}
-.home-dashboard .home-room--content {
-  top: 44.8%;
-  left: 10.4%;
-  width: 13.5%;
-}
-.home-dashboard .home-room--development {
-  top: 45.8%;
-  left: 75.5%;
-  width: 18%;
-}
-.home-dashboard .home-room--meeting {
-  top: 68%;
-  left: 46.3%;
-  width: 17%;
+.home-dashboard .home-office > video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 .home-dashboard .home-center-panels {
   padding: 16px 0 16px 14px;
@@ -1071,7 +1027,7 @@
 
 @media (max-width: 760px) {
   .home-dashboard .home-office {
-    width: calc(100% - 24px);
+    width: calc((100% - 24px) * 0.7);
     margin: 12px auto 0;
   }
 }
