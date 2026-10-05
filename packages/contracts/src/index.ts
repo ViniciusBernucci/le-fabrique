@@ -1254,7 +1254,7 @@ export const providerOnboardingChallengeSchema = z
     userCode: z
       .string()
       .trim()
-      .regex(/^[A-Z0-9]{4,12}(?:-[A-Z0-9]{4,12}){0,3}$/),
+      .regex(/^[A-Za-z0-9]{4,12}(?:-[A-Za-z0-9]{4,12}){0,3}$/),
     expiresAt: z.iso.datetime(),
   })
   .strict();

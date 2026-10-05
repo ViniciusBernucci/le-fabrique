@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { stripVTControlCharacters } from "node:util";
 import type {
   CompleteProviderOnboarding,
   ProviderOnboardingChallenge,
@@ -24,8 +25,18 @@ export function extractCodexDeviceChallenge(
   output: string,
   expiresAt: string,
 ): ProviderOnboardingChallenge | null {
-  const urlMatch = output.match(/https:\/\/[^\s<>"']+/i);
-  const codeMatch = output.match(/\b([A-Z0-9]{4,12}(?:-[A-Z0-9]{4,12}){1,3})\b/);
+  const plainOutput = stripVTControlCharacters(output);
+  const urlMatch = plainOutput.match(/https:\/\/[^\s<>"']+/i);
+  const codeMatch =
+    plainOutput.match(
+      /(?:^|\n)[ \t]*([A-Za-z0-9]{4,12}(?:-[A-Za-z0-9]{4,12}){1,3})[ \t]*(?=\r?\n)/,
+    ) ??
+    plainOutput.match(
+      /https:\/\/[^\s]+[ \t]+([A-Za-z0-9]{4,12}(?:-[A-Za-z0-9]{4,12}){1,3})[ \t]*(?=\r?\n)/,
+    ) ??
+    plainOutput.match(
+      /(?:code|enter)[ \t]*[:=]?[ \t]+([A-Za-z0-9]{4,12}(?:-[A-Za-z0-9]{4,12}){1,3})\b/i,
+    );
   if (!urlMatch?.[0] || !codeMatch?.[1]) return null;
   const candidate = {
     verificationUri: urlMatch[0].replace(/[),.;]+$/, ""),

@@ -756,3 +756,15 @@ describe("shared contracts", () => {
     ).toThrow();
   });
 });
+
+describe("Codex device code case", () => {
+  it("preserves official mixed-case codes", () => {
+    expect(
+      providerOnboardingChallengeSchema.parse({
+        verificationUri: "https://auth.openai.com/codex/device",
+        userCode: "aB7d-Ef9Gh",
+        expiresAt: "2026-10-05T19:00:00.000Z",
+      }).userCode,
+    ).toBe("aB7d-Ef9Gh");
+  });
+});

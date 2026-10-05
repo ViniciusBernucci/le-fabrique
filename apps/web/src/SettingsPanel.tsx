@@ -13,6 +13,7 @@ import type {
   ProviderVerification,
 } from "@le-fabrique/contracts";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { type CodexLoginTab, openCodexLoginTab } from "./codex-login-tab";
 import {
   approveGithubPullRequest,
   cancelGithubPullRequest,
@@ -53,6 +54,9 @@ function statusLabel(state: string) {
 export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
+  const loginTabs = useRef(new Map<string, CodexLoginTab>());
+  const [connectingInstallation, setConnectingInstallation] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
   const initiatedLogins = useRef(new Set<string>());
   const [saving, setSaving] = useState(false);
   const [editingInstallation, setEditingInstallation] = useState<ProviderInstallation | null>(null);
@@ -134,6 +138,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         return mergeObservedInstallations(current, data.configuration);
       });
       setOnboardingSessions(sessions);
+      setLoginError(null);
       for (const session of sessions) {
         if (
           session.status === "COMPLETED" &&
@@ -158,14 +163,32 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             }
           }),
       );
+      for (const entry of challenges) {
+        if (!entry) continue;
+        loginTabs.current.get(entry[0])?.authorize(entry[1].verificationUri);
+      }
+      for (const session of sessions) {
+        if (["COMPLETED", "FAILED", "EXPIRED"].includes(session.status)) {
+          loginTabs.current.get(session.id)?.closeWaiting();
+          loginTabs.current.delete(session.id);
+        }
+      }
       setOnboardingChallenges(Object.fromEntries(challenges.filter((item) => item !== null)));
     };
-    void refresh().catch(() => onMessage("Falha ao atualizar o login do Codex."));
+    void refresh().catch(() =>
+      setLoginError(
+        "Falha ao consultar o login. Confira a conexão com a API; sua autorização ainda não foi confirmada.",
+      ),
+    );
     const timer = setInterval(() => {
-      void refresh().catch(() => onMessage("Falha ao atualizar o login do Codex."));
+      void refresh().catch(() =>
+        setLoginError(
+          "Falha ao consultar o login. Confira a conexão com a API; sua autorização ainda não foi confirmada.",
+        ),
+      );
     }, 2_000);
     return () => clearInterval(timer);
-  }, [hasActiveOnboarding, onMessage, token]);
+  }, [hasActiveOnboarding, token]);
 
   useEffect(() => {
     if (!verifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))) return;
@@ -414,16 +437,27 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   }
 
   async function connect(installationId: string) {
+    const tab = openCodexLoginTab();
+    setConnectingInstallation(installationId);
+    setLoginError(null);
     try {
       const session = await requestProviderOnboarding(token, installationId);
       initiatedLogins.current.add(session.id);
+      loginTabs.current.get(session.id)?.closeWaiting();
+      loginTabs.current.set(session.id, tab);
       setOnboardingSessions((current) => [
         session,
         ...current.filter((item) => item.id !== session.id),
       ]);
       onMessage("Login oficial iniciado; aguarde o código temporário.");
     } catch {
-      onMessage("Não foi possível iniciar o login desta instalação.");
+      tab.closeWaiting();
+      const message =
+        "Não foi possível iniciar o login desta instalação. Confira se a conta está habilitada e salva e tente novamente.";
+      setLoginError(message);
+      onMessage(message);
+    } finally {
+      setConnectingInstallation(null);
     }
   }
 
@@ -629,6 +663,10 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                     </div>
                   ) : null;
                 })()}
+                {connectingInstallation === installation.id ? (
+                  <p role="status">Iniciando login oficial e aguardando código…</p>
+                ) : null}
+                {loginError ? <p role="alert">{loginError}</p> : null}
                 {(() => {
                   const session = onboardingSessions.find(
                     (item) => item.installationId === installation.id,
@@ -640,6 +678,21 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                       <p>
                         Login: <strong>{statusLabel(session.status)}</strong>
                       </p>
+                      {session.status === "PENDING" || session.status === "RUNNING" ? (
+                        <p>
+                          Aguardando URL e código do cliente oficial. O login ainda não foi
+                          confirmado.
+                        </p>
+                      ) : null}
+                      {session.status === "COMPLETED" && session.providerState === "AVAILABLE" ? (
+                        <p>Assinatura conectada e confirmada pelo cliente oficial.</p>
+                      ) : null}
+                      {session.status === "EXPIRED" ? (
+                        <p>O código expirou. Inicie novamente o login.</p>
+                      ) : null}
+                      {session.status === "FAILED" ? (
+                        <p>Não foi possível confirmar o login. Tente novamente.</p>
+                      ) : null}
                       {challenge ? (
                         <div className="onboarding-challenge">
                           <span>Abra o site oficial e informe o código temporário:</span>
@@ -648,9 +701,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                             target="_blank"
                             rel="noreferrer noopener"
                           >
-                            {challenge.verificationUri}
+                            Abrir login oficial do Codex em nova aba
                           </a>
                           <code>{challenge.userCode}</code>
+                          <span>
+                            Informe esse código na página oficial. Se a aba foi bloqueada, use o
+                            link acima. Aguarde a confirmação de assinatura conectada nesta tela.
+                          </span>
                         </div>
                       ) : null}
                     </div>
@@ -783,11 +840,14 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                     className="secondary-action account-action"
                     type="button"
                     onClick={() => connect(installation.id)}
-                    disabled={onboardingSessions.some(
-                      (item) =>
-                        item.installationId === installation.id &&
-                        ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
-                    )}
+                    disabled={
+                      connectingInstallation !== null ||
+                      onboardingSessions.some(
+                        (item) =>
+                          item.installationId === installation.id &&
+                          ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                      )
+                    }
                   >
                     Conectar assinatura Codex
                   </button>

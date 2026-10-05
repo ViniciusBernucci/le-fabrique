@@ -76,3 +76,20 @@ describe("provider onboarding", () => {
     });
   });
 });
+
+describe("real Codex challenge format", () => {
+  it("strips terminal colors and preserves mixed case in the device code", () => {
+    const output =
+      "Codex CLI\n1. Open this link\n  \u001b[94mhttps://auth.openai.com/codex/device\u001b[0m\n2. Enter this one-time code\n  \u001b[1maB7d-Ef9Gh\u001b[0m\n";
+    expect(extractCodexDeviceChallenge(output, job.expiresAt)).toEqual({
+      verificationUri: "https://auth.openai.com/codex/device",
+      userCode: "aB7d-Ef9Gh",
+      expiresAt: job.expiresAt,
+    });
+  });
+  it("waits for a whole code line rather than publishing a partial chunk", () => {
+    const output = "https://auth.openai.com/codex/device\n2. Enter this one-time code\n  aB7d-Ef9G";
+    expect(extractCodexDeviceChallenge(output, job.expiresAt)).toBeNull();
+    expect(extractCodexDeviceChallenge(`${output}h\n`, job.expiresAt)?.userCode).toBe("aB7d-Ef9Gh");
+  });
+});
