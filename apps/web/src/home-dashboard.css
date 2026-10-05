@@ -1208,3 +1208,50 @@
 .home-dashboard .workspace-content .account-list-item:hover {
   background: #142b3d;
 }
+.home-dashboard .workspace-content .team-tabs {
+  margin-bottom: 18px;
+}
+.home-dashboard .workspace-content .team-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin: 16px 0;
+}
+.home-dashboard .workspace-content .team-list-heading label {
+  width: min(360px, 100%);
+  margin: 0;
+}
+.home-dashboard .workspace-content .team-list-heading button {
+  white-space: nowrap;
+}
+.home-dashboard .workspace-content .team-empty {
+  padding: 16px 0;
+}
+.home-dashboard .workspace-content .team-execution-roles {
+  border-top: 1px solid #294456;
+  margin-top: 24px;
+  padding-top: 16px;
+}
+.home-dashboard .workspace-content .team-execution-roles summary {
+  cursor: pointer;
+  color: #a5bad0;
+  margin-bottom: 16px;
+}
+.home-dashboard .workspace-content .team-skill-picker {
+  border: 1px solid #294456;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+}
+.home-dashboard .workspace-content .team-skill-picker legend {
+  color: #a5bad0;
+  font-size: 12px;
+  padding: 0 5px;
+}
+@media (max-width: 760px) {
+  .home-dashboard .workspace-content .team-list-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+}

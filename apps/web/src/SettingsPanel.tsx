@@ -7,6 +7,7 @@ import type {
   GithubPullRequest,
   GithubRepositoryVerification,
   GithubVerification,
+  Project,
   ProviderInstallation,
   ProviderOnboardingChallenge,
   ProviderOnboardingSession,
@@ -45,14 +46,26 @@ import {
   pruneAssignmentAlternatives,
   roleLabels,
 } from "./settings-view-model";
+import { TeamsPanel } from "./TeamsPanel";
+import { pruneTeamAgentInstallations } from "./teams-view-model";
 
-type SettingsPanelProps = { token: string; onMessage: (message: string) => void };
+type SettingsPanelProps = {
+  token: string;
+  onMessage: (message: string) => void;
+  projects?: Project[];
+  activeProjectId?: string;
+};
 
 function statusLabel(state: string) {
   return state.replaceAll("_", " ");
 }
 
-export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+export function SettingsPanel({
+  token,
+  onMessage,
+  projects = [],
+  activeProjectId,
+}: SettingsPanelProps) {
   const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
@@ -344,7 +357,15 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         installations,
       ),
     );
-    if (await save({ ...draft, installations, assignments })) setEditingInstallation(null);
+    if (
+      await save({
+        ...draft,
+        installations,
+        assignments,
+        digitalAgents: pruneTeamAgentInstallations(draft.digitalAgents, installations),
+      })
+    )
+      setEditingInstallation(null);
   }
 
   function updateAssignment(patch: Partial<AgentAssignment>) {
@@ -391,6 +412,10 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         ? {
             ...current,
             installations: current.installations.filter((item) => item.id !== installationId),
+            digitalAgents: pruneTeamAgentInstallations(
+              current.digitalAgents,
+              current.installations.filter((item) => item.id !== installationId),
+            ),
             assignments: current.assignments.map((assignment) =>
               assignment.installationId === installationId
                 ? {
@@ -1368,14 +1393,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         hidden={activeTab !== "teams"}
         className="settings-tab-panel"
       >
-        <section className="panel settings-section">
-          <div className="section-heading">
-            <div>
-              <p className="section-index">02</p>
-              <h2>Equipes</h2>
-            </div>
-            <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
-          </div>
+        <TeamsPanel
+          configuration={draft}
+          projects={projects}
+          activeProjectId={activeProjectId}
+          saving={saving}
+          onSave={save}
+        >
           <div className="account-list">
             {draft.assignments.map((assignment) => {
               const account = draft.installations.find(
@@ -1502,7 +1526,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 </SettingsModal>
               );
             })()}
-        </section>
+        </TeamsPanel>
       </div>
     </div>
   );

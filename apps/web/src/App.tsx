@@ -187,7 +187,12 @@ export function App() {
           </p>
         </header>
         {activeArea === "settings" ? (
-          <SettingsPanel token={token} onMessage={setMessage} />
+          <SettingsPanel
+            token={token}
+            onMessage={setMessage}
+            projects={projects}
+            activeProjectId={selectedProject}
+          />
         ) : (
           <>
             <OperationPanel token={token} />

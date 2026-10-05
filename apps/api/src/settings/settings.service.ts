@@ -84,11 +84,27 @@ export class SettingsService {
     expectedVersion: number,
     configuration: FactoryConfiguration,
   ): Promise<FactorySettings> {
-    factoryConfigurationSchema.parse(configuration);
+    configuration = factoryConfigurationSchema.parse(configuration);
     return this.prisma.$transaction(async (transaction) => {
       const current = await transaction.factorySettings.findUnique({ where: { id: SETTINGS_ID } });
       if (!current || current.version !== expectedVersion) {
         throw new ConflictException("Settings changed; reload before saving");
+      }
+      const projectIds = [
+        ...new Set([
+          ...(configuration.projectSkills ?? []).map((skill) => skill.projectId),
+          ...(configuration.digitalAgents ?? []).flatMap((agent) =>
+            agent.projectId ? [agent.projectId] : [],
+          ),
+        ]),
+      ];
+      if (projectIds.length > 0) {
+        const projects = await transaction.project.findMany({
+          where: { id: { in: projectIds } },
+          select: { id: true },
+        });
+        if (new Set(projects.map((project) => project.id)).size !== projectIds.length)
+          throw new BadRequestException("Agent or skill project does not exist");
       }
       assertObservedStatesUnchanged(
         factoryConfigurationSchema.parse(current.configuration),

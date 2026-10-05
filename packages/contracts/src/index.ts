@@ -644,6 +644,35 @@ export const financialSafetySettingsSchema = z
   })
   .strict();
 
+export const projectSkillSchema = z
+  .object({
+    id: z.uuid(),
+    projectId: z.uuid(),
+    name: z.string().trim().min(1).max(100),
+    description: z.string().trim().max(500),
+    instructions: z.string().trim().min(1).max(64_000),
+  })
+  .strict();
+export type ProjectSkill = z.infer<typeof projectSkillSchema>;
+
+export const digitalAgentSchema = z
+  .object({
+    id: z.uuid(),
+    name: z.string().trim().min(1).max(100),
+    description: z.string().trim().max(500),
+    instructions: z.string().trim().max(16_000),
+    projectId: z.uuid().nullable(),
+    installationId: z
+      .string()
+      .regex(/^[a-z0-9][a-z0-9-]{1,62}$/)
+      .nullable(),
+    model: z.string().trim().min(1).max(120).nullable(),
+    skillIds: z.array(z.uuid()),
+    enabled: z.boolean(),
+  })
+  .strict();
+export type DigitalAgent = z.infer<typeof digitalAgentSchema>;
+
 const employeeRoles = employeeRoleSchema.options;
 
 export const factoryConfigurationSchema = z
@@ -652,6 +681,8 @@ export const factoryConfigurationSchema = z
     assignments: z.array(agentAssignmentSchema).length(employeeRoles.length),
     github: githubSettingsSchema,
     financialSafety: financialSafetySettingsSchema,
+    digitalAgents: z.array(digitalAgentSchema).optional(),
+    projectSkills: z.array(projectSkillSchema).optional(),
   })
   .strict()
   .superRefine((configuration, context) => {
@@ -665,6 +696,52 @@ export const factoryConfigurationSchema = z
         });
       }
       installations.set(installation.id, installation);
+    }
+
+    const skills = new Map<string, ProjectSkill>();
+    for (const [index, skill] of (configuration.projectSkills ?? []).entries()) {
+      if (skills.has(skill.id))
+        context.addIssue({
+          code: "custom",
+          message: "Skill ids must be unique",
+          path: ["projectSkills", index, "id"],
+        });
+      skills.set(skill.id, skill);
+    }
+    const agents = new Set<string>();
+    for (const [index, agent] of (configuration.digitalAgents ?? []).entries()) {
+      if (agents.has(agent.id))
+        context.addIssue({
+          code: "custom",
+          message: "Agent ids must be unique",
+          path: ["digitalAgents", index, "id"],
+        });
+      agents.add(agent.id);
+      if ((agent.installationId === null) !== (agent.model === null))
+        context.addIssue({
+          code: "custom",
+          message: "Agent installation and model must be selected together",
+          path: ["digitalAgents", index],
+        });
+      if (agent.installationId && agent.model) {
+        const installation = installations.get(agent.installationId);
+        if (!installation?.enabled || !installation.models.includes(agent.model))
+          context.addIssue({
+            code: "custom",
+            message: "Agent requires an enabled installation and allowed model",
+            path: ["digitalAgents", index, "installationId"],
+          });
+      }
+      const references = new Set<string>();
+      for (const [skillIndex, skillId] of agent.skillIds.entries()) {
+        if (references.has(skillId) || skills.get(skillId)?.projectId !== agent.projectId)
+          context.addIssue({
+            code: "custom",
+            message: "Agent skills must be unique and belong to its project",
+            path: ["digitalAgents", index, "skillIds", skillIndex],
+          });
+        references.add(skillId);
+      }
     }
 
     const roles = new Set<EmployeeRole>();
