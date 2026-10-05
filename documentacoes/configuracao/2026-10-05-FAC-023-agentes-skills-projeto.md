@@ -35,3 +35,7 @@ Antes de reverter a implementação, preservar os cadastros de agentes/skills co
 
 ## Uso de IA e aceite
 Codex da sessão; modelo efetivo, cota e custos não comprovados. Zero clientes adicionais, subagentes e handoffs. Merge autorizado não representa aceite funcional/visual. AWAITING_HUMAN; DONE somente após aceite da revisão exata. Sem push/deploy/produção.
+
+## Integração e limpeza realizadas
+Fast-forward em developer até 6760b17, sem conflitos. Build de contracts/web na árvore principal PASS, mesmo hash dos bundles de implementação; browser reproduzido em developer/5173 PASS com os mesmos 14 PUTs fixture. GET real /api/settings sem credencial retornou 401; nenhum PUT real realizado.
+Ancestry da branch comprovada e worktree limpa antes da remoção. Preview próprio PID 2379388 parado após conferir cwd da worktree. git worktree remove /home/vinicius/le-fabrique-fac-023 executado sem force; diretório ausente, dependências da árvore principal preservadas e git worktree list contém somente developer. Branch feature preservada. Evidências reproduzidas idênticas, árvore limpa antes deste registro administrativo; sem push/deploy. Aceite humano permanece pendente.

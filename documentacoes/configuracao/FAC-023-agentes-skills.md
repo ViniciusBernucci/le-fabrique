@@ -12,4 +12,4 @@ Codex da sessão, modelo/cota/cobrança não comprovados. Nenhum cliente/provedo
 Relatório datado por domínio, README atual, índices/changelog/backlog/lessons/patch/evidências. AWAITING_HUMAN após checks; DONE só após aceite exato.
 
 ## Revisão entregue
-IMPLEMENTADO / AWAITING_HUMAN: código a25638acde42ba50576908f1bf6725570a360a99. Critérios de cadastro/vínculos/persistência fixture comprovados; execução automática fora do incremento. [Relatório e evidências](2026-10-05-FAC-023-agentes-skills-projeto.md). Merge/limpeza autorizados; confirmação de execução será registrada após realização.
+IMPLEMENTADO / AWAITING_HUMAN: código a25638acde42ba50576908f1bf6725570a360a99. Critérios de cadastro/vínculos/persistência fixture comprovados; execução automática fora do incremento. [Relatório e evidências](2026-10-05-FAC-023-agentes-skills-projeto.md). Merge fast-forward developer até 6760b17 e limpeza da worktree realizados após checks e ancestry; browser principal/5173 PASS. Ver conclusão administrativa no relatório.

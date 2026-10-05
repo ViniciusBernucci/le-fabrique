@@ -9,3 +9,5 @@ runtime: 65 testes / 8 arquivos PASS
 worker: 215 testes / 26 arquivos PASS
 Browser: PASS, ver browser-results.txt; fixtures, não PostgreSQL/provider real
 Falhas iniciais: cópia de dependências API aninhada e harness DOM após reload; corrigidas sem alterar implementação.
+Developer 6760b17: build contracts/web PASS, browser 5173 PASS (14 PUTs fixture), GET real settings sem credencial 401.
+Merge fast-forward confirmado; worktree limpa e ancestral removida sem force, somente preview próprio parado; branch preservada.
