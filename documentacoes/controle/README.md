@@ -1,11 +1,10 @@
 # Controle administrativo
 
-## Página inicial — FAC-020
+## Página inicial — FAC-020/FAC-024
 
-Estado IMPLEMENTADO/AWAITING_HUMAN integrado em `developer`, código atual `cde0cc6` (FAC-021), com nome La fabrique e cena central desktop em 60%. O painel abre uma central estática antes do formulário de login. `HomeDashboard` concentra escritório cartoon, sidebar, busca de atalhos, métricas, notificações, mensagens, agentes e projetos, todos explicitamente demonstrativos. A home não lê API na entrada inicial. Projetos/Novo Projeto/Desenvolvimento levam à Operação; Agentes/JARVIS/Marketing/Configurações levam às configurações existentes, com autenticação administrativa preservada. Áreas futuras usam dialog de prévia, sem persistência ou jobs.
+Estado IMPLEMENTADO/AWAITING_HUMAN. DashboardLayout abre a home antes do login com menus persistentes e dados demonstrativos. Cena central agora usa o vídeo fornecido pelo responsável, preparado como loop de 9,25s sem áudio, autoplay/playsInline e controles ocultos. Largura desktop 42% da coluna, 70% dos 60% anteriores; mobile também reduzido a 70% da largura anterior. Poster local durante carregamento. Imagem original preservada, hotspots antigos retirados; atalhos/menus continuam disponíveis. [Funcionamento, mídia, checks e limites atuais](2026-10-05-FAC-024-video-dashboard.md).
 
-O escritório reutiliza o PNG enviado pelo responsável com enquadramento em CSS; ícones e avatares são SVGs locais. A cena mantém marca/texto da referência. Percentuais indicam atividade fictícia, não cota de assinatura. Ctrl/Cmd+K foca a busca; menu colapsa e cartões se empilham no mobile. [Relatório e capturas](2026-10-05-FAC-020-central-controle-estatica.md). Nenhum contrato/backend/migration alterado; descrição de token abaixo continua aplicável às áreas administrativas.
-
+Indicadores, notificações, mensagens, agentes e projetos continuam simulados; home não lê API na entrada. Acessos às áreas existentes preservam autenticação administrativa; áreas futuras usam prévias. Ícones/avatares SVG locais. Histórico da ilustração está no [FAC-020](2026-10-05-FAC-020-central-controle-estatica.md). Nenhum contrato/backend/migration alterado nesta troca visual.
 
 FAC-012AH: claim responde 429/WRITER_BUSY por capacidade global/rollback conhecido antes de autoridade. Worker adia job sem FAILED/attemptsMade; 409/lease/execução/ambiguidade propagam. 528 testes + 10 PostgreSQL + 3 Redis. [Evidências](2026-10-03-FAC-012AH-admissao-capacidade.md).
 

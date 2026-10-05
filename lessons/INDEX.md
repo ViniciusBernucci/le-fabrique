@@ -84,3 +84,5 @@ FAC-012AA amplia [perfis de permissão](perfis-permissao-cliente-cli.md) com all
 
 
 FAC-023 amplia contratos-runtime-monorepo e modal-edicao-configuracao com cadastro aditivo, vínculos por projeto, limpeza referencial e erro de gravação dentro do dialog.
+
+- [Vídeo decorativo com fronteira contínua — FAC-024](video-decorativo-loop.md)

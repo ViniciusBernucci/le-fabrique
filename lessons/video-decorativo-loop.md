@@ -1,0 +1,4 @@
+# Vídeo decorativo com fronteira contínua
+No FAC-024, só adicionar loop repetiria um corte do asset fornecido. prepare-video.py desloca o início em 18 frames e mistura a cauda com a cabeça; a duração do fade usa 17 intervalos entre 18 frames, incluindo os extremos. Análise de frames detectou o resíduo de uma duração arredondada de 0,75s e confirmou fronteira mais suave após ajuste. Hashes associam a prova ao MP4 exato.
+
+DashboardLayout usa autoplay/muted/playsInline, poster local e sem controls, interação ou foco no vídeo. Preparar transição no MP4 evita temporizadores/decoders duplos na página; faststart, áudio removido e resolução adequada reduziram tráfego. Browser verifica reprodução e dois reinícios com requestVideoFrameCallback; diferença entre último/primeiro frame não prova tempo de apresentação, e o tempo no browser não garante desempenho em todos os dispositivos. [Relatório e scripts](../documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).

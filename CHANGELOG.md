@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-05 — FAC-024
+
+Home substitui PNG pelo vídeo fornecido, preparado sem áudio com transição cíclica suave e controles ocultos; área em 70% da largura anterior. Poster/asset locais, sem dependência nova. [Evidências](documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).
+
 ## 2026-10-05 — FAC-023
 
 Equipes separa Agentes/Skills; agentes sem limite fixo de seis, cadastro de skills por projeto, instruções, vínculos e edição/exclusão persistidos. Contratos e API validam relações/projetos. [Evidências e limites](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).

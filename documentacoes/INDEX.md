@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-024 — vídeo decorativo compacto no dashboard](controle/2026-10-05-FAC-024-video-dashboard.md)
+
 - [FAC-023 — cadastro de agentes e skills por projeto](configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md)
 - [FAC-023 — controle](controle/2026-10-05-FAC-023-agentes-skills.md)
 - [FAC-023 — contratos runtime](runtime/2026-10-05-FAC-023-agentes-skills.md)
