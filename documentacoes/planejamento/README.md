@@ -1,5 +1,9 @@
 # Planejamento atual
 
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](../configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+
 FAC-014 IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-014-modais-funcionarios-github.md), [relatório](../configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md). Modais de funcionários/GitHub, sem alteração de contrato.
 FAC-013 IMPLEMENTADO/AWAITING_HUMAN: [ticket](FAC-013-modal-contas-ia.md), [relatório](../configuracao/2026-10-05-FAC-013-modal-contas-ia.md). Lista compacta/modal de contas IA; validação visual humana pendente.
 OPS-009 IMPLEMENTADO/AWAITING_HUMAN: [ticket](OPS-009-reconciliar-migration-historica.md), [evidências](../infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md). Reconciliação Prisma histórica não equivale a liberação de writer.

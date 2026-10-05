@@ -1,5 +1,7 @@
 # Operação da fábrica e worker
 
+FAC-018: Autenticação com keyring; implementação pronta, consentimento real e keyring Antigravity pendentes. [Relatório](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
 FAC-017: só COMPLETED/AVAILABLE confirmado pelo cliente significa assinatura conectada; abrir aba não basta. [Passo a passo](2026-10-05-FAC-017-confirmacao-login-codex.md).
 
 FAC-016 confirma que setup exige reinício do supervisor dev para recarregar ambiente; Codex real voltou a AUTH_REQUIRED. [Procedimento](2026-10-05-FAC-016-env-processo-dev.md).

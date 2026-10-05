@@ -1,5 +1,7 @@
 # Agent Runtime Gateway e Provider Manager
 
+FAC-018: Autorização oficial; implementação pronta, consentimento real e keyring Antigravity pendentes. [Relatório](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
 FAC-017 remove ANSI do desafio Codex e preserva código completo/caso. [Contrato e evidências](2026-10-05-FAC-017-desafio-ansi-codex.md).
 
 FAC-016 identifica raiz privada ausente com mensagem fixa, preservando sanitização de erros desconhecidos. [Diagnóstico](2026-10-05-FAC-016-diagnostico-raiz-privada.md).

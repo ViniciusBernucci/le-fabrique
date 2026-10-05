@@ -1,5 +1,7 @@
 # Centro de configuracoes
 
+FAC-018: Login Claude/Antigravity e abas; implementação pronta, consentimento real e keyring Antigravity pendentes. [Relatório](../configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
 FAC-017 reserva aba de autorização no clique Codex e navega para URL oficial ao receber desafio; mantém link manual/código e distingue sucesso confirmado de pedido iniciado. [Guia](2026-10-05-FAC-017-login-device-codex.md).
 
 FAC-016 torna envio/espera/resultado das verificações visíveis no modal e trata falha de consulta. [Guia](2026-10-05-FAC-016-feedback-verificacao-codex.md).
@@ -53,7 +55,7 @@ FAC-010A implementa `Verificar instalacao`. Pedido/outbox sao persistidos e o wo
 
 FAC-010B implementa `Conectar assinatura Codex` para instalacao habilitada em `AUTH_REQUIRED`. A sessao e a intencao ficam no PostgreSQL/outbox, mas URL e codigo temporarios existem somente no Redis privado por ate dez minutos e no estado em memoria da tela. O worker executa `codex login --device-auth`, nunca o executavel editavel, e confirma com `codex login status` antes de atualizar o estado observado.
 
-O painel nao recebe senha, token, cookie ou cache de autenticacao. Claude e Antigravity continuam sem botao de login gerenciado ate seus fluxos oficiais seguros serem comprovados. Detalhes e evidencias: [2026-10-01-FAC-010B-login-efemero-codex.md](2026-10-01-FAC-010B-login-efemero-codex.md).
+O painel nao recebe senha, token, cookie ou cache de autenticacao. FAC-018 acrescenta login gerenciado Claude/Antigravity; ver limitações operacionais no relatório atual. Detalhes e evidencias: [2026-10-01-FAC-010B-login-efemero-codex.md](2026-10-01-FAC-010B-login-efemero-codex.md).
 
 ## Rota por funcionario
 
@@ -82,3 +84,5 @@ O painel recebe apenas owner/repositorio canonicos, branch padrao/base, visibili
 ## Pull request sob gate humano
 
 FAC-011D separa `Preparar` de `Aprovar e enviar ao worker`. Preparacao grava payload/version/digest sem outbox; aprovacao exata reconfere opt-in e leitura antes de publicar. O worker exige `permissions.push`, reconcilia PR aberto e so depois usa `gh pr create` com argv fixo e body por stdin. Draft e configuravel por pedido; merge permanece impossivel neste fluxo. Detalhes: [2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md](2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md).
+
+FAC-019: abas Contas, Integrações IA, Equipes com modais preservados. [Relatório](2026-10-05-FAC-019-abas-configuracoes.md).

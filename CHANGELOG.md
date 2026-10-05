@@ -1,5 +1,9 @@
 # Changelog
 
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+
 ## 2026-10-05 — FAC-017
 
 Login Codex normaliza ANSI, preserva caso/linha completa do código e abre aba de espera que segue para autorização oficial. Modal mantém link/código e confirmação explícita. [Evidências](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).

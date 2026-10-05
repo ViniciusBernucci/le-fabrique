@@ -1,5 +1,9 @@
 # Fábrica de Software — kit v2.3
 
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+
 FAC-017 corrige leitura do desafio colorido do Codex e abre aba de autorização a partir do clique, com link alternativo e confirmação explícita. Login real ainda depende do usuário. [Guia](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
 
 FAC-016 mostra envio/andamento/resultado da verificação dentro do modal e diagnóstico sanitizado da raiz privada. Codex real verificado com AUTH_REQUIRED; login ainda depende do usuário. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
