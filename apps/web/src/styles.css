@@ -637,3 +637,28 @@ button:disabled {
     padding: 18px;
   }
 }
+
+.settings-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border, #dce1e8);
+  padding-bottom: 12px;
+}
+.settings-tabs [role="tab"] {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--border, #dce1e8);
+}
+.settings-tabs [aria-selected="true"] {
+  background: #1e293b;
+  color: #fff;
+  border-color: #1e293b;
+}
+.settings-tab-panel:not([hidden]) {
+  display: grid;
+  gap: 24px;
+}
+.settings-tab-panel[hidden] {
+  display: none;
+}

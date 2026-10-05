@@ -47,3 +47,16 @@ describe("Codex login tab", () => {
     expect(tab.close).toHaveBeenCalledOnce();
   });
 });
+
+describe("provider-specific login tabs", () => {
+  it("allows only the selected Claude or Google provider", () => {
+    const claude = fixture(),
+      google = fixture();
+    const claudeLogin = new CodexLoginTab(claude as unknown as Window, "CLAUDE");
+    expect(claudeLogin.authorize("https://accounts.google.com/o/oauth2/auth")).toBe(false);
+    expect(claudeLogin.authorize("https://claude.com/cai/oauth/authorize")).toBe(true);
+    const googleLogin = new CodexLoginTab(google as unknown as Window, "ANTIGRAVITY");
+    expect(googleLogin.authorize("https://claude.com/cai/oauth/authorize")).toBe(false);
+    expect(googleLogin.authorize("https://accounts.google.com/o/oauth2/auth")).toBe(true);
+  });
+});

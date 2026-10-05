@@ -768,3 +768,37 @@ describe("Codex device code case", () => {
     ).toBe("aB7d-Ef9Gh");
   });
 });
+
+describe("provider authorization challenges", () => {
+  it("binds Claude and Google authorization URLs to their providers", () => {
+    const common = { flow: "AUTHORIZATION_CODE", expiresAt: "2026-10-05T22:00:00.000Z" };
+    expect(
+      providerOnboardingChallengeSchema.safeParse({
+        ...common,
+        provider: "CLAUDE",
+        verificationUri: "https://claude.com/cai/oauth/authorize?state=fixture",
+      }).success,
+    ).toBe(true);
+    expect(
+      providerOnboardingChallengeSchema.safeParse({
+        ...common,
+        provider: "ANTIGRAVITY",
+        verificationUri: "https://accounts.google.com/o/oauth2/auth?state=fixture",
+      }).success,
+    ).toBe(true);
+    expect(
+      providerOnboardingChallengeSchema.safeParse({
+        ...common,
+        provider: "CLAUDE",
+        verificationUri: "https://accounts.google.com/oauth",
+      }).success,
+    ).toBe(false);
+    expect(
+      providerOnboardingChallengeSchema.safeParse({
+        ...common,
+        provider: "ANTIGRAVITY",
+        verificationUri: "https://accounts.google.com.evil.example/oauth",
+      }).success,
+    ).toBe(false);
+  });
+});

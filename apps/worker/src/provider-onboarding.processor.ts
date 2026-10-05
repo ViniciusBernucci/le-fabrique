@@ -141,18 +141,21 @@ export async function processProviderOnboarding(
     const login = await runner(job.expiresAt, (challenge) =>
       control.publishProviderOnboardingChallenge(job.sessionId, challenge),
     );
-    const verification = await inspector("CODEX");
+    const verification = await inspector(job.provider);
     if (login.exitCode === 0 && verification.providerState === "AVAILABLE") {
       result = {
         status: "COMPLETED",
         providerState: "AVAILABLE",
-        message: "Official Codex subscription login confirmed",
+        message:
+          job.provider === "CODEX"
+            ? "Official Codex subscription login confirmed"
+            : "Official provider account login confirmed",
       };
     } else {
       result = {
         status: "FAILED",
         providerState: verification.providerState,
-        message: "Codex login was not confirmed by the official client",
+        message: "Provider login was not confirmed by the official client",
       };
     }
   } catch (error) {
@@ -162,7 +165,7 @@ export async function processProviderOnboarding(
       providerState: expired ? "AUTH_REQUIRED" : "ERROR",
       message: expired
         ? "Login window expired"
-        : "Codex login failed without persisted client output",
+        : "Provider login failed without persisted client output",
     };
   }
   return control.completeProviderOnboarding(job.sessionId, result);

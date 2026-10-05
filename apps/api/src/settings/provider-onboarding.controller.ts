@@ -1,5 +1,7 @@
 import {
   completeProviderOnboardingSchema,
+  providerAuthorizationCodeResultSchema,
+  providerAuthorizationCodeSchema,
   providerOnboardingChallengeSchema,
   providerOnboardingSessionListSchema,
   providerOnboardingSessionSchema,
@@ -31,6 +33,13 @@ export class ProviderOnboardingAdminController {
   @Post("installations/:installationId/onboarding")
   async request(@Param("installationId") installationId: string) {
     return providerOnboardingSessionSchema.parse(await this.onboarding.request(installationId));
+  }
+
+  @Post("onboarding/:id/authorization-code")
+  async submitCode(@Param("id", ParseUUIDPipe) id: string, @Body() body: unknown) {
+    const input = providerAuthorizationCodeSchema.safeParse(body);
+    if (!input.success) throw new BadRequestException("Invalid authorization code");
+    return this.onboarding.submitAuthorizationCode(id, input.data.code);
   }
 
   @Get("onboarding")
@@ -66,6 +75,15 @@ export class ProviderOnboardingWorkerController {
     if (!input.success) throw new BadRequestException("Invalid onboarding challenge payload");
     return providerOnboardingSessionSchema.parse(
       await this.onboarding.publishChallenge(id, input.data.workerId, input.data.challenge),
+    );
+  }
+
+  @Post(":id/authorization-code")
+  async takeCode(@Param("id", ParseUUIDPipe) id: string, @Body() body: unknown) {
+    const input = startProviderOnboardingSchema.safeParse(body);
+    if (!input.success) throw new BadRequestException("Invalid worker identity");
+    return providerAuthorizationCodeResultSchema.parse(
+      await this.onboarding.takeAuthorizationCode(id, input.data.workerId),
     );
   }
 

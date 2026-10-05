@@ -43,6 +43,7 @@ const workerEnvironmentSchema = z
       .default("")
       .transform(parseRepositoryHosts),
     WORKER_CODEX_BINARY: z.string().trim().min(1).max(4096).default("/usr/bin/codex"),
+    WORKER_ANTIGRAVITY_BINARY: z.string().trim().min(1).max(4096).default("/usr/bin/agy"),
     WORKER_CLAUDE_BINARY: z.string().trim().min(1).max(4096).default("/usr/bin/claude"),
     WORKER_LEASE_DURATION_MS: z.coerce.number().int().min(15_000).max(300_000).default(90_000),
   })

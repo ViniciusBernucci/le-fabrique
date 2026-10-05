@@ -26,6 +26,7 @@ import {
   orchestrationClaimSchema,
   orchestrationReconcileResultSchema,
   orchestrationStateSchema,
+  providerAuthorizationCodeResultSchema,
   providerOnboardingSessionSchema,
   providerVerificationSchema,
   workerConfigurationSnapshotSchema,
@@ -63,6 +64,8 @@ export class ControlClient {
             "probe",
             "subscription-client-preflight",
             "codex-device-onboarding",
+            "claude-subscription-onboarding",
+            "antigravity-google-onboarding",
             "github-cli-verification",
             "github-device-onboarding",
             "github-repository-read-verification",
@@ -299,6 +302,15 @@ export class ControlClient {
         body: JSON.stringify({ workerId: this.config.WORKER_ID, challenge }),
       }),
     );
+  }
+
+  async takeProviderAuthorizationCode(sessionId: string): Promise<string | null> {
+    return providerAuthorizationCodeResultSchema.parse(
+      await this.request(`/internal/provider-onboarding/${sessionId}/authorization-code`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
+      }),
+    ).code;
   }
 
   async completeProviderOnboarding(

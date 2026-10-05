@@ -143,3 +143,98 @@ describe("ProviderOnboardingService", () => {
     expect(redis.del).toHaveBeenCalledWith(`provider-onboarding:${sessionId}:challenge`);
   });
 });
+
+describe("multi-provider authorization", () => {
+  for (const provider of ["CLAUDE", "ANTIGRAVITY"] as const) {
+    it(`creates ${provider} onboarding with metadata-only outbox`, async () => {
+      const configuration = createDefaultFactoryConfiguration();
+      const installation = configuration.installations.find((item) => item.provider === provider);
+      if (!installation) throw new Error("Fixture missing");
+      installation.enabled = true;
+      const created = { ...record(), provider, installationId: installation.id };
+      const tx = {
+        providerOnboardingSession: {
+          updateMany: vi.fn(),
+          findFirst: vi.fn().mockResolvedValue(null),
+          create: vi.fn().mockResolvedValue(created),
+        },
+        factorySettings: { findUnique: vi.fn().mockResolvedValue({ configuration }) },
+        outboxEvent: { create: vi.fn().mockResolvedValue({}) },
+      };
+      const service = new ProviderOnboardingService(
+        {
+          $transaction: async (callback: (transaction: typeof tx) => unknown) => callback(tx),
+        } as never,
+        {} as never,
+      );
+      await expect(service.request(installation.id)).resolves.toMatchObject({ provider });
+      expect(tx.outboxEvent.create.mock.calls[0]?.[0].data.payload.provider).toBe(provider);
+      expect(JSON.stringify(tx.outboxEvent.create.mock.calls)).not.toMatch(
+        /authorizationCode|code_challenge|verificationUri/,
+      );
+    });
+  }
+  it("keeps returned codes only in Redis with NX and bounded TTL; owner consumes once", async () => {
+    const session = { ...record("AWAITING_USER"), provider: "CLAUDE" };
+    const prisma = {
+      providerOnboardingSession: { findUnique: vi.fn().mockResolvedValue(session) },
+    };
+    let pending: string | null = null;
+    const redis = {
+      ensureConnected: vi.fn(),
+      get: vi.fn().mockResolvedValue(
+        JSON.stringify({
+          flow: "AUTHORIZATION_CODE",
+          provider: "CLAUDE",
+          verificationUri: "https://claude.com/cai/oauth/authorize",
+          expiresAt: expiresAt.toISOString(),
+        }),
+      ),
+      set: vi.fn(async (_key: string, value: string) => {
+        pending = value;
+        return "OK";
+      }),
+      getdel: vi.fn(async () => {
+        const value = pending;
+        pending = null;
+        return value;
+      }),
+    };
+    const service = new ProviderOnboardingService(prisma as never, redis as never);
+    await service.submitAuthorizationCode(sessionId, "synthetic-code#state");
+    expect(redis.set).toHaveBeenCalledWith(
+      `provider-onboarding:${sessionId}:response`,
+      "synthetic-code#state",
+      "EX",
+      expect.any(Number),
+      "NX",
+    );
+    await expect(
+      service.takeAuthorizationCode(sessionId, "33333333-3333-4333-8333-333333333333"),
+    ).rejects.toThrow();
+    expect(redis.getdel).not.toHaveBeenCalled();
+    await expect(service.takeAuthorizationCode(sessionId, workerId)).resolves.toEqual({
+      code: "synthetic-code#state",
+    });
+    await expect(service.takeAuthorizationCode(sessionId, workerId)).resolves.toEqual({
+      code: null,
+    });
+  });
+  it("rejects expired sessions and terminal control characters before storing a code", async () => {
+    const session = {
+      ...record("AWAITING_USER"),
+      provider: "ANTIGRAVITY",
+      expiresAt: new Date(Date.now() - 1),
+    };
+    const redis = { set: vi.fn() };
+    const service = new ProviderOnboardingService(
+      { providerOnboardingSession: { findUnique: vi.fn().mockResolvedValue(session) } } as never,
+      redis as never,
+    );
+    await expect(service.submitAuthorizationCode(sessionId, "synthetic-code")).rejects.toThrow();
+    await expect(
+      service.submitAuthorizationCode(sessionId, "synthetic-code\n/exit"),
+    ).rejects.toThrow();
+    expect(redis.set).not.toHaveBeenCalled();
+  });
+});

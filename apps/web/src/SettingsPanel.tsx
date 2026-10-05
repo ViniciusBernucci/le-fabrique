@@ -32,6 +32,7 @@ import {
   requestGithubVerification,
   requestProviderOnboarding,
   requestProviderVerification,
+  submitProviderAuthorizationCode,
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
@@ -52,10 +53,15 @@ function statusLabel(state: string) {
 }
 
 export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+  const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const loginTabs = useRef(new Map<string, CodexLoginTab>());
   const [connectingInstallation, setConnectingInstallation] = useState<string | null>(null);
+  const [authorizationCodes, setAuthorizationCodes] = useState<Record<string, string>>({});
+  const [sendingCode, setSendingCode] = useState<string | null>(null);
+  const [submittedCodes, setSubmittedCodes] = useState<Record<string, boolean>>({});
+  const [loginRefreshError, setLoginRefreshError] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);
   const initiatedLogins = useRef(new Set<string>());
   const [saving, setSaving] = useState(false);
@@ -138,7 +144,15 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         return mergeObservedInstallations(current, data.configuration);
       });
       setOnboardingSessions(sessions);
-      setLoginError(null);
+      const activeIds = new Set(
+        sessions
+          .filter((item) => ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status))
+          .map((item) => item.id),
+      );
+      setAuthorizationCodes((current) =>
+        Object.fromEntries(Object.entries(current).filter(([id]) => activeIds.has(id))),
+      );
+      setLoginRefreshError(null);
       for (const session of sessions) {
         if (
           session.status === "COMPLETED" &&
@@ -176,13 +190,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       setOnboardingChallenges(Object.fromEntries(challenges.filter((item) => item !== null)));
     };
     void refresh().catch(() =>
-      setLoginError(
+      setLoginRefreshError(
         "Falha ao consultar o login. Confira a conexão com a API; sua autorização ainda não foi confirmada.",
       ),
     );
     const timer = setInterval(() => {
       void refresh().catch(() =>
-        setLoginError(
+        setLoginRefreshError(
           "Falha ao consultar o login. Confira a conexão com a API; sua autorização ainda não foi confirmada.",
         ),
       );
@@ -437,7 +451,10 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   }
 
   async function connect(installationId: string) {
-    const tab = openCodexLoginTab();
+    const provider =
+      settings?.configuration.installations.find((item) => item.id === installationId)?.provider ??
+      "CODEX";
+    const tab = openCodexLoginTab(provider);
     setConnectingInstallation(installationId);
     setLoginError(null);
     try {
@@ -458,6 +475,22 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
       onMessage(message);
     } finally {
       setConnectingInstallation(null);
+    }
+  }
+
+  async function sendAuthorizationCode(sessionId: string) {
+    setSendingCode(sessionId);
+    setLoginError(null);
+    try {
+      await submitProviderAuthorizationCode(token, sessionId, authorizationCodes[sessionId] ?? "");
+      setAuthorizationCodes((current) => ({ ...current, [sessionId]: "" }));
+      setSubmittedCodes((current) => ({ ...current, [sessionId]: true }));
+    } catch {
+      setLoginError(
+        "Não foi possível enviar o código. Confira o código e se a sessão ainda está ativa.",
+      );
+    } finally {
+      setSendingCode(null);
     }
   }
 
@@ -581,445 +614,400 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         </article>
       </section>
 
-      <section className="panel settings-section">
-        <div className="section-heading">
-          <div>
-            <p className="section-index">01</p>
-            <h2>IA e contas</h2>
+      <div className="settings-tabs" role="tablist" aria-label="Categorias de configurações">
+        {(
+          [
+            ["accounts", "Contas"],
+            ["integrations", "Integrações IA"],
+            ["teams", "Equipes"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            id={`settings-tab-${id}`}
+            aria-controls={`settings-panel-${id}`}
+            aria-selected={activeTab === id}
+            tabIndex={activeTab === id ? 0 : -1}
+            onClick={() => setActiveTab(id)}
+            onKeyDown={(event) => {
+              const ids = ["accounts", "integrations", "teams"] as const;
+              const index = ids.indexOf(id);
+              const next =
+                event.key === "ArrowRight"
+                  ? ids[(index + 1) % 3]
+                  : event.key === "ArrowLeft"
+                    ? ids[(index + 2) % 3]
+                    : event.key === "Home"
+                      ? ids[0]
+                      : event.key === "End"
+                        ? ids[2]
+                        : null;
+              if (next) {
+                event.preventDefault();
+                setActiveTab(next);
+                document.getElementById(`settings-tab-${next}`)?.focus();
+              }
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div
+        id="settings-panel-accounts"
+        role="tabpanel"
+        aria-labelledby="settings-tab-accounts"
+        hidden={activeTab !== "accounts"}
+        className="settings-tab-panel"
+      >
+        <section className="panel settings-section">
+          <div className="section-heading">
+            <div>
+              <p className="section-index">01</p>
+              <h2>Contas de IA</h2>
+            </div>
+            <p>
+              Clientes oficiais por assinatura. Modelos só devem ser incluídos após observação real.
+            </p>
           </div>
-          <p>
-            Clientes oficiais por assinatura. Modelos só devem ser incluídos após observação real.
-          </p>
-        </div>
-        <button
-          className="secondary-action"
-          type="button"
-          onClick={addInstallation}
-          disabled={draft.installations.length >= 20}
-        >
-          + Adicionar conta
-        </button>
-        <div className="account-list">
-          {draft.installations.length === 0 && (
-            <p className="muted">Nenhuma conta cadastrada. Adicione uma conta para começar.</p>
-          )}
-          {draft.installations.map((installation) => (
-            <button
-              type="button"
-              className="account-list-item"
-              key={installation.id}
-              onClick={() => setEditingInstallation(structuredClone(installation))}
-              aria-label={`Configurar ${installation.label}`}
-            >
-              <span
-                className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
-              >
-                {providerLabels[installation.provider].slice(0, 1)}
-              </span>
-              <span className="account-list-name">
-                <strong>{installation.label}</strong>
-                <span className="account-list-detail">
-                  {providerLabels[installation.provider]} ·{" "}
-                  {installation.enabled ? "Habilitada" : "Desabilitada"}
-                </span>
-              </span>
-              <span className={`status status--${installation.state.toLowerCase()}`}>
-                {statusLabel(installation.state)}
-              </span>
-              <span className="account-list-edit">Configurar →</span>
-            </button>
-          ))}
-        </div>
-        {editingInstallation &&
-          (() => {
-            const installation = {
-              ...editingInstallation,
-              state:
-                settings.configuration.installations.find(
-                  (item) =>
-                    item.id === editingInstallation.id &&
-                    item.provider === editingInstallation.provider,
-                )?.state ?? editingInstallation.state,
-            };
-            return (
-              <SettingsModal
-                title="Configurar conta"
-                saving={saving}
-                onClose={() => setEditingInstallation(null)}
-                onSave={() => void saveInstallation()}
-              >
-                {requestingVerification === installation.id ? (
-                  <p role="status">Enviando verificação à API…</p>
-                ) : null}
-                {verificationError ? <p role="alert">{verificationError}</p> : null}
-                {(() => {
-                  const latest = verifications.find(
-                    (item) => item.installationId === installation.id,
-                  );
-                  return latest ? (
-                    <div className="verification-line" role="status" aria-live="polite">
-                      <p>{providerVerificationFeedback(latest)}</p>
-                      {latest.cliVersion ? <p>Cliente: {latest.cliVersion}</p> : null}
-                    </div>
-                  ) : null;
-                })()}
-                {connectingInstallation === installation.id ? (
-                  <p role="status">Iniciando login oficial e aguardando código…</p>
-                ) : null}
-                {loginError ? <p role="alert">{loginError}</p> : null}
-                {(() => {
-                  const session = onboardingSessions.find(
-                    (item) => item.installationId === installation.id,
-                  );
-                  const challenge = session ? onboardingChallenges[session.id] : undefined;
-                  if (!session) return null;
-                  return (
-                    <div className="onboarding-status">
-                      <p>
-                        Login: <strong>{statusLabel(session.status)}</strong>
-                      </p>
-                      {session.status === "PENDING" || session.status === "RUNNING" ? (
-                        <p>
-                          Aguardando URL e código do cliente oficial. O login ainda não foi
-                          confirmado.
-                        </p>
-                      ) : null}
-                      {session.status === "COMPLETED" && session.providerState === "AVAILABLE" ? (
-                        <p>Assinatura conectada e confirmada pelo cliente oficial.</p>
-                      ) : null}
-                      {session.status === "EXPIRED" ? (
-                        <p>O código expirou. Inicie novamente o login.</p>
-                      ) : null}
-                      {session.status === "FAILED" ? (
-                        <p>Não foi possível confirmar o login. Tente novamente.</p>
-                      ) : null}
-                      {challenge ? (
-                        <div className="onboarding-challenge">
-                          <span>Abra o site oficial e informe o código temporário:</span>
-                          <a
-                            href={challenge.verificationUri}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            Abrir login oficial do Codex em nova aba
-                          </a>
-                          <code>{challenge.userCode}</code>
-                          <span>
-                            Informe esse código na página oficial. Se a aba foi bloqueada, use o
-                            link acima. Aguarde a confirmação de assinatura conectada nesta tela.
-                          </span>
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                })()}
-                <div className="account-title">
-                  <div
-                    className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
-                  >
-                    {providerLabels[installation.provider].slice(0, 1)}
-                  </div>
-                  <div>
-                    <h3>{providerLabels[installation.provider]}</h3>
-                    <span>{installation.authMode}</span>
-                  </div>
-                  <span className={`status status--${installation.state.toLowerCase()}`}>
-                    {statusLabel(installation.state)}
-                  </span>
-                </div>
-                <label>
-                  Provider
-                  <select
-                    value={installation.provider}
-                    onChange={(event) =>
-                      updateInstallation({
-                        provider: event.target.value as ProviderInstallation["provider"],
-                      })
-                    }
-                  >
-                    {Object.entries(providerLabels).map(([provider, label]) => (
-                      <option key={provider} value={provider}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  Nome da conta
-                  <input
-                    value={installation.label}
-                    onChange={(event) => updateInstallation({ label: event.target.value })}
-                  />
-                </label>
-                <label>
-                  Executável
-                  <input
-                    value={installation.executable}
-                    onChange={(event) => updateInstallation({ executable: event.target.value })}
-                  />
-                </label>
-                <label>
-                  Modelos permitidos, um por linha
-                  <textarea
-                    value={installation.models.join("\n")}
-                    onChange={(event) => {
-                      const models = [
-                        ...new Set(
-                          event.target.value
-                            .split("\n")
-                            .map((item) => item.trim())
-                            .filter(Boolean),
-                        ),
-                      ];
-                      updateInstallation({
-                        models,
-                        defaultModel: models.includes(installation.defaultModel ?? "")
-                          ? installation.defaultModel
-                          : (models[0] ?? null),
-                      });
-                    }}
-                  />
-                </label>
-                <label>
-                  Modelo padrão
-                  <select
-                    value={installation.defaultModel ?? ""}
-                    onChange={(event) =>
-                      updateInstallation({ defaultModel: event.target.value || null })
-                    }
-                  >
-                    <option value="">Nenhum</option>
-                    {installation.models.map((model) => (
-                      <option key={model} value={model}>
-                        {model}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="switch-row">
-                  <input
-                    type="checkbox"
-                    checked={installation.enabled}
-                    onChange={(event) => updateInstallation({ enabled: event.target.checked })}
-                  />
-                  <span>Disponível para atribuição</span>
-                </label>
-                <button
-                  className="secondary-action account-action"
-                  type="button"
-                  disabled={
-                    saving ||
-                    requestingVerification !== null ||
-                    verifications.some(
-                      (item) =>
-                        item.installationId === installation.id &&
-                        ["PENDING", "RUNNING"].includes(item.status),
-                    ) ||
-                    !settings.configuration.installations.some(
-                      (item) => item.id === installation.id,
-                    )
-                  }
-                  onClick={() => verify(installation.id)}
-                >
-                  {requestingVerification === installation.id
-                    ? "Enviando…"
-                    : verifications.some(
-                          (item) =>
-                            item.installationId === installation.id &&
-                            ["PENDING", "RUNNING"].includes(item.status),
-                        )
-                      ? "Verificação em andamento…"
-                      : "Verificar conta e modelos"}
-                </button>
-                {installation.provider === "CODEX" &&
-                settings.configuration.installations.some(
-                  (item) => item.id === installation.id && item.enabled,
-                ) &&
-                installation.state === "AUTH_REQUIRED" ? (
-                  <button
-                    className="secondary-action account-action"
-                    type="button"
-                    onClick={() => connect(installation.id)}
-                    disabled={
-                      connectingInstallation !== null ||
-                      onboardingSessions.some(
-                        (item) =>
-                          item.installationId === installation.id &&
-                          ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
-                      )
-                    }
-                  >
-                    Conectar assinatura Codex
-                  </button>
-                ) : null}
-                {installation.provider === "CLAUDE" ? (
-                  <p>
-                    Login da assinatura na VPS:{" "}
-                    <code>npm run providers:login -- {installation.id}</code>. Depois clique em
-                    Verificar conta e modelos. Os modelos Claude são informados no campo acima; o
-                    status oficial não fornece um catálogo.
-                  </p>
-                ) : null}
-                {installation.provider === "CODEX" ? (
-                  <p>
-                    Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
-                    modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
-                    funcionários digitais.
-                  </p>
-                ) : null}
-                {installation.provider === "ANTIGRAVITY" ? (
-                  <p>Integração de execução ainda indisponível.</p>
-                ) : null}
-                <button
-                  className="remove-action"
-                  type="button"
-                  disabled={!draft.installations.some((item) => item.id === installation.id)}
-                  onClick={() => removeInstallation(installation.id)}
-                >
-                  Remover conta
-                </button>
-              </SettingsModal>
-            );
-          })()}
-      </section>
-
-      <section className="panel settings-section">
-        <div className="section-heading">
-          <div>
-            <p className="section-index">02</p>
-            <h2>Funcionários digitais</h2>
-          </div>
-          <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
-        </div>
-        <div className="account-list">
-          {draft.assignments.map((assignment) => {
-            const account = draft.installations.find(
-              (item) => item.id === assignment.installationId,
-            );
-            return (
+          <button
+            className="secondary-action"
+            type="button"
+            onClick={addInstallation}
+            disabled={draft.installations.length >= 20}
+          >
+            + Adicionar conta
+          </button>
+          <div className="account-list">
+            {draft.installations.length === 0 && (
+              <p className="muted">Nenhuma conta cadastrada. Adicione uma conta para começar.</p>
+            )}
+            {draft.installations.map((installation) => (
               <button
                 type="button"
                 className="account-list-item"
-                key={assignment.role}
-                aria-label={`Configurar ${roleLabels[assignment.role]}`}
-                onClick={() => setEditingAssignment(structuredClone(assignment))}
+                key={installation.id}
+                onClick={() => setEditingInstallation(structuredClone(installation))}
+                aria-label={`Configurar ${installation.label}`}
               >
-                <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
+                <span
+                  className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+                >
+                  {providerLabels[installation.provider].slice(0, 1)}
+                </span>
                 <span className="account-list-name">
-                  <strong>{roleLabels[assignment.role]}</strong>
+                  <strong>{installation.label}</strong>
                   <span className="account-list-detail">
-                    {account
-                      ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
-                      : "Sem atribuição"}
-                  </span>
-                  <span className="account-list-detail">
-                    {assignment.permissionMode === "READ_ONLY"
-                      ? "Somente leitura"
-                      : "Escrita no workspace"}{" "}
-                    · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
+                    {providerLabels[installation.provider]} ·{" "}
+                    {installation.enabled ? "Habilitada" : "Desabilitada"}
                   </span>
                 </span>
-                <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
+                <span className={`status status--${installation.state.toLowerCase()}`}>
+                  {statusLabel(installation.state)}
+                </span>
                 <span className="account-list-edit">Configurar →</span>
               </button>
-            );
-          })}
-        </div>
-        {editingAssignment &&
-          (() => {
-            const assignment = editingAssignment;
-            const selection =
-              assignment.installationId && assignment.model
-                ? `${assignment.installationId}::${assignment.model}`
-                : "";
-            return (
-              <SettingsModal
-                title={`Configurar ${roleLabels[assignment.role]}`}
-                saving={saving}
-                onClose={() => setEditingAssignment(null)}
-                onSave={() => void saveAssignment()}
-              >
-                <label>
-                  Conta e modelo
-                  <select
-                    value={selection}
-                    onChange={(event) => {
-                      const [installationId, ...modelParts] = event.target.value.split("::");
-                      updateAssignment({
-                        installationId: installationId || null,
-                        model: modelParts.join("::") || null,
-                      });
-                    }}
-                  >
-                    <option value="">Sem atribuição</option>
-                    {draft.installations
-                      .filter((item) => item.enabled)
-                      .flatMap((item) =>
-                        item.models.map((model) => (
-                          <option key={`${item.id}:${model}`} value={`${item.id}::${model}`}>
-                            {item.label} · {model}
-                          </option>
-                        )),
-                      )}
-                  </select>
-                </label>
-                <HandoffAlternatives
-                  assignment={assignment}
-                  installations={draft.installations}
-                  onChange={(alternatives) => updateAssignment({ alternatives })}
-                />
-                <label>
-                  Permissão
-                  <select
-                    value={assignment.permissionMode}
-                    onChange={(event) =>
-                      updateAssignment({
-                        permissionMode: event.target.value as AgentAssignment["permissionMode"],
-                      })
+            ))}
+          </div>
+          {editingInstallation &&
+            (() => {
+              const installation = {
+                ...editingInstallation,
+                state:
+                  settings.configuration.installations.find(
+                    (item) =>
+                      item.id === editingInstallation.id &&
+                      item.provider === editingInstallation.provider,
+                  )?.state ?? editingInstallation.state,
+              };
+              return (
+                <SettingsModal
+                  title="Configurar conta"
+                  saving={saving}
+                  onClose={() => setEditingInstallation(null)}
+                  onSave={() => void saveInstallation()}
+                >
+                  {requestingVerification === installation.id ? (
+                    <p role="status">Enviando verificação à API…</p>
+                  ) : null}
+                  {verificationError ? <p role="alert">{verificationError}</p> : null}
+                  {(() => {
+                    const latest = verifications.find(
+                      (item) => item.installationId === installation.id,
+                    );
+                    return latest ? (
+                      <div className="verification-line" role="status" aria-live="polite">
+                        <p>{providerVerificationFeedback(latest)}</p>
+                        {latest.cliVersion ? <p>Cliente: {latest.cliVersion}</p> : null}
+                      </div>
+                    ) : null;
+                  })()}
+                  {connectingInstallation === installation.id ? (
+                    <p role="status">Iniciando login oficial e aguardando instruções…</p>
+                  ) : null}
+                  {loginError ? <p role="alert">{loginError}</p> : null}
+                  {loginRefreshError ? <p role="alert">{loginRefreshError}</p> : null}
+                  {(() => {
+                    const session = onboardingSessions.find(
+                      (item) => item.installationId === installation.id,
+                    );
+                    const challenge = session ? onboardingChallenges[session.id] : undefined;
+                    if (!session) return null;
+                    return (
+                      <div className="onboarding-status">
+                        <p>
+                          Login: <strong>{statusLabel(session.status)}</strong>
+                        </p>
+                        {session.status === "PENDING" || session.status === "RUNNING" ? (
+                          <p>
+                            Aguardando URL e código do cliente oficial. O login ainda não foi
+                            confirmado.
+                          </p>
+                        ) : null}
+                        {session.status === "COMPLETED" && session.providerState === "AVAILABLE" ? (
+                          <p>Conta conectada e confirmada pelo cliente oficial.</p>
+                        ) : null}
+                        {session.status === "EXPIRED" ? (
+                          <p>O código expirou. Inicie novamente o login.</p>
+                        ) : null}
+                        {session.status === "FAILED" ? (
+                          <p>Não foi possível confirmar o login. Tente novamente.</p>
+                        ) : null}
+                        {challenge ? (
+                          <div className="onboarding-challenge">
+                            <span>
+                              {challenge.flow === "AUTHORIZATION_CODE"
+                                ? "Abra o site oficial, autorize sua conta e devolva o código exibido no navegador:"
+                                : "Abra o site oficial e informe o código temporário:"}
+                            </span>
+                            <a
+                              href={challenge.verificationUri}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              Abrir login oficial em nova aba
+                            </a>
+                            {challenge.userCode ? <code>{challenge.userCode}</code> : null}
+                            {challenge.flow === "AUTHORIZATION_CODE" ? (
+                              submittedCodes[session.id] ? (
+                                <p role="status">
+                                  Código enviado ao cliente oficial. Aguarde a confirmação da conta
+                                  conectada.
+                                </p>
+                              ) : (
+                                <div>
+                                  <label>
+                                    Código devolvido pelo provedor
+                                    <input
+                                      type="password"
+                                      autoComplete="off"
+                                      value={authorizationCodes[session.id] ?? ""}
+                                      onChange={(event) =>
+                                        setAuthorizationCodes((current) => ({
+                                          ...current,
+                                          [session.id]: event.target.value,
+                                        }))
+                                      }
+                                    />
+                                  </label>
+                                  <button
+                                    type="button"
+                                    className="secondary-action"
+                                    disabled={
+                                      sendingCode !== null ||
+                                      !authorizationCodes[session.id]?.trim()
+                                    }
+                                    onClick={() => void sendAuthorizationCode(session.id)}
+                                  >
+                                    Enviar código de autorização
+                                  </button>
+                                </div>
+                              )
+                            ) : null}
+                            <span>
+                              Informe esse código na página oficial. Se a aba foi bloqueada, use o
+                              link acima. Aguarde a confirmação de assinatura conectada nesta tela.
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
+                    );
+                  })()}
+                  <div className="account-title">
+                    <div
+                      className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+                    >
+                      {providerLabels[installation.provider].slice(0, 1)}
+                    </div>
+                    <div>
+                      <h3>{providerLabels[installation.provider]}</h3>
+                      <span>{installation.authMode}</span>
+                    </div>
+                    <span className={`status status--${installation.state.toLowerCase()}`}>
+                      {statusLabel(installation.state)}
+                    </span>
+                  </div>
+                  <label>
+                    Provider
+                    <select
+                      value={installation.provider}
+                      onChange={(event) =>
+                        updateInstallation({
+                          provider: event.target.value as ProviderInstallation["provider"],
+                        })
+                      }
+                    >
+                      {Object.entries(providerLabels).map(([provider, label]) => (
+                        <option key={provider} value={provider}>
+                          {label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Nome da conta
+                    <input
+                      value={installation.label}
+                      onChange={(event) => updateInstallation({ label: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    Executável
+                    <input
+                      value={installation.executable}
+                      onChange={(event) => updateInstallation({ executable: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    Modelos permitidos, um por linha
+                    <textarea
+                      value={installation.models.join("\n")}
+                      onChange={(event) => {
+                        const models = [
+                          ...new Set(
+                            event.target.value
+                              .split("\n")
+                              .map((item) => item.trim())
+                              .filter(Boolean),
+                          ),
+                        ];
+                        updateInstallation({
+                          models,
+                          defaultModel: models.includes(installation.defaultModel ?? "")
+                            ? installation.defaultModel
+                            : (models[0] ?? null),
+                        });
+                      }}
+                    />
+                  </label>
+                  <label>
+                    Modelo padrão
+                    <select
+                      value={installation.defaultModel ?? ""}
+                      onChange={(event) =>
+                        updateInstallation({ defaultModel: event.target.value || null })
+                      }
+                    >
+                      <option value="">Nenhum</option>
+                      {installation.models.map((model) => (
+                        <option key={model} value={model}>
+                          {model}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="switch-row">
+                    <input
+                      type="checkbox"
+                      checked={installation.enabled}
+                      onChange={(event) => updateInstallation({ enabled: event.target.checked })}
+                    />
+                    <span>Disponível para atribuição</span>
+                  </label>
+                  <button
+                    className="secondary-action account-action"
+                    type="button"
+                    disabled={
+                      saving ||
+                      requestingVerification !== null ||
+                      verifications.some(
+                        (item) =>
+                          item.installationId === installation.id &&
+                          ["PENDING", "RUNNING"].includes(item.status),
+                      ) ||
+                      !settings.configuration.installations.some(
+                        (item) => item.id === installation.id,
+                      )
                     }
+                    onClick={() => verify(installation.id)}
                   >
-                    <option value="READ_ONLY">Somente leitura</option>
-                    <option value="WORKSPACE_WRITE">Escrita no workspace</option>
-                  </select>
-                </label>
-                <label>
-                  Minutos
-                  <input
-                    type="number"
-                    min="1"
-                    max="30"
-                    value={assignment.timeoutMinutes}
-                    onChange={(event) =>
-                      updateAssignment({ timeoutMinutes: Number(event.target.value) })
-                    }
-                  />
-                </label>
-                <label>
-                  Tentativas
-                  <select
-                    value={assignment.maxAttempts}
-                    onChange={(event) =>
-                      updateAssignment({ maxAttempts: Number(event.target.value) })
-                    }
+                    {requestingVerification === installation.id
+                      ? "Enviando…"
+                      : verifications.some(
+                            (item) =>
+                              item.installationId === installation.id &&
+                              ["PENDING", "RUNNING"].includes(item.status),
+                          )
+                        ? "Verificação em andamento…"
+                        : "Verificar conta e modelos"}
+                  </button>
+                  {settings.configuration.installations.some(
+                    (item) => item.id === installation.id && item.enabled,
+                  ) && installation.state === "AUTH_REQUIRED" ? (
+                    <button
+                      className="secondary-action account-action"
+                      type="button"
+                      onClick={() => connect(installation.id)}
+                      disabled={
+                        connectingInstallation !== null ||
+                        onboardingSessions.some(
+                          (item) =>
+                            item.installationId === installation.id &&
+                            ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                        )
+                      }
+                    >
+                      {installation.provider === "ANTIGRAVITY"
+                        ? "Conectar conta Google"
+                        : `Conectar assinatura ${providerLabels[installation.provider]}`}
+                    </button>
+                  ) : null}
+                  {installation.provider === "CLAUDE" ? (
+                    <p>
+                      Conecte sua assinatura na aba oficial; se o navegador apresentar um código,
+                      cole-o neste modal. Os modelos Claude são informados no campo acima; o status
+                      oficial não fornece um catálogo.
+                    </p>
+                  ) : null}
+                  {installation.provider === "CODEX" ? (
+                    <p>
+                      Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
+                      modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
+                      funcionários digitais.
+                    </p>
+                  ) : null}
+                  {installation.provider === "ANTIGRAVITY" ? (
+                    <p>
+                      Conecte sua conta Google pelo fluxo oficial; se solicitado, devolva o código
+                      ao modal. A confirmação depende de armazenamento seguro da sessão no cliente.
+                      Integração de execução ainda indisponível.
+                    </p>
+                  ) : null}
+                  <button
+                    className="remove-action"
+                    type="button"
+                    disabled={!draft.installations.some((item) => item.id === installation.id)}
+                    onClick={() => removeInstallation(installation.id)}
                   >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                </label>
-                <label className="switch-row compact">
-                  <input
-                    type="checkbox"
-                    checked={assignment.enabled}
-                    onChange={(event) => updateAssignment({ enabled: event.target.checked })}
-                  />
-                  <span>Ativo</span>
-                </label>
-              </SettingsModal>
-            );
-          })()}
-      </section>
+                    Remover conta
+                  </button>
+                </SettingsModal>
+              );
+            })()}
+        </section>
 
-      <section className="settings-bottom-grid">
         <section className="panel settings-section">
           <div className="section-heading">
             <div>
@@ -1305,7 +1293,58 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             </SettingsModal>
           )}
         </section>
-
+      </div>
+      <div
+        id="settings-panel-integrations"
+        role="tabpanel"
+        aria-labelledby="settings-tab-integrations"
+        hidden={activeTab !== "integrations"}
+        className="settings-tab-panel"
+      >
+        <section className="panel settings-section">
+          <div className="section-heading">
+            <div>
+              <p className="section-index">MODELOS</p>
+              <h2>Integrações IA</h2>
+            </div>
+            <p>Modelos configurados por conta para uso nas equipes.</p>
+          </div>
+          <div className="account-list">
+            {draft.installations.length === 0 && (
+              <p className="muted">Cadastre uma conta na aba Contas para configurar os modelos.</p>
+            )}
+            {draft.installations.map((installation) => (
+              <button
+                type="button"
+                className="account-list-item"
+                key={installation.id}
+                onClick={() => {
+                  setActiveTab("accounts");
+                  setEditingInstallation(structuredClone(installation));
+                }}
+                aria-label={`Configurar modelos de ${installation.label}`}
+              >
+                <span
+                  className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+                >
+                  {providerLabels[installation.provider].slice(0, 1)}
+                </span>
+                <span className="account-list-name">
+                  <strong>{installation.label}</strong>
+                  <span className="account-list-detail">
+                    {installation.models.length
+                      ? installation.models.join(" · ")
+                      : "Nenhum modelo configurado"}
+                  </span>
+                </span>
+                <span className={`status status--${installation.state.toLowerCase()}`}>
+                  {statusLabel(installation.state)}
+                </span>
+                <span className="account-list-edit">Configurar →</span>
+              </button>
+            ))}
+          </div>
+        </section>
         <section className="panel safety-card">
           <p className="section-index">POLÍTICA FINANCEIRA</p>
           <h2>Proteções ativas</h2>
@@ -1321,7 +1360,150 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             Estas proteções são fixas neste MVP e não podem ser ativadas por esta tela.
           </p>
         </section>
-      </section>
+      </div>
+      <div
+        id="settings-panel-teams"
+        role="tabpanel"
+        aria-labelledby="settings-tab-teams"
+        hidden={activeTab !== "teams"}
+        className="settings-tab-panel"
+      >
+        <section className="panel settings-section">
+          <div className="section-heading">
+            <div>
+              <p className="section-index">02</p>
+              <h2>Equipes</h2>
+            </div>
+            <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
+          </div>
+          <div className="account-list">
+            {draft.assignments.map((assignment) => {
+              const account = draft.installations.find(
+                (item) => item.id === assignment.installationId,
+              );
+              return (
+                <button
+                  type="button"
+                  className="account-list-item"
+                  key={assignment.role}
+                  aria-label={`Configurar ${roleLabels[assignment.role]}`}
+                  onClick={() => setEditingAssignment(structuredClone(assignment))}
+                >
+                  <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
+                  <span className="account-list-name">
+                    <strong>{roleLabels[assignment.role]}</strong>
+                    <span className="account-list-detail">
+                      {account
+                        ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
+                        : "Sem atribuição"}
+                    </span>
+                    <span className="account-list-detail">
+                      {assignment.permissionMode === "READ_ONLY"
+                        ? "Somente leitura"
+                        : "Escrita no workspace"}{" "}
+                      · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
+                    </span>
+                  </span>
+                  <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
+                  <span className="account-list-edit">Configurar →</span>
+                </button>
+              );
+            })}
+          </div>
+          {editingAssignment &&
+            (() => {
+              const assignment = editingAssignment;
+              const selection =
+                assignment.installationId && assignment.model
+                  ? `${assignment.installationId}::${assignment.model}`
+                  : "";
+              return (
+                <SettingsModal
+                  title={`Configurar ${roleLabels[assignment.role]}`}
+                  saving={saving}
+                  onClose={() => setEditingAssignment(null)}
+                  onSave={() => void saveAssignment()}
+                >
+                  <label>
+                    Conta e modelo
+                    <select
+                      value={selection}
+                      onChange={(event) => {
+                        const [installationId, ...modelParts] = event.target.value.split("::");
+                        updateAssignment({
+                          installationId: installationId || null,
+                          model: modelParts.join("::") || null,
+                        });
+                      }}
+                    >
+                      <option value="">Sem atribuição</option>
+                      {draft.installations
+                        .filter((item) => item.enabled)
+                        .flatMap((item) =>
+                          item.models.map((model) => (
+                            <option key={`${item.id}:${model}`} value={`${item.id}::${model}`}>
+                              {item.label} · {model}
+                            </option>
+                          )),
+                        )}
+                    </select>
+                  </label>
+                  <HandoffAlternatives
+                    assignment={assignment}
+                    installations={draft.installations}
+                    onChange={(alternatives) => updateAssignment({ alternatives })}
+                  />
+                  <label>
+                    Permissão
+                    <select
+                      value={assignment.permissionMode}
+                      onChange={(event) =>
+                        updateAssignment({
+                          permissionMode: event.target.value as AgentAssignment["permissionMode"],
+                        })
+                      }
+                    >
+                      <option value="READ_ONLY">Somente leitura</option>
+                      <option value="WORKSPACE_WRITE">Escrita no workspace</option>
+                    </select>
+                  </label>
+                  <label>
+                    Minutos
+                    <input
+                      type="number"
+                      min="1"
+                      max="30"
+                      value={assignment.timeoutMinutes}
+                      onChange={(event) =>
+                        updateAssignment({ timeoutMinutes: Number(event.target.value) })
+                      }
+                    />
+                  </label>
+                  <label>
+                    Tentativas
+                    <select
+                      value={assignment.maxAttempts}
+                      onChange={(event) =>
+                        updateAssignment({ maxAttempts: Number(event.target.value) })
+                      }
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                    </select>
+                  </label>
+                  <label className="switch-row compact">
+                    <input
+                      type="checkbox"
+                      checked={assignment.enabled}
+                      onChange={(event) => updateAssignment({ enabled: event.target.checked })}
+                    />
+                    <span>Ativo</span>
+                  </label>
+                </SettingsModal>
+              );
+            })()}
+        </section>
+      </div>
     </div>
   );
 }

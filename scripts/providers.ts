@@ -45,6 +45,7 @@ async function main() {
       throw new Error("A raiz deve ser canônica, privada (0700) e pertencer ao usuário.");
     const entries = {
       WORKER_PROVIDER_ROOT: root,
+      WORKER_ANTIGRAVITY_BINARY: process.env.WORKER_ANTIGRAVITY_BINARY ?? (await binary("agy")),
       WORKER_CODEX_BINARY: process.env.WORKER_CODEX_BINARY ?? (await binary("codex")),
       WORKER_CLAUDE_BINARY: process.env.WORKER_CLAUDE_BINARY ?? (await binary("claude")),
     };

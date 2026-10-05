@@ -4,6 +4,7 @@ import {
   factoryConfigurationSchema,
   type ProviderOnboardingChallenge,
   type ProviderOnboardingSession,
+  providerAuthorizationCodeSchema,
   providerOnboardingChallengeSchema,
   providerOnboardingSessionSchema,
 } from "@le-fabrique/contracts";
@@ -49,8 +50,8 @@ export class ProviderOnboardingService {
         const configuration = factoryConfigurationSchema.parse(settings.configuration);
         const installation = configuration.installations.find((item) => item.id === installationId);
         if (!installation) throw new NotFoundException("Provider installation not found");
-        if (!installation.enabled || installation.provider !== "CODEX") {
-          throw new ConflictException("Only an enabled Codex installation supports managed login");
+        if (!installation.enabled) {
+          throw new ConflictException("Only an enabled installation supports managed login");
         }
         if (installation.state !== "AUTH_REQUIRED") {
           throw new ConflictException("Provider installation does not require authentication");
@@ -63,7 +64,7 @@ export class ProviderOnboardingService {
         const session = await transaction.providerOnboardingSession.create({
           data: {
             installationId,
-            provider: "CODEX",
+            provider: installation.provider,
             expiresAt: new Date(now.getTime() + SESSION_TTL_MS),
           },
         });
@@ -75,7 +76,7 @@ export class ProviderOnboardingService {
             payload: {
               sessionId: session.id,
               installationId,
-              provider: "CODEX",
+              provider: installation.provider,
               expiresAt: session.expiresAt.toISOString(),
             } satisfies Prisma.InputJsonValue,
           },
@@ -139,6 +140,12 @@ export class ProviderOnboardingService {
     if (!["RUNNING", "AWAITING_USER"].includes(current.status) || current.workerId !== workerId) {
       throw new ConflictException("Onboarding belongs to another worker or state");
     }
+    if (
+      current.provider === "CODEX"
+        ? challenge.flow !== undefined
+        : challenge.flow !== "AUTHORIZATION_CODE" || challenge.provider !== current.provider
+    )
+      throw new ConflictException("Challenge provider mismatch");
     const remainingMs = current.expiresAt.getTime() - Date.now();
     if (remainingMs <= 0) throw new ConflictException("Onboarding session expired");
     const expiresAt = new Date(challenge.expiresAt);
@@ -173,6 +180,48 @@ export class ProviderOnboardingService {
     return providerOnboardingChallengeSchema.parse(JSON.parse(value));
   }
 
+  async submitAuthorizationCode(id: string, code: string): Promise<{ accepted: true }> {
+    const input = providerAuthorizationCodeSchema.parse({ code });
+    const session = await this.prisma.providerOnboardingSession.findUnique({ where: { id } });
+    if (
+      session?.status !== "AWAITING_USER" ||
+      session.provider === "CODEX" ||
+      session.expiresAt.getTime() <= Date.now()
+    )
+      throw new ConflictException("Authorization session is not awaiting a code");
+    const challenge = await this.getChallenge(id);
+    if (challenge.flow !== "AUTHORIZATION_CODE" || challenge.provider !== session.provider)
+      throw new ConflictException("Authorization challenge mismatch");
+    const ttl = Math.max(
+      1,
+      Math.min(600, Math.ceil((session.expiresAt.getTime() - Date.now()) / 1000)),
+    );
+    const stored = await this.redis.set(
+      `provider-onboarding:${id}:response`,
+      input.code,
+      "EX",
+      ttl,
+      "NX",
+    );
+    if (!stored) throw new ConflictException("Authorization code already pending");
+    return { accepted: true };
+  }
+
+  async takeAuthorizationCode(id: string, workerId: string): Promise<{ code: string | null }> {
+    const session = await this.prisma.providerOnboardingSession.findUnique({ where: { id } });
+    if (
+      !session ||
+      session.workerId !== workerId ||
+      session.provider === "CODEX" ||
+      !["RUNNING", "AWAITING_USER"].includes(session.status) ||
+      session.expiresAt.getTime() <= Date.now()
+    )
+      throw new ConflictException("Authorization session does not belong to this worker");
+    await this.redis.ensureConnected();
+    const code = await this.redis.getdel(`provider-onboarding:${id}:response`);
+    return { code: code === null ? null : providerAuthorizationCodeSchema.parse({ code }).code };
+  }
+
   async complete(
     id: string,
     input: CompleteProviderOnboarding,
@@ -202,7 +251,7 @@ export class ProviderOnboardingService {
         (item) => item.id === current.installationId,
       );
       const installation = configuration.installations[installationIndex];
-      if (installation?.provider !== "CODEX") {
+      if (installation?.provider !== current.provider) {
         throw new ConflictException("Provider installation changed during onboarding");
       }
       const updatedConfiguration: FactoryConfiguration = {
@@ -231,6 +280,7 @@ export class ProviderOnboardingService {
     try {
       await this.redis.ensureConnected();
       await this.redis.del(challengeKey(id));
+      await this.redis.del(`provider-onboarding:${id}:response`);
     } catch {
       // The challenge still expires by its bounded Redis TTL.
     }

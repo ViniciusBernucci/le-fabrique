@@ -1210,7 +1210,7 @@ export const providerOnboardingSessionSchema = z
   .object({
     id: z.uuid(),
     installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
-    provider: z.literal("CODEX"),
+    provider: settingsProviderSchema,
     status: providerOnboardingStatusSchema,
     workerId: z.uuid().nullable(),
     providerState: settingsProviderStateSchema.nullable(),
@@ -1230,14 +1230,16 @@ export const providerOnboardingJobSchema = z
     eventId: z.uuid(),
     sessionId: z.uuid(),
     installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
-    provider: z.literal("CODEX"),
+    provider: settingsProviderSchema,
     expiresAt: z.iso.datetime(),
   })
   .strict();
 export type ProviderOnboardingJob = z.infer<typeof providerOnboardingJobSchema>;
 
-export const providerOnboardingChallengeSchema = z
+const codexOnboardingChallengeSchema = z
   .object({
+    flow: z.undefined().optional(),
+    provider: z.undefined().optional(),
     verificationUri: z
       .url()
       .max(500)
@@ -1257,6 +1259,45 @@ export const providerOnboardingChallengeSchema = z
       .regex(/^[A-Za-z0-9]{4,12}(?:-[A-Za-z0-9]{4,12}){0,3}$/),
     expiresAt: z.iso.datetime(),
   })
+  .strict();
+export const providerAuthorizationChallengeSchema = z
+  .object({
+    flow: z.literal("AUTHORIZATION_CODE"),
+    provider: z.enum(["CLAUDE", "ANTIGRAVITY"]),
+    verificationUri: z.url().max(12000),
+    userCode: z.undefined().optional(),
+    expiresAt: z.iso.datetime(),
+  })
+  .strict()
+  .superRefine((challenge, context) => {
+    const url = new URL(challenge.verificationUri);
+    const hosts =
+      challenge.provider === "CLAUDE"
+        ? ["claude.ai", "claude.com", "platform.claude.com", "console.anthropic.com"]
+        : ["accounts.google.com"];
+    if (url.protocol !== "https:" || !hosts.includes(url.hostname) || url.username || url.password)
+      context.addIssue({
+        code: "custom",
+        message: "Authorization URL must match the official provider",
+        path: ["verificationUri"],
+      });
+  });
+export const providerOnboardingChallengeSchema = z.union([
+  codexOnboardingChallengeSchema,
+  providerAuthorizationChallengeSchema,
+]);
+export const providerAuthorizationCodeSchema = z
+  .object({
+    code: z
+      .string()
+      .trim()
+      .min(8)
+      .max(4096)
+      .regex(/^[A-Za-z0-9._~+/#=-]+$/),
+  })
+  .strict();
+export const providerAuthorizationCodeResultSchema = z
+  .object({ code: providerAuthorizationCodeSchema.shape.code.nullable() })
   .strict();
 export type ProviderOnboardingChallenge = z.infer<typeof providerOnboardingChallengeSchema>;
 

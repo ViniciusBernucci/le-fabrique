@@ -144,6 +144,14 @@ export async function inspectProvider(
             .filter((line) => /^[a-zA-Z0-9][a-zA-Z0-9._/-]{1,119}$/.test(line))
             .slice(0, 50)
         : [];
+    if (provider === "ANTIGRAVITY" && observedModels.length === 0)
+      return {
+        status: "COMPLETED",
+        providerState: "ERROR",
+        cliVersion,
+        observedModels: [],
+        message: "Official model catalog did not confirm account authentication",
+      };
     if (provider === "CODEX" && catalog) {
       try {
         observedModels = await catalog();
@@ -173,7 +181,13 @@ export async function inspectProvider(
       message:
         error instanceof Error && error.message === "Private provider root is required"
           ? "Private provider root missing; run providers:setup and restart npm run dev"
-          : "Client verification failed without persisted output",
+          : error instanceof Error &&
+              error.message === "Antigravity private keyring dependencies missing"
+            ? "Antigravity requires a private keyring; install gnome-keyring on the VPS"
+            : error instanceof Error &&
+                error.message === "Antigravity keyring launcher must be built"
+              ? "Build the worker to prepare the Antigravity private keyring launcher"
+              : "Client verification failed without persisted output",
     };
   }
 }

@@ -39,6 +39,10 @@ import {
 import { processGithubRepositoryVerification } from "./github-repository-verification.processor";
 import { processGithubVerification } from "./github-verification.processor";
 import { type ProbeResult, processProbe } from "./probe.processor";
+import {
+  cancelProviderAuthorizationProcesses,
+  runProviderAuthorizationLogin,
+} from "./provider-authorization.processor";
 import { ProviderIdentityManager } from "./provider-identity";
 import {
   cancelProviderOnboardingProcesses,
@@ -76,6 +80,7 @@ async function bootstrap(): Promise<void> {
   const identities = new ProviderIdentityManager(config.WORKER_PROVIDER_ROOT, {
     CODEX: config.WORKER_CODEX_BINARY,
     CLAUDE: config.WORKER_CLAUDE_BINARY,
+    ANTIGRAVITY: config.WORKER_ANTIGRAVITY_BINARY,
   });
   const probeWorker = new Worker<WorkerProbeJob, ProbeResult>(
     "le-fabrique.probe",
@@ -232,11 +237,17 @@ async function bootstrap(): Promise<void> {
         job.data,
         control,
         async (expiresAt, sink) =>
-          runCodexDeviceLogin(
-            expiresAt,
-            sink,
-            await identities.prepare("CODEX", job.data.installationId),
-          ),
+          job.data.provider !== "CODEX"
+            ? runProviderAuthorizationLogin(
+                job.data,
+                await identities.prepare(job.data.provider, job.data.installationId),
+                control,
+              )
+            : runCodexDeviceLogin(
+                expiresAt,
+                sink,
+                await identities.prepare("CODEX", job.data.installationId),
+              ),
         async (provider) =>
           inspectProvider(provider, async (binary, args) =>
             runVerificationCommand(
@@ -326,6 +337,7 @@ async function bootstrap(): Promise<void> {
     executionStop.abort();
     stopHeartbeat();
     cancelProviderOnboardingProcesses();
+    cancelProviderAuthorizationProcesses();
     cancelGithubOnboardingProcesses();
     cancelGithubPullRequestProcesses();
     console.info("worker stopping", { reason });

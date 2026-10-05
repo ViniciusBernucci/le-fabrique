@@ -1,12 +1,16 @@
+import type { SettingsProvider } from "@le-fabrique/contracts";
 /** Reserve the tab during the user gesture; redirect only when the official challenge arrives. */
 export class CodexLoginTab {
   private waiting = true;
-  constructor(private readonly tab: Window | null) {
+  constructor(
+    private readonly tab: Window | null,
+    private readonly provider: SettingsProvider = "CODEX",
+  ) {
     if (!tab) return;
     tab.opener = null;
-    tab.document.title = "Conectar assinatura Codex";
+    tab.document.title = `Conectar conta ${provider}`;
     tab.document.body.textContent =
-      "Aguardando a URL oficial do Codex. Volte à Le Fabrique para consultar o código temporário e o andamento do login.";
+      "Aguardando a URL oficial do provedor. Volte à Le Fabrique para consultar as instruções e o andamento do login.";
   }
 
   authorize(url: string): boolean {
@@ -14,7 +18,13 @@ export class CodexLoginTab {
     const parsed = new URL(url);
     if (
       parsed.protocol !== "https:" ||
-      !["auth.openai.com", "chatgpt.com"].includes(parsed.hostname) ||
+      !(
+        this.provider === "CODEX"
+          ? ["auth.openai.com", "chatgpt.com"]
+          : this.provider === "CLAUDE"
+            ? ["claude.ai", "claude.com", "platform.claude.com", "console.anthropic.com"]
+            : ["accounts.google.com"]
+      ).includes(parsed.hostname) ||
       parsed.username ||
       parsed.password
     )
@@ -40,6 +50,6 @@ export class CodexLoginTab {
   }
 }
 
-export function openCodexLoginTab(): CodexLoginTab {
-  return new CodexLoginTab(window.open("about:blank", "_blank"));
+export function openCodexLoginTab(provider: SettingsProvider = "CODEX"): CodexLoginTab {
+  return new CodexLoginTab(window.open("about:blank", "_blank"), provider);
 }

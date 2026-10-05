@@ -411,3 +411,14 @@ export async function updateFactoryScheduling(
     await request("/operation/scheduling", token, { method: "PUT", body: JSON.stringify(input) }),
   );
 }
+
+export async function submitProviderAuthorizationCode(
+  token: string,
+  sessionId: string,
+  code: string,
+): Promise<void> {
+  await request(`/settings/onboarding/${sessionId}/authorization-code`, token, {
+    method: "POST",
+    body: JSON.stringify({ code }),
+  });
+}

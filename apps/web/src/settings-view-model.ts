@@ -93,6 +93,10 @@ export function providerVerificationFeedback(result: ProviderVerification): stri
     result.message === "Private provider root missing; run providers:setup and restart npm run dev"
   )
     return "O worker está sem o diretório privado das contas. Execute npm run providers:setup e reinicie npm run dev na VPS; depois verifique novamente.";
+  if (result.message === "Antigravity requires a private keyring; install gnome-keyring on the VPS")
+    return "Falta o keyring privado do Antigravity. Na VPS execute sudo apt-get install -y gnome-keyring; depois verifique novamente.";
+  if (result.message === "Build the worker to prepare the Antigravity private keyring launcher")
+    return "Prepare o worker na VPS com npm run build -w @le-fabrique/worker e verifique novamente.";
   if (result.providerState === "AUTH_REQUIRED")
     return "Cliente encontrado. É necessário conectar sua assinatura; habilite e salve a conta para iniciar o login.";
   if (result.providerState === "AVAILABLE")
