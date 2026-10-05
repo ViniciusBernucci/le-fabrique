@@ -1,5 +1,6 @@
 # Backlog v2
 
+- OPS-007: AWAITING_HUMAN — FAC-012Z–AH integrados localmente em developer, nove worktrees funcionais removidas, branches preservadas. [Relatório](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
 - FAC-012AH: AWAITING_HUMAN — código `f2d80f1`, 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; revisão humana/ativação operacionais separadas do software e do piloto. [Relatório](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
 - FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup de capacidade fechado pelo FAC-012AH. [Relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).

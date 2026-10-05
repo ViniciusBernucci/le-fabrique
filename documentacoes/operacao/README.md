@@ -1,5 +1,6 @@
 # Operação da fábrica e worker
 
+OPS-007 consolida FAC-012Z–AH na developer por fast-forward e remove as nove worktrees funcionais após verificar limpeza/ancestry. Branches e aceites permanecem preservados; serviços não foram atualizados. [Relatório](2026-10-05-OPS-007-consolidacao-worktrees.md).
 FAC-012AH: writer global ocupado mantém próximos jobs delayed; somente parada comprovada libera capacidade. Não limpar jobs/índice ou usar expiração como stop. Pretest prepara pacotes internos. MVP interno verificado; contas/UID/financeiro/ativação continuam operação própria, sem piloto requerido. [Evidências](../controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
 FAC-012AG: pausa global pela interface mantém jobs/outbox; ativos recebem PAUSE via renew e preservam snapshot/journal. Queue pausa também recovery enfileirado; finalização direta aceita evidência existente. Retomar agendamento não retoma run terminal/unknown nem ativa gate env/auth. [Evidências](../controle/2026-10-03-FAC-012AG-pausa-global.md).

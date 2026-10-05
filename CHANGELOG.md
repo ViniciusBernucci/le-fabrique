@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-10-05 — OPS-007
+
+Integração local FAC-012Z–AH por fast-forward, sem conflitos ou alteração funcional. Worktrees incorporadas removidas sem force, branches e aceites preservados. [Evidências](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
 ## 2026-10-03 — FAC-012AH
 
 Recusa pré-claim por capacidade/rollback conhecido preserva job delayed sem tentativa/IA; falhas posteriores propagam. Bootstrap de npm test reproduzível. 541 verificações passaram; MVP interno verificado, piloto independente. [Evidências](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).

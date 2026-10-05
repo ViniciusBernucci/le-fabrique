@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [OPS-007 — consolidação local Z–AH](operacao/2026-10-05-OPS-007-consolidacao-worktrees.md)
+- [Ticket OPS-007](planejamento/OPS-007-consolidacao-worktrees.md)
 - [FAC-012AH — admissão/capacidade e estado interno MVP](controle/2026-10-03-FAC-012AH-admissao-capacidade.md)
 - [Ticket FAC-012AH](planejamento/FAC-012AH-admissao-capacidade.md)
 
