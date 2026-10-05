@@ -12,7 +12,7 @@ import type {
   ProviderOnboardingSession,
   ProviderVerification,
 } from "@le-fabrique/contracts";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   approveGithubPullRequest,
   cancelGithubPullRequest,
@@ -34,6 +34,7 @@ import {
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
+import { SettingsModal } from "./SettingsModal";
 import {
   configurationSummary,
   providerLabels,
@@ -52,12 +53,9 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
   const [saving, setSaving] = useState(false);
   const [editingInstallation, setEditingInstallation] = useState<ProviderInstallation | null>(null);
-  const accountDialog = useRef<HTMLDialogElement>(null);
+  const [editingAssignment, setEditingAssignment] = useState<AgentAssignment | null>(null);
+  const [editingGithub, setEditingGithub] = useState<FactoryConfiguration["github"] | null>(null);
 
-  useEffect(() => {
-    if (editingInstallation && !accountDialog.current?.open) accountDialog.current?.showModal();
-    if (!editingInstallation && accountDialog.current?.open) accountDialog.current.close();
-  }, [editingInstallation]);
   const [verifications, setVerifications] = useState<ProviderVerification[]>([]);
   const [githubVerifications, setGithubVerifications] = useState<GithubVerification[]>([]);
   const [githubOnboardingSessions, setGithubOnboardingSessions] = useState<
@@ -292,18 +290,25 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
     if (await save({ ...draft, installations, assignments })) setEditingInstallation(null);
   }
 
-  function updateAssignment(index: number, patch: Partial<AgentAssignment>) {
-    setDraft((current) => {
-      if (!current) return current;
-      const assignments = [...current.assignments];
-      const assignment = assignments[index];
-      if (!assignment) return current;
-      assignments[index] = pruneAssignmentAlternatives(
-        { ...assignment, ...patch },
-        current.installations,
-      );
-      return { ...current, assignments };
-    });
+  function updateAssignment(patch: Partial<AgentAssignment>) {
+    setEditingAssignment((current) =>
+      current && draft
+        ? pruneAssignmentAlternatives({ ...current, ...patch }, draft.installations)
+        : current,
+    );
+  }
+
+  async function saveAssignment() {
+    if (!draft || !editingAssignment) return;
+    const assignments = draft.assignments.map((assignment) =>
+      assignment.role === editingAssignment.role ? editingAssignment : assignment,
+    );
+    if (await save({ ...draft, assignments })) setEditingAssignment(null);
+  }
+
+  async function saveGithubConfiguration() {
+    if (!draft || !editingGithub) return;
+    if (await save({ ...draft, github: editingGithub })) setEditingGithub(null);
   }
 
   function addInstallation() {
@@ -563,227 +568,187 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             </button>
           ))}
         </div>
-        <dialog
-          ref={accountDialog}
-          className="account-dialog"
-          aria-labelledby="account-dialog-title"
-          onCancel={(event) => {
-            if (saving) event.preventDefault();
-            else setEditingInstallation(null);
-          }}
-        >
-          {editingInstallation &&
-            (() => {
-              const installation = editingInstallation;
-              return (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    void saveInstallation();
-                  }}
-                >
-                  <div className="account-dialog-heading">
-                    <div>
-                      <p className="eyebrow">IA E CONTAS</p>
-                      <h2 id="account-dialog-title">Configurar conta</h2>
-                    </div>
-                    <button
-                      type="button"
-                      className="secondary-action"
-                      disabled={saving}
-                      onClick={() => setEditingInstallation(null)}
-                      aria-label="Fechar configuração"
-                    >
-                      ×
-                    </button>
-                  </div>
-                  <fieldset disabled={saving}>
-                    {(() => {
-                      const latest = verifications.find(
-                        (item) => item.installationId === installation.id,
-                      );
-                      return latest ? (
-                        <p className="verification-line">
-                          Verificação: <strong>{latest.status}</strong>
-                          {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
-                        </p>
-                      ) : null;
-                    })()}
-                    {(() => {
-                      const session = onboardingSessions.find(
-                        (item) => item.installationId === installation.id,
-                      );
-                      const challenge = session ? onboardingChallenges[session.id] : undefined;
-                      if (!session) return null;
-                      return (
-                        <div className="onboarding-status">
-                          <p>
-                            Login: <strong>{statusLabel(session.status)}</strong>
-                          </p>
-                          {challenge ? (
-                            <div className="onboarding-challenge">
-                              <span>Abra o site oficial e informe o código temporário:</span>
-                              <a
-                                href={challenge.verificationUri}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                              >
-                                {challenge.verificationUri}
-                              </a>
-                              <code>{challenge.userCode}</code>
-                            </div>
-                          ) : null}
+        {editingInstallation &&
+          (() => {
+            const installation = editingInstallation;
+            return (
+              <SettingsModal
+                title="Configurar conta"
+                saving={saving}
+                onClose={() => setEditingInstallation(null)}
+                onSave={() => void saveInstallation()}
+              >
+                {(() => {
+                  const latest = verifications.find(
+                    (item) => item.installationId === installation.id,
+                  );
+                  return latest ? (
+                    <p className="verification-line">
+                      Verificação: <strong>{latest.status}</strong>
+                      {latest.cliVersion ? ` · ${latest.cliVersion}` : ""}
+                    </p>
+                  ) : null;
+                })()}
+                {(() => {
+                  const session = onboardingSessions.find(
+                    (item) => item.installationId === installation.id,
+                  );
+                  const challenge = session ? onboardingChallenges[session.id] : undefined;
+                  if (!session) return null;
+                  return (
+                    <div className="onboarding-status">
+                      <p>
+                        Login: <strong>{statusLabel(session.status)}</strong>
+                      </p>
+                      {challenge ? (
+                        <div className="onboarding-challenge">
+                          <span>Abra o site oficial e informe o código temporário:</span>
+                          <a
+                            href={challenge.verificationUri}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                          >
+                            {challenge.verificationUri}
+                          </a>
+                          <code>{challenge.userCode}</code>
                         </div>
-                      );
-                    })()}
-                    <div className="account-title">
-                      <div
-                        className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
-                      >
-                        {providerLabels[installation.provider].slice(0, 1)}
-                      </div>
-                      <div>
-                        <h3>{providerLabels[installation.provider]}</h3>
-                        <span>{installation.authMode}</span>
-                      </div>
-                      <span className={`status status--${installation.state.toLowerCase()}`}>
-                        {statusLabel(installation.state)}
-                      </span>
+                      ) : null}
                     </div>
-                    <label>
-                      Provider
-                      <select
-                        value={installation.provider}
-                        onChange={(event) =>
-                          updateInstallation({
-                            provider: event.target.value as ProviderInstallation["provider"],
-                          })
-                        }
-                      >
-                        {Object.entries(providerLabels).map(([provider, label]) => (
-                          <option key={provider} value={provider}>
-                            {label}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label>
-                      Nome da conta
-                      <input
-                        value={installation.label}
-                        onChange={(event) => updateInstallation({ label: event.target.value })}
-                      />
-                    </label>
-                    <label>
-                      Executável
-                      <input
-                        value={installation.executable}
-                        onChange={(event) => updateInstallation({ executable: event.target.value })}
-                      />
-                    </label>
-                    <label>
-                      Modelos permitidos, um por linha
-                      <textarea
-                        value={installation.models.join("\n")}
-                        onChange={(event) => {
-                          const models = [
-                            ...new Set(
-                              event.target.value
-                                .split("\n")
-                                .map((item) => item.trim())
-                                .filter(Boolean),
-                            ),
-                          ];
-                          updateInstallation({
-                            models,
-                            defaultModel: models.includes(installation.defaultModel ?? "")
-                              ? installation.defaultModel
-                              : (models[0] ?? null),
-                          });
-                        }}
-                      />
-                    </label>
-                    <label>
-                      Modelo padrão
-                      <select
-                        value={installation.defaultModel ?? ""}
-                        onChange={(event) =>
-                          updateInstallation({ defaultModel: event.target.value || null })
-                        }
-                      >
-                        <option value="">Nenhum</option>
-                        {installation.models.map((model) => (
-                          <option key={model} value={model}>
-                            {model}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label className="switch-row">
-                      <input
-                        type="checkbox"
-                        checked={installation.enabled}
-                        onChange={(event) => updateInstallation({ enabled: event.target.checked })}
-                      />
-                      <span>Disponível para atribuição</span>
-                    </label>
-                    <button
-                      className="secondary-action account-action"
-                      type="button"
-                      disabled={
-                        saving ||
-                        !settings.configuration.installations.some(
-                          (item) => item.id === installation.id,
-                        )
-                      }
-                      onClick={() => verify(installation.id)}
-                    >
-                      Verificar instalação
-                    </button>
-                    {installation.provider === "CODEX" &&
-                    settings.configuration.installations.some(
-                      (item) => item.id === installation.id && item.enabled,
-                    ) &&
-                    installation.state === "AUTH_REQUIRED" ? (
-                      <button
-                        className="secondary-action account-action"
-                        type="button"
-                        onClick={() => connect(installation.id)}
-                        disabled={onboardingSessions.some(
-                          (item) =>
-                            item.installationId === installation.id &&
-                            ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
-                        )}
-                      >
-                        Conectar assinatura Codex
-                      </button>
-                    ) : null}
-                    <button
-                      className="remove-action"
-                      type="button"
-                      disabled={!draft.installations.some((item) => item.id === installation.id)}
-                      onClick={() => removeInstallation(installation.id)}
-                    >
-                      Remover conta
-                    </button>
-                  </fieldset>
-                  <div className="account-dialog-footer">
-                    <button
-                      type="button"
-                      className="secondary-action"
-                      disabled={saving}
-                      onClick={() => setEditingInstallation(null)}
-                    >
-                      Cancelar
-                    </button>
-                    <button type="submit" disabled={saving}>
-                      {saving ? "Salvando…" : "Salvar conta"}
-                    </button>
+                  );
+                })()}
+                <div className="account-title">
+                  <div
+                    className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+                  >
+                    {providerLabels[installation.provider].slice(0, 1)}
                   </div>
-                </form>
-              );
-            })()}
-        </dialog>
+                  <div>
+                    <h3>{providerLabels[installation.provider]}</h3>
+                    <span>{installation.authMode}</span>
+                  </div>
+                  <span className={`status status--${installation.state.toLowerCase()}`}>
+                    {statusLabel(installation.state)}
+                  </span>
+                </div>
+                <label>
+                  Provider
+                  <select
+                    value={installation.provider}
+                    onChange={(event) =>
+                      updateInstallation({
+                        provider: event.target.value as ProviderInstallation["provider"],
+                      })
+                    }
+                  >
+                    {Object.entries(providerLabels).map(([provider, label]) => (
+                      <option key={provider} value={provider}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Nome da conta
+                  <input
+                    value={installation.label}
+                    onChange={(event) => updateInstallation({ label: event.target.value })}
+                  />
+                </label>
+                <label>
+                  Executável
+                  <input
+                    value={installation.executable}
+                    onChange={(event) => updateInstallation({ executable: event.target.value })}
+                  />
+                </label>
+                <label>
+                  Modelos permitidos, um por linha
+                  <textarea
+                    value={installation.models.join("\n")}
+                    onChange={(event) => {
+                      const models = [
+                        ...new Set(
+                          event.target.value
+                            .split("\n")
+                            .map((item) => item.trim())
+                            .filter(Boolean),
+                        ),
+                      ];
+                      updateInstallation({
+                        models,
+                        defaultModel: models.includes(installation.defaultModel ?? "")
+                          ? installation.defaultModel
+                          : (models[0] ?? null),
+                      });
+                    }}
+                  />
+                </label>
+                <label>
+                  Modelo padrão
+                  <select
+                    value={installation.defaultModel ?? ""}
+                    onChange={(event) =>
+                      updateInstallation({ defaultModel: event.target.value || null })
+                    }
+                  >
+                    <option value="">Nenhum</option>
+                    {installation.models.map((model) => (
+                      <option key={model} value={model}>
+                        {model}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="switch-row">
+                  <input
+                    type="checkbox"
+                    checked={installation.enabled}
+                    onChange={(event) => updateInstallation({ enabled: event.target.checked })}
+                  />
+                  <span>Disponível para atribuição</span>
+                </label>
+                <button
+                  className="secondary-action account-action"
+                  type="button"
+                  disabled={
+                    saving ||
+                    !settings.configuration.installations.some(
+                      (item) => item.id === installation.id,
+                    )
+                  }
+                  onClick={() => verify(installation.id)}
+                >
+                  Verificar instalação
+                </button>
+                {installation.provider === "CODEX" &&
+                settings.configuration.installations.some(
+                  (item) => item.id === installation.id && item.enabled,
+                ) &&
+                installation.state === "AUTH_REQUIRED" ? (
+                  <button
+                    className="secondary-action account-action"
+                    type="button"
+                    onClick={() => connect(installation.id)}
+                    disabled={onboardingSessions.some(
+                      (item) =>
+                        item.installationId === installation.id &&
+                        ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                    )}
+                  >
+                    Conectar assinatura Codex
+                  </button>
+                ) : null}
+                <button
+                  className="remove-action"
+                  type="button"
+                  disabled={!draft.installations.some((item) => item.id === installation.id)}
+                  onClick={() => removeInstallation(installation.id)}
+                >
+                  Remover conta
+                </button>
+              </SettingsModal>
+            );
+          })()}
       </section>
 
       <section className="panel settings-section">
@@ -794,29 +759,61 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
           </div>
           <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
         </div>
-        <div className="assignment-list">
-          {draft.assignments.map((assignment, index) => {
+        <div className="account-list">
+          {draft.assignments.map((assignment) => {
+            const account = draft.installations.find(
+              (item) => item.id === assignment.installationId,
+            );
+            return (
+              <button
+                type="button"
+                className="account-list-item"
+                key={assignment.role}
+                aria-label={`Configurar ${roleLabels[assignment.role]}`}
+                onClick={() => setEditingAssignment(structuredClone(assignment))}
+              >
+                <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
+                <span className="account-list-name">
+                  <strong>{roleLabels[assignment.role]}</strong>
+                  <span className="account-list-detail">
+                    {account
+                      ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
+                      : "Sem atribuição"}
+                  </span>
+                  <span className="account-list-detail">
+                    {assignment.permissionMode === "READ_ONLY"
+                      ? "Somente leitura"
+                      : "Escrita no workspace"}{" "}
+                    · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
+                  </span>
+                </span>
+                <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
+                <span className="account-list-edit">Configurar →</span>
+              </button>
+            );
+          })}
+        </div>
+        {editingAssignment &&
+          (() => {
+            const assignment = editingAssignment;
             const selection =
               assignment.installationId && assignment.model
                 ? `${assignment.installationId}::${assignment.model}`
                 : "";
             return (
-              <article className="assignment-row" key={assignment.role}>
-                <div>
-                  <h3>{roleLabels[assignment.role]}</h3>
-                  <span>
-                    {assignment.permissionMode === "READ_ONLY"
-                      ? "Somente leitura"
-                      : "Escrita no workspace"}
-                  </span>
-                </div>
+              <SettingsModal
+                title={`Configurar ${roleLabels[assignment.role]}`}
+                saving={saving}
+                onClose={() => setEditingAssignment(null)}
+                onSave={() => void saveAssignment()}
+              >
                 <label>
                   Conta e modelo
                   <select
                     value={selection}
                     onChange={(event) => {
                       const [installationId, ...modelParts] = event.target.value.split("::");
-                      updateAssignment(index, {
+                      updateAssignment({
                         installationId: installationId || null,
                         model: modelParts.join("::") || null,
                       });
@@ -837,14 +834,14 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 <HandoffAlternatives
                   assignment={assignment}
                   installations={draft.installations}
-                  onChange={(alternatives) => updateAssignment(index, { alternatives })}
+                  onChange={(alternatives) => updateAssignment({ alternatives })}
                 />
                 <label>
                   Permissão
                   <select
                     value={assignment.permissionMode}
                     onChange={(event) =>
-                      updateAssignment(index, {
+                      updateAssignment({
                         permissionMode: event.target.value as AgentAssignment["permissionMode"],
                       })
                     }
@@ -861,7 +858,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                     max="30"
                     value={assignment.timeoutMinutes}
                     onChange={(event) =>
-                      updateAssignment(index, { timeoutMinutes: Number(event.target.value) })
+                      updateAssignment({ timeoutMinutes: Number(event.target.value) })
                     }
                   />
                 </label>
@@ -870,7 +867,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                   <select
                     value={assignment.maxAttempts}
                     onChange={(event) =>
-                      updateAssignment(index, { maxAttempts: Number(event.target.value) })
+                      updateAssignment({ maxAttempts: Number(event.target.value) })
                     }
                   >
                     <option value="1">1</option>
@@ -881,14 +878,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                   <input
                     type="checkbox"
                     checked={assignment.enabled}
-                    onChange={(event) => updateAssignment(index, { enabled: event.target.checked })}
+                    onChange={(event) => updateAssignment({ enabled: event.target.checked })}
                   />
                   <span>Ativo</span>
                 </label>
-              </article>
+              </SettingsModal>
             );
-          })}
-        </div>
+          })()}
       </section>
 
       <section className="settings-bottom-grid">
@@ -900,252 +896,282 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
             </div>
             <span className="status">{statusLabel(draft.github.state)}</span>
           </div>
-          <div className="form-grid">
-            <label>
-              Host
-              <input
-                value={draft.github.host}
-                onChange={(event) =>
-                  setDraft({ ...draft, github: { ...draft.github, host: event.target.value } })
-                }
-              />
-            </label>
-            <label>
-              Organização / usuário
-              <input
-                value={draft.github.owner ?? ""}
-                onChange={(event) =>
-                  setDraft({
-                    ...draft,
-                    github: { ...draft.github, owner: event.target.value || null },
-                  })
-                }
-              />
-            </label>
-            <label>
-              Repositório
-              <input
-                value={draft.github.repository ?? ""}
-                onChange={(event) =>
-                  setDraft({
-                    ...draft,
-                    github: { ...draft.github, repository: event.target.value || null },
-                  })
-                }
-              />
-            </label>
-            <label>
-              Branch base
-              <input
-                value={draft.github.baseBranch}
-                onChange={(event) =>
-                  setDraft({
-                    ...draft,
-                    github: { ...draft.github, baseBranch: event.target.value },
-                  })
-                }
-              />
-            </label>
-          </div>
-          <label className="switch-row">
-            <input
-              type="checkbox"
-              checked={draft.github.pullRequestCreationEnabled}
-              onChange={(event) =>
-                setDraft({
-                  ...draft,
-                  github: { ...draft.github, pullRequestCreationEnabled: event.target.checked },
-                })
-              }
-            />
-            <span>Permitir criação de PR após gate humano</span>
-          </label>
-          <p className="security-note">
-            Autenticação prevista via <strong>gh CLI</strong> no worker. Tokens não trafegam pelo
-            painel.
-          </p>
-          {githubVerifications[0] ? (
-            <p className="verification-line">
-              Verificação: <strong>{githubVerifications[0].status}</strong>
-              {githubVerifications[0].cliVersion ? ` · ${githubVerifications[0].cliVersion}` : ""}
-              {githubVerifications[0].message ? ` · ${githubVerifications[0].message}` : ""}
-            </p>
-          ) : null}
-          {latestGithubOnboarding ? (
-            <div className="onboarding-status">
-              <p>
-                Login: <strong>{statusLabel(latestGithubOnboarding.status)}</strong>
-                {latestGithubOnboarding.credentialStorage
-                  ? ` · ${statusLabel(latestGithubOnboarding.credentialStorage)}`
-                  : ""}
-                {latestGithubOnboarding.message ? ` · ${latestGithubOnboarding.message}` : ""}
+          <button
+            type="button"
+            className="account-list-item"
+            onClick={() => setEditingGithub(structuredClone(draft.github))}
+            aria-label="Configurar GitHub"
+          >
+            <span className="provider-mark">G</span>
+            <span className="account-list-name">
+              <strong>
+                {draft.github.owner && draft.github.repository
+                  ? `${draft.github.owner}/${draft.github.repository}`
+                  : "GitHub"}
+              </strong>
+              <span className="account-list-detail">
+                {draft.github.host} · Branch {draft.github.baseBranch}
+              </span>
+              <span className="account-list-detail">
+                {draft.github.pullRequestCreationEnabled
+                  ? "PR com aprovação humana"
+                  : "Criação de PR desabilitada"}
+              </span>
+            </span>
+            <span className="status">{statusLabel(draft.github.state)}</span>
+            <span className="account-list-edit">Configurar →</span>
+          </button>
+          {editingGithub && (
+            <SettingsModal
+              title="Configurar GitHub"
+              saving={saving}
+              onClose={() => setEditingGithub(null)}
+              onSave={() => void saveGithubConfiguration()}
+            >
+              <div className="form-grid">
+                <label>
+                  Host
+                  <input
+                    value={editingGithub.host}
+                    onChange={(event) =>
+                      setEditingGithub({ ...editingGithub, host: event.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  Organização / usuário
+                  <input
+                    value={editingGithub.owner ?? ""}
+                    onChange={(event) =>
+                      setEditingGithub({ ...editingGithub, owner: event.target.value || null })
+                    }
+                  />
+                </label>
+                <label>
+                  Repositório
+                  <input
+                    value={editingGithub.repository ?? ""}
+                    onChange={(event) =>
+                      setEditingGithub({ ...editingGithub, repository: event.target.value || null })
+                    }
+                  />
+                </label>
+                <label>
+                  Branch base
+                  <input
+                    value={editingGithub.baseBranch}
+                    onChange={(event) =>
+                      setEditingGithub({ ...editingGithub, baseBranch: event.target.value })
+                    }
+                  />
+                </label>
+              </div>
+              <label className="switch-row">
+                <input
+                  type="checkbox"
+                  checked={editingGithub.pullRequestCreationEnabled}
+                  onChange={(event) =>
+                    setEditingGithub({
+                      ...editingGithub,
+                      pullRequestCreationEnabled: event.target.checked,
+                    })
+                  }
+                />
+                <span>Permitir criação de PR após gate humano</span>
+              </label>
+              <p className="security-note">
+                Autenticação prevista via <strong>gh CLI</strong> no worker. Tokens não trafegam
+                pelo painel.
               </p>
-              {currentGithubChallenge ? (
-                <div className="onboarding-challenge">
-                  <span>Abra o site oficial e informe o código temporário:</span>
-                  <a
-                    href={currentGithubChallenge.verificationUri}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {currentGithubChallenge.verificationUri}
-                  </a>
-                  <code>{currentGithubChallenge.userCode}</code>
+              {githubVerifications[0] ? (
+                <p className="verification-line">
+                  Verificação: <strong>{githubVerifications[0].status}</strong>
+                  {githubVerifications[0].cliVersion
+                    ? ` · ${githubVerifications[0].cliVersion}`
+                    : ""}
+                  {githubVerifications[0].message ? ` · ${githubVerifications[0].message}` : ""}
+                </p>
+              ) : null}
+              {latestGithubOnboarding ? (
+                <div className="onboarding-status">
+                  <p>
+                    Login: <strong>{statusLabel(latestGithubOnboarding.status)}</strong>
+                    {latestGithubOnboarding.credentialStorage
+                      ? ` · ${statusLabel(latestGithubOnboarding.credentialStorage)}`
+                      : ""}
+                    {latestGithubOnboarding.message ? ` · ${latestGithubOnboarding.message}` : ""}
+                  </p>
+                  {currentGithubChallenge ? (
+                    <div className="onboarding-challenge">
+                      <span>Abra o site oficial e informe o código temporário:</span>
+                      <a
+                        href={currentGithubChallenge.verificationUri}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {currentGithubChallenge.verificationUri}
+                      </a>
+                      <code>{currentGithubChallenge.userCode}</code>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
-            </div>
-          ) : null}
-          {githubRepositoryVerifications[0] ? (
-            <p className="verification-line">
-              Repositório: <strong>{githubRepositoryVerifications[0].status}</strong>
-              {githubRepositoryVerifications[0].access
-                ? ` · ${statusLabel(githubRepositoryVerifications[0].access)}`
-                : ""}
-              {githubRepositoryVerifications[0].observedOwner &&
-              githubRepositoryVerifications[0].observedRepository
-                ? ` · ${githubRepositoryVerifications[0].observedOwner}/${githubRepositoryVerifications[0].observedRepository}`
-                : ""}
-              {githubRepositoryVerifications[0].observedBaseBranch
-                ? ` · ${githubRepositoryVerifications[0].observedBaseBranch}`
-                : ""}
-              {githubRepositoryVerifications[0].message
-                ? ` · ${githubRepositoryVerifications[0].message}`
-                : ""}
-            </p>
-          ) : null}
-          <button
-            className="secondary-action account-action"
-            type="button"
-            onClick={verifyGithub}
-            disabled={
-              githubVerifications.some((item) => ["PENDING", "RUNNING"].includes(item.status)) ||
-              hasActiveGithubOnboarding
-            }
-          >
-            Verificar GitHub CLI
-          </button>
-          {draft.github.state === "AUTH_REQUIRED" ? (
-            <button
-              className="secondary-action account-action"
-              type="button"
-              onClick={connectGithub}
-              disabled={
-                hasActiveGithubOnboarding ||
-                githubVerifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))
-              }
-            >
-              Conectar GitHub CLI
-            </button>
-          ) : null}
-          <button
-            className="secondary-action account-action"
-            type="button"
-            onClick={verifyGithubRepository}
-            disabled={
-              settings.configuration.github.state !== "CONNECTED" ||
-              settings.configuration.github.owner === null ||
-              settings.configuration.github.repository === null ||
-              githubRepositoryVerifications.some((item) =>
-                ["PENDING", "RUNNING"].includes(item.status),
-              )
-            }
-          >
-            Verificar repositório salvo (somente leitura)
-          </button>
-          <div className="onboarding-status">
-            <p>
-              <strong>Pull request sob aprovação humana</strong>
-            </p>
-            <div className="form-grid">
-              <label>
-                Branch de origem
-                <input
-                  value={pullRequestHead}
-                  onChange={(event) => setPullRequestHead(event.target.value)}
-                  placeholder="feature/minha-alteracao"
-                />
-              </label>
-              <label>
-                Título
-                <input
-                  value={pullRequestTitle}
-                  onChange={(event) => setPullRequestTitle(event.target.value)}
-                  maxLength={200}
-                />
-              </label>
-            </div>
-            <label>
-              Descrição
-              <textarea
-                value={pullRequestBody}
-                onChange={(event) => setPullRequestBody(event.target.value)}
-                maxLength={10 * 1024}
-                rows={5}
-              />
-            </label>
-            <label className="switch-row compact">
-              <input
-                type="checkbox"
-                checked={pullRequestDraft}
-                onChange={(event) => setPullRequestDraft(event.target.checked)}
-              />
-              <span>Criar como draft</span>
-            </label>
-            <button
-              className="secondary-action account-action"
-              type="button"
-              onClick={preparePullRequest}
-              disabled={
-                settings.configuration.github.state !== "CONNECTED" ||
-                !settings.configuration.github.pullRequestCreationEnabled ||
-                pullRequestHead.trim() === "" ||
-                pullRequestTitle.trim() === "" ||
-                githubPullRequests.some((item) =>
-                  ["PREPARED", "APPROVED", "RUNNING"].includes(item.status),
-                )
-              }
-            >
-              Preparar PR para revisão
-            </button>
-            {latestGithubPullRequest ? (
-              <div className="verification-line">
-                <p>
-                  Pedido: <strong>{statusLabel(latestGithubPullRequest.status)}</strong>
-                  {` · ${latestGithubPullRequest.headBranch} → ${latestGithubPullRequest.baseBranch}`}
-                  {` · digest ${latestGithubPullRequest.approvalDigest.slice(0, 12)}`}
+              {githubRepositoryVerifications[0] ? (
+                <p className="verification-line">
+                  Repositório: <strong>{githubRepositoryVerifications[0].status}</strong>
+                  {githubRepositoryVerifications[0].access
+                    ? ` · ${statusLabel(githubRepositoryVerifications[0].access)}`
+                    : ""}
+                  {githubRepositoryVerifications[0].observedOwner &&
+                  githubRepositoryVerifications[0].observedRepository
+                    ? ` · ${githubRepositoryVerifications[0].observedOwner}/${githubRepositoryVerifications[0].observedRepository}`
+                    : ""}
+                  {githubRepositoryVerifications[0].observedBaseBranch
+                    ? ` · ${githubRepositoryVerifications[0].observedBaseBranch}`
+                    : ""}
+                  {githubRepositoryVerifications[0].message
+                    ? ` · ${githubRepositoryVerifications[0].message}`
+                    : ""}
                 </p>
-                <p>{latestGithubPullRequest.title}</p>
-                {latestGithubPullRequest.pullRequestUrl ? (
-                  <a
-                    href={latestGithubPullRequest.pullRequestUrl}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    Abrir PR #{latestGithubPullRequest.pullRequestNumber}
-                  </a>
-                ) : null}
-                {latestGithubPullRequest.message ? <p>{latestGithubPullRequest.message}</p> : null}
-                {latestGithubPullRequest.status === "PREPARED" ? (
-                  <div>
-                    <button
-                      className="secondary-action account-action"
-                      type="button"
-                      onClick={() => approvePullRequest(latestGithubPullRequest)}
-                    >
-                      Aprovar e enviar ao worker
-                    </button>
-                    <button
-                      className="secondary-action account-action"
-                      type="button"
-                      onClick={() => cancelPullRequest(latestGithubPullRequest)}
-                    >
-                      Cancelar preparação
-                    </button>
+              ) : null}
+              <button
+                className="secondary-action account-action"
+                type="button"
+                onClick={verifyGithub}
+                disabled={
+                  githubVerifications.some((item) =>
+                    ["PENDING", "RUNNING"].includes(item.status),
+                  ) || hasActiveGithubOnboarding
+                }
+              >
+                Verificar GitHub CLI
+              </button>
+              {settings.configuration.github.state === "AUTH_REQUIRED" ? (
+                <button
+                  className="secondary-action account-action"
+                  type="button"
+                  onClick={connectGithub}
+                  disabled={
+                    hasActiveGithubOnboarding ||
+                    githubVerifications.some((item) => ["PENDING", "RUNNING"].includes(item.status))
+                  }
+                >
+                  Conectar GitHub CLI
+                </button>
+              ) : null}
+              <button
+                className="secondary-action account-action"
+                type="button"
+                onClick={verifyGithubRepository}
+                disabled={
+                  settings.configuration.github.state !== "CONNECTED" ||
+                  settings.configuration.github.owner === null ||
+                  settings.configuration.github.repository === null ||
+                  githubRepositoryVerifications.some((item) =>
+                    ["PENDING", "RUNNING"].includes(item.status),
+                  )
+                }
+              >
+                Verificar repositório salvo (somente leitura)
+              </button>
+              <div className="onboarding-status">
+                <p>
+                  <strong>Pull request sob aprovação humana</strong>
+                </p>
+                <div className="form-grid">
+                  <label>
+                    Branch de origem
+                    <input
+                      value={pullRequestHead}
+                      onChange={(event) => setPullRequestHead(event.target.value)}
+                      placeholder="feature/minha-alteracao"
+                    />
+                  </label>
+                  <label>
+                    Título
+                    <input
+                      value={pullRequestTitle}
+                      onChange={(event) => setPullRequestTitle(event.target.value)}
+                      maxLength={200}
+                    />
+                  </label>
+                </div>
+                <label>
+                  Descrição
+                  <textarea
+                    value={pullRequestBody}
+                    onChange={(event) => setPullRequestBody(event.target.value)}
+                    maxLength={10 * 1024}
+                    rows={5}
+                  />
+                </label>
+                <label className="switch-row compact">
+                  <input
+                    type="checkbox"
+                    checked={pullRequestDraft}
+                    onChange={(event) => setPullRequestDraft(event.target.checked)}
+                  />
+                  <span>Criar como draft</span>
+                </label>
+                <button
+                  className="secondary-action account-action"
+                  type="button"
+                  onClick={preparePullRequest}
+                  disabled={
+                    settings.configuration.github.state !== "CONNECTED" ||
+                    !settings.configuration.github.pullRequestCreationEnabled ||
+                    pullRequestHead.trim() === "" ||
+                    pullRequestTitle.trim() === "" ||
+                    githubPullRequests.some((item) =>
+                      ["PREPARED", "APPROVED", "RUNNING"].includes(item.status),
+                    )
+                  }
+                >
+                  Preparar PR para revisão
+                </button>
+                {latestGithubPullRequest ? (
+                  <div className="verification-line">
+                    <p>
+                      Pedido: <strong>{statusLabel(latestGithubPullRequest.status)}</strong>
+                      {` · ${latestGithubPullRequest.headBranch} → ${latestGithubPullRequest.baseBranch}`}
+                      {` · digest ${latestGithubPullRequest.approvalDigest.slice(0, 12)}`}
+                    </p>
+                    <p>{latestGithubPullRequest.title}</p>
+                    {latestGithubPullRequest.pullRequestUrl ? (
+                      <a
+                        href={latestGithubPullRequest.pullRequestUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Abrir PR #{latestGithubPullRequest.pullRequestNumber}
+                      </a>
+                    ) : null}
+                    {latestGithubPullRequest.message ? (
+                      <p>{latestGithubPullRequest.message}</p>
+                    ) : null}
+                    {latestGithubPullRequest.status === "PREPARED" ? (
+                      <div>
+                        <button
+                          className="secondary-action account-action"
+                          type="button"
+                          onClick={() => approvePullRequest(latestGithubPullRequest)}
+                        >
+                          Aprovar e enviar ao worker
+                        </button>
+                        <button
+                          className="secondary-action account-action"
+                          type="button"
+                          onClick={() => cancelPullRequest(latestGithubPullRequest)}
+                        >
+                          Cancelar preparação
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
-            ) : null}
-          </div>
+            </SettingsModal>
+          )}
         </section>
 
         <section className="panel safety-card">
