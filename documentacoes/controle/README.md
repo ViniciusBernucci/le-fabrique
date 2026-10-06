@@ -1,8 +1,8 @@
 # Controle administrativo
 
-## Página inicial — FAC-020/FAC-024
+## Página inicial — FAC-020/FAC-025
 
-Estado IMPLEMENTADO/AWAITING_HUMAN. DashboardLayout abre a home antes do login com menus persistentes e dados demonstrativos. Cena central agora usa o vídeo fornecido pelo responsável, preparado como loop de 9,25s sem áudio, autoplay/playsInline e controles ocultos. Largura desktop 42% da coluna, 70% dos 60% anteriores; mobile também reduzido a 70% da largura anterior. Poster local durante carregamento. Imagem original preservada, hotspots antigos retirados; atalhos/menus continuam disponíveis. [Funcionamento, mídia, checks e limites atuais](2026-10-05-FAC-024-video-dashboard.md).
+Estado IMPLEMENTADO/AWAITING_HUMAN. DashboardLayout abre a home antes do login com menus persistentes e dados demonstrativos. FAC-025 retira o vídeo por pedido do responsável e restaura a imagem cartoon original, estática. Largura desktop 42% da coluna, mobile em 70% da largura anterior, proporção/enquadramento do PNG. Nenhum player ou request MP4; vídeo/poster retirados do build. Menus/atalhos preservados. [Estado atual e checks](2026-10-06-FAC-025-retirar-video-dashboard.md).
 
 Indicadores, notificações, mensagens, agentes e projetos continuam simulados; home não lê API na entrada. Acessos às áreas existentes preservam autenticação administrativa; áreas futuras usam prévias. Ícones/avatares SVG locais. Histórico da ilustração está no [FAC-020](2026-10-05-FAC-020-central-controle-estatica.md). Nenhum contrato/backend/migration alterado nesta troca visual.
 

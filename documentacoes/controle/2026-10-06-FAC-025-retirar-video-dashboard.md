@@ -1,0 +1,12 @@
+# FAC-025 — Retirar vídeo do dashboard
+2026-10-06. IMPLEMENTADO / AWAITING_HUMAN. Baseline 4a49ccb; código `f264747e10a489c84338ae85f3d6c92e914524b2`.
+[Ticket READY](tickets/FAC-025.md). Responsável rejeitou o resultado visual do vídeo e pediu sua retirada. Mesmo writer, branch/worktree fix/fac-025-remove-dashboard-video isolada, sem handoff/subagentes/provider adicional; Codex desta sessão, modelo/cota/custo não comprovados. Merge developer/limpeza já autorizados na sessão, sem push/deploy.
+
+## Mudança e funcionamento
+DashboardLayout restaura o PNG original da cena cartoon e seu enquadramento CSS/proporção 906/558, mantendo largura desktop 42% e mobile em 70% da largura anterior. Não restaura hotspots antigos: menus/atalhos existentes preservados. Vídeo e poster removidos do public/build, sem player, reprodução ou download MP4. Fonte do usuário e evidências históricas FAC-024 preservadas; histórico Git conserva assets removidos. Dados demonstrativos, login, template e fontes permanecem como antes. Sem mudança de backend, dados, contrato, migration ou pacote.
+
+## Checks e evidências
+46 testes web/18 arquivos, typecheck web, build web, lint raiz e git diff --check PASS; um aviso preexistente useOptionalChain da API. Browser real: PNG decodificado, zero elementos/requests de vídeo/poster, largura desktop 42%, nenhum overflow em 1536/768/390/320px, navegação login→home/menu persistente, sem pageerror/API na home. [Resultado](evidencias/FAC-025/browser-results.txt), [script](evidencias/FAC-025/browser-check.mjs), [desktop](evidencias/FAC-025/desktop.png), [mobile](evidencias/FAC-025/mobile.png), [testes](evidencias/FAC-025/tests.txt), [typecheck](evidencias/FAC-025/typecheck.txt), [build](evidencias/FAC-025/build.txt), [lint](evidencias/FAC-025/lint.txt), [patch sanitizado](evidencias/FAC-025/implementation.patch). Nenhuma rodada corretiva necessária.
+
+## Limites, rollback e docs
+Imagem estática de referência, ainda contém arte/textos originais; área compacta mantida conforme pedido anterior. Reverter `f264747e10a489c84338ae85f3d6c92e914524b2` restaura vídeo/poster/CSS; sem dados a recuperar ou migrations. Rollback descrito, não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG, ticket e lesson de mídia atualizados; FAC-024 continua como histórico, não estado atual. AWAITING_HUMAN: retirada é pedido explícito, novo resultado visual ainda sem aceite exato/DONE.

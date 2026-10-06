@@ -1,6 +1,6 @@
 # Fábrica de Software — kit v2.3
 
-FAC-024: home com vídeo decorativo local em loop suavizado, sem áudio/controles e área em 70% da largura anterior. [Estado atual e evidências](documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).
+FAC-025: vídeo retirado da home, imagem estática original restaurada mantendo área compacta. [Estado atual e evidências](documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).
 
 FAC-022: template padrão com menus persistentes em home/login/controle/configurações e tipografia compacta. Código `4e042a1` integrado em developer/5173; dados da home continuam demonstrativos. [Relatório](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
 

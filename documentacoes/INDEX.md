@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-025 — retirada do vídeo e imagem estática](controle/2026-10-06-FAC-025-retirar-video-dashboard.md)
+
 - [FAC-024 — vídeo decorativo compacto no dashboard](controle/2026-10-05-FAC-024-video-dashboard.md)
 
 - [FAC-023 — cadastro de agentes e skills por projeto](configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md)

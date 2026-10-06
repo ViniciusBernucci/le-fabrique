@@ -127,3 +127,5 @@ FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](do
 - FAC-023: AWAITING_HUMAN — agentes e skills por projeto; 562 testes, typecheck/lint/build e browser fixture PASS. Código a25638acde42ba50576908f1bf6725570a360a99; registro não executa novos perfis automaticamente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
 
 - FAC-024: AWAITING_HUMAN — vídeo decorativo em loop e área compacta na home. Código eaf90013e8978a6562f930b98754f28d9a68c5d7; 46 testes web/typecheck/lint/build e browser com reprodução real PASS. [Relatório](documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).
+
+- FAC-025: AWAITING_HUMAN — vídeo retirado/imagem original restaurada, área compacta mantida. Código f264747e10a489c84338ae85f3d6c92e914524b2; 46 testes web e browser/typecheck/lint/build PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).

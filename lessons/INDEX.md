@@ -86,3 +86,5 @@ FAC-012AA amplia [perfis de permissão](perfis-permissao-cliente-cli.md) com all
 FAC-023 amplia contratos-runtime-monorepo e modal-edicao-configuracao com cadastro aditivo, vínculos por projeto, limpeza referencial e erro de gravação dentro do dialog.
 
 - [Vídeo decorativo com fronteira contínua — FAC-024](video-decorativo-loop.md)
+
+FAC-025 amplia vídeo-decorativo-loop: prova técnica não é aceite visual; remoção do player inclui assets publicados, com histórico preservado.
