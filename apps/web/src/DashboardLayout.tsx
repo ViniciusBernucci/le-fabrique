@@ -414,20 +414,11 @@ export function DashboardLayout({
           <main id="home-content" className="home-columns" tabIndex={-1}>
             <div className="home-center">
               <h1 className="home-sr-only">Central de controle La fabrique</h1>
-              <section className="home-office" aria-label="Visual animado da central de controle">
-                <video
-                  src="/videos/control-room-loop.mp4"
-                  poster="/images/control-room-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  aria-hidden="true"
-                  tabIndex={-1}
-                  onContextMenu={(event) => event.preventDefault()}
+              <section className="home-office" aria-label="Escritório virtual da equipe">
+                <img
+                  src="/images/control-room-reference.png"
+                  alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
+                  fetchPriority="high"
                 />
               </section>
               <div className="home-center-panels">
