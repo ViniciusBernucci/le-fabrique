@@ -11,3 +11,7 @@ DashboardLayout inicia sidebarCollapsed em true, inclusive renderização inicia
 ## Limites, rollback e docs
 Expandir é escolha da navegação atual, sem persistência entre aberturas. Esse comportamento substitui a preferência após reload do FAC-027 conforme novo pedido. Sem mudança de backend/contrato/migration/dependência. Reverter `3608f1766c50ee49071a6430d1087fa2fd538749` restaura a inicialização/preferência anterior mantendo seta à direita; rollback não executado.
 README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de template atualizados; relatório FAC-029 conserva evidência de alinhamento e histórico da preferência antiga. AWAITING_HUMAN; DONE apenas com aceite visual exato.
+
+## Integração e limpeza realizadas
+Fast-forward developer até f4fabe7, build e browser 5173 PASS: recolhido ao abrir/recarregar, expansão durante navegação e seta à direita. Captura de abertura inspecionada. [Resultado developer](evidencias/FAC-030/browser-results-developer.txt).
+Worktree limpa e feature ancestral comprovadas; preview próprio PID 3109036 parado após conferir cwd. git worktree remove /home/vinicius/le-fabrique-fac-029 executado sem force; diretório ausente, dependências principais preservadas, somente developer em git worktree list. Branch feature preservada, sem push/deploy. Aceite visual permanece pendente.

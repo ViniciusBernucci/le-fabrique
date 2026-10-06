@@ -10,3 +10,7 @@ Build web (inclui TypeScript) e lint raiz PASS, aviso preexistente useOptionalCh
 Sem mudança de backend/contrato/serviço/dado ou dependência. Foco acessível preservado; menu mantém limites atuais de preferência local/mobile. Reverter `ec98b7dc2f2ea700857810fe5df708bae91a720a` volta a centralizar a seta sem afetar dados; rollback não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de template atualizados. AWAITING_HUMAN; aceite visual exato pendente.
 
 Atualização posterior FAC-030: padrão de abertura/reload passa a recolhido, sem alterar alinhamento à direita; [estado atual](2026-10-06-FAC-030-menu-inicial-recolhido.md). Evidências FAC-029 preservam o comportamento anterior à mudança de inicialização.
+
+## Integração e limpeza realizadas
+Fast-forward developer até 3906b77, build e browser 5173 PASS antes do FAC-030. Seta à direita comprovada no destino; mudança posterior de inicialização registrada separadamente. [Resultado developer](evidencias/FAC-029/browser-results-developer.txt).
+Worktree limpa e feature ancestral comprovadas; preview próprio PID 3109036 parado após conferir cwd. git worktree remove /home/vinicius/le-fabrique-fac-029 executado sem force; diretório ausente, dependências principais preservadas, somente developer em git worktree list. Branch feature preservada, sem push/deploy. Aceite visual permanece pendente.
