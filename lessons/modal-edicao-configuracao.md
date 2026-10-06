@@ -25,3 +25,6 @@ FAC-026: separar botão da linha e switch evita controle interativo aninhado. A 
 
 
 FAC-028: retirar texto/moldura visual de um botão não exige retirar aria-label, title ou foco de teclado. CSS transparente no hover evita caixa implícita da regra global de botões; browser verifica estilo computado e o fluxo já existente.
+
+
+FAC-029: alinhar à borda requer ajustar margem/padding, além de justify-content. Browser compara getBoundingClientRect do SVG e do menu nos dois estados; diferença de 1px representa a borda real do sidebar.

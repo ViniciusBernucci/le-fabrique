@@ -133,3 +133,5 @@ FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](do
 - FAC-026 / FAC-027: AWAITING_HUMAN — agentes pré-configurados com switch/modal e menu recolhível. Código bb0ad15 / b1d794035342128b9ed832d5fe9b74c887eb7075; 46 testes web/typecheck/lint/build e dois fluxos browser PASS. Aceite exato pendente.
 
 - FAC-028: AWAITING_HUMAN — seta minimalista no toggle de menu; código efbcb86631da70e6afe40ce33265a97a69f62847, typecheck/build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
+
+- FAC-029: AWAITING_HUMAN — seta à direita; código ec98b7dc2f2ea700857810fe5df708bae91a720a, build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).

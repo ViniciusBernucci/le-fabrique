@@ -100,3 +100,6 @@ FAC-027: botão sob a marca recolhe sidebar para 66px e só ícones; preferênci
 
 
 FAC-028: toggle minimalista só com seta de 16px, sem texto visível/borda/fundo; nomes acessíveis e comportamento FAC-027 preservados. [Checks e capturas](2026-10-06-FAC-028-seta-menu-minimalista.md).
+
+
+FAC-029: seta minimalista agora na borda interna direita, nos estados expandido/recolhido. [Funcionamento/evidências](2026-10-06-FAC-029-seta-direita-menu.md).

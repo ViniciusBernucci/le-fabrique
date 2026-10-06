@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — FAC-029
+
+Seta minimalista do menu alinhada à borda direita em ambos estados. [Evidências](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
+
 ## 2026-10-06 — FAC-028
 
 Toggle do menu apenas com seta, sem texto/moldura/fundo; acessibilidade e persistência preservadas. [Evidências](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).

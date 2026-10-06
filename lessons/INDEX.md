@@ -94,3 +94,6 @@ FAC-026/027 ampliam modal-edicao-configuracao: controles da linha separados, foc
 
 
 FAC-028 amplia modal-edicao-configuracao com distinção entre moldura visual e nome/foco acessível de botão iconográfico.
+
+
+FAC-029 amplia modal-edicao-configuracao com medição de alinhamento do ícone ao container nos dois estados.

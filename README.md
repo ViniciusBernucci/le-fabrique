@@ -122,3 +122,6 @@ FAC-026/027: agentes pré-configurados na lista com ativação individual e moda
 
 
 FAC-028: botão de recolher/expandir menu agora é somente seta sem texto, borda ou fundo. [Estado/evidências](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
+
+
+FAC-029: seta de recolher/expandir alinhada à borda direita do menu. [Checks](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).

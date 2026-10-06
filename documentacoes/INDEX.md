@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-029 — seta à direita do menu](controle/2026-10-06-FAC-029-seta-direita-menu.md)
+
 - [FAC-028 — seta minimalista do menu](controle/2026-10-06-FAC-028-seta-menu-minimalista.md)
 
 - [FAC-026 — agentes pré-configurados](configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md)
