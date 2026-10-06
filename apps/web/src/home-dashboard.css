@@ -1255,7 +1255,7 @@
   align-items: center;
   justify-content: flex-end;
   margin: 8px 0 0;
-  padding: 6px 0;
+  padding: 6px 12px;
   min-height: 34px;
   color: var(--home-muted);
   border: 0;
@@ -1293,4 +1293,9 @@
 }
 .home-dashboard.is-menu-collapsed .home-menu-toggle svg {
   transform: none;
+}
+
+.home-dashboard.is-menu-collapsed .home-menu-toggle {
+  justify-content: center;
+  padding: 6px 0;
 }
