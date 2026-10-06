@@ -37,6 +37,7 @@ import {
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
+import { PresetAgents } from "./PresetAgents";
 import { SettingsModal } from "./SettingsModal";
 import {
   configurationSummary,
@@ -1400,40 +1401,16 @@ export function SettingsPanel({
           saving={saving}
           onSave={save}
         >
-          <div className="account-list">
-            {draft.assignments.map((assignment) => {
-              const account = draft.installations.find(
-                (item) => item.id === assignment.installationId,
-              );
-              return (
-                <button
-                  type="button"
-                  className="account-list-item"
-                  key={assignment.role}
-                  aria-label={`Configurar ${roleLabels[assignment.role]}`}
-                  onClick={() => setEditingAssignment(structuredClone(assignment))}
-                >
-                  <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
-                  <span className="account-list-name">
-                    <strong>{roleLabels[assignment.role]}</strong>
-                    <span className="account-list-detail">
-                      {account
-                        ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
-                        : "Sem atribuição"}
-                    </span>
-                    <span className="account-list-detail">
-                      {assignment.permissionMode === "READ_ONLY"
-                        ? "Somente leitura"
-                        : "Escrita no workspace"}{" "}
-                      · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
-                    </span>
-                  </span>
-                  <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
-                  <span className="account-list-edit">Configurar →</span>
-                </button>
-              );
-            })}
-          </div>
+          <PresetAgents
+            configuring={Boolean(editingAssignment)}
+            configuration={draft}
+            saving={saving}
+            onSave={save}
+            onConfigure={(role) => {
+              const assignment = draft.assignments.find((item) => item.role === role);
+              if (assignment) setEditingAssignment(structuredClone(assignment));
+            }}
+          />
           {editingAssignment &&
             (() => {
               const assignment = editingAssignment;

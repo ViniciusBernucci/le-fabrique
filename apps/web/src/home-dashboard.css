@@ -1185,16 +1185,6 @@
 .home-dashboard .workspace-content .team-empty {
   padding: 16px 0;
 }
-.home-dashboard .workspace-content .team-execution-roles {
-  border-top: 1px solid #294456;
-  margin-top: 24px;
-  padding-top: 16px;
-}
-.home-dashboard .workspace-content .team-execution-roles summary {
-  cursor: pointer;
-  color: #a5bad0;
-  margin-bottom: 16px;
-}
 .home-dashboard .workspace-content .team-skill-picker {
   border: 1px solid #294456;
   border-radius: 8px;
@@ -1210,5 +1200,69 @@
   .home-dashboard .workspace-content .team-list-heading {
     align-items: start;
     flex-direction: column;
+  }
+}
+
+.home-dashboard .workspace-content .preset-agent-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 1px solid var(--home-line);
+  border-radius: 8px;
+  background: #0a1a28;
+}
+.home-dashboard .workspace-content .preset-agent-row > .account-list-item {
+  border: 0;
+  background: transparent;
+}
+.home-dashboard .workspace-content .preset-agent-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px;
+  cursor: pointer;
+}
+.home-dashboard .workspace-content .preset-agent-toggle input {
+  appearance: none;
+  width: 36px;
+  min-width: 36px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 20px;
+  background: #34485e;
+  cursor: pointer;
+}
+.home-dashboard .workspace-content .preset-agent-toggle input::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  transform: translateX(0);
+}
+.home-dashboard .workspace-content .preset-agent-toggle input:checked {
+  background: #147fea;
+}
+.home-dashboard .workspace-content .preset-agent-toggle input:checked::before {
+  transform: translateX(15px);
+}
+.home-dashboard .workspace-content .preset-agent-toggle input:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.home-dashboard .workspace-content .preset-agent-list {
+  margin-bottom: 12px;
+}
+.home-dashboard .workspace-content .agent-overview {
+  padding: 24px;
+}
+.home-dashboard .workspace-content .agent-overview p {
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .home-dashboard .workspace-content .preset-agent-toggle {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
   }
 }

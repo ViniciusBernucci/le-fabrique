@@ -152,11 +152,12 @@ export function TeamsPanel({
         hidden={tab !== "agents"}
       >
         <div className="team-list-heading">
-          <p>{agents.length} agente(s) cadastrado(s)</p>
+          <p>{agents.length + configuration.assignments.length} agente(s) na equipe</p>
           <button type="button" onClick={addAgent} disabled={saving}>
             + Adicionar agente
           </button>
         </div>
+        {children}
         <div className="account-list">
           {agents.map((item) => (
             <button
@@ -183,13 +184,9 @@ export function TeamsPanel({
         </div>
         {agents.length === 0 && (
           <p className="muted team-empty">
-            Nenhum agente cadastrado. Adicione os agentes de que sua equipe precisa.
+            Adicione outros agentes conforme as necessidades da sua equipe.
           </p>
         )}
-        <details className="team-execution-roles">
-          <summary>Funções de execução da fábrica</summary>
-          {children}
-        </details>
       </div>
       <div
         role="tabpanel"
