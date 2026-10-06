@@ -11,3 +11,6 @@ Build web (inclui TypeScript), lint raiz e git diff --check PASS; aviso preexist
 
 ## Limites, rollback e docs
 Somente alinhamento visual; foco e nomes acessíveis preservados. Reverter `3b7e02067884378b7775ebf48af81d61c82187a8` retorna seta à borda direita em ambos estados sem afetar inicialização/dados; rollback não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de template atualizados. AWAITING_HUMAN até aceite visual exato.
+
+## Integração e limpeza
+Merge fast-forward em developer até `5e52ecc`, autorizado pela sessão. Build web e [browser em developer](evidencias/FAC-031/browser-results-developer.txt) PASS; screenshots recolhido/expandido inspecionados visualmente. Preview exclusivo encerrado após conferir PID/cwd; worktree limpa removida sem force, branch preservada e node_modules raiz intacto. Apenas worktree developer restante; sem push/deploy. Aceite humano da revisão visual permanece pendente.
