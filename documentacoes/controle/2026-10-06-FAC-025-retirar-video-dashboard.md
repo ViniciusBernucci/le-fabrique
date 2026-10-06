@@ -10,3 +10,6 @@ DashboardLayout restaura o PNG original da cena cartoon e seu enquadramento CSS/
 
 ## Limites, rollback e docs
 Imagem estática de referência, ainda contém arte/textos originais; área compacta mantida conforme pedido anterior. Reverter `f264747e10a489c84338ae85f3d6c92e914524b2` restaura vídeo/poster/CSS; sem dados a recuperar ou migrations. Rollback descrito, não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG, ticket e lesson de mídia atualizados; FAC-024 continua como histórico, não estado atual. AWAITING_HUMAN: retirada é pedido explícito, novo resultado visual ainda sem aceite exato/DONE.
+
+## Integração e limpeza realizadas
+Fast-forward developer até c58e558 sem conflitos; build web e browser no painel habitual/5173 PASS com os mesmos critérios. [Resultado developer](evidencias/FAC-025/browser-results-developer.txt); capturas desktop inspecionadas. Worktree limpa e branch ancestral confirmadas antes de remoção; preview próprio PID 2568185 parado após conferir cwd. git worktree remove /home/vinicius/le-fabrique-fac-025 realizado sem force; diretório ausente, dependências principais preservadas e somente developer em git worktree list. Branch feature preservada. Sem push/deploy; aceite visual pendente.
