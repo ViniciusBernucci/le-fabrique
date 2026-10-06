@@ -94,3 +94,6 @@ Código atual `4e042a1`, integrado em developer. `DashboardLayout` é a raiz vis
 
 
 FAC-023: Configurações → Equipes → Skills é o cadastro de skills por projeto; Agentes permite adicionar, editar e excluir múltiplos perfis com vínculos às skills. Mantém template/fontes. [Contrato, persistência e evidências](../configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
+
+
+FAC-027: botão sob a marca recolhe sidebar para 66px e só ícones; preferência local persiste navegação/reload desktop. Mobile recolhido por padrão, expansão sobre conteúdo. [Funcionamento/checks](2026-10-06-FAC-027-menu-recolhivel.md). FAC-026 apresenta agentes pré-configurados na lista com switches e explicação/configuração em dois passos; [relatório](../configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md).

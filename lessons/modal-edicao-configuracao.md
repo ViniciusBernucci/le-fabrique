@@ -19,3 +19,6 @@ FAC-022: `App` monta DashboardLayout uma vez e muda apenas o slot central; o bro
 
 
 FAC-023: TeamsPanel mantém clone de agente/skill separado do draft de settings, fecha somente após PUT positivo e mostra erro 409 dentro do modal. removeProjectSkill/upsertProjectSkill e pruneTeamAgentInstallations limpam referências ao excluir/mover skill ou retirar conta/modelo. Browser prova oito agentes, recarga e cancelamento após conflito com HTTP fixture; não é prova de escrita PostgreSQL real.
+
+
+FAC-026: separar botão da linha e switch evita controle interativo aninhado. A alteração de enabled confirma PUT versionado antes de mostrar novo estado; conflito mantém valor e erro. Ao transitar de dialog informativo para configuração, foco nativo pode tentar voltar a botão de dialog já desmontado; PresetAgents preserva referência à linha e restaura foco ao terminar configuring. Browser mede retorno, gravação e cancelamento, com fixture explícita. FAC-027 mantém recolhimento no template e usa uma variável CSS para width/margem em todos os breakpoints; storage opcional não deve bloquear navegação.

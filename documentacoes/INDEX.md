@@ -1,5 +1,8 @@
 # Documentação atual v2.3
 
+- [FAC-026 — agentes pré-configurados](configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md)
+- [FAC-027 — menu recolhível](controle/2026-10-06-FAC-027-menu-recolhivel.md)
+
 - [FAC-025 — retirada do vídeo e imagem estática](controle/2026-10-06-FAC-025-retirar-video-dashboard.md)
 
 - [FAC-024 — vídeo decorativo compacto no dashboard](controle/2026-10-05-FAC-024-video-dashboard.md)

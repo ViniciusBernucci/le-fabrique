@@ -91,3 +91,6 @@ FAC-019: abas Contas, Integrações IA, Equipes com modais preservados. [Relató
 
 
 FAC-023: Equipes agora contém Agentes/Skills. Registro de múltiplos agentes e skills por projeto persiste no JSON versionado existente; vínculos validados e limpos na exclusão. Funções operacionais existentes preservadas; registro não instala nem executa skills automaticamente. [Relatório atual](2026-10-05-FAC-023-agentes-skills-projeto.md).
+
+
+FAC-026: seis agentes pré-configurados visíveis junto dos personalizados, sem agrupamento Funções de execução. Switch por agente persiste enabled; clique explica papel/fluxo e botão abre ajustes existentes. Modal distingue funções integradas e não automáticas; ativar não executa jobs. [Relatório atual](2026-10-06-FAC-026-agentes-preconfigurados.md). FAC-027 adiciona menu lateral recolhível persistente nas telas.

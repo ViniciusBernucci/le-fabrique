@@ -1,0 +1,30 @@
+
+> le-fabrique@0.1.0 lint
+> biome check .
+
+apps/api/src/orchestration/run-delivery.service.ts:209:9 lint/complexity/useOptionalChain  FIXABLE  ━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    207 │       const evidence = result.documentation;
+    208 │       if (
+  > 209 │         !evidence ||
+        │         ^^^^^^^^^^^^
+  > 210 │         evidence.status !== "PASS" ||
+        │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    211 │         evidence.findings.length > 0 ||
+    212 │         evidence.snapshotHash !== snapshot.manifestHash ||
+  
+  i Unsafe fix: Change to an optional chain.
+  
+    207 207 │         const evidence = result.documentation;
+    208 208 │         if (
+    209     │ - ········!evidence·||
+    210     │ - ········evidence.status·!==·"PASS"·||
+        209 │ + ········evidence?.status·!==·"PASS"·||
+    211 210 │           evidence.findings.length > 0 ||
+    212 211 │           evidence.snapshotHash !== snapshot.manifestHash ||
+  
+
+Checked 257 files in 535ms. No fixes applied.
+Found 1 warning.

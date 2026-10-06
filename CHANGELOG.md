@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — FAC-026 / FAC-027
+
+Agentes pré-configurados na lista com ativação individual, explicação de função/fluxo e configurações em segundo passo. Menu recolhível para ícones com preferência local. [Agentes](documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md).
+
 ## 2026-10-06 — FAC-025
 
 Vídeo da home retirado por pedido do responsável; imagem original restaurada mantendo largura compacta, vídeo/poster removidos do build. [Evidências](documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).

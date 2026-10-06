@@ -116,3 +116,6 @@ Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredo
 
 
 FAC-023: Configurações → Equipes separa Agentes e Skills; cadastros de agentes sem limite fixo de seis e skills por projeto com instruções, edição e vínculos. [Funcionamento, evidências e limites](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
+
+
+FAC-026/027: agentes pré-configurados na lista com ativação individual e modal explicativo antes da configuração; menu lateral recolhível para ícones com preferência local. [Agentes](documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md).

@@ -88,3 +88,6 @@ FAC-023 amplia contratos-runtime-monorepo e modal-edicao-configuracao com cadast
 - [Vídeo decorativo com fronteira contínua — FAC-024](video-decorativo-loop.md)
 
 FAC-025 amplia vídeo-decorativo-loop: prova técnica não é aceite visual; remoção do player inclui assets publicados, com histórico preservado.
+
+
+FAC-026/027 ampliam modal-edicao-configuracao: controles da linha separados, foco entre dialogs e estado persistente do template com variável de layout.
