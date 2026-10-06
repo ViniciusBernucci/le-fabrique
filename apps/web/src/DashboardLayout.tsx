@@ -242,15 +242,7 @@ export function DashboardLayout({
   activeDestination?: HomeDestination;
   children?: ReactNode;
 }) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
-    if (typeof window === "undefined") return false;
-    if (window.matchMedia("(max-width: 760px)").matches) return true;
-    try {
-      return window.localStorage.getItem("la-fabrique.sidebar-collapsed") === "true";
-    } catch {
-      return false;
-    }
-  });
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 760px)");
     const collapseOnSmallScreen = () => {
@@ -260,13 +252,7 @@ export function DashboardLayout({
     return () => smallScreen.removeEventListener("change", collapseOnSmallScreen);
   }, []);
   function toggleSidebar() {
-    const collapsed = !sidebarCollapsed;
-    setSidebarCollapsed(collapsed);
-    try {
-      window.localStorage.setItem("la-fabrique.sidebar-collapsed", String(collapsed));
-    } catch {
-      // The current template still preserves the choice when storage is unavailable.
-    }
+    setSidebarCollapsed((collapsed) => !collapsed);
   }
   const [query, setQuery] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
