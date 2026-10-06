@@ -352,7 +352,6 @@ export function DashboardLayout({
           onClick={toggleSidebar}
         >
           <Icon name="arrow" />
-          <span>Recolher menu</span>
         </button>
         <nav>
           {navigation.map((item) => (

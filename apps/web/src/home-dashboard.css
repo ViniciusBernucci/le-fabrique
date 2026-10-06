@@ -1254,16 +1254,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
   margin: 8px 9px 0;
   padding: 6px;
   min-height: 34px;
   color: var(--home-muted);
-  border: 1px solid var(--home-line);
+  border: 0;
+  background: transparent;
+}
+.home-dashboard .home-menu-toggle:hover {
+  background: transparent;
+  color: #f4f6ff;
 }
 .home-dashboard .home-menu-toggle svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   transform: rotate(180deg);
 }
 .home-dashboard.is-menu-collapsed {
@@ -1275,8 +1279,7 @@
 }
 .home-dashboard.is-menu-collapsed .home-brand span,
 .home-dashboard.is-menu-collapsed .home-sidebar nav button span,
-.home-dashboard.is-menu-collapsed .home-workspace,
-.home-dashboard.is-menu-collapsed .home-menu-toggle span {
+.home-dashboard.is-menu-collapsed .home-workspace {
   display: none;
 }
 .home-dashboard.is-menu-collapsed .home-sidebar nav {
