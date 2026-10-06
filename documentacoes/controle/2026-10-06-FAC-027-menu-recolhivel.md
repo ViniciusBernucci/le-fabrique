@@ -17,3 +17,7 @@ Preferência é local ao navegador; mobile adota recolhimento inicial mesmo se d
 README raiz/controle/configuração, INDEX, CHANGELOG, BACKLOG/ticket e lesson de estado do template atualizados. AWAITING_HUMAN após checks; DONE só após aceite exato. Integração/limpeza serão registradas após realização.
 
 Validação final na revisão d3cf9990128fc4811cf7ed54806a0efd3ddc0949: teste estático antigo exigia atributos HTML adjacentes; inclusão de title expôs essa fragilidade. Regex ajustada para verificar menu ativo independentemente de atributos intermediários; 46 testes passaram novamente, sem alterar comportamento. Logs finais substituem o ensaio anterior.
+
+## Integração e limpeza realizadas
+Fast-forward local em developer até f9d20ae, sem conflitos. Build web no destino PASS com mesmos bundles; ambos os fluxos browser reproduzidos no painel habitual/5173 PASS. [Resultado developer](evidencias/FAC-027/browser-results-developer.txt). Ensaios de settings usam cinco PUTs em memória interceptados; nenhuma alteração real de ativação/conta/job.
+Worktree limpa e feature ancestral comprovadas. Preview próprio PID 2575191 parado após conferir cwd; git worktree remove /home/vinicius/le-fabrique-fac-026 realizado sem force. Diretório ausente, dependências principais preservadas e somente developer em git worktree list; branch feature preservada. Sem push/deploy; aceite visual/funcional pendente.

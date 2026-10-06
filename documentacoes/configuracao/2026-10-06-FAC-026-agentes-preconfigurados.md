@@ -19,3 +19,7 @@ Correções: lint exigiu aria-checked explícito no switch; browser identificou 
 
 ## Rollback, docs e aceite
 Reverter bb0ad15 restaura lista antiga sob details/modais diretos sem alterar dados; toggle reutiliza enabled existente. Sem migration. README raiz/configuração/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de modais atualizados. Configuração/execução continuam sujeitas a gates existentes. AWAITING_HUMAN, não DONE: merge autorizado não substitui aceite exato.
+
+## Integração e limpeza realizadas
+Fast-forward local em developer até f9d20ae, sem conflitos. Build web no destino PASS com mesmos bundles; ambos os fluxos browser reproduzidos no painel habitual/5173 PASS. [Resultado developer](evidencias/FAC-026/browser-results-developer.txt). Ensaios de settings usam cinco PUTs em memória interceptados; nenhuma alteração real de ativação/conta/job.
+Worktree limpa e feature ancestral comprovadas. Preview próprio PID 2575191 parado após conferir cwd; git worktree remove /home/vinicius/le-fabrique-fac-026 realizado sem force. Diretório ausente, dependências principais preservadas e somente developer em git worktree list; branch feature preservada. Sem push/deploy; aceite visual/funcional pendente.
