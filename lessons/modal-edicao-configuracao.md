@@ -28,3 +28,6 @@ FAC-028: retirar texto/moldura visual de um botão não exige retirar aria-label
 
 
 FAC-029: alinhar à borda requer ajustar margem/padding, além de justify-content. Browser compara getBoundingClientRect do SVG e do menu nos dois estados; diferença de 1px representa a borda real do sidebar.
+
+
+FAC-030: estado preservado pelo template durante navegação é diferente de persistência entre aberturas. Novo pedido definiu início sempre recolhido; useState(true) com atualização funcional preserva a navegação sem consultar/escrever preferência antiga. Browser semeia chave antiga false e comprova padrão no reload, além de troca de tela preservada.

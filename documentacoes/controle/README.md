@@ -103,3 +103,6 @@ FAC-028: toggle minimalista só com seta de 16px, sem texto visível/borda/fundo
 
 
 FAC-029: seta minimalista agora na borda interna direita, nos estados expandido/recolhido. [Funcionamento/evidências](2026-10-06-FAC-029-seta-direita-menu.md).
+
+
+FAC-030: padrão atual é menu recolhido em toda abertura/reload, independente da preferência antiga. Expansão manual mantém estado entre telas na navegação atual. Seta permanece minimalista à direita. [Funcionamento/checks](2026-10-06-FAC-030-menu-inicial-recolhido.md). Este pedido substitui a persistência após reload do FAC-027.

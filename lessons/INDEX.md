@@ -97,3 +97,6 @@ FAC-028 amplia modal-edicao-configuracao com distinção entre moldura visual e 
 
 
 FAC-029 amplia modal-edicao-configuracao com medição de alinhamento do ícone ao container nos dois estados.
+
+
+FAC-030 amplia modal-edicao-configuracao: distinguir estado do template entre telas e padrão de nova abertura.

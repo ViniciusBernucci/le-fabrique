@@ -8,3 +8,5 @@ Build web (inclui TypeScript) e lint raiz PASS, aviso preexistente useOptionalCh
 
 ## Limites, rollback e docs
 Sem mudança de backend/contrato/serviço/dado ou dependência. Foco acessível preservado; menu mantém limites atuais de preferência local/mobile. Reverter `ec98b7dc2f2ea700857810fe5df708bae91a720a` volta a centralizar a seta sem afetar dados; rollback não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de template atualizados. AWAITING_HUMAN; aceite visual exato pendente.
+
+Atualização posterior FAC-030: padrão de abertura/reload passa a recolhido, sem alterar alinhamento à direita; [estado atual](2026-10-06-FAC-030-menu-inicial-recolhido.md). Evidências FAC-029 preservam o comportamento anterior à mudança de inicialização.

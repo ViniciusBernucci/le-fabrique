@@ -125,3 +125,6 @@ FAC-028: botão de recolher/expandir menu agora é somente seta sem texto, borda
 
 
 FAC-029: seta de recolher/expandir alinhada à borda direita do menu. [Checks](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
+
+
+FAC-030: menu abre sempre recolhido/ícones; expansão manual permanece durante navegação, reload volta recolhido. Seta na borda direita (FAC-029). [Estado atual](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).

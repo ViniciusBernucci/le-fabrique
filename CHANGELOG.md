@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — FAC-030
+
+Menu inicia recolhido em toda abertura/reload; expansão preservada durante navegação atual e seta mantida à direita. [Evidências](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
+
 ## 2026-10-06 — FAC-029
 
 Seta minimalista do menu alinhada à borda direita em ambos estados. [Evidências](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
