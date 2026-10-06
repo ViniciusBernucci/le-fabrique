@@ -1,5 +1,5 @@
 # FAC-026 — Agentes pré-configurados na lista
-2026-10-06. IMPLEMENTADO / AWAITING_HUMAN. Baseline 99b819b; código específico bb0ad15; revisão combinada verificada `b1d794035342128b9ed832d5fe9b74c887eb7075` (inclui FAC-027).
+2026-10-06. IMPLEMENTADO / AWAITING_HUMAN. Baseline 99b819b; código específico bb0ad15; revisão combinada verificada `d3cf9990128fc4811cf7ed54806a0efd3ddc0949` (inclui FAC-027).
 [Ticket READY](FAC-026-agentes-preconfigurados.md). Branch feat/fac-026-preset-agent-list/worktree /home/vinicius/le-fabrique-fac-026; mesmo writer, sem handoff/subagentes. Codex da sessão, modelo/cota/custo não comprovados; nenhum provider/credencial/cobrança. Merge developer e limpeza já autorizados, sem push/deploy.
 
 ## Objetivo e funcionamento

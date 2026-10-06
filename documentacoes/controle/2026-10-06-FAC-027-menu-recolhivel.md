@@ -15,3 +15,5 @@ Primeiro ensaio apontou width literal 210px de breakpoint anterior sobrescrevend
 ## Limites, rollback, docs e aceite
 Preferência é local ao navegador; mobile adota recolhimento inicial mesmo se desktop estava expandido. Não sincroniza conta/dispositivos. Em mobile, menu expandido cobre parte do conteúdo até recolher. Reverter `b1d794035342128b9ed832d5fe9b74c887eb7075` restaura comportamento anterior do menu; chave localStorage remanescente é inerte, sem dados do servidor. Sem rollback executado.
 README raiz/controle/configuração, INDEX, CHANGELOG, BACKLOG/ticket e lesson de estado do template atualizados. AWAITING_HUMAN após checks; DONE só após aceite exato. Integração/limpeza serão registradas após realização.
+
+Validação final na revisão d3cf9990128fc4811cf7ed54806a0efd3ddc0949: teste estático antigo exigia atributos HTML adjacentes; inclusão de title expôs essa fragilidade. Regex ajustada para verificar menu ativo independentemente de atributos intermediários; 46 testes passaram novamente, sem alterar comportamento. Logs finais substituem o ensaio anterior.
