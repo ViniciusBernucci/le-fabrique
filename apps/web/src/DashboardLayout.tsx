@@ -242,6 +242,32 @@ export function DashboardLayout({
   activeDestination?: HomeDestination;
   children?: ReactNode;
 }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    if (typeof window === "undefined") return false;
+    if (window.matchMedia("(max-width: 760px)").matches) return true;
+    try {
+      return window.localStorage.getItem("la-fabrique.sidebar-collapsed") === "true";
+    } catch {
+      return false;
+    }
+  });
+  useEffect(() => {
+    const smallScreen = window.matchMedia("(max-width: 760px)");
+    const collapseOnSmallScreen = () => {
+      if (smallScreen.matches) setSidebarCollapsed(true);
+    };
+    smallScreen.addEventListener("change", collapseOnSmallScreen);
+    return () => smallScreen.removeEventListener("change", collapseOnSmallScreen);
+  }, []);
+  function toggleSidebar() {
+    const collapsed = !sidebarCollapsed;
+    setSidebarCollapsed(collapsed);
+    try {
+      window.localStorage.setItem("la-fabrique.sidebar-collapsed", String(collapsed));
+    } catch {
+      // The current template still preserves the choice when storage is unavailable.
+    }
+  }
   const [query, setQuery] = useState("");
   const [preview, setPreview] = useState<string | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -296,11 +322,11 @@ export function DashboardLayout({
     );
   }
   return (
-    <div className="home-dashboard">
+    <div className={`home-dashboard${sidebarCollapsed ? " is-menu-collapsed" : ""}`}>
       <a className="home-skip" href="#home-content">
         Ir para o conteúdo
       </a>
-      <aside className="home-sidebar" aria-label="Menu principal">
+      <aside id="home-sidebar" className="home-sidebar" aria-label="Menu principal">
         <button
           type="button"
           className="home-brand"
@@ -316,12 +342,25 @@ export function DashboardLayout({
           </svg>
           <span>La fabrique</span>
         </button>
+        <button
+          type="button"
+          className="home-menu-toggle"
+          aria-label={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
+          title={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
+          aria-expanded={!sidebarCollapsed}
+          aria-controls="home-sidebar"
+          onClick={toggleSidebar}
+        >
+          <Icon name="arrow" />
+          <span>Recolher menu</span>
+        </button>
         <nav>
           {navigation.map((item) => (
             <button
               type="button"
               key={item.name}
               aria-label={item.name}
+              title={item.name}
               className={isActive(item.name) ? "is-active" : ""}
               aria-current={isActive(item.name) ? "page" : undefined}
               onClick={() =>
