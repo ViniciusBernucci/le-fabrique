@@ -100,3 +100,6 @@ FAC-029 amplia modal-edicao-configuracao com medição de alinhamento do ícone 
 
 
 FAC-030 amplia modal-edicao-configuracao: distinguir estado do template entre telas e padrão de nova abertura.
+
+
+FAC-031 amplia modal-edicao-configuracao com alinhamento medido por estado do template.

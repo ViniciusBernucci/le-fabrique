@@ -1,5 +1,7 @@
 # Documentação atual v2.3
 
+- [FAC-031 — posição da seta conforme menu](controle/2026-10-06-FAC-031-posicao-seta-menu.md)
+
 - [FAC-030 — menu inicialmente recolhido](controle/2026-10-06-FAC-030-menu-inicial-recolhido.md)
 
 - [FAC-029 — seta à direita do menu](controle/2026-10-06-FAC-029-seta-direita-menu.md)

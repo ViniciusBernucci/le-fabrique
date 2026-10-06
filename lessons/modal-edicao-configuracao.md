@@ -31,3 +31,6 @@ FAC-029: alinhar à borda requer ajustar margem/padding, além de justify-conten
 
 
 FAC-030: estado preservado pelo template durante navegação é diferente de persistência entre aberturas. Novo pedido definiu início sempre recolhido; useState(true) com atualização funcional preserva a navegação sem consultar/escrever preferência antiga. Browser semeia chave antiga false e comprova padrão no reload, além de troca de tela preservada.
+
+
+FAC-031: alinhamento visual pode depender do estado do template. Regra específica is-menu-collapsed centraliza o SVG sem aplicar padding do estado expandido; browser mede centro e distância da borda, considerando a borda de 1px do container.

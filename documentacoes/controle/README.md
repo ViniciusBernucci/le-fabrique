@@ -106,3 +106,6 @@ FAC-029: seta minimalista agora na borda interna direita, nos estados expandido/
 
 
 FAC-030: padrão atual é menu recolhido em toda abertura/reload, independente da preferência antiga. Expansão manual mantém estado entre telas na navegação atual. Seta permanece minimalista à direita. [Funcionamento/checks](2026-10-06-FAC-030-menu-inicial-recolhido.md). Este pedido substitui a persistência após reload do FAC-027.
+
+
+FAC-031: posição atual da seta depende do estado: central no recolhido, à direita com padding 12px no expandido. Padrão de abertura FAC-030 preservado. [Checks](2026-10-06-FAC-031-posicao-seta-menu.md).

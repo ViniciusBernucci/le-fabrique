@@ -137,3 +137,5 @@ FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](do
 - FAC-029: AWAITING_HUMAN — seta à direita; código ec98b7dc2f2ea700857810fe5df708bae91a720a, build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
 
 - FAC-030: AWAITING_HUMAN — menu inicia recolhido; código 3608f1766c50ee49071a6430d1087fa2fd538749, 46 testes web/build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
+
+- FAC-031: AWAITING_HUMAN — seta por estado do menu; código 3b7e02067884378b7775ebf48af81d61c82187a8, build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md).

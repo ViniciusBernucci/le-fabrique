@@ -128,3 +128,6 @@ FAC-029: seta de recolher/expandir alinhada à borda direita do menu. [Checks](d
 
 
 FAC-030: menu abre sempre recolhido/ícones; expansão manual permanece durante navegação, reload volta recolhido. Seta na borda direita (FAC-029). [Estado atual](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
+
+
+FAC-031: seta centralizada no menu recolhido e com 12px de espaço à direita quando expandido. Abertura recolhida mantida. [Estado atual](documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md).

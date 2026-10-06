@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — FAC-031
+
+Seta centralizada no menu recolhido; padding direito 12px no expandido. [Evidências](documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md).
+
 ## 2026-10-06 — FAC-030
 
 Menu inicia recolhido em toda abertura/reload; expansão preservada durante navegação atual e seta mantida à direita. [Evidências](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
