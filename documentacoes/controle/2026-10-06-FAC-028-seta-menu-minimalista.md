@@ -10,3 +10,7 @@ Typecheck web, build web, lint raiz e git diff --check PASS; aviso useOptionalCh
 
 ## Limites, rollback e docs
 Nome aparece só como tooltip/descrição acessível; foco de teclado mantém indicação para acessibilidade, sem moldura padrão/hover. Reverter `efbcb86631da70e6afe40ce33265a97a69f62847` restaura texto e borda, sem dados/migration. Rollback não executado. README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket e lesson de template atualizados. AWAITING_HUMAN: ajuste feito conforme pedido, aceite visual exato ainda pendente.
+
+## Integração e limpeza realizadas
+Fast-forward local developer até 725852f sem conflitos. Build web no destino PASS; browser 5173 confirma seta única/sem moldura/fundo e os fluxos de recolhimento/persistência/mobile/storage. [Resultado developer](evidencias/FAC-028/browser-results-developer.txt).
+Worktree limpa e ancestralidade comprovadas; preview próprio PID 3104223 parado após conferir cwd. git worktree remove /home/vinicius/le-fabrique-fac-028 realizado sem force, diretório ausente e dependências principais preservadas; git worktree list contém somente developer, branch feature preservada. Sem push/deploy; aceite visual pendente.
