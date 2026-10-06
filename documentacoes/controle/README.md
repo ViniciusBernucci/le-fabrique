@@ -97,3 +97,6 @@ FAC-023: Configurações → Equipes → Skills é o cadastro de skills por proj
 
 
 FAC-027: botão sob a marca recolhe sidebar para 66px e só ícones; preferência local persiste navegação/reload desktop. Mobile recolhido por padrão, expansão sobre conteúdo. [Funcionamento/checks](2026-10-06-FAC-027-menu-recolhivel.md). FAC-026 apresenta agentes pré-configurados na lista com switches e explicação/configuração em dois passos; [relatório](../configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md).
+
+
+FAC-028: toggle minimalista só com seta de 16px, sem texto visível/borda/fundo; nomes acessíveis e comportamento FAC-027 preservados. [Checks e capturas](2026-10-06-FAC-028-seta-menu-minimalista.md).

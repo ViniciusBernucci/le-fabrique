@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-06 — FAC-028
+
+Toggle do menu apenas com seta, sem texto/moldura/fundo; acessibilidade e persistência preservadas. [Evidências](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
+
 ## 2026-10-06 — FAC-026 / FAC-027
 
 Agentes pré-configurados na lista com ativação individual, explicação de função/fluxo e configurações em segundo passo. Menu recolhível para ícones com preferência local. [Agentes](documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md).

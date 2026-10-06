@@ -22,3 +22,6 @@ FAC-023: TeamsPanel mantém clone de agente/skill separado do draft de settings,
 
 
 FAC-026: separar botão da linha e switch evita controle interativo aninhado. A alteração de enabled confirma PUT versionado antes de mostrar novo estado; conflito mantém valor e erro. Ao transitar de dialog informativo para configuração, foco nativo pode tentar voltar a botão de dialog já desmontado; PresetAgents preserva referência à linha e restaura foco ao terminar configuring. Browser mede retorno, gravação e cancelamento, com fixture explícita. FAC-027 mantém recolhimento no template e usa uma variável CSS para width/margem em todos os breakpoints; storage opcional não deve bloquear navegação.
+
+
+FAC-028: retirar texto/moldura visual de um botão não exige retirar aria-label, title ou foco de teclado. CSS transparente no hover evita caixa implícita da regra global de botões; browser verifica estilo computado e o fluxo já existente.

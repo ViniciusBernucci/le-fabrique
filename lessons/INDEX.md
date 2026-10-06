@@ -91,3 +91,6 @@ FAC-025 amplia vídeo-decorativo-loop: prova técnica não é aceite visual; rem
 
 
 FAC-026/027 ampliam modal-edicao-configuracao: controles da linha separados, foco entre dialogs e estado persistente do template com variável de layout.
+
+
+FAC-028 amplia modal-edicao-configuracao com distinção entre moldura visual e nome/foco acessível de botão iconográfico.

@@ -119,3 +119,6 @@ FAC-023: Configurações → Equipes separa Agentes e Skills; cadastros de agent
 
 
 FAC-026/027: agentes pré-configurados na lista com ativação individual e modal explicativo antes da configuração; menu lateral recolhível para ícones com preferência local. [Agentes](documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md).
+
+
+FAC-028: botão de recolher/expandir menu agora é somente seta sem texto, borda ou fundo. [Estado/evidências](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
