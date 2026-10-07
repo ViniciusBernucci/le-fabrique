@@ -145,3 +145,7 @@ FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](do
 ## Migração documental — DOC-MV-001
 
 READY autorizado pelo pedido de 2026-10-07; implementação documental executada em branch isolada docs/manual-vivo-inicial. Estado AWAITING_HUMAN após checks registrados na entrega; não altera status/aceites FAC/OPS ou implementa LF-MT. [Entrega](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md), [plano LF-MT posterior PROPOSTO](docs/08-desenvolvimento/plano-lf-mt-proposto.md). Colisão histórica FAC-013 (plano terceiro adapter versus modal contas entregue) é explicitada na auditoria, sem renumerar passado.
+
+### DOC-MV-001 — Integração autorizada (2026-10-07)
+
+Revisão documental 607d6ed integrada em developer por fast-forward autorizado pelo usuário. Docs atuais em docs/; worktree de migração removida sem alterações pendentes. Permanecem os limites de revisão independente/render/autoload registrados na entrega; nenhum ticket de software promovido a DONE.

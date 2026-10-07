@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-07",
+  "timezone": "Europe/Berlin",
+  "authorization": "Pedido explícito do usuário: commits, merge da worktree em developer e remoção de worktrees órfãs",
+  "base": "a2cc5e0db0f30bf227dfc64300f74bde23a6f412",
+  "migration_commit": "607d6ededcb6499cac5df10ee4adb60a4b3156b1",
+  "merge": {
+    "command": "git merge --ff-only docs/manual-vivo-inicial",
+    "result": "PASS",
+    "mode": "FAST_FORWARD",
+    "conflicts": false
+  },
+  "cleanup": {
+    "command": "git worktree remove /home/vinicius/le-fabrique-manual-vivo; git worktree prune --verbose",
+    "result": "PASS",
+    "force": false,
+    "additional_orphan_records": 0,
+    "remaining_worktrees": [
+      "/home/vinicius/le-fabrique"
+    ]
+  },
+  "preserved": [
+    "reorganizacao-documental/ untracked",
+    "node_modules da worktree principal",
+    "branch docs/manual-vivo-inicial",
+    "originais históricos com hashes"
+  ],
+  "checks": {
+    "document_validator": "PASS pós-merge e após registro de integração",
+    "whitespace": "PASS diff corrente do registro de integração",
+    "software": "NOT_RUN novamente; nenhum novo diff de software"
+  },
+  "limitations": [
+    "sem push/deploy/produção",
+    "autoload e render Mermaid continuam não verificados",
+    "revisão semântica independente pendente"
+  ]
+}

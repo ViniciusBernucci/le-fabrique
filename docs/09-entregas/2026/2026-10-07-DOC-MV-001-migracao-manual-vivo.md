@@ -43,3 +43,13 @@ Revisão semântica própria registrada com fontes locais; revisão independente
 ## Limpeza de redundâncias autorizada
 
 Pedido posterior do usuário autorizou apagar MD desnecessários/redundantes. Removidos 202 bridges individuais em documentacoes/lessons/templates após conferir capítulo canônico e snapshot/hash original. Guias, atalhos essenciais, módulos/contratos/relatos/lessons e originais íntegros permanecem. [Lista verificável](../../00-governanca/MD-REMOVIDOS.json). Rollback desses paths usa exatamente os originais do manifesto ou a revisão anterior; não exige recuperar conteúdo perdido.
+
+## Integração em developer — 2026-10-07
+
+Após a entrega inicial, o usuário autorizou explicitamente os commits, merge em developer e remoção de worktrees órfãs. Integrado o commit documental 607d6ededcb6499cac5df10ee4adb60a4b3156b1 por `git merge --ff-only docs/manual-vivo-inicial`, partindo de a2cc5e0db0f30bf227dfc64300f74bde23a6f412; sem conflitos. O Manual Vivo agora está em `/home/vinicius/le-fabrique/docs`, na branch developer. As menções à worktree e ausência de merge acima registram o estado da entrega original.
+
+A worktree documental foi removida por `git worktree remove` sem force, após confirmar integração e ausência de mudanças pendentes. Seus únicos itens ignorados eram outputs locais de build/test e o symlink de dependências; a origem de node_modules foi preservada. `git worktree prune --verbose` não encontrou registros órfãos adicionais. Resta somente a worktree principal. A branch documental permanece como referência; o pacote recebido reorganizacao-documental/ continua intacto e untracked. Nenhum push/deploy/serviço/migration foi executado.
+
+[Checks da integração](evidencias/DOC-MV-001/INTEGRACAO.json) e [validação pós-integração](evidencias/DOC-MV-001/VALIDACAO-INTEGRACAO.json) registram evidências reais. Sem novo diff de software desde os checks web originais; não repetidos por esta operação Git. O manifesto REVISAO.json e o patch editorial descrevem a revisão inicial 607d6ed, anterior a este registro adicional. Autoload, render Mermaid e revisão semântica independente permanecem com os limites já declarados; autorização de merge não comprova esses testes.
+
+Rollback da integração: `git revert 607d6ededcb6499cac5df10ee4adb60a4b3156b1` em revisão isolada, preservando alterações posteriores; sem reset destrutivo. Para consultar a revisão original, usar Git; recriar worktree não é necessário para acessar docs atuais.

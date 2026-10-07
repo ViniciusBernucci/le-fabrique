@@ -414,3 +414,9 @@ Kit de planejamento anterior com execução por APIs na VPS, agora substituído 
 Mescla do pacote fornecido com documentação/código reais em a2cc5e0; navegação docs-as-code, C4 atual/alvo, módulos/features/contratos/ADRs/operação/desenvolvimento; relatórios e lessons realocados com bridges e snapshots/hash/mapa por seção. Backlog/aceites locais preservados; política comum única e fallback de carregamento. Exemplos UI do gate apontam docs; sem mudança de segurança/execução. Estado documental AWAITING_HUMAN; [entrega e checks](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md).
 
 DOC-MV-001 — limpeza posterior autorizada: 202 bridges MD individuais redundantes removidos após conferir canônico/snapshot/hash; entradas essenciais e todo conteúdo útil preservados. Lista em docs/00-governanca/MD-REMOVIDOS.json.
+
+## 2026-10-07 — Integração DOC-MV-001 em developer
+
+- Migração Manual Vivo 607d6ed incorporada por fast-forward autorizado; docs/ disponível na worktree principal.
+- Worktree documental limpa e integrada removida sem force; somente a principal permanece, sem registros órfãos adicionais.
+- Validação documental pós-merge executada; pacote recebido preservado. [Registro](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md#integração-em-developer--2026-10-07).
