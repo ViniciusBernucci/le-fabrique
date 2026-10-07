@@ -16,7 +16,7 @@ Auth/versão/digest/estado inválido interrompe a operação pertinente; informa
 
 ## Relações e evidências
 
-[runs](../03-modulos/runs/README.md), [sandbox](../03-modulos/sandbox/README.md), [worker](../03-modulos/worker/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../../BACKLOG.md).
+[runs](../03-modulos/runs/README.md), [sandbox](../03-modulos/sandbox/README.md), [worker](../03-modulos/worker/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../08-desenvolvimento/backlog.md).
 
 ## Limite
 

@@ -16,7 +16,7 @@ Auth/versão/digest/estado inválido interrompe a operação pertinente; informa
 
 ## Relações e evidências
 
-[controle](../03-modulos/controle/README.md), [observabilidade-economia](../03-modulos/observabilidade-economia/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../../BACKLOG.md).
+[controle](../03-modulos/controle/README.md), [observabilidade-economia](../03-modulos/observabilidade-economia/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../08-desenvolvimento/backlog.md).
 
 ## Limite
 

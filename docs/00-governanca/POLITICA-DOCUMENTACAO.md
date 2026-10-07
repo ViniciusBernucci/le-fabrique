@@ -14,13 +14,13 @@ Uma pessoa nova deve compreender: o que é, como funciona, por que foi decidido,
 | Interfaces/entidades/eventos/filas | docs/05-contratos (schema de código quando existir) |
 | Razão arquitetural | docs/06-decisoes |
 | Procedimento operacional | docs/07-operacao |
-| Setup/testes/contribuição/planejamento | docs/08-desenvolvimento; BACKLOG raiz |
+| Setup/testes/contribuição/planejamento | docs/08-desenvolvimento; backlog.md nesta área |
 | Mudança histórica por entrega | docs/09-entregas/<ano>/AAAA-MM-DD-TICKET-titulo.md |
 | Conceito efetivamente aplicado | docs/10-lessons/<conceito>.md |
 | Governança/auditoria/templates | docs/00-governanca |
 | Origem/superado | docs/99-historico |
 
-CHANGELOG.md de raiz é único registro resumido; docs/CHANGELOG.md é atalho. PILOTO, PLANO-MVP, ESPEC-MVP, MATRIZ e FONTES de raiz são atalhos para suas fontes. INDEX é inventário navegável, Manual ensina; não copiar definições entre eles.
+[docs/CHANGELOG.md](../CHANGELOG.md) é o único registro resumido; [backlog](../08-desenvolvimento/backlog.md) preserva trabalho e aceites reais. Piloto/plano/controle/matriz ficam em desenvolvimento; especificação em contratos; fontes e guia de integração em governança; prompts em prompts/. A raiz mantém somente README e os três guias de agentes; não recriar atalhos removidos. INDEX é inventário navegável, Manual ensina; não copiar definições entre eles.
 
 ## Matriz de impacto por entrega
 

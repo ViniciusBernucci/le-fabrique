@@ -1,6 +1,6 @@
 # Catálogo funcional FAC preservado
 
-Revisão documental: 2026-10-06. Todos os tickets abaixo continuam **PLANEJADOS**, nenhum DONE comprovado. Objetivos/aceites funcionais são preservados. Dependências/sprints/esforços citados nas fichas são **baseline histórica v2**, subordinada ao [sequenciamento FAC/LF-MT proposto atual](../../BACKLOG.md) e ao [plano v3](plano-mvp.md). FAC-002 não autoriza execução real antes dos gates. Estimativa 23–35 dias não cobre LF-MT nem é prazo contratual.
+Revisão documental: 2026-10-06. Todos os tickets abaixo continuam **PLANEJADOS**, nenhum DONE comprovado. Objetivos/aceites funcionais são preservados. Dependências/sprints/esforços citados nas fichas são **baseline histórica v2**, subordinada ao [sequenciamento FAC/LF-MT proposto atual](backlog.md) e ao [plano v3](plano-mvp.md). FAC-002 não autoriza execução real antes dos gates. Estimativa 23–35 dias não cobre LF-MT nem é prazo contratual.
 
 ## FAC-001 — Contratar piloto
 

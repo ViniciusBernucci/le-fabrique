@@ -2,7 +2,7 @@
 
 # Controle do MVP — La fabrique
 
-Atualizado em 2026-10-03 pelo FAC-012AH. Estado: MVP DE SOFTWARE IMPLEMENTADO/VERIFICADO / ACEITE E ATIVAÇÃO OPERACIONAL PENDENTES. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](../../BACKLOG.md) registra aceite por ticket; [documentacoes/INDEX.md](../INDEX.md) reúne evidências.
+Atualizado em 2026-10-03 pelo FAC-012AH. Estado: MVP DE SOFTWARE IMPLEMENTADO/VERIFICADO / ACEITE E ATIVAÇÃO OPERACIONAL PENDENTES. Software e instalação têm verificações distintas; piloto externo não é requisito de conclusão do MVP. [BACKLOG.md](backlog.md) registra aceite por ticket; [documentacoes/INDEX.md](../INDEX.md) reúne evidências.
 
 Escopo autorizado: concluir código/verificações internas sem piloto externo, integrar trabalho local na `developer` e preservar configuração pela interface. Aceite humano, push e implantação são distintos de implementação/merge local.
 

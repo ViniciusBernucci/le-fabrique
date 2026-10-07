@@ -34,3 +34,7 @@ Sections de documentos locais realocados são transferidas integralmente, com li
 ## Limpeza autorizada posterior
 
 [MD removidos](MD-REMOVIDOS.json) registra cada bridge individual redundante apagado pelo pedido explícito do usuário, com destino canônico e snapshot/hash previamente conferidos. Atalhos de raiz e entradas documentacoes/INDEX, política/domínios README e lessons/INDEX permanecem essenciais. Não existe exclusão de conteúdo útil ou snapshot para apagar conflito.
+
+## DOC-MV-002 — caminhos atuais após organização da raiz
+
+[Realocação da raiz](REALOCACAO-RAIZ.json) e [retirada de documentacoes](REMOCAO-DOCUMENTACOES.json) suplementam a migração inicial, com snapshots/hash e destino por arquivo. Backlog atual em docs/08-desenvolvimento/backlog.md; changelog em docs/CHANGELOG.md; guia em docs/00-governanca/GUIA-DE-INTEGRACAO.md. Documentacoes não existe mais como pasta corrente; seu nome em origem/histórico identifica proveniência.

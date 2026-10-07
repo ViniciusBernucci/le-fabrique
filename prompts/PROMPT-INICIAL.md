@@ -2,7 +2,7 @@
 
 Abrir explicitamente o guia do agente (AGENTS.md, CLAUDE.md ou ANTIGRAVITY.md), docs/00-governanca/POLITICA-IA.md e docs/00-governanca/POLITICA-DOCUMENTACAO.md, README raiz, docs/README.md, piloto/ticket e capítulos afetados. Link não inclui arquivo automaticamente; se descoberta não comprovada, injetar fontes com hashes e omissões.
 
-Inspecionar root/branch/SHA/status/patch/untracked e regras locais. Selecionar menor ticket READY real com objetivo/critério/escopo/baseline/provider elegível/limites. Não usar indicação histórica “próximo FAC-003” para reexecutar ticket aceito; BACKLOG raiz é fonte dos aceites atuais. Piloto externo DEFERRED/opcional não bloqueia software da fábrica.
+Inspecionar root/branch/SHA/status/patch/untracked e regras locais. Selecionar menor ticket READY real com objetivo/critério/escopo/baseline/provider elegível/limites. Não usar indicação histórica “próximo FAC-003” para reexecutar ticket aceito; docs/08-desenvolvimento/backlog.md é fonte dos aceites atuais. Piloto externo DEFERRED/opcional não bloqueia software da fábrica.
 
 Stack aprovada React/Vite, NestJS, worker Node/TS separado, PostgreSQL e Redis/BullMQ, VPS única. Preservar stack apenas de projeto externo. Assinaturas/clientes oficiais; API de IA/extras/créditos/recarga/fallback pago desligados. Não instalar/autenticar provider ou ativar runtime por este prompt. Código/schema/controller prevalece para implementação; tenancy/RLS/broker do pacote são propostas posteriores, sem contorno de OAuth/API/auth mount.
 

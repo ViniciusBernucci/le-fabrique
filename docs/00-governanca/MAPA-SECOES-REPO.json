@@ -80,861 +80,861 @@
     "source": "BACKLOG.md",
     "section": "Backlog v2",
     "sha256": "3da13cc706520c700f493c7cbb12cd067cc1f8e50ced370560dfb9edda00e60c",
-    "destination": "BACKLOG.md",
+    "destination": "docs/08-desenvolvimento/backlog.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "BACKLOG.md",
     "section": "Decisão obrigatória da stack - revisão 2.3",
     "sha256": "b93b9bf5356c166a73763be10f185c1d6e9449c41fcd5c064db91931760b7804",
-    "destination": "BACKLOG.md",
+    "destination": "docs/08-desenvolvimento/backlog.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "BACKLOG.md",
     "section": "Stack obrigatória da fábrica - revisão 2.3",
     "sha256": "c47045cc18bf5342b10a7530435b67e02fdc593de1dae258bed0658523617ee6",
-    "destination": "BACKLOG.md",
+    "destination": "docs/08-desenvolvimento/backlog.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "Changelog",
     "sha256": "2d68c5b88ac4872c603d66e65137074cfbf18827dfe756250942f8a213694071",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-031",
     "sha256": "1acf26d9315e4672a31568b6b8242e98b19d0a5cb23514ffb282bc1b9048aaad",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-030",
     "sha256": "9ccac1d43ab57558737e17d6d27dac231652ef39f0ce7190cc0c91e9a9daa605",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-029",
     "sha256": "b1c5aa85ba7ac0b20580d97d58791cdd5efe824a099b6c5f7b98d6d5929845d0",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-028",
     "sha256": "0eb1ee93cf1665063d8a66f3fd67ed81be32f64fa346e8aaf41b707707a1e250",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-026 / FAC-027",
     "sha256": "1f74fe46fa513c4f54bafb2734cdd88ea86a47a2b2ba00d0186ff792a1a4f75b",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-06 — FAC-025",
     "sha256": "d4d9d08703c5b79d37004af57bddc3e29414a70db414b314a332ab2b15589de6",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-024",
     "sha256": "3556d10be2f4995f21fa4f3db90dfc069caa5b65ea2ffcb2016a1c94a6461ac7",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-023",
     "sha256": "4b11901196f1d6e7c207eb7182d5ad408edc41e87a475d61b69ac3d87748ace5",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-022",
     "sha256": "eb3aaf30680be62d27cffd4e5050b55e9ece08b9bfddf0427a0533e8aef3cae9",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-020A / FAC-021",
     "sha256": "b6993b0cafdf02078cf9bdaf93a8e9e16ce50894856c9ba2318c008b70520765",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-020",
     "sha256": "220a547fc64e2732297351727d37db6210e9f80565ae566850f706ed97747a07",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-017",
     "sha256": "ef5bfd1f92a24c06df38d6fde8fe0b308546a520e7d83445b8ca2eb7ec5fb2ca",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-016",
     "sha256": "7205cd991894a24b012b26d9bf1da3e7970e7e8b83ec352f173c69099dc40965",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-015",
     "sha256": "1b7ff0b351dad28c553c321d28afb2f9f7be7015a6319241ad7488067c183ca1",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-014",
     "sha256": "34622ae03c72d7b35c1e9c3127b566dae4deea556bbec31a0e4683e94134a61d",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — FAC-013",
     "sha256": "f1157ec3cce621ed009861ecf1d2425331b37ba7a0f08a1bed272da9073d4caf",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — OPS-009",
     "sha256": "a84d7db3490433c555dd6f9156dac1e17946b706646e9709f7affe5a8721443a",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — OPS-008",
     "sha256": "5ff64bf1fab7c3612efa8a30648fe2735569ca9e916635d28d84e38f7f6db2bb",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-05 — OPS-007",
     "sha256": "836a91ca6d265067b0de33a6a90b6b0284aba008cc2b4fdffacd78a95ca04715",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AH",
     "sha256": "a233394f7f83fd0722362edcb8bae1a2c76bd02d18bd1ce82d6c927f6cdab321",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AG",
     "sha256": "a3b7ceb8fd6f3f7888f7b5ca1a5da94b5a91e9fab97cc6e4def8e9507dcc07dc",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AF",
     "sha256": "796b775cec27ec4eea828cfd68f9c86c5f830eb080d7ec99eb9b404d15a9d045",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AE",
     "sha256": "5f4fcde4cc8e8e5c381ec0dd4ba0f87b1976746ed1081b5616823b8f46f1e0ef",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AD",
     "sha256": "75f2bd77f6eeb6ef5f7e15af813ed691622edbaf62f55e9cf0db3e54fda2cd12",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AC",
     "sha256": "4d8b07f9d794fc7dfdbb0ffb6671905e0aee8bdc980ed12bdc84efe017fc889f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AB",
     "sha256": "ba47967035c9793457ea1833d53273a0e7755133f13709d72900ef82fd950a99",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012AA",
     "sha256": "4f5dbde580a6434c8cddf0524b74f67b0f9fb7339c1806cb911f0f3129c32de7",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2026-10-03 — FAC-012Z",
     "sha256": "afd392673a2d539ab214b0e68d49be77c6b46ccd02d5d4eb4140e249d1c2137e",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.88 - 2026-10-03",
     "sha256": "9c83a940415538d5ce0bd17482a53371b09ee0bea108b3493dc058e5af150148",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.87 - 2026-10-03",
     "sha256": "2aac11c636b565708ea89f9736abd2208e3fad7d3689dc34a7a65ed5f141a150",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.86 - 2026-10-03",
     "sha256": "281b0e7532fcafede606212d4dc19368404cc80b9d27ca24c2b037f0c7d8a914",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.85 - 2026-10-03",
     "sha256": "ac40028457fabe63e480d0919ec2a4149cc612d852dbbd9ee1b73fbba361e0f7",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.84 - 2026-10-03",
     "sha256": "ff88f32562f1d2c3aaf48a5bf1dc262c69a36ef1c17e4db55a909ef77a6c88b3",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.83 - 2026-10-03",
     "sha256": "a36a0ef43fc1aabee599e66fc7da484adf1f6c1f529a3551df223397aed1c735",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.82 - 2026-10-03",
     "sha256": "a326d51dde59c7b40f7fcb2ced450d43fc6bfdd6ae0fbba508df16eb26f79e66",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.81 - 2026-10-03",
     "sha256": "a3aba1ae5f6e4e97471c30d288182e4ac5c100c77dd35eee22336ce6489521e5",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.80 - 2026-10-03",
     "sha256": "cc5dd32802968a7a7a5a28c49b0257b050802e1b201bb68509f44abcc256a827",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.79 - 2026-10-03",
     "sha256": "0cf7aec48569c0ec02990dbcf82cd6bc9e4a02df7460f604a343eefda2a9da0c",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.78 - 2026-10-03",
     "sha256": "315f36918346adb4c139a059382d577ebab8a89ca9767399cbc8a439c7803677",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.77 - 2026-10-03",
     "sha256": "d93dbb194098658ef583d7b235b123f03fdf56cd160a304c6dbd2a887b90c49a",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.76 - 2026-10-03",
     "sha256": "fe07b241d5ac4a6b3ef0bc7a0073e261b6f31e9065483527a28a829385590b06",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.75 - 2026-10-03",
     "sha256": "99e9718db0b4e58977c63f2857c072fa74fa5f430f4efc9040297184fd5d4075",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.74 - 2026-10-03",
     "sha256": "8e477d974f1ea411aeb6de2ff87cc925b92dc04c98e5309fbc7fe8ff160bb78a",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.73 - 2026-10-03",
     "sha256": "b59c67cdcb119d63e812ea52bb9ed860dd0f342837dd2a72bb1147ba52ef78e6",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.72 - 2026-10-03",
     "sha256": "39d5d079f8ad0fa9361edf517c37e207443982348e4fa9a73c34dd1a7475783f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.71 - 2026-10-03",
     "sha256": "4704c3f16f937970031273d9407c29115efc9a462a340b1f7fc0ef51ee2e2615",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.70 - 2026-10-03 — planejamento paralelo",
     "sha256": "b61028d36fa50a1f6db2f0e3975a0f8202dd02ac3add03695b6bd76e07998ad8",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.69 - 2026-10-03",
     "sha256": "f204810ab10015cafe4c2e5856689b57a2ca0ff1298860e93d19bb3762e5b415",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.68 - 2026-10-02",
     "sha256": "14e79a66763cf4f7ee5a4e20f8c5f0d9678bb09c0f6beec088b0bb547a217b06",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.67 - 2026-10-02",
     "sha256": "5c81834cfd4ea28b85ab6d80e3fe7b0c5f8fa93bb5b49edd196ab9e5c3cf836b",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.66 - 2026-10-02",
     "sha256": "528270780bb27716e269b71e298a663081de4b4bafb02f0b9d55c2d88e07e74a",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.65 - 2026-10-02",
     "sha256": "3fda572d2567e9de2929ad3d34d8bdf60870f25c1b7d5eaca71e3dcd64c16bef",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.64 - 2026-10-02",
     "sha256": "6a0ae7be00758c8353f61a527be7bc18527c7df5fcb05ce0bbec86ee12863c4f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.63 - 2026-10-02",
     "sha256": "12eda1837365a46cdc4fcb5ac73c5d6c0f8c3b0a0daea495603abb1e6825496b",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.62 - 2026-10-02",
     "sha256": "4474d6dcbed9efab1f584ed16fc10681e9d6388e4d61d839cf6f7953937628b8",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.61 - 2026-10-02",
     "sha256": "176e4480b7d31ed1b220cff1d5708b96d8ae655477185e831ef8d4581326d3c3",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.60 - 2026-10-02",
     "sha256": "d56433320bbc4632dead0b8ec81613a160c38dae808e29fcf2e6bd242a27a23b",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.59 - 2026-10-02",
     "sha256": "32a608bf5e8bd304dedb51d8e53eb7721017217a686c2ff0dc8f11886e0af792",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.58 - 2026-10-02",
     "sha256": "4075b72c7042d2c2d53b34af7474880b64b7be71f5f473805ba14b31d586fb85",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.57 - 2026-10-02",
     "sha256": "3c0d1efc131e29e08ee3eea0f7a272ece2da50669bbe91227aa18148dbc957d6",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.56 - 2026-10-02",
     "sha256": "01e61b6dac3d199d34cc64a26fc74d132c4507b539236170552d68a14d391f39",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.55 - 2026-10-02",
     "sha256": "db044fa3d8d926bc94b585659c01b6f0946ad5cce5955dd076caeb2b686c6785",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.54 - 2026-10-02",
     "sha256": "dca3b0bfdd25bd898c539e32a406c785c51e9f37f944726e345fdb42c5d7e19e",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.53 - 2026-10-02",
     "sha256": "2122c5250aabe4c41572a300acf0d695bb51df90119877d3efb1a3a8a7c15162",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.52 - 2026-10-02",
     "sha256": "17d40c8e2bb9a077bcdb1520fd4b766cb6d3d97cd8510db374bd31f7f2f7cbee",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.51 - 2026-10-02",
     "sha256": "3caad72f2a5f750450fa9917ab57397c1c366c5389fc8511914e1cebeca67f9f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.50 - 2026-10-02",
     "sha256": "fd0249a904723e176065f7f7bd0156fa6da3d5acd4f2e888949d0000bcff084e",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.49 - 2026-10-02",
     "sha256": "9fa86a4df4f322489ef60bda32cbe2452b54b5c37140e9c3136af818dbfc9a4c",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.48 - 2026-10-02",
     "sha256": "2d434bfa73a2c26f052074d80ef23fab0b355999ecc230326586319589cefa16",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.47 - 2026-10-02",
     "sha256": "3e7dd20cb78da6222368fb07536d5425f01650d444e48b9cb6dadf1b9be25b6c",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.46 - 2026-10-02",
     "sha256": "7c014a778368fbc9b8ae4050eb75b6e5cd628c4000c61643cae36a4dcce14fc6",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.45 - 2026-10-02",
     "sha256": "d9a0f16c16dae1e1d42c5b1e274363cf042b5d8cd61a8e478fe595367bf71c33",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.44 - 2026-10-02",
     "sha256": "ff3db442c4aa2d61d62d711b7a25ef7b68f37911a3aab643a75fc21d5fc87471",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.43 - 2026-10-02",
     "sha256": "7c26adb85a7c99db188d8f3598469d0df1d7a55dd54d7180cb6bf1966b7bd287",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.42 - 2026-10-02",
     "sha256": "9d267e7ede55f21b98e01ee503240fa3a4bb9129d7e4aa183121a3740a34b191",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.41 - 2026-10-02",
     "sha256": "aa6564d63b3309547ef5fbbe482558598116a1e0c933bf6ad1d5fbe911f9be05",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.40 - 2026-10-02",
     "sha256": "ba331c9420bf2027348ddf7e1d591f9180f04af7ab4291c4c86555b512ecf730",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.39 - 2026-10-02",
     "sha256": "0183e0f21046618ed5851a11727985689c0e1da19bfb8aaace07bf8f12adc279",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.38 - 2026-10-02",
     "sha256": "e914915c2eb86a974efb0ca76552366bfecbc8fabcd8d8098ae3d35f6837055a",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.37 - 2026-10-02",
     "sha256": "8d9afb55efa30e64617a8399feb5a1e1df417cdc453e4bc0ad701b0420329ca1",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.36 - 2026-10-02",
     "sha256": "e5cf8a29baa11cf30e92b9d5c827d2f2016e3e6a16287109f00e5414be918c89",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.35 - 2026-10-02",
     "sha256": "e08d4102d9fcad94a05650e4c9b90217c01eedc586d3389d9f836d8886aac251",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.34 - 2026-10-02",
     "sha256": "c9aea495794b60f0809fe8a3aed225b55f98c0df925a690b811ca9e46003ae20",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.33 - 2026-10-02",
     "sha256": "7f3234600852cff5bc4967e31234814c6d2e3ad47c0967436b3228520d97f193",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.32 - 2026-10-01",
     "sha256": "d0467830c9692e6a55ac32fcddd40cc19d7596ffe6f55b3032c72efa610be6fe",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.31 - 2026-10-01",
     "sha256": "68718329874d9cf0ca66ef3a31f2714804b738a586525eebb4b0f21a30604e33",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.30 - 2026-10-01",
     "sha256": "cc4f75d7aa58e8fa7a89ac6f486dfe18e74f6f0c7d5ea43f430250632c470be9",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.29 - 2026-10-01",
     "sha256": "c3388135d0ea241b067330649577e2ad16b7a5e828fdaf996e90d3bfb0d04829",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.28 - 2026-10-01",
     "sha256": "8176be372e0e49193cf64743e617d39ba1d3ba45568bc5a63289c26825645fdf",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.27 - 2026-10-01",
     "sha256": "e09caba8a682d3f08744335a30425af86a9709d93564121c83e6e1391fe03faf",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.26 - 2026-10-01",
     "sha256": "6f9575846dbdabe655e1700d71c024d6a59ab6fc15c26a10effcb8ed84a57b98",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.25 - 2026-10-01",
     "sha256": "eb11e7ccd2633ecfacfc41988107e307dd80098e3627845dcb5c9fde3971ef70",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.24 - 2026-10-01",
     "sha256": "5c2f16fb19d300da09dc775e21fb040a2d28f7a080f1c63b88dece087df2a491",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.23 - 2026-10-01",
     "sha256": "4cec1ef5b2c9775303bbb3e1a045f52771a717ed18cf11f16bbc2b04daa80d20",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.22 - 2026-10-01",
     "sha256": "92fb545a2faaa4a4821146dd714f03a56472d9a0c7e13e481e58ffddfcfb2cdc",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.21 - 2026-10-01",
     "sha256": "295e29e048ef1061951e47c772bc577c14190cf81a976e7a8041cc1f0b4b269e",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.20 - 2026-10-01",
     "sha256": "87dd4d597fee14b60d44310a4459f4da7b92a6423c9c5ae22c30b1497236e34f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.19 - 2026-10-01",
     "sha256": "7af28f82698f4db8339464aed44769364a73f707c3a44744fb8269e7be1e5ec5",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.18 - 2026-10-01",
     "sha256": "3d7d789ebe79788eb2c1d2a05eb3da388b097323e1e4614d122426a4768a8a5c",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.17 - 2026-10-01",
     "sha256": "cbe9f272f4d5a15ca2a644ddd6fc034e37084710fd740f648318fac0ecd01195",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.16 - 2026-10-01",
     "sha256": "724dc36de58f26a79a6600a09d5d758b86e4f7e155282e180c626ba5f377eab2",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.15 - 2026-10-01",
     "sha256": "3269827ec6fc9e06d1d62214acdaa85ca48e0069801b283ff9b2ee4f53d90dec",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.14 - 2026-09-30",
     "sha256": "575677bc4ab18f752c1c9a1fae8537829e18272b4e39be1705173f85008d1ea4",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.13 - 2026-09-30",
     "sha256": "0179c4d30f5bc4361ef6d4d841d598bd6b881eb44b351c476e8a121463e8e622",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.12 - 2026-09-30",
     "sha256": "84648823d1968e9982c72c86beb50431260ef3f1341ea7660cedf5ff7dc4419d",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.11 - 2026-09-30",
     "sha256": "110e52c2b2ea1278383c604b6b33834dc7f209362c69e4bd98d2a0408666b7e8",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.10 - 2026-09-30",
     "sha256": "847b65e9f8d60199a10b54c0ffd6eae558d4226bb4d320813324eea9317c4975",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.9 - 2026-09-30",
     "sha256": "0e2e4c5d9b6514265c1e4980d379a306a773b7776568ab76be775b380ef1b4dd",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.8 - 2026-09-30",
     "sha256": "a0a9d4013fe43314f0b0e0db623047058a611983a7a208dc32be3070036a5c23",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.7 - 2026-09-30",
     "sha256": "d792bf0c04b6ffca4325a6647fa45b080cb71e33aa28f6913dff7efbb5c41b66",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.6 - 2026-09-30",
     "sha256": "ebc067038bf515160539ea8ee93203b44deaf22527c01496e82ea18e18ad555f",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.5 - 2026-09-30",
     "sha256": "af8e9e5ff8628d5659b031eadd8f6eb5b01d838659483bd0d057562c91db869d",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.4 - 2026-09-30",
     "sha256": "c0834db349d61bcab454a456518db7f6f661176d12ed7aaad6ba5d275855ab90",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.3 - 2026-09-30",
     "sha256": "3927d7e55e6f824e912d87164385f08036064253520c4996a716a08f6b90e052",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "Changelog",
     "sha256": "2d68c5b88ac4872c603d66e65137074cfbf18827dfe756250942f8a213694071",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.2 - 2026-09-29",
     "sha256": "36dc0c6673366fb56ea1dfa87225a177baed23f29307271b75e1e51b78dbc85b",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.1 - 2026-09-29",
     "sha256": "6f77cc89a97f664e9f1f0224dfaaf4c4084e9afb0f83a6953bee596e83a871d4",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "2.0 — 2026-09-29",
     "sha256": "85a1dde06d0dc2ee3f960ea6a0d80ed4bc3b481af8f3584537b668c8ebda9ccc",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {
     "source": "CHANGELOG.md",
     "section": "1.0 — 2026-09-29",
     "sha256": "a65d335f200a4d9b86b77614a893f16046d6d5716c6250cd451110ca75abca5c",
-    "destination": "CHANGELOG.md",
+    "destination": "docs/CHANGELOG.md",
     "treatment": "Não realocado; fonte local/guia preservado e mesclado por política, snapshot íntegro"
   },
   {

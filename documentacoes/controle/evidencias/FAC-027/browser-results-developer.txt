@@ -1,3 +1,0 @@
-Desktop 234px ↔ 66px; keyboard button, hidden text/visible icons, title and aria labels; content margin tracks width; preference survives navigation and reload
-Mobile starts/crosses breakpoint collapsed; expands as 234px overlay and recollects; no overflow at five widths
-Disabled localStorage does not break toggling/navigation; no page errors, no provider/database operations

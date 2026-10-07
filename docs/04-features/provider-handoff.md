@@ -16,7 +16,7 @@ Auth/versão/digest/estado inválido interrompe a operação pertinente; informa
 
 ## Relações e evidências
 
-[providers](../03-modulos/providers/README.md), [runtime](../03-modulos/runtime/README.md), [runtime-guard](../03-modulos/runtime-guard/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../../BACKLOG.md).
+[providers](../03-modulos/providers/README.md), [runtime](../03-modulos/runtime/README.md), [runtime-guard](../03-modulos/runtime-guard/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../08-desenvolvimento/backlog.md).
 
 ## Limite
 

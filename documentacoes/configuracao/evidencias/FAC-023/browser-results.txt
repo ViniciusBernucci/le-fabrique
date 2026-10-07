@@ -1,7 +1,0 @@
-Skills: create/edit, required project and instructions, project isolation
-Eight agents created (beyond former six roles), project skill associations and edit persisted
-Reload re-fetches fixture settings and preserves agents, instructions and links
-409 retains draft/modal, explains failure and does not overwrite persisted settings
-Agent deletion and skill deletion clean associations without removing other project records
-Roving keyboard tabs, compact modal, persistent template; no overflow at five widths, no page errors
-14 settings writes via local HTTP fixture; no database/provider/external calls

@@ -16,7 +16,7 @@ Auth/versão/digest/estado inválido interrompe a operação pertinente; informa
 
 ## Relações e evidências
 
-[projects](../03-modulos/projects/README.md), [tickets](../03-modulos/tickets/README.md), [orchestrator](../03-modulos/orchestrator/README.md), [worker](../03-modulos/worker/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../../BACKLOG.md).
+[projects](../03-modulos/projects/README.md), [tickets](../03-modulos/tickets/README.md), [orchestrator](../03-modulos/orchestrator/README.md), [worker](../03-modulos/worker/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../08-desenvolvimento/backlog.md).
 
 ## Limite
 

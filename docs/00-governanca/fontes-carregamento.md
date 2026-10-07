@@ -19,3 +19,7 @@ Abrir nova sessão no root e pedir: “Liste os arquivos de instrução ativos, 
 Somente --version executado: codex-cli 0.159.2; Claude Code 2.1.285; agy 1.2.17. Instruções hierárquicas de raiz/.agents e fixtures inventariadas; sem AGENTS ancestral localizado em /home/vinicius, /home ou /. Nenhuma nova sessão de inferência/cliente executada: disponibilidade de binário não comprova provider elegível, cobrança de assinatura/extra desligado ou leitura das políticas. O escopo documental não altera autenticação/permissões para testar autoload. Resultado NÃO VERIFICADO por agente.
 
 Fallback obrigatório: abrir explicitamente AGENTS/CLAUDE/ANTIGRAVITY e docs/00-governanca/POLITICA-IA.md + POLITICA-DOCUMENTACAO.md no job; registrar SHA-256/config e omissões antes de editar. A versão instalada pode carregar hierarquia/override específicos; confirmar numa sessão autorizada, sem ampliar permissões nem ler auth.
+
+## Destinos após DOC-MV-002
+
+AGENTS/CLAUDE/ANTIGRAVITY continuam na raiz. Todos exigem ler políticas e apontam explicitamente docs/08-desenvolvimento/backlog.md, docs/CHANGELOG.md e docs/00-governanca/GUIA-DE-INTEGRACAO.md, além de piloto e templates. Os atalhos de apoio da raiz e a pasta documentacoes foram retirados. Ponte .agents permanece válida; leitura automática continua NÃO VERIFICADA.

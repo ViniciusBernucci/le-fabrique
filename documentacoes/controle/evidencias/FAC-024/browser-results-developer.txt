@@ -1,5 +1,0 @@
-Real local MP4 autoplay, muted, loop, playsInline; no controls, PiP/remote disabled, no overlay buttons or keyboard focus
-Desktop width 42% of center = 70% of previous 60%; 16:9 video aspect ratio
-Two native loops: 235 displayed frames, maximum gap 66.7ms, seam gaps 66.7/33.3ms, no black frame
-No overflow at six widths; mobile at 70% of former width; auth/navigation/frame preserved, video unmounts on other pages and restarts on home
-No page errors or initial API calls; browser media measurements on local asset, no provider/database actions

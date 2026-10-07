@@ -16,7 +16,7 @@ Auth/versão/digest/estado inválido interrompe a operação pertinente; informa
 
 ## Relações e evidências
 
-[documentation-gate](../03-modulos/documentation-gate/README.md), [approvals](../03-modulos/approvals/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../../BACKLOG.md).
+[documentation-gate](../03-modulos/documentation-gate/README.md), [approvals](../03-modulos/approvals/README.md). [Contratos](../05-contratos/README.md), [ADRs](../06-decisoes/README.md), [entregas](../09-entregas/README.md), [aceites reais](../08-desenvolvimento/backlog.md).
 
 ## Limite
 

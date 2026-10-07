@@ -127,10 +127,37 @@ def main():
     else:
         errors.append('Mapa de seções/destinos do repo ausente')
 
+    relocation_path = root / 'docs/00-governanca/REALOCACAO-RAIZ.json'
+    if relocation_path.is_file():
+        relocation = json.loads(relocation_path.read_text())
+        for entry in relocation['files']:
+            archive = root / entry['archive']
+            if not archive.is_file() or hashlib.sha256(archive.read_bytes()).hexdigest() != entry['sha256']:
+                errors.append(f"Snapshot da raiz alterado/ausente: {entry['archive']}")
+            if (root / entry['source']).exists():
+                errors.append(f"Atalho redundante recriado na raiz: {entry['source']}")
+            if not (root / entry['destination']).is_file():
+                errors.append(f"Destino da raiz ausente: {entry['destination']}")
+
+    legacy_map = root / 'docs/00-governanca/REMOCAO-DOCUMENTACOES.json'
+    if legacy_map.is_file():
+        if (root / 'documentacoes').exists():
+            errors.append('Pasta legada documentacoes recriada')
+        for entry in json.loads(legacy_map.read_text())['files']:
+            archive = root / entry['archive']
+            target = root / entry['destination']
+            if not archive.is_file() or hashlib.sha256(archive.read_bytes()).hexdigest() != entry['sha256']:
+                errors.append(f"Original legado alterado/ausente: {entry['archive']}")
+            if not target.is_file():
+                errors.append(f"Destino legado ausente: {entry['destination']}")
+            elif entry['source'].endswith('.md') is False and hashlib.sha256(target.read_bytes()).hexdigest() != entry['sha256']:
+                errors.append(f"Evidência legada alterada: {entry['destination']}")
+
     required = ['AGENTS.md', 'CLAUDE.md', 'ANTIGRAVITY.md',
         'docs/README.md', 'docs/INDEX.md', 'docs/00-governanca/POLITICA-IA.md',
         'docs/00-governanca/POLITICA-DOCUMENTACAO.md', 'docs/00-governanca/MAPA-MIGRACAO.md',
-        'prompts/PROMPT-MESTRE-MIGRACAO.md', 'GUIA-DE-INTEGRACAO.md']
+        'prompts/PROMPT-MESTRE-MIGRACAO.md', 'docs/00-governanca/GUIA-DE-INTEGRACAO.md',
+        'docs/08-desenvolvimento/backlog.md', 'docs/CHANGELOG.md']
     for name in required:
         if not (root / name).is_file():
             errors.append(f'Entrada obrigatória ausente: {name}')

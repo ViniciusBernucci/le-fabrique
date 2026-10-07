@@ -102,4 +102,4 @@ Relatos locais preservam datas/IDs/revisões/resultados/limites; links editoriai
 - [2026-10-05-FAC-018-autorizacao-clientes / runtime](2026/runtime/2026-10-05-FAC-018-autorizacao-clientes.md)
 - [2026-10-05-FAC-023-agentes-skills / runtime](2026/runtime/2026-10-05-FAC-023-agentes-skills.md)
 
-[Backlog real](../../BACKLOG.md), [índice global](../INDEX.md).
+[Backlog real](../08-desenvolvimento/backlog.md), [índice global](../INDEX.md).
