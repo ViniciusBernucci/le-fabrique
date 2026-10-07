@@ -14,11 +14,11 @@ Código/schema/controller prevalece para implementação: C4 atual separado do a
 
 ## Origem, arquivos, diff e revisão
 
-[Manifesto](../../00-governanca/MANIFESTO-FONTES.json), [inventário](../../00-governanca/INVENTARIO-REPO.json), [destinos](../../00-governanca/DESTINOS-REPO.json), [mapa por seção](../../00-governanca/MAPA-SECOES-REPO.json) e [auditoria](../../00-governanca/AUDITORIA.md). Snapshots repo-a2cc5e0 e pacote-recebido preservam originais/PDF/ZIP/manifestos integralmente. [Patch editorial sanitizado](evidencias/DOC-MV-001/editorial.patch) e [manifesto da revisão](evidencias/DOC-MV-001/REVISAO.json) identificam o conjunto revisável. Patch exclui snapshots/evidências binárias e JSONs volumosos de proveniência; git diff/commit da branch contém a totalidade, inclusive esses artefatos. Exclusões do manifesto evitam hash circular e são explícitas.
+[Manifesto](../../00-governanca/MANIFESTO-FONTES.json), [inventário](../../00-governanca/INVENTARIO-REPO.json), [destinos](../../00-governanca/DESTINOS-REPO.json), [mapa por seção](../../00-governanca/MAPA-SECOES-REPO.json) e [auditoria](../../00-governanca/08-AUDITORIA.md). Snapshots repo-a2cc5e0 e pacote-recebido preservam originais/PDF/ZIP/manifestos integralmente. [Patch editorial sanitizado](evidencias/DOC-MV-001/editorial.patch) e [manifesto da revisão](evidencias/DOC-MV-001/REVISAO.json) identificam o conjunto revisável. Patch exclui snapshots/evidências binárias e JSONs volumosos de proveniência; git diff/commit da branch contém a totalidade, inclusive esses artefatos. Exclusões do manifesto evitam hash circular e são explícitas.
 
 ## Checks e resultados
 
-[Validação e resultados reais](../../00-governanca/VALIDACAO.md). Web typecheck PASS e 46 testes web PASS para mudança exclusiva de exemplos. Validador final PASS: 367 Markdown correntes, 1.734 links, 601 snapshots/origens e 2.444 seções. Whitespace corrente PASS, histórico íntegro preserva whitespace original; lint PASS com warning prévio; PDF extraído e sete páginas conferidas; Mermaid revisão textual PASS/render NOT_RUN por bibliotecas locais ausentes. Resultados registrados após os checks; ausência de ensaio operacional declarada NOT_RUN, sem transformar catálogo de testes em PASS.
+[Validação e resultados reais](../../00-governanca/11-VALIDACAO.md). Web typecheck PASS e 46 testes web PASS para mudança exclusiva de exemplos. Validador final PASS: 367 Markdown correntes, 1.734 links, 601 snapshots/origens e 2.444 seções. Whitespace corrente PASS, histórico íntegro preserva whitespace original; lint PASS com warning prévio; PDF extraído e sete páginas conferidas; Mermaid revisão textual PASS/render NOT_RUN por bibliotecas locais ausentes. Resultados registrados após os checks; ausência de ensaio operacional declarada NOT_RUN, sem transformar catálogo de testes em PASS.
 
 ## Dados, API e configuração
 
@@ -32,7 +32,7 @@ Rollback: revisar dependentes e reverter somente commit/patch desta migração d
 
 ## Docs e lessons
 
-[Manual](../../README.md), [políticas](../../00-governanca/README.md), [C4/AS-IS](../../02-arquitetura/README.md), [módulos](../../03-modulos/README.md), [features](../../04-features/README.md), [contratos](../../05-contratos/README.md), [ADRs](../../06-decisoes/README.md), [operação](../../07-operacao/README.md), [desenvolvimento](../../08-desenvolvimento/README.md). Lessons prévias têm exemplos/revisões preservados; [lesson de documentação/proveniência](../../10-lessons/documentacao-proveniencia.md) descreve somente conceito aplicado nesta migração.
+[Manual](../../01-README.md), [políticas](../../00-governanca/00-README.md), [C4/AS-IS](../../02-arquitetura/00-README.md), [módulos](../../03-modulos/00-README.md), [features](../../04-features/00-README.md), [contratos](../../05-contratos/00-README.md), [ADRs](../../06-decisoes/00-README.md), [operação](../../07-operacao/00-README.md), [desenvolvimento](../../08-desenvolvimento/00-README.md). Lessons prévias têm exemplos/revisões preservados; [lesson de documentação/proveniência](../../10-lessons/12-documentacao-proveniencia.md) descreve somente conceito aplicado nesta migração.
 
 ## Uso e aceite
 

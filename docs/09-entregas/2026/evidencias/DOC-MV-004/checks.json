@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-07",
+  "baseline": "árvore DOC-MV-003 sobre 9439cde",
+  "checks": [
+    {
+      "command": "skill-creator/scripts/quick_validate.py para cada skill",
+      "result": "PASS",
+      "skills": 11,
+      "evidence": "skill-validation.json"
+    },
+    {
+      "command": "bash -n skills/security-audit/scripts/security-surface.sh",
+      "result": "PASS"
+    },
+    {
+      "command": "scanner em fixture sintética e root inválido",
+      "result": "PASS",
+      "evidence": "scanner-fixture.json"
+    },
+    {
+      "command": "conferência de origem/papéis/paths",
+      "result": "PASS_SELF_REVIEW",
+      "evidence": "semantic-review.json"
+    },
+    {
+      "command": "git apply --check instalacao-em-agents.patch",
+      "result": "PASS",
+      "installation": "NOT_APPLIED_READ_ONLY"
+    },
+    {
+      "command": "python3 scripts/validar-documentacao.py",
+      "result": "PASS"
+    },
+    {
+      "command": "compile() do validador Python",
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "scope": "tracked; snapshots mantêm whitespace original"
+    },
+    {
+      "command": "testes de aplicação / provider / DB / nova sessão independente/autoload",
+      "result": "NOT_RUN",
+      "reason": "sem mudança funcional de aplicação; skill/ref/script/documentação locais apenas"
+    }
+  ],
+  "physical_installation": ".agents/skills não editado por read-only",
+  "git": "sem commit, .git read-only"
+}

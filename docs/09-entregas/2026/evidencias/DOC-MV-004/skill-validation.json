@@ -1,0 +1,57 @@
+[
+  {
+    "skill": "arquiteto-de-software",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "fechar-entrega",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "implementador-de-ticket",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "orquestrador-fluxo-ia",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "review-loop-driver",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "revisor-de-codigo",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "revisor-de-qa",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "security-audit",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "simplify",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "tech-lead",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "worktree-planner",
+    "result": "PASS",
+    "output": "Skill is valid!\n"
+  }
+]

@@ -4,7 +4,7 @@
   "files": [
     {
       "source": "BACKLOG.md",
-      "destination": "docs/08-desenvolvimento/backlog.md",
+      "destination": "docs/08-desenvolvimento/09-backlog.md",
       "archive": "docs/99-historico/raiz-5845754/BACKLOG.md",
       "bytes": 24009,
       "sha256": "2e261150fab3ae506882bacaf97d332b9ba33c41f2e18ba81595ad01fd376dd6",
@@ -12,7 +12,7 @@
     },
     {
       "source": "CHANGELOG.md",
-      "destination": "docs/CHANGELOG.md",
+      "destination": "docs/04-CHANGELOG.md",
       "archive": "docs/99-historico/raiz-5845754/CHANGELOG.md",
       "bytes": 37223,
       "sha256": "21ec4b1c4ab23fb9c2d8eb9b96baebe507dfde8651077aea3322ee9a72bb8992",
@@ -20,7 +20,7 @@
     },
     {
       "source": "GUIA-DE-INTEGRACAO.md",
-      "destination": "docs/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "destination": "docs/00-governanca/03-GUIA-DE-INTEGRACAO.md",
       "archive": "docs/99-historico/raiz-5845754/GUIA-DE-INTEGRACAO.md",
       "bytes": 2213,
       "sha256": "512008335b59bb2acae74e9f669598105d32e83634b412c50ebf412537b6cd41",
@@ -28,7 +28,7 @@
     },
     {
       "source": "PILOTO.md",
-      "destination": "docs/08-desenvolvimento/piloto.md",
+      "destination": "docs/08-desenvolvimento/07-piloto.md",
       "archive": "docs/99-historico/raiz-5845754/PILOTO.md",
       "bytes": 384,
       "sha256": "f0e25f22e65eb97748516880df265797c801b52606500f450ef209a727cf691a",
@@ -36,7 +36,7 @@
     },
     {
       "source": "PLANO-MVP.md",
-      "destination": "docs/08-desenvolvimento/plano-mvp.md",
+      "destination": "docs/08-desenvolvimento/10-plano-mvp.md",
       "archive": "docs/99-historico/raiz-5845754/PLANO-MVP.md",
       "bytes": 393,
       "sha256": "303c89257e479e4ac5d5113d4c516452a7ba6ce40904022729326fa029cd0652",
@@ -44,7 +44,7 @@
     },
     {
       "source": "CONTROLE-MVP.md",
-      "destination": "docs/08-desenvolvimento/controle-mvp.md",
+      "destination": "docs/08-desenvolvimento/06-controle-mvp.md",
       "archive": "docs/99-historico/raiz-5845754/CONTROLE-MVP.md",
       "bytes": 402,
       "sha256": "f86194374cd4aa12806bd27d8bd19a24bcf3b026b8fb478b9eb5186da04c4c7e",
@@ -52,7 +52,7 @@
     },
     {
       "source": "ESPEC-MVP.md",
-      "destination": "docs/05-contratos/especificacao-v2.3.md",
+      "destination": "docs/05-contratos/01-especificacao-v2.3.md",
       "archive": "docs/99-historico/raiz-5845754/ESPEC-MVP.md",
       "bytes": 399,
       "sha256": "f681fc8649b716e9606f7c0f90eb33d7ea6b623c30a959bc3c0e51a7a8a33be9",
@@ -60,7 +60,7 @@
     },
     {
       "source": "FONTES.md",
-      "destination": "docs/00-governanca/fontes-tecnicas.md",
+      "destination": "docs/00-governanca/06-fontes-tecnicas.md",
       "archive": "docs/99-historico/raiz-5845754/FONTES.md",
       "bytes": 392,
       "sha256": "0c243da684da901a4ac3b91410e4c46d80b93719db2a3a90e21dd7b6ca6e5a32",
@@ -68,7 +68,7 @@
     },
     {
       "source": "MATRIZ-COBERTURA.md",
-      "destination": "docs/08-desenvolvimento/matriz-cobertura.md",
+      "destination": "docs/08-desenvolvimento/05-matriz-cobertura.md",
       "archive": "docs/99-historico/raiz-5845754/MATRIZ-COBERTURA.md",
       "bytes": 414,
       "sha256": "f3c570198339a977de18e29b54a2758e1c07eb89ba0065830708fb8ed04a5744",

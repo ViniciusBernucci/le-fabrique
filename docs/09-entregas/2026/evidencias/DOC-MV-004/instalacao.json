@@ -1,0 +1,9 @@
+{
+  "target": ".agents/skills",
+  "status": "PREPARADO_NAO_APLICADO",
+  "reason": "destino read-only no ambiente; sem ampliação de permissões",
+  "canonical": "skills/",
+  "files": 24,
+  "checks": "git apply --check para estrutura/contexto; não instala nem comprova autoload",
+  "rollback": "originais por hash em ADAPTACAO-SKILLS.json"
+}

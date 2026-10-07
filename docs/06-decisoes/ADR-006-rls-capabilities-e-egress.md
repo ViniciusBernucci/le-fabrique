@@ -20,7 +20,7 @@ Pools transacionais e roles sem bypass; revogação/fencing; allowlist de domín
 
 ## Verificação e reversão
 
-Aplicar testes de [aceite](../08-desenvolvimento/testes-seguranca.md) e registrar código/config/revisão real. Até esse gate a implementação continua PLANEJADA. Se falhar, desabilitar recurso/provider e preservar checkpoint; rollback não remove fronteiras nem retorna a auth compartilhada. Reavaliar decisão em ADR posterior se implementação provar incompatibilidade.
+Aplicar testes de [aceite](../08-desenvolvimento/12-testes-seguranca.md) e registrar código/config/revisão real. Até esse gate a implementação continua PLANEJADA. Se falhar, desabilitar recurso/provider e preservar checkpoint; rollback não remove fronteiras nem retorna a auth compartilhada. Reavaliar decisão em ADR posterior se implementação provar incompatibilidade.
 
 
 ## Origem desta edição

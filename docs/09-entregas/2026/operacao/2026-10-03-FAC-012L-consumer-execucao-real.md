@@ -53,7 +53,7 @@ Desligar admission e confirmar término das árvores antes de rollback operacion
 
 ## Documentação e lessons
 
-Atualizados README raiz/operação/runtime/planejamento, ticket, backlog, changelog e índice. Lessons: [heartbeat/quiescência](../../../10-lessons/worker-heartbeat-quiescencia.md), [checkout](../../../10-lessons/checkout-confiavel.md), [lifecycle CLI](../../../10-lessons/lifecycle-processo-cli.md). Stack/topologia aprovadas preservadas.
+Atualizados README raiz/operação/runtime/planejamento, ticket, backlog, changelog e índice. Lessons: [heartbeat/quiescência](../../../10-lessons/10-worker-heartbeat-quiescencia.md), [checkout](../../../10-lessons/05-checkout-confiavel.md), [lifecycle CLI](../../../10-lessons/08-lifecycle-processo-cli.md). Stack/topologia aprovadas preservadas.
 
 ## Uso de IA e aceite
 

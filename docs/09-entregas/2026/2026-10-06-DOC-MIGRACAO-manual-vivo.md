@@ -24,11 +24,11 @@ Não foram lidas credenciais nem acessados serviços/produção. Risco principal
 
 ## Documentação e lessons
 
-Todos os capítulos estão no [índice](../../INDEX.md); [mapa de migração](../../00-governanca/MAPA-MIGRACAO.md) registra fontes e destinos. Não foi inventada lesson de implementação: nenhum conceito de software foi aplicado aqui. Preservação por hashes foi aplicada na própria entrega documental e está evidenciada na governança.
+Todos os capítulos estão no [índice](../../02-INDEX.md); [mapa de migração](../../00-governanca/10-MAPA-MIGRACAO.md) registra fontes e destinos. Não foi inventada lesson de implementação: nenhum conceito de software foi aplicado aqui. Preservação por hashes foi aplicada na própria entrega documental e está evidenciada na governança.
 
 ## Uso/custos e pendências
 
-Não executados providers do runtime da fábrica, logo uso/versões/planos deles são desconhecidos. Nenhum gasto/contratação autorizado ou realizado. Repo real/VPS/preflight/IDs/rotas/esquemas/gates aguardam integração e validação; [pendências](../../00-governanca/PENDENCIAS.md).
+Não executados providers do runtime da fábrica, logo uso/versões/planos deles são desconhecidos. Nenhum gasto/contratação autorizado ou realizado. Repo real/VPS/preflight/IDs/rotas/esquemas/gates aguardam integração e validação; [pendências](../../00-governanca/07-PENDENCIAS.md).
 
 ## Aceite
 

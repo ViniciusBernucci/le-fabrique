@@ -29,7 +29,7 @@ Autoplay mudo é suportado no navegador verificado; políticas de economia de ba
 Rollback: reverter `eaf90013e8978a6562f930b98754f28d9a68c5d7`, restaurando PNG/CSS/hotspots anteriores; sem dados ou migration a desfazer. Fonte original preservada; não executar rollback destrutivo. Sem push/deploy/provider.
 
 ## Docs, uso de IA e aceite
-README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket atualizados e [lesson sobre vídeo decorativo](../../../10-lessons/video-decorativo-loop.md). Stack aprovada preservada. Codex da sessão, mesmo writer, zero subagentes/handoff/clientes adicionais; modelo/cota/custo não comprovados. Merge developer/limpeza pós-merge autorizados anteriormente na sessão; registro de execução após realizar. AWAITING_HUMAN para revisão visual exata, DONE somente após aceite.
+README raiz/controle, INDEX, CHANGELOG, BACKLOG/ticket atualizados e [lesson sobre vídeo decorativo](../../../10-lessons/14-video-decorativo-loop.md). Stack aprovada preservada. Codex da sessão, mesmo writer, zero subagentes/handoff/clientes adicionais; modelo/cota/custo não comprovados. Merge developer/limpeza pós-merge autorizados anteriormente na sessão; registro de execução após realizar. AWAITING_HUMAN para revisão visual exata, DONE somente após aceite.
 
 ## Integração e limpeza realizadas
 Fast-forward local em developer até 3ad0357, sem conflitos. Build web no destino PASS, mesmos bundles; reprodução real no painel habitual/5173 PASS: dois reinícios, fronteiras de 66,7/33,3ms, sem frame preto, mesma validação de navegação e seis larguras. [Resultado developer](../evidencias/controle/evidencias/FAC-024/browser-results-developer.txt). Capturas atualizadas pela execução na árvore principal.

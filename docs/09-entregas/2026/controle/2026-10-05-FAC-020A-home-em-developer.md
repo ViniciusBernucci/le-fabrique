@@ -12,7 +12,7 @@ Root limpo antes do merge; ancestry permitiu fast-forward sem conflitos. Fonte s
 ## Limites e rollback
 Operação local de desenvolvimento, não publicação em produção. Dados da home demonstrativos; aceite visual não presumido. Reverter 904d0b5 para retirar a home e cde0cc6 para desfazer nome/escala, sem apagar histórico nem dados. Remoção da worktree condicionada à preservação de todos os commits em developer; registro de conclusão será acrescentado após o comando real.
 ## Documentação e lessons
-README raiz/controle/operação, INDEX, CHANGELOG, BACKLOG, ticket e [lesson de baseline](../../../10-lessons/baseline-regressao-review.md). Código pronto em branch não comprova que o serviço habitual serve essa revisão: verificar cwd/porta e navegador no endpoint real.
+README raiz/controle/operação, INDEX, CHANGELOG, BACKLOG, ticket e [lesson de baseline](../../../10-lessons/11-baseline-regressao-review.md). Código pronto em branch não comprova que o serviço habitual serve essa revisão: verificar cwd/porta e navegador no endpoint real.
 ## IA e custos
 Mesmo Codex da sessão, um writer; nenhum provider adicional, acesso a credenciais ou alteração de gastos. Modelo efetivo, cota e uso total não comprovados.
 ## Aceite

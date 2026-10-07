@@ -1,0 +1,381 @@
+{
+  "date": "2026-10-07",
+  "branch": "developer",
+  "head": "9439cde4ce52a09225c9476c19baa89319802523",
+  "authorization": "Pedido explícito para commit/merge e limpeza",
+  "git_write": {
+    "command": "git add -- caminhos da entrega",
+    "result": "BLOCKED_READ_ONLY",
+    "error": "Unable to create .git/index.lock: Read-only file system",
+    "commit_created": false,
+    "merge_executed": false
+  },
+  "worktrees": "worktree /home/vinicius/le-fabrique\nHEAD 9439cde4ce52a09225c9476c19baa89319802523\nbranch refs/heads/developer",
+  "other_worktree_paths_found": [],
+  "merged_branches_eligible": [
+    {
+      "branch": "docs/fac-000-acceptance-and-pilot-replan",
+      "sha": "c2e52587526bda5118cff79e533a8e71fd381eaa",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "docs/manual-vivo-inicial",
+      "sha": "607d6ededcb6499cac5df10ee4adb60a4b3156b1",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-001a-project-definition",
+      "sha": "43043c98ca4b105daf1f2e9986882b26da6f2ec3",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-002-codex-preflight",
+      "sha": "3963f4aeb8741718eb8f94e78a6ccf85764dfc2c",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-003-control",
+      "sha": "98745b6bc9c62c71a243059acdb11233341aae2c",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-004-worker-identity",
+      "sha": "8214cec2790f4e51f7cad4aae490c8937f633932",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-005-runtime-gateway",
+      "sha": "7044a0a932cb38f2b3c2f70c07fb0be34523ab13",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-006-context-builder-runtime-guard",
+      "sha": "2154bcfdd3edc620f6f4b92fdcbc3304ad29f356",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-007-sandbox-snapshots",
+      "sha": "2a4137549682e5f1f14427baa9a9ab81a2313e97",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-008-orchestrator-checkpoints",
+      "sha": "59ba387937467881fee1835a7d90c4b018c45805",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-009-developer-checks-review",
+      "sha": "485ae88a772a499f6fc8034f5ea3df0e80c32ceb",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-010-managed-onboarding",
+      "sha": "d772d127d213999a46dfaedb633b5dc70875be54",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-010-second-provider-handoff",
+      "sha": "0186bcf5420d941b50f38e4a77f119aaa8faa678",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-010b-ephemeral-login",
+      "sha": "0b1544dba3d8c2fef96fd61ac0ad816d312fd94c",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-010c-claude-handoff",
+      "sha": "bf8f45edd1143ffc21f0223214d5f0b782aabf90",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-011-settings-center",
+      "sha": "f3872072b2770970814c694153c6583ad5abc057",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-011a-github-verification",
+      "sha": "eed7f85f564387ce6ed006e7cac4e46cd874ac30",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-011b-github-login",
+      "sha": "4e3f01d85e8ed386bc7dc6476f5a386d02d894a0",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-011c-github-repository-verification",
+      "sha": "8fd38781652fac187d0f5a419eb336c15e94b816",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-011d-github-pull-request",
+      "sha": "c069926cb4b43a1519b5fd10b212b8fbe36cbfaa",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012a-execution-spec",
+      "sha": "3ef3d543b98fb48226714787315f4de947fa6dd9",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012aa-claude-confinement",
+      "sha": "2edbb915d53d06ec52f70d31a53a1e5ee9fa7738",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012ad-operation-panel",
+      "sha": "f12b48abd04797b46c9e7ef91c29bc641ebb456a",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012ae-project-events",
+      "sha": "c1aa79a9ef332ce31d1f66864775efbca2f13eb8",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012af-evidence-backup",
+      "sha": "41ecfa2ca2e7b587c2bacad40b53bb38698d8601",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012ag-factory-pause",
+      "sha": "2eced85a3479aacd2014b1da4b9e4c940262350e",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012b-workflow-compiler",
+      "sha": "3e28363b0642f8e05840bb649b681e3837e1e015",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012c-sandbox-path-policy",
+      "sha": "a6fdf9ce57cc2293ddf310198204ea1093db9522",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012d-project-write-paths",
+      "sha": "439e95429b81a4bd12e01c0d501d9241a18393ee",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012e-worker-settings-read",
+      "sha": "36c89e1044f995e34c16bcd5835006b8289b4254",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012f-configured-agent-route",
+      "sha": "dd4e3d35428d690503787980b0da7ea57b1a64b8",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012g-role-aware-workflow",
+      "sha": "9c1e11e351cefad8a0eb38bb0b64430bdc4d5fa0",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012h-sandbox-root-isolation",
+      "sha": "0a9a7545dd011f166a233c8e7adc94d6a595ce9f",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012i-project-execution-profile",
+      "sha": "191a5377ddde1d9a15393c8a49cdbe36e98741da",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012j-trusted-checkout",
+      "sha": "17fed5bd2d55eaa4dc4eb23d607cd98893f6c674",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012k-lease-guard",
+      "sha": "a305b38607bb70c5747b4fa8d6f0e5a579621258",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012l-real-execution",
+      "sha": "a1d904bf543256315bf4458c761602eb0433b870",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012m-execution-results",
+      "sha": "f3b9b058c58ffbee09950f27a9147fd93e583521",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012n-reconcile",
+      "sha": "0f96dd30fe6bdc502856da5b2db80db96f33058c",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012o-result-journal",
+      "sha": "2d5a9a34f72fb89f21a0f049ad3d6fe1fca63692",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012p-artifacts",
+      "sha": "3ff8bdda96d7e071059c584c40e718cf91e1cbb3",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012q-delivery-gate",
+      "sha": "297d308a5e7128a8652e3a7abc32e10d79ecd6b8",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012r-interruption-snapshot",
+      "sha": "4be88df185815ab4a9434441d3d651bfabf7886a",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012s-run-control",
+      "sha": "93735b033379f7d31b9f6bcd5407e99f9fd8b047",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012t-resume",
+      "sha": "7c3ca199d3dfbfc294fc1469729f403ce473b3db",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012u-finalization-recovery",
+      "sha": "65be5abafbc86ff2d4771f544f22296dfd13e055",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012v-provider-identities",
+      "sha": "f996169d9074a2ff6ba3054136add63577b34462",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012w-artifact-budget",
+      "sha": "9da35a4e9d7f6aba6ddd59a11ae706387770d1de",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012x-waiting-provider",
+      "sha": "af5545a85fc6e37e021a625b695444d5475b3912",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012y-configured-handoff",
+      "sha": "745ce2d25b6120541085b4500e149cc8d313380f",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-012z-documentation-gate",
+      "sha": "ca413282c29684ce617ca423e0f5755e96439e10",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-020-home-dashboard",
+      "sha": "776a7427ec607567f69db3a467f10a3b5fb06e75",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-023-agents-skills",
+      "sha": "6760b17a3fcd2cf210eda97be7436fb9cbbf9e4e",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-024-dashboard-video",
+      "sha": "3ad035717b057cd8bfd7bff7d441b73d0add56b5",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "feat/fac-026-preset-agent-list",
+      "sha": "f9d20ae87cdb054cc8c1a69986b50a58e1e9b47a",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-012ac-global-writer",
+      "sha": "8a47bbff7651a78fd51b9aaf0161ab120fd83528",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-012ah-admission-capacity",
+      "sha": "8b42fe4ce858d800ce97fd67cfbccf39cc239874",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-025-remove-dashboard-video",
+      "sha": "c58e558ca0d10e517583afe638514f295a2725fd",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-028-minimal-menu-toggle",
+      "sha": "725852f9a735f7b3dbca68c725f144bb35f166f4",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-029-menu-arrow-right",
+      "sha": "f4fabe702984ac9be2c37feabfc51e07a0e425cd",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/fac-031-menu-arrow-spacing",
+      "sha": "5e52ecc967a18bc8498aacd5ec2a0983a9581761",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/ops-001-dev-bootstrap",
+      "sha": "4e5b772a2dbeb1dd8868e3fe2bedd480c8e837c4",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/ops-002-stale-orchestration-jobs",
+      "sha": "4630ce0b9a613b937d40d550e4551fa1402d6c6a",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/ops-003-reconcile-accepted-state",
+      "sha": "ce27c13cace1fa81b8bffde1df98e8c3e499fe0e",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "fix/ops-004-consolidate-worktrees",
+      "sha": "35507a78b6f2176a4b0c004ea6b51f86196a12a0",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "ops/ops-005-host-worker-service",
+      "sha": "7df2765b875af110ccdef1524b616b656e63aa9e",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "ops/ops-006-final-local-integration",
+      "sha": "d24245a83e8686373f237a2a7fcb2db6cba69746",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "ops/ops-007-consolidacao-worktrees",
+      "sha": "51196bd46a12a63079d6ddfb855b0b8f364ad5be",
+      "reason": "integrada em developer e sem worktree"
+    },
+    {
+      "branch": "test/fac-012ab-integrated-mvp",
+      "sha": "a54876f81ace6fa6f31ebdc5b3f818f378ad31b1",
+      "reason": "integrada em developer e sem worktree"
+    }
+  ],
+  "branches_preserved": [
+    {
+      "branch": "developer",
+      "sha": "9439cde4ce52a09225c9476c19baa89319802523",
+      "reason": "worktree ativa ou branch principal"
+    },
+    {
+      "branch": "main",
+      "sha": "15c2198076a6a6afcbf2f15212ae1eaf53822b9f",
+      "reason": "worktree ativa ou branch principal"
+    }
+  ],
+  "cleanup_executed": false,
+  "reason": "escrita Git bloqueada pelo ambiente; não contornar permissões",
+  "checks": {
+    "documentation": "PASS: 377 Markdown, 2280 links, 601 snapshots e 2444 seções antes do checkpoint",
+    "prune_dry_run": "nenhum registro órfão listado"
+  },
+  "next_step": "Com ambiente Git gravável, revisar/stage/commit os paths autorizados e apagar apenas branches integradas confirmadas; não excluir developer/main ou commits não integrados"
+}

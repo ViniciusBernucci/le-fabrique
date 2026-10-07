@@ -1,0 +1,18 @@
+[
+  {
+    "case": "novo capítulo fora do roteiro",
+    "result": "PASS_NEGATIVE",
+    "detected": [
+      "Capítulo fora do roteiro didático: docs/01-visao-geral/sem-numero-temporario.md",
+      "Markdown corrente fora do índice: docs/01-visao-geral/sem-numero-temporario.md"
+    ]
+  },
+  {
+    "case": "posição/capítulo duplicado",
+    "result": "PASS_NEGATIVE",
+    "detected": [
+      "Capítulo duplicado no roteiro: docs/00-LEIA-ME-PRIMEIRO.md",
+      "Prefixo didático ausente/duplicado: docs/00-LEIA-ME-PRIMEIRO.md"
+    ]
+  }
+]

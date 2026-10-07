@@ -105,7 +105,7 @@
       "Decisão obrigatória da stack - revisão 2.3",
       "Stack obrigatória da fábrica - revisão 2.3"
     ],
-    "destination": "docs/08-desenvolvimento/backlog.md"
+    "destination": "docs/08-desenvolvimento/09-backlog.md"
   },
   {
     "path": "CHANGELOG.md",
@@ -236,7 +236,7 @@
       "2.0 — 2026-09-29",
       "1.0 — 2026-09-29"
     ],
-    "destination": "docs/CHANGELOG.md"
+    "destination": "docs/04-CHANGELOG.md"
   },
   {
     "path": "CLAUDE.md",
@@ -269,7 +269,7 @@
       "Conclusão interna e operação posterior",
       "Incrementos de confiabilidade atuais"
     ],
-    "destination": "docs/08-desenvolvimento/controle-mvp.md"
+    "destination": "docs/08-desenvolvimento/06-controle-mvp.md"
   },
   {
     "path": "ESPEC-MVP.md",
@@ -289,7 +289,7 @@
       "Checks essenciais do MVP",
       "Stack obrigatória da fábrica - revisão 2.3"
     ],
-    "destination": "docs/05-contratos/especificacao-v2.3.md"
+    "destination": "docs/05-contratos/01-especificacao-v2.3.md"
   },
   {
     "path": "FONTES.md",
@@ -306,7 +306,7 @@
       "Orca",
       "Limites da evidência"
     ],
-    "destination": "docs/00-governanca/fontes-tecnicas.md"
+    "destination": "docs/00-governanca/06-fontes-tecnicas.md"
   },
   {
     "path": "MATRIZ-COBERTURA.md",
@@ -319,7 +319,7 @@
       "Cobertura e migração v1 -> v2",
       "Stack obrigatória da fábrica - revisão 2.3"
     ],
-    "destination": "docs/08-desenvolvimento/matriz-cobertura.md"
+    "destination": "docs/08-desenvolvimento/05-matriz-cobertura.md"
   },
   {
     "path": "PILOTO.md",
@@ -332,7 +332,7 @@
       "Contrato do piloto",
       "Decisão obrigatória da stack - revisão 2.3"
     ],
-    "destination": "docs/08-desenvolvimento/piloto.md"
+    "destination": "docs/08-desenvolvimento/07-piloto.md"
   },
   {
     "path": "PLANO-MVP.md",
@@ -365,7 +365,7 @@
       "Infraestrutura obrigatória do MVP",
       "Stack obrigatória da fábrica - revisão 2.3"
     ],
-    "destination": "docs/08-desenvolvimento/plano-mvp.md"
+    "destination": "docs/08-desenvolvimento/10-plano-mvp.md"
   },
   {
     "path": "PROMPT-INICIAL.md",
@@ -2739,7 +2739,7 @@
     "sections": [
       "Documentação atual v2.3"
     ],
-    "destination": "docs/INDEX.md"
+    "destination": "docs/02-INDEX.md"
   },
   {
     "path": "documentacoes/POLITICA-IA.md",
@@ -2761,7 +2761,7 @@
       "Topologia obrigatória v2.3",
       "Stack obrigatória da fábrica - revisão 2.3"
     ],
-    "destination": "docs/00-governanca/POLITICA-IA.md"
+    "destination": "docs/00-governanca/01-POLITICA-IA.md"
   },
   {
     "path": "documentacoes/arquitetura/2026-09-30-correcao-stack.md",
@@ -2836,7 +2836,7 @@
       "12. Contratos e painel",
       "13. Fontes e pendências"
     ],
-    "destination": "docs/02-arquitetura/referencia-v2.3.md"
+    "destination": "docs/02-arquitetura/15-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/arquitetura/TECH-LEAD-HANDOFF.md",
@@ -2853,7 +2853,7 @@
       "Restrições para os próximos tickets",
       "Riscos abertos"
     ],
-    "destination": "docs/08-desenvolvimento/tech-lead-handoff.md"
+    "destination": "docs/08-desenvolvimento/08-tech-lead-handoff.md"
   },
   {
     "path": "documentacoes/configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md",
@@ -3171,7 +3171,7 @@
       "Verificacao do repositorio GitHub",
       "Pull request sob gate humano"
     ],
-    "destination": "docs/03-modulos/configuracao/referencia-v2.3.md"
+    "destination": "docs/03-modulos/configuracao/01-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/configuracao/evidencias/FAC-015-diff.patch",
@@ -3551,7 +3551,7 @@
     "sections": [
       "Contexto de execucao"
     ],
-    "destination": "docs/03-modulos/context-builder/referencia-v2.3.md"
+    "destination": "docs/03-modulos/context-builder/01-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/controle/2026-09-30-FAC-003-controle-web-persistencia.md",
@@ -4061,7 +4061,7 @@
       "Atualização FAC-012M",
       "Template padrão — FAC-022"
     ],
-    "destination": "docs/03-modulos/controle/referencia-v2.3.md"
+    "destination": "docs/03-modulos/controle/01-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/controle/evidencias/FAC-020/browser-check.mjs",
@@ -5264,7 +5264,7 @@
       "Política de economia",
       "Decisão obrigatória da stack - revisão 2.3"
     ],
-    "destination": "docs/07-operacao/economia/referencia-v2.3.md"
+    "destination": "docs/07-operacao/economia/00-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md",
@@ -5297,7 +5297,7 @@
       "Corrida de recuperação",
       "Conteúdo mínimo"
     ],
-    "destination": "docs/07-operacao/handoff/referencia-v2.3.md"
+    "destination": "docs/07-operacao/handoff/00-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/infraestrutura/2026-09-30-FAC-000-aceite.md",
@@ -5467,7 +5467,7 @@
       "Ensaio e critérios de escala",
       "Segurança e disponibilidade"
     ],
-    "destination": "docs/07-operacao/infraestrutura/dimensionamento-vps.md"
+    "destination": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md"
   },
   {
     "path": "documentacoes/infraestrutura/README.md",
@@ -5482,7 +5482,7 @@
       "Variáveis e execução",
       "Sandbox atual"
     ],
-    "destination": "docs/07-operacao/infraestrutura/referencia-v2.3.md"
+    "destination": "docs/07-operacao/infraestrutura/01-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/operacao/2026-09-30-FAC-004-worker-identidade.md",
@@ -5980,7 +5980,7 @@
       "Bootstrap executável atual",
       "Preflight granular Claude — FAC-012AA"
     ],
-    "destination": "docs/07-operacao/operacao/referencia-v2.3.md"
+    "destination": "docs/07-operacao/operacao/00-referencia-v2.3.md"
   },
   {
     "path": "documentacoes/planejamento/2026-09-30-PLAN-001-adiamento-piloto.md",
@@ -7127,7 +7127,7 @@
     "sections": [
       "Planejamento atual"
     ],
-    "destination": "docs/08-desenvolvimento/tickets/planejamento/README.md"
+    "destination": "docs/08-desenvolvimento/tickets/planejamento/00-README.md"
   },
   {
     "path": "documentacoes/runtime/2026-09-30-FAC-002-preflight-codex.md",
@@ -7312,7 +7312,7 @@
       "Erros normalizados",
       "Roteamento"
     ],
-    "destination": "docs/03-modulos/runtime/referencia-v2.3.md"
+    "destination": "docs/03-modulos/runtime/02-referencia-v2.3.md"
   },
   {
     "path": "fixtures/codex-preflight-isolation/AGENTS.md",
@@ -7452,7 +7452,7 @@
     "sections": [
       "Lessons"
     ],
-    "destination": "docs/10-lessons/README.md"
+    "destination": "docs/10-lessons/00-README.md"
   },
   {
     "path": "lessons/baseline-regressao-review.md",
@@ -7464,7 +7464,7 @@
     "sections": [
       "Baseline, regressao e review sao sinais diferentes"
     ],
-    "destination": "docs/10-lessons/baseline-regressao-review.md"
+    "destination": "docs/10-lessons/11-baseline-regressao-review.md"
   },
   {
     "path": "lessons/checkout-confiavel.md",
@@ -7476,7 +7476,7 @@
     "sections": [
       "Checkout confiável mantém credenciais fora do projeto"
     ],
-    "destination": "docs/10-lessons/checkout-confiavel.md"
+    "destination": "docs/10-lessons/05-checkout-confiavel.md"
   },
   {
     "path": "lessons/contexto-deterministico-limites.md",
@@ -7488,7 +7488,7 @@
     "sections": [
       "Contexto deterministico e limites conservadores"
     ],
-    "destination": "docs/10-lessons/contexto-deterministico-limites.md"
+    "destination": "docs/10-lessons/04-contexto-deterministico-limites.md"
   },
   {
     "path": "lessons/contratos-runtime-monorepo.md",
@@ -7504,7 +7504,7 @@
       "Quando repetir",
       "Evidência"
     ],
-    "destination": "docs/10-lessons/contratos-runtime-monorepo.md"
+    "destination": "docs/10-lessons/02-contratos-runtime-monorepo.md"
   },
   {
     "path": "lessons/definicao-projeto-configuravel.md",
@@ -7520,7 +7520,7 @@
       "Cuidados",
       "Referencias"
     ],
-    "destination": "docs/10-lessons/definicao-projeto-configuravel.md"
+    "destination": "docs/10-lessons/01-definicao-projeto-configuravel.md"
   },
   {
     "path": "lessons/leases-fencing-checkpoints.md",
@@ -7532,7 +7532,7 @@
     "sections": [
       "Lease, fencing e checkpoint cobrem falhas diferentes"
     ],
-    "destination": "docs/10-lessons/leases-fencing-checkpoints.md"
+    "destination": "docs/10-lessons/09-leases-fencing-checkpoints.md"
   },
   {
     "path": "lessons/lifecycle-processo-cli.md",
@@ -7547,7 +7547,7 @@
       "Eventos como entrada nao confiavel",
       "Exemplo do repositorio"
     ],
-    "destination": "docs/10-lessons/lifecycle-processo-cli.md"
+    "destination": "docs/10-lessons/08-lifecycle-processo-cli.md"
   },
   {
     "path": "lessons/modal-edicao-configuracao.md",
@@ -7559,7 +7559,7 @@
     "sections": [
       "Edição em modal com rascunho separado"
     ],
-    "destination": "docs/10-lessons/modal-edicao-configuracao.md"
+    "destination": "docs/10-lessons/13-modal-edicao-configuracao.md"
   },
   {
     "path": "lessons/outbox-idempotencia.md",
@@ -7571,7 +7571,7 @@
     "sections": [
       "Outbox idempotente e versão otimista"
     ],
-    "destination": "docs/10-lessons/outbox-idempotencia.md"
+    "destination": "docs/10-lessons/03-outbox-idempotencia.md"
   },
   {
     "path": "lessons/perfis-permissao-cliente-cli.md",
@@ -7587,7 +7587,7 @@
       "Limite",
       "FAC-015: conta, catálogo e execução são evidências distintas"
     ],
-    "destination": "docs/10-lessons/perfis-permissao-cliente-cli.md"
+    "destination": "docs/10-lessons/07-perfis-permissao-cliente-cli.md"
   },
   {
     "path": "lessons/sandbox-worktree-snapshot.md",
@@ -7599,7 +7599,7 @@
     "sections": [
       "Sandbox, worktree e snapshot sao limites diferentes"
     ],
-    "destination": "docs/10-lessons/sandbox-worktree-snapshot.md"
+    "destination": "docs/10-lessons/06-sandbox-worktree-snapshot.md"
   },
   {
     "path": "lessons/video-decorativo-loop.md",
@@ -7611,7 +7611,7 @@
     "sections": [
       "Vídeo decorativo com fronteira contínua"
     ],
-    "destination": "docs/10-lessons/video-decorativo-loop.md"
+    "destination": "docs/10-lessons/14-video-decorativo-loop.md"
   },
   {
     "path": "lessons/worker-heartbeat-quiescencia.md",
@@ -7625,7 +7625,7 @@
       "Bootstrap nao e heartbeat",
       "Lease por tentativa exige renovação e parada comprovada"
     ],
-    "destination": "docs/10-lessons/worker-heartbeat-quiescencia.md"
+    "destination": "docs/10-lessons/10-worker-heartbeat-quiescencia.md"
   },
   {
     "path": "package-lock.json",
@@ -8148,7 +8148,7 @@
       "Uso de IA e custos",
       "Pendências e aceite"
     ],
-    "destination": "docs/00-governanca/templates/ENTREGA.md"
+    "destination": "docs/00-governanca/templates/08-ENTREGA.md"
   },
   {
     "path": "templates/HANDOFF.md",
@@ -8167,7 +8167,7 @@
       "Documentação",
       "Uso"
     ],
-    "destination": "docs/00-governanca/templates/HANDOFF.md"
+    "destination": "docs/00-governanca/templates/07-HANDOFF.md"
   },
   {
     "path": "templates/LESSON.md",
@@ -8185,7 +8185,7 @@
       "Evidências e referências",
       "Entregas relacionadas"
     ],
-    "destination": "docs/00-governanca/templates/LESSON.md"
+    "destination": "docs/00-governanca/templates/09-LESSON.md"
   },
   {
     "path": "templates/TICKET.md",
@@ -8206,7 +8206,7 @@
       "Entregáveis e documentação afetada",
       "Evidências e aceite"
     ],
-    "destination": "docs/00-governanca/templates/TICKET.md"
+    "destination": "docs/00-governanca/templates/01-TICKET.md"
   },
   {
     "path": "tsconfig.base.json",
@@ -8456,7 +8456,7 @@
       "Duplicações",
       "Escolhas editoriais deste pacote"
     ],
-    "destination": "docs/00-governanca/AUDITORIA.md"
+    "destination": "docs/00-governanca/08-AUDITORIA.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/CHECKLIST-ENTREGA.md",
@@ -8468,7 +8468,7 @@
     "sections": [
       "Checklist de entrega"
     ],
-    "destination": "docs/00-governanca/CHECKLIST-ENTREGA.md"
+    "destination": "docs/00-governanca/04-CHECKLIST-ENTREGA.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/INVENTARIO.md",
@@ -8482,7 +8482,7 @@
       "Duplicações byte a byte",
       "Membros do ZIP histórico"
     ],
-    "destination": "docs/00-governanca/INVENTARIO.md"
+    "destination": "docs/00-governanca/09-INVENTARIO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/MANIFESTO-FONTES.json",
@@ -8507,7 +8507,7 @@
       "Mapa de temas/seções transversais",
       "Regra de integração"
     ],
-    "destination": "docs/00-governanca/MAPA-MIGRACAO.md"
+    "destination": "docs/00-governanca/10-MAPA-MIGRACAO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/PENDENCIAS.md",
@@ -8519,7 +8519,7 @@
     "sections": [
       "Pendências e limites da integração"
     ],
-    "destination": "docs/00-governanca/PENDENCIAS.md"
+    "destination": "docs/00-governanca/07-PENDENCIAS.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/POLITICA-DOCUMENTACAO.md",
@@ -8536,7 +8536,7 @@
       "Histórico, migração e decisões",
       "Gate documental"
     ],
-    "destination": "docs/00-governanca/POLITICA-DOCUMENTACAO.md"
+    "destination": "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/POLITICA-IA.md",
@@ -8554,7 +8554,7 @@
       "Veracidade e finanças",
       "Proveniência"
     ],
-    "destination": "docs/00-governanca/POLITICA-IA.md"
+    "destination": "docs/00-governanca/01-POLITICA-IA.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/README.md",
@@ -8566,7 +8566,7 @@
     "sections": [
       "Governança documental"
     ],
-    "destination": "docs/00-governanca/README.md"
+    "destination": "docs/00-governanca/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/RESULTADO-VALIDACAO.json",
@@ -8591,7 +8591,7 @@
       "Revisão semântica documental",
       "Limites e pendências"
     ],
-    "destination": "docs/00-governanca/VALIDACAO.md"
+    "destination": "docs/00-governanca/11-VALIDACAO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/fontes-carregamento.md",
@@ -8606,7 +8606,7 @@
       "Claude e Antigravity",
       "Teste de adoção no repo real"
     ],
-    "destination": "docs/00-governanca/fontes-carregamento.md"
+    "destination": "docs/00-governanca/05-fontes-carregamento.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/fontes-tecnicas.md",
@@ -8625,7 +8625,7 @@
       "Fontes técnicas consultadas nesta revisão",
       "Origem desta edição"
     ],
-    "destination": "docs/00-governanca/fontes-tecnicas.md"
+    "destination": "docs/00-governanca/06-fontes-tecnicas.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/ADR.md",
@@ -8644,7 +8644,7 @@
       "Rollback e limites",
       "Fontes, código, contratos e entregas"
     ],
-    "destination": "docs/00-governanca/templates/ADR.md"
+    "destination": "docs/00-governanca/templates/05-ADR.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/CONTRATO.md",
@@ -8665,7 +8665,7 @@
       "Testes positivos/negativos e evidência",
       "Migração, rollback e pendências"
     ],
-    "destination": "docs/00-governanca/templates/CONTRATO.md"
+    "destination": "docs/00-governanca/templates/04-CONTRATO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/ENTREGA.md",
@@ -8689,7 +8689,7 @@
       "Uso de IA e custos",
       "Pendências, próximos passos e aceite"
     ],
-    "destination": "docs/00-governanca/templates/ENTREGA.md"
+    "destination": "docs/00-governanca/templates/08-ENTREGA.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/FEATURE.md",
@@ -8709,7 +8709,7 @@
       "Módulos, contratos e ADRs",
       "Entregas, testes e limitações"
     ],
-    "destination": "docs/00-governanca/templates/FEATURE.md"
+    "destination": "docs/00-governanca/templates/03-FEATURE.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/HANDOFF.md",
@@ -8728,7 +8728,7 @@
       "Uso e limites",
       "Gate de retomada"
     ],
-    "destination": "docs/00-governanca/templates/HANDOFF.md"
+    "destination": "docs/00-governanca/templates/07-HANDOFF.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/LESSON.md",
@@ -8746,7 +8746,7 @@
       "Evidências e referências",
       "Entregas relacionadas"
     ],
-    "destination": "docs/00-governanca/templates/LESSON.md"
+    "destination": "docs/00-governanca/templates/09-LESSON.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/MODULO.md",
@@ -8769,7 +8769,7 @@
       "ADRs, features e entregas relacionadas",
       "Evidências, limitações e pendências"
     ],
-    "destination": "docs/00-governanca/templates/MODULO.md"
+    "destination": "docs/00-governanca/templates/02-MODULO.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/README.md",
@@ -8782,7 +8782,7 @@
       "Templates de autoria",
       "Proveniência"
     ],
-    "destination": "docs/00-governanca/templates/README.md"
+    "destination": "docs/00-governanca/templates/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/RUNBOOK.md",
@@ -8801,7 +8801,7 @@
       "Segurança e limites",
       "Evidência do ensaio e última validação"
     ],
-    "destination": "docs/00-governanca/templates/RUNBOOK.md"
+    "destination": "docs/00-governanca/templates/06-RUNBOOK.md"
   },
   {
     "path": "reorganizacao-documental/docs/00-governanca/templates/TICKET.md",
@@ -8820,7 +8820,7 @@
       "Entregáveis e impacto documental",
       "Evidências, revisão e aceite"
     ],
-    "destination": "docs/00-governanca/templates/TICKET.md"
+    "destination": "docs/00-governanca/templates/01-TICKET.md"
   },
   {
     "path": "reorganizacao-documental/docs/01-visao-geral/README.md",
@@ -8832,7 +8832,7 @@
     "sections": [
       "Visão geral"
     ],
-    "destination": "docs/01-visao-geral/README.md"
+    "destination": "docs/01-visao-geral/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/01-visao-geral/escopo.md",
@@ -8845,7 +8845,7 @@
       "Escopo e evolução",
       "Proveniência"
     ],
-    "destination": "docs/01-visao-geral/escopo.md"
+    "destination": "docs/01-visao-geral/02-escopo.md"
   },
   {
     "path": "reorganizacao-documental/docs/01-visao-geral/glossario.md",
@@ -8887,7 +8887,7 @@
       "R0–R4",
       "Proveniência"
     ],
-    "destination": "docs/01-visao-geral/glossario.md"
+    "destination": "docs/01-visao-geral/03-glossario.md"
   },
   {
     "path": "reorganizacao-documental/docs/01-visao-geral/mapa-do-sistema.md",
@@ -8899,7 +8899,7 @@
     "sections": [
       "Mapa do sistema"
     ],
-    "destination": "docs/01-visao-geral/mapa-do-sistema.md"
+    "destination": "docs/01-visao-geral/04-mapa-do-sistema.md"
   },
   {
     "path": "reorganizacao-documental/docs/01-visao-geral/objetivos.md",
@@ -8912,7 +8912,7 @@
       "Objetivos e avaliação",
       "Proveniência"
     ],
-    "destination": "docs/01-visao-geral/objetivos.md"
+    "destination": "docs/01-visao-geral/01-objetivos.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/README.md",
@@ -8924,7 +8924,7 @@
     "sections": [
       "Arquitetura"
     ],
-    "destination": "docs/02-arquitetura/README.md"
+    "destination": "docs/02-arquitetura/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/componentes.md",
@@ -8936,7 +8936,7 @@
     "sections": [
       "C4 nível 3 — componentes"
     ],
-    "destination": "docs/02-arquitetura/componentes.md"
+    "destination": "docs/02-arquitetura/04-componentes.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/containers.md",
@@ -8949,7 +8949,7 @@
       "C4 nível 2 — containers",
       "Proveniência"
     ],
-    "destination": "docs/02-arquitetura/containers.md"
+    "destination": "docs/02-arquitetura/03-containers.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/contexto.md",
@@ -8961,7 +8961,7 @@
     "sections": [
       "C4 nível 1 — contexto"
     ],
-    "destination": "docs/02-arquitetura/contexto.md"
+    "destination": "docs/02-arquitetura/02-contexto.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/dados.md",
@@ -8973,7 +8973,7 @@
     "sections": [
       "Arquitetura de dados"
     ],
-    "destination": "docs/02-arquitetura/dados.md"
+    "destination": "docs/02-arquitetura/06-dados.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/fluxos.md",
@@ -8988,7 +8988,7 @@
       "Handoff seguro",
       "Recuperação e revogação"
     ],
-    "destination": "docs/02-arquitetura/fluxos.md"
+    "destination": "docs/02-arquitetura/05-fluxos.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/fronteiras-e-invariantes.md",
@@ -9005,7 +9005,7 @@
       "Critério para habilitar",
       "Origem desta edição"
     ],
-    "destination": "docs/02-arquitetura/fronteiras-e-invariantes.md"
+    "destination": "docs/02-arquitetura/07-fronteiras-e-invariantes.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/infraestrutura.md",
@@ -9017,7 +9017,7 @@
     "sections": [
       "Infraestrutura e implantação"
     ],
-    "destination": "docs/02-arquitetura/infraestrutura.md"
+    "destination": "docs/02-arquitetura/09-infraestrutura.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/seguranca.md",
@@ -9029,7 +9029,7 @@
     "sections": [
       "Segurança e fronteiras"
     ],
-    "destination": "docs/02-arquitetura/seguranca.md"
+    "destination": "docs/02-arquitetura/08-seguranca.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/seguranca/rede-e-egress.md",
@@ -9045,7 +9045,7 @@
       "Dependências e exfiltração",
       "Origem desta edição"
     ],
-    "destination": "docs/02-arquitetura/seguranca/rede-e-egress.md"
+    "destination": "docs/02-arquitetura/seguranca/01-rede-e-egress.md"
   },
   {
     "path": "reorganizacao-documental/docs/02-arquitetura/seguranca/threat-model.md",
@@ -9063,7 +9063,7 @@
       "Resposta a incidente",
       "Origem desta edição"
     ],
-    "destination": "docs/02-arquitetura/seguranca/threat-model.md"
+    "destination": "docs/02-arquitetura/seguranca/00-threat-model.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/README.md",
@@ -9075,7 +9075,7 @@
     "sections": [
       "Catálogo de módulos"
     ],
-    "destination": "docs/03-modulos/README.md"
+    "destination": "docs/03-modulos/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/approvals/README.md",
@@ -9096,7 +9096,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/approvals/README.md"
+    "destination": "docs/03-modulos/approvals/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/context-builder/README.md",
@@ -9118,7 +9118,7 @@
       "Proveniência",
       "Contexto planejado e eficiência"
     ],
-    "destination": "docs/03-modulos/context-builder/README.md"
+    "destination": "docs/03-modulos/context-builder/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/documentation-gate/README.md",
@@ -9139,7 +9139,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/documentation-gate/README.md"
+    "destination": "docs/03-modulos/documentation-gate/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/executor-manager/README.md",
@@ -9160,7 +9160,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/executor-manager/README.md"
+    "destination": "docs/03-modulos/executor-manager/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/observabilidade-economia/README.md",
@@ -9181,7 +9181,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/observabilidade-economia/README.md"
+    "destination": "docs/03-modulos/observabilidade-economia/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/orchestrator/README.md",
@@ -9202,7 +9202,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/orchestrator/README.md"
+    "destination": "docs/03-modulos/orchestrator/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/projects/README.md",
@@ -9223,7 +9223,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/projects/README.md"
+    "destination": "docs/03-modulos/projects/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/providers/README.md",
@@ -9245,7 +9245,7 @@
       "Proveniência",
       "Seleção, estados e cotas herdados"
     ],
-    "destination": "docs/03-modulos/providers/README.md"
+    "destination": "docs/03-modulos/providers/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/runs/README.md",
@@ -9266,7 +9266,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/runs/README.md"
+    "destination": "docs/03-modulos/runs/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/runtime-guard/README.md",
@@ -9287,7 +9287,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/runtime-guard/README.md"
+    "destination": "docs/03-modulos/runtime-guard/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/runtime/README.md",
@@ -9306,7 +9306,7 @@
       "Origem desta edição",
       "Localização, relações e validação"
     ],
-    "destination": "docs/03-modulos/runtime/README.md"
+    "destination": "docs/03-modulos/runtime/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/sandbox/README.md",
@@ -9325,7 +9325,7 @@
       "Origem desta edição",
       "Localização, relações e validação"
     ],
-    "destination": "docs/03-modulos/sandbox/README.md"
+    "destination": "docs/03-modulos/sandbox/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/tenant-isolation/README.md",
@@ -9344,7 +9344,7 @@
       "Origem desta edição",
       "Localização, relações e validação"
     ],
-    "destination": "docs/03-modulos/tenant-isolation/README.md"
+    "destination": "docs/03-modulos/tenant-isolation/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/tickets/README.md",
@@ -9365,7 +9365,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/tickets/README.md"
+    "destination": "docs/03-modulos/tickets/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/tool-broker/README.md",
@@ -9382,7 +9382,7 @@
       "Origem desta edição",
       "Localização, relações e validação"
     ],
-    "destination": "docs/03-modulos/tool-broker/README.md"
+    "destination": "docs/03-modulos/tool-broker/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/03-modulos/worker/README.md",
@@ -9403,7 +9403,7 @@
       "Verificação e pendências",
       "Proveniência"
     ],
-    "destination": "docs/03-modulos/worker/README.md"
+    "destination": "docs/03-modulos/worker/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/README.md",
@@ -9415,7 +9415,7 @@
     "sections": [
       "Catálogo de features"
     ],
-    "destination": "docs/04-features/README.md"
+    "destination": "docs/04-features/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/documentation-approval.md",
@@ -9431,7 +9431,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/documentation-approval.md"
+    "destination": "docs/04-features/03-documentation-approval.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/provider-handoff.md",
@@ -9447,7 +9447,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/provider-handoff.md"
+    "destination": "docs/04-features/05-provider-handoff.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/recovery-operation.md",
@@ -9463,7 +9463,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/recovery-operation.md"
+    "destination": "docs/04-features/04-recovery-operation.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/tenant-isolation.md",
@@ -9479,7 +9479,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/tenant-isolation.md"
+    "destination": "docs/04-features/07-tenant-isolation.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/ticket-execution.md",
@@ -9495,7 +9495,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/ticket-execution.md"
+    "destination": "docs/04-features/02-ticket-execution.md"
   },
   {
     "path": "reorganizacao-documental/docs/04-features/usage-dashboard.md",
@@ -9511,7 +9511,7 @@
       "Módulos e contratos",
       "Rastreabilidade e limites"
     ],
-    "destination": "docs/04-features/usage-dashboard.md"
+    "destination": "docs/04-features/06-usage-dashboard.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/README.md",
@@ -9523,7 +9523,7 @@
     "sections": [
       "Contratos internos da fábrica"
     ],
-    "destination": "docs/05-contratos/README.md"
+    "destination": "docs/05-contratos/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/api/controle.md",
@@ -9538,7 +9538,7 @@
       "Autorização, erros e efeitos",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/api/controle.md"
+    "destination": "docs/05-contratos/api/01-controle.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/api/runtime.md",
@@ -9551,7 +9551,7 @@
       "Contrato do Runtime Gateway",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/api/runtime.md"
+    "destination": "docs/05-contratos/api/03-runtime.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/api/worker.md",
@@ -9564,7 +9564,7 @@
       "Protocolo interno do worker",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/api/worker.md"
+    "destination": "docs/05-contratos/api/02-worker.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/eventos/catalogo.md",
@@ -9577,7 +9577,7 @@
       "Eventos planejados",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/eventos/catalogo.md"
+    "destination": "docs/05-contratos/eventos/00-catalogo.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/filas/dispatch.md",
@@ -9590,7 +9590,7 @@
       "Dispatch, outbox e filas",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/filas/dispatch.md"
+    "destination": "docs/05-contratos/filas/00-dispatch.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/schemas/artifact-context.md",
@@ -9603,7 +9603,7 @@
       "Artifact e ContextManifest",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/schemas/artifact-context.md"
+    "destination": "docs/05-contratos/schemas/02-artifact-context.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/schemas/checkpoint.md",
@@ -9616,7 +9616,7 @@
       "Checkpoint recuperável",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/schemas/checkpoint.md"
+    "destination": "docs/05-contratos/schemas/03-checkpoint.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/schemas/entidades.md",
@@ -9629,7 +9629,7 @@
       "Entidades e invariantes",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/schemas/entidades.md"
+    "destination": "docs/05-contratos/schemas/00-entidades.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/schemas/job-package.md",
@@ -9646,7 +9646,7 @@
       "Implementado versus planejado",
       "Origem desta edição"
     ],
-    "destination": "docs/05-contratos/schemas/job-package.md"
+    "destination": "docs/05-contratos/schemas/04-job-package.md"
   },
   {
     "path": "reorganizacao-documental/docs/05-contratos/schemas/workflow.md",
@@ -9659,7 +9659,7 @@
       "Estados e transições",
       "Proveniência"
     ],
-    "destination": "docs/05-contratos/schemas/workflow.md"
+    "destination": "docs/05-contratos/schemas/01-workflow.md"
   },
   {
     "path": "reorganizacao-documental/docs/06-decisoes/ADR-002-vps-unica.md",
@@ -9777,7 +9777,7 @@
     "sections": [
       "Índice de decisões"
     ],
-    "destination": "docs/06-decisoes/README.md"
+    "destination": "docs/06-decisoes/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/README.md",
@@ -9789,7 +9789,7 @@
     "sections": [
       "Operação planejada"
     ],
-    "destination": "docs/07-operacao/README.md"
+    "destination": "docs/07-operacao/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/backup.md",
@@ -9802,7 +9802,7 @@
       "Runbook de backup",
       "Proveniência"
     ],
-    "destination": "docs/07-operacao/backup.md"
+    "destination": "docs/07-operacao/05-backup.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/deploy.md",
@@ -9817,7 +9817,7 @@
       "Sequência planejada",
       "Rollback e evidência"
     ],
-    "destination": "docs/07-operacao/deploy.md"
+    "destination": "docs/07-operacao/01-deploy.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/economia.md",
@@ -9830,7 +9830,7 @@
       "Economia, quotas e custos",
       "Proveniência"
     ],
-    "destination": "docs/07-operacao/economia.md"
+    "destination": "docs/07-operacao/09-economia.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/execucao-e-recuperacao.md",
@@ -9848,7 +9848,7 @@
       "Operação financeira",
       "Origem desta edição"
     ],
-    "destination": "docs/07-operacao/execucao-e-recuperacao.md"
+    "destination": "docs/07-operacao/02-execucao-e-recuperacao.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/handoff.md",
@@ -9861,7 +9861,7 @@
       "Handoff e troca de provider",
       "Proveniência"
     ],
-    "destination": "docs/07-operacao/handoff.md"
+    "destination": "docs/07-operacao/04-handoff.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/incidentes.md",
@@ -9874,7 +9874,7 @@
       "Resposta a incidente",
       "Proveniência"
     ],
-    "destination": "docs/07-operacao/incidentes.md"
+    "destination": "docs/07-operacao/08-incidentes.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/infraestrutura/dimensionamento-vps.md",
@@ -9890,7 +9890,7 @@
       "Origem desta edição",
       "Detalhes herdados úteis para planejamento"
     ],
-    "destination": "docs/07-operacao/infraestrutura/dimensionamento-vps.md"
+    "destination": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/observabilidade.md",
@@ -9903,7 +9903,7 @@
       "Observabilidade e evidências",
       "Proveniência"
     ],
-    "destination": "docs/07-operacao/observabilidade.md"
+    "destination": "docs/07-operacao/03-observabilidade.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/restore.md",
@@ -9915,7 +9915,7 @@
     "sections": [
       "Runbook de restauração"
     ],
-    "destination": "docs/07-operacao/restore.md"
+    "destination": "docs/07-operacao/06-restore.md"
   },
   {
     "path": "reorganizacao-documental/docs/07-operacao/troubleshooting.md",
@@ -9927,7 +9927,7 @@
     "sections": [
       "Diagnóstico e recuperação"
     ],
-    "destination": "docs/07-operacao/troubleshooting.md"
+    "destination": "docs/07-operacao/07-troubleshooting.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/README.md",
@@ -9939,7 +9939,7 @@
     "sections": [
       "Desenvolvimento"
     ],
-    "destination": "docs/08-desenvolvimento/README.md"
+    "destination": "docs/08-desenvolvimento/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/ambiente-local.md",
@@ -9951,7 +9951,7 @@
     "sections": [
       "Ambiente local"
     ],
-    "destination": "docs/08-desenvolvimento/ambiente-local.md"
+    "destination": "docs/08-desenvolvimento/01-ambiente-local.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/catalogo-fac.md",
@@ -9978,7 +9978,7 @@
       "Regras de integração",
       "Proveniência"
     ],
-    "destination": "docs/08-desenvolvimento/catalogo-fac.md"
+    "destination": "docs/08-desenvolvimento/13-catalogo-fac.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/como-contribuir.md",
@@ -9990,7 +9990,7 @@
     "sections": [
       "Como contribuir"
     ],
-    "destination": "docs/08-desenvolvimento/como-contribuir.md"
+    "destination": "docs/08-desenvolvimento/03-como-contribuir.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/convencoes.md",
@@ -10002,7 +10002,7 @@
     "sections": [
       "Convenções de engenharia e documentação"
     ],
-    "destination": "docs/08-desenvolvimento/convencoes.md"
+    "destination": "docs/08-desenvolvimento/02-convencoes.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/matriz-cobertura.md",
@@ -10018,7 +10018,7 @@
       "Origem desta edição",
       "Integração documental de 2026-10-06"
     ],
-    "destination": "docs/08-desenvolvimento/matriz-cobertura.md"
+    "destination": "docs/08-desenvolvimento/05-matriz-cobertura.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/piloto.md",
@@ -10032,7 +10032,7 @@
       "Extensão v3 proposta — 2026-10-06",
       "Origem desta edição"
     ],
-    "destination": "docs/08-desenvolvimento/piloto.md"
+    "destination": "docs/08-desenvolvimento/07-piloto.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/plano-mvp.md",
@@ -10049,7 +10049,7 @@
       "Origem desta edição",
       "Integração documental de 2026-10-06"
     ],
-    "destination": "docs/08-desenvolvimento/plano-mvp.md"
+    "destination": "docs/08-desenvolvimento/10-plano-mvp.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/testes-seguranca.md",
@@ -10066,7 +10066,7 @@
       "Gates",
       "Origem desta edição"
     ],
-    "destination": "docs/08-desenvolvimento/testes-seguranca.md"
+    "destination": "docs/08-desenvolvimento/12-testes-seguranca.md"
   },
   {
     "path": "reorganizacao-documental/docs/08-desenvolvimento/testes.md",
@@ -10078,7 +10078,7 @@
     "sections": [
       "Estratégia de testes"
     ],
-    "destination": "docs/08-desenvolvimento/testes.md"
+    "destination": "docs/08-desenvolvimento/04-testes.md"
   },
   {
     "path": "reorganizacao-documental/docs/09-entregas/2026/2026-10-06-DOC-MIGRACAO-manual-vivo.md",
@@ -10110,7 +10110,7 @@
     "sections": [
       "Registros históricos de entrega"
     ],
-    "destination": "docs/09-entregas/README.md"
+    "destination": "docs/09-entregas/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/10-lessons/README.md",
@@ -10123,7 +10123,7 @@
       "Lessons aplicadas",
       "Proveniência"
     ],
-    "destination": "docs/10-lessons/README.md"
+    "destination": "docs/10-lessons/00-README.md"
   },
   {
     "path": "reorganizacao-documental/docs/99-historico/README.md",
@@ -11180,7 +11180,7 @@
     "sections": [
       "Atalho — CHANGELOG.md"
     ],
-    "destination": "docs/CHANGELOG.md"
+    "destination": "docs/04-CHANGELOG.md"
   },
   {
     "path": "reorganizacao-documental/docs/GLOSSARIO.md",
@@ -11192,7 +11192,7 @@
     "sections": [
       "Atalho do glossário"
     ],
-    "destination": "docs/GLOSSARIO.md"
+    "destination": "docs/03-GLOSSARIO.md"
   },
   {
     "path": "reorganizacao-documental/docs/INDEX.md",
@@ -11205,7 +11205,7 @@
       "Índice completo do pacote",
       "Histórico e auditoria"
     ],
-    "destination": "docs/INDEX.md"
+    "destination": "docs/02-INDEX.md"
   },
   {
     "path": "reorganizacao-documental/docs/LEIA-ME-PRIMEIRO.md",
@@ -11217,7 +11217,7 @@
     "sections": [
       "Como ler este sistema"
     ],
-    "destination": "docs/LEIA-ME-PRIMEIRO.md"
+    "destination": "docs/00-LEIA-ME-PRIMEIRO.md"
   },
   {
     "path": "reorganizacao-documental/docs/README.md",
@@ -11236,7 +11236,7 @@
       "Onde continuar",
       "Proveniência"
     ],
-    "destination": "docs/README.md"
+    "destination": "docs/01-README.md"
   },
   {
     "path": "reorganizacao-documental/documentacoes/INDEX.md",

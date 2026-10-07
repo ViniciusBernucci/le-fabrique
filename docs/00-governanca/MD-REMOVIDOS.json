@@ -25,14 +25,14 @@
     {
       "path": "documentacoes/arquitetura/ARQUITETURA.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/02-arquitetura/referencia-v2.3.md",
+      "canonical": "docs/02-arquitetura/15-referencia-v2.3.md",
       "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/ARQUITETURA.md",
       "original_sha256": "efe84248ca2a9bdb390a9b67ccd495f0bcb71803f51172174c881ba23ab8c983"
     },
     {
       "path": "documentacoes/arquitetura/TECH-LEAD-HANDOFF.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/08-desenvolvimento/tech-lead-handoff.md",
+      "canonical": "docs/08-desenvolvimento/08-tech-lead-handoff.md",
       "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/TECH-LEAD-HANDOFF.md",
       "original_sha256": "6d044aaaa2dc66f8502d9f239e0c4e3056e9ae73be973cfe09386e6dc2570e92"
     },
@@ -522,7 +522,7 @@
     {
       "path": "documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "canonical": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md",
       "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
       "original_sha256": "10175a3f4fd379b2619b75df984af2e4caf995cfc64b442cb64d347569b3742b"
     },
@@ -1299,119 +1299,119 @@
     {
       "path": "lessons/baseline-regressao-review.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/baseline-regressao-review.md",
+      "canonical": "docs/10-lessons/11-baseline-regressao-review.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/baseline-regressao-review.md",
       "original_sha256": "c5271feb60ceb688447360acb160f54045c08cd2ddbcfd90ee54abe064902137"
     },
     {
       "path": "lessons/checkout-confiavel.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/checkout-confiavel.md",
+      "canonical": "docs/10-lessons/05-checkout-confiavel.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/checkout-confiavel.md",
       "original_sha256": "34f9839f64164f262acedebf47fca80313b8fe8c1a7377b866d458121e20c72c"
     },
     {
       "path": "lessons/contexto-deterministico-limites.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/contexto-deterministico-limites.md",
+      "canonical": "docs/10-lessons/04-contexto-deterministico-limites.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/contexto-deterministico-limites.md",
       "original_sha256": "178244a8288740d0be66ffdb6e7c1cc5f152364a2fe5d19cfe32726341f23675"
     },
     {
       "path": "lessons/contratos-runtime-monorepo.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/contratos-runtime-monorepo.md",
+      "canonical": "docs/10-lessons/02-contratos-runtime-monorepo.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/contratos-runtime-monorepo.md",
       "original_sha256": "cee26ba5627cf27d42c21f3cecb17dbd8ee45524631c99d6b0227224170785f4"
     },
     {
       "path": "lessons/definicao-projeto-configuravel.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/definicao-projeto-configuravel.md",
+      "canonical": "docs/10-lessons/01-definicao-projeto-configuravel.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/definicao-projeto-configuravel.md",
       "original_sha256": "9392c00546cba327064845df87f181235b3b39cab77940b34108935f399a7a62"
     },
     {
       "path": "lessons/leases-fencing-checkpoints.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/leases-fencing-checkpoints.md",
+      "canonical": "docs/10-lessons/09-leases-fencing-checkpoints.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/leases-fencing-checkpoints.md",
       "original_sha256": "2bb799db6759b4ba55ee3a73ded4978b00cdc319721b745fa3758e4085bff97f"
     },
     {
       "path": "lessons/lifecycle-processo-cli.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/lifecycle-processo-cli.md",
+      "canonical": "docs/10-lessons/08-lifecycle-processo-cli.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/lifecycle-processo-cli.md",
       "original_sha256": "3faeea44389210adc94f80b33f27d56a0b73b16f62bcf306b211f9d991d33678"
     },
     {
       "path": "lessons/modal-edicao-configuracao.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/modal-edicao-configuracao.md",
+      "canonical": "docs/10-lessons/13-modal-edicao-configuracao.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/modal-edicao-configuracao.md",
       "original_sha256": "2382f9e6f351d6dbe1743f59669f9d4603bb20e1908a901bb5d6c5791842c0af"
     },
     {
       "path": "lessons/outbox-idempotencia.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/outbox-idempotencia.md",
+      "canonical": "docs/10-lessons/03-outbox-idempotencia.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/outbox-idempotencia.md",
       "original_sha256": "9989a587c71f6f4d27d6c9b7ff1cc7f6b745ce054b7565e66afbbe778be80bb6"
     },
     {
       "path": "lessons/perfis-permissao-cliente-cli.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/perfis-permissao-cliente-cli.md",
+      "canonical": "docs/10-lessons/07-perfis-permissao-cliente-cli.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/perfis-permissao-cliente-cli.md",
       "original_sha256": "7c132e13f585ff4001dd062bc4e29c86be5d9fb77b47b14e020e879500ba00c9"
     },
     {
       "path": "lessons/sandbox-worktree-snapshot.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/sandbox-worktree-snapshot.md",
+      "canonical": "docs/10-lessons/06-sandbox-worktree-snapshot.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/sandbox-worktree-snapshot.md",
       "original_sha256": "ea64a91c740c6779a6261458c83ac8409fb50c16eaef9e964b5324a73b748643"
     },
     {
       "path": "lessons/video-decorativo-loop.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/video-decorativo-loop.md",
+      "canonical": "docs/10-lessons/14-video-decorativo-loop.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/video-decorativo-loop.md",
       "original_sha256": "b773615c72f9c8cf9f990a69de9988ada42b54f1c83c0fa8086bc135d3921e64"
     },
     {
       "path": "lessons/worker-heartbeat-quiescencia.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/10-lessons/worker-heartbeat-quiescencia.md",
+      "canonical": "docs/10-lessons/10-worker-heartbeat-quiescencia.md",
       "archive": "docs/99-historico/repo-a2cc5e0/lessons/worker-heartbeat-quiescencia.md",
       "original_sha256": "bbc1e74c574b86749d305aa0ccb784d9e91ce61a0022c98971e5199a3d8c2de2"
     },
     {
       "path": "templates/ENTREGA.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/00-governanca/templates/ENTREGA.md",
+      "canonical": "docs/00-governanca/templates/08-ENTREGA.md",
       "archive": "docs/99-historico/repo-a2cc5e0/templates/ENTREGA.md",
       "original_sha256": "10ad61ad1e6d8fc9f6c7cd3155afe29f4c5cac41a075e5cfc406fd510592171e"
     },
     {
       "path": "templates/HANDOFF.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/00-governanca/templates/HANDOFF.md",
+      "canonical": "docs/00-governanca/templates/07-HANDOFF.md",
       "archive": "docs/99-historico/repo-a2cc5e0/templates/HANDOFF.md",
       "original_sha256": "de499a2ad9889593a78c3dd3651901a440d60ae9339e4c6a003fe41668fe59b4"
     },
     {
       "path": "templates/LESSON.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/00-governanca/templates/LESSON.md",
+      "canonical": "docs/00-governanca/templates/09-LESSON.md",
       "archive": "docs/99-historico/repo-a2cc5e0/templates/LESSON.md",
       "original_sha256": "d17c37c2c955d3090dc9ef8f5db3dc780bed63c357b2cd2618ce25602c94052b"
     },
     {
       "path": "templates/TICKET.md",
       "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
-      "canonical": "docs/00-governanca/templates/TICKET.md",
+      "canonical": "docs/00-governanca/templates/01-TICKET.md",
       "archive": "docs/99-historico/repo-a2cc5e0/templates/TICKET.md",
       "original_sha256": "fbbda5565d599ab23c863655d425c6c10a6af3867054fd3aa17f909cef1219c7"
     }

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import "./home-dashboard.css";
 
-export type HomeDestination = "control" | "settings";
+export type HomeDestination = "control" | "settings" | "tasks";
 type IconName =
   | "home"
   | "folder"
@@ -101,13 +101,9 @@ function Avatar({ robot = false }: { robot?: boolean }) {
 const navigation: { name: string; icon: IconName; destination?: HomeDestination }[] = [
   { name: "Painel", icon: "home" },
   { name: "Projetos", icon: "folder", destination: "control" },
-  { name: "Agentes IA", icon: "robot", destination: "settings" },
-  { name: "Conteúdos", icon: "content" },
-  { name: "Vendas", icon: "chart" },
-  { name: "CRM / Leads", icon: "users" },
-  { name: "Eventos", icon: "calendar" },
-  { name: "Oportunidades", icon: "star" },
-  { name: "Financeiro", icon: "money" },
+  { name: "Tarefas", icon: "content", destination: "tasks" },
+  { name: "Agentes de IA", icon: "robot", destination: "settings" },
+  { name: "Escritório", icon: "home" },
   { name: "Usuários", icon: "users" },
   { name: "Configurações", icon: "settings", destination: "settings" },
 ];
@@ -304,7 +300,9 @@ export function DashboardLayout({
         ? "Projetos"
         : activeDestination === "settings"
           ? "Configurações"
-          : "Painel")
+          : activeDestination === "tasks"
+            ? "Tarefas"
+            : "Painel")
     );
   }
   return (

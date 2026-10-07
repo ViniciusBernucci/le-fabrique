@@ -15,7 +15,7 @@ O consumer real permanece desabilitado por padrão e a fixture só existe em tes
 
 ## Controle e lacunas
 
-[CONTROLE-MVP.md](../../../08-desenvolvimento/controle-mvp.md) resume funcionalidades, evidências, aceites e pendências reais de código. Também foi corrigida a divergência do PLANO-MVP, que ainda mostrava FAC-012A pendente apesar do aceite já registrado pelo OPS-003. A/B permanecem DONE; C–L e tickets operacionais pendentes de aceite continuam assim.
+[CONTROLE-MVP.md](../../../08-desenvolvimento/06-controle-mvp.md) resume funcionalidades, evidências, aceites e pendências reais de código. Também foi corrigida a divergência do PLANO-MVP, que ainda mostrava FAC-012A pendente apesar do aceite já registrado pelo OPS-003. A/B permanecem DONE; C–L e tickets operacionais pendentes de aceite continuam assim.
 
 A auditoria das APIs/painel/worker confirmou lacunas: resultados/artefatos no painel, replay e recuperação, WAITING_PROVIDER/handoff integrados, múltiplas contas isoladas por instalação, pausa/cancelamento/retomada/aceite de run e gate documental. Piloto/implantação são manuais e não bloqueiam a implementação dessas lacunas internas.
 

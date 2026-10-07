@@ -1,6 +1,6 @@
 # Prompt para entregas futuras
 
-Leia as instruções locais e abra docs/00-governanca/POLITICA-IA.md e POLITICA-DOCUMENTACAO.md, Manual Vivo, ticket e capítulos afetados. Execute apenas o incremento autorizado com critério/baseline/revisão reais.
+Leia as instruções locais e abra docs/00-governanca/01-POLITICA-IA.md e POLITICA-DOCUMENTACAO.md, Manual Vivo, ticket e capítulos afetados. Execute apenas o incremento autorizado com critério/baseline/revisão reais.
 
 Identifique impacto e mantenha código + documentação atual + histórico na mesma entrega. Atualize módulo/feature/contrato/arquitetura/runbook/desenvolvimento conforme matriz; ADR somente para decisão estrutural; lesson somente com conceito aplicado e código/revisão/evidência reais. Não recrie toda documentação nem copie contratos entre capítulos.
 

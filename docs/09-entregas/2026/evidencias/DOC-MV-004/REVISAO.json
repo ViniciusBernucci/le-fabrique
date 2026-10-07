@@ -1,0 +1,402 @@
+{
+  "baseline": "DOC-MV-003 preservada sobre 9439cde",
+  "state": "AWAITING_HUMAN; sem commit; instalação física/autoload pendentes",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 4481,
+      "sha256": "7ca4664cba5de95bb0d19d0b8131c078f3d917486b143afda60edc841a0665ca"
+    },
+    {
+      "path": "ANTIGRAVITY.md",
+      "bytes": 4662,
+      "sha256": "81e1041d6c5ab96d406f2e2a330668da0722d50065739d5c53fa8b595210a75f"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 4565,
+      "sha256": "48f6bb58ec5df459e1e0200fe07c541f341cab37cce135279123a70598f09c25"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2156,
+      "sha256": "c21ab616f7049b8595e864d5695004cc071ea056257fcdda0fee557294d22223"
+    },
+    {
+      "path": "docs/00-governanca/05-fontes-carregamento.md",
+      "bytes": 5324,
+      "sha256": "8a20e5c54b7f7bac67a53dfc62333e4ea8353c7c03062934a20514f08750d1b0"
+    },
+    {
+      "path": "docs/00-governanca/ADAPTACAO-SKILLS.json",
+      "bytes": 10107,
+      "sha256": "e0652fc728edea2a4897f013c7f53b3ab67c2558921d3c7a6b4ef2014a6ed67f"
+    },
+    {
+      "path": "docs/02-INDEX.md",
+      "bytes": 39958,
+      "sha256": "c56888937a40b30a8c3a7fd963b620cdf03cd4ff213303c25d772e049d9d5494"
+    },
+    {
+      "path": "docs/04-CHANGELOG.md",
+      "bytes": 38418,
+      "sha256": "521351492c02d33446b892a49101e40b58f7b873dcea85bdf13b59112aa4383b"
+    },
+    {
+      "path": "docs/08-desenvolvimento/09-backlog.md",
+      "bytes": 24940,
+      "sha256": "ed1a96010edb8869a8881eb80affe708b03f6336c693e96189d24dc47613fb8a"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tickets/DOC-MV-004.md",
+      "bytes": 953,
+      "sha256": "144e5f70ae7551e10d3560eb28bdf162387fbd01cbe769d1e2a21ccf5c72e6d3"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-07-DOC-MV-004-skills-la-fabrique.md",
+      "bytes": 4582,
+      "sha256": "c3a5787c898a767f04f0972aba3723c89a531dd6d4d393e9d41655ffd53cb87a"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/checks.json",
+      "bytes": 1493,
+      "sha256": "ff17df0435b8af1a2091dd075c7bb8c25ff7280a77049f48f6a7da5cc1c6b96e"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/instalacao-em-agents.patch",
+      "bytes": 238095,
+      "sha256": "7ec076d6fa0caa180705a46b97ef8d330ac5b28c1c97f2f67229e7608f795a00"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/instalacao.json",
+      "bytes": 343,
+      "sha256": "15137a71da9eeb9624a8258744034bc3d23b2ac7df0c518ef30504b030c4ffc9"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/scanner-fixture.json",
+      "bytes": 532,
+      "sha256": "cdaec6f537fa9100cdec093fe7fbc1d6a3a2ad3ae32dcd9f725d1b33b127e4b5"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/semantic-review.json",
+      "bytes": 444,
+      "sha256": "166ffa1121a4108ed8c78940fda310350c7190fe878f4f20d7493a27a8c8aae7"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/skill-validation.json",
+      "bytes": 1079,
+      "sha256": "10565f25fbe2025600bd5573cdf27cb0777ea652f634b7b0d082df67fecbcc10"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-004/validacao.json",
+      "bytes": 338,
+      "sha256": "5606df1cdb519e9660d3846d9db0b68eaad4defd7035c786c4f55a8bfdd84c51"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/AGENTS.md",
+      "bytes": 3599,
+      "sha256": "84c7bb2849e8e0d74b0577ed8bb5421ce7f9dcdb4efaf9d71c3ce2d19ed1b295"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/ANTIGRAVITY.md",
+      "bytes": 3780,
+      "sha256": "63a2d28b11e444b56799dd0559c0050874402f58ec726c25a067d02c16e740ab"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/CLAUDE.md",
+      "bytes": 3683,
+      "sha256": "bcbce2989a2181d85f3b61d021f0de8d7d315c9c6cebc673c6af6e39e0de86dc"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/README.md",
+      "bytes": 1822,
+      "sha256": "770cf1399c4b717626460bfbc93f1779d4809f42b90f603e5770616de0ab5a65"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/docs/00-governanca/05-fontes-carregamento.md",
+      "bytes": 3103,
+      "sha256": "351d7a428f2435dc99b94542099fc5027c9304e871f7930991032aba4dbdebaf"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/docs/02-INDEX.md",
+      "bytes": 38020,
+      "sha256": "b0d22c4eabc3304fdfd57c0a447264e9a82120ab9daa316f7bee772f22a8046b"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/docs/04-CHANGELOG.md",
+      "bytes": 38015,
+      "sha256": "5e87c9438af5a5c2a5bff01c6582c2742f6bfc63d1ab03aaff35fe98d982f0f1"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/docs/08-desenvolvimento/09-backlog.md",
+      "bytes": 24654,
+      "sha256": "ace6c9eecf03181e6f2f3026064865c253bf0f9eaeba1c36aa2906c7ce8fa1f9"
+    },
+    {
+      "path": "docs/99-historico/skills-baseline-doc-mv003/scripts/validar-documentacao.py",
+      "bytes": 12336,
+      "sha256": "bb368f1d4b1e2b14dc4dc9cafca1d9bfb270f0516491f8b7a6b4e55340f6ec6f"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/README.md",
+      "bytes": 12492,
+      "sha256": "8af606ec27cc90230e5b9238bc172ae47e346d93af07ce0984653fc7dedee221"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/arquiteto-de-software/SKILL.md",
+      "bytes": 2152,
+      "sha256": "2fca6c644e31808f3e9915d6dd3c07c834cc56a2952137d62b42733622153823"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/arquiteto-de-software/references/roteiro-arquitetural.md",
+      "bytes": 10515,
+      "sha256": "b7c3383a51281f3e83bdc680e7ee2b69c2de0f66607093604856fca01486214c"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/fechar-entrega/SKILL.md",
+      "bytes": 2661,
+      "sha256": "f3549e0f46c42f9eebcba1ee02e519071a2e20ecf84868ffa8c62cd168ea0afc"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/fechar-entrega/references/intranet.md",
+      "bytes": 12670,
+      "sha256": "404aeeadd5005b25351e3fbb81f379b728e41756d7b990e7a9a861e7218846f9"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/implementador-de-ticket/SKILL.md",
+      "bytes": 3833,
+      "sha256": "6992404765d27668b80a22e82b2bb090e3e4e20119eb4bc9314ef947c2317ec6"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/orquestrador-fluxo-ia/SKILL.md",
+      "bytes": 5322,
+      "sha256": "fdd959db5b039c743acd4583930d24e6a3d76ab07aef7b15c686d20986ca8f9f"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/orquestrador-fluxo-ia/references/estado-e-gates.md",
+      "bytes": 2902,
+      "sha256": "4ef98b3f65111479b649cf0412eb306f7d8be0ada9e3bf8d8dad317c33056866"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/review-loop-driver/SKILL.md",
+      "bytes": 6405,
+      "sha256": "0465ae54f057e8ad54e55406f590cbeddd73a507322193a1d0139dc8ca907682"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/SKILL.md",
+      "bytes": 7415,
+      "sha256": "da41ed71085e4b64c84f855002202d9afca50c97de2ea50edfc783b9c06819e3"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/correcao-performance.md",
+      "bytes": 3010,
+      "sha256": "b094fd0126bebbc612fcc652dad8745b6667caf2d84907a0234bce99e65ce7bc"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/qualidade.md",
+      "bytes": 3703,
+      "sha256": "366a88378874033b9def23c2984c21988ecdb15344fae8cafd5927e8ce63f3d0"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/seguranca.md",
+      "bytes": 4021,
+      "sha256": "c407ab5dc873c5e2e73789756d5019e1191e0165943248a3af6afb8c995c0f2a"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-qa/SKILL.md",
+      "bytes": 4277,
+      "sha256": "076f6d069e12513332648f1d658faa739e1fddf1618bf46e3f8d3dba0a1f61db"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/security-audit/SKILL.md",
+      "bytes": 6501,
+      "sha256": "1a28117101f549c0deee6c15c6f7255031231c5c02632b22e24920226d98087b"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/security-audit/agents/openai.yaml",
+      "bytes": 288,
+      "sha256": "356801003a332fba777f6c5ce950d877f8817d486f13c70e2852c40757575ca4"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/security-audit/references/ecosystem-checks.md",
+      "bytes": 9886,
+      "sha256": "46f7d88ff69becda8cbf413d5ac9751f6325233ffa031868ce223d78eab49869"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/security-audit/references/security-checklist.md",
+      "bytes": 11437,
+      "sha256": "b87035918731c0dfa9e5c273057d6492da0032e651ce8abfe07ddd18325eb932"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/security-audit/scripts/security-surface.sh",
+      "bytes": 6306,
+      "sha256": "c13bb60831688805dcdcd00f18a415df40d321effd0019a61c006a4773819124"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/simplify/README.md",
+      "bytes": 426,
+      "sha256": "f540294d1a8021ed016f131a39f82004ab5786797e0cdd3019d4897d67fb6ff7"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/simplify/SKILL.md",
+      "bytes": 6097,
+      "sha256": "936e3f31ff223d752c653c81a43e378de6de8809fda904e6b206628fd95cd567"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/simplify/codemap.md",
+      "bytes": 371,
+      "sha256": "8968b602f7c3e03d9593dce7675865ab1abd9ca302d4fe67ef8fea7c80ac0bc8"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/tech-lead/SKILL.md",
+      "bytes": 3131,
+      "sha256": "db444e6875bd727fb202ec1babeb4c05a366d9a509f697f52bb44b2996edffde"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/worktree-planner/SKILL.md",
+      "bytes": 2945,
+      "sha256": "510178202dbab1c6eaaebdb5b30cbb7d794a54b9590feee6ea7089290a5a43ca"
+    },
+    {
+      "path": "docs/99-historico/skills-importadas-2026-10-07/worktree-planner/references/intranet.md",
+      "bytes": 61507,
+      "sha256": "c80495c919a2287c58513a12d539a453f147c3e098ef0a3b5dc19023c2edb745"
+    },
+    {
+      "path": "scripts/validar-documentacao.py",
+      "bytes": 13146,
+      "sha256": "a4a86ea2df7bf5982277302ee0576657880d4ef9700ccd53cb10cf6d42a3c379"
+    },
+    {
+      "path": "skills/00-perfil-la-fabrique.md",
+      "bytes": 4791,
+      "sha256": "1c9823965d4f3015d5610f96a6482c4a88e2e38ede14bcf50a2be1a77ddf1621"
+    },
+    {
+      "path": "skills/arquiteto-de-software/SKILL.md",
+      "bytes": 1673,
+      "sha256": "3d7c43c57092d327ad7e5f35eeace7d07ae2ff171d06f920c59565cb377fabe0"
+    },
+    {
+      "path": "skills/arquiteto-de-software/references/roteiro-arquitetural.md",
+      "bytes": 1072,
+      "sha256": "2fc7eda6e80ca4d2ff39df7a7cf8b38b3913cde6f1f13fd7a76f90d7d8468681"
+    },
+    {
+      "path": "skills/fechar-entrega/SKILL.md",
+      "bytes": 1658,
+      "sha256": "2b61e46e3ee0163647277c63436571ce1036d056118126aae7ff8aef25cbb24f"
+    },
+    {
+      "path": "skills/fechar-entrega/references/registro-local.md",
+      "bytes": 1106,
+      "sha256": "dce5fb6e1d65765763d46437665b7fdd8855db3f46694403fdb42e7d24c67da1"
+    },
+    {
+      "path": "skills/implementador-de-ticket/SKILL.md",
+      "bytes": 1844,
+      "sha256": "bd69ef944aa2604e5cecc128b0222e0918ad50f09546b902c38be71ed656ac9a"
+    },
+    {
+      "path": "skills/orquestrador-fluxo-ia/SKILL.md",
+      "bytes": 2286,
+      "sha256": "547f89d03a6760a23d93922d2376a9490af2e37332042a1ad622bf32ac3be0b9"
+    },
+    {
+      "path": "skills/orquestrador-fluxo-ia/references/estado-e-gates.md",
+      "bytes": 1461,
+      "sha256": "69bbceaff34e12dd4a5ff8132af5413e0650408bf2a9eb30a3554cc469f8ee17"
+    },
+    {
+      "path": "skills/review-loop-driver/SKILL.md",
+      "bytes": 1789,
+      "sha256": "d0837fc4708364b562ad9063072b574046e4d675973df4eb4afad1cf3c49f50b"
+    },
+    {
+      "path": "skills/revisor-de-codigo/SKILL.md",
+      "bytes": 2090,
+      "sha256": "f7088bb39b3474d4197deec173724e747a465b0a8247d8b1be390cfead7ae0c0"
+    },
+    {
+      "path": "skills/revisor-de-codigo/references/correcao-performance.md",
+      "bytes": 953,
+      "sha256": "92188134174b38697de068bf5e907ee292daeaa9a6fc9341ab30970ed0737a1f"
+    },
+    {
+      "path": "skills/revisor-de-codigo/references/qualidade.md",
+      "bytes": 703,
+      "sha256": "dc4e98d5ae899a26e3a2be21e9eea8db325db4cdc865343483f03f08d1676a69"
+    },
+    {
+      "path": "skills/revisor-de-codigo/references/seguranca.md",
+      "bytes": 929,
+      "sha256": "6b825b4a2b5bf9789d88b9e73541043eeb44164f2368837de31c449552e832de"
+    },
+    {
+      "path": "skills/revisor-de-qa/SKILL.md",
+      "bytes": 1923,
+      "sha256": "592811934f0e6d7a57c8fa0f1562401130c1417e7886c7cb726be47a741b5f5c"
+    },
+    {
+      "path": "skills/security-audit/SKILL.md",
+      "bytes": 2344,
+      "sha256": "c7aeca8723bb622f577430a9fd5187fe34e1ceefcac3687ee4926cc4b639dd9b"
+    },
+    {
+      "path": "skills/security-audit/agents/openai.yaml",
+      "bytes": 277,
+      "sha256": "c0318b58f81f46c90468ed2d844ac66781c86cb574afb2e973760fc6d741010c"
+    },
+    {
+      "path": "skills/security-audit/references/ecosystem-checks.md",
+      "bytes": 962,
+      "sha256": "62a807f5be2c0c3a017ae2517ad72a6bbb1a5c05dfcbcc6b8c0a6631b9612650"
+    },
+    {
+      "path": "skills/security-audit/references/security-checklist.md",
+      "bytes": 1411,
+      "sha256": "913b32bbb1894e22e000a8f417f38b7c6c8676b447666ae0dc316aaa88722f51"
+    },
+    {
+      "path": "skills/security-audit/scripts/security-surface.sh",
+      "bytes": 2113,
+      "sha256": "2f6ae8799d183ff0cdb8c782a8e3f7e2816b1eda6afe1b0458c92fd8b8646148"
+    },
+    {
+      "path": "skills/simplify/SKILL.md",
+      "bytes": 1528,
+      "sha256": "63c838ae879037e8fadf91a42432ac78e45359fccbb819c62bddc01bcc7de149"
+    },
+    {
+      "path": "skills/tech-lead/SKILL.md",
+      "bytes": 1516,
+      "sha256": "c59622868d5bfdccb9bd30745540a31faa5429d53d0dc2861753a9e180b1469b"
+    },
+    {
+      "path": "skills/worktree-planner/SKILL.md",
+      "bytes": 1725,
+      "sha256": "aa753dd47b06231ea3c7a0ba1193f6e2b2266287dac4cc86b9551f8bffefa42b"
+    },
+    {
+      "path": "skills/worktree-planner/references/plano-local.md",
+      "bytes": 1194,
+      "sha256": "1925b69f4dc43b5b34c84bb0ef3369d502a76f06499a9b2a8dde776f80f61a13"
+    }
+  ],
+  "patch": {
+    "bytes": 62913,
+    "sha256": "941b485421a71e04c413b7474d02c7bb737ad6c03c682c13f75dc5364ee51188",
+    "scope": "só esta adaptação; originais e JSON de proveniência estão no manifesto, excluídos do patch editorial",
+    "check": "PASS git apply --check na baseline reconstruída"
+  },
+  "excludes": "REVISAO.json e editorial.patch para evitar hash circular",
+  "sanitization": {
+    "patterns": [
+      "sk-[A-Za-z0-9_-]{20,}",
+      "gh[pousr]_[A-Za-z0-9]{25,}",
+      "-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----"
+    ],
+    "findings": [],
+    "limit": "scan do patch editorial; não garantia universal"
+  }
+}

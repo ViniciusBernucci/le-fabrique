@@ -1,0 +1,4 @@
+interface:
+  display_name: "Auditoria de segurança"
+  short_description: "Audite fronteiras e riscos da La fabrique com evidências"
+  default_prompt: "Use $security-audit para modelar ameaças e auditar a La fabrique, respeitando suas políticas e fronteiras de execução."

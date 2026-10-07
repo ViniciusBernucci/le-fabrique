@@ -1,0 +1,19 @@
+{
+  "base": "9439cde4ce52a09225c9476c19baa89319802523",
+  "branch": "developer",
+  "revision": "working-tree FAC-033; previous changes preserved",
+  "sources": {
+    "AGENTS.md": "7ca4664cba5de95bb0d19d0b8131c078f3d917486b143afda60edc841a0665ca",
+    "docs/00-governanca/01-POLITICA-IA.md": "cf459b7d679a9796427d40b734dc0f2cabf5405de94c7ab05912574e1c3e6971",
+    "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md": "10d419ece5476593c37a092525d18f8c358f95f582eb5faf6f42540f1b1c022e",
+    "apps/web/src/App.tsx": "f070e1482653f8724a0f24e82db7f5d2c04402d96cd34b60004082740a58012b",
+    "apps/web/src/DashboardLayout.tsx": "1a706f63c709cffb1a0d980ebf6ea2e3f476fbd3c99df77c8bb32130ca81ecdf",
+    "apps/web/src/TasksPanel.tsx": "41dfa005b3eff5bfacb6cbab106bf9c91a4f92f847c9ce8829882a1b07dd5a1e",
+    "apps/web/src/tasks-model.ts": "030b24528cede1e97adada61b0f12d7be9244a7cd116f5822d657d4f26504229",
+    "apps/web/src/tasks.css": "529cc856f14c0f4226b1e308c65a55d7c2593db6711a5c78e188d9708ee4cc1e",
+    "apps/web/src/tasks-model.spec.ts": "72638525db59dfacdb06e8f6d9e6d6781604772e59b2558fecf115e0b92ba762",
+    "apps/web/src/TasksPanel.spec.tsx": "6c3255d8237f650b008afe6c1e3cbef602958befc0c08003a1cb06725a746072"
+  },
+  "autoload": "NAO_VERIFICADO",
+  "omissions": "Historical archive not loaded in full; credentials not read; effective model not observed"
+}

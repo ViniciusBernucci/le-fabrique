@@ -25,7 +25,7 @@ Comando browser: `PREVIEW_URL=http://127.0.0.1:5173`, `PLAYWRIGHT_MODULE` aponta
 ## Limitações e rollback
 Home com dados simulados; referência central raster, com texto original na arte. Desktop reduzido; mobile conserva legibilidade. Reverter cde0cc6 desfaz nome/escala sem banco. Sem push, publicação ou migração. Aceite visual humano pendente.
 ## Documentação e lessons
-READMEs raiz/controle/runtime/operação, política/guias com correção de nome, INDEX, CHANGELOG, BACKLOG, tickets, relatório, evidências e [baseline/review](../../../10-lessons/baseline-regressao-review.md). Nenhuma nova decisão de stack/contrato ou ADR necessário.
+READMEs raiz/controle/runtime/operação, política/guias com correção de nome, INDEX, CHANGELOG, BACKLOG, tickets, relatório, evidências e [baseline/review](../../../10-lessons/11-baseline-regressao-review.md). Nenhuma nova decisão de stack/contrato ou ADR necessário.
 ## Uso de IA e aceite
 Codex da sessão, um writer e zero subagentes/handoffs/chamadas adicionais a providers. Não inspecionou credenciais nem alterou cobrança. Modelo/cota/consumo não comprovados. AWAITING_HUMAN; integração e remoção da worktree autorizadas, sem presumir DONE.
 

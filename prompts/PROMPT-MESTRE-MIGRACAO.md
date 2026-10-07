@@ -4,7 +4,7 @@ Você está no repositório da Fábrica de Software. Execute uma reorganização
 
 ## Leitura e escopo
 
-Leia instruções locais/hierárquicas do agente, README e docs/00-governanca/POLITICA-IA.md, POLITICA-DOCUMENTACAO.md, AUDITORIA.md, MAPA-MIGRACAO.md, PENDENCIAS.md e docs/00-governanca/GUIA-DE-INTEGRACAO.md. Abra esses arquivos explicitamente; link não significa inclusão automática. Se houver pacote ainda não instalado, leia seus equivalentes e mescle de forma aditiva.
+Leia instruções locais/hierárquicas do agente, README e docs/00-governanca/01-POLITICA-IA.md, POLITICA-DOCUMENTACAO.md, AUDITORIA.md, MAPA-MIGRACAO.md, PENDENCIAS.md e docs/00-governanca/GUIA-DE-INTEGRACAO.md. Abra esses arquivos explicitamente; link não significa inclusão automática. Se houver pacote ainda não instalado, leia seus equivalentes e mescle de forma aditiva.
 
 Esta tarefa autoriza reorganização de documentação, governança e paths de documentação em prompts/config de gate pertinentes, preservando comportamento/segurança. Não implementa features/backlog, troca stack de código, instala providers, lê credenciais ou executa migração/produção. sources/ sincronizado é read-only. Preserve trabalho prévio e regras locais de setup/checks/segurança.
 

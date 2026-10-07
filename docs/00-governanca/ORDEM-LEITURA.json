@@ -1,0 +1,1373 @@
+{
+  "baseline": "9439cde",
+  "date": "2026-10-07",
+  "files": [
+    {
+      "source": "docs/00-governanca/README.md",
+      "destination": "docs/00-governanca/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/README.md",
+      "sha256": "ec28c428b15a7e717e4a082cacb2872bf1da7854b355af95f95246bf4f34525e",
+      "bytes": 921
+    },
+    {
+      "source": "docs/00-governanca/POLITICA-IA.md",
+      "destination": "docs/00-governanca/01-POLITICA-IA.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/POLITICA-IA.md",
+      "sha256": "1587b2771c27d48a7653d5477d2ccc2eaded05a3f0964027a651e30bb0f6c222",
+      "bytes": 6569
+    },
+    {
+      "source": "docs/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "destination": "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "sha256": "9b987587e0b5964e5896606ebe11093f1a61c24435e0eeb7bce93f97f49704fe",
+      "bytes": 5638
+    },
+    {
+      "source": "docs/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "destination": "docs/00-governanca/03-GUIA-DE-INTEGRACAO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "sha256": "afa6e66934be310bf1cb500b94059fae3397789665a38c1df89d7f69da0c462e",
+      "bytes": 2385
+    },
+    {
+      "source": "docs/00-governanca/CHECKLIST-ENTREGA.md",
+      "destination": "docs/00-governanca/04-CHECKLIST-ENTREGA.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/CHECKLIST-ENTREGA.md",
+      "sha256": "48d48a7ca7d69644bdfc1f38338d62f9e7fde379ee5aaf2a66b21eabd30fe361",
+      "bytes": 1095
+    },
+    {
+      "source": "docs/00-governanca/fontes-carregamento.md",
+      "destination": "docs/00-governanca/05-fontes-carregamento.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/fontes-carregamento.md",
+      "sha256": "98d52f41d57bf1924a71b6ce4368624d61f84ebd37e91362b303f0ba72263eff",
+      "bytes": 2956
+    },
+    {
+      "source": "docs/00-governanca/fontes-tecnicas.md",
+      "destination": "docs/00-governanca/06-fontes-tecnicas.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/fontes-tecnicas.md",
+      "sha256": "a080921a1f0ff64f88bb869c7c973c7942653668fa82c70f441f11cbe12b6785",
+      "bytes": 3320
+    },
+    {
+      "source": "docs/00-governanca/PENDENCIAS.md",
+      "destination": "docs/00-governanca/07-PENDENCIAS.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/PENDENCIAS.md",
+      "sha256": "5de8895851bed2e71d91511885e4d848a8bf4159f1114003d3c54e2ced25bc31",
+      "bytes": 2502
+    },
+    {
+      "source": "docs/00-governanca/AUDITORIA.md",
+      "destination": "docs/00-governanca/08-AUDITORIA.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/AUDITORIA.md",
+      "sha256": "61824f6bab2c00d7008a888723f5264424af1f4ea88b0af817135bb75551bdba",
+      "bytes": 5352
+    },
+    {
+      "source": "docs/00-governanca/INVENTARIO.md",
+      "destination": "docs/00-governanca/09-INVENTARIO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/INVENTARIO.md",
+      "sha256": "6ec3f8bf1bbd05f835eaf982fb8f2c7dce047699ab114ad1c073f5779cd4fab9",
+      "bytes": 849
+    },
+    {
+      "source": "docs/00-governanca/MAPA-MIGRACAO.md",
+      "destination": "docs/00-governanca/10-MAPA-MIGRACAO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/MAPA-MIGRACAO.md",
+      "sha256": "b5d42b2ed756152bb9c2e208824dd947aae54d8deb0b825028ec57fa2e376a4a",
+      "bytes": 4077
+    },
+    {
+      "source": "docs/00-governanca/VALIDACAO.md",
+      "destination": "docs/00-governanca/11-VALIDACAO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/VALIDACAO.md",
+      "sha256": "8d8187ab740188402f591421bbbc5b6e20f7c4bb288e66ad46cab3da7ea1b6d5",
+      "bytes": 6069
+    },
+    {
+      "source": "docs/00-governanca/templates/README.md",
+      "destination": "docs/00-governanca/templates/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/README.md",
+      "sha256": "3a9ff517f4a10180c1d62aefb17fbbcd0f4ea7adac5586ec33b9fea7b296c9fb",
+      "bytes": 1320
+    },
+    {
+      "source": "docs/00-governanca/templates/TICKET.md",
+      "destination": "docs/00-governanca/templates/01-TICKET.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/TICKET.md",
+      "sha256": "84656841de961c65bccdcbec1da3fcfe1c20cbd3fd874b67e58e752c9bdb2142",
+      "bytes": 2578
+    },
+    {
+      "source": "docs/00-governanca/templates/MODULO.md",
+      "destination": "docs/00-governanca/templates/02-MODULO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/MODULO.md",
+      "sha256": "c15e67cda48c9529f5fb35d86eb9f1d3ef69babefa39360cf4a35bff6732c52c",
+      "bytes": 3164
+    },
+    {
+      "source": "docs/00-governanca/templates/FEATURE.md",
+      "destination": "docs/00-governanca/templates/03-FEATURE.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/FEATURE.md",
+      "sha256": "77f4e1efc8d0c127e4c73bcfc6ba41f21357556e3a69a70b0509e6386956d6e1",
+      "bytes": 2365
+    },
+    {
+      "source": "docs/00-governanca/templates/CONTRATO.md",
+      "destination": "docs/00-governanca/templates/04-CONTRATO.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/CONTRATO.md",
+      "sha256": "158dee47b7be2027e7ee78a7e522690748fcb22acb21d7d9e4f3a47b8023c7f3",
+      "bytes": 2688
+    },
+    {
+      "source": "docs/00-governanca/templates/ADR.md",
+      "destination": "docs/00-governanca/templates/05-ADR.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/ADR.md",
+      "sha256": "0bc5e1561382d6f8e366c3a4846f8cfd22f51c0a0df38171570a8d09fe5c8706",
+      "bytes": 2176
+    },
+    {
+      "source": "docs/00-governanca/templates/RUNBOOK.md",
+      "destination": "docs/00-governanca/templates/06-RUNBOOK.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/RUNBOOK.md",
+      "sha256": "0c20e808e748a1b9d16eb85d7f8cdcceb08cf26d47f694118b8219bdb22eef9e",
+      "bytes": 2157
+    },
+    {
+      "source": "docs/00-governanca/templates/HANDOFF.md",
+      "destination": "docs/00-governanca/templates/07-HANDOFF.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/HANDOFF.md",
+      "sha256": "5625bd25c1aeaaa376c5682d0c5e9f2723a5b63a09e7f9909ec81dd9786f9470",
+      "bytes": 1519
+    },
+    {
+      "source": "docs/00-governanca/templates/ENTREGA.md",
+      "destination": "docs/00-governanca/templates/08-ENTREGA.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/ENTREGA.md",
+      "sha256": "4b447a79000f203ac47d43c6d0f8d5176609f9748a9e7b37972850bb30f04b2a",
+      "bytes": 2479
+    },
+    {
+      "source": "docs/00-governanca/templates/LESSON.md",
+      "destination": "docs/00-governanca/templates/09-LESSON.md",
+      "archive": "docs/99-historico/ordem-9439cde/00-governanca/templates/LESSON.md",
+      "sha256": "6c4a6d435af1b03acc36369d77a5e7a9151b15dc01f4f7ca070286df91043a9c",
+      "bytes": 2284
+    },
+    {
+      "source": "docs/01-visao-geral/README.md",
+      "destination": "docs/01-visao-geral/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/01-visao-geral/README.md",
+      "sha256": "f187e8b3c4e7993558252e77076cab01e283960b70036c5a5f1f0ab7f33c7930",
+      "bytes": 669
+    },
+    {
+      "source": "docs/01-visao-geral/objetivos.md",
+      "destination": "docs/01-visao-geral/01-objetivos.md",
+      "archive": "docs/99-historico/ordem-9439cde/01-visao-geral/objetivos.md",
+      "sha256": "076afc926d0515ce9e377ad02c2a26ad762532ebfd01029d82b51a0b80dee9d3",
+      "bytes": 1075
+    },
+    {
+      "source": "docs/01-visao-geral/escopo.md",
+      "destination": "docs/01-visao-geral/02-escopo.md",
+      "archive": "docs/99-historico/ordem-9439cde/01-visao-geral/escopo.md",
+      "sha256": "267e0e2c8a967afe8f20f421d5163436a2a381885cd775e8877410481d5b37c1",
+      "bytes": 1674
+    },
+    {
+      "source": "docs/01-visao-geral/glossario.md",
+      "destination": "docs/01-visao-geral/03-glossario.md",
+      "archive": "docs/99-historico/ordem-9439cde/01-visao-geral/glossario.md",
+      "sha256": "44ab875850d89fabe95a8d216840566b3e8a848f055a2c774147117a1c196aef",
+      "bytes": 3408
+    },
+    {
+      "source": "docs/01-visao-geral/mapa-do-sistema.md",
+      "destination": "docs/01-visao-geral/04-mapa-do-sistema.md",
+      "archive": "docs/99-historico/ordem-9439cde/01-visao-geral/mapa-do-sistema.md",
+      "sha256": "410bc55950430bfa6fc8f0c3f6d9a7abc50f4caca995637e93c04dde977e46d2",
+      "bytes": 711
+    },
+    {
+      "source": "docs/02-arquitetura/README.md",
+      "destination": "docs/02-arquitetura/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/README.md",
+      "sha256": "022d0ecbb612295250ea2125f0e14c5a0aae103a51f34ef7638f56f0c93d2342",
+      "bytes": 739
+    },
+    {
+      "source": "docs/02-arquitetura/as-is.md",
+      "destination": "docs/02-arquitetura/01-as-is.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/as-is.md",
+      "sha256": "d6a763d65b7f67810a84543f13f8d36651e1ea10afe829d43e06679accf0455f",
+      "bytes": 4623
+    },
+    {
+      "source": "docs/02-arquitetura/contexto.md",
+      "destination": "docs/02-arquitetura/02-contexto.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/contexto.md",
+      "sha256": "499ec42b25d2169c17a0d245a2d2e9a5f671ccaf1509235cb70afd270b6261f3",
+      "bytes": 787
+    },
+    {
+      "source": "docs/02-arquitetura/containers.md",
+      "destination": "docs/02-arquitetura/03-containers.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/containers.md",
+      "sha256": "2b187b79d0f00bd1264c4eebf32612fb18664d6cef426e0e10f9809ad45133a7",
+      "bytes": 1837
+    },
+    {
+      "source": "docs/02-arquitetura/componentes.md",
+      "destination": "docs/02-arquitetura/04-componentes.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/componentes.md",
+      "sha256": "543137846e35943e9f5d6ac218c80188bd28d6762e6e46764ec951086f72097e",
+      "bytes": 1516
+    },
+    {
+      "source": "docs/02-arquitetura/fluxos.md",
+      "destination": "docs/02-arquitetura/05-fluxos.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/fluxos.md",
+      "sha256": "ac4767484798a37f6bfc886cc8e48aa6b35efc0bc050a921fff4133f38cbf562",
+      "bytes": 1304
+    },
+    {
+      "source": "docs/02-arquitetura/dados.md",
+      "destination": "docs/02-arquitetura/06-dados.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/dados.md",
+      "sha256": "91d6f651efcfccf8c0fbf8951960481889ee43b77669f064dbad1dc4d27787ab",
+      "bytes": 711
+    },
+    {
+      "source": "docs/02-arquitetura/fronteiras-e-invariantes.md",
+      "destination": "docs/02-arquitetura/07-fronteiras-e-invariantes.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/fronteiras-e-invariantes.md",
+      "sha256": "7d23726f646aac0989d715c34b6dac5df39aebb2c939ccbbe8413b7a454be068",
+      "bytes": 5082
+    },
+    {
+      "source": "docs/02-arquitetura/seguranca.md",
+      "destination": "docs/02-arquitetura/08-seguranca.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca.md",
+      "sha256": "572164b482af432347017274c048cb336ccefe2fd12855ab580122477c1bdde2",
+      "bytes": 1446
+    },
+    {
+      "source": "docs/02-arquitetura/infraestrutura.md",
+      "destination": "docs/02-arquitetura/09-infraestrutura.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/infraestrutura.md",
+      "sha256": "4068b1e5da6355578456fd9da9d02eefcf9c91da3d8857552d4542af2887919f",
+      "bytes": 1041
+    },
+    {
+      "source": "docs/02-arquitetura/contexto-alvo.md",
+      "destination": "docs/02-arquitetura/10-contexto-alvo.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/contexto-alvo.md",
+      "sha256": "7408a142b0d9e92498d1c4cc19edb7a97f6b8d8e9fe07f291cabfa7d5e485711",
+      "bytes": 1027
+    },
+    {
+      "source": "docs/02-arquitetura/containers-alvo.md",
+      "destination": "docs/02-arquitetura/11-containers-alvo.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/containers-alvo.md",
+      "sha256": "3c132774a5a3306fb4614612d6fc7774b6dfc39b08c833830428aebc7ccecc36",
+      "bytes": 1923
+    },
+    {
+      "source": "docs/02-arquitetura/componentes-alvo.md",
+      "destination": "docs/02-arquitetura/12-componentes-alvo.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/componentes-alvo.md",
+      "sha256": "e1bfb963b84bea118189dc604e478bdeb29ab7724faa468c8e8bda1f8a04edec",
+      "bytes": 1709
+    },
+    {
+      "source": "docs/02-arquitetura/fluxos-alvo.md",
+      "destination": "docs/02-arquitetura/13-fluxos-alvo.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/fluxos-alvo.md",
+      "sha256": "7d610db25e312b637943c40604cdafc9e59fcd9d89c65287469a9141e851d857",
+      "bytes": 2463
+    },
+    {
+      "source": "docs/02-arquitetura/dados-alvo.md",
+      "destination": "docs/02-arquitetura/14-dados-alvo.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/dados-alvo.md",
+      "sha256": "20e2697c151a0761025c0939e13337a385d7480afd89ef3b4a8e08dff653bcbb",
+      "bytes": 1338
+    },
+    {
+      "source": "docs/02-arquitetura/referencia-v2.3.md",
+      "destination": "docs/02-arquitetura/15-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/referencia-v2.3.md",
+      "sha256": "bf75efee23b09f5186efa43812da7321936da18e6c6ceecc4aaf0766d5f1753d",
+      "bytes": 24379
+    },
+    {
+      "source": "docs/02-arquitetura/seguranca/threat-model.md",
+      "destination": "docs/02-arquitetura/seguranca/00-threat-model.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca/threat-model.md",
+      "sha256": "5e551ba5fd372859b7568289ee3d6a5dd9d5e51551ce00b6e84f1d98bd83e9b2",
+      "bytes": 5520
+    },
+    {
+      "source": "docs/02-arquitetura/seguranca/rede-e-egress.md",
+      "destination": "docs/02-arquitetura/seguranca/01-rede-e-egress.md",
+      "archive": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca/rede-e-egress.md",
+      "sha256": "b1981f790524b15deac9761cf944b65ef158d640df232469a796f1ac39ff2cc7",
+      "bytes": 4646
+    },
+    {
+      "source": "docs/03-modulos/README.md",
+      "destination": "docs/03-modulos/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/README.md",
+      "sha256": "7c84a4cd41ef677122ecc3dd9208bc3559392e3ebbe939e8dc28666ea2f09fc2",
+      "bytes": 1216
+    },
+    {
+      "source": "docs/03-modulos/approvals/README.md",
+      "destination": "docs/03-modulos/approvals/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/approvals/README.md",
+      "sha256": "8aff6ba9fe044fa4838fa6bd9730092734d68b8fdec0b97c44563abdfde424e5",
+      "bytes": 2144
+    },
+    {
+      "source": "docs/03-modulos/configuracao/README.md",
+      "destination": "docs/03-modulos/configuracao/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/configuracao/README.md",
+      "sha256": "a93e87326ca87a88eeca6d68472c9eba1eef9a3903c61d197ad196f45cdc7d54",
+      "bytes": 2367
+    },
+    {
+      "source": "docs/03-modulos/configuracao/referencia-v2.3.md",
+      "destination": "docs/03-modulos/configuracao/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/configuracao/referencia-v2.3.md",
+      "sha256": "b232bcfcee93acdb145ea16258f9216b0cda6fb6ce12be065c20236fb9b20631",
+      "bytes": 12593
+    },
+    {
+      "source": "docs/03-modulos/context-builder/README.md",
+      "destination": "docs/03-modulos/context-builder/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/context-builder/README.md",
+      "sha256": "4417fc905b0041c3e57e3102936bd1efd6dc3cfb4ce0823a1d19e30718f2de5e",
+      "bytes": 2313
+    },
+    {
+      "source": "docs/03-modulos/context-builder/referencia-v2.3.md",
+      "destination": "docs/03-modulos/context-builder/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/context-builder/referencia-v2.3.md",
+      "sha256": "c566bd3138b5f9947efaa18d9d6e6f298c9e732083678cd853a041e1519c4332",
+      "bytes": 2126
+    },
+    {
+      "source": "docs/03-modulos/controle/README.md",
+      "destination": "docs/03-modulos/controle/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/controle/README.md",
+      "sha256": "de0ff3a427084fa00c2b750940eaf1190d7d1dd9bad58087f4a28ff61d6bf11c",
+      "bytes": 2294
+    },
+    {
+      "source": "docs/03-modulos/controle/referencia-v2.3.md",
+      "destination": "docs/03-modulos/controle/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/controle/referencia-v2.3.md",
+      "sha256": "20b4856693081bf8858e904985fcd67798aa88965505e0fa82f46e7da1032f40",
+      "bytes": 17363
+    },
+    {
+      "source": "docs/03-modulos/documentation-gate/README.md",
+      "destination": "docs/03-modulos/documentation-gate/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/documentation-gate/README.md",
+      "sha256": "ff21a7a141cb42226f9ec9c8198d4083c423c626ed111be1e66f6abeac8ca547",
+      "bytes": 2215
+    },
+    {
+      "source": "docs/03-modulos/executor-manager/README.md",
+      "destination": "docs/03-modulos/executor-manager/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/executor-manager/README.md",
+      "sha256": "fdd14a6fa51e80877b68e94b5d5d795b637c9e382cc36e4e6533cbfcf075c446",
+      "bytes": 2141
+    },
+    {
+      "source": "docs/03-modulos/observabilidade-economia/README.md",
+      "destination": "docs/03-modulos/observabilidade-economia/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/observabilidade-economia/README.md",
+      "sha256": "9fa36603baaa2b148c5041f640a32bcade4ca67276cc16803faeeec66f5919d7",
+      "bytes": 2203
+    },
+    {
+      "source": "docs/03-modulos/orchestrator/README.md",
+      "destination": "docs/03-modulos/orchestrator/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/orchestrator/README.md",
+      "sha256": "3cd99ddd74f8547ff4f18327d3713d72a2bee964444a47d7152c65390b047beb",
+      "bytes": 2154
+    },
+    {
+      "source": "docs/03-modulos/projects/README.md",
+      "destination": "docs/03-modulos/projects/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/projects/README.md",
+      "sha256": "05def2d6653d9ac36ce2adfa6730c93175052a490f8d2fd11d1ccbec3a31af95",
+      "bytes": 2153
+    },
+    {
+      "source": "docs/03-modulos/providers/README.md",
+      "destination": "docs/03-modulos/providers/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/providers/README.md",
+      "sha256": "de9838ef0e983c14763355fdd71591ec1872fbbb54ba4c7d1c85dba543bb56be",
+      "bytes": 2165
+    },
+    {
+      "source": "docs/03-modulos/runs/README.md",
+      "destination": "docs/03-modulos/runs/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/runs/README.md",
+      "sha256": "e1ef84587d28dc50fb4f0ccc5edd7f5a772af33648383e8ed1728b99cc4ca840",
+      "bytes": 2159
+    },
+    {
+      "source": "docs/03-modulos/runtime/README.md",
+      "destination": "docs/03-modulos/runtime/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/runtime/README.md",
+      "sha256": "8ce02e896591df842708c4e80206ccdaf978a5777269a6e7cc5e8937cef3f3e5",
+      "bytes": 2598
+    },
+    {
+      "source": "docs/03-modulos/runtime/direcao-proposta.md",
+      "destination": "docs/03-modulos/runtime/01-direcao-proposta.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/runtime/direcao-proposta.md",
+      "sha256": "893092c2c629c440fdaa8da2126a313428b007f9a3c8865e8024470365c789ad",
+      "bytes": 6237
+    },
+    {
+      "source": "docs/03-modulos/runtime/referencia-v2.3.md",
+      "destination": "docs/03-modulos/runtime/02-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/runtime/referencia-v2.3.md",
+      "sha256": "df5580037b489f4ab6b93f336acad220242d2455935e263239501e020d8f6bbc",
+      "bytes": 20792
+    },
+    {
+      "source": "docs/03-modulos/runtime-guard/README.md",
+      "destination": "docs/03-modulos/runtime-guard/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/runtime-guard/README.md",
+      "sha256": "40ea2fb18a24ef3016e5b68f58eae449f59ce7aa60bf311aa449a10991bc5af4",
+      "bytes": 2083
+    },
+    {
+      "source": "docs/03-modulos/sandbox/README.md",
+      "destination": "docs/03-modulos/sandbox/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/sandbox/README.md",
+      "sha256": "6e8ca335a26fede866b0dba80b71b4042f9969d75770c2ae8a1c822c3607fb11",
+      "bytes": 2415
+    },
+    {
+      "source": "docs/03-modulos/sandbox/direcao-proposta.md",
+      "destination": "docs/03-modulos/sandbox/01-direcao-proposta.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/sandbox/direcao-proposta.md",
+      "sha256": "f9167cf61072e9429da0aeef392eed307fc9f4bb95953b725ca998b16fba1eb6",
+      "bytes": 5668
+    },
+    {
+      "source": "docs/03-modulos/tenant-isolation/README.md",
+      "destination": "docs/03-modulos/tenant-isolation/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/tenant-isolation/README.md",
+      "sha256": "3ec226cf72a7a6ae2bf1e63997f0f137928cfa945142f2e90285a85ef633c4e6",
+      "bytes": 5933
+    },
+    {
+      "source": "docs/03-modulos/tool-broker/README.md",
+      "destination": "docs/03-modulos/tool-broker/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/tool-broker/README.md",
+      "sha256": "34850f68cedcc79b819251f52fb633c81597a9b6ae8a5e1e78a33e84e0357f95",
+      "bytes": 4573
+    },
+    {
+      "source": "docs/03-modulos/worker/README.md",
+      "destination": "docs/03-modulos/worker/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/worker/README.md",
+      "sha256": "e44e2cd175ee9fefef8bae026adcdb47cb29ca7d7bb48c5c56eee5bcbbd5255c",
+      "bytes": 2060
+    },
+    {
+      "source": "docs/04-features/README.md",
+      "destination": "docs/04-features/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/README.md",
+      "sha256": "3031a11e79cfe6e1e8814f421e7d53ad6a81ee323689827366e9795bb22fea9a",
+      "bytes": 520
+    },
+    {
+      "source": "docs/04-features/control-settings.md",
+      "destination": "docs/04-features/01-control-settings.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/control-settings.md",
+      "sha256": "191973d7879915ffb2d9683970771c06a8b5dea32e3f292369408da0a2c203a6",
+      "bytes": 1441
+    },
+    {
+      "source": "docs/04-features/ticket-execution.md",
+      "destination": "docs/04-features/02-ticket-execution.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/ticket-execution.md",
+      "sha256": "a9dfe061858865d72257012834040ec80dfc079a45f3ade3622880eaf5147685",
+      "bytes": 1424
+    },
+    {
+      "source": "docs/04-features/documentation-approval.md",
+      "destination": "docs/04-features/03-documentation-approval.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/documentation-approval.md",
+      "sha256": "e23b4de71d90f2424ca7727a6ea08696f2f664279d05033665ba5f415ca1995c",
+      "bytes": 1325
+    },
+    {
+      "source": "docs/04-features/recovery-operation.md",
+      "destination": "docs/04-features/04-recovery-operation.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/recovery-operation.md",
+      "sha256": "0d9c565c1d3e420204ed43693299f2ac4afaff229a79c43edfc492f65b9e1a94",
+      "bytes": 1375
+    },
+    {
+      "source": "docs/04-features/provider-handoff.md",
+      "destination": "docs/04-features/05-provider-handoff.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/provider-handoff.md",
+      "sha256": "e5e0e8986871f2111680c14a882d363d6b939890a3a2c7d43829f5efe0ead3df",
+      "bytes": 1460
+    },
+    {
+      "source": "docs/04-features/usage-dashboard.md",
+      "destination": "docs/04-features/06-usage-dashboard.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/usage-dashboard.md",
+      "sha256": "e63cbc71f224cf5808ad7ba0149f961d80cfbe589d08321d4b3d5dfb783fe090",
+      "bytes": 1321
+    },
+    {
+      "source": "docs/04-features/tenant-isolation.md",
+      "destination": "docs/04-features/07-tenant-isolation.md",
+      "archive": "docs/99-historico/ordem-9439cde/04-features/tenant-isolation.md",
+      "sha256": "287303438a6c1812ea3cdbc6b810bfe562e949fadedc9bce5f792b6f8f783002",
+      "bytes": 1428
+    },
+    {
+      "source": "docs/05-contratos/README.md",
+      "destination": "docs/05-contratos/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/README.md",
+      "sha256": "bb0693e26a6d22c1f95f9a9fd6fbbbde6d10277b0562ef7f8b20023b8b856839",
+      "bytes": 1163
+    },
+    {
+      "source": "docs/05-contratos/especificacao-v2.3.md",
+      "destination": "docs/05-contratos/01-especificacao-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/especificacao-v2.3.md",
+      "sha256": "fe09f7e121fb84dce7b2ae2f04c4642ca735cd34cd701a2e71366db49cc815c2",
+      "bytes": 6857
+    },
+    {
+      "source": "docs/05-contratos/api/catalogo-rotas.md",
+      "destination": "docs/05-contratos/api/00-catalogo-rotas.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/api/catalogo-rotas.md",
+      "sha256": "c6b91a2f3372d69862b1c8bf8ac8d71463436022d14d13c878870f527424944b",
+      "bytes": 14871
+    },
+    {
+      "source": "docs/05-contratos/api/controle.md",
+      "destination": "docs/05-contratos/api/01-controle.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/api/controle.md",
+      "sha256": "fe922e7193bbe2c4ba6fb495b17358b695c3f6dc9c08896ca0f251984df5eb46",
+      "bytes": 5163
+    },
+    {
+      "source": "docs/05-contratos/api/worker.md",
+      "destination": "docs/05-contratos/api/02-worker.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/api/worker.md",
+      "sha256": "f32e50eb0bbc598353df1c3594437555e0fd81f879c6146877838776fdd30f84",
+      "bytes": 4134
+    },
+    {
+      "source": "docs/05-contratos/api/runtime.md",
+      "destination": "docs/05-contratos/api/03-runtime.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/api/runtime.md",
+      "sha256": "42f561c971580310dec61b6cf2a288da2a0ac8b43dc67975c35a060eeac3ea06",
+      "bytes": 1563
+    },
+    {
+      "source": "docs/05-contratos/eventos/catalogo.md",
+      "destination": "docs/05-contratos/eventos/00-catalogo.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/eventos/catalogo.md",
+      "sha256": "abfa8c4715d0d9986feb997e9cc3ce2be9c660addf5efeab5775aa1fe5470758",
+      "bytes": 1117
+    },
+    {
+      "source": "docs/05-contratos/filas/dispatch.md",
+      "destination": "docs/05-contratos/filas/00-dispatch.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/filas/dispatch.md",
+      "sha256": "2ffd70f92f54c922bd991cc6c9ea9ca121299a79a4bd15ca46defef37315380a",
+      "bytes": 1239
+    },
+    {
+      "source": "docs/05-contratos/schemas/entidades.md",
+      "destination": "docs/05-contratos/schemas/00-entidades.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/schemas/entidades.md",
+      "sha256": "8fbe46c52a8a3b34704685424cbf84aeee1a39f350f186bcd6ff84b0cb783c8f",
+      "bytes": 2126
+    },
+    {
+      "source": "docs/05-contratos/schemas/workflow.md",
+      "destination": "docs/05-contratos/schemas/01-workflow.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/schemas/workflow.md",
+      "sha256": "709f19538645670a1ff6f70d02274a2584f7afc2b8f6423a7432466d8722da6f",
+      "bytes": 2295
+    },
+    {
+      "source": "docs/05-contratos/schemas/artifact-context.md",
+      "destination": "docs/05-contratos/schemas/02-artifact-context.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/schemas/artifact-context.md",
+      "sha256": "e64f3ccc84cedd250a091155e55d0478be36da3f651db4fb23bc661af5078a7d",
+      "bytes": 1185
+    },
+    {
+      "source": "docs/05-contratos/schemas/checkpoint.md",
+      "destination": "docs/05-contratos/schemas/03-checkpoint.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/schemas/checkpoint.md",
+      "sha256": "478ce00a98add2f3ce25c275e507220a7e503dc6529e6ed9933c8559b16775e6",
+      "bytes": 1241
+    },
+    {
+      "source": "docs/05-contratos/schemas/job-package.md",
+      "destination": "docs/05-contratos/schemas/04-job-package.md",
+      "archive": "docs/99-historico/ordem-9439cde/05-contratos/schemas/job-package.md",
+      "sha256": "1c55347866cdc3891a68300f3e2bbbd54e360534008add6651c06a8b8a2fa902",
+      "bytes": 3123
+    },
+    {
+      "source": "docs/06-decisoes/README.md",
+      "destination": "docs/06-decisoes/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/06-decisoes/README.md",
+      "sha256": "8c7ad0084cba8b4584a5399b179f4b46e091a8b92dc128a9786620b062041611",
+      "bytes": 1477
+    },
+    {
+      "source": "docs/07-operacao/README.md",
+      "destination": "docs/07-operacao/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/README.md",
+      "sha256": "7138e5f2bf292602a0f41556b24b58a9c971dba3e43c17a3a092a3724305f18e",
+      "bytes": 1132
+    },
+    {
+      "source": "docs/07-operacao/deploy.md",
+      "destination": "docs/07-operacao/01-deploy.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/deploy.md",
+      "sha256": "91be4dac3368bbcefa698ba22fd58bebd56c87749165511f54e10f16f8b87a5a",
+      "bytes": 2138
+    },
+    {
+      "source": "docs/07-operacao/execucao-e-recuperacao.md",
+      "destination": "docs/07-operacao/02-execucao-e-recuperacao.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/execucao-e-recuperacao.md",
+      "sha256": "5742c675c3c5775c8e784c0e1ae8a3fdf9b7e26b2644a87c831a41b6704ad531",
+      "bytes": 5311
+    },
+    {
+      "source": "docs/07-operacao/observabilidade.md",
+      "destination": "docs/07-operacao/03-observabilidade.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/observabilidade.md",
+      "sha256": "ec8437b836c83a410aba93c3e8a432b2685cf1168ae09564a8a1cd48c6f92406",
+      "bytes": 1601
+    },
+    {
+      "source": "docs/07-operacao/handoff.md",
+      "destination": "docs/07-operacao/04-handoff.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/handoff.md",
+      "sha256": "b4be07271e45acf973dea7452981620afb52c27c20d2641b0983de877f751401",
+      "bytes": 2313
+    },
+    {
+      "source": "docs/07-operacao/backup.md",
+      "destination": "docs/07-operacao/05-backup.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/backup.md",
+      "sha256": "0fb2f365766f44fcecea7b3b9276a01b308ca380715d3186601460abb583c294",
+      "bytes": 2217
+    },
+    {
+      "source": "docs/07-operacao/restore.md",
+      "destination": "docs/07-operacao/06-restore.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/restore.md",
+      "sha256": "88cc16b06714d86f5d781f7f8f633f724a8fc3e1f8412588ecfeb8e3db874ba9",
+      "bytes": 1419
+    },
+    {
+      "source": "docs/07-operacao/troubleshooting.md",
+      "destination": "docs/07-operacao/07-troubleshooting.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/troubleshooting.md",
+      "sha256": "be7b01854fbd5aac3e611295bb676ba74e2b506932ae06f5166c452e667de0b6",
+      "bytes": 1539
+    },
+    {
+      "source": "docs/07-operacao/incidentes.md",
+      "destination": "docs/07-operacao/08-incidentes.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/incidentes.md",
+      "sha256": "ced05f34090caed0937370cadd572b25c92299fc477265a82f04086d6d20ec3f",
+      "bytes": 1362
+    },
+    {
+      "source": "docs/07-operacao/economia.md",
+      "destination": "docs/07-operacao/09-economia.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/economia.md",
+      "sha256": "94e93c271cb99450fe883dc39ec96b9ec49c3334dbaa40a10581375726c89465",
+      "bytes": 2790
+    },
+    {
+      "source": "docs/07-operacao/economia/referencia-v2.3.md",
+      "destination": "docs/07-operacao/economia/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/economia/referencia-v2.3.md",
+      "sha256": "4c33e194b5730ed25171608a4b714118270ade0d7567a98534ba3dee0c8cca69",
+      "bytes": 5449
+    },
+    {
+      "source": "docs/07-operacao/handoff/referencia-v2.3.md",
+      "destination": "docs/07-operacao/handoff/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/handoff/referencia-v2.3.md",
+      "sha256": "b251279d438da0ce78f2047aeab31fd8113d863d15c495730ac8335c87e79f96",
+      "bytes": 7184
+    },
+    {
+      "source": "docs/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "destination": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "sha256": "10175a3f4fd379b2619b75df984af2e4caf995cfc64b442cb64d347569b3742b",
+      "bytes": 5225
+    },
+    {
+      "source": "docs/07-operacao/infraestrutura/referencia-v2.3.md",
+      "destination": "docs/07-operacao/infraestrutura/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/infraestrutura/referencia-v2.3.md",
+      "sha256": "690dc5f87cdc1fa33af58d6aef84e16bff71b78f00d26c1e236b22dbb1f0c9a5",
+      "bytes": 10327
+    },
+    {
+      "source": "docs/07-operacao/operacao/referencia-v2.3.md",
+      "destination": "docs/07-operacao/operacao/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/ordem-9439cde/07-operacao/operacao/referencia-v2.3.md",
+      "sha256": "82120efa22ce54bcc69802cb82c5515f3de2c8fa35aff72c67d675fc0ff1c4a1",
+      "bytes": 33468
+    },
+    {
+      "source": "docs/08-desenvolvimento/README.md",
+      "destination": "docs/08-desenvolvimento/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/README.md",
+      "sha256": "7796d8e9a8aecca7f416dd66f67b5d48c577b20347b3022e8af0b950c6d658fc",
+      "bytes": 962
+    },
+    {
+      "source": "docs/08-desenvolvimento/ambiente-local.md",
+      "destination": "docs/08-desenvolvimento/01-ambiente-local.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/ambiente-local.md",
+      "sha256": "158a221cdecd10d46a8ee6b8f9304497cf53d8bca05d6979eacaf17f9006ad3b",
+      "bytes": 1691
+    },
+    {
+      "source": "docs/08-desenvolvimento/convencoes.md",
+      "destination": "docs/08-desenvolvimento/02-convencoes.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/convencoes.md",
+      "sha256": "e0317404a5b3fbfce5dfacc2a7c0686ca889b3cf90261faa8294326503198382",
+      "bytes": 1307
+    },
+    {
+      "source": "docs/08-desenvolvimento/como-contribuir.md",
+      "destination": "docs/08-desenvolvimento/03-como-contribuir.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/como-contribuir.md",
+      "sha256": "71a819f39206a4d2e8c8433f794076d21c46119d13299e4b9a13693d444270ed",
+      "bytes": 1352
+    },
+    {
+      "source": "docs/08-desenvolvimento/testes.md",
+      "destination": "docs/08-desenvolvimento/04-testes.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/testes.md",
+      "sha256": "10936b812868d31ee2449aaafcacc158bc012936a5dc82a6026d7f13adf24ff4",
+      "bytes": 1025
+    },
+    {
+      "source": "docs/08-desenvolvimento/matriz-cobertura.md",
+      "destination": "docs/08-desenvolvimento/05-matriz-cobertura.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/matriz-cobertura.md",
+      "sha256": "cf015295b51e35b404ef6f59f5a8da528fc479cd237aadd391a03d36d4de8780",
+      "bytes": 3762
+    },
+    {
+      "source": "docs/08-desenvolvimento/controle-mvp.md",
+      "destination": "docs/08-desenvolvimento/06-controle-mvp.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/controle-mvp.md",
+      "sha256": "73ef2682e1dbfb7399fd4788fa9ce481fa31d1c56276abc0298888c9a8c06143",
+      "bytes": 8851
+    },
+    {
+      "source": "docs/08-desenvolvimento/piloto.md",
+      "destination": "docs/08-desenvolvimento/07-piloto.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/piloto.md",
+      "sha256": "7e2417da5e4e29da888ca46a0f717cd2c0934016215861cce409fb52d2283b20",
+      "bytes": 3172
+    },
+    {
+      "source": "docs/08-desenvolvimento/tech-lead-handoff.md",
+      "destination": "docs/08-desenvolvimento/08-tech-lead-handoff.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/tech-lead-handoff.md",
+      "sha256": "9ca32e0085c3c5c62103cfa4ae6d3a1c0d880ea4561864520d4dd9cef4f4d7e4",
+      "bytes": 2583
+    },
+    {
+      "source": "docs/08-desenvolvimento/backlog.md",
+      "destination": "docs/08-desenvolvimento/09-backlog.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/backlog.md",
+      "sha256": "44a69cd38ea9c8ee87fe57df10ac7e99561aa9b2610f36e332df81395afc2e15",
+      "bytes": 24263
+    },
+    {
+      "source": "docs/08-desenvolvimento/plano-mvp.md",
+      "destination": "docs/08-desenvolvimento/10-plano-mvp.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/plano-mvp.md",
+      "sha256": "c271d14dd7ba0091faf803eaeb1a28eb600fe0206edf8d5da48fa9de3d0d0a1f",
+      "bytes": 17827
+    },
+    {
+      "source": "docs/08-desenvolvimento/plano-lf-mt-proposto.md",
+      "destination": "docs/08-desenvolvimento/11-plano-lf-mt-proposto.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/plano-lf-mt-proposto.md",
+      "sha256": "672e6843a93a658c8c63602578d3a5c7cbf0aeefc545680b9454df6c027bfe76",
+      "bytes": 3234
+    },
+    {
+      "source": "docs/08-desenvolvimento/testes-seguranca.md",
+      "destination": "docs/08-desenvolvimento/12-testes-seguranca.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/testes-seguranca.md",
+      "sha256": "e45f1e344bb487c1b09efa7e7b2e51dcac743ddafab5678b34cdbcc93a3e7461",
+      "bytes": 6695
+    },
+    {
+      "source": "docs/08-desenvolvimento/catalogo-fac.md",
+      "destination": "docs/08-desenvolvimento/13-catalogo-fac.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/catalogo-fac.md",
+      "sha256": "9cc69bf51b92b1ded0bef3d3864863c6f6b50f974fef78a468529693305d4fc5",
+      "bytes": 10434
+    },
+    {
+      "source": "docs/10-lessons/README.md",
+      "destination": "docs/10-lessons/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/README.md",
+      "sha256": "d97ac70d8be6f1deef3ad19ad48b5c66b73c6aaa2ab4f6b65eb706cd76011c08",
+      "bytes": 7928
+    },
+    {
+      "source": "docs/10-lessons/definicao-projeto-configuravel.md",
+      "destination": "docs/10-lessons/01-definicao-projeto-configuravel.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/definicao-projeto-configuravel.md",
+      "sha256": "5f96385d4959af811ed884a86b2cec6e6b6c5e9e84e5d02fad6610e6bbe9e79b",
+      "bytes": 3085
+    },
+    {
+      "source": "docs/10-lessons/contratos-runtime-monorepo.md",
+      "destination": "docs/10-lessons/02-contratos-runtime-monorepo.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/contratos-runtime-monorepo.md",
+      "sha256": "384a4bd787d82451ad9cfdbac47993edc63baeb499a2fc60597d7dac1c99af5d",
+      "bytes": 5846
+    },
+    {
+      "source": "docs/10-lessons/outbox-idempotencia.md",
+      "destination": "docs/10-lessons/03-outbox-idempotencia.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/outbox-idempotencia.md",
+      "sha256": "a9e0eeb0b22238395ea12696cf4bb58bb9f16227b1bddaa3ec2fd3cc4d54dee4",
+      "bytes": 2908
+    },
+    {
+      "source": "docs/10-lessons/contexto-deterministico-limites.md",
+      "destination": "docs/10-lessons/04-contexto-deterministico-limites.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/contexto-deterministico-limites.md",
+      "sha256": "178244a8288740d0be66ffdb6e7c1cc5f152364a2fe5d19cfe32726341f23675",
+      "bytes": 960
+    },
+    {
+      "source": "docs/10-lessons/checkout-confiavel.md",
+      "destination": "docs/10-lessons/05-checkout-confiavel.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/checkout-confiavel.md",
+      "sha256": "266c0557012c77e245d07f855205aabf1d113f285e26e6f36254a1e54e7aa662",
+      "bytes": 1569
+    },
+    {
+      "source": "docs/10-lessons/sandbox-worktree-snapshot.md",
+      "destination": "docs/10-lessons/06-sandbox-worktree-snapshot.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/sandbox-worktree-snapshot.md",
+      "sha256": "d7907f0897635ec4819c63dd15a2236ac42c38cdfe149969cbdf2b9417201edc",
+      "bytes": 6680
+    },
+    {
+      "source": "docs/10-lessons/perfis-permissao-cliente-cli.md",
+      "destination": "docs/10-lessons/07-perfis-permissao-cliente-cli.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/perfis-permissao-cliente-cli.md",
+      "sha256": "7c132e13f585ff4001dd062bc4e29c86be5d9fb77b47b14e020e879500ba00c9",
+      "bytes": 3704
+    },
+    {
+      "source": "docs/10-lessons/lifecycle-processo-cli.md",
+      "destination": "docs/10-lessons/08-lifecycle-processo-cli.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/lifecycle-processo-cli.md",
+      "sha256": "3faeea44389210adc94f80b33f27d56a0b73b16f62bcf306b211f9d991d33678",
+      "bytes": 6866
+    },
+    {
+      "source": "docs/10-lessons/leases-fencing-checkpoints.md",
+      "destination": "docs/10-lessons/09-leases-fencing-checkpoints.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/leases-fencing-checkpoints.md",
+      "sha256": "1afedd2a5a30c037dd2a2b52b8aa025a8ecebfc3e9a7939ecf0898e40cb81b80",
+      "bytes": 5256
+    },
+    {
+      "source": "docs/10-lessons/worker-heartbeat-quiescencia.md",
+      "destination": "docs/10-lessons/10-worker-heartbeat-quiescencia.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/worker-heartbeat-quiescencia.md",
+      "sha256": "f12b5b320a552af8719d94750cd841f73a0193430a25d70300fa05e1d8ee0db8",
+      "bytes": 3726
+    },
+    {
+      "source": "docs/10-lessons/baseline-regressao-review.md",
+      "destination": "docs/10-lessons/11-baseline-regressao-review.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/baseline-regressao-review.md",
+      "sha256": "e3e3c59b83927ee3c0f255c06f8dd66d935db98f3f9425bc65606c9b6ffd207b",
+      "bytes": 4504
+    },
+    {
+      "source": "docs/10-lessons/documentacao-proveniencia.md",
+      "destination": "docs/10-lessons/12-documentacao-proveniencia.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/documentacao-proveniencia.md",
+      "sha256": "7619c8259dc599b94c981d79f4566552e9310d3200dd774964302446516e51ca",
+      "bytes": 1699
+    },
+    {
+      "source": "docs/10-lessons/modal-edicao-configuracao.md",
+      "destination": "docs/10-lessons/13-modal-edicao-configuracao.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/modal-edicao-configuracao.md",
+      "sha256": "7c4e87ef0acb7d680b5fd92974ec8360e6820ef1042a99daec456caa35e8d9b3",
+      "bytes": 5382
+    },
+    {
+      "source": "docs/10-lessons/video-decorativo-loop.md",
+      "destination": "docs/10-lessons/14-video-decorativo-loop.md",
+      "archive": "docs/99-historico/ordem-9439cde/10-lessons/video-decorativo-loop.md",
+      "sha256": "6ec03ec0b51466ed921cd5b013f7056a4c6e1c438dbd254ec6e935f0ac08d9ba",
+      "bytes": 1457
+    },
+    {
+      "source": "docs/LEIA-ME-PRIMEIRO.md",
+      "destination": "docs/00-LEIA-ME-PRIMEIRO.md",
+      "archive": "docs/99-historico/ordem-9439cde/LEIA-ME-PRIMEIRO.md",
+      "sha256": "63dcb2547af9fa61a583378cdba741cee7e7ebb848a0283c6f706c2d263f7f36",
+      "bytes": 1082
+    },
+    {
+      "source": "docs/README.md",
+      "destination": "docs/01-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/README.md",
+      "sha256": "ba980896db10c273f0f8097d9f60a7cd61697f2521cce4f8597d9f38b7fe5b0f",
+      "bytes": 5181
+    },
+    {
+      "source": "docs/INDEX.md",
+      "destination": "docs/02-INDEX.md",
+      "archive": "docs/99-historico/ordem-9439cde/INDEX.md",
+      "sha256": "5ca1253259fd1981829031e58a59dabeb43a41a068b9141c3b9662044cc41227",
+      "bytes": 40919
+    },
+    {
+      "source": "docs/GLOSSARIO.md",
+      "destination": "docs/03-GLOSSARIO.md",
+      "archive": "docs/99-historico/ordem-9439cde/GLOSSARIO.md",
+      "sha256": "389de81f571fa71e129636b143b527d48361bcd648183ac03bab7c8ba2bf5558",
+      "bytes": 120
+    },
+    {
+      "source": "docs/CHANGELOG.md",
+      "destination": "docs/04-CHANGELOG.md",
+      "archive": "docs/99-historico/ordem-9439cde/CHANGELOG.md",
+      "sha256": "0ba5a5988a2778247f014a80bb89ab42ee28c6b8057e25914ee7cc62d085fb2f",
+      "bytes": 37553
+    },
+    {
+      "source": "docs/03-modulos/tickets/README.md",
+      "destination": "docs/03-modulos/tickets/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/03-modulos/tickets/README.md",
+      "sha256": "834d9d4ce8c201465a511c4110519e67d7bedaaade19d151d93ddd085e942806",
+      "bytes": 2090
+    },
+    {
+      "source": "docs/08-desenvolvimento/tickets/planejamento/README.md",
+      "destination": "docs/08-desenvolvimento/tickets/planejamento/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/08-desenvolvimento/tickets/planejamento/README.md",
+      "sha256": "9d33e71e6e82145c481158b86664a2fac8118905cb27763f9252415e9f183020",
+      "bytes": 11114
+    },
+    {
+      "source": "docs/09-entregas/README.md",
+      "destination": "docs/09-entregas/00-README.md",
+      "archive": "docs/99-historico/ordem-9439cde/09-entregas/README.md",
+      "sha256": "77ff3966d9e57aa06653b42dea777d78c1751744ae32475f7ff12c31596d3b39",
+      "bytes": 12063
+    }
+  ],
+  "groups": [
+    {
+      "folder": "docs",
+      "chapters": [
+        "docs/00-LEIA-ME-PRIMEIRO.md",
+        "docs/01-README.md",
+        "docs/02-INDEX.md",
+        "docs/03-GLOSSARIO.md",
+        "docs/04-CHANGELOG.md"
+      ]
+    },
+    {
+      "folder": "docs/01-visao-geral",
+      "chapters": [
+        "docs/01-visao-geral/00-README.md",
+        "docs/01-visao-geral/01-objetivos.md",
+        "docs/01-visao-geral/02-escopo.md",
+        "docs/01-visao-geral/03-glossario.md",
+        "docs/01-visao-geral/04-mapa-do-sistema.md"
+      ]
+    },
+    {
+      "folder": "docs/02-arquitetura",
+      "chapters": [
+        "docs/02-arquitetura/00-README.md",
+        "docs/02-arquitetura/01-as-is.md",
+        "docs/02-arquitetura/02-contexto.md",
+        "docs/02-arquitetura/03-containers.md",
+        "docs/02-arquitetura/04-componentes.md",
+        "docs/02-arquitetura/05-fluxos.md",
+        "docs/02-arquitetura/06-dados.md",
+        "docs/02-arquitetura/07-fronteiras-e-invariantes.md",
+        "docs/02-arquitetura/08-seguranca.md",
+        "docs/02-arquitetura/09-infraestrutura.md",
+        "docs/02-arquitetura/10-contexto-alvo.md",
+        "docs/02-arquitetura/11-containers-alvo.md",
+        "docs/02-arquitetura/12-componentes-alvo.md",
+        "docs/02-arquitetura/13-fluxos-alvo.md",
+        "docs/02-arquitetura/14-dados-alvo.md",
+        "docs/02-arquitetura/15-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/02-arquitetura/seguranca",
+      "chapters": [
+        "docs/02-arquitetura/seguranca/00-threat-model.md",
+        "docs/02-arquitetura/seguranca/01-rede-e-egress.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos",
+      "chapters": [
+        "docs/03-modulos/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/projects",
+      "chapters": [
+        "docs/03-modulos/projects/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/tickets",
+      "chapters": [
+        "docs/03-modulos/tickets/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/runs",
+      "chapters": [
+        "docs/03-modulos/runs/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/orchestrator",
+      "chapters": [
+        "docs/03-modulos/orchestrator/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/context-builder",
+      "chapters": [
+        "docs/03-modulos/context-builder/00-README.md",
+        "docs/03-modulos/context-builder/01-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/providers",
+      "chapters": [
+        "docs/03-modulos/providers/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/runtime",
+      "chapters": [
+        "docs/03-modulos/runtime/00-README.md",
+        "docs/03-modulos/runtime/01-direcao-proposta.md",
+        "docs/03-modulos/runtime/02-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/worker",
+      "chapters": [
+        "docs/03-modulos/worker/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/executor-manager",
+      "chapters": [
+        "docs/03-modulos/executor-manager/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/sandbox",
+      "chapters": [
+        "docs/03-modulos/sandbox/00-README.md",
+        "docs/03-modulos/sandbox/01-direcao-proposta.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/runtime-guard",
+      "chapters": [
+        "docs/03-modulos/runtime-guard/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/documentation-gate",
+      "chapters": [
+        "docs/03-modulos/documentation-gate/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/approvals",
+      "chapters": [
+        "docs/03-modulos/approvals/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/controle",
+      "chapters": [
+        "docs/03-modulos/controle/00-README.md",
+        "docs/03-modulos/controle/01-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/configuracao",
+      "chapters": [
+        "docs/03-modulos/configuracao/00-README.md",
+        "docs/03-modulos/configuracao/01-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/observabilidade-economia",
+      "chapters": [
+        "docs/03-modulos/observabilidade-economia/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/tenant-isolation",
+      "chapters": [
+        "docs/03-modulos/tenant-isolation/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/03-modulos/tool-broker",
+      "chapters": [
+        "docs/03-modulos/tool-broker/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/04-features",
+      "chapters": [
+        "docs/04-features/00-README.md",
+        "docs/04-features/01-control-settings.md",
+        "docs/04-features/02-ticket-execution.md",
+        "docs/04-features/03-documentation-approval.md",
+        "docs/04-features/04-recovery-operation.md",
+        "docs/04-features/05-provider-handoff.md",
+        "docs/04-features/06-usage-dashboard.md",
+        "docs/04-features/07-tenant-isolation.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos",
+      "chapters": [
+        "docs/05-contratos/00-README.md",
+        "docs/05-contratos/01-especificacao-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos/schemas",
+      "chapters": [
+        "docs/05-contratos/schemas/00-entidades.md",
+        "docs/05-contratos/schemas/01-workflow.md",
+        "docs/05-contratos/schemas/02-artifact-context.md",
+        "docs/05-contratos/schemas/03-checkpoint.md",
+        "docs/05-contratos/schemas/04-job-package.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos/api",
+      "chapters": [
+        "docs/05-contratos/api/00-catalogo-rotas.md",
+        "docs/05-contratos/api/01-controle.md",
+        "docs/05-contratos/api/02-worker.md",
+        "docs/05-contratos/api/03-runtime.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos/eventos",
+      "chapters": [
+        "docs/05-contratos/eventos/00-catalogo.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos/filas",
+      "chapters": [
+        "docs/05-contratos/filas/00-dispatch.md"
+      ]
+    },
+    {
+      "folder": "docs/06-decisoes",
+      "chapters": [
+        "docs/06-decisoes/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/07-operacao",
+      "chapters": [
+        "docs/07-operacao/00-README.md",
+        "docs/07-operacao/01-deploy.md",
+        "docs/07-operacao/02-execucao-e-recuperacao.md",
+        "docs/07-operacao/03-observabilidade.md",
+        "docs/07-operacao/04-handoff.md",
+        "docs/07-operacao/05-backup.md",
+        "docs/07-operacao/06-restore.md",
+        "docs/07-operacao/07-troubleshooting.md",
+        "docs/07-operacao/08-incidentes.md",
+        "docs/07-operacao/09-economia.md"
+      ]
+    },
+    {
+      "folder": "docs/07-operacao/economia",
+      "chapters": [
+        "docs/07-operacao/economia/00-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/07-operacao/handoff",
+      "chapters": [
+        "docs/07-operacao/handoff/00-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/07-operacao/infraestrutura",
+      "chapters": [
+        "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md",
+        "docs/07-operacao/infraestrutura/01-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/07-operacao/operacao",
+      "chapters": [
+        "docs/07-operacao/operacao/00-referencia-v2.3.md"
+      ]
+    },
+    {
+      "folder": "docs/08-desenvolvimento",
+      "chapters": [
+        "docs/08-desenvolvimento/00-README.md",
+        "docs/08-desenvolvimento/01-ambiente-local.md",
+        "docs/08-desenvolvimento/02-convencoes.md",
+        "docs/08-desenvolvimento/03-como-contribuir.md",
+        "docs/08-desenvolvimento/04-testes.md",
+        "docs/08-desenvolvimento/05-matriz-cobertura.md",
+        "docs/08-desenvolvimento/06-controle-mvp.md",
+        "docs/08-desenvolvimento/07-piloto.md",
+        "docs/08-desenvolvimento/08-tech-lead-handoff.md",
+        "docs/08-desenvolvimento/09-backlog.md",
+        "docs/08-desenvolvimento/10-plano-mvp.md",
+        "docs/08-desenvolvimento/11-plano-lf-mt-proposto.md",
+        "docs/08-desenvolvimento/12-testes-seguranca.md",
+        "docs/08-desenvolvimento/13-catalogo-fac.md"
+      ]
+    },
+    {
+      "folder": "docs/10-lessons",
+      "chapters": [
+        "docs/10-lessons/00-README.md",
+        "docs/10-lessons/01-definicao-projeto-configuravel.md",
+        "docs/10-lessons/02-contratos-runtime-monorepo.md",
+        "docs/10-lessons/03-outbox-idempotencia.md",
+        "docs/10-lessons/04-contexto-deterministico-limites.md",
+        "docs/10-lessons/05-checkout-confiavel.md",
+        "docs/10-lessons/06-sandbox-worktree-snapshot.md",
+        "docs/10-lessons/07-perfis-permissao-cliente-cli.md",
+        "docs/10-lessons/08-lifecycle-processo-cli.md",
+        "docs/10-lessons/09-leases-fencing-checkpoints.md",
+        "docs/10-lessons/10-worker-heartbeat-quiescencia.md",
+        "docs/10-lessons/11-baseline-regressao-review.md",
+        "docs/10-lessons/12-documentacao-proveniencia.md",
+        "docs/10-lessons/13-modal-edicao-configuracao.md",
+        "docs/10-lessons/14-video-decorativo-loop.md"
+      ]
+    },
+    {
+      "folder": "docs/00-governanca",
+      "chapters": [
+        "docs/00-governanca/00-README.md",
+        "docs/00-governanca/01-POLITICA-IA.md",
+        "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md",
+        "docs/00-governanca/03-GUIA-DE-INTEGRACAO.md",
+        "docs/00-governanca/04-CHECKLIST-ENTREGA.md",
+        "docs/00-governanca/05-fontes-carregamento.md",
+        "docs/00-governanca/06-fontes-tecnicas.md",
+        "docs/00-governanca/07-PENDENCIAS.md",
+        "docs/00-governanca/08-AUDITORIA.md",
+        "docs/00-governanca/09-INVENTARIO.md",
+        "docs/00-governanca/10-MAPA-MIGRACAO.md",
+        "docs/00-governanca/11-VALIDACAO.md"
+      ]
+    },
+    {
+      "folder": "docs/00-governanca/templates",
+      "chapters": [
+        "docs/00-governanca/templates/00-README.md",
+        "docs/00-governanca/templates/01-TICKET.md",
+        "docs/00-governanca/templates/02-MODULO.md",
+        "docs/00-governanca/templates/03-FEATURE.md",
+        "docs/00-governanca/templates/04-CONTRATO.md",
+        "docs/00-governanca/templates/05-ADR.md",
+        "docs/00-governanca/templates/06-RUNBOOK.md",
+        "docs/00-governanca/templates/07-HANDOFF.md",
+        "docs/00-governanca/templates/08-ENTREGA.md",
+        "docs/00-governanca/templates/09-LESSON.md"
+      ]
+    },
+    {
+      "folder": "docs/08-desenvolvimento/tickets/planejamento",
+      "chapters": [
+        "docs/08-desenvolvimento/tickets/planejamento/00-README.md"
+      ]
+    },
+    {
+      "folder": "docs/09-entregas",
+      "chapters": [
+        "docs/09-entregas/00-README.md"
+      ]
+    }
+  ],
+  "exceptions": [
+    "docs/00-governanca/POLITICA-IA.md",
+    "docs/00-governanca/POLITICA-DOCUMENTACAO.md"
+  ],
+  "preserved_ids": "ADRs/tickets conservam IDs; entregas conservam datas; snapshots/logs/evidências conservam bytes e proveniência",
+  "main_trail": [
+    "docs/01-visao-geral/00-README.md",
+    "docs/02-arquitetura/00-README.md",
+    "docs/03-modulos/00-README.md",
+    "docs/04-features/00-README.md",
+    "docs/05-contratos/00-README.md",
+    "docs/06-decisoes/00-README.md",
+    "docs/07-operacao/00-README.md",
+    "docs/08-desenvolvimento/00-README.md",
+    "docs/10-lessons/00-README.md"
+  ]
+}

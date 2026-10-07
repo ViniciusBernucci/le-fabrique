@@ -4,7 +4,7 @@
   "files": [
     {
       "source": "documentacoes/INDEX.md",
-      "destination": "docs/INDEX.md",
+      "destination": "docs/02-INDEX.md",
       "archive": "docs/99-historico/compatibilidade-5845754/INDEX.md",
       "sha256": "c7748616e7173b9cb7d027f80641b807b5a0abe768ec64de62661f4c4b806ffb",
       "bytes": 297,
@@ -12,7 +12,7 @@
     },
     {
       "source": "documentacoes/POLITICA-IA.md",
-      "destination": "docs/00-governanca/POLITICA-IA.md",
+      "destination": "docs/00-governanca/01-POLITICA-IA.md",
       "archive": "docs/99-historico/compatibilidade-5845754/POLITICA-IA.md",
       "sha256": "37211291eb715c8fe2fe98c57746f5be85693a52d5d6b32aeb8229db5df60360",
       "bytes": 444,
@@ -20,7 +20,7 @@
     },
     {
       "source": "documentacoes/configuracao/README.md",
-      "destination": "docs/03-modulos/configuracao/referencia-v2.3.md",
+      "destination": "docs/03-modulos/configuracao/01-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/configuracao/README.md",
       "sha256": "acd2a6bc7ea92b0ecee73870729112006fa5899ca185043b8cf100df6b53a3de",
       "bytes": 463,
@@ -308,7 +308,7 @@
     },
     {
       "source": "documentacoes/contexto/README.md",
-      "destination": "docs/03-modulos/context-builder/referencia-v2.3.md",
+      "destination": "docs/03-modulos/context-builder/01-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/contexto/README.md",
       "sha256": "836c2b74a492c5ac850527407f0b3d960d20ce15223236a86a1950e7e1d39d92",
       "bytes": 465,
@@ -316,7 +316,7 @@
     },
     {
       "source": "documentacoes/controle/README.md",
-      "destination": "docs/03-modulos/controle/referencia-v2.3.md",
+      "destination": "docs/03-modulos/controle/01-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/controle/README.md",
       "sha256": "a4f56ccbfd36a6d0a702928fb5b1ee1074ea8f42bac3fe73b5628b9fc845a4ca",
       "bytes": 451,
@@ -1148,7 +1148,7 @@
     },
     {
       "source": "documentacoes/economia/README.md",
-      "destination": "docs/07-operacao/economia/referencia-v2.3.md",
+      "destination": "docs/07-operacao/economia/00-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/economia/README.md",
       "sha256": "805d97b15e64a4c1ae5ef216b56449b0d9d6c8b643ecd8db75c7bc3c3634f477",
       "bytes": 453,
@@ -1156,7 +1156,7 @@
     },
     {
       "source": "documentacoes/handoff/README.md",
-      "destination": "docs/07-operacao/handoff/referencia-v2.3.md",
+      "destination": "docs/07-operacao/handoff/00-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/handoff/README.md",
       "sha256": "dfa9db49039b1ece35c107f9f62fec2cf45f79430c35691910a579abce34ff93",
       "bytes": 450,
@@ -1164,7 +1164,7 @@
     },
     {
       "source": "documentacoes/infraestrutura/README.md",
-      "destination": "docs/07-operacao/infraestrutura/referencia-v2.3.md",
+      "destination": "docs/07-operacao/infraestrutura/01-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/infraestrutura/README.md",
       "sha256": "df49747823c0882003f8c5a4c04dd19022d9ed4452c908bb75c51c8cdf672d9d",
       "bytes": 471,
@@ -1172,7 +1172,7 @@
     },
     {
       "source": "documentacoes/operacao/README.md",
-      "destination": "docs/07-operacao/operacao/referencia-v2.3.md",
+      "destination": "docs/07-operacao/operacao/00-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/operacao/README.md",
       "sha256": "3a84fd0427926a4b531b5335c16ed71e6e845ce30fbc6f682bb85cbecd161180",
       "bytes": 453,
@@ -1180,7 +1180,7 @@
     },
     {
       "source": "documentacoes/planejamento/README.md",
-      "destination": "docs/08-desenvolvimento/tickets/planejamento/README.md",
+      "destination": "docs/08-desenvolvimento/tickets/planejamento/00-README.md",
       "archive": "docs/99-historico/compatibilidade-5845754/planejamento/README.md",
       "sha256": "de61254ceb1d8e8d0f41498b0a4102e64eeac0f8f12e7abb707f38e6207cb157",
       "bytes": 477,
@@ -1188,7 +1188,7 @@
     },
     {
       "source": "documentacoes/runtime/README.md",
-      "destination": "docs/03-modulos/runtime/referencia-v2.3.md",
+      "destination": "docs/03-modulos/runtime/02-referencia-v2.3.md",
       "archive": "docs/99-historico/compatibilidade-5845754/runtime/README.md",
       "sha256": "c1e1e1fbbecfb1ccd08cdcf82b6f9bcbd14e18875c00f2698286e2d49f190b0f",
       "bytes": 448,

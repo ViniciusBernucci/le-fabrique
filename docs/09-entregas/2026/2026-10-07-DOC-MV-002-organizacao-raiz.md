@@ -4,7 +4,7 @@
 
 ## Objetivo e funcionamento
 
-A raiz conserva README.md, AGENTS.md, CLAUDE.md e ANTIGRAVITY.md como pontos de entrada. Backlog real completo em [desenvolvimento](../../08-desenvolvimento/backlog.md); changelog completo em [docs](../../CHANGELOG.md); [guia de integração](../../00-governanca/GUIA-DE-INTEGRACAO.md) em governança. Piloto/plano/controle/matriz, especificação/fontes e prompt já tinham fontes canônicas; seus atalhos redundantes foram removidos.
+A raiz conserva README.md, AGENTS.md, CLAUDE.md e ANTIGRAVITY.md como pontos de entrada. Backlog real completo em [desenvolvimento](../../08-desenvolvimento/09-backlog.md); changelog completo em [docs](../../04-CHANGELOG.md); [guia de integração](../../00-governanca/03-GUIA-DE-INTEGRACAO.md) em governança. Piloto/plano/controle/matriz, especificação/fontes e prompt já tinham fontes canônicas; seus atalhos redundantes foram removidos.
 
 Guias dos três agentes apontam explicitamente políticas, piloto, backlog, changelog, templates, prompt e guia atuais. Proíbem recriar os arquivos de apoio na raiz e a pasta legada. A ponte .agents existente continua válida, sem edição em área read-only. Autoload continua NÃO VERIFICADO; ler guias/políticas explicitamente é fallback obrigatório.
 
@@ -20,7 +20,7 @@ O validador agora confere também os snapshots adicionais, destinos, ausência d
 
 [Resultado estrutural](evidencias/DOC-MV-002/validacao.json) registra links/anchors/fences, índice, fontes e hashes. [Logs/checks](evidencias/DOC-MV-002/checks.json) registram somente checks efetivamente executados. Validador não comprova eficácia operacional ou veracidade semântica por si só. Nenhuma sessão adicional de provider, banco, produção ou render Mermaid foi executada.
 
-Permissões atuais deixam .git read-only: alteração no diretório principal autorizado, sem branch/worktree/commit/merge nesta etapa. Diff segue revisável; revisão independente e aceite humano pendentes. Nenhum ticket de software promovido a DONE. Não há nova lesson: aplicada a lesson existente de [documentação e proveniência](../../10-lessons/documentacao-proveniencia.md).
+Permissões atuais deixam .git read-only: alteração no diretório principal autorizado, sem branch/worktree/commit/merge nesta etapa. Diff segue revisável; revisão independente e aceite humano pendentes. Nenhum ticket de software promovido a DONE. Não há nova lesson: aplicada a lesson existente de [documentação e proveniência](../../10-lessons/12-documentacao-proveniencia.md).
 
 ## Rollback
 

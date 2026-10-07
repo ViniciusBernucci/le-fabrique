@@ -19,6 +19,7 @@ import { watchProjectEvents } from "./project-events";
 import { hasExecutableBaseRevision } from "./project-view-model";
 import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
+import { TasksPanel } from "./TasksPanel";
 
 export function App() {
   const [showHome, setShowHome] = useState(true);
@@ -29,7 +30,7 @@ export function App() {
   const [eventSequence, setEventSequence] = useState("0");
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
-  const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
+  const [activeArea, setActiveArea] = useState<"control" | "settings" | "tasks">("control");
   const [projectDefinitionVersion, setProjectDefinitionVersion] = useState<number | null>(null);
   const [projectExecutionProfileReady, setProjectExecutionProfileReady] = useState(false);
   const activeProject = projects.find((project) => project.id === selectedProject);
@@ -148,7 +149,9 @@ export function App() {
 
   let content: ReactNode;
 
-  if (!showHome && !authenticated)
+  if (!showHome && activeArea === "tasks")
+    content = <TasksPanel projects={projects} token={authenticated ? token : undefined} />;
+  else if (!showHome && !authenticated)
     content = (
       <main className="login-shell">
         <form className="panel login" onSubmit={login}>

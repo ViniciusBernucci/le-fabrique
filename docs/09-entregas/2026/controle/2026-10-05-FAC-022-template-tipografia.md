@@ -26,7 +26,7 @@ Menu/topbar mantêm os mesmos nós DOM e estado da busca nas trocas; os painéis
 ## Rollback
 Reverter 4e042a1 desfaz template/fontes e conserva nome/imagem reduzida do cde0cc6; sem migrations ou dados a restaurar. Não realizar rollback destrutivo. Sem push/deploy/ativação de serviços nesta entrega.
 ## Documentação e lessons
-README raiz/controle/configuração, INDEX, CHANGELOG, BACKLOG, ticket, relatório e [lesson de modais/estado](../../../10-lessons/modal-edicao-configuracao.md). Reutilizar o mesmo template na raiz preserva chrome/DOM; trocar apenas conteúdo não implica preservar rascunho de um painel desmontado. [Baseline/review](../../../10-lessons/baseline-regressao-review.md) distingue renderização estática, browser fixture e operação real.
+README raiz/controle/configuração, INDEX, CHANGELOG, BACKLOG, ticket, relatório e [lesson de modais/estado](../../../10-lessons/13-modal-edicao-configuracao.md). Reutilizar o mesmo template na raiz preserva chrome/DOM; trocar apenas conteúdo não implica preservar rascunho de um painel desmontado. [Baseline/review](../../../10-lessons/11-baseline-regressao-review.md) distingue renderização estática, browser fixture e operação real.
 ## Uso de IA e aceite
 Codex da sessão, mesmo writer, zero subagentes/handoffs/providers adicionais e nenhuma leitura/exportação de credenciais. Modelo efetivo/cota/custos não comprovados. AWAITING_HUMAN para revisão visual exata. Merge/remoção autorizados não representam aceite visual/DONE.
 
