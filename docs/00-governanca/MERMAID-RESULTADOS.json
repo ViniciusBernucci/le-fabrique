@@ -1,0 +1,18 @@
+{
+  "status": "NOT_RUN_RENDER",
+  "textual_review": "PASS",
+  "attempts": [
+    {
+      "stage": "Chromium headless perfil efêmero, sem relaxar sandbox",
+      "result": "NOT_RUN",
+      "reason": "libatk-1.0.so.0 ausente"
+    },
+    {
+      "stage": "reutilização de libs já extraídas /tmp/extracted, sem instalar/ampliar permissões",
+      "result": "NOT_RUN",
+      "reason": "libcups.so.2 ausente"
+    }
+  ],
+  "checkpoint": "Duas tentativas; diagnóstico externo de dependências. Não continuar instalação/flags amplas. Código Mermaid revisado textualmente, render indisponível.",
+  "limit": "Mermaid 11.12.0 temporário; sem render efetivo/screenshot de diagramas. Fences/links validados, eficácia operacional não inferida."
+}

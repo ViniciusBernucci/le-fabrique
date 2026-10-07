@@ -1,0 +1,19 @@
+# Isolar tenants e projetos
+
+Revisão documental: 2026-10-06 (America/Sao_Paulo). Arquitetura **PLANEJADA**; implementação e eficácia **NÃO VERIFICADAS** neste espelho.
+
+## Comportamento e usuário
+
+Principal/job acessa somente recursos autorizados e tools não alcançam controle/credenciais. Usuário: responsável autorizado do projeto; administração tem identidade separada.
+
+## Regras e critérios de aceite
+
+SEC-01–14 aplicáveis; casos A/B e A1/A2; perfil hostil tem gate próprio. Todos são critérios planejados; não há evidência de execução no espelho.
+
+## Módulos e contratos
+
+[Tenant isolation](../03-modulos/tenant-isolation/README.md); [Provider Runtime](../03-modulos/runtime/README.md); [Sandbox](../03-modulos/sandbox/README.md); [Tool Broker](../03-modulos/tool-broker/README.md). Contratos detalhados estão no [catálogo](../05-contratos/README.md); fluxos no [capítulo de fluxos](../02-arquitetura/fluxos.md).
+
+## Rastreabilidade e limites
+
+Backlog relacionado: LF-MT-01–08/10/11. IDs originais preservados; estes arquivos não criam novos FAC nem afirmam entrega. Release/código/revisão/testes: não disponíveis. Implementação deverá ligar registro de entrega e evidências reais.

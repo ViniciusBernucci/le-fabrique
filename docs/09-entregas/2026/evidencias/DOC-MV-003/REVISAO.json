@@ -1,0 +1,2361 @@
+{
+  "baseline": "9439cde",
+  "scope": "árvore de trabalho sem commit; aceite pendente",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 3599,
+      "sha256": "84c7bb2849e8e0d74b0577ed8bb5421ce7f9dcdb4efaf9d71c3ce2d19ed1b295"
+    },
+    {
+      "path": "ANTIGRAVITY.md",
+      "bytes": 3780,
+      "sha256": "63a2d28b11e444b56799dd0559c0050874402f58ec726c25a067d02c16e740ab"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 3683,
+      "sha256": "bcbce2989a2181d85f3b61d021f0de8d7d315c9c6cebc673c6af6e39e0de86dc"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1822,
+      "sha256": "770cf1399c4b717626460bfbc93f1779d4809f42b90f603e5770616de0ab5a65"
+    },
+    {
+      "path": "apps/web/src/ProjectDefinitionPanel.tsx",
+      "bytes": 13189,
+      "sha256": "650a5fc2dc1abb831fe8fc1980a103cc1eb4288693af2383af998c123542f903"
+    },
+    {
+      "path": "docs/00-LEIA-ME-PRIMEIRO.md",
+      "bytes": 2100,
+      "sha256": "e1ea827686f3c8230004ad44dfd6e31296de3e0d68564baab9177a75620e1001"
+    },
+    {
+      "path": "docs/00-governanca/00-README.md",
+      "bytes": 1582,
+      "sha256": "75b57762ed3ea4433af195410e84b87c319aa4d6cb05010a8a4471b3766ba5ca"
+    },
+    {
+      "path": "docs/00-governanca/01-POLITICA-IA.md",
+      "bytes": 6699,
+      "sha256": "cf459b7d679a9796427d40b734dc0f2cabf5405de94c7ab05912574e1c3e6971"
+    },
+    {
+      "path": "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md",
+      "bytes": 8183,
+      "sha256": "10d419ece5476593c37a092525d18f8c358f95f582eb5faf6f42540f1b1c022e"
+    },
+    {
+      "path": "docs/00-governanca/03-GUIA-DE-INTEGRACAO.md",
+      "bytes": 2535,
+      "sha256": "6ca0f4ec13843d798941a700e61069fc807ab5fe12ef400212fbb7bdb5395db5"
+    },
+    {
+      "path": "docs/00-governanca/04-CHECKLIST-ENTREGA.md",
+      "bytes": 1232,
+      "sha256": "83fe735d32c1b0bf1a74123a8f618770e6d3b430eff56df512bfc9dab66c4174"
+    },
+    {
+      "path": "docs/00-governanca/05-fontes-carregamento.md",
+      "bytes": 3103,
+      "sha256": "351d7a428f2435dc99b94542099fc5027c9304e871f7930991032aba4dbdebaf"
+    },
+    {
+      "path": "docs/00-governanca/06-fontes-tecnicas.md",
+      "bytes": 3449,
+      "sha256": "3e3e08ad4ab6bba196070a0d1d900bc86a08bf4d7e62b5ab05cde8c9c27d830f"
+    },
+    {
+      "path": "docs/00-governanca/07-PENDENCIAS.md",
+      "bytes": 2626,
+      "sha256": "7560347583100280f7b3f9c2b69d15422e44922471564ea21b72052ab5f45fea"
+    },
+    {
+      "path": "docs/00-governanca/08-AUDITORIA.md",
+      "bytes": 5481,
+      "sha256": "905d6bd7ad61a81f3e642b149a67e34a3002e1e454d96af71a41cb8544cb8544"
+    },
+    {
+      "path": "docs/00-governanca/09-INVENTARIO.md",
+      "bytes": 971,
+      "sha256": "3644e6dff806dc959f96974846876af539b66501e05cbb95c02c577d99cfcb07"
+    },
+    {
+      "path": "docs/00-governanca/10-MAPA-MIGRACAO.md",
+      "bytes": 4202,
+      "sha256": "b856b5ab40a0bac495da3452dcb51fa9377c34ece2a6ec8a114f047b48470f3f"
+    },
+    {
+      "path": "docs/00-governanca/11-VALIDACAO.md",
+      "bytes": 6209,
+      "sha256": "0c3eb1c6a883bc8f43d9721cb9d179a5ffab6f4f28fc3daf7f1a50c115b2d10b"
+    },
+    {
+      "path": "docs/00-governanca/AUDITORIA.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/CHECKLIST-ENTREGA.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/DESTINOS-REPO.json",
+      "bytes": 50785,
+      "sha256": "7bfcad987d3502ef0ad9109511e3d1fc8c7ab54ccb7b4521585eb6d2bc0e3133"
+    },
+    {
+      "path": "docs/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/INVENTARIO-REPO.json",
+      "bytes": 429356,
+      "sha256": "9cfd049817770411af98f32f3fa2cfbb6d9bb491db0d669d722a6ee3c8c7ea4e"
+    },
+    {
+      "path": "docs/00-governanca/INVENTARIO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/MAPA-MIGRACAO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/MAPA-SECOES-REPO.json",
+      "bytes": 1099150,
+      "sha256": "42c46e0dd1113ebdb8ee80be9a02f0df23b766ad95cc7f9536902d9ca4d2e2a5"
+    },
+    {
+      "path": "docs/00-governanca/MD-REMOVIDOS.json",
+      "bytes": 98121,
+      "sha256": "d5ef988f920474295adbedec42ccf6de7974504fecee369a90e60c09b055c9b8"
+    },
+    {
+      "path": "docs/00-governanca/ORDEM-LEITURA.json",
+      "bytes": 57690,
+      "sha256": "5172d9f3957fc50a1960751d97de34e888cfc63ea40b70ba930fd457d781235d"
+    },
+    {
+      "path": "docs/00-governanca/PENDENCIAS.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "bytes": 292,
+      "sha256": "3cf86c003a7d6a523b4f73218b1a7cce8eb65fa62a527e94d9e27a1cd9c46172"
+    },
+    {
+      "path": "docs/00-governanca/POLITICA-IA.md",
+      "bytes": 282,
+      "sha256": "3846bd90f5ed27e637923a6d1b8549296e9bf68a38b052a5c080071810654981"
+    },
+    {
+      "path": "docs/00-governanca/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/REALOCACAO-RAIZ.json",
+      "bytes": 3621,
+      "sha256": "b5da9578e9927f35a932d61415d6f13477b2c6bdb9b35bd3fd594c430291eff4"
+    },
+    {
+      "path": "docs/00-governanca/REMOCAO-DOCUMENTACOES.json",
+      "bytes": 73280,
+      "sha256": "d9e4e9b6c7b0bef2caab00a5cb07beea39a4e271626a1fff7c7292b34f485731"
+    },
+    {
+      "path": "docs/00-governanca/VALIDACAO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/fontes-carregamento.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/fontes-tecnicas.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/00-README.md",
+      "bytes": 1722,
+      "sha256": "df8f2e752fba06c284d0dfb51a7fa60b8a4f0ba0848cea5b2aebd8f6ab08d4ab"
+    },
+    {
+      "path": "docs/00-governanca/templates/01-TICKET.md",
+      "bytes": 2693,
+      "sha256": "bd2ac85b2871d0d39112e3ac2c393a50e694f2a74ce398fbe91c7618b5be1526"
+    },
+    {
+      "path": "docs/00-governanca/templates/02-MODULO.md",
+      "bytes": 3280,
+      "sha256": "1d2293820136159162ffd32f8137a8578e8918967c8df03888240752ab5ba428"
+    },
+    {
+      "path": "docs/00-governanca/templates/03-FEATURE.md",
+      "bytes": 2482,
+      "sha256": "7e6f7ffac3ac96dc0593df9c61382ed105eea0662e136e3d4b8e6a7dfba5696a"
+    },
+    {
+      "path": "docs/00-governanca/templates/04-CONTRATO.md",
+      "bytes": 2801,
+      "sha256": "069e2f86df4dcbabf680935a2e48cc3c55fb4b532962774bfbc68136cfd39512"
+    },
+    {
+      "path": "docs/00-governanca/templates/05-ADR.md",
+      "bytes": 2294,
+      "sha256": "ec200f0e09505955ea86eda9941ee3d83d2040adde1f6a097f5fac0956f0390c"
+    },
+    {
+      "path": "docs/00-governanca/templates/06-RUNBOOK.md",
+      "bytes": 2270,
+      "sha256": "03087ae069798aeea7a6a11a2e0d5c144070212bd5e82f3e82c67e3f71aa412b"
+    },
+    {
+      "path": "docs/00-governanca/templates/07-HANDOFF.md",
+      "bytes": 1636,
+      "sha256": "cad53b290aded97f8b827dcad7e7cc2fb220fcd553fcdfbb854190452c4c2bfb"
+    },
+    {
+      "path": "docs/00-governanca/templates/08-ENTREGA.md",
+      "bytes": 2595,
+      "sha256": "aedab7c59519fe385db6e508e63395de9482e60baf4fd39ec239a7b54b7dfc8c"
+    },
+    {
+      "path": "docs/00-governanca/templates/09-LESSON.md",
+      "bytes": 2454,
+      "sha256": "2379524101af3753acda1872fba746f5381099ee8c0f833fb4a0eef36833dfa8"
+    },
+    {
+      "path": "docs/00-governanca/templates/ADR.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/CONTRATO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/ENTREGA.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/FEATURE.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/HANDOFF.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/LESSON.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/MODULO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/RUNBOOK.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/00-governanca/templates/TICKET.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/01-README.md",
+      "bytes": 5347,
+      "sha256": "fd5d06f5ad04ab13c3646c96dc93c47f072d6dff0550839ff660f3dfe8a4e0e4"
+    },
+    {
+      "path": "docs/01-visao-geral/00-README.md",
+      "bytes": 948,
+      "sha256": "ce47c8825051861cb36199d3127b2d3cf1dc0b200172c106efbe3ad5c3259e86"
+    },
+    {
+      "path": "docs/01-visao-geral/01-objetivos.md",
+      "bytes": 1193,
+      "sha256": "245f67ab5185a2198b550707e12aa0f7cb5567d2f27908d357e4ef16749f76b7"
+    },
+    {
+      "path": "docs/01-visao-geral/02-escopo.md",
+      "bytes": 1795,
+      "sha256": "2f8302d1a0115e3daff633a83ab36be0f8116b111a0496cc9e7e126b06840772"
+    },
+    {
+      "path": "docs/01-visao-geral/03-glossario.md",
+      "bytes": 3532,
+      "sha256": "3998d7489ddbd5f711cace116178a800598d77db83ea626fe0d335b173e2f308"
+    },
+    {
+      "path": "docs/01-visao-geral/04-mapa-do-sistema.md",
+      "bytes": 861,
+      "sha256": "88ae7e1de7a2f8708716e8b5e39072173ba1247406cc82c8797201db5df2b82b"
+    },
+    {
+      "path": "docs/01-visao-geral/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/01-visao-geral/escopo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/01-visao-geral/glossario.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/01-visao-geral/mapa-do-sistema.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/01-visao-geral/objetivos.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-INDEX.md",
+      "bytes": 38020,
+      "sha256": "b0d22c4eabc3304fdfd57c0a447264e9a82120ab9daa316f7bee772f22a8046b"
+    },
+    {
+      "path": "docs/02-arquitetura/00-README.md",
+      "bytes": 1472,
+      "sha256": "676f31f5751cc591ca7d4251921ab5df136c57bb91b087cb49048b0462d95417"
+    },
+    {
+      "path": "docs/02-arquitetura/01-as-is.md",
+      "bytes": 4737,
+      "sha256": "a39761775f61e919e00326712486ecb952e4d7e7a01f3a6f0c742ad5f649ff85"
+    },
+    {
+      "path": "docs/02-arquitetura/02-contexto.md",
+      "bytes": 905,
+      "sha256": "a19797f4398cb37e45d59a4615758fadf2607a78fcb43cce116f426cb20bf8ee"
+    },
+    {
+      "path": "docs/02-arquitetura/03-containers.md",
+      "bytes": 1959,
+      "sha256": "4306eeab50830babcb453c49d42534d3ab5313c88231831790f71ba148af6291"
+    },
+    {
+      "path": "docs/02-arquitetura/04-componentes.md",
+      "bytes": 1635,
+      "sha256": "ae8c5cb683b2e884265a524f7e60798e303bdfdce04c47ede23900265cac7190"
+    },
+    {
+      "path": "docs/02-arquitetura/05-fluxos.md",
+      "bytes": 1429,
+      "sha256": "dba2fd46fe6a423bda5db3added5f4c81bbc43068766c2b38e6e3e5cb884d619"
+    },
+    {
+      "path": "docs/02-arquitetura/06-dados.md",
+      "bytes": 847,
+      "sha256": "835825102e453b966fc19a42597c88786c18ca68bc70e94dac805299e3b60ad1"
+    },
+    {
+      "path": "docs/02-arquitetura/07-fronteiras-e-invariantes.md",
+      "bytes": 5199,
+      "sha256": "573f74fdd67fcf3f2bc05cdecdd2b6d5b96db87c9951845cbabcf891d97efb40"
+    },
+    {
+      "path": "docs/02-arquitetura/08-seguranca.md",
+      "bytes": 1608,
+      "sha256": "ad3d5d2acb727d937b71eade039f15bf7cea0aa9fb1172a696eb711ef9e045d8"
+    },
+    {
+      "path": "docs/02-arquitetura/09-infraestrutura.md",
+      "bytes": 1175,
+      "sha256": "3bbbd233e3cb74206ce6dea30d3b1bdea39a9cd1ae42534fd99bcbea942d5990"
+    },
+    {
+      "path": "docs/02-arquitetura/10-contexto-alvo.md",
+      "bytes": 1159,
+      "sha256": "32e081124aad4debaa174d18238f4e52540532b4a32dbe85a4253ac7c7942209"
+    },
+    {
+      "path": "docs/02-arquitetura/11-containers-alvo.md",
+      "bytes": 2061,
+      "sha256": "9b089095ac148951bef5fe7942e39d8370edbd1dae16dc9dc329781c64b98110"
+    },
+    {
+      "path": "docs/02-arquitetura/12-componentes-alvo.md",
+      "bytes": 1841,
+      "sha256": "48a9a54c4d3580f17fe43c67fc445f55901826d815a711af2482af76385742b5"
+    },
+    {
+      "path": "docs/02-arquitetura/13-fluxos-alvo.md",
+      "bytes": 2604,
+      "sha256": "15c6f8cddfaf9dc2f866ab074801ec192540c9903617df79f49584f1dd680063"
+    },
+    {
+      "path": "docs/02-arquitetura/14-dados-alvo.md",
+      "bytes": 1473,
+      "sha256": "b78172157815b2b78ba137ddd557e0ebde2cb76c72f8b076acec767b4eff90fa"
+    },
+    {
+      "path": "docs/02-arquitetura/15-referencia-v2.3.md",
+      "bytes": 24525,
+      "sha256": "604dc3f49e4f69c5a8ea76670ea8f00d309ebbb8f499de0e6d93a22efa8f5920"
+    },
+    {
+      "path": "docs/02-arquitetura/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/as-is.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/componentes-alvo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/componentes.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/containers-alvo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/containers.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/contexto-alvo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/contexto.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/dados-alvo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/dados.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/fluxos-alvo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/fluxos.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/fronteiras-e-invariantes.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/infraestrutura.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/00-threat-model.md",
+      "bytes": 5610,
+      "sha256": "cfef8eca3b34d0536a294446c36206050c5e8011928779a05336423247a29e5b"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/01-rede-e-egress.md",
+      "bytes": 4792,
+      "sha256": "4ee845b671ffeb1fcd45ee6fad0b01a88c03d7668703b51092a9a81a745480f5"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/rede-e-egress.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/threat-model.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-GLOSSARIO.md",
+      "bytes": 234,
+      "sha256": "ee66986abb783db2d9efaed29eeee07482b6c4c3b423890769fe98e9d7c2c0e6"
+    },
+    {
+      "path": "docs/03-modulos/00-README.md",
+      "bytes": 1314,
+      "sha256": "903b34f76858bc3e4706e7ac56fb4e3182883d8e2752f4e080eb6cbf5eab00b4"
+    },
+    {
+      "path": "docs/03-modulos/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/approvals/00-README.md",
+      "bytes": 2262,
+      "sha256": "f697c8d0b988e26d02d1963524151ab64faa9928be4b59498e70cf6fbd765eb2"
+    },
+    {
+      "path": "docs/03-modulos/approvals/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/configuracao/00-README.md",
+      "bytes": 2565,
+      "sha256": "05b38006eef12be6c2564a271a93e88d284a864e842e3ac8274ace6d4b046be7"
+    },
+    {
+      "path": "docs/03-modulos/configuracao/01-referencia-v2.3.md",
+      "bytes": 12750,
+      "sha256": "233f9b1558bebb51931dd5b15cf6b8d01465ef8bff2c1e4075f54f72237ecff9"
+    },
+    {
+      "path": "docs/03-modulos/configuracao/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/configuracao/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/context-builder/00-README.md",
+      "bytes": 2511,
+      "sha256": "a9462a17603918f2bef282a8b067a21208bc1ffe161a62138b93beb37d7e2e4d"
+    },
+    {
+      "path": "docs/03-modulos/context-builder/01-referencia-v2.3.md",
+      "bytes": 2268,
+      "sha256": "9abcc68afcd8b35bdbf1f79debb30cd08999af69a1dc976683d97ef34c70f3ba"
+    },
+    {
+      "path": "docs/03-modulos/context-builder/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/context-builder/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/controle/00-README.md",
+      "bytes": 2492,
+      "sha256": "b03fef976fb38a5c9e1157819f5aa103ea47be2c744228839f610b19dbbfe20a"
+    },
+    {
+      "path": "docs/03-modulos/controle/01-referencia-v2.3.md",
+      "bytes": 17508,
+      "sha256": "7a763d95188195efc65c7082c7cbc6cbf57634c57c115370fda11cc61df98680"
+    },
+    {
+      "path": "docs/03-modulos/controle/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/controle/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/documentation-gate/00-README.md",
+      "bytes": 2334,
+      "sha256": "27e044612e19ddb3d317c14196b1af932be2a16c5214894fe394ea5219ef7561"
+    },
+    {
+      "path": "docs/03-modulos/documentation-gate/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/executor-manager/00-README.md",
+      "bytes": 2258,
+      "sha256": "9582484155833f235156d0b4fd1e318ab0f471d8d02befe6da3fe4350d9f030d"
+    },
+    {
+      "path": "docs/03-modulos/executor-manager/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/observabilidade-economia/00-README.md",
+      "bytes": 2329,
+      "sha256": "d99ab791b1a98c9e114ba7cd8b6e150557d607b3e7a7976de7124ee3573bf1f9"
+    },
+    {
+      "path": "docs/03-modulos/observabilidade-economia/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/orchestrator/00-README.md",
+      "bytes": 2279,
+      "sha256": "03f1886984256e3cd704c33c8937ecc534c17a598801b475b3822b4418a5b104"
+    },
+    {
+      "path": "docs/03-modulos/orchestrator/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/projects/00-README.md",
+      "bytes": 2270,
+      "sha256": "9fb91148e32bf0edcbffd6ffed8c10de6488af882373832324ec9aec12a03769"
+    },
+    {
+      "path": "docs/03-modulos/projects/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/providers/00-README.md",
+      "bytes": 2282,
+      "sha256": "a329f0cd2973381090f6643b309821b3cd61866d4714ba6409deeab63a3ec92e"
+    },
+    {
+      "path": "docs/03-modulos/providers/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/runs/00-README.md",
+      "bytes": 2281,
+      "sha256": "198a5c3e87141bf82dd6bcf2a2c94f7a7b5975ab01b9f06a8fe1304195c4f66d"
+    },
+    {
+      "path": "docs/03-modulos/runs/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/runtime-guard/00-README.md",
+      "bytes": 2211,
+      "sha256": "d5e4d62551358f2dff60ef3ca229cdcdfc205658296e1f76f6b3c6ff57d3e740"
+    },
+    {
+      "path": "docs/03-modulos/runtime-guard/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/runtime/00-README.md",
+      "bytes": 2847,
+      "sha256": "21938329e4ea306dbea6103190d47f597aaaa54379570c5bf661c910387c11bc"
+    },
+    {
+      "path": "docs/03-modulos/runtime/01-direcao-proposta.md",
+      "bytes": 6373,
+      "sha256": "ad2b77ad988d9d5058ddcf03eccb33d9a6582bb9409eb270c27e0cd4dedea7e1"
+    },
+    {
+      "path": "docs/03-modulos/runtime/02-referencia-v2.3.md",
+      "bytes": 20941,
+      "sha256": "f763df763eed7e8b8ac741dc10f266b0f4921da015324505ca626f49bfb29bff"
+    },
+    {
+      "path": "docs/03-modulos/runtime/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/runtime/direcao-proposta.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/runtime/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/sandbox/00-README.md",
+      "bytes": 2616,
+      "sha256": "fb143187d55e6caac11e4808d8a3551bfa9684af4cdbaa31268b3b6b0d27ecd7"
+    },
+    {
+      "path": "docs/03-modulos/sandbox/01-direcao-proposta.md",
+      "bytes": 5820,
+      "sha256": "b1a39076029ac8dae07b16d503d14bcdd72dd147bc1b9b589746ffe2e1549dd7"
+    },
+    {
+      "path": "docs/03-modulos/sandbox/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/sandbox/direcao-proposta.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/tenant-isolation/00-README.md",
+      "bytes": 6051,
+      "sha256": "4e4f5570768b28026dc6b2b2a661bec25c6cf04c2c331b1b4b56cdf215948906"
+    },
+    {
+      "path": "docs/03-modulos/tenant-isolation/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/tickets/00-README.md",
+      "bytes": 2204,
+      "sha256": "6fa7e737a7035f415d883bdcf21a4b51bd51768beff2ad35be1e9caf0d4514ce"
+    },
+    {
+      "path": "docs/03-modulos/tickets/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/tool-broker/00-README.md",
+      "bytes": 4694,
+      "sha256": "1b02dc2b748740cdd99541aa781712760a645bed2e59cfb6d8ea028892b5c84b"
+    },
+    {
+      "path": "docs/03-modulos/tool-broker/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/03-modulos/worker/00-README.md",
+      "bytes": 2186,
+      "sha256": "bd03c0c3b779dd581d7acb3d0b7c1a483bc9f9a506861053d9de13ebc52d657f"
+    },
+    {
+      "path": "docs/03-modulos/worker/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-CHANGELOG.md",
+      "bytes": 38015,
+      "sha256": "5e87c9438af5a5c2a5bff01c6582c2742f6bfc63d1ab03aaff35fe98d982f0f1"
+    },
+    {
+      "path": "docs/04-features/00-README.md",
+      "bytes": 1017,
+      "sha256": "1daaaaf9b29ef1015c179e1e2ad89e40e5d94947af98d423162ffbced5f9103c"
+    },
+    {
+      "path": "docs/04-features/01-control-settings.md",
+      "bytes": 1587,
+      "sha256": "9331d1ed067fda50a4f9d3ec3370658244180a57bf64ed0ce7df305928e1a5b7"
+    },
+    {
+      "path": "docs/04-features/02-ticket-execution.md",
+      "bytes": 1589,
+      "sha256": "4336ef9e8895b155dfe9c80f5bf7b6e3673cedc4baa511c470d912692131ebfc"
+    },
+    {
+      "path": "docs/04-features/03-documentation-approval.md",
+      "bytes": 1480,
+      "sha256": "fa6936e1590db99707be7196e05cff8f53022a3c98b64dbf9bee4c749a10f115"
+    },
+    {
+      "path": "docs/04-features/04-recovery-operation.md",
+      "bytes": 1537,
+      "sha256": "ed5767a12a02e344b874cb13f0435374544978e6ec2f91d87af7bd9465ef6e2a"
+    },
+    {
+      "path": "docs/04-features/05-provider-handoff.md",
+      "bytes": 1617,
+      "sha256": "d7e8eb9e53870945fb812f13115644aec87f732f1192fd074f1f03112fd6cbe1"
+    },
+    {
+      "path": "docs/04-features/06-usage-dashboard.md",
+      "bytes": 1474,
+      "sha256": "4663d886fa5816823158c6adc2155529e78cbaea31f059b5e90d5f10ccec60af"
+    },
+    {
+      "path": "docs/04-features/07-tenant-isolation.md",
+      "bytes": 1594,
+      "sha256": "ee60f1afe5ac7365eaf5591ba3501173d301817e782019d3ffb71a4a7edc3761"
+    },
+    {
+      "path": "docs/04-features/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/control-settings.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/documentation-approval.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/provider-handoff.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/recovery-operation.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/tenant-isolation.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/ticket-execution.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/04-features/usage-dashboard.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/00-README.md",
+      "bytes": 1385,
+      "sha256": "7b41efa45bd834c168300efafa56c705b953f832841a3f04bad5c76879e0d5b0"
+    },
+    {
+      "path": "docs/05-contratos/01-especificacao-v2.3.md",
+      "bytes": 6994,
+      "sha256": "e45618ff959eb1f43e26d438f2b01cb976e10380ed8fa7cca309ed20d263c752"
+    },
+    {
+      "path": "docs/05-contratos/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/api/00-catalogo-rotas.md",
+      "bytes": 14962,
+      "sha256": "3a42088bc7246d91875bc1d57f6b511e8ee034bca9b876aac7ea35161abf4cb8"
+    },
+    {
+      "path": "docs/05-contratos/api/01-controle.md",
+      "bytes": 5289,
+      "sha256": "1dc0784e50df34fbbbe7c8371e66bf39ca2c84af33a7f868e68a7b1a84529efb"
+    },
+    {
+      "path": "docs/05-contratos/api/02-worker.md",
+      "bytes": 4258,
+      "sha256": "0849fd08c4111a596e4d62fa00fc9bf82448e2f407fd2892eea88768e7ab45f3"
+    },
+    {
+      "path": "docs/05-contratos/api/03-runtime.md",
+      "bytes": 1705,
+      "sha256": "dd5f9aad9f164df1f26de0410851cff8e47b694069ee9ae2b276470c5c4776f4"
+    },
+    {
+      "path": "docs/05-contratos/api/catalogo-rotas.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/api/controle.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/api/runtime.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/api/worker.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/especificacao-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/eventos/00-catalogo.md",
+      "bytes": 1225,
+      "sha256": "65b55c405daf6d8058f58936adadf35f571e633fb648e254929296424596ccc0"
+    },
+    {
+      "path": "docs/05-contratos/eventos/catalogo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/filas/00-dispatch.md",
+      "bytes": 1354,
+      "sha256": "170c9e4bc67120decd538360ee37158a133ca7ecb4d3cc7d3aeb2c6862bc4e85"
+    },
+    {
+      "path": "docs/05-contratos/filas/dispatch.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/schemas/00-entidades.md",
+      "bytes": 2217,
+      "sha256": "9bbe69fbfb0758e3cef08bf6a66412b3e9dcfefa43bfe29e97e70d2dfc406f71"
+    },
+    {
+      "path": "docs/05-contratos/schemas/01-workflow.md",
+      "bytes": 2423,
+      "sha256": "ef69f3c3f7d6573845acc3dc08875f810f15caf9dae9c9abd129672bd623a5d1"
+    },
+    {
+      "path": "docs/05-contratos/schemas/02-artifact-context.md",
+      "bytes": 1312,
+      "sha256": "59380e687c7f809041d43b30536dfa3318c031ce270c9f8c536a215e9d94cdc7"
+    },
+    {
+      "path": "docs/05-contratos/schemas/03-checkpoint.md",
+      "bytes": 1377,
+      "sha256": "83e635da2a203d6b8404dbd393cd4ba67f8122271b6a0e81b3fc7ff06e83b38c"
+    },
+    {
+      "path": "docs/05-contratos/schemas/04-job-package.md",
+      "bytes": 3298,
+      "sha256": "2045f50e76a3e5c909972c1a1d8b099ffbba7b4c60c2915c3b0bcc066a9b580f"
+    },
+    {
+      "path": "docs/05-contratos/schemas/artifact-context.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/schemas/checkpoint.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/schemas/entidades.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/schemas/job-package.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/05-contratos/schemas/workflow.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/06-decisoes/00-README.md",
+      "bytes": 1586,
+      "sha256": "fa572166a1aefd8e872e70af1618a1cec4a8ac6b0301cd0d3951430efd8528f8"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-003-multi-tenant-e-stack.md",
+      "bytes": 2238,
+      "sha256": "62feb93bf693fba6a612e74a9494b5280fa30274c5e3c6f5b437150e265219d9"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-004-provider-runtime-sem-segredos-no-sandbox.md",
+      "bytes": 2060,
+      "sha256": "8aa14b939cf74e0dd0c3cb59fb25511d6922feccd11d1f07bfe6e8bd0e8ed84b"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md",
+      "bytes": 2036,
+      "sha256": "ff40f563c3c859ee765a6fd8b1af39e8d65a4312295fabc43788f5eac719b41f"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-006-rls-capabilities-e-egress.md",
+      "bytes": 1961,
+      "sha256": "b9fcd179964b1b0067a1fdbc9ca7fbdb192b9a46214af5e67474eb2a207e8ef3"
+    },
+    {
+      "path": "docs/06-decisoes/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/00-README.md",
+      "bytes": 1618,
+      "sha256": "5b0adffe419999ac4e86c477d356bde8be01bcbf58bad12262552bfc73b5ffc0"
+    },
+    {
+      "path": "docs/07-operacao/01-deploy.md",
+      "bytes": 2275,
+      "sha256": "14bc365e0de3e21e2b6dcd1e0d11abd7381b0becfd09732b1a0eacf579c7bbb1"
+    },
+    {
+      "path": "docs/07-operacao/02-execucao-e-recuperacao.md",
+      "bytes": 5438,
+      "sha256": "d3bc3af4e08dd037f40ad575042f35b13f80e75c23d9d08921ba0add4341fb61"
+    },
+    {
+      "path": "docs/07-operacao/03-observabilidade.md",
+      "bytes": 1739,
+      "sha256": "c6d522d614803a60ffa5e50ce85ea120e9ed61bba7a617053112498e5ca03afd"
+    },
+    {
+      "path": "docs/07-operacao/04-handoff.md",
+      "bytes": 2452,
+      "sha256": "f72d85ab7f01e3ccb355b1230b7ba32708310d47269a6995a499d0886fda06e5"
+    },
+    {
+      "path": "docs/07-operacao/05-backup.md",
+      "bytes": 2337,
+      "sha256": "59118bb94fb6ebfb6a51a96508aaf1f4cd09adfff883c720ceff14ae3d3964d2"
+    },
+    {
+      "path": "docs/07-operacao/06-restore.md",
+      "bytes": 1546,
+      "sha256": "f2a4ada6f01ae6080057d431503df58051335f4679183211387822210ce89d27"
+    },
+    {
+      "path": "docs/07-operacao/07-troubleshooting.md",
+      "bytes": 1659,
+      "sha256": "e8f4ac9a972231cd44a22f22b6adb0659821097446e084aad1fceaaa63f8d44b"
+    },
+    {
+      "path": "docs/07-operacao/08-incidentes.md",
+      "bytes": 1491,
+      "sha256": "1ab530aaecfbab42a69116374b128b8303db554a5928c4a568f168c27b2b591b"
+    },
+    {
+      "path": "docs/07-operacao/09-economia.md",
+      "bytes": 2941,
+      "sha256": "ea6ead8db6bf834930136c7ad094435285c9bd6a40eb99dde91084ae9eb76915"
+    },
+    {
+      "path": "docs/07-operacao/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/backup.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/deploy.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/economia.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/economia/00-referencia-v2.3.md",
+      "bytes": 5566,
+      "sha256": "6f75ad5c06646b8fa73578697c350b78d59ce4402da10f6eb217f590a085f7ba"
+    },
+    {
+      "path": "docs/07-operacao/economia/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/execucao-e-recuperacao.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/handoff.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/handoff/00-referencia-v2.3.md",
+      "bytes": 7312,
+      "sha256": "92e73d5c8c8982451837b5ab5832509c1dc2dd8cb44dc97ba6d8d0354eddbe60"
+    },
+    {
+      "path": "docs/07-operacao/handoff/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/incidentes.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md",
+      "bytes": 5317,
+      "sha256": "2ed3cf09d99bd5880b89e12fb537b2a19277b911414dc2a81314c05f940892bd"
+    },
+    {
+      "path": "docs/07-operacao/infraestrutura/01-referencia-v2.3.md",
+      "bytes": 10490,
+      "sha256": "4b26dd0b85560305b06187aa79c17dd8fcb0bf32a26559b5c46651743793ef03"
+    },
+    {
+      "path": "docs/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/infraestrutura/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/observabilidade.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/operacao/00-referencia-v2.3.md",
+      "bytes": 33593,
+      "sha256": "77ac664129faf756f4f66c3fe20451e56a604c6cf38007956d2c9ba2f8981364"
+    },
+    {
+      "path": "docs/07-operacao/operacao/referencia-v2.3.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/restore.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/07-operacao/troubleshooting.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/00-README.md",
+      "bytes": 1654,
+      "sha256": "a581c92cc0d51c4148f8889353a5bbf3b7f31f3750d3c8f3ea6fe925f2eac4cc"
+    },
+    {
+      "path": "docs/08-desenvolvimento/01-ambiente-local.md",
+      "bytes": 1810,
+      "sha256": "10830b815fc69370d2eb0aa316b689e7e05fe7547b749279c3179b14928771eb"
+    },
+    {
+      "path": "docs/08-desenvolvimento/02-convencoes.md",
+      "bytes": 1442,
+      "sha256": "620f31299586fa1dbbdaa124d92fae03e361c93e3172397515121ddf6b80b2f8"
+    },
+    {
+      "path": "docs/08-desenvolvimento/03-como-contribuir.md",
+      "bytes": 1471,
+      "sha256": "f981fc3183e78266a0742943a040d4a77d55eae35f0f371dd6235d98a3ee64e4"
+    },
+    {
+      "path": "docs/08-desenvolvimento/04-testes.md",
+      "bytes": 1162,
+      "sha256": "f61ce13d6b095f3de23e8fd86b63594378adae080e89d0b84565711afb36d1b8"
+    },
+    {
+      "path": "docs/08-desenvolvimento/05-matriz-cobertura.md",
+      "bytes": 3886,
+      "sha256": "944d17ea4c90f9a86b56b7ffffc0cad9e3cf76a76d42f0e1c2c9e94ea5b31a1f"
+    },
+    {
+      "path": "docs/08-desenvolvimento/06-controle-mvp.md",
+      "bytes": 8985,
+      "sha256": "60a419c2d40eefb8c2b3abb1f4fb06684d996858247ec35d675f7f8bb487630f"
+    },
+    {
+      "path": "docs/08-desenvolvimento/07-piloto.md",
+      "bytes": 3301,
+      "sha256": "5a7a9d9c83800166b09696fa33e6142c55453b8944dd9099ab8f3ad25d3f4e36"
+    },
+    {
+      "path": "docs/08-desenvolvimento/08-tech-lead-handoff.md",
+      "bytes": 2699,
+      "sha256": "5fbbf12b7636500ce3449373372e3e7b6c48ba6b73b0d838b5d11d7c1ed3fb50"
+    },
+    {
+      "path": "docs/08-desenvolvimento/09-backlog.md",
+      "bytes": 24654,
+      "sha256": "ace6c9eecf03181e6f2f3026064865c253bf0f9eaeba1c36aa2906c7ce8fa1f9"
+    },
+    {
+      "path": "docs/08-desenvolvimento/10-plano-mvp.md",
+      "bytes": 17966,
+      "sha256": "5b77e325af7cae9d5a7a7b69afaf56e99ba309da1a884a5dbedc18a1c53c2790"
+    },
+    {
+      "path": "docs/08-desenvolvimento/11-plano-lf-mt-proposto.md",
+      "bytes": 3368,
+      "sha256": "0cf8589fe39458dd18c9945abb39335133f61f4ce13f8a7e78c2b27a19187183"
+    },
+    {
+      "path": "docs/08-desenvolvimento/12-testes-seguranca.md",
+      "bytes": 6827,
+      "sha256": "dc34e41621e120b3430d97406297fc73c2506fbff6f5a21631412abb52900485"
+    },
+    {
+      "path": "docs/08-desenvolvimento/13-catalogo-fac.md",
+      "bytes": 10587,
+      "sha256": "af6febab0b4920d7c40f8ed703c26616b3933363473b964ca00d96988cbe66f1"
+    },
+    {
+      "path": "docs/08-desenvolvimento/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/ambiente-local.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/backlog.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/catalogo-fac.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/como-contribuir.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/controle-mvp.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/convencoes.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/matriz-cobertura.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/piloto.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/plano-lf-mt-proposto.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/plano-mvp.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tech-lead-handoff.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/testes-seguranca.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/testes.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tickets/DOC-MV-003.md",
+      "bytes": 514,
+      "sha256": "2c3ec466462896c29a28c02e5443fec974bc75d2c8bf0234efe8055da053b7d1"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tickets/planejamento/00-README.md",
+      "bytes": 11238,
+      "sha256": "98427032b905492a86abac82851107895659f0a8f4ae8eca09edba8708f2ef95"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tickets/planejamento/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/09-entregas/00-README.md",
+      "bytes": 12179,
+      "sha256": "6c3a93dac8bbd76f3fa490b426d4bd604c84a93e751536e5021e34ce7c8c6e23"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-06-DOC-MIGRACAO-manual-vivo.md",
+      "bytes": 3048,
+      "sha256": "86dcf3d156ee15bfe7031e68907091a9cb843d9ca04c2db9d9e3b62343e34071"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md",
+      "bytes": 8776,
+      "sha256": "63d1f70f423590242afa3dfbfc9a021d77ce6734198e665162ace32656e50a11"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-07-DOC-MV-002-organizacao-raiz.md",
+      "bytes": 3820,
+      "sha256": "3fee4cf0c4b333bcd9db6321bbd9afe18aa92b879114a839eba0083c68b49220"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-07-DOC-MV-003-ordem-didatica.md",
+      "bytes": 2307,
+      "sha256": "6f768d061c49e4250c492295abbbb9d7a46dd4268bcdd3341d17f18a323456d8"
+    },
+    {
+      "path": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md",
+      "bytes": 7684,
+      "sha256": "897d048afd78424f9339e0e3aad1639248418255244919a0396db88449c18a09"
+    },
+    {
+      "path": "docs/09-entregas/2026/controle/2026-10-05-FAC-020-central-controle-estatica.md",
+      "bytes": 9359,
+      "sha256": "974ea653f2368b82e5082bdcbb1e5d1aa5ab618684d46c49a3357bec00d14478"
+    },
+    {
+      "path": "docs/09-entregas/2026/controle/2026-10-05-FAC-020A-home-em-developer.md",
+      "bytes": 3708,
+      "sha256": "8bfc1ccadccd262a4352ffb4b9c555958c8acccb47dcb65c35ce1073cbce0d04"
+    },
+    {
+      "path": "docs/09-entregas/2026/controle/2026-10-05-FAC-021-nome-escala-home.md",
+      "bytes": 4757,
+      "sha256": "6eaa1b74552b264815113a1cf2dacffc0d64b52fd3737ffc18c0179cc9cdce9e"
+    },
+    {
+      "path": "docs/09-entregas/2026/controle/2026-10-05-FAC-022-template-tipografia.md",
+      "bytes": 6252,
+      "sha256": "ad09453f0d1304cff69824722d1863a3d126869420eac925bdcf649609008078"
+    },
+    {
+      "path": "docs/09-entregas/2026/controle/2026-10-05-FAC-024-video-dashboard.md",
+      "bytes": 6740,
+      "sha256": "56394bf17a4a0e126058d865bd68a855fae9f5a54b1e099750011ca598d868be"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-003/checks.json",
+      "bytes": 1347,
+      "sha256": "d904bbfdc6a606e0b6abd5375bd057c11ec10bff7db3417e3d9ec681f1fc09ce"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-003/negative-checks.json",
+      "bytes": 543,
+      "sha256": "3ae2c9d3f7fd872332558ff4849b1a91eed82b1e27fc536fe8152eaa08db458a"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-003/validacao.json",
+      "bytes": 338,
+      "sha256": "71556e93347e1054eea5ac723b96ec284b5a5886a32c8b97d3c912d1bf87b3b0"
+    },
+    {
+      "path": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md",
+      "bytes": 6861,
+      "sha256": "7e211da35b4ae53b9ecfc55e28e54346bdf5ee57d15096e53c6fec437a38f20c"
+    },
+    {
+      "path": "docs/09-entregas/2026/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md",
+      "bytes": 5248,
+      "sha256": "666ddf2aa61835ed47f88ae8c756a7ba7e89e6d80b910633828c9ede1de22652"
+    },
+    {
+      "path": "docs/09-entregas/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/00-README.md",
+      "bytes": 9117,
+      "sha256": "77d38d459435e04a2204dbb7c632fad3f79193603a203435f61444a2f7a4fe44"
+    },
+    {
+      "path": "docs/10-lessons/01-definicao-projeto-configuravel.md",
+      "bytes": 3217,
+      "sha256": "a24fd633f643b7e51b344679767943cb87e6bf3bae8beee00821e8d39ae68328"
+    },
+    {
+      "path": "docs/10-lessons/02-contratos-runtime-monorepo.md",
+      "bytes": 5995,
+      "sha256": "389c274f37b9a08dc327a35bd8cc999cbe9308d1e0c1ae8b8fb034afa247ed7d"
+    },
+    {
+      "path": "docs/10-lessons/03-outbox-idempotencia.md",
+      "bytes": 3065,
+      "sha256": "9a37404406520826e48f24d005e556651101417bc4d3d0ac617056d80426435a"
+    },
+    {
+      "path": "docs/10-lessons/04-contexto-deterministico-limites.md",
+      "bytes": 1097,
+      "sha256": "38adeaa3ca26a2152640324777faca43dc37a4566cf483f75bd09b13c8a69ae7"
+    },
+    {
+      "path": "docs/10-lessons/05-checkout-confiavel.md",
+      "bytes": 1725,
+      "sha256": "ff9430819a6431e7e5f6e9c6e37095050d009bc7b5b0b682c2b422142b68ac44"
+    },
+    {
+      "path": "docs/10-lessons/06-sandbox-worktree-snapshot.md",
+      "bytes": 6826,
+      "sha256": "244f411095d481c4f3146099926f5e05b0b0243fa549abdc7145b23e89c69f77"
+    },
+    {
+      "path": "docs/10-lessons/07-perfis-permissao-cliente-cli.md",
+      "bytes": 3851,
+      "sha256": "d3f5211300a5d98f0d25f1dcf6e01cd9de0a203adfcf145323a4be50b39040bc"
+    },
+    {
+      "path": "docs/10-lessons/08-lifecycle-processo-cli.md",
+      "bytes": 7020,
+      "sha256": "1bf843a0be587e0d603bf5b900a42047716cca3da2af5a9c1566215b6aa65560"
+    },
+    {
+      "path": "docs/10-lessons/09-leases-fencing-checkpoints.md",
+      "bytes": 5406,
+      "sha256": "c088d1560af0d93f9772b4bb860b0ed737861cd8b095fa836329a18e99f1d93e"
+    },
+    {
+      "path": "docs/10-lessons/10-worker-heartbeat-quiescencia.md",
+      "bytes": 3877,
+      "sha256": "ade5aed7413734ff51c449d9d8c18b73acc67069ac4b5eac098e59b3c5e2c0be"
+    },
+    {
+      "path": "docs/10-lessons/11-baseline-regressao-review.md",
+      "bytes": 4657,
+      "sha256": "696fed6e90358930984956b7e437ffb12c368914c50862bc794709f7a97086fe"
+    },
+    {
+      "path": "docs/10-lessons/12-documentacao-proveniencia.md",
+      "bytes": 1855,
+      "sha256": "960903d08b75944e442508dc915767668db43772ed9ebe6696cc34f44a7b22c5"
+    },
+    {
+      "path": "docs/10-lessons/13-modal-edicao-configuracao.md",
+      "bytes": 5528,
+      "sha256": "34ed6bf6f6e1d45e6afcff36b447659e1f3f36a78a057a23b74f9736b763603f"
+    },
+    {
+      "path": "docs/10-lessons/14-video-decorativo-loop.md",
+      "bytes": 1613,
+      "sha256": "868c2d6a1253ab6aa2c1523181503b5650052a4e6bfa7b2048908f39997ee266"
+    },
+    {
+      "path": "docs/10-lessons/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/baseline-regressao-review.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/checkout-confiavel.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/contexto-deterministico-limites.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/contratos-runtime-monorepo.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/definicao-projeto-configuravel.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/documentacao-proveniencia.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/leases-fencing-checkpoints.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/lifecycle-processo-cli.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/modal-edicao-configuracao.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/outbox-idempotencia.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/perfis-permissao-cliente-cli.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/sandbox-worktree-snapshot.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/video-decorativo-loop.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/10-lessons/worker-heartbeat-quiescencia.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/AUDITORIA.md",
+      "bytes": 5352,
+      "sha256": "61824f6bab2c00d7008a888723f5264424af1f4ea88b0af817135bb75551bdba"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/CHECKLIST-ENTREGA.md",
+      "bytes": 1095,
+      "sha256": "48d48a7ca7d69644bdfc1f38338d62f9e7fde379ee5aaf2a66b21eabd30fe361"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "bytes": 2385,
+      "sha256": "afa6e66934be310bf1cb500b94059fae3397789665a38c1df89d7f69da0c462e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/INVENTARIO.md",
+      "bytes": 849,
+      "sha256": "6ec3f8bf1bbd05f835eaf982fb8f2c7dce047699ab114ad1c073f5779cd4fab9"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/MAPA-MIGRACAO.md",
+      "bytes": 4077,
+      "sha256": "b5d42b2ed756152bb9c2e208824dd947aae54d8deb0b825028ec57fa2e376a4a"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/PENDENCIAS.md",
+      "bytes": 2502,
+      "sha256": "5de8895851bed2e71d91511885e4d848a8bf4159f1114003d3c54e2ced25bc31"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "bytes": 5638,
+      "sha256": "9b987587e0b5964e5896606ebe11093f1a61c24435e0eeb7bce93f97f49704fe"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/POLITICA-IA.md",
+      "bytes": 6569,
+      "sha256": "1587b2771c27d48a7653d5477d2ccc2eaded05a3f0964027a651e30bb0f6c222"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/README.md",
+      "bytes": 921,
+      "sha256": "ec28c428b15a7e717e4a082cacb2872bf1da7854b355af95f95246bf4f34525e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/VALIDACAO.md",
+      "bytes": 6069,
+      "sha256": "8d8187ab740188402f591421bbbc5b6e20f7c4bb288e66ad46cab3da7ea1b6d5"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/fontes-carregamento.md",
+      "bytes": 2956,
+      "sha256": "98d52f41d57bf1924a71b6ce4368624d61f84ebd37e91362b303f0ba72263eff"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/fontes-tecnicas.md",
+      "bytes": 3320,
+      "sha256": "a080921a1f0ff64f88bb869c7c973c7942653668fa82c70f441f11cbe12b6785"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/ADR.md",
+      "bytes": 2176,
+      "sha256": "0bc5e1561382d6f8e366c3a4846f8cfd22f51c0a0df38171570a8d09fe5c8706"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/CONTRATO.md",
+      "bytes": 2688,
+      "sha256": "158dee47b7be2027e7ee78a7e522690748fcb22acb21d7d9e4f3a47b8023c7f3"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/ENTREGA.md",
+      "bytes": 2479,
+      "sha256": "4b447a79000f203ac47d43c6d0f8d5176609f9748a9e7b37972850bb30f04b2a"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/FEATURE.md",
+      "bytes": 2365,
+      "sha256": "77f4e1efc8d0c127e4c73bcfc6ba41f21357556e3a69a70b0509e6386956d6e1"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/HANDOFF.md",
+      "bytes": 1519,
+      "sha256": "5625bd25c1aeaaa376c5682d0c5e9f2723a5b63a09e7f9909ec81dd9786f9470"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/LESSON.md",
+      "bytes": 2284,
+      "sha256": "6c4a6d435af1b03acc36369d77a5e7a9151b15dc01f4f7ca070286df91043a9c"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/MODULO.md",
+      "bytes": 3164,
+      "sha256": "c15e67cda48c9529f5fb35d86eb9f1d3ef69babefa39360cf4a35bff6732c52c"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/README.md",
+      "bytes": 1320,
+      "sha256": "3a9ff517f4a10180c1d62aefb17fbbcd0f4ea7adac5586ec33b9fea7b296c9fb"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/RUNBOOK.md",
+      "bytes": 2157,
+      "sha256": "0c20e808e748a1b9d16eb85d7f8cdcceb08cf26d47f694118b8219bdb22eef9e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/00-governanca/templates/TICKET.md",
+      "bytes": 2578,
+      "sha256": "84656841de961c65bccdcbec1da3fcfe1c20cbd3fd874b67e58e752c9bdb2142"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/01-visao-geral/README.md",
+      "bytes": 669,
+      "sha256": "f187e8b3c4e7993558252e77076cab01e283960b70036c5a5f1f0ab7f33c7930"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/01-visao-geral/escopo.md",
+      "bytes": 1674,
+      "sha256": "267e0e2c8a967afe8f20f421d5163436a2a381885cd775e8877410481d5b37c1"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/01-visao-geral/glossario.md",
+      "bytes": 3408,
+      "sha256": "44ab875850d89fabe95a8d216840566b3e8a848f055a2c774147117a1c196aef"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/01-visao-geral/mapa-do-sistema.md",
+      "bytes": 711,
+      "sha256": "410bc55950430bfa6fc8f0c3f6d9a7abc50f4caca995637e93c04dde977e46d2"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/01-visao-geral/objetivos.md",
+      "bytes": 1075,
+      "sha256": "076afc926d0515ce9e377ad02c2a26ad762532ebfd01029d82b51a0b80dee9d3"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/README.md",
+      "bytes": 739,
+      "sha256": "022d0ecbb612295250ea2125f0e14c5a0aae103a51f34ef7638f56f0c93d2342"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/as-is.md",
+      "bytes": 4623,
+      "sha256": "d6a763d65b7f67810a84543f13f8d36651e1ea10afe829d43e06679accf0455f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/componentes-alvo.md",
+      "bytes": 1709,
+      "sha256": "e1bfb963b84bea118189dc604e478bdeb29ab7724faa468c8e8bda1f8a04edec"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/componentes.md",
+      "bytes": 1516,
+      "sha256": "543137846e35943e9f5d6ac218c80188bd28d6762e6e46764ec951086f72097e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/containers-alvo.md",
+      "bytes": 1923,
+      "sha256": "3c132774a5a3306fb4614612d6fc7774b6dfc39b08c833830428aebc7ccecc36"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/containers.md",
+      "bytes": 1837,
+      "sha256": "2b187b79d0f00bd1264c4eebf32612fb18664d6cef426e0e10f9809ad45133a7"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/contexto-alvo.md",
+      "bytes": 1027,
+      "sha256": "7408a142b0d9e92498d1c4cc19edb7a97f6b8d8e9fe07f291cabfa7d5e485711"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/contexto.md",
+      "bytes": 787,
+      "sha256": "499ec42b25d2169c17a0d245a2d2e9a5f671ccaf1509235cb70afd270b6261f3"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/dados-alvo.md",
+      "bytes": 1338,
+      "sha256": "20e2697c151a0761025c0939e13337a385d7480afd89ef3b4a8e08dff653bcbb"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/dados.md",
+      "bytes": 711,
+      "sha256": "91d6f651efcfccf8c0fbf8951960481889ee43b77669f064dbad1dc4d27787ab"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/fluxos-alvo.md",
+      "bytes": 2463,
+      "sha256": "7d610db25e312b637943c40604cdafc9e59fcd9d89c65287469a9141e851d857"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/fluxos.md",
+      "bytes": 1304,
+      "sha256": "ac4767484798a37f6bfc886cc8e48aa6b35efc0bc050a921fff4133f38cbf562"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/fronteiras-e-invariantes.md",
+      "bytes": 5082,
+      "sha256": "7d23726f646aac0989d715c34b6dac5df39aebb2c939ccbbe8413b7a454be068"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/infraestrutura.md",
+      "bytes": 1041,
+      "sha256": "4068b1e5da6355578456fd9da9d02eefcf9c91da3d8857552d4542af2887919f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/referencia-v2.3.md",
+      "bytes": 24379,
+      "sha256": "bf75efee23b09f5186efa43812da7321936da18e6c6ceecc4aaf0766d5f1753d"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca.md",
+      "bytes": 1446,
+      "sha256": "572164b482af432347017274c048cb336ccefe2fd12855ab580122477c1bdde2"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca/rede-e-egress.md",
+      "bytes": 4646,
+      "sha256": "b1981f790524b15deac9761cf944b65ef158d640df232469a796f1ac39ff2cc7"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/02-arquitetura/seguranca/threat-model.md",
+      "bytes": 5520,
+      "sha256": "5e551ba5fd372859b7568289ee3d6a5dd9d5e51551ce00b6e84f1d98bd83e9b2"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/README.md",
+      "bytes": 1216,
+      "sha256": "7c84a4cd41ef677122ecc3dd9208bc3559392e3ebbe939e8dc28666ea2f09fc2"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/approvals/README.md",
+      "bytes": 2144,
+      "sha256": "8aff6ba9fe044fa4838fa6bd9730092734d68b8fdec0b97c44563abdfde424e5"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/configuracao/README.md",
+      "bytes": 2367,
+      "sha256": "a93e87326ca87a88eeca6d68472c9eba1eef9a3903c61d197ad196f45cdc7d54"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/configuracao/referencia-v2.3.md",
+      "bytes": 12593,
+      "sha256": "b232bcfcee93acdb145ea16258f9216b0cda6fb6ce12be065c20236fb9b20631"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/context-builder/README.md",
+      "bytes": 2313,
+      "sha256": "4417fc905b0041c3e57e3102936bd1efd6dc3cfb4ce0823a1d19e30718f2de5e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/context-builder/referencia-v2.3.md",
+      "bytes": 2126,
+      "sha256": "c566bd3138b5f9947efaa18d9d6e6f298c9e732083678cd853a041e1519c4332"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/controle/README.md",
+      "bytes": 2294,
+      "sha256": "de0ff3a427084fa00c2b750940eaf1190d7d1dd9bad58087f4a28ff61d6bf11c"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/controle/referencia-v2.3.md",
+      "bytes": 17363,
+      "sha256": "20b4856693081bf8858e904985fcd67798aa88965505e0fa82f46e7da1032f40"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/documentation-gate/README.md",
+      "bytes": 2215,
+      "sha256": "ff21a7a141cb42226f9ec9c8198d4083c423c626ed111be1e66f6abeac8ca547"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/executor-manager/README.md",
+      "bytes": 2141,
+      "sha256": "fdd14a6fa51e80877b68e94b5d5d795b637c9e382cc36e4e6533cbfcf075c446"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/observabilidade-economia/README.md",
+      "bytes": 2203,
+      "sha256": "9fa36603baaa2b148c5041f640a32bcade4ca67276cc16803faeeec66f5919d7"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/orchestrator/README.md",
+      "bytes": 2154,
+      "sha256": "3cd99ddd74f8547ff4f18327d3713d72a2bee964444a47d7152c65390b047beb"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/projects/README.md",
+      "bytes": 2153,
+      "sha256": "05def2d6653d9ac36ce2adfa6730c93175052a490f8d2fd11d1ccbec3a31af95"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/providers/README.md",
+      "bytes": 2165,
+      "sha256": "de9838ef0e983c14763355fdd71591ec1872fbbb54ba4c7d1c85dba543bb56be"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/runs/README.md",
+      "bytes": 2159,
+      "sha256": "e1ef84587d28dc50fb4f0ccc5edd7f5a772af33648383e8ed1728b99cc4ca840"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/runtime-guard/README.md",
+      "bytes": 2083,
+      "sha256": "40ea2fb18a24ef3016e5b68f58eae449f59ce7aa60bf311aa449a10991bc5af4"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/runtime/README.md",
+      "bytes": 2598,
+      "sha256": "8ce02e896591df842708c4e80206ccdaf978a5777269a6e7cc5e8937cef3f3e5"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/runtime/direcao-proposta.md",
+      "bytes": 6237,
+      "sha256": "893092c2c629c440fdaa8da2126a313428b007f9a3c8865e8024470365c789ad"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/runtime/referencia-v2.3.md",
+      "bytes": 20792,
+      "sha256": "df5580037b489f4ab6b93f336acad220242d2455935e263239501e020d8f6bbc"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/sandbox/README.md",
+      "bytes": 2415,
+      "sha256": "6e8ca335a26fede866b0dba80b71b4042f9969d75770c2ae8a1c822c3607fb11"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/sandbox/direcao-proposta.md",
+      "bytes": 5668,
+      "sha256": "f9167cf61072e9429da0aeef392eed307fc9f4bb95953b725ca998b16fba1eb6"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/tenant-isolation/README.md",
+      "bytes": 5933,
+      "sha256": "3ec226cf72a7a6ae2bf1e63997f0f137928cfa945142f2e90285a85ef633c4e6"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/tickets/README.md",
+      "bytes": 2090,
+      "sha256": "834d9d4ce8c201465a511c4110519e67d7bedaaade19d151d93ddd085e942806"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/tool-broker/README.md",
+      "bytes": 4573,
+      "sha256": "34850f68cedcc79b819251f52fb633c81597a9b6ae8a5e1e78a33e84e0357f95"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/03-modulos/worker/README.md",
+      "bytes": 2060,
+      "sha256": "e44e2cd175ee9fefef8bae026adcdb47cb29ca7d7bb48c5c56eee5bcbbd5255c"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/README.md",
+      "bytes": 520,
+      "sha256": "3031a11e79cfe6e1e8814f421e7d53ad6a81ee323689827366e9795bb22fea9a"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/control-settings.md",
+      "bytes": 1441,
+      "sha256": "191973d7879915ffb2d9683970771c06a8b5dea32e3f292369408da0a2c203a6"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/documentation-approval.md",
+      "bytes": 1325,
+      "sha256": "e23b4de71d90f2424ca7727a6ea08696f2f664279d05033665ba5f415ca1995c"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/provider-handoff.md",
+      "bytes": 1460,
+      "sha256": "e5e0e8986871f2111680c14a882d363d6b939890a3a2c7d43829f5efe0ead3df"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/recovery-operation.md",
+      "bytes": 1375,
+      "sha256": "0d9c565c1d3e420204ed43693299f2ac4afaff229a79c43edfc492f65b9e1a94"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/tenant-isolation.md",
+      "bytes": 1428,
+      "sha256": "287303438a6c1812ea3cdbc6b810bfe562e949fadedc9bce5f792b6f8f783002"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/ticket-execution.md",
+      "bytes": 1424,
+      "sha256": "a9dfe061858865d72257012834040ec80dfc079a45f3ade3622880eaf5147685"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/04-features/usage-dashboard.md",
+      "bytes": 1321,
+      "sha256": "e63cbc71f224cf5808ad7ba0149f961d80cfbe589d08321d4b3d5dfb783fe090"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/README.md",
+      "bytes": 1163,
+      "sha256": "bb0693e26a6d22c1f95f9a9fd6fbbbde6d10277b0562ef7f8b20023b8b856839"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/api/catalogo-rotas.md",
+      "bytes": 14871,
+      "sha256": "c6b91a2f3372d69862b1c8bf8ac8d71463436022d14d13c878870f527424944b"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/api/controle.md",
+      "bytes": 5163,
+      "sha256": "fe922e7193bbe2c4ba6fb495b17358b695c3f6dc9c08896ca0f251984df5eb46"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/api/runtime.md",
+      "bytes": 1563,
+      "sha256": "42f561c971580310dec61b6cf2a288da2a0ac8b43dc67975c35a060eeac3ea06"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/api/worker.md",
+      "bytes": 4134,
+      "sha256": "f32e50eb0bbc598353df1c3594437555e0fd81f879c6146877838776fdd30f84"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/especificacao-v2.3.md",
+      "bytes": 6857,
+      "sha256": "fe09f7e121fb84dce7b2ae2f04c4642ca735cd34cd701a2e71366db49cc815c2"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/eventos/catalogo.md",
+      "bytes": 1117,
+      "sha256": "abfa8c4715d0d9986feb997e9cc3ce2be9c660addf5efeab5775aa1fe5470758"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/filas/dispatch.md",
+      "bytes": 1239,
+      "sha256": "2ffd70f92f54c922bd991cc6c9ea9ca121299a79a4bd15ca46defef37315380a"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/schemas/artifact-context.md",
+      "bytes": 1185,
+      "sha256": "e64f3ccc84cedd250a091155e55d0478be36da3f651db4fb23bc661af5078a7d"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/schemas/checkpoint.md",
+      "bytes": 1241,
+      "sha256": "478ce00a98add2f3ce25c275e507220a7e503dc6529e6ed9933c8559b16775e6"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/schemas/entidades.md",
+      "bytes": 2126,
+      "sha256": "8fbe46c52a8a3b34704685424cbf84aeee1a39f350f186bcd6ff84b0cb783c8f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/schemas/job-package.md",
+      "bytes": 3123,
+      "sha256": "1c55347866cdc3891a68300f3e2bbbd54e360534008add6651c06a8b8a2fa902"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/05-contratos/schemas/workflow.md",
+      "bytes": 2295,
+      "sha256": "709f19538645670a1ff6f70d02274a2584f7afc2b8f6423a7432466d8722da6f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/06-decisoes/README.md",
+      "bytes": 1477,
+      "sha256": "8c7ad0084cba8b4584a5399b179f4b46e091a8b92dc128a9786620b062041611"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/README.md",
+      "bytes": 1132,
+      "sha256": "7138e5f2bf292602a0f41556b24b58a9c971dba3e43c17a3a092a3724305f18e"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/backup.md",
+      "bytes": 2217,
+      "sha256": "0fb2f365766f44fcecea7b3b9276a01b308ca380715d3186601460abb583c294"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/deploy.md",
+      "bytes": 2138,
+      "sha256": "91be4dac3368bbcefa698ba22fd58bebd56c87749165511f54e10f16f8b87a5a"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/economia.md",
+      "bytes": 2790,
+      "sha256": "94e93c271cb99450fe883dc39ec96b9ec49c3334dbaa40a10581375726c89465"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/economia/referencia-v2.3.md",
+      "bytes": 5449,
+      "sha256": "4c33e194b5730ed25171608a4b714118270ade0d7567a98534ba3dee0c8cca69"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/execucao-e-recuperacao.md",
+      "bytes": 5311,
+      "sha256": "5742c675c3c5775c8e784c0e1ae8a3fdf9b7e26b2644a87c831a41b6704ad531"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/handoff.md",
+      "bytes": 2313,
+      "sha256": "b4be07271e45acf973dea7452981620afb52c27c20d2641b0983de877f751401"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/handoff/referencia-v2.3.md",
+      "bytes": 7184,
+      "sha256": "b251279d438da0ce78f2047aeab31fd8113d863d15c495730ac8335c87e79f96"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/incidentes.md",
+      "bytes": 1362,
+      "sha256": "ced05f34090caed0937370cadd572b25c92299fc477265a82f04086d6d20ec3f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "bytes": 5225,
+      "sha256": "10175a3f4fd379b2619b75df984af2e4caf995cfc64b442cb64d347569b3742b"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/infraestrutura/referencia-v2.3.md",
+      "bytes": 10327,
+      "sha256": "690dc5f87cdc1fa33af58d6aef84e16bff71b78f00d26c1e236b22dbb1f0c9a5"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/observabilidade.md",
+      "bytes": 1601,
+      "sha256": "ec8437b836c83a410aba93c3e8a432b2685cf1168ae09564a8a1cd48c6f92406"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/operacao/referencia-v2.3.md",
+      "bytes": 33468,
+      "sha256": "82120efa22ce54bcc69802cb82c5515f3de2c8fa35aff72c67d675fc0ff1c4a1"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/restore.md",
+      "bytes": 1419,
+      "sha256": "88cc16b06714d86f5d781f7f8f633f724a8fc3e1f8412588ecfeb8e3db874ba9"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/07-operacao/troubleshooting.md",
+      "bytes": 1539,
+      "sha256": "be7b01854fbd5aac3e611295bb676ba74e2b506932ae06f5166c452e667de0b6"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/README.md",
+      "bytes": 962,
+      "sha256": "7796d8e9a8aecca7f416dd66f67b5d48c577b20347b3022e8af0b950c6d658fc"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/ambiente-local.md",
+      "bytes": 1691,
+      "sha256": "158a221cdecd10d46a8ee6b8f9304497cf53d8bca05d6979eacaf17f9006ad3b"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/backlog.md",
+      "bytes": 24263,
+      "sha256": "44a69cd38ea9c8ee87fe57df10ac7e99561aa9b2610f36e332df81395afc2e15"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/catalogo-fac.md",
+      "bytes": 10434,
+      "sha256": "9cc69bf51b92b1ded0bef3d3864863c6f6b50f974fef78a468529693305d4fc5"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/como-contribuir.md",
+      "bytes": 1352,
+      "sha256": "71a819f39206a4d2e8c8433f794076d21c46119d13299e4b9a13693d444270ed"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/controle-mvp.md",
+      "bytes": 8851,
+      "sha256": "73ef2682e1dbfb7399fd4788fa9ce481fa31d1c56276abc0298888c9a8c06143"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/convencoes.md",
+      "bytes": 1307,
+      "sha256": "e0317404a5b3fbfce5dfacc2a7c0686ca889b3cf90261faa8294326503198382"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/matriz-cobertura.md",
+      "bytes": 3762,
+      "sha256": "cf015295b51e35b404ef6f59f5a8da528fc479cd237aadd391a03d36d4de8780"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/piloto.md",
+      "bytes": 3172,
+      "sha256": "7e2417da5e4e29da888ca46a0f717cd2c0934016215861cce409fb52d2283b20"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/plano-lf-mt-proposto.md",
+      "bytes": 3234,
+      "sha256": "672e6843a93a658c8c63602578d3a5c7cbf0aeefc545680b9454df6c027bfe76"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/plano-mvp.md",
+      "bytes": 17827,
+      "sha256": "c271d14dd7ba0091faf803eaeb1a28eb600fe0206edf8d5da48fa9de3d0d0a1f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/tech-lead-handoff.md",
+      "bytes": 2583,
+      "sha256": "9ca32e0085c3c5c62103cfa4ae6d3a1c0d880ea4561864520d4dd9cef4f4d7e4"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/testes-seguranca.md",
+      "bytes": 6695,
+      "sha256": "e45f1e344bb487c1b09efa7e7b2e51dcac743ddafab5678b34cdbcc93a3e7461"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/testes.md",
+      "bytes": 1025,
+      "sha256": "10936b812868d31ee2449aaafcacc158bc012936a5dc82a6026d7f13adf24ff4"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/08-desenvolvimento/tickets/planejamento/README.md",
+      "bytes": 11114,
+      "sha256": "9d33e71e6e82145c481158b86664a2fac8118905cb27763f9252415e9f183020"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/09-entregas/README.md",
+      "bytes": 12063,
+      "sha256": "77ff3966d9e57aa06653b42dea777d78c1751744ae32475f7ff12c31596d3b39"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/README.md",
+      "bytes": 7928,
+      "sha256": "d97ac70d8be6f1deef3ad19ad48b5c66b73c6aaa2ab4f6b65eb706cd76011c08"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/baseline-regressao-review.md",
+      "bytes": 4504,
+      "sha256": "e3e3c59b83927ee3c0f255c06f8dd66d935db98f3f9425bc65606c9b6ffd207b"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/checkout-confiavel.md",
+      "bytes": 1569,
+      "sha256": "266c0557012c77e245d07f855205aabf1d113f285e26e6f36254a1e54e7aa662"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/contexto-deterministico-limites.md",
+      "bytes": 960,
+      "sha256": "178244a8288740d0be66ffdb6e7c1cc5f152364a2fe5d19cfe32726341f23675"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/contratos-runtime-monorepo.md",
+      "bytes": 5846,
+      "sha256": "384a4bd787d82451ad9cfdbac47993edc63baeb499a2fc60597d7dac1c99af5d"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/definicao-projeto-configuravel.md",
+      "bytes": 3085,
+      "sha256": "5f96385d4959af811ed884a86b2cec6e6b6c5e9e84e5d02fad6610e6bbe9e79b"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/documentacao-proveniencia.md",
+      "bytes": 1699,
+      "sha256": "7619c8259dc599b94c981d79f4566552e9310d3200dd774964302446516e51ca"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/leases-fencing-checkpoints.md",
+      "bytes": 5256,
+      "sha256": "1afedd2a5a30c037dd2a2b52b8aa025a8ecebfc3e9a7939ecf0898e40cb81b80"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/lifecycle-processo-cli.md",
+      "bytes": 6866,
+      "sha256": "3faeea44389210adc94f80b33f27d56a0b73b16f62bcf306b211f9d991d33678"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/modal-edicao-configuracao.md",
+      "bytes": 5382,
+      "sha256": "7c4e87ef0acb7d680b5fd92974ec8360e6820ef1042a99daec456caa35e8d9b3"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/outbox-idempotencia.md",
+      "bytes": 2908,
+      "sha256": "a9e0eeb0b22238395ea12696cf4bb58bb9f16227b1bddaa3ec2fd3cc4d54dee4"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/perfis-permissao-cliente-cli.md",
+      "bytes": 3704,
+      "sha256": "7c132e13f585ff4001dd062bc4e29c86be5d9fb77b47b14e020e879500ba00c9"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/sandbox-worktree-snapshot.md",
+      "bytes": 6680,
+      "sha256": "d7907f0897635ec4819c63dd15a2236ac42c38cdfe149969cbdf2b9417201edc"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/video-decorativo-loop.md",
+      "bytes": 1457,
+      "sha256": "6ec03ec0b51466ed921cd5b013f7056a4c6e1c438dbd254ec6e935f0ac08d9ba"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/10-lessons/worker-heartbeat-quiescencia.md",
+      "bytes": 3726,
+      "sha256": "f12b5b320a552af8719d94750cd841f73a0193430a25d70300fa05e1d8ee0db8"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/CHANGELOG.md",
+      "bytes": 37553,
+      "sha256": "0ba5a5988a2778247f014a80bb89ab42ee28c6b8057e25914ee7cc62d085fb2f"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/GLOSSARIO.md",
+      "bytes": 120,
+      "sha256": "389de81f571fa71e129636b143b527d48361bcd648183ac03bab7c8ba2bf5558"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/INDEX.md",
+      "bytes": 40919,
+      "sha256": "5ca1253259fd1981829031e58a59dabeb43a41a068b9141c3b9662044cc41227"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/LEIA-ME-PRIMEIRO.md",
+      "bytes": 1082,
+      "sha256": "63dcb2547af9fa61a583378cdba741cee7e7ebb848a0283c6f706c2d263f7f36"
+    },
+    {
+      "path": "docs/99-historico/ordem-9439cde/README.md",
+      "bytes": 5181,
+      "sha256": "ba980896db10c273f0f8097d9f60a7cd61697f2521cce4f8597d9f38b7fe5b0f"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/GLOSSARIO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/INDEX.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/LEIA-ME-PRIMEIRO.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "docs/README.md",
+      "status": "DELETED",
+      "recovery": "baseline/mapa de ordem/snapshots"
+    },
+    {
+      "path": "lessons/INDEX.md",
+      "bytes": 399,
+      "sha256": "31f5c212afe58a227cc95de002f7dd4aa60e932a5b8257b9e7be85b1899ff227"
+    },
+    {
+      "path": "prompts/PROMPT-ENTREGA.md",
+      "bytes": 1361,
+      "sha256": "c9c28f8c8a83a47da67e94531450264da2d69afe4bd5733513b1bbd06bb60a95"
+    },
+    {
+      "path": "prompts/PROMPT-INICIAL.md",
+      "bytes": 1762,
+      "sha256": "d0bc584abd9edc2643bf37888da005f7261e187e6bcf372f3dfd3e9557ed8485"
+    },
+    {
+      "path": "prompts/PROMPT-MESTRE-MIGRACAO.md",
+      "bytes": 7651,
+      "sha256": "5e7d313ffbd8b4250245adf5df707294172aa16ddca4bdc8cf6e4136939d852c"
+    },
+    {
+      "path": "prompts/implementacao/PROMPT-00-PREPARACAO.md",
+      "bytes": 8587,
+      "sha256": "ce8e7b260387650afda10200f7a0c64d5191a07f6017e3f75f7c04ef4fccfc2c"
+    },
+    {
+      "path": "prompts/implementacao/PROMPTS-IMPLEMENTACAO.md",
+      "bytes": 58707,
+      "sha256": "b899e3c37f3bc7458faa522b2213b5d86ef2c98efc49023b3272256f45b81045"
+    },
+    {
+      "path": "scripts/validar-documentacao.py",
+      "bytes": 12336,
+      "sha256": "bb368f1d4b1e2b14dc4dc9cafca1d9bfb270f0516491f8b7a6b4e55340f6ec6f"
+    }
+  ],
+  "patch": {
+    "bytes": 1518370,
+    "sha256": "35a57fdf15273fc028cd8b33edd59d6e5f9a066890108de4258e5f86259a9e02",
+    "excluded_paths": [
+      ":!docs/99-historico/**",
+      ":!docs/09-entregas/2026/evidencias/**",
+      ":!docs/00-governanca/*.json"
+    ]
+  },
+  "excludes": "REVISAO.json e editorial.patch para evitar hash circular",
+  "sanitization": {
+    "text_files": 327,
+    "findings": [],
+    "limit": "Scan de padrões fortes, não prova ausência universal de segredo/PII"
+  }
+}

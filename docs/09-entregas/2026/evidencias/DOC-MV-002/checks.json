@@ -1,0 +1,50 @@
+{
+  "baseline": "5845754",
+  "date": "2026-10-07",
+  "timezone": "Europe/Berlin",
+  "checks": [
+    {
+      "command": "npm run typecheck -w @le-fabrique/web",
+      "result": "PASS",
+      "log": "typecheck.log"
+    },
+    {
+      "command": "npm run test -w @le-fabrique/web",
+      "result": "PASS",
+      "files": 18,
+      "tests": 46,
+      "log": "tests.log"
+    },
+    {
+      "command": "npm run build -w @le-fabrique/web",
+      "result": "PASS",
+      "modules": 135,
+      "log": "build.log"
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS_WITH_PREEXISTING_WARNING",
+      "log": "lint.log",
+      "warning": "run-delivery.service.ts:209 useOptionalChain; arquivo não alterado"
+    },
+    {
+      "command": "python compile() do validador",
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "scope": "diff de arquivos tracked, novos snapshots conservam bytes originais"
+    },
+    {
+      "command": "conferência dos três guias",
+      "result": "PASS",
+      "scope": "políticas e novos destinos explícitos existem; não é teste de autoload"
+    },
+    {
+      "command": "novas sessões dos agentes / operação / DB / produção / render Mermaid",
+      "result": "NOT_RUN"
+    }
+  ],
+  "git": "read-only no ambiente; sem commit/branch/merge"
+}

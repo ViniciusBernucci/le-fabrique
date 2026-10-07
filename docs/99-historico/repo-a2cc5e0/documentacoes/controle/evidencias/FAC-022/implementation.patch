@@ -1,0 +1,1828 @@
+diff --git a/apps/web/src/App.tsx b/apps/web/src/App.tsx
+index fc34740..a7d9cbc 100644
+--- a/apps/web/src/App.tsx
++++ b/apps/web/src/App.tsx
+@@ -2 +2 @@ import type { Project, Ticket } from "@le-fabrique/contracts";
+-import type { FormEvent } from "react";
++import type { FormEvent, ReactNode } from "react";
+@@ -14 +14 @@ import {
+-import { HomeDashboard } from "./HomeDashboard";
++import { DashboardLayout } from "./DashboardLayout";
+@@ -149,9 +149 @@ export function App() {
+-  if (showHome)
+-    return (
+-      <HomeDashboard
+-        onNavigate={(area) => {
+-          setActiveArea(area);
+-          setShowHome(false);
+-        }}
+-      />
+-    );
++  let content: ReactNode;
+@@ -159,2 +151,2 @@ export function App() {
+-  if (!authenticated)
+-    return (
++  if (!showHome && !authenticated)
++    content = (
+@@ -185,113 +177,110 @@ export function App() {
+-
+-  return (
+-    <main className="shell">
+-      <header>
+-        <div>
+-          <p className="eyebrow">La fabrique</p>
+-          <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
+-        </div>
+-        <p className="message" role="status">
+-          {message}
+-        </p>
+-      </header>
+-      <nav className="area-nav" aria-label="Áreas do painel">
+-        <button type="button" onClick={() => setShowHome(true)}>
+-          Painel inicial
+-        </button>
+-        <button
+-          type="button"
+-          className={activeArea === "control" ? "active" : ""}
+-          onClick={() => setActiveArea("control")}
+-        >
+-          Operação
+-        </button>
+-        <button
+-          type="button"
+-          className={activeArea === "settings" ? "active" : ""}
+-          onClick={() => setActiveArea("settings")}
+-        >
+-          Configurações
+-        </button>
+-      </nav>
+-      {activeArea === "settings" ? (
+-        <SettingsPanel token={token} onMessage={setMessage} />
+-      ) : (
+-        <>
+-          <OperationPanel token={token} />
+-          <section className="columns">
+-            <form className="panel" onSubmit={addProject}>
+-              <h2>Novo projeto</h2>
+-              <label>
+-                Nome
+-                <input name="name" required />
+-              </label>
+-              <label>
+-                Repositório
+-                <input name="repoUrl" type="url" placeholder="https://…" required />
+-              </label>
+-              <label>
+-                Referência base
+-                <input name="baseRef" defaultValue="main" required />
+-              </label>
+-              <button type="submit">Cadastrar projeto</button>
+-            </form>
+-            <form className="panel" onSubmit={addTicket}>
+-              <h2>Novo ticket</h2>
+-              <label>
+-                Projeto
+-                <select
+-                  value={selectedProject}
+-                  onChange={(event) => setSelectedProject(event.target.value)}
+-                  required
+-                >
+-                  <option value="">Selecione</option>
+-                  {projects.map((project) => (
+-                    <option key={project.id} value={project.id}>
+-                      {project.name}
+-                    </option>
+-                  ))}
+-                </select>
+-              </label>
+-              <label>
+-                Título
+-                <input name="title" required />
+-              </label>
+-              <label>
+-                Objetivo
+-                <textarea name="objective" required />
+-              </label>
+-              <label>
+-                Critérios, um por linha
+-                <textarea name="criteria" required />
+-              </label>
+-              <button type="submit">Criar rascunho</button>
+-            </form>
+-            <form
+-              className="panel"
+-              key={activeProject ? `${activeProject.id}:${activeProject.baseRef}` : "no-project"}
+-              onSubmit={setBaseRevision}
+-            >
+-              <h2>Revisão-base executável</h2>
+-              {activeProject ? (
+-                <>
+-                  <p className="muted">
+-                    Referência atual: <code>{activeProject.baseRef}</code>
+-                  </p>
+-                  <label>
+-                    SHA exato do commit
+-                    <input
+-                      name="baseRevision"
+-                      pattern="[0-9a-f]{40}"
+-                      minLength={40}
+-                      maxLength={40}
+-                      placeholder="40 caracteres hexadecimais em minúsculas"
+-                      required
+-                    />
+-                  </label>
+-                  <button type="submit">Atualizar revisão-base</button>
+-                  <p className="muted">
+-                    {projectHasExecutableBase
+-                      ? "SHA válido. A definição do projeto também precisa estar configurada."
+-                      : "READY permanece bloqueado até configurar um SHA exato."}
+-                  </p>
+-                </>
++  else if (!showHome)
++    content = (
++      <main className="shell">
++        <header>
++          <div>
++            <p className="eyebrow">La fabrique</p>
++            <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
++          </div>
++          <p className="message" role="status">
++            {message}
++          </p>
++        </header>
++        {activeArea === "settings" ? (
++          <SettingsPanel token={token} onMessage={setMessage} />
++        ) : (
++          <>
++            <OperationPanel token={token} />
++            <section className="columns">
++              <form className="panel" onSubmit={addProject}>
++                <h2>Novo projeto</h2>
++                <label>
++                  Nome
++                  <input name="name" required />
++                </label>
++                <label>
++                  Repositório
++                  <input name="repoUrl" type="url" placeholder="https://…" required />
++                </label>
++                <label>
++                  Referência base
++                  <input name="baseRef" defaultValue="main" required />
++                </label>
++                <button type="submit">Cadastrar projeto</button>
++              </form>
++              <form className="panel" onSubmit={addTicket}>
++                <h2>Novo ticket</h2>
++                <label>
++                  Projeto
++                  <select
++                    value={selectedProject}
++                    onChange={(event) => setSelectedProject(event.target.value)}
++                    required
++                  >
++                    <option value="">Selecione</option>
++                    {projects.map((project) => (
++                      <option key={project.id} value={project.id}>
++                        {project.name}
++                      </option>
++                    ))}
++                  </select>
++                </label>
++                <label>
++                  Título
++                  <input name="title" required />
++                </label>
++                <label>
++                  Objetivo
++                  <textarea name="objective" required />
++                </label>
++                <label>
++                  Critérios, um por linha
++                  <textarea name="criteria" required />
++                </label>
++                <button type="submit">Criar rascunho</button>
++              </form>
++              <form
++                className="panel"
++                key={activeProject ? `${activeProject.id}:${activeProject.baseRef}` : "no-project"}
++                onSubmit={setBaseRevision}
++              >
++                <h2>Revisão-base executável</h2>
++                {activeProject ? (
++                  <>
++                    <p className="muted">
++                      Referência atual: <code>{activeProject.baseRef}</code>
++                    </p>
++                    <label>
++                      SHA exato do commit
++                      <input
++                        name="baseRevision"
++                        pattern="[0-9a-f]{40}"
++                        minLength={40}
++                        maxLength={40}
++                        placeholder="40 caracteres hexadecimais em minúsculas"
++                        required
++                      />
++                    </label>
++                    <button type="submit">Atualizar revisão-base</button>
++                    <p className="muted">
++                      {projectHasExecutableBase
++                        ? "SHA válido. A definição do projeto também precisa estar configurada."
++                        : "READY permanece bloqueado até configurar um SHA exato."}
++                    </p>
++                  </>
++                ) : (
++                  <p className="muted">Selecione um projeto.</p>
++                )}
++              </form>
++            </section>
++            <ProjectDefinitionPanel
++              token={token}
++              project={activeProject}
++              onMessage={setMessage}
++              onVersion={setProjectDefinitionVersion}
++              onProfileReady={setProjectExecutionProfileReady}
++            />
++            <section className="panel records">
++              <h2>Tickets</h2>
++              {tickets.length === 0 ? (
++                <p className="muted">Nenhum ticket neste projeto.</p>
+@@ -299 +288,25 @@ export function App() {
+-                <p className="muted">Selecione um projeto.</p>
++                tickets.map((ticket) => (
++                  <article key={ticket.id}>
++                    <div>
++                      <span className={`badge badge--${ticket.status.toLowerCase()}`}>
++                        {ticket.status}
++                      </span>
++                      <h3>{ticket.title}</h3>
++                      <p>{ticket.objective}</p>
++                    </div>
++                    {ticket.status === "DRAFT" && (
++                      <button
++                        type="button"
++                        disabled={!projectCanExecute}
++                        title={
++                          projectCanExecute
++                            ? "Promover ticket"
++                            : "Configure SHA-base, definição e perfil de execução aprovado antes de READY"
++                        }
++                        onClick={() => ready(ticket)}
++                      >
++                        Marcar READY
++                      </button>
++                    )}
++                  </article>
++                ))
+@@ -301,48 +314,20 @@ export function App() {
+-            </form>
+-          </section>
+-          <ProjectDefinitionPanel
+-            token={token}
+-            project={activeProject}
+-            onMessage={setMessage}
+-            onVersion={setProjectDefinitionVersion}
+-            onProfileReady={setProjectExecutionProfileReady}
+-          />
+-          <section className="panel records">
+-            <h2>Tickets</h2>
+-            {tickets.length === 0 ? (
+-              <p className="muted">Nenhum ticket neste projeto.</p>
+-            ) : (
+-              tickets.map((ticket) => (
+-                <article key={ticket.id}>
+-                  <div>
+-                    <span className={`badge badge--${ticket.status.toLowerCase()}`}>
+-                      {ticket.status}
+-                    </span>
+-                    <h3>{ticket.title}</h3>
+-                    <p>{ticket.objective}</p>
+-                  </div>
+-                  {ticket.status === "DRAFT" && (
+-                    <button
+-                      type="button"
+-                      disabled={!projectCanExecute}
+-                      title={
+-                        projectCanExecute
+-                          ? "Promover ticket"
+-                          : "Configure SHA-base, definição e perfil de execução aprovado antes de READY"
+-                      }
+-                      onClick={() => ready(ticket)}
+-                    >
+-                      Marcar READY
+-                    </button>
+-                  )}
+-                </article>
+-              ))
+-            )}
+-            <p className="muted">
+-              Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
+-            </p>
+-          </section>
+-          <RunPanel token={token} projectId={selectedProject} eventSequence={eventSequence} />
+-        </>
+-      )}
+-    </main>
++              <p className="muted">
++                Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
++              </p>
++            </section>
++            <RunPanel token={token} projectId={selectedProject} eventSequence={eventSequence} />
++          </>
++        )}
++      </main>
++    );
++  return (
++    <DashboardLayout
++      onNavigate={(area) => {
++        setActiveArea(area);
++        setShowHome(false);
++      }}
++      onHome={() => setShowHome(true)}
++      activeDestination={showHome ? undefined : activeArea}
++    >
++      {content}
++    </DashboardLayout>
+diff --git a/apps/web/src/DashboardLayout.spec.tsx b/apps/web/src/DashboardLayout.spec.tsx
+new file mode 100644
+index 0000000..2a3bd84
+--- /dev/null
++++ b/apps/web/src/DashboardLayout.spec.tsx
+@@ -0,0 +1,17 @@
++import { renderToStaticMarkup } from "react-dom/server";
++import { expect, it } from "vitest";
++import { DashboardLayout } from "./DashboardLayout";
++
++it("shares the navigation frame with custom content and marks the active destination", () => {
++  const html = renderToStaticMarkup(
++    <DashboardLayout onNavigate={() => undefined} activeDestination="settings">
++      <h1>Conteúdo administrativo</h1>
++    </DashboardLayout>,
++  );
++  expect(html).toContain("Conteúdo administrativo");
++  expect(html).toContain('class="workspace-content"');
++  expect(html).toContain('class="home-sidebar"');
++  expect(html).toContain('class="home-topbar"');
++  expect(html).toMatch(/aria-label="Configurações" class="is-active" aria-current="page"/);
++  expect(html).not.toContain("Escritório virtual da equipe");
++});
+diff --git a/apps/web/src/DashboardLayout.tsx b/apps/web/src/DashboardLayout.tsx
+new file mode 100644
+index 0000000..6932924
+--- /dev/null
++++ b/apps/web/src/DashboardLayout.tsx
+@@ -0,0 +1,678 @@
++import type { ReactNode } from "react";
++import { useEffect, useRef, useState } from "react";
++import "./home-dashboard.css";
++
++export type HomeDestination = "control" | "settings";
++type IconName =
++  | "home"
++  | "folder"
++  | "robot"
++  | "content"
++  | "chart"
++  | "users"
++  | "calendar"
++  | "star"
++  | "money"
++  | "settings"
++  | "search"
++  | "bell"
++  | "help"
++  | "plus"
++  | "arrow"
++  | "clock"
++  | "cloud"
++  | "message";
++const paths: Record<IconName, string> = {
++  home: "M3 11 12 3l9 8M5 10v11h5v-7h4v7h5V10",
++  folder: "M3 7V4h7l3 3h8v14H3V7Zm0 3h18",
++  robot: "M12 3v3m-2-3h4M5 8h14v12H5V8ZM2 12v5m20-5v5M9 12v2m6-2v2m-6 3h6",
++  content: "M5 3h14v18H5V3Zm4 5h6m-6 4h6m-6 4h4",
++  chart: "M4 20v-6h3v6m4 0V9h3v11m4 0V4h3v16",
++  users:
++    "M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9v-3c0-5 14-5 14 0v3H2ZM17 4a4 4 0 0 1 0 8m2 3c3 0 3 3 3 6",
++  calendar: "M4 5h16v16H4V5ZM8 2v6m8-6v6M4 10h16",
++  star: "m12 2 3 6 7 1-5 5 1 8-6-4-6 4 1-8-5-5 7-1 3-6Z",
++  money: "M16 6c-7-5-13 4-4 6s3 11-4 6m4-16v20",
++  settings:
++    "m9 3 6 0 1 4 4 1 2 5-3 3 0 4-5 2-3-3-4 0-2-5 3-3 0-4 4-2Zm3 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z",
++  search: "M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6",
++  bell: "M5 17h14l-2-4V9a5 5 0 0 0-10 0v4l-2 4Zm5 3h4M12 2v2",
++  help: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-3 6c0-4 7-4 6 0-1 3-3 2-3 6m0 3v1",
++  plus: "M12 4v16M4 12h16",
++  arrow: "M4 12h16m-6-6 6 6-6 6",
++  clock: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4v6l4 3",
++  cloud: "M6 19h12c7-2 3-10-2-9-1-9-13-7-12 1-5 1-4 8 2 8Z",
++  message: "M3 4h18v14H8l-5 4V4Zm4 5h10m-10 4h7",
++};
++function Icon({ name }: { name: IconName }) {
++  return (
++    <svg
++      viewBox="0 0 24 24"
++      fill="none"
++      stroke="currentColor"
++      strokeWidth="1.8"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      aria-hidden="true"
++    >
++      <path d={paths[name]} />
++    </svg>
++  );
++}
++function Avatar({ robot = false }: { robot?: boolean }) {
++  return (
++    <svg className="home-avatar" viewBox="0 0 48 48" aria-hidden="true">
++      <defs>
++        <linearGradient id={robot ? "robot-bg" : "person-bg"} x2="1" y2="1">
++          <stop stopColor={robot ? "#71dcff" : "#e8ad66"} />
++          <stop offset="1" stopColor="#103553" />
++        </linearGradient>
++      </defs>
++      <circle
++        cx="24"
++        cy="24"
++        r="22"
++        fill={`url(#${robot ? "robot-bg" : "person-bg"})`}
++        stroke="#338fc5"
++        strokeWidth="2"
++      />
++      {robot ? (
++        <>
++          <path d="M16 38v-8h16v8" fill="#e9f6ff" />
++          <rect x="9" y="10" width="30" height="24" rx="10" fill="#e9f6ff" />
++          <rect x="13" y="14" width="22" height="15" rx="6" fill="#08243b" />
++          <circle cx="19" cy="21" r="3" fill="#2bc9ff" />
++          <circle cx="29" cy="21" r="3" fill="#2bc9ff" />
++          <path d="M24 6v4" stroke="#e9f6ff" strokeWidth="3" />
++        </>
++      ) : (
++        <>
++          <path d="M10 45c1-17 27-17 28 0" fill="#1d4a79" />
++          <ellipse cx="24" cy="24" rx="11" ry="13" fill="#f5bb86" />
++          <path d="M12 25C4 4 39 2 37 26l-6-10-8 2-7-3-4 10" fill="#302321" />
++          <circle cx="20" cy="25" r="1.6" fill="#202632" />
++          <circle cx="29" cy="25" r="1.6" fill="#202632" />
++          <path d="M21 32q4 3 7-1" stroke="#a45d41" strokeWidth="1.5" fill="none" />
++        </>
++      )}
++    </svg>
++  );
++}
++const navigation: { name: string; icon: IconName; destination?: HomeDestination }[] = [
++  { name: "Painel", icon: "home" },
++  { name: "Projetos", icon: "folder", destination: "control" },
++  { name: "Agentes IA", icon: "robot", destination: "settings" },
++  { name: "Conteúdos", icon: "content" },
++  { name: "Vendas", icon: "chart" },
++  { name: "CRM / Leads", icon: "users" },
++  { name: "Eventos", icon: "calendar" },
++  { name: "Oportunidades", icon: "star" },
++  { name: "Financeiro", icon: "money" },
++  { name: "Usuários", icon: "users" },
++  { name: "Configurações", icon: "settings", destination: "settings" },
++];
++const shortcuts: {
++  name: string;
++  description: string;
++  icon: IconName;
++  color: string;
++  destination?: HomeDestination;
++}[] = [
++  {
++    name: "Novo Projeto",
++    description: "Criar workspace",
++    icon: "plus",
++    color: "blue",
++    destination: "control",
++  },
++  {
++    name: "Agentes IA",
++    description: "Gerenciar agentes",
++    icon: "robot",
++    color: "silver",
++    destination: "settings",
++  },
++  { name: "Calendário", description: "Eventos e agendas", icon: "calendar", color: "red" },
++  { name: "Conteúdos", description: "Vídeos e posts", icon: "content", color: "purple" },
++  { name: "CRM / Leads", description: "Pipeline de vendas", icon: "users", color: "cyan" },
++  { name: "Financeiro", description: "Receitas e despesas", icon: "money", color: "green" },
++  {
++    name: "Oportunidades",
++    description: "Rádios, playlists, eventos",
++    icon: "star",
++    color: "yellow",
++  },
++  { name: "Relatórios", description: "Desempenho geral", icon: "chart", color: "teal" },
++  {
++    name: "Configurações",
++    description: "Sistema e integrações",
++    icon: "settings",
++    color: "silver",
++    destination: "settings",
++  },
++];
++const notifications: {
++  title: string;
++  description?: string;
++  time: string;
++  icon: IconName;
++  color: string;
++}[] = [
++  {
++    title: "Pagamento Hotmart não processado",
++    time: "Agora há pouco",
++    icon: "clock",
++    color: "red",
++  },
++  {
++    title: "Novo lead qualificado",
++    description: "João Silva · Workshop Produção Musical",
++    time: "1 hora atrás",
++    icon: "calendar",
++    color: "orange",
++  },
++  {
++    title: "Geração de conteúdo concluída",
++    description: "5 posts prontos para revisão",
++    time: "2 horas atrás",
++    icon: "cloud",
++    color: "blue",
++  },
++  {
++    title: "Relatório semanal disponível",
++    description: "Desempenho dos projetos",
++    time: "3 horas atrás",
++    icon: "chart",
++    color: "green",
++  },
++];
++const agents = [
++  {
++    name: "JARVIS",
++    role: " (Orquestrador)",
++    status: "Online",
++    progress: 100,
++    color: "green",
++    robot: true,
++  },
++  { name: "Marketing", status: "Executando tarefas", progress: 75, color: "purple" },
++  { name: "Financeiro", status: "Aguardando fila", progress: 25, color: "orange" },
++  { name: "Conteúdo", status: "Processando vídeos", progress: 60, color: "yellow" },
++  { name: "Desenvolvimento", status: "Online", progress: 90, color: "green" },
++];
++const recentProjects = [
++  {
++    name: "Meu Estúdio",
++    description: "Produção musical e cursos",
++    icon: "star" as const,
++    color: "orange",
++    status: "Ativo",
++  },
++  {
++    name: "Agência Artística",
++    description: "Divulgação e eventos",
++    icon: "star" as const,
++    color: "orange",
++    status: "Ativo",
++  },
++  {
++    name: "La fabrique",
++    description: "Desenvolvimento do sistema",
++    icon: "robot" as const,
++    color: "purple",
++    status: "Em desenvolvimento",
++  },
++  {
++    name: "IA ENEM",
++    description: "Plataforma educacional",
++    icon: "folder" as const,
++    color: "blue",
++    status: "Pausado",
++  },
++];
++
++export function DashboardLayout({
++  onNavigate,
++  onHome,
++  activeDestination,
++  children,
++}: {
++  onNavigate: (destination: HomeDestination) => void;
++  onHome?: () => void;
++  activeDestination?: HomeDestination;
++  children?: ReactNode;
++}) {
++  const [query, setQuery] = useState("");
++  const [preview, setPreview] = useState<string | null>(null);
++  const dialog = useRef<HTMLDialogElement>(null);
++  const search = useRef<HTMLInputElement>(null);
++  useEffect(() => {
++    if (preview) dialog.current?.showModal();
++  }, [preview]);
++  useEffect(() => {
++    function shortcut(event: KeyboardEvent) {
++      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
++        event.preventDefault();
++        search.current?.focus();
++      }
++    }
++    window.addEventListener("keydown", shortcut);
++    return () => window.removeEventListener("keydown", shortcut);
++  }, []);
++  const filtered = shortcuts.filter((item) =>
++    `${item.name} ${item.description}`
++      .toLocaleLowerCase("pt-BR")
++      .includes(query.toLocaleLowerCase("pt-BR")),
++  );
++  function open(name: string, destination?: HomeDestination) {
++    if (destination) {
++      setQuery("");
++      onNavigate(destination);
++    } else setPreview(name);
++  }
++  function panelHeading(title: string, action: () => void) {
++    return (
++      <div className="home-panel-heading">
++        <h2>{title}</h2>
++        <button type="button" onClick={action}>
++          Ver {title === "Notificações importantes" ? "todas" : "todos"}
++          <Icon name="arrow" />
++        </button>
++      </div>
++    );
++  }
++  function goHome() {
++    setQuery("");
++    onHome?.();
++  }
++  function isActive(name: string) {
++    return (
++      name ===
++      (activeDestination === "control"
++        ? "Projetos"
++        : activeDestination === "settings"
++          ? "Configurações"
++          : "Painel")
++    );
++  }
++  return (
++    <div className="home-dashboard">
++      <a className="home-skip" href="#home-content">
++        Ir para o conteúdo
++      </a>
++      <aside className="home-sidebar" aria-label="Menu principal">
++        <button
++          type="button"
++          className="home-brand"
++          aria-label="La fabrique, painel inicial"
++          onClick={goHome}
++        >
++          <svg viewBox="0 0 42 46" aria-hidden="true">
++            <path d="m21 1 17 10-17 10L4 11Z" fill="#ff8d43" />
++            <path d="m4 13 15 9v20L4 33Z" fill="#278aff" />
++            <path d="m23 22 15-9v20l-15 9Z" fill="#20dca4" />
++            <path d="m21 12 9 5-9 5-9-5Z" fill="#b04bff" />
++            <path d="m21 1 8 5-8 5-8-5Z" fill="#ff4b61" />
++          </svg>
++          <span>La fabrique</span>
++        </button>
++        <nav>
++          {navigation.map((item) => (
++            <button
++              type="button"
++              key={item.name}
++              aria-label={item.name}
++              className={isActive(item.name) ? "is-active" : ""}
++              aria-current={isActive(item.name) ? "page" : undefined}
++              onClick={() =>
++                item.name === "Painel" ? goHome() : open(item.name, item.destination)
++              }
++            >
++              <Icon name={item.icon} />
++              <span>{item.name}</span>
++            </button>
++          ))}
++        </nav>
++        <div className="home-workspace">
++          <span>Workspace de demonstração</span>
++          <div>
++            <button type="button" onClick={() => setPreview("Workspaces")}>
++              Meu Estúdio <span>⌄</span>
++            </button>
++            <button
++              type="button"
++              aria-label="Configurar workspace"
++              onClick={() => onNavigate("settings")}
++            >
++              <Icon name="settings" />
++            </button>
++          </div>
++          <button type="button" className="home-all-projects" onClick={() => onNavigate("control")}>
++            Ver todos os projetos <Icon name="arrow" />
++          </button>
++        </div>
++      </aside>
++      <div className="home-main">
++        <header className="home-topbar">
++          <label className="home-search">
++            <Icon name="search" />
++            <input
++              ref={search}
++              aria-label="Buscar atalhos no sistema"
++              value={query}
++              onChange={(event) => setQuery(event.target.value)}
++              placeholder="Buscar algo no sistema..."
++            />
++            <kbd>⌘ K</kbd>
++          </label>
++          <span className="home-demo-tag">Demonstração</span>
++          <div className="home-top-actions">
++            <button
++              type="button"
++              aria-label="Ver notificações importantes"
++              onClick={() => setPreview("Notificações importantes")}
++            >
++              <Icon name="bell" />
++              <span className="home-notification-count">4</span>
++            </button>
++            <button type="button" aria-label="Ajuda" onClick={() => setPreview("Ajuda")}>
++              <Icon name="help" />
++            </button>
++            <button
++              type="button"
++              className="home-profile"
++              onClick={() => setPreview("Perfil de demonstração")}
++            >
++              <Avatar />
++              <span>
++                <strong>Administrador</strong>
++                <small>Workspace pessoal</small>
++              </span>
++              <span>⌄</span>
++            </button>
++          </div>
++        </header>
++        {children && query && (
++          <section className="home-search-results" aria-label="Resultados da busca de atalhos">
++            {filtered.map((item) => (
++              <button
++                type="button"
++                key={item.name}
++                onClick={() => open(item.name, item.destination)}
++              >
++                {item.name}
++              </button>
++            ))}
++            {filtered.length === 0 && <p role="status">Nenhum atalho encontrado.</p>}
++          </section>
++        )}
++        {children ? (
++          <section id="home-content" className="workspace-content" tabIndex={-1}>
++            {children}
++          </section>
++        ) : (
++          <main id="home-content" className="home-columns" tabIndex={-1}>
++            <div className="home-center">
++              <h1 className="home-sr-only">Central de controle La fabrique</h1>
++              <section className="home-office" aria-label="Escritório virtual da equipe">
++                <img
++                  src="/images/control-room-reference.png"
++                  alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
++                  fetchPriority="high"
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--marketing"
++                  aria-label="Abrir agente de Marketing"
++                  onClick={() => onNavigate("settings")}
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--jarvis"
++                  aria-label="Abrir JARVIS"
++                  onClick={() => onNavigate("settings")}
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--finance"
++                  aria-label="Abrir Financeiro"
++                  onClick={() => setPreview("Financeiro")}
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--content"
++                  aria-label="Abrir Conteúdo"
++                  onClick={() => setPreview("Conteúdos")}
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--development"
++                  aria-label="Abrir Desenvolvimento"
++                  onClick={() => onNavigate("control")}
++                />
++                <button
++                  type="button"
++                  className="home-room home-room--meeting"
++                  aria-label="Abrir Sala de reunião"
++                  onClick={() => setPreview("Sala de reunião")}
++                />
++              </section>
++              <div className="home-center-panels">
++                <section className="home-metrics" aria-label="Indicadores de demonstração">
++                  {[
++                    {
++                      title: "Projetos Ativos",
++                      value: "5",
++                      detail: "de 5 disponíveis",
++                      icon: "folder" as const,
++                      color: "blue",
++                    },
++                    {
++                      title: "Leads (30 dias)",
++                      value: "127",
++                      detail: "↑ 12%",
++                      icon: "users" as const,
++                      color: "purple",
++                    },
++                    {
++                      title: "Vendas (30 dias)",
++                      value: "R$ 12.450",
++                      detail: "↑ 18%",
++                      icon: "money" as const,
++                      color: "green",
++                    },
++                    {
++                      title: "Conteúdos Gerados",
++                      value: "48",
++                      detail: "↑ 33%",
++                      icon: "content" as const,
++                      color: "purple",
++                    },
++                  ].map((metric, index) => (
++                    <article className="home-card home-metric" key={metric.title}>
++                      <span className={`home-icon-tile tone-${metric.color}`}>
++                        <Icon name={metric.icon} />
++                      </span>
++                      <div>
++                        <span>{metric.title}</span>
++                        <strong>{metric.value}</strong>
++                        <small className={index > 0 ? "home-growth" : ""}>{metric.detail}</small>
++                      </div>
++                      {index === 0 ? (
++                        <div className="home-metric-line" />
++                      ) : (
++                        <div className={`home-bars tone-${metric.color}`} aria-hidden="true">
++                          {[35, 63, 45, 72, 88, 100].map((height) => (
++                            <i key={height} style={{ height: `${height}%` }} />
++                          ))}
++                        </div>
++                      )}
++                    </article>
++                  ))}
++                </section>
++                <section className="home-card home-quick">
++                  <h2>Acesso rápido</h2>
++                  <div className="home-shortcuts">
++                    {filtered.map((item) => (
++                      <button
++                        type="button"
++                        key={item.name}
++                        onClick={() => open(item.name, item.destination)}
++                      >
++                        <span className={`home-shortcut-icon tone-${item.color}`}>
++                          <Icon name={item.icon} />
++                        </span>
++                        <span>
++                          <strong>{item.name}</strong>
++                          <small>{item.description}</small>
++                        </span>
++                      </button>
++                    ))}
++                  </div>
++                  {filtered.length === 0 && (
++                    <p className="home-empty" role="status">
++                      Nenhum atalho encontrado. Tente “projetos” ou “configurações”.
++                    </p>
++                  )}
++                </section>
++                <section className="home-card home-important-message">
++                  <span className="home-shortcut-icon tone-blue">
++                    <Icon name="message" />
++                  </span>
++                  <div>
++                    <h2>Mensagens importantes</h2>
++                    <p>
++                      Seu escritório está pronto para ganhar vida. Revise as contas e a equipe para
++                      começar.
++                    </p>
++                  </div>
++                  <button type="button" onClick={() => onNavigate("settings")}>
++                    Configurar equipe <Icon name="arrow" />
++                  </button>
++                </section>
++                <p className="home-demo-note">
++                  Prévia estática · Indicadores, notificações, mensagens, projetos e status são
++                  dados simulados.
++                </p>
++              </div>
++            </div>
++            <aside className="home-right" aria-label="Resumo do workspace">
++              <section className="home-card home-notifications">
++                {panelHeading("Notificações importantes", () =>
++                  setPreview("Notificações importantes"),
++                )}
++                {notifications.map((item) => (
++                  <button
++                    type="button"
++                    className="home-notice"
++                    key={item.title}
++                    onClick={() => setPreview(item.title)}
++                  >
++                    <span className={`home-notice-icon tone-${item.color}`}>
++                      <Icon name={item.icon} />
++                    </span>
++                    <span>
++                      <strong>{item.title}</strong>
++                      {item.description && <small>{item.description}</small>}
++                      <small>{item.time}</small>
++                    </span>
++                  </button>
++                ))}
++              </section>
++              <section className="home-card home-agents">
++                {panelHeading("Status dos Agentes", () => onNavigate("settings"))}
++                {agents.map((agent) => (
++                  <button
++                    type="button"
++                    className="home-agent"
++                    key={agent.name}
++                    onClick={() => onNavigate("settings")}
++                  >
++                    <Avatar robot={agent.robot} />
++                    <span>
++                      <strong>
++                        {agent.name}
++                        <span>{agent.role}</span>
++                      </strong>
++                      <small>
++                        <i className={`home-dot tone-${agent.color}`} />
++                        {agent.status}
++                      </small>
++                    </span>
++                    <span className="home-agent-progress">
++                      <meter
++                        aria-label={`Atividade simulada de ${agent.name}`}
++                        min={0}
++                        max={100}
++                        value={agent.progress}
++                      ></meter>
++                      <small>{agent.progress}%</small>
++                    </span>
++                  </button>
++                ))}
++              </section>
++              <section className="home-card home-projects">
++                {panelHeading("Projetos recentes", () => onNavigate("control"))}
++                {recentProjects.map((project) => (
++                  <button
++                    type="button"
++                    className="home-project"
++                    key={project.name}
++                    onClick={() => onNavigate("control")}
++                  >
++                    <span className={`home-project-icon tone-${project.color}`}>
++                      <Icon name={project.icon} />
++                    </span>
++                    <span>
++                      <strong>{project.name}</strong>
++                      <small>{project.description}</small>
++                    </span>
++                    <small className="home-project-status">
++                      <i
++                        className={`home-dot tone-${project.status === "Ativo" ? "green" : project.status === "Pausado" ? "orange" : "blue"}`}
++                      />
++                      {project.status}
++                    </small>
++                  </button>
++                ))}
++              </section>
++            </aside>
++          </main>
++        )}
++      </div>
++      <dialog
++        ref={dialog}
++        className="home-preview"
++        onClose={() => setPreview(null)}
++        aria-labelledby="home-preview-title"
++      >
++        <div className="home-preview-heading">
++          <span className="home-demo-tag">Demonstração</span>
++          <form method="dialog">
++            <button type="submit" aria-label="Fechar prévia">
++              ×
++            </button>
++          </form>
++        </div>
++        <h2 id="home-preview-title">{preview}</h2>
++        {preview === "Notificações importantes" ? (
++          notifications.map((item) => (
++            <p key={item.title}>
++              <strong>{item.title}</strong>
++              <br />
++              {item.description ?? item.time}
++            </p>
++          ))
++        ) : (
++          <p>
++            Esta é uma prévia da central de controle. Os dados desta área são simulados; a
++            integração será disponibilizada em uma próxima etapa.
++          </p>
++        )}
++        <form method="dialog">
++          <button type="submit">Voltar ao painel</button>
++        </form>
++      </dialog>
++    </div>
++  );
++}
+diff --git a/apps/web/src/HomeDashboard.tsx b/apps/web/src/HomeDashboard.tsx
+index 8109a74..abc85f4 100644
+--- a/apps/web/src/HomeDashboard.tsx
++++ b/apps/web/src/HomeDashboard.tsx
+@@ -1,630 +1,2 @@
+-import { useEffect, useRef, useState } from "react";
+-import "./home-dashboard.css";
+-
+-export type HomeDestination = "control" | "settings";
+-type IconName =
+-  | "home"
+-  | "folder"
+-  | "robot"
+-  | "content"
+-  | "chart"
+-  | "users"
+-  | "calendar"
+-  | "star"
+-  | "money"
+-  | "settings"
+-  | "search"
+-  | "bell"
+-  | "help"
+-  | "plus"
+-  | "arrow"
+-  | "clock"
+-  | "cloud"
+-  | "message";
+-const paths: Record<IconName, string> = {
+-  home: "M3 11 12 3l9 8M5 10v11h5v-7h4v7h5V10",
+-  folder: "M3 7V4h7l3 3h8v14H3V7Zm0 3h18",
+-  robot: "M12 3v3m-2-3h4M5 8h14v12H5V8ZM2 12v5m20-5v5M9 12v2m6-2v2m-6 3h6",
+-  content: "M5 3h14v18H5V3Zm4 5h6m-6 4h6m-6 4h4",
+-  chart: "M4 20v-6h3v6m4 0V9h3v11m4 0V4h3v16",
+-  users:
+-    "M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 9v-3c0-5 14-5 14 0v3H2ZM17 4a4 4 0 0 1 0 8m2 3c3 0 3 3 3 6",
+-  calendar: "M4 5h16v16H4V5ZM8 2v6m8-6v6M4 10h16",
+-  star: "m12 2 3 6 7 1-5 5 1 8-6-4-6 4 1-8-5-5 7-1 3-6Z",
+-  money: "M16 6c-7-5-13 4-4 6s3 11-4 6m4-16v20",
+-  settings:
+-    "m9 3 6 0 1 4 4 1 2 5-3 3 0 4-5 2-3-3-4 0-2-5 3-3 0-4 4-2Zm3 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z",
+-  search: "M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6",
+-  bell: "M5 17h14l-2-4V9a5 5 0 0 0-10 0v4l-2 4Zm5 3h4M12 2v2",
+-  help: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-3 6c0-4 7-4 6 0-1 3-3 2-3 6m0 3v1",
+-  plus: "M12 4v16M4 12h16",
+-  arrow: "M4 12h16m-6-6 6 6-6 6",
+-  clock: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 4v6l4 3",
+-  cloud: "M6 19h12c7-2 3-10-2-9-1-9-13-7-12 1-5 1-4 8 2 8Z",
+-  message: "M3 4h18v14H8l-5 4V4Zm4 5h10m-10 4h7",
+-};
+-function Icon({ name }: { name: IconName }) {
+-  return (
+-    <svg
+-      viewBox="0 0 24 24"
+-      fill="none"
+-      stroke="currentColor"
+-      strokeWidth="1.8"
+-      strokeLinecap="round"
+-      strokeLinejoin="round"
+-      aria-hidden="true"
+-    >
+-      <path d={paths[name]} />
+-    </svg>
+-  );
+-}
+-function Avatar({ robot = false }: { robot?: boolean }) {
+-  return (
+-    <svg className="home-avatar" viewBox="0 0 48 48" aria-hidden="true">
+-      <defs>
+-        <linearGradient id={robot ? "robot-bg" : "person-bg"} x2="1" y2="1">
+-          <stop stopColor={robot ? "#71dcff" : "#e8ad66"} />
+-          <stop offset="1" stopColor="#103553" />
+-        </linearGradient>
+-      </defs>
+-      <circle
+-        cx="24"
+-        cy="24"
+-        r="22"
+-        fill={`url(#${robot ? "robot-bg" : "person-bg"})`}
+-        stroke="#338fc5"
+-        strokeWidth="2"
+-      />
+-      {robot ? (
+-        <>
+-          <path d="M16 38v-8h16v8" fill="#e9f6ff" />
+-          <rect x="9" y="10" width="30" height="24" rx="10" fill="#e9f6ff" />
+-          <rect x="13" y="14" width="22" height="15" rx="6" fill="#08243b" />
+-          <circle cx="19" cy="21" r="3" fill="#2bc9ff" />
+-          <circle cx="29" cy="21" r="3" fill="#2bc9ff" />
+-          <path d="M24 6v4" stroke="#e9f6ff" strokeWidth="3" />
+-        </>
+-      ) : (
+-        <>
+-          <path d="M10 45c1-17 27-17 28 0" fill="#1d4a79" />
+-          <ellipse cx="24" cy="24" rx="11" ry="13" fill="#f5bb86" />
+-          <path d="M12 25C4 4 39 2 37 26l-6-10-8 2-7-3-4 10" fill="#302321" />
+-          <circle cx="20" cy="25" r="1.6" fill="#202632" />
+-          <circle cx="29" cy="25" r="1.6" fill="#202632" />
+-          <path d="M21 32q4 3 7-1" stroke="#a45d41" strokeWidth="1.5" fill="none" />
+-        </>
+-      )}
+-    </svg>
+-  );
+-}
+-const navigation: { name: string; icon: IconName; destination?: HomeDestination }[] = [
+-  { name: "Painel", icon: "home" },
+-  { name: "Projetos", icon: "folder", destination: "control" },
+-  { name: "Agentes IA", icon: "robot", destination: "settings" },
+-  { name: "Conteúdos", icon: "content" },
+-  { name: "Vendas", icon: "chart" },
+-  { name: "CRM / Leads", icon: "users" },
+-  { name: "Eventos", icon: "calendar" },
+-  { name: "Oportunidades", icon: "star" },
+-  { name: "Financeiro", icon: "money" },
+-  { name: "Usuários", icon: "users" },
+-  { name: "Configurações", icon: "settings", destination: "settings" },
+-];
+-const shortcuts: {
+-  name: string;
+-  description: string;
+-  icon: IconName;
+-  color: string;
+-  destination?: HomeDestination;
+-}[] = [
+-  {
+-    name: "Novo Projeto",
+-    description: "Criar workspace",
+-    icon: "plus",
+-    color: "blue",
+-    destination: "control",
+-  },
+-  {
+-    name: "Agentes IA",
+-    description: "Gerenciar agentes",
+-    icon: "robot",
+-    color: "silver",
+-    destination: "settings",
+-  },
+-  { name: "Calendário", description: "Eventos e agendas", icon: "calendar", color: "red" },
+-  { name: "Conteúdos", description: "Vídeos e posts", icon: "content", color: "purple" },
+-  { name: "CRM / Leads", description: "Pipeline de vendas", icon: "users", color: "cyan" },
+-  { name: "Financeiro", description: "Receitas e despesas", icon: "money", color: "green" },
+-  {
+-    name: "Oportunidades",
+-    description: "Rádios, playlists, eventos",
+-    icon: "star",
+-    color: "yellow",
+-  },
+-  { name: "Relatórios", description: "Desempenho geral", icon: "chart", color: "teal" },
+-  {
+-    name: "Configurações",
+-    description: "Sistema e integrações",
+-    icon: "settings",
+-    color: "silver",
+-    destination: "settings",
+-  },
+-];
+-const notifications: {
+-  title: string;
+-  description?: string;
+-  time: string;
+-  icon: IconName;
+-  color: string;
+-}[] = [
+-  {
+-    title: "Pagamento Hotmart não processado",
+-    time: "Agora há pouco",
+-    icon: "clock",
+-    color: "red",
+-  },
+-  {
+-    title: "Novo lead qualificado",
+-    description: "João Silva · Workshop Produção Musical",
+-    time: "1 hora atrás",
+-    icon: "calendar",
+-    color: "orange",
+-  },
+-  {
+-    title: "Geração de conteúdo concluída",
+-    description: "5 posts prontos para revisão",
+-    time: "2 horas atrás",
+-    icon: "cloud",
+-    color: "blue",
+-  },
+-  {
+-    title: "Relatório semanal disponível",
+-    description: "Desempenho dos projetos",
+-    time: "3 horas atrás",
+-    icon: "chart",
+-    color: "green",
+-  },
+-];
+-const agents = [
+-  {
+-    name: "JARVIS",
+-    role: " (Orquestrador)",
+-    status: "Online",
+-    progress: 100,
+-    color: "green",
+-    robot: true,
+-  },
+-  { name: "Marketing", status: "Executando tarefas", progress: 75, color: "purple" },
+-  { name: "Financeiro", status: "Aguardando fila", progress: 25, color: "orange" },
+-  { name: "Conteúdo", status: "Processando vídeos", progress: 60, color: "yellow" },
+-  { name: "Desenvolvimento", status: "Online", progress: 90, color: "green" },
+-];
+-const recentProjects = [
+-  {
+-    name: "Meu Estúdio",
+-    description: "Produção musical e cursos",
+-    icon: "star" as const,
+-    color: "orange",
+-    status: "Ativo",
+-  },
+-  {
+-    name: "Agência Artística",
+-    description: "Divulgação e eventos",
+-    icon: "star" as const,
+-    color: "orange",
+-    status: "Ativo",
+-  },
+-  {
+-    name: "La fabrique",
+-    description: "Desenvolvimento do sistema",
+-    icon: "robot" as const,
+-    color: "purple",
+-    status: "Em desenvolvimento",
+-  },
+-  {
+-    name: "IA ENEM",
+-    description: "Plataforma educacional",
+-    icon: "folder" as const,
+-    color: "blue",
+-    status: "Pausado",
+-  },
+-];
+-
+-export function HomeDashboard({
+-  onNavigate,
+-}: {
+-  onNavigate: (destination: HomeDestination) => void;
+-}) {
+-  const [query, setQuery] = useState("");
+-  const [preview, setPreview] = useState<string | null>(null);
+-  const dialog = useRef<HTMLDialogElement>(null);
+-  const search = useRef<HTMLInputElement>(null);
+-  useEffect(() => {
+-    if (preview) dialog.current?.showModal();
+-  }, [preview]);
+-  useEffect(() => {
+-    function shortcut(event: KeyboardEvent) {
+-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+-        event.preventDefault();
+-        search.current?.focus();
+-      }
+-    }
+-    window.addEventListener("keydown", shortcut);
+-    return () => window.removeEventListener("keydown", shortcut);
+-  }, []);
+-  const filtered = shortcuts.filter((item) =>
+-    `${item.name} ${item.description}`
+-      .toLocaleLowerCase("pt-BR")
+-      .includes(query.toLocaleLowerCase("pt-BR")),
+-  );
+-  function open(name: string, destination?: HomeDestination) {
+-    if (destination) onNavigate(destination);
+-    else setPreview(name);
+-  }
+-  function panelHeading(title: string, action: () => void) {
+-    return (
+-      <div className="home-panel-heading">
+-        <h2>{title}</h2>
+-        <button type="button" onClick={action}>
+-          Ver {title === "Notificações importantes" ? "todas" : "todos"}
+-          <Icon name="arrow" />
+-        </button>
+-      </div>
+-    );
+-  }
+-  return (
+-    <div className="home-dashboard">
+-      <a className="home-skip" href="#home-content">
+-        Ir para o conteúdo
+-      </a>
+-      <aside className="home-sidebar" aria-label="Menu principal">
+-        <a className="home-brand" aria-label="La fabrique, painel inicial" href="#home-content">
+-          <svg viewBox="0 0 42 46" aria-hidden="true">
+-            <path d="m21 1 17 10-17 10L4 11Z" fill="#ff8d43" />
+-            <path d="m4 13 15 9v20L4 33Z" fill="#278aff" />
+-            <path d="m23 22 15-9v20l-15 9Z" fill="#20dca4" />
+-            <path d="m21 12 9 5-9 5-9-5Z" fill="#b04bff" />
+-            <path d="m21 1 8 5-8 5-8-5Z" fill="#ff4b61" />
+-          </svg>
+-          <span>La fabrique</span>
+-        </a>
+-        <nav>
+-          {navigation.map((item) => (
+-            <button
+-              type="button"
+-              key={item.name}
+-              aria-label={item.name}
+-              className={item.name === "Painel" ? "is-active" : ""}
+-              aria-current={item.name === "Painel" ? "page" : undefined}
+-              onClick={() =>
+-                item.name === "Painel" ? setQuery("") : open(item.name, item.destination)
+-              }
+-            >
+-              <Icon name={item.icon} />
+-              <span>{item.name}</span>
+-            </button>
+-          ))}
+-        </nav>
+-        <div className="home-workspace">
+-          <span>Workspace de demonstração</span>
+-          <div>
+-            <button type="button" onClick={() => setPreview("Workspaces")}>
+-              Meu Estúdio <span>⌄</span>
+-            </button>
+-            <button
+-              type="button"
+-              aria-label="Configurar workspace"
+-              onClick={() => onNavigate("settings")}
+-            >
+-              <Icon name="settings" />
+-            </button>
+-          </div>
+-          <button type="button" className="home-all-projects" onClick={() => onNavigate("control")}>
+-            Ver todos os projetos <Icon name="arrow" />
+-          </button>
+-        </div>
+-      </aside>
+-      <div className="home-main">
+-        <header className="home-topbar">
+-          <label className="home-search">
+-            <Icon name="search" />
+-            <input
+-              ref={search}
+-              aria-label="Buscar atalhos no sistema"
+-              value={query}
+-              onChange={(event) => setQuery(event.target.value)}
+-              placeholder="Buscar algo no sistema..."
+-            />
+-            <kbd>⌘ K</kbd>
+-          </label>
+-          <span className="home-demo-tag">Demonstração</span>
+-          <div className="home-top-actions">
+-            <button
+-              type="button"
+-              aria-label="Ver notificações importantes"
+-              onClick={() => setPreview("Notificações importantes")}
+-            >
+-              <Icon name="bell" />
+-              <span className="home-notification-count">4</span>
+-            </button>
+-            <button type="button" aria-label="Ajuda" onClick={() => setPreview("Ajuda")}>
+-              <Icon name="help" />
+-            </button>
+-            <button
+-              type="button"
+-              className="home-profile"
+-              onClick={() => setPreview("Perfil de demonstração")}
+-            >
+-              <Avatar />
+-              <span>
+-                <strong>Administrador</strong>
+-                <small>Workspace pessoal</small>
+-              </span>
+-              <span>⌄</span>
+-            </button>
+-          </div>
+-        </header>
+-        <main id="home-content" className="home-columns" tabIndex={-1}>
+-          <div className="home-center">
+-            <h1 className="home-sr-only">Central de controle La fabrique</h1>
+-            <section className="home-office" aria-label="Escritório virtual da equipe">
+-              <img
+-                src="/images/control-room-reference.png"
+-                alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
+-                fetchPriority="high"
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--marketing"
+-                aria-label="Abrir agente de Marketing"
+-                onClick={() => onNavigate("settings")}
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--jarvis"
+-                aria-label="Abrir JARVIS"
+-                onClick={() => onNavigate("settings")}
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--finance"
+-                aria-label="Abrir Financeiro"
+-                onClick={() => setPreview("Financeiro")}
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--content"
+-                aria-label="Abrir Conteúdo"
+-                onClick={() => setPreview("Conteúdos")}
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--development"
+-                aria-label="Abrir Desenvolvimento"
+-                onClick={() => onNavigate("control")}
+-              />
+-              <button
+-                type="button"
+-                className="home-room home-room--meeting"
+-                aria-label="Abrir Sala de reunião"
+-                onClick={() => setPreview("Sala de reunião")}
+-              />
+-            </section>
+-            <div className="home-center-panels">
+-              <section className="home-metrics" aria-label="Indicadores de demonstração">
+-                {[
+-                  {
+-                    title: "Projetos Ativos",
+-                    value: "5",
+-                    detail: "de 5 disponíveis",
+-                    icon: "folder" as const,
+-                    color: "blue",
+-                  },
+-                  {
+-                    title: "Leads (30 dias)",
+-                    value: "127",
+-                    detail: "↑ 12%",
+-                    icon: "users" as const,
+-                    color: "purple",
+-                  },
+-                  {
+-                    title: "Vendas (30 dias)",
+-                    value: "R$ 12.450",
+-                    detail: "↑ 18%",
+-                    icon: "money" as const,
+-                    color: "green",
+-                  },
+-                  {
+-                    title: "Conteúdos Gerados",
+-                    value: "48",
+-                    detail: "↑ 33%",
+-                    icon: "content" as const,
+-                    color: "purple",
+-                  },
+-                ].map((metric, index) => (
+-                  <article className="home-card home-metric" key={metric.title}>
+-                    <span className={`home-icon-tile tone-${metric.color}`}>
+-                      <Icon name={metric.icon} />
+-                    </span>
+-                    <div>
+-                      <span>{metric.title}</span>
+-                      <strong>{metric.value}</strong>
+-                      <small className={index > 0 ? "home-growth" : ""}>{metric.detail}</small>
+-                    </div>
+-                    {index === 0 ? (
+-                      <div className="home-metric-line" />
+-                    ) : (
+-                      <div className={`home-bars tone-${metric.color}`} aria-hidden="true">
+-                        {[35, 63, 45, 72, 88, 100].map((height) => (
+-                          <i key={height} style={{ height: `${height}%` }} />
+-                        ))}
+-                      </div>
+-                    )}
+-                  </article>
+-                ))}
+-              </section>
+-              <section className="home-card home-quick">
+-                <h2>Acesso rápido</h2>
+-                <div className="home-shortcuts">
+-                  {filtered.map((item) => (
+-                    <button
+-                      type="button"
+-                      key={item.name}
+-                      onClick={() => open(item.name, item.destination)}
+-                    >
+-                      <span className={`home-shortcut-icon tone-${item.color}`}>
+-                        <Icon name={item.icon} />
+-                      </span>
+-                      <span>
+-                        <strong>{item.name}</strong>
+-                        <small>{item.description}</small>
+-                      </span>
+-                    </button>
+-                  ))}
+-                </div>
+-                {filtered.length === 0 && (
+-                  <p className="home-empty" role="status">
+-                    Nenhum atalho encontrado. Tente “projetos” ou “configurações”.
+-                  </p>
+-                )}
+-              </section>
+-              <section className="home-card home-important-message">
+-                <span className="home-shortcut-icon tone-blue">
+-                  <Icon name="message" />
+-                </span>
+-                <div>
+-                  <h2>Mensagens importantes</h2>
+-                  <p>
+-                    Seu escritório está pronto para ganhar vida. Revise as contas e a equipe para
+-                    começar.
+-                  </p>
+-                </div>
+-                <button type="button" onClick={() => onNavigate("settings")}>
+-                  Configurar equipe <Icon name="arrow" />
+-                </button>
+-              </section>
+-              <p className="home-demo-note">
+-                Prévia estática · Indicadores, notificações, mensagens, projetos e status são dados
+-                simulados.
+-              </p>
+-            </div>
+-          </div>
+-          <aside className="home-right" aria-label="Resumo do workspace">
+-            <section className="home-card home-notifications">
+-              {panelHeading("Notificações importantes", () =>
+-                setPreview("Notificações importantes"),
+-              )}
+-              {notifications.map((item) => (
+-                <button
+-                  type="button"
+-                  className="home-notice"
+-                  key={item.title}
+-                  onClick={() => setPreview(item.title)}
+-                >
+-                  <span className={`home-notice-icon tone-${item.color}`}>
+-                    <Icon name={item.icon} />
+-                  </span>
+-                  <span>
+-                    <strong>{item.title}</strong>
+-                    {item.description && <small>{item.description}</small>}
+-                    <small>{item.time}</small>
+-                  </span>
+-                </button>
+-              ))}
+-            </section>
+-            <section className="home-card home-agents">
+-              {panelHeading("Status dos Agentes", () => onNavigate("settings"))}
+-              {agents.map((agent) => (
+-                <button
+-                  type="button"
+-                  className="home-agent"
+-                  key={agent.name}
+-                  onClick={() => onNavigate("settings")}
+-                >
+-                  <Avatar robot={agent.robot} />
+-                  <span>
+-                    <strong>
+-                      {agent.name}
+-                      <span>{agent.role}</span>
+-                    </strong>
+-                    <small>
+-                      <i className={`home-dot tone-${agent.color}`} />
+-                      {agent.status}
+-                    </small>
+-                  </span>
+-                  <span className="home-agent-progress">
+-                    <meter
+-                      aria-label={`Atividade simulada de ${agent.name}`}
+-                      min={0}
+-                      max={100}
+-                      value={agent.progress}
+-                    ></meter>
+-                    <small>{agent.progress}%</small>
+-                  </span>
+-                </button>
+-              ))}
+-            </section>
+-            <section className="home-card home-projects">
+-              {panelHeading("Projetos recentes", () => onNavigate("control"))}
+-              {recentProjects.map((project) => (
+-                <button
+-                  type="button"
+-                  className="home-project"
+-                  key={project.name}
+-                  onClick={() => onNavigate("control")}
+-                >
+-                  <span className={`home-project-icon tone-${project.color}`}>
+-                    <Icon name={project.icon} />
+-                  </span>
+-                  <span>
+-                    <strong>{project.name}</strong>
+-                    <small>{project.description}</small>
+-                  </span>
+-                  <small className="home-project-status">
+-                    <i
+-                      className={`home-dot tone-${project.status === "Ativo" ? "green" : project.status === "Pausado" ? "orange" : "blue"}`}
+-                    />
+-                    {project.status}
+-                  </small>
+-                </button>
+-              ))}
+-            </section>
+-          </aside>
+-        </main>
+-      </div>
+-      <dialog
+-        ref={dialog}
+-        className="home-preview"
+-        onClose={() => setPreview(null)}
+-        aria-labelledby="home-preview-title"
+-      >
+-        <div className="home-preview-heading">
+-          <span className="home-demo-tag">Demonstração</span>
+-          <form method="dialog">
+-            <button type="submit" aria-label="Fechar prévia">
+-              ×
+-            </button>
+-          </form>
+-        </div>
+-        <h2 id="home-preview-title">{preview}</h2>
+-        {preview === "Notificações importantes" ? (
+-          notifications.map((item) => (
+-            <p key={item.title}>
+-              <strong>{item.title}</strong>
+-              <br />
+-              {item.description ?? item.time}
+-            </p>
+-          ))
+-        ) : (
+-          <p>
+-            Esta é uma prévia da central de controle. Os dados desta área são simulados; a
+-            integração será disponibilizada em uma próxima etapa.
+-          </p>
+-        )}
+-        <form method="dialog">
+-          <button type="submit">Voltar ao painel</button>
+-        </form>
+-      </dialog>
+-    </div>
+-  );
+-}
++export type { HomeDestination } from "./DashboardLayout";
++export { DashboardLayout as HomeDashboard } from "./DashboardLayout";
+diff --git a/apps/web/src/home-dashboard.css b/apps/web/src/home-dashboard.css
+index 3993194..0bfaaf1 100644
+--- a/apps/web/src/home-dashboard.css
++++ b/apps/web/src/home-dashboard.css
+@@ -1077,0 +1078,133 @@
++.home-dashboard .home-topbar {
++  position: sticky;
++  top: 0;
++  z-index: 3;
++}
++.home-dashboard .workspace-content {
++  outline: none;
++  font-size: 13px;
++}
++.home-dashboard .workspace-content .shell {
++  width: calc(100% - 40px);
++  max-width: 1280px;
++  padding: 26px 0;
++}
++.home-dashboard .workspace-content .login-shell {
++  min-height: calc(100vh - 66px);
++  padding: 24px 0;
++}
++.home-dashboard .workspace-content h1 {
++  font-size: 24px;
++  letter-spacing: -0.03em;
++  margin: 0;
++}
++.home-dashboard .workspace-content h2 {
++  font-size: 16px;
++  letter-spacing: -0.02em;
++}
++.home-dashboard .workspace-content h3 {
++  font-size: 13px;
++}
++.home-dashboard .workspace-content p {
++  font-size: 12px;
++}
++.home-dashboard .workspace-content label {
++  font-size: 12px;
++}
++.home-dashboard .workspace-content input,
++.home-dashboard .workspace-content textarea,
++.home-dashboard .workspace-content select,
++.home-dashboard .workspace-content button {
++  font-size: 13px;
++}
++.home-dashboard .workspace-content .eyebrow {
++  font-size: 10px;
++}
++.home-dashboard .workspace-content .metric-grid strong {
++  font-size: 22px;
++}
++.home-dashboard .workspace-content .panel {
++  padding: 20px;
++}
++.home-dashboard .workspace-content button {
++  background: #258bff;
++  color: #fff;
++  font-weight: 600;
++}
++.home-dashboard .workspace-content button:hover {
++  background: #419cff;
++}
++.home-dashboard .workspace-content .secondary-action,
++.home-dashboard .workspace-content .remove-action {
++  background: #102434;
++  color: #c5d3e7;
++}
++.home-dashboard .workspace-content .settings-tabs [role="tab"] {
++  background: transparent;
++}
++.home-dashboard .workspace-content .settings-tabs [aria-selected="true"] {
++  background: #1d4364;
++}
++@media (max-width: 760px) {
++  .home-dashboard .workspace-content .shell {
++    width: calc(100% - 24px);
++    padding: 20px 0;
++  }
++  .home-dashboard .workspace-content .panel {
++    padding: 14px;
++  }
++}
++
++.home-dashboard .home-brand {
++  border-radius: 0;
++}
++.home-dashboard .home-main {
++  position: relative;
++}
++.home-dashboard .home-search-results {
++  position: absolute;
++  left: 17px;
++  top: 62px;
++  width: min(502px, calc(100% - 34px));
++  padding: 10px;
++  background: #102434;
++  border: 1px solid #294456;
++  border-radius: 8px;
++  z-index: 4;
++}
++.home-dashboard .home-search-results button {
++  display: block;
++  width: 100%;
++  text-align: left;
++}
++.home-dashboard .workspace-content .settings-tabs {
++  border-color: #294456;
++}
++.home-dashboard .workspace-content .settings-tabs [role="tab"] {
++  border-color: #294456;
++}
++.home-dashboard .workspace-content input,
++.home-dashboard .workspace-content select {
++  min-width: 0;
++}
++@media (max-width: 1150px) {
++  .home-dashboard .workspace-content .settings-bottom-grid {
++    grid-template-columns: minmax(0, 1fr);
++  }
++  .home-dashboard .workspace-content .assignment-row {
++    grid-template-columns: 1fr 1fr;
++  }
++}
++@media (max-width: 760px) {
++  .home-dashboard .workspace-content .assignment-row {
++    grid-template-columns: minmax(0, 1fr);
++  }
++}
++.home-dashboard .workspace-content .account-list-item {
++  background: #0b1b28;
++  color: #e5edf8;
++  font-weight: 400;
++}
++.home-dashboard .workspace-content .account-list-item:hover {
++  background: #142b3d;
++}

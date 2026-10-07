@@ -1,0 +1,10 @@
+Fábrica de Software | v2.1 | Planejamento
+1
+Fábrica de Software
+Arquitetura e MVP • versão 2.1
+Assinaturas de IA e clientes oficiais
+Controle e execução na mesma VPS
+Vinícius • 29 de setembro de 2026
+Documento integral de planejamento. Inclui arquitetura, funcionamento, economia, contratos,
+sprints, guias Claude/Codex/Antigravity e templates de documentação. Nenhum software foi
+implementado.

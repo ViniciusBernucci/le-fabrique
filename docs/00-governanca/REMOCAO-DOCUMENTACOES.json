@@ -1,0 +1,1199 @@
+{
+  "date": "2026-10-07",
+  "baseline": "5845754",
+  "files": [
+    {
+      "source": "documentacoes/INDEX.md",
+      "destination": "docs/02-INDEX.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/INDEX.md",
+      "sha256": "c7748616e7173b9cb7d027f80641b807b5a0abe768ec64de62661f4c4b806ffb",
+      "bytes": 297,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/POLITICA-IA.md",
+      "destination": "docs/00-governanca/01-POLITICA-IA.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/POLITICA-IA.md",
+      "sha256": "37211291eb715c8fe2fe98c57746f5be85693a52d5d6b32aeb8229db5df60360",
+      "bytes": 444,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/configuracao/README.md",
+      "destination": "docs/03-modulos/configuracao/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/configuracao/README.md",
+      "sha256": "acd2a6bc7ea92b0ecee73870729112006fa5899ca185043b8cf100df6b53a3de",
+      "bytes": 463,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-015-diff.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-015-diff.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-015-diff.patch",
+      "sha256": "28ac93784aa19056c67c16322f59278b6183a927ad8a5168825c345dc48fcba8",
+      "bytes": 29956,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-016-diff.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-016-diff.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-016-diff.patch",
+      "sha256": "1cc5601086062154016944abd86114cd61bcd77a231c19a671d8e4ffdcb849d1",
+      "bytes": 8527,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-017-diff.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-017-diff.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-017-diff.patch",
+      "sha256": "cda1d3c51798debe4f9223577cc573013338e17848d8b74baee8b8c9a270c073",
+      "bytes": 13122,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-018-checks.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-018-checks.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-018-checks.txt",
+      "sha256": "6813863e670383da67a85cf8f70613549bba0012f71ccc49af2381d84a1a18cd",
+      "bytes": 1337,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-018-diff.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-018-diff.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-018-diff.patch",
+      "sha256": "e52d4b8d73b7c0ecabb34359341a30e71191db2da7caf6a4da787c95fb022af0",
+      "bytes": 95773,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/agent-modal-mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/agent-modal-mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/agent-modal-mobile.png",
+      "sha256": "5f5a9ee5a413e64000aa2c052dfd95ce41f39bca61d36bd9384fdc3a7a7139d3",
+      "bytes": 201185,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/agents-desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/agents-desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/agents-desktop.png",
+      "sha256": "2cbcb48046ba7d2a2ded8a74499c9c69e176eeb7d90b761c3062c91b403ed509",
+      "bytes": 397740,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/agents-mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/agents-mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/agents-mobile.png",
+      "sha256": "b6acd0b5a38930b0b547f4dbb3d866a34dea8531829e4a71c090e3ece6262747",
+      "bytes": 250161,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/browser-check.mjs",
+      "sha256": "9c87c88e8f808446205a123f72d5935901519a406f854fecad796fd09752d93a",
+      "bytes": 9233,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/browser-results.txt",
+      "sha256": "6c3c7c6d7a0f2346940df2b3e7aea405d6fba508b8b924ba5916c264efa9521f",
+      "bytes": 604,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/build.txt",
+      "sha256": "38ecebb53258e368db27cf5340826dde506d976c78e96f30e16f4f99fef50bf2",
+      "bytes": 927,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/checks.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/checks.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/checks.txt",
+      "sha256": "2a274657c5dbdb589f61c1c68b547f46fcdccb978565363b5e66705622d160df",
+      "bytes": 944,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/implementation.patch",
+      "sha256": "4dce3a4ad9ef34423f1d08026d23a50d18b288d9219d0ce078630b9c3c352425",
+      "bytes": 35967,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/lint.txt",
+      "sha256": "47bd4b2f59e2b9c789968f1346ba68f5d8a82656fd1af5605f5e0ad3421af99d",
+      "bytes": 1105,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/runtime-tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/runtime-tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/runtime-tests.txt",
+      "sha256": "546eb28a9613e1e96f579fc42616c9d6371885997b5c6c1a17df46a96fb108ca",
+      "bytes": 466,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/skill-modal.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/skill-modal.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/skill-modal.png",
+      "sha256": "9193f54b7ba9f0244dcc10bdb43ee2303093318dd304d03e7069cfb44dbc89a5",
+      "bytes": 210779,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/skills-desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/skills-desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/skills-desktop.png",
+      "sha256": "306ff198bf901b8f88d273f084fe6c7b937cb77b9ab58a8ce30e8a690c93958f",
+      "bytes": 358710,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/typecheck.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/typecheck.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/typecheck.txt",
+      "sha256": "0d9600179a891af3f294e493af5d694a4e6d4e955a83dfcb7b59cc0d241eae64",
+      "bytes": 1068,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-023/worker-tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-023/worker-tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-023/worker-tests.txt",
+      "sha256": "00b536a8a5bb6718d9eccccd44ee316187d8aa6c9a18e55dd8bac11f96333229",
+      "bytes": 461,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/agents-desktop-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/agents-desktop-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/agents-desktop-developer.png",
+      "sha256": "4999219c10cbccdc54392973a5cfb80c67def82c483e612dba57c68a7779b39b",
+      "bytes": 382518,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/agents-desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/agents-desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/agents-desktop.png",
+      "sha256": "4999219c10cbccdc54392973a5cfb80c67def82c483e612dba57c68a7779b39b",
+      "bytes": 382518,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/agents-mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/agents-mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/agents-mobile-developer.png",
+      "sha256": "0c6a24221e774770a069a79dd213b53c57d4c4601fbd4321b240b6cedee7faff",
+      "bytes": 271355,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/agents-mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/agents-mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/agents-mobile.png",
+      "sha256": "0c6a24221e774770a069a79dd213b53c57d4c4601fbd4321b240b6cedee7faff",
+      "bytes": 271355,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/browser-check.mjs",
+      "sha256": "7e59316b8baf81f5f9b833a54938ec66b3de07eb10fa65246a383296b5d0523b",
+      "bytes": 8199,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/browser-results-developer.txt",
+      "sha256": "b2b21958ab6bab7a293aa1db8f9c9f001bece9c5d02007249c2461f7d20344c7",
+      "bytes": 622,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/browser-results.txt",
+      "sha256": "b2b21958ab6bab7a293aa1db8f9c9f001bece9c5d02007249c2461f7d20344c7",
+      "bytes": 622,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/build.txt",
+      "sha256": "68c98d25a3ce60c3bf70355738130d661727c834a5fa4f9db660d6780c8e4e10",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/configuration-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/configuration-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/configuration-developer.png",
+      "sha256": "82e77f82d4a50d45c9fb9c2c713f24b3ad3f702504925813a3c3aac087699abd",
+      "bytes": 392756,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/configuration.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/configuration.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/configuration.png",
+      "sha256": "ee70bf2481dfc38be594e5d10174cb998ba479939e35ecd3895094f5f1613e11",
+      "bytes": 374068,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/implementation.patch",
+      "sha256": "0826ff2e6f5cd388807313f73a842da1ae31c94622b674767adb18a15f0599f0",
+      "bytes": 13128,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/lint.txt",
+      "sha256": "c05b83917fe3631c6f1b713a03e7066e2e5776e4b6b026f84403cc3ccae6c0d8",
+      "bytes": 1097,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/overview-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/overview-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/overview-developer.png",
+      "sha256": "fc99f4efbea44c194c4c4da512336cb0dfb87408dafeb1bf2619e18bd35353d5",
+      "bytes": 383921,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/overview.png",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/overview.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/overview.png",
+      "sha256": "0d95693278b6fc2cceb3fc5f8128ff1ec6ecdc17be2624bc8360df7bc536f6e2",
+      "bytes": 364242,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/tests.txt",
+      "sha256": "492569fc999e31d8fb43b9edcbd7d6ce8ae57e6adb30e327c4789decc9821b28",
+      "bytes": 452,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/configuracao/evidencias/FAC-026/typecheck.txt",
+      "destination": "docs/09-entregas/2026/evidencias/configuracao/evidencias/FAC-026/typecheck.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/evidencias/FAC-026/typecheck.txt",
+      "sha256": "33530f743a0b838cc8d404a0fd02820f006c71a43792651bba948ebdb1d620dd",
+      "bytes": 54,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/contexto/README.md",
+      "destination": "docs/03-modulos/context-builder/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/contexto/README.md",
+      "sha256": "836c2b74a492c5ac850527407f0b3d960d20ce15223236a86a1950e7e1d39d92",
+      "bytes": 465,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/controle/README.md",
+      "destination": "docs/03-modulos/controle/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/controle/README.md",
+      "sha256": "a4f56ccbfd36a6d0a702928fb5b1ee1074ea8f42bac3fe73b5628b9fc845a4ca",
+      "bytes": 451,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020/browser-check.mjs",
+      "sha256": "3094c2b8b767a9ef8c0cdfea1b215259c42fc44ea1761fafc7516cbfcb7cd79d",
+      "bytes": 4299,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020/browser-results.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020/browser-results.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020/browser-results.json",
+      "sha256": "cddd26898ba769c6de655dcc246220a3bb3a6246f1932403df4fe1745904998d",
+      "bytes": 719,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020/desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020/desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020/desktop.png",
+      "sha256": "35d0974e5bf62406f8c8ff29b4705e5854c162a19e02b043dd80033a418f4542",
+      "bytes": 1430923,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020/implementation.patch",
+      "sha256": "9ead330cc2932b3de9cf469e73d7629b228ace1ddd41562c4ed94372ee5c4f7f",
+      "bytes": 49214,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020/mobile.png",
+      "sha256": "ba06e323e23bb2315c71bb257cc00c18d28e1ffc90ef065265967ce2753f4f0b",
+      "bytes": 586197,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-020A/browser-results.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-020A/browser-results.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-020A/browser-results.json",
+      "sha256": "4e490d0e281358eec6c09ce7ec47931d8b3749ec6aebe3d7fd07022ecc72352f",
+      "bytes": 719,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/browser-check.mjs",
+      "sha256": "9905f74ae3c9e649cb042f466bb9cdecdda7f58d9758cf2d6809451818ccd570",
+      "bytes": 4823,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/browser-results-developer.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/browser-results-developer.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/browser-results-developer.json",
+      "sha256": "64458726b570372fbb844f61871ce5bf27a08b6fa92ad671db2b3cadf37f8723",
+      "bytes": 789,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/browser-results.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/browser-results.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/browser-results.json",
+      "sha256": "fdaa36b4e6df1a414337093826e6df36ba231cbc0f00fe2c6891a49997399ecf",
+      "bytes": 789,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/desktop.png",
+      "sha256": "691d0748d3b00b3584c441b66ebc5e2a8652874e4a18292933d4d8529aed921f",
+      "bytes": 994285,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/implementation.patch",
+      "sha256": "a5104a78a976c25d8830a1f25db512a95a05dc31391438aacba00903fc06b179",
+      "bytes": 5220,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-021/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-021/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-021/mobile.png",
+      "sha256": "619843e56f67cd815be1387ce2862730c2f66ee79d3b8021780e41379967542f",
+      "bytes": 571505,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/browser-check.mjs",
+      "sha256": "69403c253efd65c2457b24791f2efa41b444bd3c9bb6c8e049e73361fc1d2ee6",
+      "bytes": 9604,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/browser-results-developer.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/browser-results-developer.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/browser-results-developer.json",
+      "sha256": "465f0e53f7a845117e2d455a7ea8d54cdfa7b0e3476b14bb42d7bb5c77e67aa4",
+      "bytes": 1178,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/browser-results.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/browser-results.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/browser-results.json",
+      "sha256": "5e50fa51948228fa2c152190de822747815b8f7d65b300d4f1503190964636bd",
+      "bytes": 1087,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/control-desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/control-desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/control-desktop.png",
+      "sha256": "da9e6e98e258910cb133cf2b4cab1ebc3d95fa5bf13856a97535d591bbeec8b1",
+      "bytes": 327141,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/desktop.png",
+      "sha256": "6c6be882a628d357e9737489b036cb82c9d547dfd900983455aca07b8303a49f",
+      "bytes": 990901,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/implementation.patch",
+      "sha256": "c3f1dd5e020c4c139c9ae389bc179cffb83d8d8a98fd18174d65ea938be36746",
+      "bytes": 65920,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/mobile.png",
+      "sha256": "c822b72f5da51f360481319c76423879fe2d814e0e5147fc6ab740b35ed7a59a",
+      "bytes": 569653,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/settings-desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/settings-desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/settings-desktop.png",
+      "sha256": "5629a432caa7d1278458cac09884f54ef38ee0bada4db5e2d2c2f57a7965e10b",
+      "bytes": 361000,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-022/settings-mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-022/settings-mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-022/settings-mobile.png",
+      "sha256": "52d1667b8cf152ed21b80d7a15998808a8938f7645869c485ee2ac470ab0b9c8",
+      "bytes": 187628,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/analyze-media.py",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/analyze-media.py",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/analyze-media.py",
+      "sha256": "64b7ea30d8284d8ff42f326cf7c7cd614b5c80ec37518b545be97454622a0972",
+      "bytes": 1392,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/browser-check.mjs",
+      "sha256": "4c971e1ac558f951d2fbb6d475ef04c862fb2d3bb615a81bd2beb396fe2cdd5f",
+      "bytes": 5506,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/browser-results-developer.txt",
+      "sha256": "e42ef44b7fd1693453a13a6811f8cabcd5c9a1e77e69f0b9146f90a87dd455be",
+      "bytes": 546,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/browser-results.txt",
+      "sha256": "11bef4fb6d868ce7281d90c3e2b07fae6b8a3936ad5a23a0ece010757b9692de",
+      "bytes": 546,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/build.txt",
+      "sha256": "3ab1950d4bd7f24eb7de6cffb1b5d3905524567eaa53925286b56d609cc4489a",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/desktop.png",
+      "sha256": "f3091100312f7ca58b9bca2c9ff7056b0c805a6657d220ba4609cd15325fff2c",
+      "bytes": 748725,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/implementation.patch",
+      "sha256": "129060f9a9030ed049e756cba7261141d6036aa1752a5c7cbcd88b7a17db2403",
+      "bytes": 5830,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/lint.txt",
+      "sha256": "81e566dc907febef85a24fd3c0f40267faaced50d05c752db801c01667c21196",
+      "bytes": 1105,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/media-analysis.json",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/media-analysis.json",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/media-analysis.json",
+      "sha256": "e5a5e6867d8f4264c8fb0ce48a2b7ed685d2638603c87c1d60811f9d5ad6541c",
+      "bytes": 420,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/media-info.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/media-info.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/media-info.txt",
+      "sha256": "e0fd37656bacd595bfcc7eccdcff3eee957798ff268c76e6175834f36102cd68",
+      "bytes": 607,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/mobile.png",
+      "sha256": "9068e699bf100e9f0954a9db5b15b30126dd97dbf609ba6a0dc616f13d3ad5d9",
+      "bytes": 451183,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/prepare-video.py",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/prepare-video.py",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/prepare-video.py",
+      "sha256": "c06cbeec38d72e2fda84787b4cf997a8d51e1de26708a5022b106ea8d66e591f",
+      "bytes": 1420,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/tests.txt",
+      "sha256": "387bc1b81fdbe2bd691d88ad82b4a11e2677790d0225b086256e94384ee9dc44",
+      "bytes": 453,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-024/typecheck.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-024/typecheck.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-024/typecheck.txt",
+      "sha256": "5d4b0492f50fb58575db0a07faa214e7c9844f0e778fa5175d209ed6a844bdae",
+      "bytes": 55,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/browser-check.mjs",
+      "sha256": "eb0dabe5dd2c3c9babbd1468e1e8317c9c97d60a58ed2411c65a4d5d1a1a092d",
+      "bytes": 2614,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/browser-results-developer.txt",
+      "sha256": "c4ccf07ab549a211d8544ce5c53b344ed63834b194a317faee76ef006d5447fe",
+      "bytes": 198,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/browser-results.txt",
+      "sha256": "c4ccf07ab549a211d8544ce5c53b344ed63834b194a317faee76ef006d5447fe",
+      "bytes": 198,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/build.txt",
+      "sha256": "1c650346c029f6c8f1692ec3b1225bbb8947252f852a06b501b1e9daa1293144",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/desktop-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/desktop-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/desktop-developer.png",
+      "sha256": "3fa26d2ca60e3eacfd3d1ddc23b16f7fbf6e1db56759b369e7bc531f48ec5838",
+      "bytes": 814037,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/desktop.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/desktop.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/desktop.png",
+      "sha256": "3fa26d2ca60e3eacfd3d1ddc23b16f7fbf6e1db56759b369e7bc531f48ec5838",
+      "bytes": 814037,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/implementation.patch",
+      "sha256": "4506001e0876540b9732c0116302229394035d7f8ce0e5b3b7d97dd6ade7e08c",
+      "bytes": 3427,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/lint.txt",
+      "sha256": "4e03c36d46755194fc34dea200c6c60de50d5f743c28f6e8ece0273af36c5c2e",
+      "bytes": 1105,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/mobile-developer.png",
+      "sha256": "0e9b6ddda21768c67a560b856dfef51ff4d24d01becedbb9a5b2a7fafee2b595",
+      "bytes": 461639,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/mobile.png",
+      "sha256": "0e9b6ddda21768c67a560b856dfef51ff4d24d01becedbb9a5b2a7fafee2b595",
+      "bytes": 461639,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/tests.txt",
+      "sha256": "200e0c9b7dd67e4adfb535ee5653900dd3a44bbee977c10abfb393b188dc67d0",
+      "bytes": 453,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-025/typecheck.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-025/typecheck.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-025/typecheck.txt",
+      "sha256": "5d4b0492f50fb58575db0a07faa214e7c9844f0e778fa5175d209ed6a844bdae",
+      "bytes": 55,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/browser-check.mjs",
+      "sha256": "8f344f0005ff56a5b01308153b284fcd7ef0175bdc5c8bf2b11f376ac38d8368",
+      "bytes": 4057,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/browser-results-developer.txt",
+      "sha256": "ef9f002f6e38f170fceb48c10fd951fe2620b0b7259327052422667a74fe1b92",
+      "bytes": 380,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/browser-results.txt",
+      "sha256": "ef9f002f6e38f170fceb48c10fd951fe2620b0b7259327052422667a74fe1b92",
+      "bytes": 380,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/collapsed-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/collapsed-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/collapsed-developer.png",
+      "sha256": "1ed77e130e7ff21d8d4bf567995a70814d46a33f926d53142b453c78a958c4d1",
+      "bytes": 844085,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/collapsed.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/collapsed.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/collapsed.png",
+      "sha256": "1ed77e130e7ff21d8d4bf567995a70814d46a33f926d53142b453c78a958c4d1",
+      "bytes": 844085,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/implementation.patch",
+      "sha256": "b94cac64c6436d1e737c55008cdbeee25b02caa299de69fb019fb1508f491b03",
+      "bytes": 5019,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/mobile-developer.png",
+      "sha256": "57cebec8db268a8de6f5a7d76f9e24483aee4e8b407fd1e696677cd39597c7b0",
+      "bytes": 463805,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-027/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-027/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-027/mobile.png",
+      "sha256": "57cebec8db268a8de6f5a7d76f9e24483aee4e8b407fd1e696677cd39597c7b0",
+      "bytes": 463805,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/browser-check.mjs",
+      "sha256": "25fac067a0c6e0292dae126f2b9a6fe8c39f4531394d33480559891d76529d2c",
+      "bytes": 4768,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/browser-results-developer.txt",
+      "sha256": "7bcdc7a891bcc57958c5824b4bb6c50d384b7c0357e11ea87ec101503d849293",
+      "bytes": 499,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/browser-results.txt",
+      "sha256": "7bcdc7a891bcc57958c5824b4bb6c50d384b7c0357e11ea87ec101503d849293",
+      "bytes": 499,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/build.txt",
+      "sha256": "42bda89221f3f4ff24e6e7cedcc624f37450393adeda73a9272984806ccc125c",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/collapsed-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/collapsed-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/collapsed-developer.png",
+      "sha256": "8cbe26f8034b10cefcfb1be9f6944f9a1fdcf1781afd2de52ec890286cb946c7",
+      "bytes": 844588,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/collapsed.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/collapsed.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/collapsed.png",
+      "sha256": "8cbe26f8034b10cefcfb1be9f6944f9a1fdcf1781afd2de52ec890286cb946c7",
+      "bytes": 844588,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/expanded-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/expanded-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/expanded-developer.png",
+      "sha256": "88208e79f5a81b4821a48bf9742262d92ea68f934ceae8215d53f20506c1f672",
+      "bytes": 817793,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/expanded.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/expanded.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/expanded.png",
+      "sha256": "88208e79f5a81b4821a48bf9742262d92ea68f934ceae8215d53f20506c1f672",
+      "bytes": 817793,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/implementation.patch",
+      "sha256": "ee4bd538678f4fef8e813f7972811507f9a03ec9081c4570f494b2b1be61dbc5",
+      "bytes": 965,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/lint.txt",
+      "sha256": "35f39fd3eb2f598e1e48b718918925c461029e1b9298284502b1066a8f6f8688",
+      "bytes": 1097,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/mobile-developer.png",
+      "sha256": "cb186c833fd7580be0cd3837ed51a11173380fd0fff17bdf662b40ea422f6f1b",
+      "bytes": 463501,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/mobile.png",
+      "sha256": "cb186c833fd7580be0cd3837ed51a11173380fd0fff17bdf662b40ea422f6f1b",
+      "bytes": 463501,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-028/typecheck.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-028/typecheck.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-028/typecheck.txt",
+      "sha256": "33530f743a0b838cc8d404a0fd02820f006c71a43792651bba948ebdb1d620dd",
+      "bytes": 54,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/browser-check.mjs",
+      "sha256": "d1e805b9ce4c633ff9411eb1153014c022eb59e03b69c7fd9d49179d9ccfb174",
+      "bytes": 5224,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/browser-results-developer.txt",
+      "sha256": "432d272b6e8c65f5de0543a1974cd7562c3e13ad9c7ca4d244deef91c70ced2a",
+      "bytes": 585,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/browser-results.txt",
+      "sha256": "432d272b6e8c65f5de0543a1974cd7562c3e13ad9c7ca4d244deef91c70ced2a",
+      "bytes": 585,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/build.txt",
+      "sha256": "6d7e2532491fa0f406046b15095f2581c0af001381b5c1ddb11cf01d3bcf7c03",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/collapsed-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/collapsed-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/collapsed-developer.png",
+      "sha256": "190ad800afb27860421f69dcf4ccf263a6a01376162aea23351d85593db67965",
+      "bytes": 843896,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/collapsed.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/collapsed.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/collapsed.png",
+      "sha256": "190ad800afb27860421f69dcf4ccf263a6a01376162aea23351d85593db67965",
+      "bytes": 843896,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/expanded-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/expanded-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/expanded-developer.png",
+      "sha256": "bcf4e5d94d1f98853d1dc39e13ccade88197ebb97ce19c4352df1397a4f79ff6",
+      "bytes": 817774,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/expanded.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/expanded.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/expanded.png",
+      "sha256": "bcf4e5d94d1f98853d1dc39e13ccade88197ebb97ce19c4352df1397a4f79ff6",
+      "bytes": 817774,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/implementation.patch",
+      "sha256": "26e027c414cd2614d052f33e0e1920dd6db69b89186763f7d84b29785400ad11",
+      "bytes": 343,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/lint.txt",
+      "sha256": "fbf74dac8eae5b8262954a977037f8173cd6df41c38e81260ccf99213e1fc8d4",
+      "bytes": 1097,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/mobile-developer.png",
+      "sha256": "277e7068540f5ac9f5daef39b2c0afb4ddd942716d36cdf1920cf2cdcfb2c0d2",
+      "bytes": 463504,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-029/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-029/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-029/mobile.png",
+      "sha256": "277e7068540f5ac9f5daef39b2c0afb4ddd942716d36cdf1920cf2cdcfb2c0d2",
+      "bytes": 463504,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/browser-check.mjs",
+      "sha256": "52e482a837fe8965ea516157f8aa84dae67fd40e0b3f5e53cf3eb1c887d64a41",
+      "bytes": 3182,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/browser-results-developer.txt",
+      "sha256": "cc7b851c4884b93a127fb3d667b23f1d09e3968c0c28fe52a8ad986f5d26e442",
+      "bytes": 265,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/browser-results.txt",
+      "sha256": "cc7b851c4884b93a127fb3d667b23f1d09e3968c0c28fe52a8ad986f5d26e442",
+      "bytes": 265,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/build.txt",
+      "sha256": "d924a3f39913d8b3695024515cf4ea30b559a28c57a213cd0d7e12e72ae54d3d",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/default-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/default-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/default-developer.png",
+      "sha256": "e8383938dae3023afa6e3a451cd113574865993398151ecfb36dc8c59de78bed",
+      "bytes": 841973,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/default.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/default.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/default.png",
+      "sha256": "e8383938dae3023afa6e3a451cd113574865993398151ecfb36dc8c59de78bed",
+      "bytes": 841973,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/implementation.patch",
+      "sha256": "004e9e0ab406299ee0554029b8edc5789de1648a94ddf518c5909b7df95117a3",
+      "bytes": 1041,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/lint.txt",
+      "sha256": "cd57859ab6a027a5e6df0ab55936fdc842c9cd1dacad13f3017d30bb626b9795",
+      "bytes": 1097,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/mobile-developer.png",
+      "sha256": "277e7068540f5ac9f5daef39b2c0afb4ddd942716d36cdf1920cf2cdcfb2c0d2",
+      "bytes": 463504,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/mobile.png",
+      "sha256": "277e7068540f5ac9f5daef39b2c0afb4ddd942716d36cdf1920cf2cdcfb2c0d2",
+      "bytes": 463504,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-030/tests.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-030/tests.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-030/tests.txt",
+      "sha256": "9ba6dc6ed85fb4604d43ba05a0e2d5913d29100a019b3482f20edb99b6a533ef",
+      "bytes": 507,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/browser-check.mjs",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/browser-check.mjs",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/browser-check.mjs",
+      "sha256": "cc6f8b6725467fca043bc3a7490fd10e83f4b7851839e8d05822ac90ae4c792e",
+      "bytes": 3555,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/browser-results-developer.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/browser-results-developer.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/browser-results-developer.txt",
+      "sha256": "f02e29c2a4152278f239f26ada7fff31c8b507c22bc7665e82865f5b0dd5ce6b",
+      "bytes": 304,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/browser-results.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/browser-results.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/browser-results.txt",
+      "sha256": "f02e29c2a4152278f239f26ada7fff31c8b507c22bc7665e82865f5b0dd5ce6b",
+      "bytes": 304,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/build.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/build.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/build.txt",
+      "sha256": "ade815b6d73b4e5ad56e113708d36f4d5fc5be6a2dd63ddd7f3b7a70390ba407",
+      "bytes": 408,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/default-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/default-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/default-developer.png",
+      "sha256": "391470d3803dd4b93f970af42e9b1bf531202c7234e2791a0d246b0bcfbdc24a",
+      "bytes": 841976,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/default.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/default.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/default.png",
+      "sha256": "391470d3803dd4b93f970af42e9b1bf531202c7234e2791a0d246b0bcfbdc24a",
+      "bytes": 841976,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/expanded-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/expanded-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/expanded-developer.png",
+      "sha256": "d6a0441ba279810c4a57fbda7dd4befdd9f044873a32cc8de4ad42424713715b",
+      "bytes": 815503,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/expanded.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/expanded.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/expanded.png",
+      "sha256": "d6a0441ba279810c4a57fbda7dd4befdd9f044873a32cc8de4ad42424713715b",
+      "bytes": 815503,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/implementation.patch",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/implementation.patch",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/implementation.patch",
+      "sha256": "47366942845d4eecffa3cf642b82ced1ea611ac711aebfa8f415749804d994bd",
+      "bytes": 373,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/lint.txt",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/lint.txt",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/lint.txt",
+      "sha256": "79138d120a2e189d2974072ba72bbbd1388c74d58b65c827d27420d1ea5d39d9",
+      "bytes": 1097,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/mobile-developer.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/mobile-developer.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/mobile-developer.png",
+      "sha256": "cb186c833fd7580be0cd3837ed51a11173380fd0fff17bdf662b40ea422f6f1b",
+      "bytes": 463501,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/controle/evidencias/FAC-031/mobile.png",
+      "destination": "docs/09-entregas/2026/evidencias/controle/evidencias/FAC-031/mobile.png",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/evidencias/FAC-031/mobile.png",
+      "sha256": "cb186c833fd7580be0cd3837ed51a11173380fd0fff17bdf662b40ea422f6f1b",
+      "bytes": 463501,
+      "treatment": "evidência duplicada conferida byte a byte; original preservado"
+    },
+    {
+      "source": "documentacoes/economia/README.md",
+      "destination": "docs/07-operacao/economia/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/economia/README.md",
+      "sha256": "805d97b15e64a4c1ae5ef216b56449b0d9d6c8b643ecd8db75c7bc3c3634f477",
+      "bytes": 453,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/handoff/README.md",
+      "destination": "docs/07-operacao/handoff/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/handoff/README.md",
+      "sha256": "dfa9db49039b1ece35c107f9f62fec2cf45f79430c35691910a579abce34ff93",
+      "bytes": 450,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/infraestrutura/README.md",
+      "destination": "docs/07-operacao/infraestrutura/01-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/infraestrutura/README.md",
+      "sha256": "df49747823c0882003f8c5a4c04dd19022d9ed4452c908bb75c51c8cdf672d9d",
+      "bytes": 471,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/operacao/README.md",
+      "destination": "docs/07-operacao/operacao/00-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/operacao/README.md",
+      "sha256": "3a84fd0427926a4b531b5335c16ed71e6e845ce30fbc6f682bb85cbecd161180",
+      "bytes": 453,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/planejamento/README.md",
+      "destination": "docs/08-desenvolvimento/tickets/planejamento/00-README.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/planejamento/README.md",
+      "sha256": "de61254ceb1d8e8d0f41498b0a4102e64eeac0f8f12e7abb707f38e6207cb157",
+      "bytes": 477,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    },
+    {
+      "source": "documentacoes/runtime/README.md",
+      "destination": "docs/03-modulos/runtime/02-referencia-v2.3.md",
+      "archive": "docs/99-historico/compatibilidade-5845754/runtime/README.md",
+      "sha256": "c1e1e1fbbecfb1ccd08cdcf82b6f9bcbd14e18875c00f2698286e2d49f190b0f",
+      "bytes": 448,
+      "treatment": "atalho redundante removido; capítulo integral já canônico"
+    }
+  ],
+  "verification": "11 bridges e 138 evidências; sem conteúdo exclusivo não migrado"
+}

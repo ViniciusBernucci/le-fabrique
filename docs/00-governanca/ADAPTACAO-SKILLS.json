@@ -1,0 +1,230 @@
+{
+  "date": "2026-10-07",
+  "source": ".agents/skills",
+  "canonical": "skills",
+  "physical_installation": "NÃO REALIZADA em .agents: diretório read-only; guias apontam fallback canônico skills/",
+  "files": [
+    {
+      "source": ".agents/skills/README.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/README.md",
+      "sha256": "8af606ec27cc90230e5b9238bc172ae47e346d93af07ce0984653fc7dedee221",
+      "bytes": 12492
+    },
+    {
+      "source": ".agents/skills/arquiteto-de-software/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/arquiteto-de-software/SKILL.md",
+      "sha256": "2fca6c644e31808f3e9915d6dd3c07c834cc56a2952137d62b42733622153823",
+      "bytes": 2152
+    },
+    {
+      "source": ".agents/skills/arquiteto-de-software/references/roteiro-arquitetural.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/arquiteto-de-software/references/roteiro-arquitetural.md",
+      "sha256": "b7c3383a51281f3e83bdc680e7ee2b69c2de0f66607093604856fca01486214c",
+      "bytes": 10515
+    },
+    {
+      "source": ".agents/skills/fechar-entrega/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/fechar-entrega/SKILL.md",
+      "sha256": "f3549e0f46c42f9eebcba1ee02e519071a2e20ecf84868ffa8c62cd168ea0afc",
+      "bytes": 2661
+    },
+    {
+      "source": ".agents/skills/fechar-entrega/references/intranet.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/fechar-entrega/references/intranet.md",
+      "sha256": "404aeeadd5005b25351e3fbb81f379b728e41756d7b990e7a9a861e7218846f9",
+      "bytes": 12670
+    },
+    {
+      "source": ".agents/skills/implementador-de-ticket/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/implementador-de-ticket/SKILL.md",
+      "sha256": "6992404765d27668b80a22e82b2bb090e3e4e20119eb4bc9314ef947c2317ec6",
+      "bytes": 3833
+    },
+    {
+      "source": ".agents/skills/orquestrador-fluxo-ia/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/orquestrador-fluxo-ia/SKILL.md",
+      "sha256": "fdd959db5b039c743acd4583930d24e6a3d76ab07aef7b15c686d20986ca8f9f",
+      "bytes": 5322
+    },
+    {
+      "source": ".agents/skills/orquestrador-fluxo-ia/references/estado-e-gates.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/orquestrador-fluxo-ia/references/estado-e-gates.md",
+      "sha256": "4ef98b3f65111479b649cf0412eb306f7d8be0ada9e3bf8d8dad317c33056866",
+      "bytes": 2902
+    },
+    {
+      "source": ".agents/skills/review-loop-driver/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/review-loop-driver/SKILL.md",
+      "sha256": "0465ae54f057e8ad54e55406f590cbeddd73a507322193a1d0139dc8ca907682",
+      "bytes": 6405
+    },
+    {
+      "source": ".agents/skills/revisor-de-codigo/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/SKILL.md",
+      "sha256": "da41ed71085e4b64c84f855002202d9afca50c97de2ea50edfc783b9c06819e3",
+      "bytes": 7415
+    },
+    {
+      "source": ".agents/skills/revisor-de-codigo/references/correcao-performance.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/correcao-performance.md",
+      "sha256": "b094fd0126bebbc612fcc652dad8745b6667caf2d84907a0234bce99e65ce7bc",
+      "bytes": 3010
+    },
+    {
+      "source": ".agents/skills/revisor-de-codigo/references/qualidade.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/qualidade.md",
+      "sha256": "366a88378874033b9def23c2984c21988ecdb15344fae8cafd5927e8ce63f3d0",
+      "bytes": 3703
+    },
+    {
+      "source": ".agents/skills/revisor-de-codigo/references/seguranca.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-codigo/references/seguranca.md",
+      "sha256": "c407ab5dc873c5e2e73789756d5019e1191e0165943248a3af6afb8c995c0f2a",
+      "bytes": 4021
+    },
+    {
+      "source": ".agents/skills/revisor-de-qa/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/revisor-de-qa/SKILL.md",
+      "sha256": "076f6d069e12513332648f1d658faa739e1fddf1618bf46e3f8d3dba0a1f61db",
+      "bytes": 4277
+    },
+    {
+      "source": ".agents/skills/security-audit/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/security-audit/SKILL.md",
+      "sha256": "1a28117101f549c0deee6c15c6f7255031231c5c02632b22e24920226d98087b",
+      "bytes": 6501
+    },
+    {
+      "source": ".agents/skills/security-audit/agents/openai.yaml",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/security-audit/agents/openai.yaml",
+      "sha256": "356801003a332fba777f6c5ce950d877f8817d486f13c70e2852c40757575ca4",
+      "bytes": 288
+    },
+    {
+      "source": ".agents/skills/security-audit/references/ecosystem-checks.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/security-audit/references/ecosystem-checks.md",
+      "sha256": "46f7d88ff69becda8cbf413d5ac9751f6325233ffa031868ce223d78eab49869",
+      "bytes": 9886
+    },
+    {
+      "source": ".agents/skills/security-audit/references/security-checklist.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/security-audit/references/security-checklist.md",
+      "sha256": "b87035918731c0dfa9e5c273057d6492da0032e651ce8abfe07ddd18325eb932",
+      "bytes": 11437
+    },
+    {
+      "source": ".agents/skills/security-audit/scripts/security-surface.sh",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/security-audit/scripts/security-surface.sh",
+      "sha256": "c13bb60831688805dcdcd00f18a415df40d321effd0019a61c006a4773819124",
+      "bytes": 6306
+    },
+    {
+      "source": ".agents/skills/simplify/README.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/simplify/README.md",
+      "sha256": "f540294d1a8021ed016f131a39f82004ab5786797e0cdd3019d4897d67fb6ff7",
+      "bytes": 426
+    },
+    {
+      "source": ".agents/skills/simplify/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/simplify/SKILL.md",
+      "sha256": "936e3f31ff223d752c653c81a43e378de6de8809fda904e6b206628fd95cd567",
+      "bytes": 6097
+    },
+    {
+      "source": ".agents/skills/simplify/codemap.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/simplify/codemap.md",
+      "sha256": "8968b602f7c3e03d9593dce7675865ab1abd9ca302d4fe67ef8fea7c80ac0bc8",
+      "bytes": 371
+    },
+    {
+      "source": ".agents/skills/tech-lead/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/tech-lead/SKILL.md",
+      "sha256": "db444e6875bd727fb202ec1babeb4c05a366d9a509f697f52bb44b2996edffde",
+      "bytes": 3131
+    },
+    {
+      "source": ".agents/skills/worktree-planner/SKILL.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/worktree-planner/SKILL.md",
+      "sha256": "510178202dbab1c6eaaebdb5b30cbb7d794a54b9590feee6ea7089290a5a43ca",
+      "bytes": 2945
+    },
+    {
+      "source": ".agents/skills/worktree-planner/references/intranet.md",
+      "archive": "docs/99-historico/skills-importadas-2026-10-07/worktree-planner/references/intranet.md",
+      "sha256": "c80495c919a2287c58513a12d539a453f147c3e098ef0a3b5dc19023c2edb745",
+      "bytes": 61507
+    }
+  ],
+  "adapted_skills": [
+    "arquiteto-de-software",
+    "tech-lead",
+    "worktree-planner",
+    "implementador-de-ticket",
+    "orquestrador-fluxo-ia",
+    "fechar-entrega",
+    "review-loop-driver",
+    "revisor-de-codigo",
+    "revisor-de-qa",
+    "security-audit",
+    "simplify"
+  ],
+  "originals": "snapshots íntegros; instruções estrangeiras sem uso operativo",
+  "automatic_discovery": "NÃO VERIFICADA",
+  "baseline_shared": [
+    {
+      "source": "AGENTS.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/AGENTS.md",
+      "sha256": "84c7bb2849e8e0d74b0577ed8bb5421ce7f9dcdb4efaf9d71c3ce2d19ed1b295",
+      "bytes": 3599
+    },
+    {
+      "source": "CLAUDE.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/CLAUDE.md",
+      "sha256": "bcbce2989a2181d85f3b61d021f0de8d7d315c9c6cebc673c6af6e39e0de86dc",
+      "bytes": 3683
+    },
+    {
+      "source": "ANTIGRAVITY.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/ANTIGRAVITY.md",
+      "sha256": "63a2d28b11e444b56799dd0559c0050874402f58ec726c25a067d02c16e740ab",
+      "bytes": 3780
+    },
+    {
+      "source": "README.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/README.md",
+      "sha256": "770cf1399c4b717626460bfbc93f1779d4809f42b90f603e5770616de0ab5a65",
+      "bytes": 1822
+    },
+    {
+      "source": "docs/00-governanca/05-fontes-carregamento.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/docs/00-governanca/05-fontes-carregamento.md",
+      "sha256": "351d7a428f2435dc99b94542099fc5027c9304e871f7930991032aba4dbdebaf",
+      "bytes": 3103
+    },
+    {
+      "source": "docs/02-INDEX.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/docs/02-INDEX.md",
+      "sha256": "b0d22c4eabc3304fdfd57c0a447264e9a82120ab9daa316f7bee772f22a8046b",
+      "bytes": 38020
+    },
+    {
+      "source": "docs/04-CHANGELOG.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/docs/04-CHANGELOG.md",
+      "sha256": "5e87c9438af5a5c2a5bff01c6582c2742f6bfc63d1ab03aaff35fe98d982f0f1",
+      "bytes": 38015
+    },
+    {
+      "source": "docs/08-desenvolvimento/09-backlog.md",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/docs/08-desenvolvimento/09-backlog.md",
+      "sha256": "ace6c9eecf03181e6f2f3026064865c253bf0f9eaeba1c36aa2906c7ce8fa1f9",
+      "bytes": 24654
+    },
+    {
+      "source": "scripts/validar-documentacao.py",
+      "archive": "docs/99-historico/skills-baseline-doc-mv003/scripts/validar-documentacao.py",
+      "sha256": "bb368f1d4b1e2b14dc4dc9cafca1d9bfb270f0516491f8b7a6b4e55340f6ec6f",
+      "bytes": 12336
+    }
+  ],
+  "baseline_evidence": "Reconstruída a revisão DOC-MV-003 pelo patch anterior; 9 arquivos conferidos pelos hashes do manifesto anterior"
+}

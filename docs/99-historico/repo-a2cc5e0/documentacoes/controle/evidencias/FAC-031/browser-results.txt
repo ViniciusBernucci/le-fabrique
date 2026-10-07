@@ -1,0 +1,1 @@
+PASS: menu starts at 66px despite previous expanded preference or unavailable storage; arrow centered when collapsed and 12px inset when expanded, no visible text/border; keyboard expands to 234px, navigation keeps choice, reload restores 66px; five widths/mobile toggle without overflow or page errors.

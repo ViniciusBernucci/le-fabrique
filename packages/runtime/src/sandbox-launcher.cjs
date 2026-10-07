@@ -122,7 +122,7 @@ try {
   }
   ensureDirectory(join(root, "tmp", "home"));
   chmodSync(join(root, "tmp", "home"), 0o700);
-  writeFileSync(join(root, "etc", "passwd"), "root:x:0:0:Le Fabrique sandbox:/tmp/home:/bin/sh\n");
+  writeFileSync(join(root, "etc", "passwd"), "root:x:0:0:La fabrique sandbox:/tmp/home:/bin/sh\n");
   writeFileSync(join(root, "etc", "group"), "root:x:0:\n\nnogroup:x:65534:\n");
   ensureDirectory(join(root, "var", "cache"));
   ensureDirectory(join(root, "var", "lib"));

@@ -1,0 +1,63 @@
+Fábrica de Software | v2.1 | Planejamento
+11
+documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md
+Dimensionamento da VPS única - MVP v2.1
+Status: PLANEJADO. Estimativa de engenharia, sujeita a ensaio do repositório. Não são requisitos
+oficiais dos CLIs. Uma VPS abriga controle, banco/fila, clientes, execução e checks; inferência nos
+fornecedores, sem GPU.
+Perfis
+Recurso
+Mínimo
+Bom - recomendação inicial
+Ideal para o MVP
+CPU
+4 vCPU
+8 vCPU
+8 vCPU; ampliar se CPU for
+gargalo
+RAM
+8 GB
+16 GB
+32 GB
+Disco útil provisionado
+120 GB SSD
+200 GB SSD/NVMe
+300 GB SSD/NVMe
+Jobs de código simultâneos
+1 leve
+1 completo
+1 inicialmente; até 2
+validados
+Browser/E2E
+Opcional, leve e sequencial
+1 sessão sequencial
+1-2 conforme medição
+Projetos ativos no
+experimento
+1
+1
+1; expandir depois
+Todos: Linux 64 bits suportado/atualizado, preferência x86_64; compatibilidade dos binários
+confirmada; Docker/Compose quando usados; Git/Node/PHP e toolchains do piloto; HTTPS, saída
+aos fornecedores/Git/dependências; backup externo e Git remoto. Tráfego depende de imagens,
+builds e artefatos; medir antes de contratar franquia. GUI completa e GPU não são requisitos;
+browser headless só quando necessário.
+Mínimo: 4 vCPU / 8 GB / 120 GB
+Viável como ponto de partida para repositório pequeno, poucos serviços e build leve. Envelope
+inicial: SO/controle/Postgres/Redis/supervisor até 3 GB; execução agregada até 3 GB; margem 2
+GB. Limite do job 2 vCPU/3 GB, 256 processos e 30 min, ajustáveis após ensaio. Limitar serviços de
+integração e não rodar builds e E2E simultâneos.
+Não representa garantia de que qualquer Angular/Laravel/build caberá. Se baseline exceder limite,
+usar Bom antes do experimento completo. Swap pode amortecer picos, mas não substitui RAM;
+evitar execução sustentada em swap. Não selecionar VPS de 2 GB/4 GB para este escopo completo
+com builds.
+Bom: 8 vCPU / 16 GB / 200 GB
+Perfil recomendado para começar o MVP com folga: controle e um job, incluindo build/testes;
+browser e revisão sequenciais. Envelope: SO 1.5 GB, controle/API/scheduler 1.5 GB, PostgreSQL
+1.5 GB, Redis 0.5 GB, supervisor/observabilidade 1 GB = 6 GB; execução agregada até 6 GB;
+margem 4 GB.
+São envelopes de planejamento, não configurações finais de PostgreSQL/PHP. Guardar orçamento
+global com overhead/cache do kernel; medir RSS e memória do cgroup. Limite inicial job 4 vCPU/6
+GB/256 processos/30 min. Capacidade de review e dependências auxiliares precisa caber no
+mesmo envelope se ativa na etapa.
+Ideal: 8 vCPU / 32 GB / 300 GB

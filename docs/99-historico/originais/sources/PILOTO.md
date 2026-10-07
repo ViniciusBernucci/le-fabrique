@@ -1,0 +1,12 @@
+# Contrato do piloto
+Status: PLANEJADO — completar antes de execução.
+- Repositório/acesso, base branch/SHA: A DEFINIR.
+- Funcionalidade pequena e critérios verificáveis: A DEFINIR.
+- Stack/versões/checks/baseline: inspecionar repo real.
+- Caminhos permitidos/proibidos: A DEFINIR.
+- Infraestrutura: VPS única; perfil Bom recomendado 8 vCPU/16 GB/200 GB; perfil contratado A DEFINIR. Clientes oficiais autenticados na VPS; compatibilidade A VERIFICAR.
+- Providers/planos/modos de autenticação/modelos: registrar no preflight real.
+- Limites propostos: um writer, 30 min/tentativa, duas correções, dois handoffs.
+- API: desativada; orçamento mensal zero. Extra usage/créditos/autorecharge: desativados nos fornecedores.
+- Dados somente sintéticos; sem merge/deploy automático.
+Preferir filtro, validação ou exibição num módulo existente com testes. Excluir autenticação/pagamento/migração irreversível na primeira amostra. Não assumir qual sistema será usado; pode ser escolhido pelo responsável.

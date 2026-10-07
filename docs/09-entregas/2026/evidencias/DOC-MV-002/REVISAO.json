@@ -1,0 +1,1102 @@
+{
+  "baseline": "5845754",
+  "state": "árvore de trabalho sem commit; revisão/aceite pendentes",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 2893,
+      "sha256": "f3dddbbd5eb543426bd6669b8226b20a6a4590de9ac7526470245b1730d0b871"
+    },
+    {
+      "path": "ANTIGRAVITY.md",
+      "bytes": 3074,
+      "sha256": "3d0b4e33addbae47d7851bdcb863fe67270d6334c4476fcfe86733401e4bca24"
+    },
+    {
+      "path": "BACKLOG.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 2977,
+      "sha256": "faac06297c9fad55bbfc555f5fe6171b0d2354963d7442fb45dde036f642987c"
+    },
+    {
+      "path": "CONTROLE-MVP.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "ESPEC-MVP.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "FONTES.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "GUIA-DE-INTEGRACAO.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "MATRIZ-COBERTURA.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "PILOTO.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "PLANO-MVP.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "PROMPT-INICIAL.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1795,
+      "sha256": "a202ae06c278b0a9dff5b6def3141de5ec4b74d75fd8994a2010dd8513029e52"
+    },
+    {
+      "path": "apps/web/src/ProjectDefinitionPanel.tsx",
+      "bytes": 13180,
+      "sha256": "d22dff2dec44c0353a5dbd3f7bd105db4a16a9956e1b5b14af4034eb7fba87b0"
+    },
+    {
+      "path": "docs/00-governanca/GUIA-DE-INTEGRACAO.md",
+      "bytes": 2385,
+      "sha256": "afa6e66934be310bf1cb500b94059fae3397789665a38c1df89d7f69da0c462e"
+    },
+    {
+      "path": "docs/00-governanca/INVENTARIO-REPO.json",
+      "bytes": 428933,
+      "sha256": "eba79721adefeee99b35f932710a6b868e40342a62cd9b45e77bf047a40adcd7"
+    },
+    {
+      "path": "docs/00-governanca/MAPA-MIGRACAO.md",
+      "bytes": 4077,
+      "sha256": "b5d42b2ed756152bb9c2e208824dd947aae54d8deb0b825028ec57fa2e376a4a"
+    },
+    {
+      "path": "docs/00-governanca/MAPA-SECOES-REPO.json",
+      "bytes": 1096666,
+      "sha256": "cea2507866d644d2b9a77d60483c25c54c2893f49c4f6df52803642ea57c5797"
+    },
+    {
+      "path": "docs/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "bytes": 5638,
+      "sha256": "9b987587e0b5964e5896606ebe11093f1a61c24435e0eeb7bce93f97f49704fe"
+    },
+    {
+      "path": "docs/00-governanca/REALOCACAO-RAIZ.json",
+      "bytes": 3594,
+      "sha256": "e765a7d240fdfc1a5463507611d7da2ad107bb1094db0c080139fc977928818c"
+    },
+    {
+      "path": "docs/00-governanca/REMOCAO-DOCUMENTACOES.json",
+      "bytes": 73247,
+      "sha256": "7e773041d4ca9df0ce62d46ba598d9280816b7757c8b86167047fed543703a1b"
+    },
+    {
+      "path": "docs/00-governanca/fontes-carregamento.md",
+      "bytes": 2956,
+      "sha256": "98d52f41d57bf1924a71b6ce4368624d61f84ebd37e91362b303f0ba72263eff"
+    },
+    {
+      "path": "docs/04-features/control-settings.md",
+      "bytes": 1441,
+      "sha256": "191973d7879915ffb2d9683970771c06a8b5dea32e3f292369408da0a2c203a6"
+    },
+    {
+      "path": "docs/04-features/documentation-approval.md",
+      "bytes": 1325,
+      "sha256": "e23b4de71d90f2424ca7727a6ea08696f2f664279d05033665ba5f415ca1995c"
+    },
+    {
+      "path": "docs/04-features/provider-handoff.md",
+      "bytes": 1460,
+      "sha256": "e5e0e8986871f2111680c14a882d363d6b939890a3a2c7d43829f5efe0ead3df"
+    },
+    {
+      "path": "docs/04-features/recovery-operation.md",
+      "bytes": 1375,
+      "sha256": "0d9c565c1d3e420204ed43693299f2ac4afaff229a79c43edfc492f65b9e1a94"
+    },
+    {
+      "path": "docs/04-features/ticket-execution.md",
+      "bytes": 1424,
+      "sha256": "a9dfe061858865d72257012834040ec80dfc079a45f3ade3622880eaf5147685"
+    },
+    {
+      "path": "docs/04-features/usage-dashboard.md",
+      "bytes": 1321,
+      "sha256": "e63cbc71f224cf5808ad7ba0149f961d80cfbe589d08321d4b3d5dfb783fe090"
+    },
+    {
+      "path": "docs/08-desenvolvimento/README.md",
+      "bytes": 962,
+      "sha256": "7796d8e9a8aecca7f416dd66f67b5d48c577b20347b3022e8af0b950c6d658fc"
+    },
+    {
+      "path": "docs/08-desenvolvimento/backlog.md",
+      "bytes": 24263,
+      "sha256": "44a69cd38ea9c8ee87fe57df10ac7e99561aa9b2610f36e332df81395afc2e15"
+    },
+    {
+      "path": "docs/08-desenvolvimento/catalogo-fac.md",
+      "bytes": 10434,
+      "sha256": "9cc69bf51b92b1ded0bef3d3864863c6f6b50f974fef78a468529693305d4fc5"
+    },
+    {
+      "path": "docs/08-desenvolvimento/controle-mvp.md",
+      "bytes": 8851,
+      "sha256": "73ef2682e1dbfb7399fd4788fa9ce481fa31d1c56276abc0298888c9a8c06143"
+    },
+    {
+      "path": "docs/08-desenvolvimento/tickets/DOC-MV-002.md",
+      "bytes": 1252,
+      "sha256": "3e05c3d1d0cb40d1df4652c13e6527c8f44538c8f9ed71ce1ced4c37bb79c816"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-07-DOC-MV-002-organizacao-raiz.md",
+      "bytes": 3808,
+      "sha256": "cab8aec32f9014749082e87edaf06374878aca2a5412e2fc9146a5d981da671a"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-002/checks.json",
+      "bytes": 1339,
+      "sha256": "612a0596c8167c202e20a68ae4c03ef9b5c6196d1fdec64bf482c674b4df8c3d"
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/DOC-MV-002/validacao.json",
+      "bytes": 338,
+      "sha256": "8a92ab268da8c8e60e7fef60bffaaff5da424e18ef2fd014de7e5d8eef40ec8f"
+    },
+    {
+      "path": "docs/09-entregas/README.md",
+      "bytes": 12063,
+      "sha256": "77ff3966d9e57aa06653b42dea777d78c1751744ae32475f7ff12c31596d3b39"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/INDEX.md",
+      "bytes": 297,
+      "sha256": "c7748616e7173b9cb7d027f80641b807b5a0abe768ec64de62661f4c4b806ffb"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/POLITICA-IA.md",
+      "bytes": 444,
+      "sha256": "37211291eb715c8fe2fe98c57746f5be85693a52d5d6b32aeb8229db5df60360"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/configuracao/README.md",
+      "bytes": 463,
+      "sha256": "acd2a6bc7ea92b0ecee73870729112006fa5899ca185043b8cf100df6b53a3de"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/contexto/README.md",
+      "bytes": 465,
+      "sha256": "836c2b74a492c5ac850527407f0b3d960d20ce15223236a86a1950e7e1d39d92"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/controle/README.md",
+      "bytes": 451,
+      "sha256": "a4f56ccbfd36a6d0a702928fb5b1ee1074ea8f42bac3fe73b5628b9fc845a4ca"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/economia/README.md",
+      "bytes": 453,
+      "sha256": "805d97b15e64a4c1ae5ef216b56449b0d9d6c8b643ecd8db75c7bc3c3634f477"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/handoff/README.md",
+      "bytes": 450,
+      "sha256": "dfa9db49039b1ece35c107f9f62fec2cf45f79430c35691910a579abce34ff93"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/infraestrutura/README.md",
+      "bytes": 471,
+      "sha256": "df49747823c0882003f8c5a4c04dd19022d9ed4452c908bb75c51c8cdf672d9d"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/operacao/README.md",
+      "bytes": 453,
+      "sha256": "3a84fd0427926a4b531b5335c16ed71e6e845ce30fbc6f682bb85cbecd161180"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/planejamento/README.md",
+      "bytes": 477,
+      "sha256": "de61254ceb1d8e8d0f41498b0a4102e64eeac0f8f12e7abb707f38e6207cb157"
+    },
+    {
+      "path": "docs/99-historico/compatibilidade-5845754/runtime/README.md",
+      "bytes": 448,
+      "sha256": "c1e1e1fbbecfb1ccd08cdcf82b6f9bcbd14e18875c00f2698286e2d49f190b0f"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/BACKLOG.md",
+      "bytes": 24009,
+      "sha256": "2e261150fab3ae506882bacaf97d332b9ba33c41f2e18ba81595ad01fd376dd6"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/CHANGELOG.md",
+      "bytes": 37223,
+      "sha256": "21ec4b1c4ab23fb9c2d8eb9b96baebe507dfde8651077aea3322ee9a72bb8992"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/CONTROLE-MVP.md",
+      "bytes": 402,
+      "sha256": "f86194374cd4aa12806bd27d8bd19a24bcf3b026b8fb478b9eb5186da04c4c7e"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/ESPEC-MVP.md",
+      "bytes": 399,
+      "sha256": "f681fc8649b716e9606f7c0f90eb33d7ea6b623c30a959bc3c0e51a7a8a33be9"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/FONTES.md",
+      "bytes": 392,
+      "sha256": "0c243da684da901a4ac3b91410e4c46d80b93719db2a3a90e21dd7b6ca6e5a32"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/GUIA-DE-INTEGRACAO.md",
+      "bytes": 2213,
+      "sha256": "512008335b59bb2acae74e9f669598105d32e83634b412c50ebf412537b6cd41"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/MATRIZ-COBERTURA.md",
+      "bytes": 414,
+      "sha256": "f3c570198339a977de18e29b54a2758e1c07eb89ba0065830708fb8ed04a5744"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/PILOTO.md",
+      "bytes": 384,
+      "sha256": "f0e25f22e65eb97748516880df265797c801b52606500f450ef209a727cf691a"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/PLANO-MVP.md",
+      "bytes": 393,
+      "sha256": "303c89257e479e4ac5d5113d4c516452a7ba6ce40904022729326fa029cd0652"
+    },
+    {
+      "path": "docs/99-historico/raiz-5845754/PROMPT-INICIAL.md",
+      "bytes": 376,
+      "sha256": "ab586dcfa67615f2c2565e7467257290610be3a36232330f163d20ef783112be"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "bytes": 37553,
+      "sha256": "0ba5a5988a2778247f014a80bb89ab42ee28c6b8057e25914ee7cc62d085fb2f"
+    },
+    {
+      "path": "docs/INDEX.md",
+      "bytes": 40919,
+      "sha256": "5ca1253259fd1981829031e58a59dabeb43a41a068b9141c3b9662044cc41227"
+    },
+    {
+      "path": "documentacoes/INDEX.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/POLITICA-IA.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-015-diff.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-016-diff.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-017-diff.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-018-checks.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-018-diff.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/agent-modal-mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/agents-desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/agents-mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/checks.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/runtime-tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/skill-modal.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/skills-desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/typecheck.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-023/worker-tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/agents-desktop-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/agents-desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/agents-mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/agents-mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/configuration-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/configuration.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/overview-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/overview.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/configuracao/evidencias/FAC-026/typecheck.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/contexto/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020/browser-results.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020/desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-020A/browser-results.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/browser-results-developer.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/browser-results.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-021/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/browser-results-developer.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/browser-results.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/control-desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/settings-desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-022/settings-mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/analyze-media.py",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/media-analysis.json",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/media-info.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/prepare-video.py",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-024/typecheck.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/desktop-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/desktop.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-025/typecheck.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/collapsed-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/collapsed.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-027/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/collapsed-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/collapsed.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/expanded-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/expanded.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-028/typecheck.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/collapsed-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/collapsed.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/expanded-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/expanded.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-029/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/default-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/default.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-030/tests.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/browser-check.mjs",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/browser-results-developer.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/browser-results.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/build.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/default-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/default.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/expanded-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/expanded.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/implementation.patch",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/lint.txt",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/mobile-developer.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/controle/evidencias/FAC-031/mobile.png",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/economia/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/handoff/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/infraestrutura/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/operacao/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/planejamento/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "documentacoes/runtime/README.md",
+      "status": "DELETED",
+      "recovery": "baseline e mapas/snapshots documentados"
+    },
+    {
+      "path": "prompts/PROMPT-INICIAL.md",
+      "bytes": 1750,
+      "sha256": "8a2ad7786e0bae15133a9d1f7fae785dfd01e2dce73371d9297329761efeadb6"
+    },
+    {
+      "path": "prompts/PROMPT-MESTRE-MIGRACAO.md",
+      "bytes": 7648,
+      "sha256": "9396d8b36bfa0ae281aa1574d8cbb27ceb2706480192bdba259e084daebf09d6"
+    },
+    {
+      "path": "prompts/implementacao/PROMPT-00-PREPARACAO.md",
+      "bytes": 8548,
+      "sha256": "552ee24445a331239d067c1e1fb6b918254f22d051b333b03777b50370181f69"
+    },
+    {
+      "path": "prompts/implementacao/PROMPTS-IMPLEMENTACAO.md",
+      "bytes": 58308,
+      "sha256": "67e26d768ae1b457ccbb61414ea6c04d6526fcf9b2452b923db4b8c091b02a68"
+    },
+    {
+      "path": "scripts/validar-documentacao.py",
+      "bytes": 9201,
+      "sha256": "40f3365451309a8e78d48f7c3ef98f22d874e1852238d35bb7a983d3eed07c97"
+    }
+  ],
+  "patch": {
+    "bytes": 244156,
+    "sha256": "a2a743bfdb3e0478a928b245b68d753e21c7c64adc42eae4caaa2be8a5a1f406",
+    "excluded_paths": [
+      ":!docs/99-historico/**",
+      ":!docs/09-entregas/2026/evidencias/**",
+      ":!docs/00-governanca/*.json",
+      ":!documentacoes/**/evidencias/**"
+    ]
+  },
+  "excludes": "REVISAO.json e editorial.patch da lista para evitar circularidade; digest do patch separado",
+  "sanitization": {
+    "text_files_scanned": 56,
+    "patterns": [
+      "sk-[A-Za-z0-9_-]{20,}",
+      "gh[pousr]_[A-Za-z0-9]{25,}",
+      "-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----"
+    ],
+    "findings": [],
+    "limit": "padrões fortes; não prova ausência universal de segredo/PII"
+  }
+}

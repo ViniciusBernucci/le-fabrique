@@ -32,7 +32,7 @@ beforeEach(async () => {
   workspaceRoot = resolve(fixtureRoot, "workspaces");
   snapshotRoot = resolve(fixtureRoot, "snapshots");
   await runChecked("/usr/bin/git", ["init", "--initial-branch=main", repository]);
-  await git(repository, "config", "user.name", "Le Fabrique Test");
+  await git(repository, "config", "user.name", "La fabrique Test");
   await git(repository, "config", "user.email", "test@example.invalid");
   await writeFile(resolve(repository, "tracked.txt"), "base\n");
   await writeFile(resolve(repository, "binary.bin"), Buffer.from([0, 1, 2, 3]));

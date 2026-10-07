@@ -1,5 +1,5 @@
 import type { Project, Ticket } from "@le-fabrique/contracts";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { useEffect, useState } from "react";
 import {
   authenticate,
@@ -11,6 +11,7 @@ import {
   projectEventStreamUrl,
   updateProjectBaseRevision,
 } from "./control-api";
+import { DashboardLayout } from "./DashboardLayout";
 import { OperationPanel } from "./OperationPanel";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { pollResource } from "./poll-resource";
@@ -18,8 +19,10 @@ import { watchProjectEvents } from "./project-events";
 import { hasExecutableBaseRevision } from "./project-view-model";
 import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
+import { TasksPanel } from "./TasksPanel";
 
 export function App() {
+  const [showHome, setShowHome] = useState(true);
   const [token, setToken] = useState(() => sessionStorage.getItem("adminToken") ?? "");
   const [authenticated, setAuthenticated] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -27,7 +30,7 @@ export function App() {
   const [eventSequence, setEventSequence] = useState("0");
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
-  const [activeArea, setActiveArea] = useState<"control" | "settings">("control");
+  const [activeArea, setActiveArea] = useState<"control" | "settings" | "tasks">("control");
   const [projectDefinitionVersion, setProjectDefinitionVersion] = useState<number | null>(null);
   const [projectExecutionProfileReady, setProjectExecutionProfileReady] = useState(false);
   const activeProject = projects.find((project) => project.id === selectedProject);
@@ -144,11 +147,15 @@ export function App() {
     }
   }
 
-  if (!authenticated)
-    return (
+  let content: ReactNode;
+
+  if (!showHome && activeArea === "tasks")
+    content = <TasksPanel projects={projects} token={authenticated ? token : undefined} />;
+  else if (!showHome && !authenticated)
+    content = (
       <main className="login-shell">
         <form className="panel login" onSubmit={login}>
-          <p className="eyebrow">LE FABRIQUE</p>
+          <p className="eyebrow">La fabrique</p>
           <h1>Controle da fábrica</h1>
           <label>
             Token administrativo
@@ -161,172 +168,176 @@ export function App() {
             />
           </label>
           <button type="submit">Entrar</button>
+          <button type="button" className="secondary-action" onClick={() => setShowHome(true)}>
+            Voltar ao painel inicial
+          </button>
           <p className="message" role="status">
             {message}
           </p>
         </form>
       </main>
     );
-
-  return (
-    <main className="shell">
-      <header>
-        <div>
-          <p className="eyebrow">LE FABRIQUE</p>
-          <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
-        </div>
-        <p className="message" role="status">
-          {message}
-        </p>
-      </header>
-      <nav className="area-nav" aria-label="Áreas do painel">
-        <button
-          type="button"
-          className={activeArea === "control" ? "active" : ""}
-          onClick={() => setActiveArea("control")}
-        >
-          Operação
-        </button>
-        <button
-          type="button"
-          className={activeArea === "settings" ? "active" : ""}
-          onClick={() => setActiveArea("settings")}
-        >
-          Configurações
-        </button>
-      </nav>
-      {activeArea === "settings" ? (
-        <SettingsPanel token={token} onMessage={setMessage} />
-      ) : (
-        <>
-          <OperationPanel token={token} />
-          <section className="columns">
-            <form className="panel" onSubmit={addProject}>
-              <h2>Novo projeto</h2>
-              <label>
-                Nome
-                <input name="name" required />
-              </label>
-              <label>
-                Repositório
-                <input name="repoUrl" type="url" placeholder="https://…" required />
-              </label>
-              <label>
-                Referência base
-                <input name="baseRef" defaultValue="main" required />
-              </label>
-              <button type="submit">Cadastrar projeto</button>
-            </form>
-            <form className="panel" onSubmit={addTicket}>
-              <h2>Novo ticket</h2>
-              <label>
-                Projeto
-                <select
-                  value={selectedProject}
-                  onChange={(event) => setSelectedProject(event.target.value)}
-                  required
-                >
-                  <option value="">Selecione</option>
-                  {projects.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Título
-                <input name="title" required />
-              </label>
-              <label>
-                Objetivo
-                <textarea name="objective" required />
-              </label>
-              <label>
-                Critérios, um por linha
-                <textarea name="criteria" required />
-              </label>
-              <button type="submit">Criar rascunho</button>
-            </form>
-            <form
-              className="panel"
-              key={activeProject ? `${activeProject.id}:${activeProject.baseRef}` : "no-project"}
-              onSubmit={setBaseRevision}
-            >
-              <h2>Revisão-base executável</h2>
-              {activeProject ? (
-                <>
-                  <p className="muted">
-                    Referência atual: <code>{activeProject.baseRef}</code>
-                  </p>
-                  <label>
-                    SHA exato do commit
-                    <input
-                      name="baseRevision"
-                      pattern="[0-9a-f]{40}"
-                      minLength={40}
-                      maxLength={40}
-                      placeholder="40 caracteres hexadecimais em minúsculas"
-                      required
-                    />
-                  </label>
-                  <button type="submit">Atualizar revisão-base</button>
-                  <p className="muted">
-                    {projectHasExecutableBase
-                      ? "SHA válido. A definição do projeto também precisa estar configurada."
-                      : "READY permanece bloqueado até configurar um SHA exato."}
-                  </p>
-                </>
-              ) : (
-                <p className="muted">Selecione um projeto.</p>
-              )}
-            </form>
-          </section>
-          <ProjectDefinitionPanel
+  else if (!showHome)
+    content = (
+      <main className="shell">
+        <header>
+          <div>
+            <p className="eyebrow">La fabrique</p>
+            <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
+          </div>
+          <p className="message" role="status">
+            {message}
+          </p>
+        </header>
+        {activeArea === "settings" ? (
+          <SettingsPanel
             token={token}
-            project={activeProject}
             onMessage={setMessage}
-            onVersion={setProjectDefinitionVersion}
-            onProfileReady={setProjectExecutionProfileReady}
+            projects={projects}
+            activeProjectId={selectedProject}
           />
-          <section className="panel records">
-            <h2>Tickets</h2>
-            {tickets.length === 0 ? (
-              <p className="muted">Nenhum ticket neste projeto.</p>
-            ) : (
-              tickets.map((ticket) => (
-                <article key={ticket.id}>
-                  <div>
-                    <span className={`badge badge--${ticket.status.toLowerCase()}`}>
-                      {ticket.status}
-                    </span>
-                    <h3>{ticket.title}</h3>
-                    <p>{ticket.objective}</p>
-                  </div>
-                  {ticket.status === "DRAFT" && (
-                    <button
-                      type="button"
-                      disabled={!projectCanExecute}
-                      title={
-                        projectCanExecute
-                          ? "Promover ticket"
-                          : "Configure SHA-base, definição e perfil de execução aprovado antes de READY"
-                      }
-                      onClick={() => ready(ticket)}
-                    >
-                      Marcar READY
-                    </button>
-                  )}
-                </article>
-              ))
-            )}
-            <p className="muted">
-              Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
-            </p>
-          </section>
-          <RunPanel token={token} projectId={selectedProject} eventSequence={eventSequence} />
-        </>
-      )}
-    </main>
+        ) : (
+          <>
+            <OperationPanel token={token} />
+            <section className="columns">
+              <form className="panel" onSubmit={addProject}>
+                <h2>Novo projeto</h2>
+                <label>
+                  Nome
+                  <input name="name" required />
+                </label>
+                <label>
+                  Repositório
+                  <input name="repoUrl" type="url" placeholder="https://…" required />
+                </label>
+                <label>
+                  Referência base
+                  <input name="baseRef" defaultValue="main" required />
+                </label>
+                <button type="submit">Cadastrar projeto</button>
+              </form>
+              <form className="panel" onSubmit={addTicket}>
+                <h2>Novo ticket</h2>
+                <label>
+                  Projeto
+                  <select
+                    value={selectedProject}
+                    onChange={(event) => setSelectedProject(event.target.value)}
+                    required
+                  >
+                    <option value="">Selecione</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Título
+                  <input name="title" required />
+                </label>
+                <label>
+                  Objetivo
+                  <textarea name="objective" required />
+                </label>
+                <label>
+                  Critérios, um por linha
+                  <textarea name="criteria" required />
+                </label>
+                <button type="submit">Criar rascunho</button>
+              </form>
+              <form
+                className="panel"
+                key={activeProject ? `${activeProject.id}:${activeProject.baseRef}` : "no-project"}
+                onSubmit={setBaseRevision}
+              >
+                <h2>Revisão-base executável</h2>
+                {activeProject ? (
+                  <>
+                    <p className="muted">
+                      Referência atual: <code>{activeProject.baseRef}</code>
+                    </p>
+                    <label>
+                      SHA exato do commit
+                      <input
+                        name="baseRevision"
+                        pattern="[0-9a-f]{40}"
+                        minLength={40}
+                        maxLength={40}
+                        placeholder="40 caracteres hexadecimais em minúsculas"
+                        required
+                      />
+                    </label>
+                    <button type="submit">Atualizar revisão-base</button>
+                    <p className="muted">
+                      {projectHasExecutableBase
+                        ? "SHA válido. A definição do projeto também precisa estar configurada."
+                        : "READY permanece bloqueado até configurar um SHA exato."}
+                    </p>
+                  </>
+                ) : (
+                  <p className="muted">Selecione um projeto.</p>
+                )}
+              </form>
+            </section>
+            <ProjectDefinitionPanel
+              token={token}
+              project={activeProject}
+              onMessage={setMessage}
+              onVersion={setProjectDefinitionVersion}
+              onProfileReady={setProjectExecutionProfileReady}
+            />
+            <section className="panel records">
+              <h2>Tickets</h2>
+              {tickets.length === 0 ? (
+                <p className="muted">Nenhum ticket neste projeto.</p>
+              ) : (
+                tickets.map((ticket) => (
+                  <article key={ticket.id}>
+                    <div>
+                      <span className={`badge badge--${ticket.status.toLowerCase()}`}>
+                        {ticket.status}
+                      </span>
+                      <h3>{ticket.title}</h3>
+                      <p>{ticket.objective}</p>
+                    </div>
+                    {ticket.status === "DRAFT" && (
+                      <button
+                        type="button"
+                        disabled={!projectCanExecute}
+                        title={
+                          projectCanExecute
+                            ? "Promover ticket"
+                            : "Configure SHA-base, definição e perfil de execução aprovado antes de READY"
+                        }
+                        onClick={() => ready(ticket)}
+                      >
+                        Marcar READY
+                      </button>
+                    )}
+                  </article>
+                ))
+              )}
+              <p className="muted">
+                Jobs falhos já existentes permanecem no histórico e não são repetidos por esta tela.
+              </p>
+            </section>
+            <RunPanel token={token} projectId={selectedProject} eventSequence={eventSequence} />
+          </>
+        )}
+      </main>
+    );
+  return (
+    <DashboardLayout
+      onNavigate={(area) => {
+        setActiveArea(area);
+        setShowHome(false);
+      }}
+      onHome={() => setShowHome(true)}
+      activeDestination={showHome ? undefined : activeArea}
+    >
+      {content}
+    </DashboardLayout>
   );
 }

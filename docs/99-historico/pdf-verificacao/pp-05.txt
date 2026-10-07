@@ -1,0 +1,64 @@
+Fábrica de Software | v2.1 | Planejamento
+5
+Perfil
+vCPU
+RAM
+SSD/NVMe útil
+Execução inicial
+Mínimo
+4
+8 GB
+120 GB
+1 job leve, etapas
+sequenciais
+Bom - recomendado
+para começar
+8
+16 GB
+200 GB
+1 job completo, testes
+e browser sequenciais
+Ideal para
+amadurecer o MVP
+8
+32 GB
+300 GB
+1 job inicial; até 2 em
+worktrees distintos
+após ensaio
+Linux 64 bits mantido, preferir x86_64 para reduzir incerteza de binários; ARM exige prova de
+compatibilidade. Sem GPU. CPU sustentada e I/O importam; vCPU compartilhada não equivale a
+núcleo dedicado. Disco precisa acomodar SO, banco, imagens, caches, worktrees e artefatos com
+20% de margem livre.
+No perfil Bom, reservar envelope inicial de 6 GB para SO/controle/banco/cache/supervisor; até 6
+GB para execução de um job, incluindo seus processos; manter 4 GB de margem. Limite agregado
+precisa ser imposto via cgroups/supervisor, não só por container individual.
+Começar sempre com MAX_CONCURRENT_EXECUTORS=1. Não executar build pesado, review
+editável ou E2E em paralelo por padrão. Promover concorrência só após medir picos, latência do
+painel, OOM, swap/I/O e disco.
+Pausar novos jobs com disco abaixo de 20% ou memória sustentada acima de 85%. Abort/timeout
+conservador, preservar checkpoint e logs limitados. Worker parado gera WAITING_WORKER;
+reboot/rede/serviço são cenários de recuperação, não dependência de laptop doméstico.
+Backup diário PostgreSQL criptografado fora da VPS; proposta sete diários/quatro semanais. Git
+remoto e artefatos relevantes externos. RPO 24h/RTO 4h são metas até restauração comprovada.
+Retenção inicial artefatos 30 dias/auditoria resumida 90 dias; limpeza sem atingir volumes
+persistentes.
+Mensalidade/renovação, backup, armazenamento externo, assinaturas, impostos/câmbio e
+manutenção compõem TCO. Energia do servidor normalmente integra a hospedagem; não somar
+energia de worker doméstico nesta arquitetura.
+4. Funcionamento de um ticket
+Entrada obrigatória: objetivo, comportamento atual e esperado, critérios de aceite verificáveis,
+escopo permitido, caminhos proibidos, comandos de teste e limites de execução e gasto. Tickets
+vagos retornam à triagem antes de gastar com implementação.
+Estados: DRAFT -> READY -> RUNNING -> VALIDATING -> REVIEW -> DOCS -> AWAITING_HUMAN
+-> DONE. WAITING_WORKER, WAITING_PROVIDER, PAUSED_LIMIT, PAUSED_BUDGET, BLOCKED e
+FAILED são estados explícitos; cancelamento interrompe novas chamadas e encerra o sandbox
+com evidências preservadas.
+1. Inspeção determinística: branch base e SHA, instruções do repositório, dependências, testes
+existentes e arquivos relevantes. 2. Plano curto de implementação. 3. Cliente oficial implementa
+no workspace autorizado. 4. Supervisor impõe isolamento/lifecycle e coleta resultados; comandos
+internos do CLI não são interceptados apenas pelo prompt. 5. Lint/testes/scanners. 6. Revisão
+independente de diff e resultados. 7. Correções limitadas. 8. Documentação. 9. Diff/PR para aceite
+humano.
+Revisor pode usar o mesmo provedor em sessão independente; isso não assegura ausência de
+vieses compartilhados. Segurança começa com ferramentas determinísticas e recebe revisão

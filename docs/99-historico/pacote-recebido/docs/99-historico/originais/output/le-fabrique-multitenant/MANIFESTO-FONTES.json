@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-06",
+  "purpose": "referências read-only; hash de origem, não evidência de implementação",
+  "files": [
+    {
+      "path": "sources/AGENTS (project file).md",
+      "bytes": 2710,
+      "sha256": "e495edbca9b1f22a69cb789c54722df30a64eac4ce4d2ded0baffc030b99fb92"
+    },
+    {
+      "path": "sources/ANTIGRAVITY.md",
+      "bytes": 2866,
+      "sha256": "cf705ea905931b8499f2934e22348615312236c5c78a75b12e20d5210d999d78"
+    },
+    {
+      "path": "sources/BACKLOG.md",
+      "bytes": 1342,
+      "sha256": "ca6e4e4d262ac4768b781936b0c0afecef5b4c6280f8cc29d6bc5ce90ec993ce"
+    },
+    {
+      "path": "sources/CHANGELOG.md",
+      "bytes": 682,
+      "sha256": "59fd1e23d3375cc0a5c2df12dae9a152d398dae828299482ccc1095d4309a444"
+    },
+    {
+      "path": "sources/CLAUDE.md",
+      "bytes": 2774,
+      "sha256": "76ab72de1dfbae54b0d3c1334dac380803038698afd6ef5e3c73e0641c776bbd"
+    },
+    {
+      "path": "sources/ESPEC-MVP.md",
+      "bytes": 4018,
+      "sha256": "04c13b2dee9f6a687c43ea4d70a3f9254d974c5d3dacf9d2352988f3cef5316d"
+    },
+    {
+      "path": "sources/FONTES.md",
+      "bytes": 2189,
+      "sha256": "d6fd3e8739bd898546a7c137c8f35ecd830980c08d76dfe31f3ed4b1682a5d59"
+    },
+    {
+      "path": "sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "bytes": 162846,
+      "sha256": "d064f9c50132c593a452924c78c5b3168771a2a6024ee51e1847ec57b3a1d0c4"
+    },
+    {
+      "path": "sources/INDEX.md",
+      "bytes": 443,
+      "sha256": "251b4fdf94dfc4553ddd69f8b0d886059036b66d43644f28aa0ab8961cfc37b1"
+    },
+    {
+      "path": "sources/MATRIZ-COBERTURA.md",
+      "bytes": 2529,
+      "sha256": "f601c428a0d210f28d54a76405fefd119d7c54e123784f8532237b9a9739c440"
+    },
+    {
+      "path": "sources/PILOTO.md",
+      "bytes": 1026,
+      "sha256": "9278e426822070d18d6f5a072f80b50fc46ac79f3243e8d28b5b1a41e4dc4f52"
+    },
+    {
+      "path": "sources/PLANO-MVP.md",
+      "bytes": 11698,
+      "sha256": "5ef1c8bbb044f3a51abfec995df98c48ee019dc88debb372c11fe4daf18fa39c"
+    },
+    {
+      "path": "sources/POLITICA-IA.md",
+      "bytes": 4143,
+      "sha256": "dbc46ae1770d65d2adf983f352a08f4dd6802ccbda2817e7c4b4a1314f7d4e3d"
+    },
+    {
+      "path": "sources/PROMPT-INICIAL.md",
+      "bytes": 881,
+      "sha256": "b22b64781dd25ee47f932a99f630e0cc4ddbad9794671e3da356b378d75d67e8"
+    },
+    {
+      "path": "sources/README.md",
+      "bytes": 1506,
+      "sha256": "02b54ffe16b4039d5348ba06bd7e514e38803de8afb064384be69c855e9e5a10"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+Fábrica de Software | v2.1 | Planejamento
+6
+especializada conforme risco.
+Cada job guarda ticket_id, run_id, attempt_id, base_sha, etapa, lease e heartbeat. Transição usa
+controle otimista ou lock transacional. Lease expirado recupera o job; side effects exigem
+idempotência. Uma chamada de IA com resultado desconhecido não deve ser reexecutada
+automaticamente sem reconciliar efeitos e possível consumo duplicado de cota.
+No piloto, produzir branch e diff local é suficiente. Publicação de PR exige configurar a integração.
+Merge e deploy continuam manuais. Um gate documental pode aprovar arquivos estruturalmente
+válidos sem assegurar a correção técnica do conteúdo; a revisão deve conferi-los.
+5. Agentes e responsabilidades
+Planner/Tech Lead: decompor objetivo, classificar risco e selecionar estratégia. Developer:
+implementar dentro do escopo. Reviewer: procurar falhas de comportamento, regressões e
+incoerências no diff. QA: relacionar critérios de aceite a evidências. Documentation: registrar
+somente o que foi efetivamente implementado. Security: revisar achados e áreas sensíveis.
+Os papéis são perfis de instrução e tarefas, não seis servidores nem seis chamadas obrigatórias a
+cada ticket. No MVP, usar Developer e Reviewer; o executor realiza verificações e a documentação
+faz parte da entrega. Planejamento extenso, QA separado e segurança por IA entram quando
+necessários.
+R0: documentação e alterações cosméticas. R1: lógica local e validações comuns. R2: integrações
+e mudanças em mais de um domínio. R3: autenticação, autorização, pagamentos, segredos ou
+dados pessoais. R4: produção, infraestrutura e migrações irreversíveis. R3/R4 não pertencem ao
+primeiro piloto.
+Ferramentas expostas: leitura limitada, busca, patch, comandos de teste cadastrados e diff. O
+modelo não recebe shell irrestrito, credenciais de produção ou Docker socket. Instruções
+encontradas em arquivos, logs e páginas são dados não confiáveis quando solicitam ultrapassar a
+política do job.
+6. Context Builder e economia
+Primeiro reduzir trabalho, depois escolher modelo. Ticket pequeno, critério claro e baseline de
+testes evitam ciclos caros. Não enviar todo o repositório, node_modules, vendor, binários, dumps
+ou logs integrais.
+TicketContext contém: objetivo, critérios, regras aplicáveis, trechos da especificação, ADR
+relevante, arquivos selecionados, testes e resumo dos achados. Registrar hashes e base_sha.
+Começar com orçamento de 20-40 mil tokens de entrada por chamada; adaptar ao modelo e
+tarefa. É um teto proposto, não uma necessidade mínima.
+Seleção inicial por caminhos, imports, dependências e busca textual. Indexação
+semântica/embeddings só após demonstrar benefício. Resumo não substitui fonte: incluir
+referências e permitir abrir o trecho original. Configurar limites de tamanho e sinalizar
+truncamento.
+Gates baratos primeiro: lint, testes, type check, secret scan e dependency scan conforme stack.
+Fornecer à IA apenas os achados úteis, diff e contexto. Evitar pedir a um modelo que redescubra o
+que uma ferramenta detecta diretamente.
+Prefixo estável pode favorecer cache administrado pelo cliente quando suportado; a análise
+financeira seguinte aplica-se somente à extensão futura de APIs. Não assumir que qualquer trecho

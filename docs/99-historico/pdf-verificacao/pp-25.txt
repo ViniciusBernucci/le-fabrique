@@ -1,0 +1,23 @@
+Fábrica de Software | v2.1 | Planejamento
+25
+Fila/etapa, last heartbeat, lease, processos, CPU/RAM/disco, OOM, duração,
+provider/modelo/versão, uso conhecido/desconhecido, handoffs, retries, checks/docs e revisão
+aceita. Evitar prompts completos e segredos nos logs. Browser de QA com perfil efêmero sem
+sessão pessoal.
+Evolução
+Separar execução em outra VPS é alternativa futura, sujeita a métricas e revisão de isolamento.
+APIs podem prover capacidade com orçamento; execução na VPS não elimina termos dos
+fornecedores. Código de terceiros exige isolamento mais forte que containers compartilhando
+host.
+Provisionamento da VPS única no MVP
+Selecionar perfil em infraestrutura/DIMENSIONAMENTO-VPS.md e registrar especificações reais.
+Configurar firewall: HTTPS público; SSH administrativo restrito; Redis/PostgreSQL/worker privados.
+Separar volumes persistentes de temporários. Instalar supervisor como serviço com usuário
+dedicado e recuperação após reinício.
+Fazer login oficial pelo método suportado para servidor sem interface; callback/fluxo remoto
+apenas conforme documentação do cliente. Não desabilitar autenticação nem copiar cookies.
+Confirmar credenciais acessíveis ao cliente e inacessíveis a código/testes/logs.
+Rodar baseline no mesmo ambiente que executará jobs. Medir recursos e painel durante build.
+Reiniciar worker, depois VPS em janela de teste; comprovar leases, nenhuma duplicação e
+retomada de checkpoint. Validar backup externo e restauração. Não abrir banco/fila para facilitar
+diagnóstico.

@@ -1,0 +1,15 @@
+
+> @le-fabrique/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique-fac-026/apps/web
+
+
+ Test Files  18 passed (18)
+      Tests  46 passed (46)
+   Start at  02:53:55
+   Duration  2.77s (import 54%, transform 30%, tests 13%, worker 3%)
+
+    Isolate  18 workers spawned · ~169ms startup each (spawn + environment, per file)
+             at least ~843ms faster with isolate: false — reuses workers across files instead of one per file

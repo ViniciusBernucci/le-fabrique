@@ -340,7 +340,7 @@ export class CodexAdapter implements RuntimeAdapter {
       .map(([path, access]) => `${JSON.stringify(path)}=${JSON.stringify(access)}`)
       .join(",");
     const permissionProfile =
-      `permissions.lefabrique={ description="Le Fabrique runtime", ` +
+      `permissions.lefabrique={ description="La fabrique runtime", ` +
       `filesystem={ ":root"="deny", ":minimal"="read", ` +
       `":workspace_roots"={ ${workspaceRulesToml} } }, network={ enabled=false } }`;
     const args = [

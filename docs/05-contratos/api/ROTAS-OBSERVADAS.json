@@ -1,0 +1,611 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/auth/session",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "adminSessionSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "projectSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "projectListSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/projects/:projectId/base-revision",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "projectSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/:projectId/definition",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "projectDefinitionStateSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/projects/:projectId/definition",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "projectDefinitionSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/projects/:projectId/tickets",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "ticketSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/:projectId/tickets",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "ticketListSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/tickets/:ticketId/ready",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "ticketSchema"
+    ],
+    "controller": "apps/api/src/control/control.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/health/live",
+    "guard": "pública (health)",
+    "schemas": [],
+    "controller": "apps/api/src/health/health.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/health/ready",
+    "guard": "pública (health)",
+    "schemas": [],
+    "controller": "apps/api/src/health/health.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/runs",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/execution-results.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/runs/:runId",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/execution-results.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/runs/:runId/attempts/:attemptId/artifact",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/execution-results.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/result",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "reportExecutionResultSchema"
+    ],
+    "controller": "apps/api/src/orchestration/execution-results.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/artifact",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "reportExecutionArtifactSchema"
+    ],
+    "controller": "apps/api/src/orchestration/execution-results.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/operation/scheduling",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "updateFactorySchedulingSchema"
+    ],
+    "controller": "apps/api/src/orchestration/factory-scheduling.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/operation",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/operation-status.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/claims",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "orchestrationClaimSchema"
+    ],
+    "controller": "apps/api/src/orchestration/orchestration.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/lease",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "orchestrationClaimSchema"
+    ],
+    "controller": "apps/api/src/orchestration/orchestration.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/checkpoint",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "orchestrationStateSchema"
+    ],
+    "controller": "apps/api/src/orchestration/orchestration.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "orchestrationStateSchema"
+    ],
+    "controller": "apps/api/src/orchestration/orchestration.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/orchestration/attempts/:attemptId/reconcile",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "orchestrationReconcileResultSchema"
+    ],
+    "controller": "apps/api/src/orchestration/orchestration.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/projects/:projectId/events",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/project-events.controller.ts"
+  },
+  {
+    "method": "GET (SSE)",
+    "path": "/api/projects/:projectId/events/stream",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/project-events.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/runs/:runId/resume",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "requestRunResumeSchema"
+    ],
+    "controller": "apps/api/src/orchestration/run-control.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/runs/:runId/control",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "requestRunControlSchema"
+    ],
+    "controller": "apps/api/src/orchestration/run-control.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/runs/:runId/delivery",
+    "guard": "AdminAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/orchestration/run-delivery.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/runs/:runId/approve-delivery",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "approveRunDeliverySchema"
+    ],
+    "controller": "apps/api/src/orchestration/run-delivery.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/runs/:runId/recover-finalization",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "requestRunRecoverySchema"
+    ],
+    "controller": "apps/api/src/orchestration/run-recovery.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/onboarding",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubOnboardingSessionSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/github/onboarding",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubOnboardingSessionListSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/github/onboarding/:id/challenge",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubOnboardingChallengeSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-onboarding/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "githubOnboardingSessionSchema",
+      "startGithubOnboardingSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-onboarding/:id/challenge",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "githubOnboardingSessionSchema",
+      "publishGithubOnboardingChallengeSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-onboarding/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeGithubOnboardingSchema",
+      "githubOnboardingSessionSchema"
+    ],
+    "controller": "apps/api/src/settings/github-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/pull-requests",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubPullRequestSchema",
+      "prepareGithubPullRequestSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/github/pull-requests",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubPullRequestListSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/pull-requests/:id/approve",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "approveGithubPullRequestSchema",
+      "githubPullRequestSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/pull-requests/:id/cancel",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "cancelGithubPullRequestSchema",
+      "githubPullRequestSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-pull-requests/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "githubPullRequestSchema",
+      "startGithubPullRequestSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-pull-requests/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeGithubPullRequestSchema",
+      "githubPullRequestSchema"
+    ],
+    "controller": "apps/api/src/settings/github-pull-request.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/repository-verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubRepositoryVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-repository-verification.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/github/repository-verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubRepositoryVerificationListSchema"
+    ],
+    "controller": "apps/api/src/settings/github-repository-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-repository-verifications/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "githubRepositoryVerificationSchema",
+      "startGithubRepositoryVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-repository-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-repository-verifications/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeGithubRepositoryVerificationSchema",
+      "githubRepositoryVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-repository-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/github/verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-verification.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/github/verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "githubVerificationListSchema"
+    ],
+    "controller": "apps/api/src/settings/github-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-verifications/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "githubVerificationSchema",
+      "startGithubVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/github-verifications/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeGithubVerificationSchema",
+      "githubVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/github-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/installations/:installationId/onboarding",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerOnboardingSessionSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/onboarding/:id/authorization-code",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerAuthorizationCodeSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/onboarding",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerOnboardingSessionListSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/onboarding/:id/challenge",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerOnboardingChallengeSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-onboarding/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "providerOnboardingSessionSchema",
+      "startProviderOnboardingSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-onboarding/:id/challenge",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "providerOnboardingSessionSchema",
+      "publishProviderOnboardingChallengeSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-onboarding/:id/authorization-code",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "providerAuthorizationCodeResultSchema",
+      "startProviderOnboardingSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-onboarding/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeProviderOnboardingSchema",
+      "providerOnboardingSessionSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-onboarding.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/installations/:installationId/verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-verification.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/verifications",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "providerVerificationListSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-verifications/:id/start",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "providerVerificationSchema",
+      "startProviderVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-verification.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/provider-verifications/:id/complete",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "completeProviderVerificationSchema",
+      "providerVerificationSchema"
+    ],
+    "controller": "apps/api/src/settings/provider-verification.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "factorySettingsSchema"
+    ],
+    "controller": "apps/api/src/settings/settings.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/settings",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "factorySettingsSchema",
+      "updateFactorySettingsSchema"
+    ],
+    "controller": "apps/api/src/settings/settings.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/internal/worker-settings",
+    "guard": "WorkerAuthGuard",
+    "schemas": [
+      "workerConfigurationSnapshotSchema"
+    ],
+    "controller": "apps/api/src/settings/worker-settings.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/workers/register",
+    "guard": "WorkerAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/worker-identity/worker-identity.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/workers/:workerId/heartbeat",
+    "guard": "WorkerAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/worker-identity/worker-identity.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/workers",
+    "guard": "AdminAuthGuard",
+    "schemas": [
+      "workerListSchema"
+    ],
+    "controller": "apps/api/src/worker-identity/worker-identity.controller.ts"
+  }
+]

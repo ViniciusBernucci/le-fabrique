@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "checks": [
+    "candidato válido listado por path",
+    "credenciais sintéticas/dependências/symlink omitidos",
+    "conteúdo não emitido",
+    "root inválido rejeitado"
+  ],
+  "fixture_output": "# Candidatos por path; não são vulnerabilidades\napps/api/src/safe.ts\nArquivos examinados: 1; paths candidatos: 1; limite de saída: 150.\nCobertura limitada: código reconhecido; histórico, credenciais e symlinks omitidos.\n",
+  "limit": "fixture sintética; sem scan de credenciais ou produção"
+}

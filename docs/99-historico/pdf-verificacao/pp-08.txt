@@ -1,0 +1,44 @@
+Fábrica de Software | v2.1 | Planejamento
+8
+Custo mensal = VPS + backup + assinaturas + extras autorizados + armazenamento externo +
+manutenção. Custo incremental = novas despesas causadas pela fábrica. Custo por aceito = custo
+atribuído ao experimento / número de tickets aceitos, incluindo falhas no numerador. Quando não
+houver aceitos, informar indefinido.
+Para atribuir custo fixo compartilhado, registrar método: por exemplo fração do tempo de uso ou
+alocação definida pelo responsável. Não somar preço teórico do CLI à assinatura como se fosse
+cobrança real. Mostrar separadamente custo total e incremental.
+Economia principal: reaproveitar planos existentes; poucos papéis por ticket; reduzir contexto;
+ferramentas determinísticas antes de IA; instruções estáveis; tickets pequenos; handoffs curtos;
+revisão proporcional ao risco; evitar loops e paralelismo que esgotam cota.
+Cache administrado pelo cliente pode ajudar uso/latência, mas não assumimos desconto em
+assinatura. Batch permanece extensão de API futura, não requisito nem desconto disponível nos
+CLIs. Modelos econômicos devem ser selecionados apenas quando expostos e elegíveis no plano.
+Quando todas as cotas acabarem, esperar é o padrão com gasto adicional zero autorizado. APIs
+futuras só após mudança explícita de política, configuração de credencial, tarifas oficiais e limites
+de cobrança. A ausência de API não impede consumo de créditos extras do CLI se o usuário os
+habilitar: por isso o onboarding verifica ambos.
+Comparar 10 tickets pequenos: aceite, regressões, tempo ativo, espera por cota, correções,
+handoffs, tokens quando observáveis e custo atribuído. A economia só estará demonstrada
+quando confrontada com baseline equivalente.
+9. Isolamento e confiabilidade
+Sandbox é workspace descartável com usuário sem privilégios, limites de
+CPU/memória/processos/tempo/disco, filesystem mínimo, capabilities reduzidas e rede restrita.
+Dependências podem exigir saída à internet via destinos controlados; o sandbox não deve
+alcançar banco/Redis da fábrica ou serviços internos.
+Não montar /var/run/docker.sock no sandbox; não usar privileged; não montar pasta de segredos.
+O Executor Manager confiável prepara ambientes. Se o projeto requer containers de integração,
+usar instâncias pré-provisionadas ou mecanismo isolado definido em ADR; não dar controle do
+host ao agente.
+No worker, containers compartilham kernel e uma falha do host afeta controle e execução.
+Restrição de recursos reduz interferência, não elimina risco de escape. O piloto usa código de um
+repositório próprio/confiável e dados sintéticos. Execução de código arbitrário de terceiros exige
+reavaliar o isolamento.
+Revisão humana permanece para merge/deploy, mudança de credenciais e operações destrutivas.
+Logs não devem vazar PII ou segredos. Remover segredos antes de enviar arquivos aos
+provedores; avaliar retenção e uso de dados da modalidade contratada escolhida.
+Recuperação: reiniciar executor em teste, comprovar lease expirado e recuperação sem duplicar
+efeitos; pausar ao exceder orçamento; testar falha do cliente, cota indisponível e timeout;
+restaurar backup. Nunca marcar DONE apenas porque o modelo declarou sucesso.
+10. MVP incremental
+V0: preencher piloto, validar os três clientes no ambiente real, confirmar autenticação e cobrança,
+executar três tickets assistidos e um handoff manual. Validar um provider por vez; não bloquear

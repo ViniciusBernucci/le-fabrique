@@ -1,0 +1,37 @@
+Fábrica de Software | v2.1 | Planejamento
+4
+documentacoes/arquitetura/ARQUITETURA.md
+Software Factory - Arquitetura e operação
+Versão 2.1 - 2026-09-29
+1. Decisão e escopo v2.1
+Decisão do usuário em 29/09/2026: toda a fábrica na mesma VPS Linux, incluindo painel/API,
+PostgreSQL, Redis, supervisor, clientes oficiais, autenticação, sandboxes, worktrees, builds, testes
+e documentação. MacBook não é necessário para executar o MVP. Assinaturas primeiro; APIs e
+créditos extras desativados. Nenhum serviço foi implementado nesta entrega.
+Stack proposta preservada: Laravel, Angular, PostgreSQL, Redis e supervisor Node/TypeScript.
+Usar módulos/processos separados, não exigir microserviços. O software piloto mantém sua stack.
+Inferência permanece nos fornecedores por internet, sem GPU ou modelo local na VPS. Autenticar
+cada cliente pelo fluxo oficial na identidade de execução dedicada; validar headless, plano,
+compatibilidade e cobrança no ambiente real.
+Uso pessoal de desenvolvimento. Multiusuário comercial, revenda e compartilhamento de
+credenciais ficam fora do MVP e exigem avaliação das condições aplicáveis.
+2. Arquitetura numa VPS
+Navegador -> HTTPS/proxy -> Angular/Laravel -> Orchestrator/Context Builder ->
+PostgreSQL/outbox/Redis -> worker interno -> Agent Runtime Gateway ->
+Codex/Claude/Antigravity oficiais -> sandbox/worktree -> checks/review/docs -> painel/aceite.
+Separar serviços de controle, supervisor confiável, cliente de IA e execução de código por
+identidades, redes e volumes. Redis/PostgreSQL internos, sem portas públicas. Worker usa
+protocolo interno autenticado para claim/heartbeat/events/checkpoint/complete; preservar
+contrato que permite execução remota futura sem torná-la requisito.
+Credenciais ficam nos mecanismos oficiais do cliente na VPS, fora do Git, logs, artefatos, contexto
+e mounts do código do piloto. A fábrica não coleta senhas nem reutiliza token OAuth como API.
+Login humano inicial e renovação quando solicitada; não prometer sessão permanente.
+Agent Runtime Gateway gerencia lifecycle e resultados. CLI pode executar ferramentas
+autonomamente, exigindo limites no host. Validar que código/testes não leem credenciais; se isso
+não for possível no modo instalado, bloquear adapter e registrar ADR de isolamento compatível.
+Um writer por worktree, revisão em sessão independente e revisão exata. Controle/executor
+compartilham host: falha da VPS afeta ambos. Backups ficam fora dela. Modelo cloud não
+transforma sandbox em isolamento de VM.
+3. Dimensionamento e operação
+Perfis de engenharia para este MVP, não requisitos oficiais de fornecedores nem benchmark.
+Detalhes em documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md.

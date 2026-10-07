@@ -112,7 +112,7 @@ export function listCodexModels(identity: ProviderIdentity): Promise<string[]> {
     send(
       "initialize",
       {
-        clientInfo: { name: "le_fabrique_catalog", title: "Le Fabrique", version: "0.1.0" },
+        clientInfo: { name: "le_fabrique_catalog", title: "La fabrique", version: "0.1.0" },
         capabilities: {},
       },
       1,

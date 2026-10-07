@@ -1,0 +1,1160 @@
+{
+  "date": "2026-10-07",
+  "authorization": "Usuário indicou remoção do pacote redundante se tudo estivesse preservado",
+  "removed": "reorganizacao-documental/",
+  "preserved": "docs/99-historico/pacote-recebido/",
+  "verification": "230 arquivos comparados byte a byte e por SHA-256; zero divergências; validador documental PASS antes da remoção",
+  "files": [
+    {
+      "path": ".agents/rules/documentacao.md",
+      "bytes": 536,
+      "sha256": "0c1fe4bc6e3b2e4685733692b21b943b72ae6372db2bbc5a74ec57c800b68631"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2378,
+      "sha256": "41fd273d5d6e4ea57686375928acb6a5a1dbf31c6e4ec450e1411526cd4eff78"
+    },
+    {
+      "path": "ANTIGRAVITY.md",
+      "bytes": 2396,
+      "sha256": "ecf610dd745e5e2897eff79937a36e0c493bf8aa611a45a9a44bdef4b9e711e7"
+    },
+    {
+      "path": "BACKLOG.md",
+      "bytes": 3633,
+      "sha256": "d3a7c237a1d20376b57cf420105ce442a33317fd898fecef345ea4cfdf08403e"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 1813,
+      "sha256": "8de069fe83c831406ee0224b739f5708ae002673f7cf3c51844967e5b6b19893"
+    },
+    {
+      "path": "CLAUDE.md",
+      "bytes": 2313,
+      "sha256": "6b148745101d01c5530b0532c0cf99904814f2ff9af534aefab7563c28d0cc0f"
+    },
+    {
+      "path": "ESPEC-MVP.md",
+      "bytes": 174,
+      "sha256": "a58fafe81cf140c43dce55e9333eeacd60a4350fd0121c8c06fe5a759314389f"
+    },
+    {
+      "path": "FONTES.md",
+      "bytes": 181,
+      "sha256": "95d5c7251bcecb9ade7d544da2cc018302c867978ffddd6a339e587b39f8ba06"
+    },
+    {
+      "path": "GUIA-DE-INTEGRACAO.md",
+      "bytes": 5938,
+      "sha256": "301f31b1692f33d024cd435b7aa499b07742976a6852f60f3697f0a85b063650"
+    },
+    {
+      "path": "MANIFESTO-PACOTE.json",
+      "bytes": 41748,
+      "sha256": "0d631733fd0b7627b31268316f2020569eba75f7301d8c44f585d56e3e814857"
+    },
+    {
+      "path": "MATRIZ-COBERTURA.md",
+      "bytes": 197,
+      "sha256": "f5a27342b56d46b0c86f1b5ea30e42d341904ca927cf1bfb1fc7f0e614f676cc"
+    },
+    {
+      "path": "PILOTO.md",
+      "bytes": 177,
+      "sha256": "6821be4a30cf05a4f2892605cfe9b1f36401e2a0e8adafd01a683234deaa90f4"
+    },
+    {
+      "path": "PLANO-MVP.md",
+      "bytes": 183,
+      "sha256": "7e0766e8d0fe9975e21f60f6781fbd6574eb681cbb9845ca1ef9aa87e349c412"
+    },
+    {
+      "path": "PROMPT-INICIAL.md",
+      "bytes": 185,
+      "sha256": "46fd9d1f02791ce47514847d794c9a56f5fa7c34ac7f8d5482f1e3b073ea2ec6"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1021,
+      "sha256": "797916d5e664e49c8915869cd92ff4868a88b3b72da5b51decfdf9f2953317df"
+    },
+    {
+      "path": "docs/00-governanca/AUDITORIA.md",
+      "bytes": 4412,
+      "sha256": "648c615c1a37e646f96935b64488d0ff60d3c1e13188b42311f20f6b3304c21f"
+    },
+    {
+      "path": "docs/00-governanca/CHECKLIST-ENTREGA.md",
+      "bytes": 1095,
+      "sha256": "48d48a7ca7d69644bdfc1f38338d62f9e7fde379ee5aaf2a66b21eabd30fe361"
+    },
+    {
+      "path": "docs/00-governanca/INVENTARIO.md",
+      "bytes": 13802,
+      "sha256": "76d51b4ecd644e7d5d9e366fa46f7611ac9507c0613df5f939178b2275f22bee"
+    },
+    {
+      "path": "docs/00-governanca/MANIFESTO-FONTES.json",
+      "bytes": 14230,
+      "sha256": "b57ca29180e5024ab6b34e8390319ffed6f99fa19f2e5ae3b147e8ca11c0cecb"
+    },
+    {
+      "path": "docs/00-governanca/MAPA-MIGRACAO.md",
+      "bytes": 27624,
+      "sha256": "d082a664af3771ecbfdac30456177528fceb59bbf32622620586125a2987c159"
+    },
+    {
+      "path": "docs/00-governanca/PENDENCIAS.md",
+      "bytes": 1629,
+      "sha256": "8ce02036b2c90e1a935f18abad238a3b891aa7efa7e75d2403045e7390624ddf"
+    },
+    {
+      "path": "docs/00-governanca/POLITICA-DOCUMENTACAO.md",
+      "bytes": 5402,
+      "sha256": "934e08fa76ef757dae9d5177d03e6021907d6e938de68f66cf30e0dc8e7d57a3"
+    },
+    {
+      "path": "docs/00-governanca/POLITICA-IA.md",
+      "bytes": 4138,
+      "sha256": "a2a214a31618536951c9b17e57ce3cc9c829a22c8958148c80a5b02302a5f381"
+    },
+    {
+      "path": "docs/00-governanca/README.md",
+      "bytes": 965,
+      "sha256": "049d6c1ebf60839268bdef077857d0f2b436aa7e8497711898b8bd9e50baffac"
+    },
+    {
+      "path": "docs/00-governanca/RESULTADO-VALIDACAO.json",
+      "bytes": 555,
+      "sha256": "a8ed59133f2a94a77dec61e4a1bfd38b7e50e353141b7ada819fbb21c9a6d007"
+    },
+    {
+      "path": "docs/00-governanca/VALIDACAO.md",
+      "bytes": 2599,
+      "sha256": "7af89daa2e52b3ae397fbd3c1f3029aebf34462545462534e5e24f2ca3bfe5e4"
+    },
+    {
+      "path": "docs/00-governanca/fontes-carregamento.md",
+      "bytes": 1629,
+      "sha256": "b080b2e1945548a8167da3fab0655198400b78586bc481f7926924eef8820c61"
+    },
+    {
+      "path": "docs/00-governanca/fontes-tecnicas.md",
+      "bytes": 3818,
+      "sha256": "cf36bb2842044dd707c4b783f13ce0d90be6c9c48d639450102e8f535edf83a9"
+    },
+    {
+      "path": "docs/00-governanca/templates/ADR.md",
+      "bytes": 518,
+      "sha256": "0c86d62c6c06f27f72b6bc90122c8028a247547536e5a74e428935d81769c862"
+    },
+    {
+      "path": "docs/00-governanca/templates/CONTRATO.md",
+      "bytes": 556,
+      "sha256": "a25c52a5eca3a22c5c407738df002f9c43d31d036ad355d0c0e4d4cce26a4bed"
+    },
+    {
+      "path": "docs/00-governanca/templates/ENTREGA.md",
+      "bytes": 1587,
+      "sha256": "3fa6fa665768739cd8fac5c54b5aa1ba965923fb63f903d48e4431643512e26c"
+    },
+    {
+      "path": "docs/00-governanca/templates/FEATURE.md",
+      "bytes": 470,
+      "sha256": "1261ce887acfb4c173db17091b8506d42e7962c5283f8871897a9ce14a7bd4eb"
+    },
+    {
+      "path": "docs/00-governanca/templates/HANDOFF.md",
+      "bytes": 1101,
+      "sha256": "cfd9c0bf2cf3272f72d0c47d072a1faffbb81c911012e26ea871b845fa411e5d"
+    },
+    {
+      "path": "docs/00-governanca/templates/LESSON.md",
+      "bytes": 444,
+      "sha256": "f45dd562fb0138f9bdfe1a244e1ec18d821548706b7ccdc7d76680a632b1303d"
+    },
+    {
+      "path": "docs/00-governanca/templates/MODULO.md",
+      "bytes": 558,
+      "sha256": "a8f40f96a4b6d725b72954b6d0f8636b77139e53dc0ea1a05a48a4484d95770b"
+    },
+    {
+      "path": "docs/00-governanca/templates/README.md",
+      "bytes": 1320,
+      "sha256": "3a9ff517f4a10180c1d62aefb17fbbcd0f4ea7adac5586ec33b9fea7b296c9fb"
+    },
+    {
+      "path": "docs/00-governanca/templates/RUNBOOK.md",
+      "bytes": 499,
+      "sha256": "fee93b8408cdbf14a2605272b1fe30a64f575b66c73f651ad598b995d08badf3"
+    },
+    {
+      "path": "docs/00-governanca/templates/TICKET.md",
+      "bytes": 501,
+      "sha256": "b9fb75cf62c10f655855ec2d66959eaeb38b5396edaafa4025f95490b77f0243"
+    },
+    {
+      "path": "docs/01-visao-geral/README.md",
+      "bytes": 468,
+      "sha256": "3a756ba20824c369a18685cc2f414232ac4a394dcf6d8e3646171b4daca6d5fb"
+    },
+    {
+      "path": "docs/01-visao-geral/escopo.md",
+      "bytes": 1432,
+      "sha256": "7d0d55b0d2ac6b606f24884fa0fd4832eef79d2527c61aed203caf0f13e4c465"
+    },
+    {
+      "path": "docs/01-visao-geral/glossario.md",
+      "bytes": 3071,
+      "sha256": "840025c4daaff6168e7420e970972c456a1da24e3bc9d1a71bac4b107c42788f"
+    },
+    {
+      "path": "docs/01-visao-geral/mapa-do-sistema.md",
+      "bytes": 687,
+      "sha256": "1c91bbdb7d2b368176cf18b21c509d28bc2bbc41c5095c2293a804a4fe58bd1f"
+    },
+    {
+      "path": "docs/01-visao-geral/objetivos.md",
+      "bytes": 874,
+      "sha256": "4b3160576d4e9884bcb266747a00a692566021ad8afb9880f4f2d794d3981314"
+    },
+    {
+      "path": "docs/02-arquitetura/README.md",
+      "bytes": 669,
+      "sha256": "3f65411cf620835aaf2db857c532f80243fd735a06415a037281f569f8ba9e2a"
+    },
+    {
+      "path": "docs/02-arquitetura/componentes.md",
+      "bytes": 1555,
+      "sha256": "bd1b37d9142a8fdfcced0da0145b74abe409a1b3b604a4eec084bdda95f12859"
+    },
+    {
+      "path": "docs/02-arquitetura/containers.md",
+      "bytes": 1769,
+      "sha256": "f3231bc8dd50aa92a177b21c7e07fc80cef7ac7e51d70761ed0c309fabf3d650"
+    },
+    {
+      "path": "docs/02-arquitetura/contexto.md",
+      "bytes": 873,
+      "sha256": "c22ff3f440bcbab7b23af814fa6e78d16934266dbcd45d15774cc1cb9e6adc02"
+    },
+    {
+      "path": "docs/02-arquitetura/dados.md",
+      "bytes": 1184,
+      "sha256": "7b82af69fad9c6d094b7e947f0d99dd61a4a0be07ed5818b63ffeb1f61125a15"
+    },
+    {
+      "path": "docs/02-arquitetura/fluxos.md",
+      "bytes": 2309,
+      "sha256": "b02fc64567700654072a5c59ff95a4a463aafc5df626ac964ffd757f27500995"
+    },
+    {
+      "path": "docs/02-arquitetura/fronteiras-e-invariantes.md",
+      "bytes": 5082,
+      "sha256": "7d23726f646aac0989d715c34b6dac5df39aebb2c939ccbbe8413b7a454be068"
+    },
+    {
+      "path": "docs/02-arquitetura/infraestrutura.md",
+      "bytes": 858,
+      "sha256": "8a5c9dcb97d112e2bb647a5cfd458f61c31918d702205a1aa1191f7a407796a1"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/rede-e-egress.md",
+      "bytes": 4646,
+      "sha256": "b1981f790524b15deac9761cf944b65ef158d640df232469a796f1ac39ff2cc7"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca/threat-model.md",
+      "bytes": 5520,
+      "sha256": "5e551ba5fd372859b7568289ee3d6a5dd9d5e51551ce00b6e84f1d98bd83e9b2"
+    },
+    {
+      "path": "docs/02-arquitetura/seguranca.md",
+      "bytes": 1263,
+      "sha256": "b7cfa3650e331b8729a63d99e112988d026500c2aa293483d73a592c6d057372"
+    },
+    {
+      "path": "docs/03-modulos/README.md",
+      "bytes": 1321,
+      "sha256": "ddff10e6869efeac85ca33bac64d9fa12172bc53428dd96befc4084317e15c07"
+    },
+    {
+      "path": "docs/03-modulos/approvals/README.md",
+      "bytes": 2317,
+      "sha256": "5c9a4463668292be71f5895a732f4eef6b7b84b0a45ab08196a7bf025e42c64f"
+    },
+    {
+      "path": "docs/03-modulos/context-builder/README.md",
+      "bytes": 3432,
+      "sha256": "ba8e2f0784343b4d51438805f967c5819a0436dfa2f0009638ef2dad973f86d2"
+    },
+    {
+      "path": "docs/03-modulos/documentation-gate/README.md",
+      "bytes": 2472,
+      "sha256": "772cb0fd2e4ba3eb3a20d3f5d3e2cb29d55166a55a5f37da393a86b73f33e0cd"
+    },
+    {
+      "path": "docs/03-modulos/executor-manager/README.md",
+      "bytes": 2410,
+      "sha256": "cdcb3232d09255f6214f9af7a176b0e054d358668da51e4e83f0b43bcb71bccf"
+    },
+    {
+      "path": "docs/03-modulos/observabilidade-economia/README.md",
+      "bytes": 2398,
+      "sha256": "fc675df905494287b017c2b26dabbe408edb447284d552694f503cac5d0b2e3a"
+    },
+    {
+      "path": "docs/03-modulos/orchestrator/README.md",
+      "bytes": 2306,
+      "sha256": "8b5dead6add865ecd556fbe5139c1a4af337fe6b6ea452bcfea3af7bbb7220c2"
+    },
+    {
+      "path": "docs/03-modulos/projects/README.md",
+      "bytes": 2291,
+      "sha256": "d325b94a5c39fdacea7ae7b719e183c34d1f43a687983c124f92d00a24ec466e"
+    },
+    {
+      "path": "docs/03-modulos/providers/README.md",
+      "bytes": 3602,
+      "sha256": "9140843e43c7b2d7ac5482bcb7767e2d17abecb3c480fb4496d6aca2f0f5ed66"
+    },
+    {
+      "path": "docs/03-modulos/runs/README.md",
+      "bytes": 2291,
+      "sha256": "fc33de88d2b99ce5918e976decba1a59cb140d149e0574fd46cc102792e4a94e"
+    },
+    {
+      "path": "docs/03-modulos/runtime/README.md",
+      "bytes": 6071,
+      "sha256": "df89fad5d694765db7a57a43aa7a5fac1a5daf381f09f70bffc88faf3023524c"
+    },
+    {
+      "path": "docs/03-modulos/runtime-guard/README.md",
+      "bytes": 2418,
+      "sha256": "48a6da47d67cae125c6b9ff38c088de9b8b2e8e540105507f007885f0b2b41d6"
+    },
+    {
+      "path": "docs/03-modulos/sandbox/README.md",
+      "bytes": 5502,
+      "sha256": "e973b5f62a3e287639d13a169c989e5506cb083c09fe146c55621e191f35741a"
+    },
+    {
+      "path": "docs/03-modulos/tenant-isolation/README.md",
+      "bytes": 5650,
+      "sha256": "925af2ddf55ed76976d9b914fa9db08bb11e73255f7ebd30553fa6c265d83b12"
+    },
+    {
+      "path": "docs/03-modulos/tickets/README.md",
+      "bytes": 2239,
+      "sha256": "14adf5eaba8bc3a4476262ae65311c93202f63a18e1c40e8de3623a39b86a210"
+    },
+    {
+      "path": "docs/03-modulos/tool-broker/README.md",
+      "bytes": 4295,
+      "sha256": "3fe72b8e8a87dd0c6087240055c6666d62fdefc7db56559c99ff2a9df2f525a0"
+    },
+    {
+      "path": "docs/03-modulos/worker/README.md",
+      "bytes": 2276,
+      "sha256": "68beb3c7a29163a76a2f7abbe8eedda845dc03dd23d5783530bdc486a031bf8c"
+    },
+    {
+      "path": "docs/04-features/README.md",
+      "bytes": 970,
+      "sha256": "a7873a645fdefd7697ea68c6a917f31dbec3f603de18c51b6d1b041f64f1069e"
+    },
+    {
+      "path": "docs/04-features/documentation-approval.md",
+      "bytes": 1135,
+      "sha256": "f8ab0c1268ec83eba681e45683ffc7740755937666bc62673dd7442f7db60019"
+    },
+    {
+      "path": "docs/04-features/provider-handoff.md",
+      "bytes": 1277,
+      "sha256": "b45d680bcd7ff171aabac3ca34cc8555d92c99897be81945fb7da5935e2aaa86"
+    },
+    {
+      "path": "docs/04-features/recovery-operation.md",
+      "bytes": 1231,
+      "sha256": "25e81e30a52b0a8ae07bdd2f1914b1942ad875e455b9ac49f92e3dc5b38a258a"
+    },
+    {
+      "path": "docs/04-features/tenant-isolation.md",
+      "bytes": 1227,
+      "sha256": "731cef156789d6d13c5dd7ee94c7b98fab9d1ebe1cf7c87dc58d4d4d230e7346"
+    },
+    {
+      "path": "docs/04-features/ticket-execution.md",
+      "bytes": 1407,
+      "sha256": "bdd41993f9fac5e8040fc77b70fbe852176633603806271cb0b8848006e0e2c9"
+    },
+    {
+      "path": "docs/04-features/usage-dashboard.md",
+      "bytes": 1232,
+      "sha256": "52807ec6873607b2380f2a854570dd88beba480c8df50d9816e5048dd4ad49ab"
+    },
+    {
+      "path": "docs/05-contratos/README.md",
+      "bytes": 1504,
+      "sha256": "4aadf4ace1f9e638e86a3eb1193c2410ca0eadfff4c41e12937bd72fcf18615c"
+    },
+    {
+      "path": "docs/05-contratos/api/controle.md",
+      "bytes": 2561,
+      "sha256": "af0be3a221e711129f534a0f1ca6a8933a79188b8786287dd31e5ceb6d2b2d46"
+    },
+    {
+      "path": "docs/05-contratos/api/runtime.md",
+      "bytes": 1368,
+      "sha256": "e95e12f9e70e9518d82c3c061c9a475b3ab27258ff7c339e46960844747f428f"
+    },
+    {
+      "path": "docs/05-contratos/api/worker.md",
+      "bytes": 1433,
+      "sha256": "497faa7a0f3682ead352347c763a56fa6d8709d9f5abde01f709e3e6279566cb"
+    },
+    {
+      "path": "docs/05-contratos/eventos/catalogo.md",
+      "bytes": 1380,
+      "sha256": "a94f9574795db4eb6f8db878cf53ac819bbee51fc73046f66d4adc39e12aa011"
+    },
+    {
+      "path": "docs/05-contratos/filas/dispatch.md",
+      "bytes": 1081,
+      "sha256": "e40ce7a9775a72954c55ce91908c769cfc13e0ec7b62b0c26e63f6b61fcb2ca3"
+    },
+    {
+      "path": "docs/05-contratos/schemas/artifact-context.md",
+      "bytes": 1061,
+      "sha256": "fb2f36ab851c95a99dd278766e0403bc09fa604d8fb39aa8e1364e69e7861b6d"
+    },
+    {
+      "path": "docs/05-contratos/schemas/checkpoint.md",
+      "bytes": 1258,
+      "sha256": "f434240a64b9771d7d00784b2243739678e064aa5e79f233d58c91857de9150e"
+    },
+    {
+      "path": "docs/05-contratos/schemas/entidades.md",
+      "bytes": 2309,
+      "sha256": "51fc9657cf76771465137d140d5c9bf6ecd71a527ce7f34ed51ed2559982847d"
+    },
+    {
+      "path": "docs/05-contratos/schemas/job-package.md",
+      "bytes": 3123,
+      "sha256": "1c55347866cdc3891a68300f3e2bbbd54e360534008add6651c06a8b8a2fa902"
+    },
+    {
+      "path": "docs/05-contratos/schemas/workflow.md",
+      "bytes": 1591,
+      "sha256": "716279b457337dbe5c0781d8f4c9db958628a75e278d7cb7806dbc614686984d"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-002-vps-unica.md",
+      "bytes": 1582,
+      "sha256": "913462ae2bdc8b9442d99b97abf7c69bd91ea847c8d1c951f642ef0e19180e07"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-003-multi-tenant-e-stack.md",
+      "bytes": 2024,
+      "sha256": "e71dbce9e224338ef884115150bc3955357b1a299341ad5826393fff34a80ddb"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-004-provider-runtime-sem-segredos-no-sandbox.md",
+      "bytes": 2057,
+      "sha256": "5aa9ab314380504f65620da3a240c034d42a3a703482cc165a836434c015e1ca"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md",
+      "bytes": 2033,
+      "sha256": "3df32c9a8724426b57d9ee274f8eb0094ef8ac0fa8886684f65aa6ec40c61f6e"
+    },
+    {
+      "path": "docs/06-decisoes/ADR-006-rls-capabilities-e-egress.md",
+      "bytes": 1958,
+      "sha256": "079bd8be2e21db632c583966503e248c94aac2d85ed60ed84931d4b7778fb990"
+    },
+    {
+      "path": "docs/06-decisoes/DOC-ADR-001-manual-vivo.md",
+      "bytes": 1480,
+      "sha256": "871eda12630b8415b0bef8c0020eaeee78e004e5ca56ced3302d41ec377d076f"
+    },
+    {
+      "path": "docs/06-decisoes/README.md",
+      "bytes": 1380,
+      "sha256": "639a9116d51a9edf7eda25c6c4ccfea3be37f95871f68a4df20aca3d3fb684cc"
+    },
+    {
+      "path": "docs/07-operacao/README.md",
+      "bytes": 787,
+      "sha256": "e9b7d63e4f619ec535013297490996ddf0f39bfcd9c56d520b729aa89f37e15b"
+    },
+    {
+      "path": "docs/07-operacao/backup.md",
+      "bytes": 1259,
+      "sha256": "a52141017265eab5afa866255b957532ecafa6afcd4289f6fdacc393bda87520"
+    },
+    {
+      "path": "docs/07-operacao/deploy.md",
+      "bytes": 1571,
+      "sha256": "15eb58ffa992c02820f65792b050778610d0f44f9e10ecf1525122ce07b5947c"
+    },
+    {
+      "path": "docs/07-operacao/economia.md",
+      "bytes": 2025,
+      "sha256": "4cd2fa3eabfe400e54e0f4b4112a785b21239d48a4eb693b6bb43de55dbc7272"
+    },
+    {
+      "path": "docs/07-operacao/execucao-e-recuperacao.md",
+      "bytes": 4762,
+      "sha256": "43390ec17a5b5900e135f1b30008d14c6959323a065c1aba3109387e0013ac02"
+    },
+    {
+      "path": "docs/07-operacao/handoff.md",
+      "bytes": 1519,
+      "sha256": "bc9960e3a2fc41652d6550919bba13ea77d5d89aca3532298625b1aeddc4ec54"
+    },
+    {
+      "path": "docs/07-operacao/incidentes.md",
+      "bytes": 956,
+      "sha256": "d3ac6e41bf0ce9dc883c8904c89cfaca8aefa8bbd455472c8c3d7444618c7b10"
+    },
+    {
+      "path": "docs/07-operacao/infraestrutura/dimensionamento-vps.md",
+      "bytes": 6680,
+      "sha256": "b2688b77623f1ef22a3afa31f340a51f077c6d3f143e96d372a01e4b7921c058"
+    },
+    {
+      "path": "docs/07-operacao/observabilidade.md",
+      "bytes": 1135,
+      "sha256": "99164c744a19ea5e40739d2059be662a4bbd115b0295fb087f6f807522f9af95"
+    },
+    {
+      "path": "docs/07-operacao/restore.md",
+      "bytes": 1224,
+      "sha256": "72fc25e2e1cf4c1b8708fdc4f0fb86c703b309d60faa32764938e0f3e273447a"
+    },
+    {
+      "path": "docs/07-operacao/troubleshooting.md",
+      "bytes": 1338,
+      "sha256": "e0799094e5d5ed8bb8bc45c98862ebbdf48f486c948898494cf70bcad9d04473"
+    },
+    {
+      "path": "docs/08-desenvolvimento/README.md",
+      "bytes": 858,
+      "sha256": "78e036d257c6c00938029bc2869e3f758522b2d1d9d937f7beeebd7a78c147b6"
+    },
+    {
+      "path": "docs/08-desenvolvimento/ambiente-local.md",
+      "bytes": 965,
+      "sha256": "220ee15e0fc9c201506bbd0c7b638b07aba19513a678575af05d6394be1a22ba"
+    },
+    {
+      "path": "docs/08-desenvolvimento/catalogo-fac.md",
+      "bytes": 10440,
+      "sha256": "cc497bdf9bddce13d1c6ff343f1fac78ea35cbe29e621c655d232350c4b2f89b"
+    },
+    {
+      "path": "docs/08-desenvolvimento/como-contribuir.md",
+      "bytes": 1151,
+      "sha256": "1198ce0b1b32cadb4ad404b5d4afa3db941b6edd9f91955b7ea79cfeefa4e461"
+    },
+    {
+      "path": "docs/08-desenvolvimento/convencoes.md",
+      "bytes": 1065,
+      "sha256": "ea19c885c99580adbc91c199cf6fdf09d1a9bfa0bbb80dfc56f33ef04ce93af3"
+    },
+    {
+      "path": "docs/08-desenvolvimento/matriz-cobertura.md",
+      "bytes": 5633,
+      "sha256": "5b1bda8cad37f2262fa76395cb7d07a3912127e7f77df539a91117525fa48864"
+    },
+    {
+      "path": "docs/08-desenvolvimento/piloto.md",
+      "bytes": 2039,
+      "sha256": "ddf0244d53b7caaa3e86af0aef631c5fa4f7d9f81b01af3510892ec8d8e5ead6"
+    },
+    {
+      "path": "docs/08-desenvolvimento/plano-mvp.md",
+      "bytes": 3234,
+      "sha256": "672e6843a93a658c8c63602578d3a5c7cbf0aeefc545680b9454df6c027bfe76"
+    },
+    {
+      "path": "docs/08-desenvolvimento/testes-seguranca.md",
+      "bytes": 6695,
+      "sha256": "e45f1e344bb487c1b09efa7e7b2e51dcac743ddafab5678b34cdbcc93a3e7461"
+    },
+    {
+      "path": "docs/08-desenvolvimento/testes.md",
+      "bytes": 1250,
+      "sha256": "5ed5ee9aeb4bcfc324420fa294386f45c1637b1f6fb750430dcccc1ca2e252e4"
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-06-DOC-MIGRACAO-manual-vivo.md",
+      "bytes": 3039,
+      "sha256": "8927af744d1973f18d88bdff4a1dfddd213acad95aacf9f6f32db9ccd3197e45"
+    },
+    {
+      "path": "docs/09-entregas/README.md",
+      "bytes": 574,
+      "sha256": "6b770de2d799128b970557cdc1dc51c312d5d1e86a78018513ef4c73dc08c3c6"
+    },
+    {
+      "path": "docs/10-lessons/README.md",
+      "bytes": 867,
+      "sha256": "8da3cad442c3b5145659efb4d815e293eec52870de569a3c8ab094be20fa1a5a"
+    },
+    {
+      "path": "docs/99-historico/README.md",
+      "bytes": 934,
+      "sha256": "a51349f866d5a222c7e17f4c2e418e6a4f6d6131a29f54eee7270985f4d227fc"
+    },
+    {
+      "path": "docs/99-historico/originais/AGENTS.md",
+      "bytes": 414,
+      "sha256": "4eb2e5253c158830082c3f92bc8b7575adbab20a9ee75e0811cb58958e382cc9"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/AGENTS.md",
+      "bytes": 3774,
+      "sha256": "a00ed431cd700e6ae8cbb82806003abc3913717662ec4daae773a633c931014a"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/ANTIGRAVITY.md",
+      "bytes": 3930,
+      "sha256": "c5784e832ba6f1a55563ab3f13a3100aac45ca35cf6158b17425a876acdb2fa1"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/BACKLOG.md",
+      "bytes": 3087,
+      "sha256": "a0ed4fc05e9ecaadb7272c503aba4791f78c40dda2defae22c2a0539d0b7f079"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/CHANGELOG.md",
+      "bytes": 1372,
+      "sha256": "5af9a20e5dcef5fa6a7743538d9f518b1662c442ba3d727e16edf759c1cd13e1"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/CLAUDE.md",
+      "bytes": 3838,
+      "sha256": "05777a2ae23858a36de81d07333406f0cd5d444d7c6bb07429352d883ef8a389"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/ESPEC-MVP.md",
+      "bytes": 3271,
+      "sha256": "05e448c530017a6ec00d88f9855990ca1dc21f32f783a379ebd5697b747c1c6d"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/FONTES.md",
+      "bytes": 3603,
+      "sha256": "863f728a2522d6a8d018a40cc45b36eb9ce6257a3707635b33ea987c978d3029"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/MANIFESTO-FONTES.json",
+      "bytes": 2497,
+      "sha256": "32df7197263bbfa9696603a84dce0f80c3ad35b70cf1a9ce51ff9ba5a2e81aa3"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/MATRIZ-COBERTURA.md",
+      "bytes": 4813,
+      "sha256": "3d6f0ee14ebdaa71bb0a96571d598a1b0dbf79e3d4e6517cb0e79ccd6d865b22"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/PILOTO.md",
+      "bytes": 1824,
+      "sha256": "5304632ef7f1cca23cc4549d7172e479fb9f279c882de62ca40b1be14724a369"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/PLANO-MVP.md",
+      "bytes": 2713,
+      "sha256": "bb19e6941ef8b5938593f91a87c0906f900de7624226e0012bfbb58d191fbfc2"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/PROMPT-INICIAL.md",
+      "bytes": 572,
+      "sha256": "b6716c443a323552030586a6875d013379ac77ab38ab2ff47729dcc9ef8b8c74"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/README.md",
+      "bytes": 2519,
+      "sha256": "b71de8dccf9e9f28712b7a338b6b3b3de4e97248efcaa06f3665671720009584"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/VALIDACAO-DOCUMENTAL.md",
+      "bytes": 2191,
+      "sha256": "6f244692d2bf038b918612b3b8dc22aefa960ea551179c3b89b64881b9ace3df"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/AUDITORIA-FONTES.md",
+      "bytes": 3542,
+      "sha256": "d8cbe1eb9f373e7c9a81185a45eaf9070d356717380ffa11a9c9cb793adb9ff0"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/INDEX.md",
+      "bytes": 2461,
+      "sha256": "7807f43648736f69b25dac99813fb283613a771df066879cb99546f08865fc00"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/POLITICA-IA.md",
+      "bytes": 5717,
+      "sha256": "9d6cc78aa349f49a1336623452bf04c2bcfa7e308959206f1c1ab293d879bfb6"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-003-multi-tenant-e-stack.md",
+      "bytes": 1749,
+      "sha256": "b51faa6fd705ece23f86b17e79c1ae1ae76b17c4d3a02900dea8749f251fcabe"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-004-provider-runtime-sem-segredos-no-sandbox.md",
+      "bytes": 1762,
+      "sha256": "cea85116b06b7defc1bd9ada2497a548ddd2ecaf90c08586098fc3d1e9d9b628"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md",
+      "bytes": 1740,
+      "sha256": "98942c29cbf1671dcad7a5dd98de20b528b2598eaf49ed1b47d33b191a106650"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-006-rls-capabilities-e-egress.md",
+      "bytes": 1678,
+      "sha256": "a7c6f2842f7ce4ea39d33179f8f9d6a8b68103d18fbe54905cd272c30543e973"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/arquitetura/ARQUITETURA.md",
+      "bytes": 4839,
+      "sha256": "152b101997eac1d396204d13d1454b09889097db2c8a75408c0d6ec72a4b3594"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
+      "bytes": 3969,
+      "sha256": "7be1de5bb3503a04b993c0456a5f98f53c76ea63459e7a377635811832095c80"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/operacao/README.md",
+      "bytes": 4524,
+      "sha256": "a7ae50e6bcf4b0dcca58fdefcc2236846fed577accebb9d9e898044bcf8e1d5f"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/runtime/README.md",
+      "bytes": 5429,
+      "sha256": "617d4d11acf5538ba9c6dc6bf9f8cf0a995cfe03722af72a92c7dea0b2a6e0eb"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/sandbox/README.md",
+      "bytes": 4860,
+      "sha256": "3eda821067ea9ccba0e34f01952ed8b7a86812551b67d54d7569cf5d46121757"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/seguranca/CAPABILITIES-E-TOOLS.md",
+      "bytes": 3637,
+      "sha256": "2398fb05ab16a0bea67f9c08285529f212e395db1e6932739ad1315323784c3f"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/seguranca/REDE-E-EGRESS.md",
+      "bytes": 4397,
+      "sha256": "86d5df72cf461c6a038732dc5256407ca3cbac3ed8446a5d6a9c3cfe62d3e005"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/seguranca/TESTES-ACEITE.md",
+      "bytes": 6449,
+      "sha256": "586d8b30dd76cd69b0e7899e7ec1e0a114944c3a3a7a317d11768b44e271b5c4"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/seguranca/THREAT-MODEL.md",
+      "bytes": 5272,
+      "sha256": "e3691302dbc048a9533b0ed7ee3c98ebe0ee108801f1c4f67b0ecdc715296f1a"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/documentacoes/tenant-isolation/README.md",
+      "bytes": 4999,
+      "sha256": "ff849b298a98d5813ccf09b419cfb76efc40af7b5eae2ece0c2bed03180d5f8f"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/prompts/PROMPT-00-PREPARACAO.md",
+      "bytes": 7775,
+      "sha256": "3e4de60724fcd521b0cddd21554ea1b4f37b23371c077ae77f31286716b51021"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant/prompts/PROMPTS-IMPLEMENTACAO.md",
+      "bytes": 55373,
+      "sha256": "d26c57848e39e5e303e436e32412f367726dc51863683efad3fc10b0446397e9"
+    },
+    {
+      "path": "docs/99-historico/originais/output/le-fabrique-multitenant.zip",
+      "bytes": 72320,
+      "sha256": "399f13fe1f219ffb8b7941b6d0887c67034c3f76e1e719128e1c1bc2f9bbcfd4"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/AGENTS (project file).md",
+      "bytes": 2710,
+      "sha256": "e495edbca9b1f22a69cb789c54722df30a64eac4ce4d2ded0baffc030b99fb92"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/ANTIGRAVITY.md",
+      "bytes": 2866,
+      "sha256": "cf705ea905931b8499f2934e22348615312236c5c78a75b12e20d5210d999d78"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/BACKLOG.md",
+      "bytes": 1342,
+      "sha256": "ca6e4e4d262ac4768b781936b0c0afecef5b4c6280f8cc29d6bc5ce90ec993ce"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/CHANGELOG.md",
+      "bytes": 682,
+      "sha256": "59fd1e23d3375cc0a5c2df12dae9a152d398dae828299482ccc1095d4309a444"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/CLAUDE.md",
+      "bytes": 2774,
+      "sha256": "76ab72de1dfbae54b0d3c1334dac380803038698afd6ef5e3c73e0641c776bbd"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/ESPEC-MVP.md",
+      "bytes": 4018,
+      "sha256": "04c13b2dee9f6a687c43ea4d70a3f9254d974c5d3dacf9d2352988f3cef5316d"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/FONTES.md",
+      "bytes": 2189,
+      "sha256": "d6fd3e8739bd898546a7c137c8f35ecd830980c08d76dfe31f3ed4b1682a5d59"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "bytes": 162846,
+      "sha256": "d064f9c50132c593a452924c78c5b3168771a2a6024ee51e1847ec57b3a1d0c4"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/INDEX.md",
+      "bytes": 443,
+      "sha256": "251b4fdf94dfc4553ddd69f8b0d886059036b66d43644f28aa0ab8961cfc37b1"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/MATRIZ-COBERTURA.md",
+      "bytes": 2529,
+      "sha256": "f601c428a0d210f28d54a76405fefd119d7c54e123784f8532237b9a9739c440"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/PILOTO.md",
+      "bytes": 1026,
+      "sha256": "9278e426822070d18d6f5a072f80b50fc46ac79f3243e8d28b5b1a41e4dc4f52"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/PLANO-MVP.md",
+      "bytes": 11698,
+      "sha256": "5ef1c8bbb044f3a51abfec995df98c48ee019dc88debb372c11fe4daf18fa39c"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/POLITICA-IA.md",
+      "bytes": 4143,
+      "sha256": "dbc46ae1770d65d2adf983f352a08f4dd6802ccbda2817e7c4b4a1314f7d4e3d"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/PROMPT-INICIAL.md",
+      "bytes": 881,
+      "sha256": "b22b64781dd25ee47f932a99f630e0cc4ddbad9794671e3da356b378d75d67e8"
+    },
+    {
+      "path": "docs/99-historico/originais/sources/README.md",
+      "bytes": 1506,
+      "sha256": "02b54ffe16b4039d5348ba06bd7e514e38803de8afb064384be69c855e9e5a10"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/.agents/rules/documentacao.md",
+      "bytes": 528,
+      "sha256": "8dd7b3dbd06204301a1efae3f567733a75d099084e8c688324f01686c3936d1b"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/AGENTS.md",
+      "bytes": 2955,
+      "sha256": "90e31965766c97271a50ab55e75cb112419a7c9704ef5219a783ef1cbcf98fd3"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/ANTIGRAVITY.md",
+      "bytes": 3121,
+      "sha256": "1ba93029ef0dee9ae162543c55544ce2a95146809f02ac7cf4ecfd5bf4081dc6"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/BACKLOG.md",
+      "bytes": 1594,
+      "sha256": "431d70640b5c7cffcb12002f8eb3a20f4f42e1184496142f4d3c06b8c05bd493"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/CHANGELOG.md",
+      "bytes": 929,
+      "sha256": "665479f08d5a4545df5f36edac378a29d7b348425a3f3f602a668a5d6cadaf22"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/CLAUDE.md",
+      "bytes": 3019,
+      "sha256": "31498c09d3292f2f7c3857714b20ded6a7cea22d1e8e8d545295ea9008ae0ef2"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/ESPEC-MVP.md",
+      "bytes": 4307,
+      "sha256": "e403dcaa7362f35e826bab48fdf41c423102194ed44d366a9fb570f703d4ed63"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/FONTES.md",
+      "bytes": 2430,
+      "sha256": "81329492edce9de682560f6300085fa8ae9d798cad65dd9c5fc41469630391ac"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/MATRIZ-COBERTURA.md",
+      "bytes": 2603,
+      "sha256": "59c62b295805217c07085d84117a7c7c648562f7b0c95879f817a0626226017e"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/PILOTO.md",
+      "bytes": 1279,
+      "sha256": "7867a668dfc662bc94cdb63ab2110b1b1f563fd90efdedcdef896cd7d8128c44"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/PLANO-MVP.md",
+      "bytes": 12083,
+      "sha256": "db7fc4163cafaa12e332b1ab2e7f85bb888fb765b09cee603c957c2186265cbe"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/PROMPT-INICIAL.md",
+      "bytes": 1150,
+      "sha256": "044f6d27e2837643f544373b3d2b5644c10c40bc3bfbf8652ca4eb5671c53944"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/README.md",
+      "bytes": 1746,
+      "sha256": "4e5c296a0392f95d449e1f6f05aa538ce36d48c25f37f42c2635af6f36a9d99b"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/config/policies.example.md",
+      "bytes": 2039,
+      "sha256": "a8fb8117c52795f377bcb1fec6c6e77290941c501032b465359bb3b515c4fed8"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/INDEX.md",
+      "bytes": 713,
+      "sha256": "52cccd66ae0b774882520ca09a0daa3da3fde0f5619e8646665a9a024233c4b4"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/POLITICA-IA.md",
+      "bytes": 4456,
+      "sha256": "b211316464d728c257b8b1a6ac1977dd83ed6f5d77ab1fb93792a1710af6b8a3"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/arquitetura/ADR-002-vps-unica.md",
+      "bytes": 1596,
+      "sha256": "a6ef0a218813c66f5c384f4223729ec931c559ccdba5f28d2c99f03df008af30"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/arquitetura/ARQUITETURA.md",
+      "bytes": 22332,
+      "sha256": "9df01b69d158b3fa8e66d8162639a286a896e1fa0ae716d9726f9e62f28455e9"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/economia/README.md",
+      "bytes": 1742,
+      "sha256": "ef77f01ce91e8b7ffbf69f26d64b31135a914c9509452f837f0466b5ae4a7053"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/handoff/README.md",
+      "bytes": 2789,
+      "sha256": "37570ab8651521383ed0e8e99805f728904f0587dfffb2efa62840821518c581"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
+      "bytes": 5462,
+      "sha256": "9188e3b4106b7e2918df4409c4b4d1075a276be50ee5cafdd376c66c5f50ba3a"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/operacao/README.md",
+      "bytes": 4591,
+      "sha256": "7610c85b5dd0ebd91c5265b1f55dba9ad558a403818639a68b4d0d7bce173975"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/documentacoes/runtime/README.md",
+      "bytes": 4392,
+      "sha256": "c3930067919ce4da3ac0f9ab54f201b968844d7dd2739b1e40343b6bad2daedc"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/lessons/INDEX.md",
+      "bytes": 622,
+      "sha256": "11fcf6102d9bb75e8003d28f3151df8a484698a28138219d382f5b2fd15b3c53"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/templates/ENTREGA.md",
+      "bytes": 1343,
+      "sha256": "08991e01758ffbfff365653c68223e0d7fd06f8e15c6e3093ebba0d2e07277ea"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/templates/HANDOFF.md",
+      "bytes": 1070,
+      "sha256": "b41c9a62a832c8db980e4eddf8922dfa61b02e2cad8989074bf05569edae8de2"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/templates/LESSON.md",
+      "bytes": 450,
+      "sha256": "29b9c953f2e76b6a201a42d044ed8a6c1c8e57448db54a1ddea488f6e7f243ce"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/recuperados/templates/TICKET.md",
+      "bytes": 513,
+      "sha256": "39b767d05d193fce484b6b74cb9834c8d514bfb5989de17416b4450d6894ab56"
+    },
+    {
+      "path": "docs/99-historico/pdf-v2.1/texto-integral.md",
+      "bytes": 88033,
+      "sha256": "4cc9e4db5aae0648abb77a71ab352ded84d4d5460801a73e1f036a080fa0b6cc"
+    },
+    {
+      "path": "docs/CHANGELOG.md",
+      "bytes": 162,
+      "sha256": "5c54af46f7d5c4426ea64055156b3eb961a7e60ff0e4fbe0d8527deb4f39a797"
+    },
+    {
+      "path": "docs/GLOSSARIO.md",
+      "bytes": 120,
+      "sha256": "389de81f571fa71e129636b143b527d48361bcd648183ac03bab7c8ba2bf5558"
+    },
+    {
+      "path": "docs/INDEX.md",
+      "bytes": 9109,
+      "sha256": "03bf0497faa0d31b2c849fb2d7e145b871877ae82728fcfac36cae9ad2ea69f3"
+    },
+    {
+      "path": "docs/LEIA-ME-PRIMEIRO.md",
+      "bytes": 1082,
+      "sha256": "63dcb2547af9fa61a583378cdba741cee7e7ebb848a0283c6f706c2d263f7f36"
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 4974,
+      "sha256": "ba0ee4193108e5fa7abda1fb9091d331263db1ef7c230dca88374d4c7dd3328f"
+    },
+    {
+      "path": "documentacoes/INDEX.md",
+      "bytes": 196,
+      "sha256": "b8bc1cd1f6e9e3ce15cd33c426d8605a868cb1d29bb83946835724cb16d0dddd"
+    },
+    {
+      "path": "documentacoes/POLITICA-IA.md",
+      "bytes": 216,
+      "sha256": "810fb31ae4cbbe4971bfc4ead6a10dd7b3fce5ed93f754742342e9f78750ce67"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-002-vps-unica.md",
+      "bytes": 223,
+      "sha256": "86ca1825c6b54de3d534aae1128f9382bfb0332f16db06d57427a4c1c360355d"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-003-multi-tenant-e-stack.md",
+      "bytes": 234,
+      "sha256": "65a82b500e0b76aa424127dc9f5550d16f6eda0982822e2dcd0bd836e476a0e0"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-004-provider-runtime-sem-segredos-no-sandbox.md",
+      "bytes": 254,
+      "sha256": "7bd31182395d8de51776c632576df4430d0cc0929eaf2f0df17ef23013de766e"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md",
+      "bytes": 252,
+      "sha256": "9ec049fd27714e1ee40769daa3fb65b7447902a2072587220bb8c0751a83e114"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-006-rls-capabilities-e-egress.md",
+      "bytes": 239,
+      "sha256": "e6962a92bb8b49f74afccc5ba8dce0441d4cca902efb8747f8c26ae128374076"
+    },
+    {
+      "path": "documentacoes/arquitetura/ARQUITETURA.md",
+      "bytes": 233,
+      "sha256": "e7b71cabd8569a277bf916ec9e117117ce1a2cd287488c1291087a7c8523994b"
+    },
+    {
+      "path": "documentacoes/economia/README.md",
+      "bytes": 214,
+      "sha256": "2c11a1d1a6affcb183abb97c6930dbadf846fc24da469cd9bdbd0228b8779a9a"
+    },
+    {
+      "path": "documentacoes/handoff/README.md",
+      "bytes": 213,
+      "sha256": "763787c078377a48e37f68aac9bc868895189debaa7452a5c3fbb5814c5ea1d0"
+    },
+    {
+      "path": "documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
+      "bytes": 240,
+      "sha256": "f4d11d03fe6e5ff43372b50015e6401d260deecca9c0ea750b87f99ff14f7fc9"
+    },
+    {
+      "path": "documentacoes/operacao/README.md",
+      "bytes": 228,
+      "sha256": "c4486a78ec810d3534e5adb9570345403ac42727c48e460e63e85152542cd8fd"
+    },
+    {
+      "path": "documentacoes/runtime/README.md",
+      "bytes": 219,
+      "sha256": "c2a2c48cb60245fbe1e39d38e32b0be169d0327b7c62d029a46d8dce224dbb65"
+    },
+    {
+      "path": "documentacoes/sandbox/README.md",
+      "bytes": 219,
+      "sha256": "a1cf44cd278203b3cd8f5197812308812e6cfc6ccf91d94bee1dfb98b8502bc8"
+    },
+    {
+      "path": "documentacoes/seguranca/CAPABILITIES-E-TOOLS.md",
+      "bytes": 223,
+      "sha256": "494ce4a8e8c408eb419b558b3468358e6e134fa13c3981972ef48b5e7f5d8afa"
+    },
+    {
+      "path": "documentacoes/seguranca/REDE-E-EGRESS.md",
+      "bytes": 232,
+      "sha256": "5a7c0bf6c4fca9155cd95aee91f4c5c6a0cf8abedb6d8b1dbfa9da6acd8ea401"
+    },
+    {
+      "path": "documentacoes/seguranca/TESTES-ACEITE.md",
+      "bytes": 229,
+      "sha256": "a40152c22cbb5fbac4f74be722936ed397dbfed0845d08a596082aebde52d954"
+    },
+    {
+      "path": "documentacoes/seguranca/THREAT-MODEL.md",
+      "bytes": 231,
+      "sha256": "a1937897475aec0542b414594ade7723a800f042d8cea53e7c160b25917ce404"
+    },
+    {
+      "path": "documentacoes/tenant-isolation/README.md",
+      "bytes": 228,
+      "sha256": "c92e76f1ea78522647e4bfdd02c55e20e3291b1295fa67719128920359413f6c"
+    },
+    {
+      "path": "lessons/INDEX.md",
+      "bytes": 208,
+      "sha256": "b49dd803b72f03db21ebd87e3479c1a6a35fddf4783c262317280a195f48baad"
+    },
+    {
+      "path": "prompts/PROMPT-ENTREGA.md",
+      "bytes": 1358,
+      "sha256": "8dfe35830dcd26c7b91e7e6983ed6731ae160f939158380137c33c3e7fbc7a8f"
+    },
+    {
+      "path": "prompts/PROMPT-MESTRE-MIGRACAO.md",
+      "bytes": 7629,
+      "sha256": "65e146e5ea821192801f95341c8c643f458128900881b9d7e3cec5b6f69d7d5f"
+    },
+    {
+      "path": "prompts/implementacao/PROMPT-00-PREPARACAO.md",
+      "bytes": 8495,
+      "sha256": "e2d2fed7f7f69e9162afdd1938e19e09e8c3fb2bbf2d74c0c39a5f9de5c2bb76"
+    },
+    {
+      "path": "prompts/implementacao/PROMPTS-IMPLEMENTACAO.md",
+      "bytes": 57725,
+      "sha256": "524246c9a623cc9161ac6ef4d889684e881c10c1e614dfe6daff37b49842e55a"
+    },
+    {
+      "path": "scripts/validar-documentacao.py",
+      "bytes": 5532,
+      "sha256": "fd8c46756a173b7bf88784b5bcb6ee393b332ce3c6ea6b1092a450f053ea576d"
+    }
+  ],
+  "rollback": "Restaurar diretório copiando pacote-recebido para reorganizacao-documental; originais versionados permanecem"
+}

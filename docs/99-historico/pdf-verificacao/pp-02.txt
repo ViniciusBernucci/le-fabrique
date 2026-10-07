@@ -1,0 +1,31 @@
+Fábrica de Software | v2.1 | Planejamento
+2
+Conteúdo
+01. README.md
+02. documentacoes/arquitetura/ARQUITETURA.md
+03. documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md
+04. documentacoes/arquitetura/ADR-002-vps-unica.md
+05. PLANO-MVP.md
+06. ESPEC-MVP.md
+07. documentacoes/runtime/README.md
+08. documentacoes/handoff/README.md
+09. documentacoes/operacao/README.md
+10. documentacoes/economia/README.md
+11. documentacoes/POLITICA-IA.md
+12. AGENTS.md
+13. CLAUDE.md
+14. ANTIGRAVITY.md
+15. PILOTO.md
+16. BACKLOG.md
+17. MATRIZ-COBERTURA.md
+18. FONTES.md
+19. PROMPT-INICIAL.md
+20. templates/TICKET.md
+21. templates/ENTREGA.md
+22. templates/HANDOFF.md
+23. templates/LESSON.md
+24. documentacoes/INDEX.md
+25. lessons/INDEX.md
+26. CHANGELOG.md
+27. .agents/rules/documentacao.md
+Anexo final: config/policies.example.json

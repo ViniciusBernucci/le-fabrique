@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "imported_files_unchanged": 25,
+  "adapted_skills": 11,
+  "checks": [
+    "originais importados e snapshots íntegros",
+    "11 nomes preservados",
+    "referências estrangeiras operativas removidas",
+    "perfil comum vinculado em cada skill",
+    "três guias apontam fontes correntes"
+  ],
+  "limitations": [
+    "sem instalação física em .agents read-only",
+    "sem autoload/forward-test de nova sessão"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "files_scanned": 1132,
+  "findings": [],
+  "patterns": [
+    "sk-[A-Za-z0-9_-]{20,}",
+    "gh[pousr]_[A-Za-z0-9]{25,}",
+    "-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----"
+  ],
+  "result": "PASS",
+  "limit": "Scan de padrões fortes em arquivos textuais alterados do escopo; não comprova ausência universal de segredo/PII, binários não examinados semanticamente."
+}

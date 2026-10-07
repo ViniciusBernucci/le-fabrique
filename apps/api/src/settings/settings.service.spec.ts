@@ -136,3 +136,81 @@ describe("SettingsService", () => {
     expect(transaction.factorySettings.updateMany).not.toHaveBeenCalled();
   });
 });
+
+it("persists project skills and more than six agents using the existing versioned settings JSON", async () => {
+  const projectId = crypto.randomUUID();
+  const skillId = crypto.randomUUID();
+  const current = createDefaultFactoryConfiguration();
+  const configuration = {
+    ...current,
+    projectSkills: [
+      {
+        id: skillId,
+        projectId,
+        name: "Skill de revisão",
+        description: "",
+        instructions: "Verifique a UI.",
+      },
+    ],
+    digitalAgents: Array.from({ length: 12 }, (_, index) => ({
+      id: crypto.randomUUID(),
+      projectId,
+      name: `Agente ${index}`,
+      description: "",
+      instructions: "",
+      installationId: null,
+      model: null,
+      skillIds: [skillId],
+      enabled: true,
+    })),
+  };
+  const record = { id: "global", version: 2, configuration, createdAt: now, updatedAt: now };
+  const transaction = {
+    project: { findMany: vi.fn().mockResolvedValue([{ id: projectId }]) },
+    factorySettings: {
+      findUnique: vi.fn().mockResolvedValue({ ...record, configuration: current, version: 1 }),
+      updateMany: vi.fn().mockResolvedValue({ count: 1 }),
+      findUniqueOrThrow: vi.fn().mockResolvedValue(record),
+    },
+  };
+  const service = new SettingsService({
+    $transaction: vi.fn((callback) => callback(transaction)),
+  } as never);
+  const result = await service.update(1, configuration);
+  expect(result.configuration.digitalAgents).toHaveLength(12);
+  expect(result.configuration.projectSkills?.[0]?.projectId).toBe(projectId);
+  expect(transaction.project.findMany).toHaveBeenCalledWith({
+    where: { id: { in: [projectId] } },
+    select: { id: true },
+  });
+  expect(transaction.factorySettings.updateMany).toHaveBeenCalledWith(
+    expect.objectContaining({ data: expect.objectContaining({ configuration }) }),
+  );
+});
+
+it("rejects project skills or agents referencing a nonexistent project before writing", async () => {
+  const configuration = createDefaultFactoryConfiguration();
+  configuration.projectSkills = [
+    {
+      id: crypto.randomUUID(),
+      projectId: crypto.randomUUID(),
+      name: "Skill",
+      description: "",
+      instructions: "Review",
+    },
+  ];
+  const transaction = {
+    project: { findMany: vi.fn().mockResolvedValue([]) },
+    factorySettings: {
+      findUnique: vi
+        .fn()
+        .mockResolvedValue({ version: 1, configuration: createDefaultFactoryConfiguration() }),
+      updateMany: vi.fn(),
+    },
+  };
+  const service = new SettingsService({
+    $transaction: vi.fn((callback) => callback(transaction)),
+  } as never);
+  await expect(service.update(1, configuration)).rejects.toThrow("project does not exist");
+  expect(transaction.factorySettings.updateMany).not.toHaveBeenCalled();
+});

@@ -1,0 +1,53 @@
+{
+  "baseline": "9439cde",
+  "date": "2026-10-07",
+  "checks": [
+    {
+      "command": "python3 scripts/validar-documentacao.py",
+      "result": "PASS"
+    },
+    {
+      "command": "checks negativos: novo capítulo e posição duplicada",
+      "result": "PASS_NEGATIVE",
+      "log": "negative-checks.json"
+    },
+    {
+      "command": "npm run typecheck -w @le-fabrique/web",
+      "result": "PASS",
+      "log": "typecheck.log"
+    },
+    {
+      "command": "npm run test -w @le-fabrique/web",
+      "result": "PASS",
+      "tests": 46,
+      "files": 18,
+      "log": "tests.log"
+    },
+    {
+      "command": "npm run build -w @le-fabrique/web",
+      "result": "PASS",
+      "modules": 135,
+      "log": "build.log"
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS_WITH_PREEXISTING_WARNING",
+      "log": "lint.log",
+      "warning": "useOptionalChain em run-delivery.service.ts:209, arquivo não alterado"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS",
+      "scope": "tracked; snapshots conservam whitespace original"
+    },
+    {
+      "command": "compile() do validador Python",
+      "result": "PASS"
+    },
+    {
+      "command": "novas sessões de agentes / Mermaid render / operação / DB / produção",
+      "result": "NOT_RUN"
+    }
+  ],
+  "git": "read-only; sem commit/merge"
+}

@@ -1,0 +1,5 @@
+Six preset agents visible in Agents with individual switches; all six overview dialogs describe purpose/flow/current integration without writes or fields
+Switch mouse/keyboard persist only selected role; 409 keeps stored checked state and shows list error, no modal opening
+Overview button opens existing behavior configuration; timeout/attempts persist after reload; cancel discards draft and focus returns to agent row
+Custom agents and Skills tabs preserved, compact 16px modal title, no overflow at five widths, no page errors
+Five PUTs to in-memory versioned fixture only; no database/provider/authentication actions

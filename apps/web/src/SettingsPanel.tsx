@@ -7,6 +7,7 @@ import type {
   GithubPullRequest,
   GithubRepositoryVerification,
   GithubVerification,
+  Project,
   ProviderInstallation,
   ProviderOnboardingChallenge,
   ProviderOnboardingSession,
@@ -36,6 +37,7 @@ import {
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
+import { PresetAgents } from "./PresetAgents";
 import { SettingsModal } from "./SettingsModal";
 import {
   configurationSummary,
@@ -45,14 +47,26 @@ import {
   pruneAssignmentAlternatives,
   roleLabels,
 } from "./settings-view-model";
+import { TeamsPanel } from "./TeamsPanel";
+import { pruneTeamAgentInstallations } from "./teams-view-model";
 
-type SettingsPanelProps = { token: string; onMessage: (message: string) => void };
+type SettingsPanelProps = {
+  token: string;
+  onMessage: (message: string) => void;
+  projects?: Project[];
+  activeProjectId?: string;
+};
 
 function statusLabel(state: string) {
   return state.replaceAll("_", " ");
 }
 
-export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+export function SettingsPanel({
+  token,
+  onMessage,
+  projects = [],
+  activeProjectId,
+}: SettingsPanelProps) {
   const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
@@ -344,7 +358,15 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         installations,
       ),
     );
-    if (await save({ ...draft, installations, assignments })) setEditingInstallation(null);
+    if (
+      await save({
+        ...draft,
+        installations,
+        assignments,
+        digitalAgents: pruneTeamAgentInstallations(draft.digitalAgents, installations),
+      })
+    )
+      setEditingInstallation(null);
   }
 
   function updateAssignment(patch: Partial<AgentAssignment>) {
@@ -391,6 +413,10 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         ? {
             ...current,
             installations: current.installations.filter((item) => item.id !== installationId),
+            digitalAgents: pruneTeamAgentInstallations(
+              current.digitalAgents,
+              current.installations.filter((item) => item.id !== installationId),
+            ),
             assignments: current.assignments.map((assignment) =>
               assignment.installationId === installationId
                 ? {
@@ -1368,48 +1394,23 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
         hidden={activeTab !== "teams"}
         className="settings-tab-panel"
       >
-        <section className="panel settings-section">
-          <div className="section-heading">
-            <div>
-              <p className="section-index">02</p>
-              <h2>Equipes</h2>
-            </div>
-            <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
-          </div>
-          <div className="account-list">
-            {draft.assignments.map((assignment) => {
-              const account = draft.installations.find(
-                (item) => item.id === assignment.installationId,
-              );
-              return (
-                <button
-                  type="button"
-                  className="account-list-item"
-                  key={assignment.role}
-                  aria-label={`Configurar ${roleLabels[assignment.role]}`}
-                  onClick={() => setEditingAssignment(structuredClone(assignment))}
-                >
-                  <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
-                  <span className="account-list-name">
-                    <strong>{roleLabels[assignment.role]}</strong>
-                    <span className="account-list-detail">
-                      {account
-                        ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
-                        : "Sem atribuição"}
-                    </span>
-                    <span className="account-list-detail">
-                      {assignment.permissionMode === "READ_ONLY"
-                        ? "Somente leitura"
-                        : "Escrita no workspace"}{" "}
-                      · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
-                    </span>
-                  </span>
-                  <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
-                  <span className="account-list-edit">Configurar →</span>
-                </button>
-              );
-            })}
-          </div>
+        <TeamsPanel
+          configuration={draft}
+          projects={projects}
+          activeProjectId={activeProjectId}
+          saving={saving}
+          onSave={save}
+        >
+          <PresetAgents
+            configuring={Boolean(editingAssignment)}
+            configuration={draft}
+            saving={saving}
+            onSave={save}
+            onConfigure={(role) => {
+              const assignment = draft.assignments.find((item) => item.role === role);
+              if (assignment) setEditingAssignment(structuredClone(assignment));
+            }}
+          />
           {editingAssignment &&
             (() => {
               const assignment = editingAssignment;
@@ -1502,7 +1503,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
                 </SettingsModal>
               );
             })()}
-        </section>
+        </TeamsPanel>
       </div>
     </div>
   );

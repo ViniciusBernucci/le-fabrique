@@ -1,0 +1,1420 @@
+{
+  "authorized": "Pedido explícito do usuário: apagar MD desnecessários/redundantes",
+  "files": [
+    {
+      "path": "documentacoes/arquitetura/2026-09-30-correcao-stack.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/arquitetura/2026-09-30-correcao-stack.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/2026-09-30-correcao-stack.md",
+      "original_sha256": "598991f7ad740c102cf971d6b53dafd315cfee5d84b294e3d873965011184989"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-002-vps-unica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/06-decisoes/ADR-002-vps-unica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/ADR-002-vps-unica.md",
+      "original_sha256": "bcbcdea6242a0de1226679f61ad627068ba6b262be8238a7e6fc05a8b5a61f0f"
+    },
+    {
+      "path": "documentacoes/arquitetura/ADR-003-stack-typescript.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/06-decisoes/ADR-003-stack-typescript.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/ADR-003-stack-typescript.md",
+      "original_sha256": "2c090937cb4d6e796fa31a8fc1ac8f9b3774cdcf3ad7d1c831bb1cf54cd8c0b2"
+    },
+    {
+      "path": "documentacoes/arquitetura/ARQUITETURA.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/02-arquitetura/15-referencia-v2.3.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/ARQUITETURA.md",
+      "original_sha256": "efe84248ca2a9bdb390a9b67ccd495f0bcb71803f51172174c881ba23ab8c983"
+    },
+    {
+      "path": "documentacoes/arquitetura/TECH-LEAD-HANDOFF.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/08-tech-lead-handoff.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/arquitetura/TECH-LEAD-HANDOFF.md",
+      "original_sha256": "6d044aaaa2dc66f8502d9f239e0c4e3056e9ae73be973cfe09386e6dc2570e92"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-01-FAC-010A-verificacao-instalacoes.md",
+      "original_sha256": "7239832fafe7c4f9e069fc8b794b903fbe0839e42dab92f6d730baa18316afbf"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-01-FAC-010B-login-efemero-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-01-FAC-010B-login-efemero-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-01-FAC-010B-login-efemero-codex.md",
+      "original_sha256": "50a8e3f960b46bb0a45747447b2884df9fecef9743031449c0a0a176669970bb"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-01-FAC-011-centro-configuracoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-01-FAC-011-centro-configuracoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-01-FAC-011-centro-configuracoes.md",
+      "original_sha256": "bde964317dac38246f8a5dcd2ceba7a1c95ac6d4946e21f6b7e9c3298e20ffb3"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-01-FAC-011A-verificacao-github-cli.md",
+      "original_sha256": "e4f668669c48cae725d518c14924d6fd0b32a913fbe26cc62911b7b03f0c7cd0"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-01-FAC-011B-login-efemero-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-01-FAC-011B-login-efemero-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-01-FAC-011B-login-efemero-github.md",
+      "original_sha256": "1edb2ae956051ec0617d62980a2c4728ed72d3c9fc037675fad0c307c8ce86f6"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-02-FAC-011C-verificacao-repositorio-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-02-FAC-011C-verificacao-repositorio-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-02-FAC-011C-verificacao-repositorio-github.md",
+      "original_sha256": "921b52c15c40914c2b491c3ce9a84cd5d27fbfa3ce964a173eceb53f22b45005"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-02-FAC-011D-criacao-pull-request-gate-humano.md",
+      "original_sha256": "fdd511e4b320e465f51e3c313813b01c92e7bbd912dd5b3c9e48c4d2d8af0238"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-013-modal-contas-ia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md",
+      "original_sha256": "21ba197d14573f6a046fed22200f163ad74576f8eb07b4c58f3016957bcf6e86"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md",
+      "original_sha256": "b6023e11e6c86b0aa46907e7fbc9ea658a35dc4920fc9f330ae8c300533d40c9"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md",
+      "original_sha256": "a781aa0df2a0ace64a5490bfe9e14b153201c6f8a0dda3ef6b5186cea3db033d"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md",
+      "original_sha256": "1a8333e84c4dd97b3a56f3446d22ac623c63611483f43f047065dde60c682608"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-017-login-device-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md",
+      "original_sha256": "820f35d4b46568573d4e1760fb3c50b623eddb091fbef89eeaca062f94efe0b2"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md",
+      "original_sha256": "a5c657f6ddbb98b743d513ebdb8f38d99e0df3baa9c8b8652e664eb5b70f92da"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-019-abas-configuracoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md",
+      "original_sha256": "dabb1f6420922e653ec28c6cbd92fcdff2f4fc3fcee5ad94045287d62df1b047"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md",
+      "original_sha256": "ffacc2d2e380df978a8d89baccb53f7606bd1a6b9f22223ac12ae3751a33b6d9"
+    },
+    {
+      "path": "documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md",
+      "original_sha256": "9b20af1cb771134314f0d97d7fda5b978f07411fa4ac423b5e212e55040ca31e"
+    },
+    {
+      "path": "documentacoes/configuracao/FAC-023-agentes-skills.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/configuracao/FAC-023-agentes-skills.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/FAC-023-agentes-skills.md",
+      "original_sha256": "a3b3a5eecf04e78736b7e3c1776253b2bda48faf58172ecf84a6acdc655e08ef"
+    },
+    {
+      "path": "documentacoes/configuracao/FAC-026-agentes-preconfigurados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/configuracao/FAC-026-agentes-preconfigurados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/configuracao/FAC-026-agentes-preconfigurados.md",
+      "original_sha256": "8d39a223544431c33c3bbc4af6f93bf43d65db1ad64858e5fe05a194b725e2ab"
+    },
+    {
+      "path": "documentacoes/contexto/2026-09-30-FAC-006-context-builder-runtime-guard.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/contexto/2026-09-30-FAC-006-context-builder-runtime-guard.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/contexto/2026-09-30-FAC-006-context-builder-runtime-guard.md",
+      "original_sha256": "ed214c4f9084bd2ce0070d5502e5dbd3ad6c587e17ebb34771e878517c097d45"
+    },
+    {
+      "path": "documentacoes/controle/2026-09-30-FAC-003-controle-web-persistencia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-09-30-FAC-003-controle-web-persistencia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-09-30-FAC-003-controle-web-persistencia.md",
+      "original_sha256": "f942133b0386fddc1e5783ee1d38ccee5039a6cc1d6bf037f1026faf91a1fab5"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-02-FAC-001A-definicao-projeto-configuravel.md",
+      "original_sha256": "3ec46c74215690e91bffe4275fe2b4d5346d3d3dcb3a9a92307bd671e95b5628"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-02-FAC-003A-gate-revisao-base-ready.md",
+      "original_sha256": "a65e38f64931fc69834a4d1c852aaeea172397c8aeac2dcc918a37108eb0a4f8"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "original_sha256": "1931961238a06dab1874c824ca6a3cfec56f4beeb5e3ded0f41f400e24181928"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012AC-writer-global.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md",
+      "original_sha256": "b92ffb24f5794d63fa872d1ceaf4b183b26f7793f7791ec5ed0287087dd04ba0"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012AD-painel-operacao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md",
+      "original_sha256": "c5529e3791edb29d0a89232b61d635a4540838fdda091b1ebaf4b360105140e1"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012AE-eventos-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md",
+      "original_sha256": "d20bdc2e4d1e1a03f2aeb2188bd17395e1bac8c346e7916a8e34f90d4ffeccca"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012AG-pausa-global.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md",
+      "original_sha256": "70e785d94b88c66e3af58e87f7d5f04a70578eb3c0378b55a837e655100100a7"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012AH-admissao-capacidade.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md",
+      "original_sha256": "e6c3fa4616b6e42ed9b7cde91ff3cf2bee8c305fcf0289f6eba3f8de31b40cf2"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md",
+      "original_sha256": "979d8f490506253b7340dbc3502e290e2e60a3dbdb31b9790929cdec41aa91f6"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012P-artefatos-painel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md",
+      "original_sha256": "08b3fd518e3206845524717f1856c43ef0ab3e3ba76c9d88342012e1c2c90843"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md",
+      "original_sha256": "aa0d6946b3c2d3d963259fe0b9cde952c79b5786000bc11610c3accee7212fa2"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012S-comandos-run.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md",
+      "original_sha256": "5cabb79dcfa04b3f4c5917199a0d1f00aca05cb6e3fb4150eba428da4341c201"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012T-retomada-snapshot.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md",
+      "original_sha256": "bb462e501ae76869c3cadbda953d5a4d7da0782d2edcea8ccb07bcec36a74f13"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md",
+      "original_sha256": "0e10988453ed58a84509f1d56de19e523b1f18c49887fa55054218ea44adc430"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012W-artefatos-ampliados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md",
+      "original_sha256": "2002b208a85096a3f6a00dd00bd6aaff892f06a32beb344875f02396d3857250"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md",
+      "original_sha256": "b6cce1424d90b4fa336081508a2c539192c9695c791e720b97781cf954e805cd"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-020-central-controle-estatica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md",
+      "original_sha256": "c9b5422665b6826d8268936afcaafd04ba3a2f2a1faa89ee014cb644355dd579"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-020A-home-em-developer.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md",
+      "original_sha256": "7d0a24f5aa47f17d7abe4ce37950fe79327e57a43be7a60d9ffcb4b955b6de1c"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-021-nome-escala-home.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md",
+      "original_sha256": "ead899c960f70e9af3a83eb2e45e93d3487b211fb7139819961f9021a5e6f5fe"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-022-template-tipografia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md",
+      "original_sha256": "bd22fc175a29aa25a91193ad64d4006a5fb51a3a481f3e6e653202d16f5c70ad"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-023-agentes-skills.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-023-agentes-skills.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-023-agentes-skills.md",
+      "original_sha256": "f4e621b9cc09b90664302510dc32d0a5eca85591e31a2be913d18909d7224d2f"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-05-FAC-024-video-dashboard.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md",
+      "original_sha256": "c81751730670e9b43c9ca6061898edc43dd0abcfe5da1d77a3c462bb91b1e1b6"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-025-retirar-video-dashboard.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md",
+      "original_sha256": "b09d3b572ab4aef269024f1735b3d933ad1c34cc036e400582b1aa1f100b3254"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-027-menu-recolhivel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md",
+      "original_sha256": "df7983bcc8cfc90de707cc529416c2a59471476e6a70f9cc303ee1944184da58"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-028-seta-menu-minimalista.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md",
+      "original_sha256": "20437605b83886e403c5167abd7ed8c868afae83455cf4c1328164fbcf198cf5"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-029-seta-direita-menu.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md",
+      "original_sha256": "406bb563b5944f453b509c2c2cb049581140dee9a70a2a900ed0518424d4fba4"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md",
+      "original_sha256": "f8f5191282b7edff5e3d01a76de8b2266d81233c21274a25fabf6268b1d051e7"
+    },
+    {
+      "path": "documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/controle/2026-10-06-FAC-031-posicao-seta-menu.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md",
+      "original_sha256": "c6323c48ea10362978af7d4caa2af082bc970a0db5ffcbb8d6dca53fcbf7c88f"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-020.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-020.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-020.md",
+      "original_sha256": "8608b52510911779b3fbb027bf5b0955fa098cb2a31f4cc3e0214910abe68ea9"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-020A.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-020A.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-020A.md",
+      "original_sha256": "9f21ab4435bc2bcbc2fa8d4a422d64e29f8a092332a19667d03b5c424dd5fa98"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-021.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-021.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-021.md",
+      "original_sha256": "b1311bc35e5bcc8fb0a8d9c5ea9367b1c001e21d099fd4da11779a6eb1e55a60"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-022.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-022.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-022.md",
+      "original_sha256": "dc7492fee633ff7538121af078371e3ecc6de35819d497731dd0b0b511716bd4"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-024.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-024.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-024.md",
+      "original_sha256": "94d5632f4c95c042091e7ce5aec294d1241b018353c33cb39e0d7475d8831375"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-025.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-025.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-025.md",
+      "original_sha256": "3a596cf6426be6ded61fd599c83abc23a770cc42a3f93e551099de2169992cd2"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-027.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-027.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-027.md",
+      "original_sha256": "d526a0f57c4409ce3528abc58dc754c9810db93784b76a588ff5dfc7ca8c928c"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-028.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-028.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-028.md",
+      "original_sha256": "ef173b362b16edd9b25bf5b7c983e4157a112aed3d1f41515aee45436971604e"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-029.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-029.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-029.md",
+      "original_sha256": "a3a4aa90e0c2c553d1ba5732b856cad822d4eebbd397845fbdf3ff87a05c5fd1"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-030.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-030.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-030.md",
+      "original_sha256": "3df284729f18325db15a16cd7496497cc5f6ad94e1bd72a06bc52a40bc7ba695"
+    },
+    {
+      "path": "documentacoes/controle/tickets/FAC-031.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/controle/tickets/FAC-031.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/controle/tickets/FAC-031.md",
+      "original_sha256": "62a8e1ac15cacb83d1fd73b7bcd0a4ffa4c05931f42fe47c77707f0ec7034a37"
+    },
+    {
+      "path": "documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/handoff/2026-10-03-FAC-012Y-handoff-configurado.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md",
+      "original_sha256": "bb52babc1335f3198fa97fa15f3adeb0b74a230f11bd1969deb4dcad316b55c7"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-09-30-FAC-000-aceite.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-09-30-FAC-000-aceite.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-09-30-FAC-000-aceite.md",
+      "original_sha256": "cf237bcd04fdf11350d24f37d159aa3a8c3d7b967eb849b7d7ec32019df30f39"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-09-30-FAC-000-bootstrap-typescript.md",
+      "original_sha256": "58e938e5130fb034d6cd492bb1c8a548b9da8b31a9e94827cbdd49c23d3cee52"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-09-30-FAC-007-sandbox-snapshots.md",
+      "original_sha256": "deb0f90c53cdfd259403c8b78998fd8019b25e89517f2f355acb96ce1f5fa335"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-02-FAC-012J-checkout-confiavel-worker.md",
+      "original_sha256": "94ffcac4e2fac66dc9254285052b9c50d0c379a00e8e27a86d40846d333951de"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-02-OPS-001-bootstrap-desenvolvimento-local.md",
+      "original_sha256": "6428a82510b8a7daacb6bbabb0293114ce9caff53ba88902b1c716c9d0b055a2"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-03-OPS-005-worker-host-sandbox.md",
+      "original_sha256": "073280817c6e3db5c75a87b6d94297904e18f7f9f97f48afb9b1154bce202ca4"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-05-FAC-018-keyring-privado.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-05-FAC-018-keyring-privado.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-05-FAC-018-keyring-privado.md",
+      "original_sha256": "d153d4da20c68e39be6ec5e9316a7773718210efd63763bb90599d7ed78a672f"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md",
+      "original_sha256": "6e403189845a0e217c891d17647b299e9e9281bebf5a39fc9dccd3dfdab4c210"
+    },
+    {
+      "path": "documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md",
+      "original_sha256": "1dc21df84fa975959e3667a5a82d2572d65d603789c814583230ee3dd40741d1"
+    },
+    {
+      "path": "documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/07-operacao/infraestrutura/00-dimensionamento-vps.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md",
+      "original_sha256": "10175a3f4fd379b2619b75df984af2e4caf995cfc64b442cb64d347569b3742b"
+    },
+    {
+      "path": "documentacoes/operacao/2026-09-30-FAC-004-worker-identidade.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-09-30-FAC-004-worker-identidade.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-09-30-FAC-004-worker-identidade.md",
+      "original_sha256": "9e0948bbd353489c5c53c17a517d932466ffb836f78e25322996d240617e6665"
+    },
+    {
+      "path": "documentacoes/operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-09-30-FAC-008-orquestrador-checkpoints.md",
+      "original_sha256": "641209f16736d0589464afc86c6b479e009913121749f0b733f76abf709b2e91"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-01-FAC-008-correcao-idempotencia-consumidor.md",
+      "original_sha256": "659e506fdde9bc9b19b1f88aebc3b11794dcb108a372089d152fb2e27bccc9c1"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-01-FAC-009-developer-checks-review.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-01-FAC-009-developer-checks-review.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-01-FAC-009-developer-checks-review.md",
+      "original_sha256": "dc1dfa6652c6bcfb79e3f93bde6b8a550089c73170f4cb6629d17bdeeb93f224"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012A-especificacao-execucao-imutavel.md",
+      "original_sha256": "df81b12de21e70599dfec6eb6ec01b76b7ab5948d3a510c2580b56b19df1cffa"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012B-compilador-workflow-configuravel.md",
+      "original_sha256": "61a6eff8cc943a5650dda1253ef91eaeabc783cd48eae9147ad238fb17a10183"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012C-politica-escrita-sandbox.md",
+      "original_sha256": "6a4827a2c44ac6d21c32b142f13aa66b6bf030b968eb2931b4bed5f368b68ae4"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012D-caminhos-escrita-cli.md",
+      "original_sha256": "a6aadc75818a0fe96c6ebe8b98423f3b15ce331a7aa334bd06fb150d6b1ab485"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012E-configuracao-runtime-worker.md",
+      "original_sha256": "483c4767833f4815fc905135edd4ed3ff3f8a03a27a7a2854feec645c2e7205a"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012F-rota-agente-configurada.md",
+      "original_sha256": "e7a603d4c7192e63c61d3cf47797a00b7b7da01aeaba8a40393cbdb0b775a4cd"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012G-workflow-rotas-por-funcao.md",
+      "original_sha256": "e114cadb17aeae47ace45c971f7e9f2be088806da42edaff3daa181e84928eab"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012H-isolamento-raiz-sandbox.md",
+      "original_sha256": "0fcbcb8203d753a5763ae5316b99115957408bc6cc52e5142840614ef6da4fac"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-FAC-012I-perfil-execucao-projeto.md",
+      "original_sha256": "6b535bcabc178507b2907f4106026ac07bd34791f2ee5bf9e453e570522987dc"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-02-OPS-003-aceites-e-deltas-locais.md",
+      "original_sha256": "690da599116b544240e9aa0ec559698cda28a5561a442f7276c90376839c0524"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md",
+      "original_sha256": "2d9a68c300c38458af5e868c0c6d4625da859b046ce319445b78bb246b3698ee"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012AF-backup-restauracao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md",
+      "original_sha256": "9844167d29669c1bb96907a8499275f229ca112972ff188c54d1a0e379396e14"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012K-lease-vivo-cancelamento.md",
+      "original_sha256": "ee12b3d2de12e28867f9a4514899350ef45159bcb6159a96804febf2a4ac8b54"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012L-consumer-execucao-real.md",
+      "original_sha256": "1c370ea8465a64c1c32886ddcb5a90b63b99dc32ed9f671aec582b8d324131fe"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md",
+      "original_sha256": "81c39769b774e8ad339b00bb03f9481e6aa141a68d4bf7a0dccbf7bb17faed42"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012O-journal-resultados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md",
+      "original_sha256": "cbcdb22a549770abb0b4d991c9906e419513fad92c70472af4de0ca4822f178a"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md",
+      "original_sha256": "755077f9735bd4cc6f26dcf219be175b8d08acb3705cee28d8d191b5212b42c3"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-FAC-012X-espera-provider.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md",
+      "original_sha256": "8c6e40257b859d31aa4bbe65a6f74f76ed6ea5790e6f128c249f35fd7f6ed0dc"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-OPS-004-consolidacao-worktrees.md",
+      "original_sha256": "e034204fa1fb8ccbbd20b3caaf745e7df9273ab9f5f5c414c3180f1cb708fddf"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-03-OPS-006-integracao-local-controle-mvp.md",
+      "original_sha256": "736a99219dff0de5feb4c49a0a4170bb4ecd668b3168dda3f975c6073e7374bf"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-05-FAC-015-preparacao-assinaturas.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-05-FAC-015-preparacao-assinaturas.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-05-FAC-015-preparacao-assinaturas.md",
+      "original_sha256": "8372398d70b06f8b2bd96053387b7ea39f5c59c2764e2be3581148e24fbdded8"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-05-FAC-016-env-processo-dev.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-05-FAC-016-env-processo-dev.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-05-FAC-016-env-processo-dev.md",
+      "original_sha256": "7c8fd6a0bdf304fab9df959545ec54a695b877ccd830dbae4a7beeb982736968"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-05-FAC-017-confirmacao-login-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-05-FAC-017-confirmacao-login-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-05-FAC-017-confirmacao-login-codex.md",
+      "original_sha256": "9b26943ae6ef956cc5ddf8f8ed65de84cc8a850b705b77e15407930cad9ebacb"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-05-FAC-018-keyring-autenticacao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-05-FAC-018-keyring-autenticacao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-05-FAC-018-keyring-autenticacao.md",
+      "original_sha256": "b67c2efaf234cc656bd25aa6a9569dd715b902065ebca325f338f89ea2822e99"
+    },
+    {
+      "path": "documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md",
+      "original_sha256": "433d39ef594a1e0a9e36871d6ec9685fe3a41c830a6d1af063ceaed57e9048a3"
+    },
+    {
+      "path": "documentacoes/planejamento/2026-09-30-PLAN-001-adiamento-piloto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/2026-09-30-PLAN-001-adiamento-piloto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/2026-09-30-PLAN-001-adiamento-piloto.md",
+      "original_sha256": "c7b01c9a32be896826e3573f5db66a51f887f4ea7019e9bcc3d7730b6d1e2a00"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-000-bootstrap-typescript.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-000-bootstrap-typescript.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-000-bootstrap-typescript.md",
+      "original_sha256": "f1b9e1493f82c25ebd66441cda18f5ef562ad4d4d105cb99f5765353f891cbcc"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-001A-definicao-projeto-configuravel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-001A-definicao-projeto-configuravel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-001A-definicao-projeto-configuravel.md",
+      "original_sha256": "bcaadefee07f8ea2faabb04d7fd850765c5ffe5130d62ec75f3d67fbdf73d627"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-002-preflight-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-002-preflight-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-002-preflight-codex.md",
+      "original_sha256": "2f3d80f5a32bd95abba13f81b8ffd4c89e37c68729a3dbf4dedf319d1f0f8ae3"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-003-controle-web-persistencia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-003-controle-web-persistencia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-003-controle-web-persistencia.md",
+      "original_sha256": "b8c33ef0daaacea0685dbc7f1b28d7ad0dc96f7ed9d16d202dba14255edc4804"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-003A-gate-revisao-base-ready.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-003A-gate-revisao-base-ready.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-003A-gate-revisao-base-ready.md",
+      "original_sha256": "9b404ce54865df3b590f00f2bba5837f8f870f4e77f39ba4280ef9adb684da41"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-004-worker-identidade.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-004-worker-identidade.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-004-worker-identidade.md",
+      "original_sha256": "31e5363522a9f032c9bb02654365729a8c3795b15bc415d05a5e6f67fa1b2e80"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-005-runtime-gateway-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-005-runtime-gateway-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-005-runtime-gateway-codex.md",
+      "original_sha256": "328604245027d9469a405bcc76ce9d1574c204cd3d1fb4c777f1f3ddb804f0a6"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-006-context-builder-runtime-guard.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-006-context-builder-runtime-guard.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-006-context-builder-runtime-guard.md",
+      "original_sha256": "40de60a72b45fb06d4c0296f2042feee2dd67ecb1448941d885e7dfe223799f8"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-007-sandbox-snapshots.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-007-sandbox-snapshots.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-007-sandbox-snapshots.md",
+      "original_sha256": "a4059b6f9aa029e485841af04d4e4d33eb4e4086b428f22b5d551e72a0dbf27d"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-008-orquestrador-checkpoints.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-008-orquestrador-checkpoints.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-008-orquestrador-checkpoints.md",
+      "original_sha256": "bdde2def454cd8360c783ff2223cb6ca49570bdb34dc82ff77150ede12cb94fd"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-009-developer-checks-review.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-009-developer-checks-review.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-009-developer-checks-review.md",
+      "original_sha256": "fcf2556fb8ccd4abd0bfa9f4b74e028d065c7735f258edf36a5b150f8cafd0c4"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-010-segundo-provider-handoff.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-010-segundo-provider-handoff.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-010-segundo-provider-handoff.md",
+      "original_sha256": "b1c1adbf50d2646057c86c4d37d153e04226f3ddfd79d76a28bddfd0b8222258"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-010A-verificacao-instalacoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-010A-verificacao-instalacoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-010A-verificacao-instalacoes.md",
+      "original_sha256": "338949c5300f30602e6b1d90e9ac587fe9ef871350ae3728031d4cb2fd897dee"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-010B-login-efemero-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-010B-login-efemero-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-010B-login-efemero-codex.md",
+      "original_sha256": "df9a33d70861c0e16c49a18a84c1aba1ac7e3321ce8f4f35ce6350fede22fb49"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-010C-adapter-claude-handoff.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-010C-adapter-claude-handoff.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-010C-adapter-claude-handoff.md",
+      "original_sha256": "d300fa26b98dd1999385b38dfb6abbf85043d281073c9046b0062a23609c8fdd"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-011-centro-configuracoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-011-centro-configuracoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-011-centro-configuracoes.md",
+      "original_sha256": "404cf3bf49a40a6594729d09b20154c333e9c5fef4e3a3f54c821a30e89ac5be"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-011A-verificacao-github-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-011A-verificacao-github-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-011A-verificacao-github-cli.md",
+      "original_sha256": "4d27a486dc0d7d69081f8562017ebe35b95e8783621129edae82d00e34d6e635"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-011B-login-efemero-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-011B-login-efemero-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-011B-login-efemero-github.md",
+      "original_sha256": "41290a03b18db5db85b572b475ff705d4bef7d4559699e63b74001bb51a92314"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-011C-verificacao-repositorio-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-011C-verificacao-repositorio-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-011C-verificacao-repositorio-github.md",
+      "original_sha256": "6022dca881ba77e612efe2b397433e2d74cf189b23b809717fec7fb19852363e"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-011D-criacao-pull-request-gate-humano.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-011D-criacao-pull-request-gate-humano.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-011D-criacao-pull-request-gate-humano.md",
+      "original_sha256": "0be23d8ccef55199032e5af2875d2cbd8648586306ee08d4281929c6aec80ed6"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012A-especificacao-execucao-imutavel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012A-especificacao-execucao-imutavel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012A-especificacao-execucao-imutavel.md",
+      "original_sha256": "75b50e5d03a4f6bccbba7bfee476a0eeafe0a36265bc4fed8b6b62a84bfb4e19"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AA-confinamento-claude.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AA-confinamento-claude.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AA-confinamento-claude.md",
+      "original_sha256": "47f1bbe44b2985560f291f1a8f6a97d04f3448acab4d1bc1d88759344e3108f2"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AB-ensaio-integrado-mvp.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AB-ensaio-integrado-mvp.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AB-ensaio-integrado-mvp.md",
+      "original_sha256": "dd8d8e7a350cd8b6d05236b0f7df408629892c42394e3cdd7e7bec85c3e50c19"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AC-writer-global.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AC-writer-global.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AC-writer-global.md",
+      "original_sha256": "08ee30c1d9f26d9be5d39a0ae9d75a8af01fcfc319c218f5b9f7874a980b33e7"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AD-painel-operacao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AD-painel-operacao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AD-painel-operacao.md",
+      "original_sha256": "45bd23f424c14fb3d785ee4b7cb2c1e18bc685e4ab693fc82949d96a1823c725"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AE-eventos-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AE-eventos-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AE-eventos-projeto.md",
+      "original_sha256": "cd4b7bd306abe2e2c214beab16a1cb81367afefada8b67ec9856dc5ff0fb39d2"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AF-backup-restauracao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AF-backup-restauracao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AF-backup-restauracao.md",
+      "original_sha256": "6821c48abe84397274c18dbf6fa17aa28fd4b550b5b65ecdf59f0345f4f306ca"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AG-pausa-global.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AG-pausa-global.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AG-pausa-global.md",
+      "original_sha256": "0a98442f4f74aaf61a5cbc3ce5cd50e43b4e1c06b480edabff4f344e15ba3d7a"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012AH-admissao-capacidade.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012AH-admissao-capacidade.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012AH-admissao-capacidade.md",
+      "original_sha256": "7929d46937b5764aa403a58696784b1c3d4f46bf2f4f2aa08cee224c1bfaed35"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012B-compilador-workflow-configuravel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012B-compilador-workflow-configuravel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012B-compilador-workflow-configuravel.md",
+      "original_sha256": "e8fb5dde61f1fd57af8fa89c28a99d8dbf199d8ab5453a283ed7409ffa130f9d"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012C-politica-escrita-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012C-politica-escrita-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012C-politica-escrita-sandbox.md",
+      "original_sha256": "797f1f80991eb7d6b5de7c5a49e2d83714199a0fb84289a83cc58355ffaab188"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012D-caminhos-escrita-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012D-caminhos-escrita-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012D-caminhos-escrita-cli.md",
+      "original_sha256": "89730f02a4601e9498e981ac962d5243e82fb398021321fc2b0e8891c843d9a4"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012E-configuracao-runtime-worker.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012E-configuracao-runtime-worker.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012E-configuracao-runtime-worker.md",
+      "original_sha256": "a49fe81ce61d2557178ba444974a899225352a4ad8982118728368f676300099"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012F-rota-agente-configurada.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012F-rota-agente-configurada.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012F-rota-agente-configurada.md",
+      "original_sha256": "099cabd5fbcafe72122076bd599c4e27f8d0bcaf7746fdb1e9d2e1e0e6d15651"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012G-workflow-rotas-por-funcao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012G-workflow-rotas-por-funcao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012G-workflow-rotas-por-funcao.md",
+      "original_sha256": "41c40d8b44e72b096aea343627505fe5126e3fefa2f0cd806ea7fe1f5b9b047d"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012H-isolamento-raiz-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012H-isolamento-raiz-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012H-isolamento-raiz-sandbox.md",
+      "original_sha256": "802cfcd2795dd58c7d7340f096dbf44ffbf5fbbc8554187bba5c62640c7ab39a"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012I-perfil-execucao-projeto.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012I-perfil-execucao-projeto.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012I-perfil-execucao-projeto.md",
+      "original_sha256": "e019f4b1e0715ae8f48fcfd907fa39da9979548f5c88e652457372537a06b986"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012J-checkout-confiavel-worker.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012J-checkout-confiavel-worker.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012J-checkout-confiavel-worker.md",
+      "original_sha256": "befc2d1c26e8404396a0904a8c054c343925c527382b9a04f8057a43bbb248e7"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012K-lease-vivo-cancelamento.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012K-lease-vivo-cancelamento.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012K-lease-vivo-cancelamento.md",
+      "original_sha256": "525ba8398d7d35f2bef9d832950ce2f3dc399b3f55d6702052070af210cc6350"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012L-consumer-execucao-real.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012L-consumer-execucao-real.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012L-consumer-execucao-real.md",
+      "original_sha256": "8a7f6a8b3fa48994d6dd64c8161972797ad3ad2bcbffac300029c5fef86ed426"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012M-resultados-execucao-painel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012M-resultados-execucao-painel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012M-resultados-execucao-painel.md",
+      "original_sha256": "0f0a90b1c764be7068c6d42e864d849d4cb4ff223d57dca4c147bf11c79bd22f"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012N-reconciliacao-checkpoint.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012N-reconciliacao-checkpoint.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012N-reconciliacao-checkpoint.md",
+      "original_sha256": "b807eacd6059c5051f2a4c7e2219b7065c491d3c3574a5197bffe12385bece6e"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012O-journal-resultados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012O-journal-resultados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012O-journal-resultados.md",
+      "original_sha256": "e7be6027e936284937dae4da3525419950b4c1bb5dd42b82c364fe44905fb139"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012P-artefatos-painel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012P-artefatos-painel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012P-artefatos-painel.md",
+      "original_sha256": "1c2126264bb75921542207a7fa2f52ae3702563fc0d7c60c614dc89addddb47b"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012Q-documentacao-aceite-entrega.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012Q-documentacao-aceite-entrega.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012Q-documentacao-aceite-entrega.md",
+      "original_sha256": "337f7f693e5b4b17570690660758cc8009239aff5a8fbcde785c068e5c13a750"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012R-snapshot-interrupcao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012R-snapshot-interrupcao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012R-snapshot-interrupcao.md",
+      "original_sha256": "5d866522ab81766c162d3262876abcfef32cd202bfb26d93aab835e3f2c93d83"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012S-comandos-run.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012S-comandos-run.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012S-comandos-run.md",
+      "original_sha256": "dd4158b4a188633aaac857be9162457108c50faf031634e2a2821d8635053355"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012T-retomada-snapshot.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012T-retomada-snapshot.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012T-retomada-snapshot.md",
+      "original_sha256": "75f36c6a916f4557b08b268299981584edd4f562b4a7385684930399cd32f513"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012U-recuperacao-finalizacao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012U-recuperacao-finalizacao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012U-recuperacao-finalizacao.md",
+      "original_sha256": "6fc1ee832d5794488aed1bb6f165ebae37d48e6c3bbf7c6a8bc67134febaeec2"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012V-identidades-instalacoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012V-identidades-instalacoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012V-identidades-instalacoes.md",
+      "original_sha256": "c5f57cab2e2adde93c21f86c0106025e3ab438860038585c60b7a5c1a40fa9fa"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012W-artefatos-ampliados.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012W-artefatos-ampliados.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012W-artefatos-ampliados.md",
+      "original_sha256": "94ff62d70c2b681f827e379c6f70afa63dedf6aaa1ff6da70a251bceb31f5248"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012X-espera-provider.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012X-espera-provider.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012X-espera-provider.md",
+      "original_sha256": "9b13e9c3656b7ecc80de0d335c41424f301d326772668aa82c771c675e82e0a9"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012Y-handoff-configurado.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012Y-handoff-configurado.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012Y-handoff-configurado.md",
+      "original_sha256": "09b29b51c739576e94de465d51fdd32bf6eb216724a37c07e880602e26561431"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-012Z-gate-documentacao-tecnica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-012Z-gate-documentacao-tecnica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-012Z-gate-documentacao-tecnica.md",
+      "original_sha256": "eff2a71f85070bbe56ee65b7d610594fdaa2e4e85d6d255d3a5686bf8c3af5eb"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-013-modal-contas-ia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-013-modal-contas-ia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-013-modal-contas-ia.md",
+      "original_sha256": "390cd769ab931d7f69d1a33a169eac18e7b710d8cfe5ebbb4af9b759e00e5771"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-014-modais-funcionarios-github.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-014-modais-funcionarios-github.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-014-modais-funcionarios-github.md",
+      "original_sha256": "68971f4a4ff1c3e24fa761798e8b159d917e094c19001387139f9951ecfd4183"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-015-contas-autenticadas-modelos.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-015-contas-autenticadas-modelos.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-015-contas-autenticadas-modelos.md",
+      "original_sha256": "01b57cd1c2ae6d6d8bb9a18b39fbc9eef1e4634c583263199eb823ab17294c21"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-016-feedback-verificacao-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-016-feedback-verificacao-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-016-feedback-verificacao-codex.md",
+      "original_sha256": "a63f9b22954e51a6ff61d93aa25bd47a54dfa54907f2503b568b2c481349b2fe"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-017-login-device-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-017-login-device-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-017-login-device-codex.md",
+      "original_sha256": "46f1f01522de842791fdb5bd1f1d3b2903875a46d2c6badee888f07f0925fa70"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-018-login-claude-antigravity.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-018-login-claude-antigravity.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-018-login-claude-antigravity.md",
+      "original_sha256": "50c66b94def365fe2eb1970b925449956ce9c8382972fcea5aff6fdb1f584046"
+    },
+    {
+      "path": "documentacoes/planejamento/FAC-019-abas-configuracoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/FAC-019-abas-configuracoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/FAC-019-abas-configuracoes.md",
+      "original_sha256": "c2a9d0fb1f691656e1e9383c2c9d4e73adcde2f99b498a847fdb97b7a9829475"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-001-bootstrap-desenvolvimento-local.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-001-bootstrap-desenvolvimento-local.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-001-bootstrap-desenvolvimento-local.md",
+      "original_sha256": "95883346719e1eb2e37af814d7cf23b19f5af9431e86c3b46bd4af399052a921"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-003-consolidacao-revisoes-aceitas.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-003-consolidacao-revisoes-aceitas.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-003-consolidacao-revisoes-aceitas.md",
+      "original_sha256": "ec3284e407d82a0ebef68994c3f1990ce1d342676e06b9ad9f8ca221a1eac391"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-004-consolidar-worktrees-locais.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-004-consolidar-worktrees-locais.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-004-consolidar-worktrees-locais.md",
+      "original_sha256": "fb0ae64761c4dc0ab700c5dd0da5c343e04d51a3cda3cf9152e643a1261e7906"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-005-worker-host-sandbox.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-005-worker-host-sandbox.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-005-worker-host-sandbox.md",
+      "original_sha256": "d084cb58a4d05a957a1b38ddc545ff53489d8e780a7261b6d026fe75531581b0"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-006-integracao-local-controle-mvp.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-006-integracao-local-controle-mvp.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-006-integracao-local-controle-mvp.md",
+      "original_sha256": "f3067a69633fc8db85ccf403317ad7d82831d90c00c40a6e677309ce6ad9672e"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-007-consolidacao-worktrees.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-007-consolidacao-worktrees.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-007-consolidacao-worktrees.md",
+      "original_sha256": "7fde9185b0e4d93433b77588e22fa8946113c75543685d30ae8b2e13eddfc595"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-008-bootstrap-migrations-telas.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-008-bootstrap-migrations-telas.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-008-bootstrap-migrations-telas.md",
+      "original_sha256": "7ac521fffaaa669d1352439b11482547ad1c32e9d8490c66a18ce065cd05f039"
+    },
+    {
+      "path": "documentacoes/planejamento/OPS-009-reconciliar-migration-historica.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/08-desenvolvimento/tickets/planejamento/OPS-009-reconciliar-migration-historica.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/planejamento/OPS-009-reconciliar-migration-historica.md",
+      "original_sha256": "171e86a8300a500c117ff47b09f543dce1913f75207eb07b17228785685e182b"
+    },
+    {
+      "path": "documentacoes/runtime/2026-09-30-FAC-002-preflight-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-09-30-FAC-002-preflight-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-09-30-FAC-002-preflight-codex.md",
+      "original_sha256": "95fba506009df2f053bf64cfba9037e48da703500089c9a6a1250582a0e8f80b"
+    },
+    {
+      "path": "documentacoes/runtime/2026-09-30-FAC-005-runtime-gateway-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-09-30-FAC-005-runtime-gateway-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-09-30-FAC-005-runtime-gateway-codex.md",
+      "original_sha256": "35011ee309fe99880628667922f1fa1e9e6042764ce9724690c9fb94313f9926"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-01-FAC-010-preflight-segundo-provider.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-01-FAC-010-preflight-segundo-provider.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-01-FAC-010-preflight-segundo-provider.md",
+      "original_sha256": "996077659f68ce03739fd6274a39af5e6f5032ea3060db1efaaf5be8c0806e15"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-01-FAC-010C-adapter-claude-handoff.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-01-FAC-010C-adapter-claude-handoff.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-01-FAC-010C-adapter-claude-handoff.md",
+      "original_sha256": "e24d0beff99a943977a121f3dc326a46dab8b54aaa82d126e26023331fea27df"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-03-FAC-012AA-confinamento-claude.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md",
+      "original_sha256": "25f9fefbccb0426cf9d53dd40a304e9ddb1b8208529bc46d979dcb93ce56798d"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md",
+      "original_sha256": "26f7e2627cdb4ab1f0fa3f4368566b6812479ea828e44a29bc52bd074326b107"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-05-FAC-015-catalogo-clientes-oficiais.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-05-FAC-015-catalogo-clientes-oficiais.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-05-FAC-015-catalogo-clientes-oficiais.md",
+      "original_sha256": "df47dc2f8477f95536aea038bfa72ffdabc79703e93303bfc3ef24eed9c87169"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-05-FAC-016-diagnostico-raiz-privada.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-05-FAC-016-diagnostico-raiz-privada.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-05-FAC-016-diagnostico-raiz-privada.md",
+      "original_sha256": "31d613516a798df2ccd931cdc6ef09f9f0930d48045b8346829f76c55871397f"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-05-FAC-017-desafio-ansi-codex.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-05-FAC-017-desafio-ansi-codex.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-05-FAC-017-desafio-ansi-codex.md",
+      "original_sha256": "f6e1842b9369ce5ef29e0eebedd010f3588ad3fe2f70cff729b12533bc5eb52d"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-05-FAC-018-autorizacao-clientes.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-05-FAC-018-autorizacao-clientes.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-05-FAC-018-autorizacao-clientes.md",
+      "original_sha256": "79c2e8b85366da6dc2ff88c54a05a8c3cb8c2d813b315c31f85b8728441ba016"
+    },
+    {
+      "path": "documentacoes/runtime/2026-10-05-FAC-023-agentes-skills.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/09-entregas/2026/runtime/2026-10-05-FAC-023-agentes-skills.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/documentacoes/runtime/2026-10-05-FAC-023-agentes-skills.md",
+      "original_sha256": "e9e3c0e4d568c3906983ff5e123a1d3f3ec87601e72de84c6f5f56c6bd9e4e1f"
+    },
+    {
+      "path": "lessons/baseline-regressao-review.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/11-baseline-regressao-review.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/baseline-regressao-review.md",
+      "original_sha256": "c5271feb60ceb688447360acb160f54045c08cd2ddbcfd90ee54abe064902137"
+    },
+    {
+      "path": "lessons/checkout-confiavel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/05-checkout-confiavel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/checkout-confiavel.md",
+      "original_sha256": "34f9839f64164f262acedebf47fca80313b8fe8c1a7377b866d458121e20c72c"
+    },
+    {
+      "path": "lessons/contexto-deterministico-limites.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/04-contexto-deterministico-limites.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/contexto-deterministico-limites.md",
+      "original_sha256": "178244a8288740d0be66ffdb6e7c1cc5f152364a2fe5d19cfe32726341f23675"
+    },
+    {
+      "path": "lessons/contratos-runtime-monorepo.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/02-contratos-runtime-monorepo.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/contratos-runtime-monorepo.md",
+      "original_sha256": "cee26ba5627cf27d42c21f3cecb17dbd8ee45524631c99d6b0227224170785f4"
+    },
+    {
+      "path": "lessons/definicao-projeto-configuravel.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/01-definicao-projeto-configuravel.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/definicao-projeto-configuravel.md",
+      "original_sha256": "9392c00546cba327064845df87f181235b3b39cab77940b34108935f399a7a62"
+    },
+    {
+      "path": "lessons/leases-fencing-checkpoints.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/09-leases-fencing-checkpoints.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/leases-fencing-checkpoints.md",
+      "original_sha256": "2bb799db6759b4ba55ee3a73ded4978b00cdc319721b745fa3758e4085bff97f"
+    },
+    {
+      "path": "lessons/lifecycle-processo-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/08-lifecycle-processo-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/lifecycle-processo-cli.md",
+      "original_sha256": "3faeea44389210adc94f80b33f27d56a0b73b16f62bcf306b211f9d991d33678"
+    },
+    {
+      "path": "lessons/modal-edicao-configuracao.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/13-modal-edicao-configuracao.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/modal-edicao-configuracao.md",
+      "original_sha256": "2382f9e6f351d6dbe1743f59669f9d4603bb20e1908a901bb5d6c5791842c0af"
+    },
+    {
+      "path": "lessons/outbox-idempotencia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/03-outbox-idempotencia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/outbox-idempotencia.md",
+      "original_sha256": "9989a587c71f6f4d27d6c9b7ff1cc7f6b745ce054b7565e66afbbe778be80bb6"
+    },
+    {
+      "path": "lessons/perfis-permissao-cliente-cli.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/07-perfis-permissao-cliente-cli.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/perfis-permissao-cliente-cli.md",
+      "original_sha256": "7c132e13f585ff4001dd062bc4e29c86be5d9fb77b47b14e020e879500ba00c9"
+    },
+    {
+      "path": "lessons/sandbox-worktree-snapshot.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/06-sandbox-worktree-snapshot.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/sandbox-worktree-snapshot.md",
+      "original_sha256": "ea64a91c740c6779a6261458c83ac8409fb50c16eaef9e964b5324a73b748643"
+    },
+    {
+      "path": "lessons/video-decorativo-loop.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/14-video-decorativo-loop.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/video-decorativo-loop.md",
+      "original_sha256": "b773615c72f9c8cf9f990a69de9988ada42b54f1c83c0fa8086bc135d3921e64"
+    },
+    {
+      "path": "lessons/worker-heartbeat-quiescencia.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/10-lessons/10-worker-heartbeat-quiescencia.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/lessons/worker-heartbeat-quiescencia.md",
+      "original_sha256": "bbc1e74c574b86749d305aa0ccb784d9e91ce61a0022c98971e5199a3d8c2de2"
+    },
+    {
+      "path": "templates/ENTREGA.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/00-governanca/templates/08-ENTREGA.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/templates/ENTREGA.md",
+      "original_sha256": "10ad61ad1e6d8fc9f6c7cd3155afe29f4c5cac41a075e5cfc406fd510592171e"
+    },
+    {
+      "path": "templates/HANDOFF.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/00-governanca/templates/07-HANDOFF.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/templates/HANDOFF.md",
+      "original_sha256": "de499a2ad9889593a78c3dd3651901a440d60ae9339e4c6a003fe41668fe59b4"
+    },
+    {
+      "path": "templates/LESSON.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/00-governanca/templates/09-LESSON.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/templates/LESSON.md",
+      "original_sha256": "d17c37c2c955d3090dc9ef8f5db3dc780bed63c357b2cd2618ce25602c94052b"
+    },
+    {
+      "path": "templates/TICKET.md",
+      "reason": "bridge individual redundante; conteúdo atual e original íntegro existem",
+      "canonical": "docs/00-governanca/templates/01-TICKET.md",
+      "archive": "docs/99-historico/repo-a2cc5e0/templates/TICKET.md",
+      "original_sha256": "fbbda5565d599ab23c863655d425c6c10a6af3867054fd3aa17f909cef1219c7"
+    }
+  ],
+  "limit": "Nenhum snapshot/hash original ou conteúdo canônico apagado; guias e atalhos essenciais preservados."
+}

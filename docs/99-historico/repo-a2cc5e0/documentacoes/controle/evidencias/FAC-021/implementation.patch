@@ -1,0 +1,107 @@
+diff --git a/apps/web/index.html b/apps/web/index.html
+index eb322ab..4e3f932 100644
+--- a/apps/web/index.html
++++ b/apps/web/index.html
+@@ -8 +8 @@
+-    <title>Le Fabrique</title>
++    <title>La fabrique</title>
+diff --git a/apps/web/public/favicon.svg b/apps/web/public/favicon.svg
+index 67433b0..e982a34 100644
+--- a/apps/web/public/favicon.svg
++++ b/apps/web/public/favicon.svg
+@@ -2 +2 @@
+-  <title>Le Fabrique</title>
++  <title>La fabrique</title>
+diff --git a/apps/web/src/App.tsx b/apps/web/src/App.tsx
+index 7ef0bad..fc34740 100644
+--- a/apps/web/src/App.tsx
++++ b/apps/web/src/App.tsx
+@@ -163 +163 @@ export function App() {
+-          <p className="eyebrow">LE FABRIQUE</p>
++          <p className="eyebrow">La fabrique</p>
+@@ -190 +190 @@ export function App() {
+-          <p className="eyebrow">LE FABRIQUE</p>
++          <p className="eyebrow">La fabrique</p>
+diff --git a/apps/web/src/HomeDashboard.spec.tsx b/apps/web/src/HomeDashboard.spec.tsx
+index 87623aa..f2e19d1 100644
+--- a/apps/web/src/HomeDashboard.spec.tsx
++++ b/apps/web/src/HomeDashboard.spec.tsx
+@@ -7 +7 @@ it("identifies synthetic information and renders the local illustration without
+-  expect(html).toContain("Central de controle Le Fabrique");
++  expect(html).toContain("Central de controle La fabrique");
+diff --git a/apps/web/src/HomeDashboard.tsx b/apps/web/src/HomeDashboard.tsx
+index 1d10cbc..8109a74 100644
+--- a/apps/web/src/HomeDashboard.tsx
++++ b/apps/web/src/HomeDashboard.tsx
+@@ -218 +218 @@ const recentProjects = [
+-    name: "Le Fabrique",
++    name: "La fabrique",
+@@ -281 +281 @@ export function HomeDashboard({
+-        <a className="home-brand" aria-label="Le Fabrique, painel inicial" href="#home-content">
++        <a className="home-brand" aria-label="La fabrique, painel inicial" href="#home-content">
+@@ -289 +289 @@ export function HomeDashboard({
+-          <span>LE FABRIQUE</span>
++          <span>La fabrique</span>
+@@ -369 +369 @@ export function HomeDashboard({
+-            <h1 className="home-sr-only">Central de controle Le Fabrique</h1>
++            <h1 className="home-sr-only">Central de controle La fabrique</h1>
+diff --git a/apps/web/src/codex-login-tab.ts b/apps/web/src/codex-login-tab.ts
+index 358493b..c922a35 100644
+--- a/apps/web/src/codex-login-tab.ts
++++ b/apps/web/src/codex-login-tab.ts
+@@ -13 +13 @@ export class CodexLoginTab {
+-      "Aguardando a URL oficial do provedor. Volte à Le Fabrique para consultar as instruções e o andamento do login.";
++      "Aguardando a URL oficial do provedor. Volte à La fabrique para consultar as instruções e o andamento do login.";
+diff --git a/apps/web/src/home-dashboard.css b/apps/web/src/home-dashboard.css
+index ee5e80b..3993194 100644
+--- a/apps/web/src/home-dashboard.css
++++ b/apps/web/src/home-dashboard.css
+@@ -271,0 +272,5 @@
++  width: 60%;
++  margin: 20px auto;
++  border-radius: 12px;
++  border: 1px solid var(--home-line);
++  box-shadow: 0 14px 40px #0004;
+@@ -1065,0 +1071,7 @@
++
++@media (max-width: 760px) {
++  .home-dashboard .home-office {
++    width: calc(100% - 24px);
++    margin: 12px auto 0;
++  }
++}
+diff --git a/apps/worker/src/codex-models.ts b/apps/worker/src/codex-models.ts
+index 2a5a79f..b2c7597 100644
+--- a/apps/worker/src/codex-models.ts
++++ b/apps/worker/src/codex-models.ts
+@@ -115 +115 @@ export function listCodexModels(identity: ProviderIdentity): Promise<string[]> {
+-        clientInfo: { name: "le_fabrique_catalog", title: "Le Fabrique", version: "0.1.0" },
++        clientInfo: { name: "le_fabrique_catalog", title: "La fabrique", version: "0.1.0" },
+diff --git a/infrastructure/systemd/le-fabrique-worker.service b/infrastructure/systemd/le-fabrique-worker.service
+index 3299578..0601f41 100644
+--- a/infrastructure/systemd/le-fabrique-worker.service
++++ b/infrastructure/systemd/le-fabrique-worker.service
+@@ -2 +2 @@
+-Description=Le Fabrique trusted worker
++Description=La fabrique trusted worker
+diff --git a/packages/runtime/src/codex-adapter.ts b/packages/runtime/src/codex-adapter.ts
+index c0eca99..613d7dd 100644
+--- a/packages/runtime/src/codex-adapter.ts
++++ b/packages/runtime/src/codex-adapter.ts
+@@ -343 +343 @@ export class CodexAdapter implements RuntimeAdapter {
+-      `permissions.lefabrique={ description="Le Fabrique runtime", ` +
++      `permissions.lefabrique={ description="La fabrique runtime", ` +
+diff --git a/packages/runtime/src/sandbox-launcher.cjs b/packages/runtime/src/sandbox-launcher.cjs
+index b12de08..5d04ac4 100644
+--- a/packages/runtime/src/sandbox-launcher.cjs
++++ b/packages/runtime/src/sandbox-launcher.cjs
+@@ -125 +125 @@ try {
+-  writeFileSync(join(root, "etc", "passwd"), "root:x:0:0:Le Fabrique sandbox:/tmp/home:/bin/sh\n");
++  writeFileSync(join(root, "etc", "passwd"), "root:x:0:0:La fabrique sandbox:/tmp/home:/bin/sh\n");
+diff --git a/packages/runtime/src/workspace-snapshot.spec.ts b/packages/runtime/src/workspace-snapshot.spec.ts
+index eb7aac9..f8b87fb 100644
+--- a/packages/runtime/src/workspace-snapshot.spec.ts
++++ b/packages/runtime/src/workspace-snapshot.spec.ts
+@@ -35 +35 @@ beforeEach(async () => {
+-  await git(repository, "config", "user.name", "Le Fabrique Test");
++  await git(repository, "config", "user.name", "La fabrique Test");
