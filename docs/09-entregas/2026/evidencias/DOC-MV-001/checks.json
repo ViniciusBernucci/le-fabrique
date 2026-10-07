@@ -1,0 +1,44 @@
+{
+  "baseline": "a2cc5e0db0f30bf227dfc64300f74bde23a6f412",
+  "date": "2026-10-07",
+  "timezone": "Europe/Berlin",
+  "environment": {
+    "node": "v22.23.3",
+    "npm": "10.9.9",
+    "dependencies": "node_modules existente da origem via symlink na worktree, sem instalação; fonte runtime/contracts na mesma revisão"
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck -w @le-fabrique/web",
+      "result": "PASS",
+      "evidence": "saída observada na sessão; tsc -b --noEmit, exit 0"
+    },
+    {
+      "command": "npm run test -w @le-fabrique/web",
+      "result": "PASS",
+      "test_files": 18,
+      "tests": 46,
+      "evidence": "saída observada na sessão, Vitest 5.0.2; exit 0"
+    },
+    {
+      "command": "npm run build -w @le-fabrique/web",
+      "result": "PASS",
+      "evidence": "build-web.txt, 135 módulos compilados, Vite 8.3.1"
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS_WITH_WARNING",
+      "evidence": "lint.txt; 257 arquivos, zero fixes, um warning preexistente useOptionalChain em run-delivery.service.ts:209, fonte não alterada"
+    },
+    {
+      "command": "python3 -m py_compile scripts/validar-documentacao.py",
+      "result": "PASS"
+    },
+    {
+      "command": "software API/worker/DB/provider/SEC/production",
+      "result": "NOT_RUN",
+      "reason": "apenas documentação e placeholders UI alterados; fora do escopo operativo"
+    }
+  ],
+  "limit": "Registro resumido das saídas reais observadas; typecheck/test não têm log bruto local capturado, outputs preservados na sessão."
+}

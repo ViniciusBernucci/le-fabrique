@@ -1,0 +1,124 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+const browser=await chromium.launch({headless:true});
+const output=fileURLToPath(new URL('./',import.meta.url));
+const timestamp='2026-10-05T20:40:00.000Z';
+const projects=['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222'].map((id,i)=>({id,name:`Projeto ${i+1}`,repoUrl:'https://github.com/example/project',baseRef:'main',createdAt:timestamp,updatedAt:timestamp}));
+let settings={version:1,createdAt:timestamp,updatedAt:timestamp,configuration:{installations:[],assignments:['PLANNER','DEVELOPER','REVIEWER','QA','DOCUMENTATION','SECURITY'].map(role=>({role,enabled:false,installationId:null,model:null,permissionMode:'READ_ONLY',timeoutMinutes:10,maxAttempts:1})),github:{authMode:'GH_CLI',state:'DISCONNECTED',host:'github.com',owner:null,repository:null,baseBranch:'main',pullRequestCreationEnabled:false,mergeEnabled:false},financialSafety:{apiEnabled:false,extraUsageEnabled:false,paidCreditsEnabled:false,autoRechargeEnabled:false,paidFallbackEnabled:false}}};
+let conflict=false,writes=0;
+const results=[],errors=[];
+try{
+ const page=await browser.newPage({viewport:{width:1536,height:1024}});
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/api/**',async route=>{
+  const req=route.request(),path=new URL(req.url()).pathname;
+  if(req.method()==='PUT'){
+   assert.equal(path,'/api/settings');
+   const input=req.postDataJSON();
+   assert.equal(input.expectedVersion,settings.version);
+   if(conflict)return route.fulfill({status:409,contentType:'application/json',body:JSON.stringify({message:'Synthetic version conflict'})});
+   settings={...settings,version:settings.version+1,configuration:input.configuration}; writes++;
+  }else assert.equal(req.method(),'GET');
+  const body=path==='/api/auth/session'?{authenticated:true}:path==='/api/settings'?settings:path==='/api/projects'?projects:path.endsWith('/definition')?{definition:null}:[];
+  return route.fulfill({status:path==='/api/operation'?503:200,contentType:'application/json',body:JSON.stringify(body)});
+ });
+ const open=async()=>{
+  await page.goto(process.env.PREVIEW_URL??'http://127.0.0.1:5174');
+  await page.getByRole('button',{name:'Configurações',exact:true}).click();
+  if(await page.getByLabel('Token administrativo').count()){
+   await page.getByLabel('Token administrativo').fill('synthetic-browser-test-credential-0000');
+   await page.getByRole('button',{name:'Entrar',exact:true}).click();
+  }
+  await page.getByRole('tab',{name:'Equipes',exact:true}).click();
+  await page.getByRole('tab',{name:'Agentes',exact:true}).waitFor();
+ };
+ const save=async()=>{await page.getByRole('button',{name:'Salvar configuração',exact:true}).click();await page.getByRole('dialog').waitFor({state:'hidden'});};
+ await open();
+ await page.evaluate(()=>{window.sidebar=document.querySelector('.home-sidebar');window.topbar=document.querySelector('.home-topbar');});
+ await page.getByRole('tab',{name:'Skills',exact:true}).click();
+ await page.getByLabel('Projeto das skills').selectOption(projects[0].id);
+ await page.getByRole('button',{name:'+ Registrar skill',exact:true}).click();
+ await page.getByLabel('Nome da skill').fill('Revisão TypeScript');
+ await page.getByLabel('Descrição da skill').fill('Padrões do projeto');
+ await page.getByLabel('Instruções da skill').fill('Revise os tipos e os contratos em runtime.');
+ await save();
+ const skillId=settings.configuration.projectSkills[0].id;
+ assert.equal(settings.configuration.projectSkills[0].projectId,projects[0].id);
+ await page.getByLabel('Projeto das skills').selectOption(projects[1].id);
+ assert.equal(await page.getByRole('button',{name:'Editar skill Revisão TypeScript'}).count(),0);
+ await page.getByRole('button',{name:'+ Registrar skill',exact:true}).click();
+ await page.getByLabel('Nome da skill').fill('Design');
+ await page.getByLabel('Instruções da skill').fill('Mantenha as fontes da home.');
+ await save();
+ await page.getByLabel('Projeto das skills').selectOption(projects[0].id);
+ await page.getByRole('button',{name:'Editar skill Revisão TypeScript'}).click();
+ await page.getByLabel('Descrição da skill').fill('Contratos e tipos compartilhados');
+ await save();
+ results.push('Skills: create/edit, required project and instructions, project isolation');
+ await page.getByRole('tab',{name:'Agentes',exact:true}).click();
+ for(let i=1;i<=8;i++){
+  await page.getByRole('button',{name:'+ Adicionar agente',exact:true}).click();
+  await page.getByLabel('Nome do agente').fill(`Agente ${i}`);
+  await page.getByLabel('Projeto do agente').selectOption(projects[0].id);
+  await page.getByRole('checkbox',{name:'Revisão TypeScript',exact:true}).check();
+  await save();
+ }
+ assert.equal(settings.configuration.digitalAgents.length,8);
+ assert.ok(settings.configuration.digitalAgents.every(a=>a.skillIds.includes(skillId)));
+ await page.getByRole('button',{name:'Editar agente Agente 1',exact:true}).click();
+ await page.getByLabel('Descrição do agente').fill('Agente de revisão');
+ await save();
+ results.push('Eight agents created (beyond former six roles), project skill associations and edit persisted');
+ await open();
+ await page.evaluate(()=>{window.sidebar=document.querySelector('.home-sidebar');window.topbar=document.querySelector('.home-topbar');});
+ assert.equal(await page.getByRole('button',{name:/^Editar agente Agente /}).count(),8);
+ await page.getByRole('button',{name:'Editar agente Agente 1',exact:true}).click();
+ assert.equal(await page.getByLabel('Descrição do agente').inputValue(),'Agente de revisão');
+ assert.equal(await page.getByRole('checkbox',{name:'Revisão TypeScript',exact:true}).isChecked(),true);
+ await page.getByRole('button',{name:'Cancelar',exact:true}).click();
+ results.push('Reload re-fetches fixture settings and preserves agents, instructions and links');
+ await page.getByRole('button',{name:'+ Adicionar agente',exact:true}).click();
+ await page.getByLabel('Nome do agente').fill('Conflito'); conflict=true;
+ await page.getByRole('button',{name:'Salvar configuração',exact:true}).click();
+ await page.getByRole('dialog').getByRole('alert').waitFor();
+ assert.equal(settings.configuration.digitalAgents.length,8);
+ await page.getByRole('button',{name:'Cancelar',exact:true}).click(); conflict=false;
+ results.push('409 retains draft/modal, explains failure and does not overwrite persisted settings');
+ await page.getByRole('button',{name:'Editar agente Agente 8',exact:true}).click();
+ await page.getByRole('button',{name:'Excluir agente',exact:true}).click();
+ await page.getByRole('dialog').waitFor({state:'hidden'});
+ assert.equal(settings.configuration.digitalAgents.length,7);
+ const skillTab=page.getByRole('tab',{name:'Skills',exact:true});
+ await page.getByRole('tab',{name:'Agentes',exact:true}).focus();await page.keyboard.press('ArrowRight');
+ assert.equal(await skillTab.getAttribute('aria-selected'),'true');
+ await page.getByLabel('Projeto das skills').selectOption(projects[0].id);
+ await page.screenshot({path:`${output}skills-desktop.png`,fullPage:true});
+ await page.getByRole('button',{name:'Editar skill Revisão TypeScript'}).click();
+ assert.equal(await page.locator('.account-dialog h2').evaluate(el=>getComputedStyle(el).fontSize),'16px');
+ await page.screenshot({path:`${output}skill-modal.png`,fullPage:true});
+ await page.getByRole('button',{name:'Excluir skill',exact:true}).click();
+ await page.getByRole('dialog').waitFor({state:'hidden'});
+ assert.ok(settings.configuration.digitalAgents.every(a=>a.skillIds.length===0));
+ assert.equal(settings.configuration.projectSkills.length,1);
+ results.push('Agent deletion and skill deletion clean associations without removing other project records');
+ await page.getByRole('tab',{name:'Agentes',exact:true}).click();
+ await page.screenshot({path:`${output}agents-desktop.png`,fullPage:true});
+ for(const width of [1536,1024,768,390,320]){
+  await page.setViewportSize({width,height:1024});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`overflow ${width}`);
+ }
+ await page.screenshot({path:`${output}agents-mobile.png`,fullPage:true});
+ await page.getByRole('button',{name:'+ Adicionar agente',exact:true}).click();
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ await page.screenshot({path:`${output}agent-modal-mobile.png`,fullPage:true});
+ await page.keyboard.press('Escape');
+ assert.equal(await page.evaluate(()=>window.sidebar===document.querySelector('.home-sidebar')&&window.topbar===document.querySelector('.home-topbar')),true);
+ assert.equal(settings.configuration.assignments.length,6);
+ assert.deepEqual(errors,[]);
+ results.push('Roving keyboard tabs, compact modal, persistent template; no overflow at five widths, no page errors');
+ results.push(`${writes} settings writes via local HTTP fixture; no database/provider/external calls`);
+ await writeFile(`${output}browser-results.txt`,results.join('\n')+'\n');
+ console.log(results.join('\n'));
+}finally{await browser.close();}

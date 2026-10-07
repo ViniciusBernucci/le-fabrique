@@ -1,0 +1,731 @@
+diff --git a/.env.example b/.env.example
+index 6513704..c298253 100644
+--- a/.env.example
++++ b/.env.example
+@@ -17,0 +18,5 @@ WORKER_LEASE_DURATION_MS=90000
++
++# Provisionamento idempotente local: npm run providers:setup (depois reinicie npm run dev).
++# Claude: npm run providers:login -- claude-default, após salvar/habilitar essa conta no painel.
++# WORKER_CODEX_BINARY=/absolute/path/to/codex
++# WORKER_CLAUDE_BINARY=/absolute/path/to/claude
+diff --git a/apps/api/src/settings/provider-verification.service.spec.ts b/apps/api/src/settings/provider-verification.service.spec.ts
+new file mode 100644
+index 0000000..b794e8e
+--- /dev/null
++++ b/apps/api/src/settings/provider-verification.service.spec.ts
+@@ -0,0 +1,66 @@
++import { factoryConfigurationSchema } from "@le-fabrique/contracts";
++import { describe, expect, it, vi } from "vitest";
++import { ProviderVerificationService } from "./provider-verification.service";
++import { createDefaultFactoryConfiguration } from "./settings.defaults";
++
++describe("verified model publication", () => {
++  for (const state of ["AVAILABLE", "ERROR"] as const) {
++    it(`publishes models only for ${state} results`, async () => {
++      const configuration = createDefaultFactoryConfiguration();
++      const installation = configuration.installations[0];
++      if (!installation) throw new Error("Fixture missing");
++      installation.models = ["existing-model"];
++      installation.defaultModel = null;
++      const workerId = "11111111-1111-4111-8111-111111111111";
++      const id = "22222222-2222-4222-8222-222222222222";
++      const record = {
++        id,
++        workerId,
++        installationId: installation.id,
++        provider: "CODEX",
++        status: "RUNNING",
++        cliVersion: null,
++        providerState: null,
++        observedModels: [],
++        message: null,
++        createdAt: new Date(),
++        startedAt: new Date(),
++        completedAt: null,
++      };
++      const transaction = {
++        factorySettings: {
++          findUnique: vi.fn().mockResolvedValue({ configuration }),
++          update: vi.fn().mockResolvedValue({}),
++        },
++        providerVerification: {
++          findUnique: vi.fn().mockResolvedValue(record),
++          update: vi.fn(async ({ data }) => ({ ...record, ...data })),
++        },
++      };
++      const service = new ProviderVerificationService({
++        $transaction: async (callback: (tx: typeof transaction) => unknown) =>
++          callback(transaction),
++      } as never);
++      await service.complete(id, {
++        workerId,
++        status: "COMPLETED",
++        providerState: state,
++        cliVersion: "codex-cli 0.159.2",
++        observedModels: ["existing-model", "discovered-model"],
++        message: "Verified",
++      });
++      const saved = factoryConfigurationSchema.parse(
++        transaction.factorySettings.update.mock.calls[0]?.[0].data.configuration,
++      );
++      expect(saved.installations[0]?.models).toEqual(
++        state === "AVAILABLE" ? ["existing-model", "discovered-model"] : ["existing-model"],
++      );
++      expect(saved.installations[0]?.defaultModel).toBe(
++        state === "AVAILABLE" ? "existing-model" : null,
++      );
++      expect(transaction.factorySettings.update.mock.calls[0]?.[0].data.version).toEqual({
++        increment: 1,
++      });
++    });
++  }
++});
+diff --git a/apps/api/src/settings/provider-verification.service.ts b/apps/api/src/settings/provider-verification.service.ts
+index 9354a8d..59a1aa9 100644
+--- a/apps/api/src/settings/provider-verification.service.ts
++++ b/apps/api/src/settings/provider-verification.service.ts
+@@ -114 +114,15 @@ export class ProviderVerificationService {
+-          index === installationIndex ? { ...item, state: input.providerState } : item,
++          index === installationIndex
++            ? {
++                ...item,
++                state: input.providerState,
++                models:
++                  input.providerState === "AVAILABLE" && input.observedModels.length > 0
++                    ? [...new Set([...item.models, ...input.observedModels])].slice(0, 50)
++                    : item.models,
++                defaultModel:
++                  item.defaultModel ??
++                  (input.providerState === "AVAILABLE"
++                    ? (item.models[0] ?? input.observedModels[0] ?? null)
++                    : null),
++              }
++            : item,
+@@ -120 +134,3 @@ export class ProviderVerificationService {
+-          configuration: updatedConfiguration as Prisma.InputJsonValue,
++          configuration: factoryConfigurationSchema.parse(
++            updatedConfiguration,
++          ) as Prisma.InputJsonValue,
+diff --git a/apps/web/src/SettingsPanel.tsx b/apps/web/src/SettingsPanel.tsx
+index 47f0e4b..e378100 100644
+--- a/apps/web/src/SettingsPanel.tsx
++++ b/apps/web/src/SettingsPanel.tsx
+@@ -15 +15 @@ import type {
+-import { useEffect, useMemo, useState } from "react";
++import { useEffect, useMemo, useRef, useState } from "react";
+@@ -39,0 +40 @@ import {
++  mergeObservedInstallations,
+@@ -53,0 +55 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++  const initiatedLogins = useRef(new Set<string>());
+@@ -129,10 +131 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-        const observedStates = new Map(
+-          data.configuration.installations.map((item) => [item.id, item.state]),
+-        );
+-        return {
+-          ...current,
+-          installations: current.installations.map((item) => ({
+-            ...item,
+-            state: observedStates.get(item.id) ?? item.state,
+-          })),
+-        };
++        return mergeObservedInstallations(current, data.configuration);
+@@ -140,0 +134,13 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++      for (const session of sessions) {
++        if (
++          session.status === "COMPLETED" &&
++          session.providerState === "AVAILABLE" &&
++          initiatedLogins.current.delete(session.id)
++        ) {
++          const verification = await requestProviderVerification(token, session.installationId);
++          setVerifications((current) => [
++            verification,
++            ...current.filter((item) => item.id !== verification.id),
++          ]);
++        }
++      }
+@@ -166,0 +173,8 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++          setEditingInstallation((current) =>
++            current
++              ? (mergeObservedInstallations(
++                  { ...data.configuration, installations: [current] },
++                  data.configuration,
++                ).installations[0] ?? current)
++              : null,
++          );
+@@ -169,10 +183 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-            const observedStates = new Map(
+-              data.configuration.installations.map((item) => [item.id, item.state]),
+-            );
+-            return {
+-              ...current,
+-              installations: current.installations.map((item) => ({
+-                ...item,
+-                state: observedStates.get(item.id) ?? item.state,
+-              })),
+-            };
++            return mergeObservedInstallations(current, data.configuration);
+@@ -275 +280,8 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-    const updated = editingInstallation;
++    const updated = {
++      ...editingInstallation,
++      state:
++        settings?.configuration.installations.find(
++          (item) =>
++            item.id === editingInstallation.id && item.provider === editingInstallation.provider,
++        )?.state ?? editingInstallation.state,
++    };
+@@ -391,0 +404 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++      initiatedLogins.current.add(session.id);
+@@ -573 +586,9 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-            const installation = editingInstallation;
++            const installation = {
++              ...editingInstallation,
++              state:
++                settings.configuration.installations.find(
++                  (item) =>
++                    item.id === editingInstallation.id &&
++                    item.provider === editingInstallation.provider,
++                )?.state ?? editingInstallation.state,
++            };
+@@ -721 +742 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                  Verificar instalação
++                  Verificar conta e modelos
+@@ -740,0 +762,18 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++                {installation.provider === "CLAUDE" ? (
++                  <p>
++                    Login da assinatura na VPS:{" "}
++                    <code>npm run providers:login -- {installation.id}</code>. Depois clique em
++                    Verificar conta e modelos. Os modelos Claude são informados no campo acima; o
++                    status oficial não fornece um catálogo.
++                  </p>
++                ) : null}
++                {installation.provider === "CODEX" ? (
++                  <p>
++                    Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
++                    modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
++                    funcionários digitais.
++                  </p>
++                ) : null}
++                {installation.provider === "ANTIGRAVITY" ? (
++                  <p>Integração de execução ainda indisponível.</p>
++                ) : null}
+diff --git a/apps/web/src/settings-view-model.spec.ts b/apps/web/src/settings-view-model.spec.ts
+index b9b792d..6ca3111 100644
+--- a/apps/web/src/settings-view-model.spec.ts
++++ b/apps/web/src/settings-view-model.spec.ts
+@@ -62,0 +63,34 @@ describe("configurationSummary", () => {
++
++describe("observed account models", () => {
++  it("preserves draft edits while making discovered models available to employee selectors", async () => {
++    const { mergeObservedInstallations } = await import("./settings-view-model");
++    const installation = {
++      id: "codex-default",
++      provider: "CODEX",
++      label: "Draft label",
++      state: "AUTH_REQUIRED",
++      models: ["manual-model"],
++      defaultModel: null,
++    };
++    const draft = { installations: [installation], assignments: [] };
++    const saved = {
++      installations: [
++        {
++          ...installation,
++          label: "Saved label",
++          state: "AVAILABLE",
++          models: ["discovered-model"],
++          defaultModel: "discovered-model",
++        },
++      ],
++    };
++    const result = mergeObservedInstallations(draft as never, saved as never);
++    expect(result.installations[0]).toMatchObject({
++      label: "Draft label",
++      state: "AVAILABLE",
++      models: ["manual-model", "discovered-model"],
++      defaultModel: "discovered-model",
++    });
++    expect(draft.installations[0]?.models).toEqual(["manual-model"]);
++  });
++});
+diff --git a/apps/web/src/settings-view-model.ts b/apps/web/src/settings-view-model.ts
+index c6f43f7..f01bc6f 100644
+--- a/apps/web/src/settings-view-model.ts
++++ b/apps/web/src/settings-view-model.ts
+@@ -3,0 +4 @@ import type {
++  FactoryConfiguration,
+@@ -60,0 +62,25 @@ export function configurationSummary(settings: FactorySettings) {
++
++/** Preserve local editing while incorporating verified account metadata. */
++export function mergeObservedInstallations(
++  draft: FactoryConfiguration,
++  observed: FactoryConfiguration,
++): FactoryConfiguration {
++  return {
++    ...draft,
++    installations: draft.installations.map((item) => {
++      const saved = observed.installations.find(
++        (candidate) => candidate.id === item.id && candidate.provider === item.provider,
++      );
++      if (!saved) return item;
++      const models = [...new Set([...item.models, ...saved.models])].slice(0, 50);
++      return {
++        ...item,
++        state: saved.state,
++        models,
++        defaultModel:
++          item.defaultModel ??
++          (saved.defaultModel && models.includes(saved.defaultModel) ? saved.defaultModel : null),
++      };
++    }),
++  };
++}
+diff --git a/apps/worker/src/codex-models.spec.ts b/apps/worker/src/codex-models.spec.ts
+new file mode 100644
+index 0000000..44f4aee
+--- /dev/null
++++ b/apps/worker/src/codex-models.spec.ts
+@@ -0,0 +1,63 @@
++import { mkdtemp, rm, writeFile } from "node:fs/promises";
++import os from "node:os";
++import path from "node:path";
++import { describe, expect, it } from "vitest";
++import { listCodexModels } from "./codex-models";
++
++async function fixture(account: string, repeated = false) {
++  const root = await mkdtemp(path.join(os.tmpdir(), "catalog-"));
++  const script = path.join(root, "client.cjs");
++  await writeFile(
++    script,
++    `
++    const readline = require('node:readline');
++    readline.createInterface({ input: process.stdin }).on('line', line => {
++      const request = JSON.parse(line);
++      let result;
++      if (request.method === 'initialized') return;
++      if (request.method === 'initialize') result = { serverInfo: 'fixture' };
++      else if (request.method === 'account/read') result = { account: { type: ${JSON.stringify(account)} } };
++      else if (request.method === 'model/list') {
++        if (!request.params.cursor) result = {data:[{model:'fixture-model'},{model:'hidden-model',hidden:true}],nextCursor:'next'};
++        else result = {data:[{model:'fixture-model'},{model:'other-model'}],nextCursor:${repeated ? "'next'" : "null"}};
++      } else process.exit(2); // No thread/turn/inference allowed.
++      process.stdout.write(JSON.stringify({id:request.id,result})+'\\n');
++    });
++  `,
++  );
++  return {
++    root,
++    identity: {
++      binaryPath: process.execPath,
++      binaryArgsPrefix: [script],
++      environment: { HOME: root, PATH: process.env.PATH },
++    },
++  };
++}
++
++describe("Codex official metadata catalog", () => {
++  it("discovers paginated models, filters hidden entries and deduplicates without inference", async () => {
++    const { root, identity } = await fixture("chatgpt");
++    try {
++      await expect(listCodexModels(identity)).resolves.toEqual(["fixture-model", "other-model"]);
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  });
++  it("rejects API authentication without returning private account details", async () => {
++    const { root, identity } = await fixture("apiKey");
++    try {
++      await expect(listCodexModels(identity)).rejects.toThrow("Codex model catalog unavailable");
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  });
++  it("bounds a repeated pagination cursor", async () => {
++    const { root, identity } = await fixture("chatgpt", true);
++    try {
++      await expect(listCodexModels(identity)).rejects.toThrow("Codex model catalog unavailable");
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  });
++});
+diff --git a/apps/worker/src/codex-models.ts b/apps/worker/src/codex-models.ts
+new file mode 100644
+index 0000000..2a5a79f
+--- /dev/null
++++ b/apps/worker/src/codex-models.ts
+@@ -0,0 +1,121 @@
++import { spawn } from "node:child_process";
++import { z } from "zod";
++import type { ProviderIdentity } from "./provider-identity";
++
++const modelPage = z.object({
++  data: z
++    .array(
++      z.object({
++        model: z
++          .string()
++          .min(1)
++          .max(120)
++          .regex(/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/),
++        hidden: z.boolean().optional(),
++      }),
++    )
++    .max(50),
++  nextCursor: z.string().max(4096).nullable().optional(),
++});
++
++/** Metadata only: never creates a thread or submits an inference request. */
++export function listCodexModels(identity: ProviderIdentity): Promise<string[]> {
++  return new Promise((resolve, reject) => {
++    const child = spawn(
++      identity.binaryPath,
++      [...identity.binaryArgsPrefix, "--no-daemon", "app-server", "--listen", "stdio://"],
++      {
++        env: identity.environment,
++        cwd: identity.environment.HOME,
++        detached: process.platform !== "win32",
++        shell: false,
++        stdio: ["pipe", "pipe", "pipe"],
++      },
++    );
++    let buffer = "";
++    let bytes = 0;
++    let settled = false;
++    let requestId = 3;
++    const models = new Set<string>();
++    const cursors = new Set<string>();
++    const stop = () => {
++      if (child.pid) {
++        try {
++          if (process.platform !== "win32") process.kill(-child.pid, "SIGKILL");
++          else child.kill("SIGKILL");
++        } catch {
++          /* The process may already have exited. */
++        }
++      }
++    };
++    const finish = (result?: string[]) => {
++      if (settled) return;
++      settled = true;
++      clearTimeout(timer);
++      stop();
++      if (result) resolve(result);
++      else reject(new Error("Codex model catalog unavailable"));
++    };
++    const send = (method: string, params: unknown, id?: number) => {
++      child.stdin.write(
++        `${JSON.stringify({ method, params, ...(id === undefined ? {} : { id }) })}\n`,
++      );
++    };
++    const timer = setTimeout(() => finish(), 15_000);
++    timer.unref();
++    child.once("error", () => finish());
++    child.stdin.on("error", () => finish());
++    child.once("close", () => finish());
++    child.stderr.on("data", (chunk: Buffer) => {
++      bytes += chunk.length;
++      if (bytes > 1024 * 1024) finish();
++    });
++    child.stdout.on("data", (chunk: Buffer) => {
++      if (settled) return;
++      bytes += chunk.length;
++      if (bytes > 1024 * 1024) return finish();
++      buffer += chunk.toString("utf8");
++      let newline = buffer.indexOf("\n");
++      while (newline >= 0 && !settled) {
++        const line = buffer.slice(0, newline);
++        buffer = buffer.slice(newline + 1);
++        try {
++          const response = JSON.parse(line);
++          if (response.id === 1) {
++            if (response.error || !response.result) return finish();
++            send("initialized", {});
++            send("account/read", { refreshToken: false }, 2);
++          } else if (response.id === 2) {
++            if (response.error || response.result?.account?.type !== "chatgpt") return finish();
++            send("model/list", { limit: 50, includeHidden: false }, requestId);
++          } else if (response.id === requestId) {
++            if (response.error) return finish();
++            const page = modelPage.parse(response.result);
++            for (const entry of page.data) if (!entry.hidden) models.add(entry.model);
++            if (models.size > 50) return finish();
++            if (!page.nextCursor) return finish([...models]);
++            if (cursors.has(page.nextCursor) || cursors.size >= 10) return finish();
++            cursors.add(page.nextCursor);
++            requestId++;
++            send(
++              "model/list",
++              { limit: 50, includeHidden: false, cursor: page.nextCursor },
++              requestId,
++            );
++          }
++        } catch {
++          return finish();
++        }
++        newline = buffer.indexOf("\n");
++      }
++    });
++    send(
++      "initialize",
++      {
++        clientInfo: { name: "le_fabrique_catalog", title: "Le Fabrique", version: "0.1.0" },
++        capabilities: {},
++      },
++      1,
++    );
++  });
++}
+diff --git a/apps/worker/src/main.ts b/apps/worker/src/main.ts
+index 264c068..c9d497f 100644
+--- a/apps/worker/src/main.ts
++++ b/apps/worker/src/main.ts
+@@ -22,0 +23 @@ import { ArtifactReader } from "./artifact-reader";
++import { listCodexModels } from "./codex-models";
+@@ -202,6 +203,12 @@ async function bootstrap(): Promise<void> {
+-      processProviderVerification(job.data, control, async (binary, args) =>
+-        runVerificationCommand(
+-          binary,
+-          args,
+-          await identities.prepare(job.data.provider, job.data.installationId),
+-        ),
++      processProviderVerification(
++        job.data,
++        control,
++        async (binary, args) =>
++          runVerificationCommand(
++            binary,
++            args,
++            await identities.prepare(job.data.provider, job.data.installationId),
++          ),
++        job.data.provider === "CODEX"
++          ? async () => listCodexModels(await identities.prepare("CODEX", job.data.installationId))
++          : undefined,
+diff --git a/apps/worker/src/provider-verification.processor.spec.ts b/apps/worker/src/provider-verification.processor.spec.ts
+index cfdf91a..b0c2490 100644
+--- a/apps/worker/src/provider-verification.processor.spec.ts
++++ b/apps/worker/src/provider-verification.processor.spec.ts
+@@ -103,0 +104,40 @@ describe("provider verification", () => {
++
++describe("subscription model discovery", () => {
++  it("only reads the catalog after proving ChatGPT subscription authentication", async () => {
++    const catalog = vi.fn().mockResolvedValue(["fixture-model"]);
++    const runner = vi.fn(async (_binary: string, args: readonly string[]) => ({
++      exitCode: 0,
++      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using an API key",
++      stderr: "",
++    }));
++    await expect(inspectProvider("CODEX", runner, catalog)).resolves.toMatchObject({
++      providerState: "ERROR",
++    });
++    expect(catalog).not.toHaveBeenCalled();
++    runner.mockImplementation(async (_binary, args) => ({
++      exitCode: 0,
++      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using ChatGPT",
++      stderr: "",
++    }));
++    await expect(inspectProvider("CODEX", runner, catalog)).resolves.toMatchObject({
++      providerState: "AVAILABLE",
++      observedModels: ["fixture-model"],
++    });
++  });
++  it("distinguishes authenticated status from a failed catalog read", async () => {
++    const runner = async (_binary: string, args: readonly string[]) => ({
++      exitCode: 0,
++      stdout: args.includes("--version") ? "codex-cli 0.159.2" : "Logged in using ChatGPT",
++      stderr: "",
++    });
++    await expect(
++      inspectProvider("CODEX", runner, async () => {
++        throw new Error("private diagnostic");
++      }),
++    ).resolves.toMatchObject({
++      providerState: "AVAILABLE",
++      observedModels: [],
++      message: "Subscription authenticated; model catalog unavailable, verify again",
++    });
++  });
++});
+diff --git a/apps/worker/src/provider-verification.processor.ts b/apps/worker/src/provider-verification.processor.ts
+index 04ceb19..3c5126c 100644
+--- a/apps/worker/src/provider-verification.processor.ts
++++ b/apps/worker/src/provider-verification.processor.ts
+@@ -90,0 +91 @@ export async function inspectProvider(
++  catalog?: () => Promise<string[]>,
+@@ -138 +139 @@ export async function inspectProvider(
+-    const observedModels =
++    let observedModels =
+@@ -145,0 +147,13 @@ export async function inspectProvider(
++    if (provider === "CODEX" && catalog) {
++      try {
++        observedModels = await catalog();
++      } catch {
++        return {
++          status: "COMPLETED",
++          providerState: "AVAILABLE",
++          cliVersion,
++          observedModels: [],
++          message: "Subscription authenticated; model catalog unavailable, verify again",
++        };
++      }
++    }
+@@ -167,0 +182 @@ export async function processProviderVerification(
++  catalog?: () => Promise<string[]>,
+@@ -170 +185 @@ export async function processProviderVerification(
+-  const result = await inspectProvider(job.provider, runner);
++  const result = await inspectProvider(job.provider, runner, catalog);
+diff --git a/package.json b/package.json
+index ceed14b..08d429f 100644
+--- a/package.json
++++ b/package.json
+@@ -31 +31,3 @@
+-    "db:status": "node scripts/db.mjs status"
++    "db:status": "node scripts/db.mjs status",
++    "providers:setup": "tsx scripts/providers.ts setup",
++    "providers:login": "tsx scripts/providers.ts login"
+diff --git a/scripts/providers.ts b/scripts/providers.ts
+new file mode 100644
+index 0000000..7f6843f
+--- /dev/null
++++ b/scripts/providers.ts
+@@ -0,0 +1,140 @@
++import { spawn } from "node:child_process";
++import { constants } from "node:fs";
++import { access, appendFile, lstat, mkdir, readFile, realpath } from "node:fs/promises";
++import { homedir } from "node:os";
++import path from "node:path";
++import { factorySettingsSchema } from "@le-fabrique/contracts";
++import { ProviderIdentityManager } from "../apps/worker/src/provider-identity";
++
++async function binary(name: string): Promise<string> {
++  for (const directory of (process.env.PATH ?? "").split(path.delimiter)) {
++    if (!path.isAbsolute(directory)) continue;
++    const candidate = path.join(directory, name);
++    try {
++      await access(candidate, constants.X_OK);
++      return await realpath(candidate);
++    } catch {
++      /* Try next PATH entry. */
++    }
++  }
++  throw new Error(`Cliente oficial ${name} não encontrado no PATH.`);
++}
++
++async function main() {
++  const envFile = path.resolve(".env");
++  process.loadEnvFile(envFile);
++  const mode = process.argv[2];
++  if (mode === "setup") {
++    const root =
++      process.env.WORKER_PROVIDER_ROOT ??
++      path.join(homedir(), ".local/share/le-fabrique/providers");
++    if (
++      !path.isAbsolute(root) ||
++      path.resolve(root) === "/" ||
++      root.startsWith(`${process.cwd()}/`)
++    )
++      throw new Error("Use uma raiz privada fora do repositório.");
++    await mkdir(root, { recursive: true, mode: 0o700 });
++    const metadata = await lstat(root);
++    if (
++      !metadata.isDirectory() ||
++      metadata.uid !== process.getuid?.() ||
++      (metadata.mode & 0o077) !== 0 ||
++      (await realpath(root)) !== root
++    )
++      throw new Error("A raiz deve ser canônica, privada (0700) e pertencer ao usuário.");
++    const entries = {
++      WORKER_PROVIDER_ROOT: root,
++      WORKER_CODEX_BINARY: process.env.WORKER_CODEX_BINARY ?? (await binary("codex")),
++      WORKER_CLAUDE_BINARY: process.env.WORKER_CLAUDE_BINARY ?? (await binary("claude")),
++    };
++    const contents = await readFile(envFile, "utf8");
++    for (const [key, value] of Object.entries(entries)) {
++      if (process.env[key]) continue;
++      if (new RegExp(`^${key}=`, "m").test(contents))
++        throw new Error(`Revise ${key} vazio no .env.`);
++      if (!/^[a-zA-Z0-9/@+._-]+$/.test(value)) throw new Error("Caminho de configuração inválido.");
++      await appendFile(envFile, `\n${key}=${value}\n`);
++    }
++    console.log(
++      "Raiz privada e caminhos dos clientes configurados. Reinicie npm run dev para carregar o .env. Nenhuma conta foi autenticada.",
++    );
++    return;
++  }
++  if (mode !== "login") throw new Error("Use providers:setup ou providers:login -- ID_DA_CONTA.");
++  const base = new URL(process.env.CONTROL_API_URL ?? "http://127.0.0.1:3000/api");
++  if (
++    base.protocol !== "http:" ||
++    !["127.0.0.1", "localhost", "[::1]"].includes(base.hostname) ||
++    base.username ||
++    base.password
++  )
++    throw new Error("O controle deve ser local na VPS.");
++  const token = process.env.ADMIN_API_TOKEN;
++  if (!token) throw new Error("ADMIN_API_TOKEN ausente.");
++  const headers = { Authorization: `Bearer ${token}` };
++  const response = await fetch(`${base.href.replace(/\/$/, "")}/settings`, {
++    headers,
++    signal: AbortSignal.timeout(10_000),
++    redirect: "error",
++  });
++  if (!response.ok) throw new Error("Não foi possível ler as contas salvas no controle.");
++  const settings = factorySettingsSchema.parse(await response.json());
++  const installation = settings.configuration.installations.find(
++    (item) => item.id === process.argv[3],
++  );
++  if (installation?.provider !== "CLAUDE" || !installation.enabled)
++    throw new Error("Informe o ID de uma conta Claude salva e habilitada.");
++  const manager = new ProviderIdentityManager(process.env.WORKER_PROVIDER_ROOT, {
++    CODEX: process.env.WORKER_CODEX_BINARY ?? "/usr/bin/codex",
++    CLAUDE: process.env.WORKER_CLAUDE_BINARY ?? "/usr/bin/claude",
++  });
++  const identity = await manager.prepare("CLAUDE", installation.id);
++  console.log(
++    "Autentique sua assinatura Claude no fluxo oficial. Credenciais ficam apenas no diretório privado desta conta.",
++  );
++  await new Promise<void>((resolve, reject) => {
++    const child = spawn(identity.binaryPath, ["auth", "login", "--claudeai"], {
++      env: identity.environment,
++      cwd: identity.environment.HOME,
++      shell: false,
++      stdio: "inherit",
++      detached: true,
++    });
++    const stop = () => {
++      if (child.pid) {
++        try {
++          process.kill(-child.pid, "SIGTERM");
++        } catch {
++          /* Already stopped. */
++        }
++      }
++    };
++    const timer = setTimeout(stop, 600_000);
++    process.once("SIGINT", stop);
++    child.once("error", () => {
++      clearTimeout(timer);
++      process.removeListener("SIGINT", stop);
++      reject(new Error("Falha ao iniciar login oficial."));
++    });
++    child.once("exit", (code) => {
++      clearTimeout(timer);
++      process.removeListener("SIGINT", stop);
++      if (code === 0) resolve();
++      else reject(new Error("Login não concluído."));
++    });
++  });
++  const verification = await fetch(
++    `${base.href.replace(/\/$/, "")}/settings/installations/${installation.id}/verifications`,
++    { method: "POST", headers, signal: AbortSignal.timeout(10_000), redirect: "error" },
++  );
++  if (!verification.ok)
++    throw new Error("Login encerrado; solicite Verificar conta e modelos no painel.");
++  console.log(
++    "Verificação solicitada ao worker. Reabra Configurações para conferir o estado; cadastre os nomes dos modelos Claude disponíveis na sua assinatura.",
++  );
++}
++void main().catch((error) => {
++  console.error(error instanceof Error ? error.message : "Falha na configuração dos provedores.");
++  process.exitCode = 1;
++});

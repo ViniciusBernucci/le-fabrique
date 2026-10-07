@@ -1,0 +1,18 @@
+Fábrica de Software | v2.1 | Planejamento
+20
+Inspeção determinística -> contexto -> lock writer -> adapter execute -> checks reais -> reviewer
+separado -> correção limitada -> documentação -> gate -> aceite. Cliente oficial executa tools
+dentro do isolamento; supervisor controla lifecycle e valida outputs. Não tratar evento de IA como
+comando confiável.
+Gate documental
+Comparar base/code revision, exigir relato por domínio, diff/patch associado, checks com
+resultados e revisão, README atual e atualização de índice/changelog/backlog. Validar
+links/estrutura, evitar placeholder em relatório IMPLEMENTADO e segredos. Revisão semântica
+confere conteúdo; presença de arquivo não prova verdade.
+Checks essenciais do MVP
+Idempotência de claim e eventos; worker desconectado interrompe writer; processos antigos não
+continuam após handoff; arquivos untracked recuperáveis; auth/cota tratados sem loop; API key
+herdada bloqueada; extras desligados verificados; segredo inacessível ao código do piloto; doc
+gate rejeita entrega incompleta; aceite invalidado por novo diff.
+Mocks/fixtures sanitizadas para adapters; integração real opt-in no preflight dentro da assinatura
+validada. Medir ensaio de falha por simulação de adapter, sem desperdiçar cota real de propósito.

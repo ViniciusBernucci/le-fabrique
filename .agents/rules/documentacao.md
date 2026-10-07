@@ -1,3 +1,3 @@
-# Regra comum da fábrica
+# Ponte do projeto
 
-Ler documentacoes/POLITICA-IA.md e o guia ANTIGRAVITY.md. Aplicar documentação por entrega, atualização de estado atual e lessons. Confirmar carregamento desta regra; não presumir ativação automática.
+Abrir explicitamente `docs/00-governanca/POLITICA-IA.md`, `docs/00-governanca/POLITICA-DOCUMENTACAO.md` e `ANTIGRAVITY.md`. Não criar regra concorrente em documentacoes/. Autoload NÃO VERIFICADO; usar leitura explícita e registrar hashes.

@@ -1,0 +1,13 @@
+Fábrica de Software | v2.1 | Planejamento
+18
+FAC-002 valida compatibilidade, login, extras desativados e baseline na VPS. FAC-003 registra
+plano contratado, limites e separação de redes/volumes. FAC-004 testa serviço/credenciais após
+reboot. FAC-007 prova que código não lê credenciais/controle. FAC-012 mede painel sob build,
+OOM/I/O/disco e restauração externa.
+Aceite de infraestrutura: specs reais documentadas; checks do piloto cabem no envelope; sem
+OOM no ensaio; bancos privados; segredo inacessível ao código; nenhum efeito duplicado após
+reinício; backup externo restaurável. Na ocorrência de falha de capacidade, otimizar/subir perfil
+antes de ampliar concorrência.
+Perfil Bom é recomendação de engenharia, não contratação autorizada. Preços, fornecedor e
+acesso ainda precisam ser informados para provisionar. Detalhamento em
+documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md.

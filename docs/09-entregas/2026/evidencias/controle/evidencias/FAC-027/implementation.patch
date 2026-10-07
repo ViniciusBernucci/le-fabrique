@@ -1,0 +1,145 @@
+diff --git a/apps/web/src/DashboardLayout.spec.tsx b/apps/web/src/DashboardLayout.spec.tsx
+index 2a3bd84..7d95839 100644
+--- a/apps/web/src/DashboardLayout.spec.tsx
++++ b/apps/web/src/DashboardLayout.spec.tsx
+@@ -15 +15 @@ it("shares the navigation frame with custom content and marks the active destina
+-  expect(html).toMatch(/aria-label="Configurações" class="is-active" aria-current="page"/);
++  expect(html).toMatch(/aria-label="Configurações"[^>]*class="is-active" aria-current="page"/);
+diff --git a/apps/web/src/DashboardLayout.tsx b/apps/web/src/DashboardLayout.tsx
+index 8cbfca8..7cba3e5 100644
+--- a/apps/web/src/DashboardLayout.tsx
++++ b/apps/web/src/DashboardLayout.tsx
+@@ -244,0 +245,26 @@ export function DashboardLayout({
++  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
++    if (typeof window === "undefined") return false;
++    if (window.matchMedia("(max-width: 760px)").matches) return true;
++    try {
++      return window.localStorage.getItem("la-fabrique.sidebar-collapsed") === "true";
++    } catch {
++      return false;
++    }
++  });
++  useEffect(() => {
++    const smallScreen = window.matchMedia("(max-width: 760px)");
++    const collapseOnSmallScreen = () => {
++      if (smallScreen.matches) setSidebarCollapsed(true);
++    };
++    smallScreen.addEventListener("change", collapseOnSmallScreen);
++    return () => smallScreen.removeEventListener("change", collapseOnSmallScreen);
++  }, []);
++  function toggleSidebar() {
++    const collapsed = !sidebarCollapsed;
++    setSidebarCollapsed(collapsed);
++    try {
++      window.localStorage.setItem("la-fabrique.sidebar-collapsed", String(collapsed));
++    } catch {
++      // The current template still preserves the choice when storage is unavailable.
++    }
++  }
+@@ -299 +325 @@ export function DashboardLayout({
+-    <div className="home-dashboard">
++    <div className={`home-dashboard${sidebarCollapsed ? " is-menu-collapsed" : ""}`}>
+@@ -303 +329 @@ export function DashboardLayout({
+-      <aside className="home-sidebar" aria-label="Menu principal">
++      <aside id="home-sidebar" className="home-sidebar" aria-label="Menu principal">
+@@ -318,0 +345,12 @@ export function DashboardLayout({
++        <button
++          type="button"
++          className="home-menu-toggle"
++          aria-label={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
++          title={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
++          aria-expanded={!sidebarCollapsed}
++          aria-controls="home-sidebar"
++          onClick={toggleSidebar}
++        >
++          <Icon name="arrow" />
++          <span>Recolher menu</span>
++        </button>
+@@ -324,0 +363 @@ export function DashboardLayout({
++              title={item.name}
+diff --git a/apps/web/src/home-dashboard.css b/apps/web/src/home-dashboard.css
+index 40a0f85..07644a7 100644
+--- a/apps/web/src/home-dashboard.css
++++ b/apps/web/src/home-dashboard.css
+@@ -3,0 +4 @@
++  --home-sidebar-width: 234px;
+@@ -62 +63 @@
+-  width: 234px;
++  width: var(--home-sidebar-width);
+@@ -156 +157 @@
+-  margin-left: 234px;
++  margin-left: var(--home-sidebar-width);
+@@ -757,2 +758,2 @@
+-  .home-dashboard .home-sidebar {
+-    width: 210px;
++  .home-dashboard {
++    --home-sidebar-width: 210px;
+@@ -767 +768 @@
+-    margin-left: 210px;
++    margin-left: var(--home-sidebar-width);
+@@ -831,20 +832,2 @@
+-  .home-dashboard .home-sidebar {
+-    width: 66px;
+-  }
+-  .home-dashboard .home-brand {
+-    justify-content: center;
+-    padding: 0;
+-  }
+-  .home-dashboard .home-brand span,
+-  .home-dashboard .home-sidebar nav button span,
+-  .home-dashboard .home-workspace {
+-    display: none;
+-  }
+-  .home-dashboard .home-sidebar nav {
+-    padding: 14px 5px;
+-    gap: 7px;
+-  }
+-  .home-dashboard .home-sidebar nav button {
+-    justify-content: center;
+-    padding: 10px 8px;
+-    min-height: 45px;
++  .home-dashboard {
++    --home-sidebar-width: 234px;
+@@ -1268,0 +1252,42 @@
++
++.home-dashboard .home-menu-toggle {
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 12px;
++  margin: 8px 9px 0;
++  padding: 6px;
++  min-height: 34px;
++  color: var(--home-muted);
++  border: 1px solid var(--home-line);
++}
++.home-dashboard .home-menu-toggle svg {
++  width: 18px;
++  height: 18px;
++  transform: rotate(180deg);
++}
++.home-dashboard.is-menu-collapsed {
++  --home-sidebar-width: 66px;
++}
++.home-dashboard.is-menu-collapsed .home-brand {
++  justify-content: center;
++  padding: 0;
++}
++.home-dashboard.is-menu-collapsed .home-brand span,
++.home-dashboard.is-menu-collapsed .home-sidebar nav button span,
++.home-dashboard.is-menu-collapsed .home-workspace,
++.home-dashboard.is-menu-collapsed .home-menu-toggle span {
++  display: none;
++}
++.home-dashboard.is-menu-collapsed .home-sidebar nav {
++  padding: 14px 5px;
++  gap: 7px;
++}
++.home-dashboard.is-menu-collapsed .home-sidebar nav button {
++  justify-content: center;
++  padding: 10px 8px;
++  min-height: 45px;
++}
++.home-dashboard.is-menu-collapsed .home-menu-toggle svg {
++  transform: none;
++}

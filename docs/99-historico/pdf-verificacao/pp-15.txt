@@ -1,0 +1,39 @@
+Fábrica de Software | v2.1 | Planejamento
+15
+Aceite: Ticket autenticado persiste após reinício e dispatch idempotente; sem segredo em Git.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-004 — Worker interno e identidade de serviço
+Sprint: Sprint 1. Dependências: FAC-003. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Descrição: Registro restrito, claim, heartbeat, eventos, systemd, login oficial na identidade de
+serviço e limites globais; rede interna autenticada.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.
+Aceite: Queda de rede interrompe writer antes do lease; job antigo não recebe conclusão válida;
+sem portas públicas de worker/banco/fila.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-005 — Runtime Gateway e primeiro adapter
+Sprint: Sprint 1. Dependências: FAC-002, FAC-004. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Descrição: Interface, execução segura por argv/stdin, fixtures/eventos e cliente oficial escolhido
+por preflight.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.
+Aceite: Execute/cancel/schema comprovados; auth/cota normalizados; modelo/uso desconhecido
+não inventados.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-006 — Context Builder e RuntimeGuard
+Sprint: Sprint 1. Dependências: FAC-001, FAC-003. Esforço estimado: 1-2 dias. Status: PLANEJADO.
+Descrição: Fontes determinísticas/hashes; limites de tentativas/tempo/troca; API/extra bloqueados.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.
+Aceite: Sem segredo/dependência no contexto; falha repetida pausa; keys herdadas não ativam
+API.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-007 — Sandbox e snapshots recuperáveis
+Sprint: Sprint 2. Dependências: FAC-004, FAC-005. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Descrição: Worktree isolado, recursos, serviços sintéticos, patches/untracked e revisão exata.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.

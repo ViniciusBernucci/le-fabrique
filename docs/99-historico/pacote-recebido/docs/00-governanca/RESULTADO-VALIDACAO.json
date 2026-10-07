@@ -1,0 +1,17 @@
+{
+  "markdown_correntes": 146,
+  "links_locais_verificados": 730,
+  "snapshots_verificados": 50,
+  "fontes_originais_conferidas": true,
+  "historico_excluido_da_validacao_de_links": true,
+  "erros": [],
+  "limite": "Checks estruturais/hashes; não comprova software, isolamento nem veracidade semântica.",
+  "date": "2026-10-06",
+  "timezone": "America/Sao_Paulo",
+  "resultado": "PASS",
+  "pdf_paginas": 45,
+  "capitulos_pdf_recuperados": 28,
+  "zip_historico_membros": 33,
+  "codigo_aplicacao": "NÃO DISPONÍVEL",
+  "testes_software_sec": "NOT_RUN"
+}

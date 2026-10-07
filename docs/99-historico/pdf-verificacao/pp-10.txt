@@ -1,0 +1,34 @@
+Fábrica de Software | v2.1 | Planejamento
+10
+Runtime request: ticket/run/step/attempt, workspace e revisão, provider/modelo solicitado,
+prompt/context manifest, ferramentas e limites, regras documentais. Result: status normalizado,
+exit code, revisão/diff, artefatos/checks, uso nullable, versão do cliente, modelo efetivo e
+checkpoints. Nunca armazenar cadeia de raciocínio privada.
+Interface: execute, getStatus, getCapabilities, getUsage, cancel, resume. Capacidade ausente
+deve retornar unsupported, não simular equivalência. Resume nativo só no mesmo
+provider/versão compatível; troca de provider é nova execução com handoff. Cancel deve encerrar
+árvore de processos e confirmar quiescência.
+Painel mobile: tickets, etapa, writer, worker online/offline, health dos providers, última observação
+de uso e sua fonte, espera por cota, tentativas, diff, checks e docs. Percentual de uso apenas se
+fornecedor expõe e adapter validou. API/extra desligados visíveis. Aceite associado a revisão
+exata; novo código invalida aprovação.
+CLI encerrou com zero não prova sucesso do ticket. Validar schemas, diff, checks, critérios e
+documentação antes de AWAITING_HUMAN. Publicação de PR é integração opcional autenticada
+com escopo mínimo.
+13. Fontes e pendências
+Fontes oficiais verificadas em 29/09/2026, listadas integralmente em FONTES.md. Confirmado:
+Codex possui exec não interativo e reutiliza autenticação do CLI; Claude Code possui -p; Google
+documenta agy -p para automação. Isso comprova mecanismos técnicos, não capacidade ilimitada
+ou elegibilidade automática de qualquer uso.
+Autenticação oficial, plano contratado, modo de execução, créditos extras, termos e
+compatibilidade precisam ser validados no worker antes de ativar o adapter. No Claude,
+diferenciar cliente oficial de SDK/serviço usando credenciais de assinatura; não
+capturar/intermediar tokens OAuth. Documentação de assinatura não substitui análise de modo de
+cobrança real.
+Pendências para execução: repo/branch, feature piloto, baseline, perfil contratado da VPS e
+compatibilidade dos clientes, assinaturas e modelos acessíveis, forma oficial de login, VPS e
+capacidade semanal. Stack da fábrica proposta pode ser confirmada antes de bootstrap. O
+planejamento avança sem inventar estas respostas.
+Esta v2.1 substitui a topologia VPS + MacBook da v2 e a execução por APIs da v1. Mantém
+qualidade, isolamento, documentação por domínio, lessons, evidências, backlog e aceite. Nenhum
+cliente foi instalado ou testado nesta entrega.

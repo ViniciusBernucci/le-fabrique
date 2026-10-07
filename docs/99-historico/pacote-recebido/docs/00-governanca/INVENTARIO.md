@@ -1,0 +1,100 @@
+# Inventário documental
+
+Total de entradas preservadas: 50. Inclui AGENTS do espelho, 14 MD e um PDF em sources, pacote multi-tenant (inclusive prompts), manifesto e ZIP. O PDF tem 45 páginas; 28 capítulos/anexo recuperados. Nenhum source alterado.
+
+| Path de origem | Bytes | SHA-256 |
+|---|---|---|
+| `AGENTS.md` | 414 | `4eb2e5253c158830082c3f92bc8b7575adbab20a9ee75e0811cb58958e382cc9` |
+| `sources/AGENTS (project file).md` | 2710 | `e495edbca9b1f22a69cb789c54722df30a64eac4ce4d2ded0baffc030b99fb92` |
+| `sources/ANTIGRAVITY.md` | 2866 | `cf705ea905931b8499f2934e22348615312236c5c78a75b12e20d5210d999d78` |
+| `sources/BACKLOG.md` | 1342 | `ca6e4e4d262ac4768b781936b0c0afecef5b4c6280f8cc29d6bc5ce90ec993ce` |
+| `sources/CHANGELOG.md` | 682 | `59fd1e23d3375cc0a5c2df12dae9a152d398dae828299482ccc1095d4309a444` |
+| `sources/CLAUDE.md` | 2774 | `76ab72de1dfbae54b0d3c1334dac380803038698afd6ef5e3c73e0641c776bbd` |
+| `sources/ESPEC-MVP.md` | 4018 | `04c13b2dee9f6a687c43ea4d70a3f9254d974c5d3dacf9d2352988f3cef5316d` |
+| `sources/FONTES.md` | 2189 | `d6fd3e8739bd898546a7c137c8f35ecd830980c08d76dfe31f3ed4b1682a5d59` |
+| `sources/Fabrica-Software-Arquitetura-MVP-v2.pdf` | 162846 | `d064f9c50132c593a452924c78c5b3168771a2a6024ee51e1847ec57b3a1d0c4` |
+| `sources/INDEX.md` | 443 | `251b4fdf94dfc4553ddd69f8b0d886059036b66d43644f28aa0ab8961cfc37b1` |
+| `sources/MATRIZ-COBERTURA.md` | 2529 | `f601c428a0d210f28d54a76405fefd119d7c54e123784f8532237b9a9739c440` |
+| `sources/PILOTO.md` | 1026 | `9278e426822070d18d6f5a072f80b50fc46ac79f3243e8d28b5b1a41e4dc4f52` |
+| `sources/PLANO-MVP.md` | 11698 | `5ef1c8bbb044f3a51abfec995df98c48ee019dc88debb372c11fe4daf18fa39c` |
+| `sources/POLITICA-IA.md` | 4143 | `dbc46ae1770d65d2adf983f352a08f4dd6802ccbda2817e7c4b4a1314f7d4e3d` |
+| `sources/PROMPT-INICIAL.md` | 881 | `b22b64781dd25ee47f932a99f630e0cc4ddbad9794671e3da356b378d75d67e8` |
+| `sources/README.md` | 1506 | `02b54ffe16b4039d5348ba06bd7e514e38803de8afb064384be69c855e9e5a10` |
+| `output/le-fabrique-multitenant/AGENTS.md` | 3774 | `a00ed431cd700e6ae8cbb82806003abc3913717662ec4daae773a633c931014a` |
+| `output/le-fabrique-multitenant/ANTIGRAVITY.md` | 3930 | `c5784e832ba6f1a55563ab3f13a3100aac45ca35cf6158b17425a876acdb2fa1` |
+| `output/le-fabrique-multitenant/BACKLOG.md` | 3087 | `a0ed4fc05e9ecaadb7272c503aba4791f78c40dda2defae22c2a0539d0b7f079` |
+| `output/le-fabrique-multitenant/CHANGELOG.md` | 1372 | `5af9a20e5dcef5fa6a7743538d9f518b1662c442ba3d727e16edf759c1cd13e1` |
+| `output/le-fabrique-multitenant/CLAUDE.md` | 3838 | `05777a2ae23858a36de81d07333406f0cd5d444d7c6bb07429352d883ef8a389` |
+| `output/le-fabrique-multitenant/ESPEC-MVP.md` | 3271 | `05e448c530017a6ec00d88f9855990ca1dc21f32f783a379ebd5697b747c1c6d` |
+| `output/le-fabrique-multitenant/FONTES.md` | 3603 | `863f728a2522d6a8d018a40cc45b36eb9ce6257a3707635b33ea987c978d3029` |
+| `output/le-fabrique-multitenant/MANIFESTO-FONTES.json` | 2497 | `32df7197263bbfa9696603a84dce0f80c3ad35b70cf1a9ce51ff9ba5a2e81aa3` |
+| `output/le-fabrique-multitenant/MATRIZ-COBERTURA.md` | 4813 | `3d6f0ee14ebdaa71bb0a96571d598a1b0dbf79e3d4e6517cb0e79ccd6d865b22` |
+| `output/le-fabrique-multitenant/PILOTO.md` | 1824 | `5304632ef7f1cca23cc4549d7172e479fb9f279c882de62ca40b1be14724a369` |
+| `output/le-fabrique-multitenant/PLANO-MVP.md` | 2713 | `bb19e6941ef8b5938593f91a87c0906f900de7624226e0012bfbb58d191fbfc2` |
+| `output/le-fabrique-multitenant/PROMPT-INICIAL.md` | 572 | `b6716c443a323552030586a6875d013379ac77ab38ab2ff47729dcc9ef8b8c74` |
+| `output/le-fabrique-multitenant/README.md` | 2519 | `b71de8dccf9e9f28712b7a338b6b3b3de4e97248efcaa06f3665671720009584` |
+| `output/le-fabrique-multitenant/VALIDACAO-DOCUMENTAL.md` | 2191 | `6f244692d2bf038b918612b3b8dc22aefa960ea551179c3b89b64881b9ace3df` |
+| `output/le-fabrique-multitenant/documentacoes/AUDITORIA-FONTES.md` | 3542 | `d8cbe1eb9f373e7c9a81185a45eaf9070d356717380ffa11a9c9cb793adb9ff0` |
+| `output/le-fabrique-multitenant/documentacoes/INDEX.md` | 2461 | `7807f43648736f69b25dac99813fb283613a771df066879cb99546f08865fc00` |
+| `output/le-fabrique-multitenant/documentacoes/POLITICA-IA.md` | 5717 | `9d6cc78aa349f49a1336623452bf04c2bcfa7e308959206f1c1ab293d879bfb6` |
+| `output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-003-multi-tenant-e-stack.md` | 1749 | `b51faa6fd705ece23f86b17e79c1ae1ae76b17c4d3a02900dea8749f251fcabe` |
+| `output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-004-provider-runtime-sem-segredos-no-sandbox.md` | 1762 | `cea85116b06b7defc1bd9ada2497a548ddd2ecaf90c08586098fc3d1e9d9b628` |
+| `output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md` | 1740 | `98942c29cbf1671dcad7a5dd98de20b528b2598eaf49ed1b47d33b191a106650` |
+| `output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-006-rls-capabilities-e-egress.md` | 1678 | `a7c6f2842f7ce4ea39d33179f8f9d6a8b68103d18fbe54905cd272c30543e973` |
+| `output/le-fabrique-multitenant/documentacoes/arquitetura/ARQUITETURA.md` | 4839 | `152b101997eac1d396204d13d1454b09889097db2c8a75408c0d6ec72a4b3594` |
+| `output/le-fabrique-multitenant/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md` | 3969 | `7be1de5bb3503a04b993c0456a5f98f53c76ea63459e7a377635811832095c80` |
+| `output/le-fabrique-multitenant/documentacoes/operacao/README.md` | 4524 | `a7ae50e6bcf4b0dcca58fdefcc2236846fed577accebb9d9e898044bcf8e1d5f` |
+| `output/le-fabrique-multitenant/documentacoes/runtime/README.md` | 5429 | `617d4d11acf5538ba9c6dc6bf9f8cf0a995cfe03722af72a92c7dea0b2a6e0eb` |
+| `output/le-fabrique-multitenant/documentacoes/sandbox/README.md` | 4860 | `3eda821067ea9ccba0e34f01952ed8b7a86812551b67d54d7569cf5d46121757` |
+| `output/le-fabrique-multitenant/documentacoes/seguranca/CAPABILITIES-E-TOOLS.md` | 3637 | `2398fb05ab16a0bea67f9c08285529f212e395db1e6932739ad1315323784c3f` |
+| `output/le-fabrique-multitenant/documentacoes/seguranca/REDE-E-EGRESS.md` | 4397 | `86d5df72cf461c6a038732dc5256407ca3cbac3ed8446a5d6a9c3cfe62d3e005` |
+| `output/le-fabrique-multitenant/documentacoes/seguranca/TESTES-ACEITE.md` | 6449 | `586d8b30dd76cd69b0e7899e7ec1e0a114944c3a3a7a317d11768b44e271b5c4` |
+| `output/le-fabrique-multitenant/documentacoes/seguranca/THREAT-MODEL.md` | 5272 | `e3691302dbc048a9533b0ed7ee3c98ebe0ee108801f1c4f67b0ecdc715296f1a` |
+| `output/le-fabrique-multitenant/documentacoes/tenant-isolation/README.md` | 4999 | `ff849b298a98d5813ccf09b419cfb76efc40af7b5eae2ece0c2bed03180d5f8f` |
+| `output/le-fabrique-multitenant/prompts/PROMPT-00-PREPARACAO.md` | 7775 | `3e4de60724fcd521b0cddd21554ea1b4f37b23371c077ae77f31286716b51021` |
+| `output/le-fabrique-multitenant/prompts/PROMPTS-IMPLEMENTACAO.md` | 55373 | `d26c57848e39e5e303e436e32412f367726dc51863683efad3fc10b0446397e9` |
+| `output/le-fabrique-multitenant.zip` | 72320 | `399f13fe1f219ffb8b7941b6d0887c67034c3f76e1e719128e1c1bc2f9bbcfd4` |
+
+## Duplicações byte a byte
+
+Nenhuma entrada idêntica byte a byte.
+
+Duplicações semânticas e diferenças de versões são registradas na auditoria; hash diferente não prova conteúdo independente.
+
+## Membros do ZIP histórico
+
+| Membro | Bytes | SHA-256 | Igual a entrada disponível? |
+|---|---|---|---|
+| `le-fabrique-multitenant/AGENTS.md` | 3774 | `a00ed431cd700e6ae8cbb82806003abc3913717662ec4daae773a633c931014a` | output/le-fabrique-multitenant/AGENTS.md |
+| `le-fabrique-multitenant/ANTIGRAVITY.md` | 3930 | `c5784e832ba6f1a55563ab3f13a3100aac45ca35cf6158b17425a876acdb2fa1` | output/le-fabrique-multitenant/ANTIGRAVITY.md |
+| `le-fabrique-multitenant/BACKLOG.md` | 3087 | `a0ed4fc05e9ecaadb7272c503aba4791f78c40dda2defae22c2a0539d0b7f079` | output/le-fabrique-multitenant/BACKLOG.md |
+| `le-fabrique-multitenant/CHANGELOG.md` | 1372 | `5af9a20e5dcef5fa6a7743538d9f518b1662c442ba3d727e16edf759c1cd13e1` | output/le-fabrique-multitenant/CHANGELOG.md |
+| `le-fabrique-multitenant/CLAUDE.md` | 3838 | `05777a2ae23858a36de81d07333406f0cd5d444d7c6bb07429352d883ef8a389` | output/le-fabrique-multitenant/CLAUDE.md |
+| `le-fabrique-multitenant/ESPEC-MVP.md` | 3271 | `05e448c530017a6ec00d88f9855990ca1dc21f32f783a379ebd5697b747c1c6d` | output/le-fabrique-multitenant/ESPEC-MVP.md |
+| `le-fabrique-multitenant/FONTES.md` | 3603 | `863f728a2522d6a8d018a40cc45b36eb9ce6257a3707635b33ea987c978d3029` | output/le-fabrique-multitenant/FONTES.md |
+| `le-fabrique-multitenant/MANIFESTO-FONTES.json` | 2497 | `32df7197263bbfa9696603a84dce0f80c3ad35b70cf1a9ce51ff9ba5a2e81aa3` | output/le-fabrique-multitenant/MANIFESTO-FONTES.json |
+| `le-fabrique-multitenant/MATRIZ-COBERTURA.md` | 4813 | `3d6f0ee14ebdaa71bb0a96571d598a1b0dbf79e3d4e6517cb0e79ccd6d865b22` | output/le-fabrique-multitenant/MATRIZ-COBERTURA.md |
+| `le-fabrique-multitenant/PILOTO.md` | 1824 | `5304632ef7f1cca23cc4549d7172e479fb9f279c882de62ca40b1be14724a369` | output/le-fabrique-multitenant/PILOTO.md |
+| `le-fabrique-multitenant/PLANO-MVP.md` | 2713 | `bb19e6941ef8b5938593f91a87c0906f900de7624226e0012bfbb58d191fbfc2` | output/le-fabrique-multitenant/PLANO-MVP.md |
+| `le-fabrique-multitenant/PROMPT-INICIAL.md` | 572 | `b6716c443a323552030586a6875d013379ac77ab38ab2ff47729dcc9ef8b8c74` | output/le-fabrique-multitenant/PROMPT-INICIAL.md |
+| `le-fabrique-multitenant/README.md` | 2519 | `b71de8dccf9e9f28712b7a338b6b3b3de4e97248efcaa06f3665671720009584` | output/le-fabrique-multitenant/README.md |
+| `le-fabrique-multitenant/VALIDACAO-DOCUMENTAL.md` | 2191 | `6f244692d2bf038b918612b3b8dc22aefa960ea551179c3b89b64881b9ace3df` | output/le-fabrique-multitenant/VALIDACAO-DOCUMENTAL.md |
+| `le-fabrique-multitenant/documentacoes/AUDITORIA-FONTES.md` | 3542 | `d8cbe1eb9f373e7c9a81185a45eaf9070d356717380ffa11a9c9cb793adb9ff0` | output/le-fabrique-multitenant/documentacoes/AUDITORIA-FONTES.md |
+| `le-fabrique-multitenant/documentacoes/INDEX.md` | 2461 | `7807f43648736f69b25dac99813fb283613a771df066879cb99546f08865fc00` | output/le-fabrique-multitenant/documentacoes/INDEX.md |
+| `le-fabrique-multitenant/documentacoes/POLITICA-IA.md` | 5717 | `9d6cc78aa349f49a1336623452bf04c2bcfa7e308959206f1c1ab293d879bfb6` | output/le-fabrique-multitenant/documentacoes/POLITICA-IA.md |
+| `le-fabrique-multitenant/documentacoes/arquitetura/ADR-003-multi-tenant-e-stack.md` | 1749 | `b51faa6fd705ece23f86b17e79c1ae1ae76b17c4d3a02900dea8749f251fcabe` | output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-003-multi-tenant-e-stack.md |
+| `le-fabrique-multitenant/documentacoes/arquitetura/ADR-004-provider-runtime-sem-segredos-no-sandbox.md` | 1762 | `cea85116b06b7defc1bd9ada2497a548ddd2ecaf90c08586098fc3d1e9d9b628` | output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-004-provider-runtime-sem-segredos-no-sandbox.md |
+| `le-fabrique-multitenant/documentacoes/arquitetura/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md` | 1740 | `98942c29cbf1671dcad7a5dd98de20b528b2598eaf49ed1b47d33b191a106650` | output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-005-sandbox-efemero-e-perfil-de-isolamento.md |
+| `le-fabrique-multitenant/documentacoes/arquitetura/ADR-006-rls-capabilities-e-egress.md` | 1678 | `a7c6f2842f7ce4ea39d33179f8f9d6a8b68103d18fbe54905cd272c30543e973` | output/le-fabrique-multitenant/documentacoes/arquitetura/ADR-006-rls-capabilities-e-egress.md |
+| `le-fabrique-multitenant/documentacoes/arquitetura/ARQUITETURA.md` | 4839 | `152b101997eac1d396204d13d1454b09889097db2c8a75408c0d6ec72a4b3594` | output/le-fabrique-multitenant/documentacoes/arquitetura/ARQUITETURA.md |
+| `le-fabrique-multitenant/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md` | 3969 | `7be1de5bb3503a04b993c0456a5f98f53c76ea63459e7a377635811832095c80` | output/le-fabrique-multitenant/documentacoes/infraestrutura/DIMENSIONAMENTO-VPS.md |
+| `le-fabrique-multitenant/documentacoes/operacao/README.md` | 4524 | `a7ae50e6bcf4b0dcca58fdefcc2236846fed577accebb9d9e898044bcf8e1d5f` | output/le-fabrique-multitenant/documentacoes/operacao/README.md |
+| `le-fabrique-multitenant/documentacoes/runtime/README.md` | 5429 | `617d4d11acf5538ba9c6dc6bf9f8cf0a995cfe03722af72a92c7dea0b2a6e0eb` | output/le-fabrique-multitenant/documentacoes/runtime/README.md |
+| `le-fabrique-multitenant/documentacoes/sandbox/README.md` | 4860 | `3eda821067ea9ccba0e34f01952ed8b7a86812551b67d54d7569cf5d46121757` | output/le-fabrique-multitenant/documentacoes/sandbox/README.md |
+| `le-fabrique-multitenant/documentacoes/seguranca/CAPABILITIES-E-TOOLS.md` | 3637 | `2398fb05ab16a0bea67f9c08285529f212e395db1e6932739ad1315323784c3f` | output/le-fabrique-multitenant/documentacoes/seguranca/CAPABILITIES-E-TOOLS.md |
+| `le-fabrique-multitenant/documentacoes/seguranca/REDE-E-EGRESS.md` | 4397 | `86d5df72cf461c6a038732dc5256407ca3cbac3ed8446a5d6a9c3cfe62d3e005` | output/le-fabrique-multitenant/documentacoes/seguranca/REDE-E-EGRESS.md |
+| `le-fabrique-multitenant/documentacoes/seguranca/TESTES-ACEITE.md` | 6449 | `586d8b30dd76cd69b0e7899e7ec1e0a114944c3a3a7a317d11768b44e271b5c4` | output/le-fabrique-multitenant/documentacoes/seguranca/TESTES-ACEITE.md |
+| `le-fabrique-multitenant/documentacoes/seguranca/THREAT-MODEL.md` | 5272 | `e3691302dbc048a9533b0ed7ee3c98ebe0ee108801f1c4f67b0ecdc715296f1a` | output/le-fabrique-multitenant/documentacoes/seguranca/THREAT-MODEL.md |
+| `le-fabrique-multitenant/documentacoes/tenant-isolation/README.md` | 4999 | `ff849b298a98d5813ccf09b419cfb76efc40af7b5eae2ece0c2bed03180d5f8f` | output/le-fabrique-multitenant/documentacoes/tenant-isolation/README.md |
+| `le-fabrique-multitenant/prompts/PROMPT-00-PREPARACAO.md` | 7775 | `3e4de60724fcd521b0cddd21554ea1b4f37b23371c077ae77f31286716b51021` | output/le-fabrique-multitenant/prompts/PROMPT-00-PREPARACAO.md |
+| `le-fabrique-multitenant/prompts/PROMPTS-IMPLEMENTACAO.md` | 55373 | `d26c57848e39e5e303e436e32412f367726dc51863683efad3fc10b0446397e9` | output/le-fabrique-multitenant/prompts/PROMPTS-IMPLEMENTACAO.md |

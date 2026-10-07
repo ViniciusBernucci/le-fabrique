@@ -1,0 +1,421 @@
+{
+  "pdf_sha256": "d064f9c50132c593a452924c78c5b3168771a2a6024ee51e1847ec57b3a1d0c4",
+  "tool": "PyMuPDF 1.26.7 temporário",
+  "pages": [
+    {
+      "page": 1,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "fad8e85c8c926752706f744803b53b449b3af3277050857be234552fc742521a",
+      "characters": 395,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 8
+    },
+    {
+      "page": 2,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "cf9afa27d15d4f950f9f4b24e723942c79765038bf9ca1e879fc1367c497e4fc",
+      "characters": 807,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 3
+    },
+    {
+      "page": 3,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "b21997cacb077e9ee9b1df0e50f7e7c800697fb874ca319ea0d5b60964d6713e",
+      "characters": 1510,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 25
+    },
+    {
+      "page": 4,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "5c0558059e22698f2ca6a0f4fe925fc742a70c1f4d669225d0fab8d8660c6052",
+      "characters": 2680,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 36
+    },
+    {
+      "page": 5,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "d1303f4045c040dfb02bae70dadc0e3ff6bef9dd69c957381994c1d4b568c277",
+      "characters": 3118,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 43
+    },
+    {
+      "page": 6,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "0be8c961f0196d6023ff86e8a0e93681b7400ecfaa3e44893ad859f2b94a986f",
+      "characters": 3244,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 43
+    },
+    {
+      "page": 7,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "2045b4e7a582b757c281d8f27e05f49f392224a21640b48eab259850ee62d30b",
+      "characters": 3428,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 43
+    },
+    {
+      "page": 8,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "b90c89855c9d16f630a2046b33b26af7725f46e5b8dc323d360d05c9ed3e34c5",
+      "characters": 3400,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 43
+    },
+    {
+      "page": 9,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "7a15f30b9edf7adac5f0ce535d8d13f6fd8e8f08dfad7f920f85b86752c41253",
+      "characters": 3120,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 42
+    },
+    {
+      "page": 10,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "45d6eb7f0be40c30d37d81312d2b3861cc9e5eb766e2e07951c33298da17d3f6",
+      "characters": 2499,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 33
+    },
+    {
+      "page": 11,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "774972bd398c5ce545d3b3b50eb1b2d5c1938dcfc6df57b51de4927aa95f17e2",
+      "characters": 2507,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 39
+    },
+    {
+      "page": 12,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "fa1f476674760a227989ab6d44cec65f13a9bf5042f6fc135288aed1f27f00b7",
+      "characters": 2571,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 34
+    },
+    {
+      "page": 13,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "1128df3e5e0f4593ca4b858e22591d764362e8a406c0c3baa1566d33535c0d03",
+      "characters": 1311,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 22
+    },
+    {
+      "page": 14,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "ca05a6aadef8aad3e5fdf1cd28f06ae88c053cdec16b36b16906398f04a49c73",
+      "characters": 2650,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 15,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "af68fcd397030a3ecfab7bc3c32911e4d21389a4c8e1776053a00af5ef41a45e",
+      "characters": 2784,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 16,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "381e195bac66b6b0bb16a14afee4fe9db5b9a0f2705be5fb5c4d6d4fa1b75906",
+      "characters": 2686,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 17,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "e7f1e3b11b19fd9c0879c778d834bc45a8b707514a5de2f84d1a7ea16e4aead5",
+      "characters": 2512,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 37
+    },
+    {
+      "page": 18,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "808e649b0398bf4db815e8b3bbf4c5ab53840b4366e7b6339e55987ffd48c694",
+      "characters": 891,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 12
+    },
+    {
+      "page": 19,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "4cfbf3fdbaac989483f0bb769ffac1759a07a3042cf51ae23d9ce4da3c14ce75",
+      "characters": 2761,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 41
+    },
+    {
+      "page": 20,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "c34f10bc8ed72330e897559f5f15dc7e1acc64887cfb85f9396cd30a668be1a9",
+      "characters": 1267,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 17
+    },
+    {
+      "page": 21,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "fa65506565f9532b3f14d8a0b125db9ab7447eb1ca3859d98edf33e4c41c11e8",
+      "characters": 2883,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 41
+    },
+    {
+      "page": 22,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "4acfb91d16b37840292cde148d02fbabc06328ed1d06bd5182691b5a4b8403f6",
+      "characters": 1200,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 17
+    },
+    {
+      "page": 23,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "a83a1f10210d672f1d9d18240e96b1fdf922923d453a5ac218bcca520cf9e9ba",
+      "characters": 2512,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 24,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "853e0d672b8cb86f82dcaf75626874a9b5d11d32964e07136f860c0e9a14c26c",
+      "characters": 2747,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 41
+    },
+    {
+      "page": 25,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "281db582dfecc35ed8eacd980300c1a2236779a02313c7dfcbcaa6c03adb8944",
+      "characters": 1517,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 22
+    },
+    {
+      "page": 26,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "c302c04ef12b3bc8da45e8458d29dd19f495bbc67f5ef5afdb45a251a8555d89",
+      "characters": 1484,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 22
+    },
+    {
+      "page": 27,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "b6676db10790d2c44a43ad49da1751b84590c3e4049aa0701c0c08bc7b148eaf",
+      "characters": 2376,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 37
+    },
+    {
+      "page": 28,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "31bcaa898e910da39f0f38f4f716492dc06653cf35bfec55161c1c2444d6263f",
+      "characters": 1731,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 23
+    },
+    {
+      "page": 29,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "7d08558fbf0ef7c06edc3ee9375d176fa5d1e1062c72aeb443a21efe292e2d23",
+      "characters": 2673,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 30,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "223eb2e6a2d7a4de68942c4365d49e02ee384d932cf6be044c60aba133cabce1",
+      "characters": 2734,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 38
+    },
+    {
+      "page": 31,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "f41aacdd8c87955e84630c2968c71695ce011d870906f81add38eb3739e360d2",
+      "characters": 2825,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 39
+    },
+    {
+      "page": 32,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "778c7b38fcf40d58168bcc21b16732801941f003bfc290feadb577b8233bd014",
+      "characters": 1049,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 18
+    },
+    {
+      "page": 33,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "3802101b3eb795d2465a5437827827ab4aa1d51b573b8339ce1c0a22423d708d",
+      "characters": 1342,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 20
+    },
+    {
+      "page": 34,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "a20305b8a98b8a66c638501733ce8d502867405886b116ff15c09e734643ac3c",
+      "characters": 2330,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 45
+    },
+    {
+      "page": 35,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "8bc9070ad4e9f7e59d2145e5c373b8de8d8366b37e532319fb4d96c7da58b39c",
+      "characters": 2157,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 33
+    },
+    {
+      "page": 36,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "05dd82b465075b13975c2ed974b9f4e87e9f4c32ef14d061c052031525069b64",
+      "characters": 917,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 14
+    },
+    {
+      "page": 37,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "197d4fba193748402826d375c729f1a347cd55f15050ba0e13e57d83c5bb6c73",
+      "characters": 294,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 13
+    },
+    {
+      "page": 38,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "c930a913eb9cfb403f84a9dd4fc9251540ab0fda81f8ec36a509d51eb130248a",
+      "characters": 1092,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 30
+    },
+    {
+      "page": 39,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "e847f2a2eff0cb8996d41aad1a3c104d79ff4b99fe33cf814291d1d73c1413d6",
+      "characters": 836,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 23
+    },
+    {
+      "page": 40,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "4d8beda2ef49b0a9f8e9aac8e1aa12dd1b4bbbb2538dd6269ffeb4475d50fd3d",
+      "characters": 233,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 10
+    },
+    {
+      "page": 41,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "ced96bfc287a51150c93805f09cc3f865a05945a4739ef218328f3d2cc376313",
+      "characters": 498,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 11
+    },
+    {
+      "page": 42,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "c810770e8484b89be0968cb0bf2df333b9044f0507cf4bba0b480de11120bae2",
+      "characters": 407,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 7
+    },
+    {
+      "page": 43,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "561b12cca7820f87ad6d03c59b65b0ec60d0bae732e1c45d7c3ac4549f44523e",
+      "characters": 706,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 14
+    },
+    {
+      "page": 44,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "9318421cfd9d756d7ba9dac516493d4fa478154620bf23590ed0e0ac55020c14",
+      "characters": 299,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 6
+    },
+    {
+      "page": 45,
+      "source": "docs/99-historico/originais/sources/Fabrica-Software-Arquitetura-MVP-v2.pdf",
+      "sha256_text": "976d0d365d81ab73f1a07cf124828a16b1071e19d7fa5baccb8bd04ef619c0f7",
+      "characters": 1819,
+      "width": 595.280029296875,
+      "height": 841.8900146484375,
+      "blocks": 3
+    }
+  ],
+  "rendered_pages": [
+    4,
+    6,
+    11,
+    12,
+    19,
+    20,
+    45
+  ],
+  "limit": "extração não preserva layout; imagens renderizadas para inspeção de tabelas/diagramas/config"
+}

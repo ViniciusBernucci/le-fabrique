@@ -1,0 +1,44 @@
+Fábrica de Software | v2.1 | Planejamento
+7
+repetido vira cache ou que cache funciona entre provedores/modelos. Medir tokens efetivamente
+em cache. Não omitir invalidação de regras ou contexto para preservar desconto.
+Como extensão futura de API, para relatórios e auditorias não urgentes, avaliar Batch, observando
+elegibilidade, SLA e tarifas. Não colocar uma etapa interativa bloqueante em lote apenas pelo
+desconto. Batch e cache têm condições próprias; não somar descontos sem conferir a tabela do
+provedor.
+Respostas estruturadas e patches reduzem saída desnecessária. Limitar raciocínio quando houver
+controle suportado, sem cortar capacidade necessária. Caching de resultados internos só para
+entradas equivalentes e mesma revisão; nunca reutilizar aprovação de diff alterado.
+7. Agent Router, cotas e limites
+Seleção por capacidade exigida, elegibilidade do modo de autenticação, disponibilidade do worker,
+saúde do cliente, cota observada, risco e desempenho medido. Preferências Claude para
+análise/review, Codex para implementação e Antigravity para UI/QA são hipóteses iniciais; não
+representam ranking comprovado.
+Estados do provider: UNCONFIGURED, AUTH_REQUIRED, AVAILABLE, BUSY, RATE_LIMITED,
+COOLDOWN, ERROR e DISABLED. Estado de uso inclui value nullable, unidade, fonte, observed_at
+e reset_at nullable. Saldo desconhecido não significa disponível ilimitadamente; o painel mostra
+desconhecido. Não inventar percentuais ou horários de reset.
+Uma assinatura pode ter várias janelas e limites por modelo/modo. O adapter deve guardar as
+restrições distintas. AVAILABLE significa último teste elegível, não garantia de próxima chamada.
+Reativar após horário informado com uma sondagem barata; se horário ausente, backoff limitado
+e verificação posterior.
+Atingiu cota: parar writer, preservar checkpoint, registrar motivo e escolher outro provider
+elegível. Se nenhum disponível, WAITING_PROVIDER. Não criar contas, alternar identidades ou usar
+endpoints privados para contornar limites. Trocar entre assinaturas próprias não aumenta a cota
+de nenhuma delas.
+Limites propostos: duas rodadas de correção, uma escalada, dois handoffs por ticket e 30 minutos
+por tentativa. Falha repetida idêntica pausa com diagnóstico. Auth exige ação humana no cliente
+oficial; 5xx transitório tem retry limitado; limite de uso não recebe retry imediato.
+UsageMeter guarda métricas realmente expostas: tokens/modelo/tempo/ferramentas, quando
+disponíveis. Custo teórico de tokens apresentado pelo CLI não equivale a cobrança de assinatura.
+Ledger distingue assinatura fixa, extra medido, API estimada/reconciliada e desconhecido.
+MVP: monthly_api_budget=0, fallback_api.enabled=false, créditos/extra usage/autorecharge
+desativados em cada conta. Bloquear também variáveis de API key herdadas no processo.
+Configuração da fábrica não controla cobrança habilitada no site do fornecedor: o preflight precisa
+verificá-la com o usuário no onboarding.
+BudgetGuard monetário permanece preparado para futura API, com reservas atômicas e
+reconciliação; não é usado para fingir reservar tokens de assinatura sem suporte do fornecedor.
+RuntimeGuard aplica tempo, tentativas, processos, concorrência e limites de troca.
+8. Economia e comparação financeira
+Retirar a simulação por tokens da arquitetura principal: o modelo agora é assinatura/capacidade.
+Não prometer quantidade de tickets por plano nem economia percentual antes do experimento.

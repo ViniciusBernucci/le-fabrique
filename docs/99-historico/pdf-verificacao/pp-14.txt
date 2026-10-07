@@ -1,0 +1,39 @@
+Fábrica de Software | v2.1 | Planejamento
+14
+PLANO-MVP.md
+Plano do MVP v2
+Um módulo existente, um projeto, um worker, um writer. Sprints por objetivos de 1-2 semanas
+sugeridas, sem datas contratuais. Somatório estimado: 23-35 dias de engenharia para FAC-001 a
+FAC-012; calendário depende de disponibilidade e compatibilidade. FAC-013 é evolução opcional.
+V0 assistida entrega aprendizado antes da plataforma; V1 valida runtime único; V2 testa handoff;
+Sprint 3 mede operação. Nenhum ticket está implementado.
+Épicos
+Sprint 0: contrato e viabilidade. Sprint 1: controle, worker e runtime. Sprint 2: execução
+recuperável e providers. Sprint 3: documentação, painel e experimento. Evolução: terceiro
+adapter/capacidades novas.
+FAC-001 — Contratar piloto
+Sprint: Sprint 0. Dependências: nenhuma. Esforço estimado: 1-2 dias. Status: PLANEJADO.
+Descrição: Inspecionar repo, baseline, regras, caminhos e três tickets pequenos.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.
+Aceite: Contrato verificável e baseline reproduzido; não editar lógica fora do ticket.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-002 — Validar clientes e baseline assistido
+Sprint: Sprint 0. Dependências: FAC-001. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Descrição: Preflight de login/cobrança/isolamento na VPS selecionada; medir baseline de recursos,
+executar três tickets e handoff manual; confirmar providers um a um.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.
+Aceite: Um adapter elegível comprovado, três entregas e checkpoint recuperável; limites
+desconhecidos explícitos.
+Entregáveis: código quando pertinente, checks reais, artefatos por revisão e documentação.
+FAC-003 — Controle web e persistência
+Sprint: Sprint 1. Dependências: FAC-002. Esforço estimado: 2-3 dias. Status: PLANEJADO.
+Descrição: Selecionar e registrar perfil mínimo/bom/ideal, provisionar VPS única,
+redes/volumes/limites e backup externo; bootstrap proposto, auth administrativa,
+entidades/tickets/attempts e outbox; Redis/Postgres privados.
+Subtarefas: registrar contrato e evidência de início; implementar menor incremento; verificar
+cenários de sucesso/falha descritos; revisar diff/limites; atualizar relatório por domínio, README
+atual, lessons pertinentes e backlog.

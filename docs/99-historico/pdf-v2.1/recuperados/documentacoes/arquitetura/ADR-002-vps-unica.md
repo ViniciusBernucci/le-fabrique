@@ -1,0 +1,31 @@
+# Recuperado — documentacoes/arquitetura/ADR-002-vps-unica.md
+
+Fonte: PDF v2.1, páginas 13–13. Transcrição textual histórica; quebras de linha e tabelas podem diferir do original. Não usar como instrução atual.
+
+```text
+Fábrica de Software | v2.1 | Planejamento
+13
+documentacoes/arquitetura/ADR-002-vps-unica.md
+ADR-002 - Controle e execução na mesma
+VPS
+Data: 2026-09-29. Decisão de topologia ACEITA pelo usuário; implementação PLANEJADA.
+Contexto
+A v2 separava VPS de controle e worker no MacBook. O usuário optou por executar também
+clientes oficiais, autenticação, builds e testes na VPS.
+Decisão
+VPS Linux única com separação lógica de controle, supervisor, runtime de agentes e código do
+piloto. Assinaturas via clientes oficiais; APIs/extras desligados. Perfil Bom (8 vCPU/16 GB/200 GB)
+como recomendação de dimensionamento, contratação ainda pendente.
+Consequências
+Independência do MacBook e operação centralizada. Maior VPS, sessões pessoais no servidor,
+disputa de recursos e ponto único de falha. Isolamento precisa impedir acesso do código às
+credenciais e ao controle. Revisão e merge/deploy mantêm políticas anteriores.
+Verificação antes de ativar
+Login oficial headless e em identidade de serviço; termos/cobrança compatíveis; teste de segredo
+inacessível; build/testes dentro do envelope; cancelamento/lease, reboot e restauração. Não houve
+implantação nesta revisão.
+Evolução
+Preservar contratos de worker para futura separação se risco, carga ou disponibilidade
+justificarem. Não exigir segundo servidor no MVP.
+
+```

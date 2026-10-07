@@ -324,7 +324,7 @@ export function ProjectDefinitionPanel({
                 setDocFiles(event.target.value);
                 onProfileReady(false);
               }}
-              placeholder="README.md\ndocumentacoes/INDEX.md\nCHANGELOG.md\nBACKLOG.md\ndocumentacoes/entregas/atual.md"
+              placeholder="README.md\ndocs/INDEX.md\nCHANGELOG.md\nBACKLOG.md\ndocs/09-entregas/2026/entrega-atual.md"
             />
           </label>
           <label>
@@ -335,7 +335,7 @@ export function ProjectDefinitionPanel({
                 setDocReport(event.target.value);
                 onProfileReady(false);
               }}
-              placeholder="documentacoes/entregas/atual.md"
+              placeholder="docs/09-entregas/2026/entrega-atual.md"
             />
           </label>
           <label>

@@ -1,0 +1,43 @@
+Fábrica de Software | v2.1 | Planejamento
+9
+primeiro teste porque os três ainda não estão prontos.
+V1: controle web, worker por HTTPS, lease/heartbeat, um adapter oficial, sandbox, Context Builder,
+Developer, checks e gate documental. Nenhuma API paga. Revisor em sessão independente, com
+revisão humana final.
+V2: segundo adapter, Provider Manager e handoff automático após writer encerrado, ensaio de
+falha/cota e dez tickets. Terceiro adapter pode entrar após prova de compatibilidade. UI/QA só
+exige browser se o critério precisar dele.
+V3: expandir projetos, workers ou workflow engine quando métricas justificarem. Temporal,
+autoscaling, APIs e inferência local seguem como opções futuras.
+Fora MVP: merge/deploy automático, multiusuário comercial, credenciais compartilhadas, GPUs,
+execução de código arbitrário de terceiros e features de risco R3/R4.
+Metas propostas: 8/10 aceitos em até duas correções; 100% com docs e evidências; zero
+extras/API não autorizados; zero writers simultâneos no mesmo worktree; recuperação de
+interrupção comprovada. Não são resultados medidos.
+11. Documentação como parte da entrega
+Toda feature, correção, refatoração, configuração ou migração exige relatório datado em
+documentacoes/<dominio>/AAAA-MM-DD-TICKET-titulo.md. O relatório registra objetivo,
+funcionamento, alterações, diff sanitizado, testes e resultados reais, riscos, rollback e limitações.
+Além do histórico, atualizar a documentação de estado atual:
+documentacoes/<dominio>/README.md, arquitetura/ADRs quando necessário, contratos/API,
+índice, CHANGELOG e status do backlog. Não basta acumular relatos de entrega e deixar a
+descrição atual obsoleta.
+Lessons: criar ou atualizar lessons/<conceito>.md com explicação, motivo, exemplo real, cuidados
+e links. Reutilizar documento existente; não inventar aprendizado ou gerar cópias por ticket.
+Atualizar o índice.
+Documento de entrega vincula base_sha/head_sha ou diff de uma revisão identificada. Não tentar
+incluir no próprio documento o hash do commit que ainda vai conter esse documento: usar revisão
+do código anterior ao commit documental ou link final do PR. Remover segredos e dumps dos diffs.
+Definition of Done: critérios verificados, checks relevantes aprovados, revisão resolvida, custo
+reconciliado ou explicitamente pendente, documentação técnica atualizada, relatório de entrega,
+lessons quando aplicável, diff revisável e aceite humano. Gate de CI exige arquivos e seções;
+revisão humana avalia a veracidade.
+Os arquivos AGENTS.md, CLAUDE.md e .agents/rules/documentacao.md remetem à política
+comum. Antigravity exige confirmar que a versão instalada lê a pasta de regras; se não, inserir a
+política explicitamente no contexto. Esses MD são orientações de repositório, não instalação de
+skills ou garantia de leitura automática.
+12. Contratos e painel
+Detalhamento em ESPEC-MVP.md, documentacoes/runtime/README.md,
+documentacoes/handoff/README.md e documentacoes/operacao/README.md. Entidades: Project,
+Ticket, Run, Step, Worker, ProviderInstallation, UsageObservation, AgentExecution, Checkpoint,
+ContextManifest, Artifact, LedgerEntry e Approval.

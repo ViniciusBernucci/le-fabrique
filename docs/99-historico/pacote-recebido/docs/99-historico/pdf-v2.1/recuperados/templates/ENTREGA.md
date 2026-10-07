@@ -1,0 +1,38 @@
+# Recuperado — templates/ENTREGA.md
+
+Fonte: PDF v2.1, páginas 38–38. Transcrição textual histórica; quebras de linha e tabelas podem diferir do original. Não usar como instrução atual.
+
+```text
+Fábrica de Software | v2.1 | Planejamento
+38
+templates/ENTREGA.md
+TICKET - título
+Data: AAAA-MM-DD
+Status: IMPLEMENTADO / PLANEJADO / NÃO VERIFICADO
+Domínio:
+Base SHA / revisão do código:
+Branch / run / PR:
+Objetivo e critérios de aceite
+O que foi implementado
+Arquivos, responsabilidades e decisões reais.
+Funcionamento
+Entrada, fluxo, regras, saída, erros e exemplos reais.
+Alterações e diff
+Trecho sanitizado ou caminho do patch associado à revisão do código.
+Verificação
+Comando; resultado; critério comprovado. Marcar não executado quando aplicável.
+Riscos e limitações
+Rollback
+Passos específicos; se não houver reversão segura, explicar.
+Documentação atualizada
+Caminhos de README do domínio, ADR/API/operação, índice e backlog.
+Lessons
+Links ou justificativa de ausência de conceito novo.
+Uso de IA e custos
+Provider, versão, modo de autenticação/cobrança sem segredo, modelo efetivo, tentativas,
+handoffs, tempo/tokens observáveis, fonte/horário de quota; custo fixo/extra/API atribuídos e
+desconhecidos separados.
+Pendências e aceite
+Responsável e estado; DONE somente após aceite.
+
+```

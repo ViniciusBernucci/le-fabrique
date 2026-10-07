@@ -1,0 +1,24 @@
+Fábrica de Software | v2.1 | Planejamento
+28
+Ausência de repo/escopo/critério impede a implementação do piloto, mas permite inspeção e
+planejamento. Budget esgotado impede novas chamadas. Merge/deploy, ações destrutivas e
+migrações irreversíveis dependem de autorização explícita.
+Execução e handoff
+Ler o checkpoint e conferir SHA, diff e arquivos não rastreados antes de retomar. Nunca depender
+da memória da conversa anterior. Um writer por worktree; não iniciar outro até confirmar término
+da árvore de processos anterior. Se não houver provider, preservar trabalho e aguardar. Não
+alterar login, plano, créditos ou política financeira para continuar.
+Relatar provider, versão, modelo efetivo quando conhecido, tempo, uso reportado, fonte e dados
+desconhecidos. Não converter tokens de assinatura automaticamente em cobrança. Não fingir que
+observação antiga de cota é atual.
+Documentar também entregas parciais/interrompidas e próximos passos; checkpoints não
+substituem relatório final. Descrever PLANEJADO quando ainda não implementado.
+Contexto e verificação
+Não carregar todo o kit a cada ticket. Ler política comum e documentos relevantes ao domínio;
+Context Builder guarda hashes e omissões. Executar checks na revisão final e invalidar evidência
+após alteração pertinente. Gate de documentação estrutural precisa de revisão semântica.
+Topologia obrigatória v2.1
+Controle, worker, clientes oficiais/autenticação e sandbox executam na mesma VPS. Seguir
+ADR-002 e infraestrutura/DIMENSIONAMENTO-VPS.md (sob documentacoes). Não depender de
+MacBook. Um executor inicial; impor limites globais e preservar controle/banco/credenciais fora do
+alcance do código. Não contratar VPS ou habilitar gastos sem autorização aplicável.

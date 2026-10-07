@@ -2,116 +2,116 @@
 
 ## 2026-10-06 — FAC-031
 
-Seta centralizada no menu recolhido; padding direito 12px no expandido. [Evidências](documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md).
+Seta centralizada no menu recolhido; padding direito 12px no expandido. [Evidências](docs/09-entregas/2026/controle/2026-10-06-FAC-031-posicao-seta-menu.md).
 
 ## 2026-10-06 — FAC-030
 
-Menu inicia recolhido em toda abertura/reload; expansão preservada durante navegação atual e seta mantida à direita. [Evidências](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
+Menu inicia recolhido em toda abertura/reload; expansão preservada durante navegação atual e seta mantida à direita. [Evidências](docs/09-entregas/2026/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
 
 ## 2026-10-06 — FAC-029
 
-Seta minimalista do menu alinhada à borda direita em ambos estados. [Evidências](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
+Seta minimalista do menu alinhada à borda direita em ambos estados. [Evidências](docs/09-entregas/2026/controle/2026-10-06-FAC-029-seta-direita-menu.md).
 
 ## 2026-10-06 — FAC-028
 
-Toggle do menu apenas com seta, sem texto/moldura/fundo; acessibilidade e persistência preservadas. [Evidências](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
+Toggle do menu apenas com seta, sem texto/moldura/fundo; acessibilidade e persistência preservadas. [Evidências](docs/09-entregas/2026/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
 
 ## 2026-10-06 — FAC-026 / FAC-027
 
-Agentes pré-configurados na lista com ativação individual, explicação de função/fluxo e configurações em segundo passo. Menu recolhível para ícones com preferência local. [Agentes](documentacoes/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](documentacoes/controle/2026-10-06-FAC-027-menu-recolhivel.md).
+Agentes pré-configurados na lista com ativação individual, explicação de função/fluxo e configurações em segundo passo. Menu recolhível para ícones com preferência local. [Agentes](docs/09-entregas/2026/configuracao/2026-10-06-FAC-026-agentes-preconfigurados.md), [menu](docs/09-entregas/2026/controle/2026-10-06-FAC-027-menu-recolhivel.md).
 
 ## 2026-10-06 — FAC-025
 
-Vídeo da home retirado por pedido do responsável; imagem original restaurada mantendo largura compacta, vídeo/poster removidos do build. [Evidências](documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).
+Vídeo da home retirado por pedido do responsável; imagem original restaurada mantendo largura compacta, vídeo/poster removidos do build. [Evidências](docs/09-entregas/2026/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).
 
 ## 2026-10-05 — FAC-024
 
-Home substitui PNG pelo vídeo fornecido, preparado sem áudio com transição cíclica suave e controles ocultos; área em 70% da largura anterior. Poster/asset locais, sem dependência nova. [Evidências](documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).
+Home substitui PNG pelo vídeo fornecido, preparado sem áudio com transição cíclica suave e controles ocultos; área em 70% da largura anterior. Poster/asset locais, sem dependência nova. [Evidências](docs/09-entregas/2026/controle/2026-10-05-FAC-024-video-dashboard.md).
 
 ## 2026-10-05 — FAC-023
 
-Equipes separa Agentes/Skills; agentes sem limite fixo de seis, cadastro de skills por projeto, instruções, vínculos e edição/exclusão persistidos. Contratos e API validam relações/projetos. [Evidências e limites](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
+Equipes separa Agentes/Skills; agentes sem limite fixo de seis, cadastro de skills por projeto, instruções, vínculos e edição/exclusão persistidos. Contratos e API validam relações/projetos. [Evidências e limites](docs/09-entregas/2026/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
 
 ## 2026-10-05 — FAC-022
 
-DashboardLayout como template padrão de home, login e telas administrativas. Sidebar/topbar persistem; busca global e menu ativo; fontes internas compactas compatíveis com home. [Evidências](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
+DashboardLayout como template padrão de home, login e telas administrativas. Sidebar/topbar persistem; busca global e menu ativo; fontes internas compactas compatíveis com home. [Evidências](docs/09-entregas/2026/controle/2026-10-05-FAC-022-template-tipografia.md).
 
 
 ## 2026-10-05 — FAC-020A / FAC-021
 
-Home integrada em developer. Marca corrigida para La fabrique nos textos do sistema e documentação; cena desktop reduzida para 60%, centralizada, mobile legível. Correção nominal em documentos históricos identificada pelo FAC-021; artefatos de evidência preservados. [Relatório](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md).
+Home integrada em developer. Marca corrigida para La fabrique nos textos do sistema e documentação; cena desktop reduzida para 60%, centralizada, mobile legível. Correção nominal em documentos históricos identificada pelo FAC-021; artefatos de evidência preservados. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-021-nome-escala-home.md).
 
 
 ## 2026-10-05 — FAC-020
 
-Página inicial estática inspirada na referência: escritório cartoon, navegação, métricas, notificações, mensagens e acessos rápidos. Ícones/avatares SVG, arte central PNG fornecida. Busca filtra atalhos; áreas futuras abrem prévia; telas existentes mantêm autenticação. 42 testes web e browser em seis larguras passaram. [Evidências](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+Página inicial estática inspirada na referência: escritório cartoon, navegação, métricas, notificações, mensagens e acessos rápidos. Ícones/avatares SVG, arte central PNG fornecida. Busca filtra atalhos; áreas futuras abrem prévia; telas existentes mantêm autenticação. 42 testes web e browser em seis larguras passaram. [Evidências](docs/09-entregas/2026/controle/2026-10-05-FAC-020-central-controle-estatica.md).
 
 
-FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
-FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
 
 ## 2026-10-05 — FAC-017
 
-Login Codex normaliza ANSI, preserva caso/linha completa do código e abre aba de espera que segue para autorização oficial. Modal mantém link/código e confirmação explícita. [Evidências](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
+Login Codex normaliza ANSI, preserva caso/linha completa do código e abre aba de espera que segue para autorização oficial. Modal mantém link/código e confirmação explícita. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-017-login-device-codex.md).
 
 ## 2026-10-05 — FAC-016
 
-Verificação Codex com feedback acessível no modal, bloqueio de repetição e diagnóstico sanitizado de raiz privada ausente. Worker real respondeu AUTH_REQUIRED. [Evidências](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+Verificação Codex com feedback acessível no modal, bloqueio de repetição e diagnóstico sanitizado de raiz privada ausente. Worker real respondeu AUTH_REQUIRED. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
 
 ## 2026-10-05 — FAC-015
 
-Catálogo Codex via cliente oficial, persistência/seletores de modelos sincronizados, setup privado e comando de login Claude por instalação. Sem liberação de execução ou migrations. [Evidências](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
+Catálogo Codex via cliente oficial, persistência/seletores de modelos sincronizados, setup privado e comando de login Claude por instalação. Sem liberação de execução ou migrations. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
 
 ## 2026-10-05 — FAC-014
 
-Funcionários digitais e GitHub passam a resumos clicáveis e configuração em modal, compartilhado também com contas IA. Preservados limites/alternativas e ações explícitas de integração/PR. [Evidências](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
+Funcionários digitais e GitHub passam a resumos clicáveis e configuração em modal, compartilhado também com contas IA. Preservados limites/alternativas e ações explícitas de integração/PR. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
 ## 2026-10-05 — FAC-013
 
-Contas IA listadas com configuração em modal, edição local descartável e persistência via API existente. Preservados verificação/login/remoção e atribuições. [Evidências](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
+Contas IA listadas com configuração em modal, edição local descartável e persistência via API existente. Preservados verificação/login/remoção e atribuições. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
 ## 2026-10-05 — OPS-009
 
-Reconciliação de migration histórica no banco dev via migrate resolve --applied após conferir todos os efeitos SQL. Histórico e dados preservados, nenhuma liberação de writer. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
+Reconciliação de migration histórica no banco dev via migrate resolve --applied após conferir todos os efeitos SQL. Histórico e dados preservados, nenhuma liberação de writer. [Relatório](docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
 ## 2026-10-05 — OPS-008
 
-Comandos Prisma raiz carregam `.env` explicitamente, novo db:status e favicon SVG. Diagnóstico identifica tabelas ausentes/divergência de histórico no banco dev; atualização de schema permanece pendente. [Evidências](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
+Comandos Prisma raiz carregam `.env` explicitamente, novo db:status e favicon SVG. Diagnóstico identifica tabelas ausentes/divergência de histórico no banco dev; atualização de schema permanece pendente. [Evidências](docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
 ## 2026-10-05 — OPS-007
 
-Integração local FAC-012Z–AH por fast-forward, sem conflitos ou alteração funcional. Worktrees incorporadas removidas sem force, branches e aceites preservados. [Evidências](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
+Integração local FAC-012Z–AH por fast-forward, sem conflitos ou alteração funcional. Worktrees incorporadas removidas sem force, branches e aceites preservados. [Evidências](docs/09-entregas/2026/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
 ## 2026-10-03 — FAC-012AH
 
-Recusa pré-claim por capacidade/rollback conhecido preserva job delayed sem tentativa/IA; falhas posteriores propagam. Bootstrap de npm test reproduzível. 541 verificações passaram; MVP interno verificado, piloto independente. [Evidências](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
+Recusa pré-claim por capacidade/rollback conhecido preserva job delayed sem tentativa/IA; falhas posteriores propagam. Bootstrap de npm test reproduzível. 541 verificações passaram; MVP interno verificado, piloto independente. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
 ## 2026-10-03 — FAC-012AG
 
-Default pausa global PostgreSQL, versão otimista e UI; claim/renew honram autoridade, dispatcher sincroniza BullMQ e gap de claim pausado adia job sem FAILED. 531 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+Default pausa global PostgreSQL, versão otimista e UI; claim/renew honram autoridade, dispatcher sincroniza BullMQ e gap de claim pausado adia job sem FAILED. 531 verificações passaram. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012AG-pausa-global.md).
 
 ## 2026-10-03 — FAC-012AF
 
-Backup AES-256-GCM bounded/allowlist e staging novo sem overwrite; roundtrip de PostgreSQL e snapshot Git reais. 501 testes internos + 8 PostgreSQL verificados, sem dependência de piloto. [Relatório](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+Backup AES-256-GCM bounded/allowlist e staging novo sem overwrite; roundtrip de PostgreSQL e snapshot Git reais. 501 testes internos + 8 PostgreSQL verificados, sem dependência de piloto. [Relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
 ## 2026-10-03 — FAC-012AE
 
-Eventos minimizados de projeto persistidos em transação, SSE Bearer retomável e atualização do painel com polling fallback/proxy sem buffering. 492 verificações passaram. [Relatório](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+Eventos minimizados de projeto persistidos em transação, SSE Bearer retomável e atualização do painel com polling fallback/proxy sem buffering. 492 verificações passaram. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
 
 ## 2026-10-03 — FAC-012AD
 
-Estado da fábrica sem projeto: heartbeat recente/stale, tentativas sem stop e proteção global válida; novo claim recusa índice ausente. 465 verificações passaram. [Evidências](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+Estado da fábrica sem projeto: heartbeat recente/stale, tentativas sem stop e proteção global válida; novo claim recusa índice ausente. 465 verificações passaram. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
 ## 2026-10-03 — FAC-012AC
 
-Claim consulta writer global; índice parcial garante exclusão concorrente entre runs, sem liberar por lease/status. 448 verificações passaram; piloto removido dos requisitos de conclusão do software nos documentos atuais. [Evidências](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+Claim consulta writer global; índice parcial garante exclusão concorrente entre runs, sem liberar por lease/status. 448 verificações passaram; piloto removido dos requisitos de conclusão do software nos documentos atuais. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012AC-writer-global.md).
 
 ## 2026-10-03 — FAC-012AB
 
-Cinco testes de composição real do worker verificam bytes/bundle/documentação, restore/handoff e replay conservador; typecheck da integração incluído no comando raiz. 438 testes passaram, runtime inalterado. [Relatório](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
+Cinco testes de composição real do worker verificam bytes/bundle/documentação, restore/handoff e replay conservador; typecheck da integração incluído no comando raiz. 438 testes passaram, runtime inalterado. [Relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
 ## 2026-10-03 — FAC-012AA
 
-Claude usa perfil granular e factory exige prova privada atual de permissão nativa; preflight oficial opt-in verifica traces/canários/binário e preserva evidências. 433 testes/checks, código `56f2e38`; nenhuma prova real/ativação/piloto/deploy. [Relatório](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+Claude usa perfil granular e factory exige prova privada atual de permissão nativa; preflight oficial opt-in verifica traces/canários/binário e preserva evidências. 433 testes/checks, código `56f2e38`; nenhuma prova real/ativação/piloto/deploy. [Relatório](docs/09-entregas/2026/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 
 ## 2026-10-03 — FAC-012Z
 
-Política documental pela interface; READY/compilador exigem configuração; workflow valida alteração/estrutura/hashes, Reviewer confere semântica e mutação durante review invalida aprovação. Controle cruza conjunto/manifesto antes do aceite. Código `9c48dd9`, 422 testes/checks, sem operação/deploy. [Relatório](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+Política documental pela interface; READY/compilador exigem configuração; workflow valida alteração/estrutura/hashes, Reviewer confere semântica e mutação durante review invalida aprovação. Controle cruza conjunto/manifesto antes do aceite. Código `9c48dd9`, 422 testes/checks, sem operação/deploy. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
 ## 2.88 - 2026-10-03
 
@@ -408,3 +408,9 @@ Decisão do usuário: toda a fábrica e autenticação na mesma VPS. Dimensionam
 Planejamento revisado para assinaturas e clientes oficiais; controle web + worker interno na VPS; gateway/runtime, router/cotas, handoff, isolamento, operação e custos adaptados. Guias das três IAs e templates atualizados. Cobertura v1 rastreada. Nenhum software implementado.
 ## 1.0 — 2026-09-29
 Kit de planejamento anterior com execução por APIs na VPS, agora substituído nas decisões conflitantes.
+
+## 2026-10-07 — DOC-MV-001 — Manual Vivo inicial
+
+Mescla do pacote fornecido com documentação/código reais em a2cc5e0; navegação docs-as-code, C4 atual/alvo, módulos/features/contratos/ADRs/operação/desenvolvimento; relatórios e lessons realocados com bridges e snapshots/hash/mapa por seção. Backlog/aceites locais preservados; política comum única e fallback de carregamento. Exemplos UI do gate apontam docs; sem mudança de segurança/execução. Estado documental AWAITING_HUMAN; [entrega e checks](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md).
+
+DOC-MV-001 — limpeza posterior autorizada: 202 bridges MD individuais redundantes removidos após conferir canônico/snapshot/hash; entradas essenciais e todo conteúdo útil preservados. Lista em docs/00-governanca/MD-REMOVIDOS.json.

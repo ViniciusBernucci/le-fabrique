@@ -1,0 +1,1 @@
+PASS: original image decoded; no video element/media requests; desktop width 42% preserved; no overflow at 1536/768/390/320px; template/login/home navigation preserved; no page errors or API calls.

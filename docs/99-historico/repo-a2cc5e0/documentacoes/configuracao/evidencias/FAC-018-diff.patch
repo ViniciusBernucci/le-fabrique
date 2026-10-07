@@ -1,0 +1,2163 @@
+diff --git a/.env.example b/.env.example
+index c298253..8e58ae0 100644
+--- a/.env.example
++++ b/.env.example
+@@ -22,0 +23,2 @@ WORKER_LEASE_DURATION_MS=90000
++
++# WORKER_ANTIGRAVITY_BINARY=/absolute/path/to/agy
+diff --git a/apps/api/src/settings/provider-onboarding.controller.ts b/apps/api/src/settings/provider-onboarding.controller.ts
+index 2061a16..37066a1 100644
+--- a/apps/api/src/settings/provider-onboarding.controller.ts
++++ b/apps/api/src/settings/provider-onboarding.controller.ts
+@@ -2,0 +3,2 @@ import {
++  providerAuthorizationCodeResultSchema,
++  providerAuthorizationCodeSchema,
+@@ -35,0 +38,7 @@ export class ProviderOnboardingAdminController {
++  @Post("onboarding/:id/authorization-code")
++  async submitCode(@Param("id", ParseUUIDPipe) id: string, @Body() body: unknown) {
++    const input = providerAuthorizationCodeSchema.safeParse(body);
++    if (!input.success) throw new BadRequestException("Invalid authorization code");
++    return this.onboarding.submitAuthorizationCode(id, input.data.code);
++  }
++
+@@ -71,0 +81,9 @@ export class ProviderOnboardingWorkerController {
++  @Post(":id/authorization-code")
++  async takeCode(@Param("id", ParseUUIDPipe) id: string, @Body() body: unknown) {
++    const input = startProviderOnboardingSchema.safeParse(body);
++    if (!input.success) throw new BadRequestException("Invalid worker identity");
++    return providerAuthorizationCodeResultSchema.parse(
++      await this.onboarding.takeAuthorizationCode(id, input.data.workerId),
++    );
++  }
++
+diff --git a/apps/api/src/settings/provider-onboarding.service.spec.ts b/apps/api/src/settings/provider-onboarding.service.spec.ts
+index b07003b..f3f3a33 100644
+--- a/apps/api/src/settings/provider-onboarding.service.spec.ts
++++ b/apps/api/src/settings/provider-onboarding.service.spec.ts
+@@ -145,0 +146,95 @@ describe("ProviderOnboardingService", () => {
++
++describe("multi-provider authorization", () => {
++  for (const provider of ["CLAUDE", "ANTIGRAVITY"] as const) {
++    it(`creates ${provider} onboarding with metadata-only outbox`, async () => {
++      const configuration = createDefaultFactoryConfiguration();
++      const installation = configuration.installations.find((item) => item.provider === provider);
++      if (!installation) throw new Error("Fixture missing");
++      installation.enabled = true;
++      const created = { ...record(), provider, installationId: installation.id };
++      const tx = {
++        providerOnboardingSession: {
++          updateMany: vi.fn(),
++          findFirst: vi.fn().mockResolvedValue(null),
++          create: vi.fn().mockResolvedValue(created),
++        },
++        factorySettings: { findUnique: vi.fn().mockResolvedValue({ configuration }) },
++        outboxEvent: { create: vi.fn().mockResolvedValue({}) },
++      };
++      const service = new ProviderOnboardingService(
++        {
++          $transaction: async (callback: (transaction: typeof tx) => unknown) => callback(tx),
++        } as never,
++        {} as never,
++      );
++      await expect(service.request(installation.id)).resolves.toMatchObject({ provider });
++      expect(tx.outboxEvent.create.mock.calls[0]?.[0].data.payload.provider).toBe(provider);
++      expect(JSON.stringify(tx.outboxEvent.create.mock.calls)).not.toMatch(
++        /authorizationCode|code_challenge|verificationUri/,
++      );
++    });
++  }
++  it("keeps returned codes only in Redis with NX and bounded TTL; owner consumes once", async () => {
++    const session = { ...record("AWAITING_USER"), provider: "CLAUDE" };
++    const prisma = {
++      providerOnboardingSession: { findUnique: vi.fn().mockResolvedValue(session) },
++    };
++    let pending: string | null = null;
++    const redis = {
++      ensureConnected: vi.fn(),
++      get: vi.fn().mockResolvedValue(
++        JSON.stringify({
++          flow: "AUTHORIZATION_CODE",
++          provider: "CLAUDE",
++          verificationUri: "https://claude.com/cai/oauth/authorize",
++          expiresAt: expiresAt.toISOString(),
++        }),
++      ),
++      set: vi.fn(async (_key: string, value: string) => {
++        pending = value;
++        return "OK";
++      }),
++      getdel: vi.fn(async () => {
++        const value = pending;
++        pending = null;
++        return value;
++      }),
++    };
++    const service = new ProviderOnboardingService(prisma as never, redis as never);
++    await service.submitAuthorizationCode(sessionId, "synthetic-code#state");
++    expect(redis.set).toHaveBeenCalledWith(
++      `provider-onboarding:${sessionId}:response`,
++      "synthetic-code#state",
++      "EX",
++      expect.any(Number),
++      "NX",
++    );
++    await expect(
++      service.takeAuthorizationCode(sessionId, "33333333-3333-4333-8333-333333333333"),
++    ).rejects.toThrow();
++    expect(redis.getdel).not.toHaveBeenCalled();
++    await expect(service.takeAuthorizationCode(sessionId, workerId)).resolves.toEqual({
++      code: "synthetic-code#state",
++    });
++    await expect(service.takeAuthorizationCode(sessionId, workerId)).resolves.toEqual({
++      code: null,
++    });
++  });
++  it("rejects expired sessions and terminal control characters before storing a code", async () => {
++    const session = {
++      ...record("AWAITING_USER"),
++      provider: "ANTIGRAVITY",
++      expiresAt: new Date(Date.now() - 1),
++    };
++    const redis = { set: vi.fn() };
++    const service = new ProviderOnboardingService(
++      { providerOnboardingSession: { findUnique: vi.fn().mockResolvedValue(session) } } as never,
++      redis as never,
++    );
++    await expect(service.submitAuthorizationCode(sessionId, "synthetic-code")).rejects.toThrow();
++    await expect(
++      service.submitAuthorizationCode(sessionId, "synthetic-code\n/exit"),
++    ).rejects.toThrow();
++    expect(redis.set).not.toHaveBeenCalled();
++  });
++});
+diff --git a/apps/api/src/settings/provider-onboarding.service.ts b/apps/api/src/settings/provider-onboarding.service.ts
+index 0bee4fe..78ee72e 100644
+--- a/apps/api/src/settings/provider-onboarding.service.ts
++++ b/apps/api/src/settings/provider-onboarding.service.ts
+@@ -6,0 +7 @@ import {
++  providerAuthorizationCodeSchema,
+@@ -52,2 +53,2 @@ export class ProviderOnboardingService {
+-        if (!installation.enabled || installation.provider !== "CODEX") {
+-          throw new ConflictException("Only an enabled Codex installation supports managed login");
++        if (!installation.enabled) {
++          throw new ConflictException("Only an enabled installation supports managed login");
+@@ -66 +67 @@ export class ProviderOnboardingService {
+-            provider: "CODEX",
++            provider: installation.provider,
+@@ -78 +79 @@ export class ProviderOnboardingService {
+-              provider: "CODEX",
++              provider: installation.provider,
+@@ -141,0 +143,6 @@ export class ProviderOnboardingService {
++    if (
++      current.provider === "CODEX"
++        ? challenge.flow !== undefined
++        : challenge.flow !== "AUTHORIZATION_CODE" || challenge.provider !== current.provider
++    )
++      throw new ConflictException("Challenge provider mismatch");
+@@ -175,0 +183,42 @@ export class ProviderOnboardingService {
++  async submitAuthorizationCode(id: string, code: string): Promise<{ accepted: true }> {
++    const input = providerAuthorizationCodeSchema.parse({ code });
++    const session = await this.prisma.providerOnboardingSession.findUnique({ where: { id } });
++    if (
++      session?.status !== "AWAITING_USER" ||
++      session.provider === "CODEX" ||
++      session.expiresAt.getTime() <= Date.now()
++    )
++      throw new ConflictException("Authorization session is not awaiting a code");
++    const challenge = await this.getChallenge(id);
++    if (challenge.flow !== "AUTHORIZATION_CODE" || challenge.provider !== session.provider)
++      throw new ConflictException("Authorization challenge mismatch");
++    const ttl = Math.max(
++      1,
++      Math.min(600, Math.ceil((session.expiresAt.getTime() - Date.now()) / 1000)),
++    );
++    const stored = await this.redis.set(
++      `provider-onboarding:${id}:response`,
++      input.code,
++      "EX",
++      ttl,
++      "NX",
++    );
++    if (!stored) throw new ConflictException("Authorization code already pending");
++    return { accepted: true };
++  }
++
++  async takeAuthorizationCode(id: string, workerId: string): Promise<{ code: string | null }> {
++    const session = await this.prisma.providerOnboardingSession.findUnique({ where: { id } });
++    if (
++      !session ||
++      session.workerId !== workerId ||
++      session.provider === "CODEX" ||
++      !["RUNNING", "AWAITING_USER"].includes(session.status) ||
++      session.expiresAt.getTime() <= Date.now()
++    )
++      throw new ConflictException("Authorization session does not belong to this worker");
++    await this.redis.ensureConnected();
++    const code = await this.redis.getdel(`provider-onboarding:${id}:response`);
++    return { code: code === null ? null : providerAuthorizationCodeSchema.parse({ code }).code };
++  }
++
+@@ -205 +254 @@ export class ProviderOnboardingService {
+-      if (installation?.provider !== "CODEX") {
++      if (installation?.provider !== current.provider) {
+@@ -233,0 +283 @@ export class ProviderOnboardingService {
++      await this.redis.del(`provider-onboarding:${id}:response`);
+diff --git a/apps/web/src/SettingsPanel.tsx b/apps/web/src/SettingsPanel.tsx
+index cafab74..b0413be 100644
+--- a/apps/web/src/SettingsPanel.tsx
++++ b/apps/web/src/SettingsPanel.tsx
+@@ -34,0 +35 @@ import {
++  submitProviderAuthorizationCode,
+@@ -54,0 +56 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++  const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
+@@ -58,0 +61,4 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++  const [authorizationCodes, setAuthorizationCodes] = useState<Record<string, string>>({});
++  const [sendingCode, setSendingCode] = useState<string | null>(null);
++  const [submittedCodes, setSubmittedCodes] = useState<Record<string, boolean>>({});
++  const [loginRefreshError, setLoginRefreshError] = useState<string | null>(null);
+@@ -141 +147,9 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-      setLoginError(null);
++      const activeIds = new Set(
++        sessions
++          .filter((item) => ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status))
++          .map((item) => item.id),
++      );
++      setAuthorizationCodes((current) =>
++        Object.fromEntries(Object.entries(current).filter(([id]) => activeIds.has(id))),
++      );
++      setLoginRefreshError(null);
+@@ -179 +193 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-      setLoginError(
++      setLoginRefreshError(
+@@ -185 +199 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-        setLoginError(
++        setLoginRefreshError(
+@@ -440 +454,4 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-    const tab = openCodexLoginTab();
++    const provider =
++      settings?.configuration.installations.find((item) => item.id === installationId)?.provider ??
++      "CODEX";
++    const tab = openCodexLoginTab(provider);
+@@ -463,0 +481,16 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++  async function sendAuthorizationCode(sessionId: string) {
++    setSendingCode(sessionId);
++    setLoginError(null);
++    try {
++      await submitProviderAuthorizationCode(token, sessionId, authorizationCodes[sessionId] ?? "");
++      setAuthorizationCodes((current) => ({ ...current, [sessionId]: "" }));
++      setSubmittedCodes((current) => ({ ...current, [sessionId]: true }));
++    } catch {
++      setLoginError(
++        "Não foi possível enviar o código. Confira o código e se a sessão ainda está ativa.",
++      );
++    } finally {
++      setSendingCode(null);
++    }
++  }
++
+@@ -584,5 +617,57 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-      <section className="panel settings-section">
+-        <div className="section-heading">
+-          <div>
+-            <p className="section-index">01</p>
+-            <h2>IA e contas</h2>
++      <div className="settings-tabs" role="tablist" aria-label="Categorias de configurações">
++        {(
++          [
++            ["accounts", "Contas"],
++            ["integrations", "Integrações IA"],
++            ["teams", "Equipes"],
++          ] as const
++        ).map(([id, label]) => (
++          <button
++            key={id}
++            type="button"
++            role="tab"
++            id={`settings-tab-${id}`}
++            aria-controls={`settings-panel-${id}`}
++            aria-selected={activeTab === id}
++            tabIndex={activeTab === id ? 0 : -1}
++            onClick={() => setActiveTab(id)}
++            onKeyDown={(event) => {
++              const ids = ["accounts", "integrations", "teams"] as const;
++              const index = ids.indexOf(id);
++              const next =
++                event.key === "ArrowRight"
++                  ? ids[(index + 1) % 3]
++                  : event.key === "ArrowLeft"
++                    ? ids[(index + 2) % 3]
++                    : event.key === "Home"
++                      ? ids[0]
++                      : event.key === "End"
++                        ? ids[2]
++                        : null;
++              if (next) {
++                event.preventDefault();
++                setActiveTab(next);
++                document.getElementById(`settings-tab-${next}`)?.focus();
++              }
++            }}
++          >
++            {label}
++          </button>
++        ))}
++      </div>
++      <div
++        id="settings-panel-accounts"
++        role="tabpanel"
++        aria-labelledby="settings-tab-accounts"
++        hidden={activeTab !== "accounts"}
++        className="settings-tab-panel"
++      >
++        <section className="panel settings-section">
++          <div className="section-heading">
++            <div>
++              <p className="section-index">01</p>
++              <h2>Contas de IA</h2>
++            </div>
++            <p>
++              Clientes oficiais por assinatura. Modelos só devem ser incluídos após observação real.
++            </p>
+@@ -590,26 +675,19 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-          <p>
+-            Clientes oficiais por assinatura. Modelos só devem ser incluídos após observação real.
+-          </p>
+-        </div>
+-        <button
+-          className="secondary-action"
+-          type="button"
+-          onClick={addInstallation}
+-          disabled={draft.installations.length >= 20}
+-        >
+-          + Adicionar conta
+-        </button>
+-        <div className="account-list">
+-          {draft.installations.length === 0 && (
+-            <p className="muted">Nenhuma conta cadastrada. Adicione uma conta para começar.</p>
+-          )}
+-          {draft.installations.map((installation) => (
+-            <button
+-              type="button"
+-              className="account-list-item"
+-              key={installation.id}
+-              onClick={() => setEditingInstallation(structuredClone(installation))}
+-              aria-label={`Configurar ${installation.label}`}
+-            >
+-              <span
+-                className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
++          <button
++            className="secondary-action"
++            type="button"
++            onClick={addInstallation}
++            disabled={draft.installations.length >= 20}
++          >
++            + Adicionar conta
++          </button>
++          <div className="account-list">
++            {draft.installations.length === 0 && (
++              <p className="muted">Nenhuma conta cadastrada. Adicione uma conta para começar.</p>
++            )}
++            {draft.installations.map((installation) => (
++              <button
++                type="button"
++                className="account-list-item"
++                key={installation.id}
++                onClick={() => setEditingInstallation(structuredClone(installation))}
++                aria-label={`Configurar ${installation.label}`}
+@@ -617,7 +695,4 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                {providerLabels[installation.provider].slice(0, 1)}
+-              </span>
+-              <span className="account-list-name">
+-                <strong>{installation.label}</strong>
+-                <span className="account-list-detail">
+-                  {providerLabels[installation.provider]} ·{" "}
+-                  {installation.enabled ? "Habilitada" : "Desabilitada"}
++                <span
++                  className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
++                >
++                  {providerLabels[installation.provider].slice(0, 1)}
+@@ -625,57 +700,60 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-              </span>
+-              <span className={`status status--${installation.state.toLowerCase()}`}>
+-                {statusLabel(installation.state)}
+-              </span>
+-              <span className="account-list-edit">Configurar →</span>
+-            </button>
+-          ))}
+-        </div>
+-        {editingInstallation &&
+-          (() => {
+-            const installation = {
+-              ...editingInstallation,
+-              state:
+-                settings.configuration.installations.find(
+-                  (item) =>
+-                    item.id === editingInstallation.id &&
+-                    item.provider === editingInstallation.provider,
+-                )?.state ?? editingInstallation.state,
+-            };
+-            return (
+-              <SettingsModal
+-                title="Configurar conta"
+-                saving={saving}
+-                onClose={() => setEditingInstallation(null)}
+-                onSave={() => void saveInstallation()}
+-              >
+-                {requestingVerification === installation.id ? (
+-                  <p role="status">Enviando verificação à API…</p>
+-                ) : null}
+-                {verificationError ? <p role="alert">{verificationError}</p> : null}
+-                {(() => {
+-                  const latest = verifications.find(
+-                    (item) => item.installationId === installation.id,
+-                  );
+-                  return latest ? (
+-                    <div className="verification-line" role="status" aria-live="polite">
+-                      <p>{providerVerificationFeedback(latest)}</p>
+-                      {latest.cliVersion ? <p>Cliente: {latest.cliVersion}</p> : null}
+-                    </div>
+-                  ) : null;
+-                })()}
+-                {connectingInstallation === installation.id ? (
+-                  <p role="status">Iniciando login oficial e aguardando código…</p>
+-                ) : null}
+-                {loginError ? <p role="alert">{loginError}</p> : null}
+-                {(() => {
+-                  const session = onboardingSessions.find(
+-                    (item) => item.installationId === installation.id,
+-                  );
+-                  const challenge = session ? onboardingChallenges[session.id] : undefined;
+-                  if (!session) return null;
+-                  return (
+-                    <div className="onboarding-status">
+-                      <p>
+-                        Login: <strong>{statusLabel(session.status)}</strong>
+-                      </p>
+-                      {session.status === "PENDING" || session.status === "RUNNING" ? (
++                <span className="account-list-name">
++                  <strong>{installation.label}</strong>
++                  <span className="account-list-detail">
++                    {providerLabels[installation.provider]} ·{" "}
++                    {installation.enabled ? "Habilitada" : "Desabilitada"}
++                  </span>
++                </span>
++                <span className={`status status--${installation.state.toLowerCase()}`}>
++                  {statusLabel(installation.state)}
++                </span>
++                <span className="account-list-edit">Configurar →</span>
++              </button>
++            ))}
++          </div>
++          {editingInstallation &&
++            (() => {
++              const installation = {
++                ...editingInstallation,
++                state:
++                  settings.configuration.installations.find(
++                    (item) =>
++                      item.id === editingInstallation.id &&
++                      item.provider === editingInstallation.provider,
++                  )?.state ?? editingInstallation.state,
++              };
++              return (
++                <SettingsModal
++                  title="Configurar conta"
++                  saving={saving}
++                  onClose={() => setEditingInstallation(null)}
++                  onSave={() => void saveInstallation()}
++                >
++                  {requestingVerification === installation.id ? (
++                    <p role="status">Enviando verificação à API…</p>
++                  ) : null}
++                  {verificationError ? <p role="alert">{verificationError}</p> : null}
++                  {(() => {
++                    const latest = verifications.find(
++                      (item) => item.installationId === installation.id,
++                    );
++                    return latest ? (
++                      <div className="verification-line" role="status" aria-live="polite">
++                        <p>{providerVerificationFeedback(latest)}</p>
++                        {latest.cliVersion ? <p>Cliente: {latest.cliVersion}</p> : null}
++                      </div>
++                    ) : null;
++                  })()}
++                  {connectingInstallation === installation.id ? (
++                    <p role="status">Iniciando login oficial e aguardando instruções…</p>
++                  ) : null}
++                  {loginError ? <p role="alert">{loginError}</p> : null}
++                  {loginRefreshError ? <p role="alert">{loginRefreshError}</p> : null}
++                  {(() => {
++                    const session = onboardingSessions.find(
++                      (item) => item.installationId === installation.id,
++                    );
++                    const challenge = session ? onboardingChallenges[session.id] : undefined;
++                    if (!session) return null;
++                    return (
++                      <div className="onboarding-status">
+@@ -683,2 +761 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                          Aguardando URL e código do cliente oficial. O login ainda não foi
+-                          confirmado.
++                          Login: <strong>{statusLabel(session.status)}</strong>
+@@ -686,27 +763,80 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                      ) : null}
+-                      {session.status === "COMPLETED" && session.providerState === "AVAILABLE" ? (
+-                        <p>Assinatura conectada e confirmada pelo cliente oficial.</p>
+-                      ) : null}
+-                      {session.status === "EXPIRED" ? (
+-                        <p>O código expirou. Inicie novamente o login.</p>
+-                      ) : null}
+-                      {session.status === "FAILED" ? (
+-                        <p>Não foi possível confirmar o login. Tente novamente.</p>
+-                      ) : null}
+-                      {challenge ? (
+-                        <div className="onboarding-challenge">
+-                          <span>Abra o site oficial e informe o código temporário:</span>
+-                          <a
+-                            href={challenge.verificationUri}
+-                            target="_blank"
+-                            rel="noreferrer noopener"
+-                          >
+-                            Abrir login oficial do Codex em nova aba
+-                          </a>
+-                          <code>{challenge.userCode}</code>
+-                          <span>
+-                            Informe esse código na página oficial. Se a aba foi bloqueada, use o
+-                            link acima. Aguarde a confirmação de assinatura conectada nesta tela.
+-                          </span>
+-                        </div>
+-                      ) : null}
++                        {session.status === "PENDING" || session.status === "RUNNING" ? (
++                          <p>
++                            Aguardando URL e código do cliente oficial. O login ainda não foi
++                            confirmado.
++                          </p>
++                        ) : null}
++                        {session.status === "COMPLETED" && session.providerState === "AVAILABLE" ? (
++                          <p>Conta conectada e confirmada pelo cliente oficial.</p>
++                        ) : null}
++                        {session.status === "EXPIRED" ? (
++                          <p>O código expirou. Inicie novamente o login.</p>
++                        ) : null}
++                        {session.status === "FAILED" ? (
++                          <p>Não foi possível confirmar o login. Tente novamente.</p>
++                        ) : null}
++                        {challenge ? (
++                          <div className="onboarding-challenge">
++                            <span>
++                              {challenge.flow === "AUTHORIZATION_CODE"
++                                ? "Abra o site oficial, autorize sua conta e devolva o código exibido no navegador:"
++                                : "Abra o site oficial e informe o código temporário:"}
++                            </span>
++                            <a
++                              href={challenge.verificationUri}
++                              target="_blank"
++                              rel="noreferrer noopener"
++                            >
++                              Abrir login oficial em nova aba
++                            </a>
++                            {challenge.userCode ? <code>{challenge.userCode}</code> : null}
++                            {challenge.flow === "AUTHORIZATION_CODE" ? (
++                              submittedCodes[session.id] ? (
++                                <p role="status">
++                                  Código enviado ao cliente oficial. Aguarde a confirmação da conta
++                                  conectada.
++                                </p>
++                              ) : (
++                                <div>
++                                  <label>
++                                    Código devolvido pelo provedor
++                                    <input
++                                      type="password"
++                                      autoComplete="off"
++                                      value={authorizationCodes[session.id] ?? ""}
++                                      onChange={(event) =>
++                                        setAuthorizationCodes((current) => ({
++                                          ...current,
++                                          [session.id]: event.target.value,
++                                        }))
++                                      }
++                                    />
++                                  </label>
++                                  <button
++                                    type="button"
++                                    className="secondary-action"
++                                    disabled={
++                                      sendingCode !== null ||
++                                      !authorizationCodes[session.id]?.trim()
++                                    }
++                                    onClick={() => void sendAuthorizationCode(session.id)}
++                                  >
++                                    Enviar código de autorização
++                                  </button>
++                                </div>
++                              )
++                            ) : null}
++                            <span>
++                              Informe esse código na página oficial. Se a aba foi bloqueada, use o
++                              link acima. Aguarde a confirmação de assinatura conectada nesta tela.
++                            </span>
++                          </div>
++                        ) : null}
++                      </div>
++                    );
++                  })()}
++                  <div className="account-title">
++                    <div
++                      className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
++                    >
++                      {providerLabels[installation.provider].slice(0, 1)}
+@@ -714,11 +844,7 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                  );
+-                })()}
+-                <div className="account-title">
+-                  <div
+-                    className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
+-                  >
+-                    {providerLabels[installation.provider].slice(0, 1)}
+-                  </div>
+-                  <div>
+-                    <h3>{providerLabels[installation.provider]}</h3>
+-                    <span>{installation.authMode}</span>
++                    <div>
++                      <h3>{providerLabels[installation.provider]}</h3>
++                      <span>{installation.authMode}</span>
++                    </div>
++                    <span className={`status status--${installation.state.toLowerCase()}`}>
++                      {statusLabel(installation.state)}
++                    </span>
+@@ -726,113 +852,77 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                  <span className={`status status--${installation.state.toLowerCase()}`}>
+-                    {statusLabel(installation.state)}
+-                  </span>
+-                </div>
+-                <label>
+-                  Provider
+-                  <select
+-                    value={installation.provider}
+-                    onChange={(event) =>
+-                      updateInstallation({
+-                        provider: event.target.value as ProviderInstallation["provider"],
+-                      })
+-                    }
+-                  >
+-                    {Object.entries(providerLabels).map(([provider, label]) => (
+-                      <option key={provider} value={provider}>
+-                        {label}
+-                      </option>
+-                    ))}
+-                  </select>
+-                </label>
+-                <label>
+-                  Nome da conta
+-                  <input
+-                    value={installation.label}
+-                    onChange={(event) => updateInstallation({ label: event.target.value })}
+-                  />
+-                </label>
+-                <label>
+-                  Executável
+-                  <input
+-                    value={installation.executable}
+-                    onChange={(event) => updateInstallation({ executable: event.target.value })}
+-                  />
+-                </label>
+-                <label>
+-                  Modelos permitidos, um por linha
+-                  <textarea
+-                    value={installation.models.join("\n")}
+-                    onChange={(event) => {
+-                      const models = [
+-                        ...new Set(
+-                          event.target.value
+-                            .split("\n")
+-                            .map((item) => item.trim())
+-                            .filter(Boolean),
+-                        ),
+-                      ];
+-                      updateInstallation({
+-                        models,
+-                        defaultModel: models.includes(installation.defaultModel ?? "")
+-                          ? installation.defaultModel
+-                          : (models[0] ?? null),
+-                      });
+-                    }}
+-                  />
+-                </label>
+-                <label>
+-                  Modelo padrão
+-                  <select
+-                    value={installation.defaultModel ?? ""}
+-                    onChange={(event) =>
+-                      updateInstallation({ defaultModel: event.target.value || null })
+-                    }
+-                  >
+-                    <option value="">Nenhum</option>
+-                    {installation.models.map((model) => (
+-                      <option key={model} value={model}>
+-                        {model}
+-                      </option>
+-                    ))}
+-                  </select>
+-                </label>
+-                <label className="switch-row">
+-                  <input
+-                    type="checkbox"
+-                    checked={installation.enabled}
+-                    onChange={(event) => updateInstallation({ enabled: event.target.checked })}
+-                  />
+-                  <span>Disponível para atribuição</span>
+-                </label>
+-                <button
+-                  className="secondary-action account-action"
+-                  type="button"
+-                  disabled={
+-                    saving ||
+-                    requestingVerification !== null ||
+-                    verifications.some(
+-                      (item) =>
+-                        item.installationId === installation.id &&
+-                        ["PENDING", "RUNNING"].includes(item.status),
+-                    ) ||
+-                    !settings.configuration.installations.some(
+-                      (item) => item.id === installation.id,
+-                    )
+-                  }
+-                  onClick={() => verify(installation.id)}
+-                >
+-                  {requestingVerification === installation.id
+-                    ? "Enviando…"
+-                    : verifications.some(
+-                          (item) =>
+-                            item.installationId === installation.id &&
+-                            ["PENDING", "RUNNING"].includes(item.status),
+-                        )
+-                      ? "Verificação em andamento…"
+-                      : "Verificar conta e modelos"}
+-                </button>
+-                {installation.provider === "CODEX" &&
+-                settings.configuration.installations.some(
+-                  (item) => item.id === installation.id && item.enabled,
+-                ) &&
+-                installation.state === "AUTH_REQUIRED" ? (
++                  <label>
++                    Provider
++                    <select
++                      value={installation.provider}
++                      onChange={(event) =>
++                        updateInstallation({
++                          provider: event.target.value as ProviderInstallation["provider"],
++                        })
++                      }
++                    >
++                      {Object.entries(providerLabels).map(([provider, label]) => (
++                        <option key={provider} value={provider}>
++                          {label}
++                        </option>
++                      ))}
++                    </select>
++                  </label>
++                  <label>
++                    Nome da conta
++                    <input
++                      value={installation.label}
++                      onChange={(event) => updateInstallation({ label: event.target.value })}
++                    />
++                  </label>
++                  <label>
++                    Executável
++                    <input
++                      value={installation.executable}
++                      onChange={(event) => updateInstallation({ executable: event.target.value })}
++                    />
++                  </label>
++                  <label>
++                    Modelos permitidos, um por linha
++                    <textarea
++                      value={installation.models.join("\n")}
++                      onChange={(event) => {
++                        const models = [
++                          ...new Set(
++                            event.target.value
++                              .split("\n")
++                              .map((item) => item.trim())
++                              .filter(Boolean),
++                          ),
++                        ];
++                        updateInstallation({
++                          models,
++                          defaultModel: models.includes(installation.defaultModel ?? "")
++                            ? installation.defaultModel
++                            : (models[0] ?? null),
++                        });
++                      }}
++                    />
++                  </label>
++                  <label>
++                    Modelo padrão
++                    <select
++                      value={installation.defaultModel ?? ""}
++                      onChange={(event) =>
++                        updateInstallation({ defaultModel: event.target.value || null })
++                      }
++                    >
++                      <option value="">Nenhum</option>
++                      {installation.models.map((model) => (
++                        <option key={model} value={model}>
++                          {model}
++                        </option>
++                      ))}
++                    </select>
++                  </label>
++                  <label className="switch-row">
++                    <input
++                      type="checkbox"
++                      checked={installation.enabled}
++                      onChange={(event) => updateInstallation({ enabled: event.target.checked })}
++                    />
++                    <span>Disponível para atribuição</span>
++                  </label>
+@@ -842 +931,0 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                    onClick={() => connect(installation.id)}
+@@ -844,2 +933,3 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                      connectingInstallation !== null ||
+-                      onboardingSessions.some(
++                      saving ||
++                      requestingVerification !== null ||
++                      verifications.some(
+@@ -848 +938,4 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                          ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
++                          ["PENDING", "RUNNING"].includes(item.status),
++                      ) ||
++                      !settings.configuration.installations.some(
++                        (item) => item.id === installation.id,
+@@ -850,0 +944 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
++                    onClick={() => verify(installation.id)}
+@@ -852 +946,9 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                    Conectar assinatura Codex
++                    {requestingVerification === installation.id
++                      ? "Enviando…"
++                      : verifications.some(
++                            (item) =>
++                              item.installationId === installation.id &&
++                              ["PENDING", "RUNNING"].includes(item.status),
++                          )
++                        ? "Verificação em andamento…"
++                        : "Verificar conta e modelos"}
+@@ -854,150 +956,47 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                ) : null}
+-                {installation.provider === "CLAUDE" ? (
+-                  <p>
+-                    Login da assinatura na VPS:{" "}
+-                    <code>npm run providers:login -- {installation.id}</code>. Depois clique em
+-                    Verificar conta e modelos. Os modelos Claude são informados no campo acima; o
+-                    status oficial não fornece um catálogo.
+-                  </p>
+-                ) : null}
+-                {installation.provider === "CODEX" ? (
+-                  <p>
+-                    Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
+-                    modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
+-                    funcionários digitais.
+-                  </p>
+-                ) : null}
+-                {installation.provider === "ANTIGRAVITY" ? (
+-                  <p>Integração de execução ainda indisponível.</p>
+-                ) : null}
+-                <button
+-                  className="remove-action"
+-                  type="button"
+-                  disabled={!draft.installations.some((item) => item.id === installation.id)}
+-                  onClick={() => removeInstallation(installation.id)}
+-                >
+-                  Remover conta
+-                </button>
+-              </SettingsModal>
+-            );
+-          })()}
+-      </section>
+-
+-      <section className="panel settings-section">
+-        <div className="section-heading">
+-          <div>
+-            <p className="section-index">02</p>
+-            <h2>Funcionários digitais</h2>
+-          </div>
+-          <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
+-        </div>
+-        <div className="account-list">
+-          {draft.assignments.map((assignment) => {
+-            const account = draft.installations.find(
+-              (item) => item.id === assignment.installationId,
+-            );
+-            return (
+-              <button
+-                type="button"
+-                className="account-list-item"
+-                key={assignment.role}
+-                aria-label={`Configurar ${roleLabels[assignment.role]}`}
+-                onClick={() => setEditingAssignment(structuredClone(assignment))}
+-              >
+-                <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
+-                <span className="account-list-name">
+-                  <strong>{roleLabels[assignment.role]}</strong>
+-                  <span className="account-list-detail">
+-                    {account
+-                      ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
+-                      : "Sem atribuição"}
+-                  </span>
+-                  <span className="account-list-detail">
+-                    {assignment.permissionMode === "READ_ONLY"
+-                      ? "Somente leitura"
+-                      : "Escrita no workspace"}{" "}
+-                    · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
+-                  </span>
+-                </span>
+-                <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
+-                <span className="account-list-edit">Configurar →</span>
+-              </button>
+-            );
+-          })}
+-        </div>
+-        {editingAssignment &&
+-          (() => {
+-            const assignment = editingAssignment;
+-            const selection =
+-              assignment.installationId && assignment.model
+-                ? `${assignment.installationId}::${assignment.model}`
+-                : "";
+-            return (
+-              <SettingsModal
+-                title={`Configurar ${roleLabels[assignment.role]}`}
+-                saving={saving}
+-                onClose={() => setEditingAssignment(null)}
+-                onSave={() => void saveAssignment()}
+-              >
+-                <label>
+-                  Conta e modelo
+-                  <select
+-                    value={selection}
+-                    onChange={(event) => {
+-                      const [installationId, ...modelParts] = event.target.value.split("::");
+-                      updateAssignment({
+-                        installationId: installationId || null,
+-                        model: modelParts.join("::") || null,
+-                      });
+-                    }}
+-                  >
+-                    <option value="">Sem atribuição</option>
+-                    {draft.installations
+-                      .filter((item) => item.enabled)
+-                      .flatMap((item) =>
+-                        item.models.map((model) => (
+-                          <option key={`${item.id}:${model}`} value={`${item.id}::${model}`}>
+-                            {item.label} · {model}
+-                          </option>
+-                        )),
+-                      )}
+-                  </select>
+-                </label>
+-                <HandoffAlternatives
+-                  assignment={assignment}
+-                  installations={draft.installations}
+-                  onChange={(alternatives) => updateAssignment({ alternatives })}
+-                />
+-                <label>
+-                  Permissão
+-                  <select
+-                    value={assignment.permissionMode}
+-                    onChange={(event) =>
+-                      updateAssignment({
+-                        permissionMode: event.target.value as AgentAssignment["permissionMode"],
+-                      })
+-                    }
+-                  >
+-                    <option value="READ_ONLY">Somente leitura</option>
+-                    <option value="WORKSPACE_WRITE">Escrita no workspace</option>
+-                  </select>
+-                </label>
+-                <label>
+-                  Minutos
+-                  <input
+-                    type="number"
+-                    min="1"
+-                    max="30"
+-                    value={assignment.timeoutMinutes}
+-                    onChange={(event) =>
+-                      updateAssignment({ timeoutMinutes: Number(event.target.value) })
+-                    }
+-                  />
+-                </label>
+-                <label>
+-                  Tentativas
+-                  <select
+-                    value={assignment.maxAttempts}
+-                    onChange={(event) =>
+-                      updateAssignment({ maxAttempts: Number(event.target.value) })
+-                    }
++                  {settings.configuration.installations.some(
++                    (item) => item.id === installation.id && item.enabled,
++                  ) && installation.state === "AUTH_REQUIRED" ? (
++                    <button
++                      className="secondary-action account-action"
++                      type="button"
++                      onClick={() => connect(installation.id)}
++                      disabled={
++                        connectingInstallation !== null ||
++                        onboardingSessions.some(
++                          (item) =>
++                            item.installationId === installation.id &&
++                            ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
++                        )
++                      }
++                    >
++                      {installation.provider === "ANTIGRAVITY"
++                        ? "Conectar conta Google"
++                        : `Conectar assinatura ${providerLabels[installation.provider]}`}
++                    </button>
++                  ) : null}
++                  {installation.provider === "CLAUDE" ? (
++                    <p>
++                      Conecte sua assinatura na aba oficial; se o navegador apresentar um código,
++                      cole-o neste modal. Os modelos Claude são informados no campo acima; o status
++                      oficial não fornece um catálogo.
++                    </p>
++                  ) : null}
++                  {installation.provider === "CODEX" ? (
++                    <p>
++                      Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
++                      modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
++                      funcionários digitais.
++                    </p>
++                  ) : null}
++                  {installation.provider === "ANTIGRAVITY" ? (
++                    <p>
++                      Conecte sua conta Google pelo fluxo oficial; se solicitado, devolva o código
++                      ao modal. A confirmação depende de armazenamento seguro da sessão no cliente.
++                      Integração de execução ainda indisponível.
++                    </p>
++                  ) : null}
++                  <button
++                    className="remove-action"
++                    type="button"
++                    disabled={!draft.installations.some((item) => item.id === installation.id)}
++                    onClick={() => removeInstallation(installation.id)}
+@@ -1005,16 +1004,6 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-                    <option value="1">1</option>
+-                    <option value="2">2</option>
+-                  </select>
+-                </label>
+-                <label className="switch-row compact">
+-                  <input
+-                    type="checkbox"
+-                    checked={assignment.enabled}
+-                    onChange={(event) => updateAssignment({ enabled: event.target.checked })}
+-                  />
+-                  <span>Ativo</span>
+-                </label>
+-              </SettingsModal>
+-            );
+-          })()}
+-      </section>
++                    Remover conta
++                  </button>
++                </SettingsModal>
++              );
++            })()}
++        </section>
+@@ -1022 +1010,0 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-      <section className="settings-bottom-grid">
+@@ -1308 +1296,52 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-
++      </div>
++      <div
++        id="settings-panel-integrations"
++        role="tabpanel"
++        aria-labelledby="settings-tab-integrations"
++        hidden={activeTab !== "integrations"}
++        className="settings-tab-panel"
++      >
++        <section className="panel settings-section">
++          <div className="section-heading">
++            <div>
++              <p className="section-index">MODELOS</p>
++              <h2>Integrações IA</h2>
++            </div>
++            <p>Modelos configurados por conta para uso nas equipes.</p>
++          </div>
++          <div className="account-list">
++            {draft.installations.length === 0 && (
++              <p className="muted">Cadastre uma conta na aba Contas para configurar os modelos.</p>
++            )}
++            {draft.installations.map((installation) => (
++              <button
++                type="button"
++                className="account-list-item"
++                key={installation.id}
++                onClick={() => {
++                  setActiveTab("accounts");
++                  setEditingInstallation(structuredClone(installation));
++                }}
++                aria-label={`Configurar modelos de ${installation.label}`}
++              >
++                <span
++                  className={`provider-mark provider-mark--${installation.provider.toLowerCase()}`}
++                >
++                  {providerLabels[installation.provider].slice(0, 1)}
++                </span>
++                <span className="account-list-name">
++                  <strong>{installation.label}</strong>
++                  <span className="account-list-detail">
++                    {installation.models.length
++                      ? installation.models.join(" · ")
++                      : "Nenhum modelo configurado"}
++                  </span>
++                </span>
++                <span className={`status status--${installation.state.toLowerCase()}`}>
++                  {statusLabel(installation.state)}
++                </span>
++                <span className="account-list-edit">Configurar →</span>
++              </button>
++            ))}
++          </div>
++        </section>
+@@ -1324 +1363,144 @@ export function SettingsPanel({ token, onMessage }: SettingsPanelProps) {
+-      </section>
++      </div>
++      <div
++        id="settings-panel-teams"
++        role="tabpanel"
++        aria-labelledby="settings-tab-teams"
++        hidden={activeTab !== "teams"}
++        className="settings-tab-panel"
++      >
++        <section className="panel settings-section">
++          <div className="section-heading">
++            <div>
++              <p className="section-index">02</p>
++              <h2>Equipes</h2>
++            </div>
++            <p>Escolha conta, modelo, permissão e limites por responsabilidade.</p>
++          </div>
++          <div className="account-list">
++            {draft.assignments.map((assignment) => {
++              const account = draft.installations.find(
++                (item) => item.id === assignment.installationId,
++              );
++              return (
++                <button
++                  type="button"
++                  className="account-list-item"
++                  key={assignment.role}
++                  aria-label={`Configurar ${roleLabels[assignment.role]}`}
++                  onClick={() => setEditingAssignment(structuredClone(assignment))}
++                >
++                  <span className="provider-mark">{roleLabels[assignment.role].slice(0, 1)}</span>
++                  <span className="account-list-name">
++                    <strong>{roleLabels[assignment.role]}</strong>
++                    <span className="account-list-detail">
++                      {account
++                        ? `${account.label} · ${assignment.model ?? "Sem modelo"}`
++                        : "Sem atribuição"}
++                    </span>
++                    <span className="account-list-detail">
++                      {assignment.permissionMode === "READ_ONLY"
++                        ? "Somente leitura"
++                        : "Escrita no workspace"}{" "}
++                      · {assignment.timeoutMinutes} min · {assignment.maxAttempts} tentativa(s)
++                    </span>
++                  </span>
++                  <span className="status">{assignment.enabled ? "Ativo" : "Inativo"}</span>
++                  <span className="account-list-edit">Configurar →</span>
++                </button>
++              );
++            })}
++          </div>
++          {editingAssignment &&
++            (() => {
++              const assignment = editingAssignment;
++              const selection =
++                assignment.installationId && assignment.model
++                  ? `${assignment.installationId}::${assignment.model}`
++                  : "";
++              return (
++                <SettingsModal
++                  title={`Configurar ${roleLabels[assignment.role]}`}
++                  saving={saving}
++                  onClose={() => setEditingAssignment(null)}
++                  onSave={() => void saveAssignment()}
++                >
++                  <label>
++                    Conta e modelo
++                    <select
++                      value={selection}
++                      onChange={(event) => {
++                        const [installationId, ...modelParts] = event.target.value.split("::");
++                        updateAssignment({
++                          installationId: installationId || null,
++                          model: modelParts.join("::") || null,
++                        });
++                      }}
++                    >
++                      <option value="">Sem atribuição</option>
++                      {draft.installations
++                        .filter((item) => item.enabled)
++                        .flatMap((item) =>
++                          item.models.map((model) => (
++                            <option key={`${item.id}:${model}`} value={`${item.id}::${model}`}>
++                              {item.label} · {model}
++                            </option>
++                          )),
++                        )}
++                    </select>
++                  </label>
++                  <HandoffAlternatives
++                    assignment={assignment}
++                    installations={draft.installations}
++                    onChange={(alternatives) => updateAssignment({ alternatives })}
++                  />
++                  <label>
++                    Permissão
++                    <select
++                      value={assignment.permissionMode}
++                      onChange={(event) =>
++                        updateAssignment({
++                          permissionMode: event.target.value as AgentAssignment["permissionMode"],
++                        })
++                      }
++                    >
++                      <option value="READ_ONLY">Somente leitura</option>
++                      <option value="WORKSPACE_WRITE">Escrita no workspace</option>
++                    </select>
++                  </label>
++                  <label>
++                    Minutos
++                    <input
++                      type="number"
++                      min="1"
++                      max="30"
++                      value={assignment.timeoutMinutes}
++                      onChange={(event) =>
++                        updateAssignment({ timeoutMinutes: Number(event.target.value) })
++                      }
++                    />
++                  </label>
++                  <label>
++                    Tentativas
++                    <select
++                      value={assignment.maxAttempts}
++                      onChange={(event) =>
++                        updateAssignment({ maxAttempts: Number(event.target.value) })
++                      }
++                    >
++                      <option value="1">1</option>
++                      <option value="2">2</option>
++                    </select>
++                  </label>
++                  <label className="switch-row compact">
++                    <input
++                      type="checkbox"
++                      checked={assignment.enabled}
++                      onChange={(event) => updateAssignment({ enabled: event.target.checked })}
++                    />
++                    <span>Ativo</span>
++                  </label>
++                </SettingsModal>
++              );
++            })()}
++        </section>
++      </div>
+diff --git a/apps/web/src/codex-login-tab.spec.ts b/apps/web/src/codex-login-tab.spec.ts
+index 4db7403..0e8edb9 100644
+--- a/apps/web/src/codex-login-tab.spec.ts
++++ b/apps/web/src/codex-login-tab.spec.ts
+@@ -49,0 +50,13 @@ describe("Codex login tab", () => {
++
++describe("provider-specific login tabs", () => {
++  it("allows only the selected Claude or Google provider", () => {
++    const claude = fixture(),
++      google = fixture();
++    const claudeLogin = new CodexLoginTab(claude as unknown as Window, "CLAUDE");
++    expect(claudeLogin.authorize("https://accounts.google.com/o/oauth2/auth")).toBe(false);
++    expect(claudeLogin.authorize("https://claude.com/cai/oauth/authorize")).toBe(true);
++    const googleLogin = new CodexLoginTab(google as unknown as Window, "ANTIGRAVITY");
++    expect(googleLogin.authorize("https://claude.com/cai/oauth/authorize")).toBe(false);
++    expect(googleLogin.authorize("https://accounts.google.com/o/oauth2/auth")).toBe(true);
++  });
++});
+diff --git a/apps/web/src/codex-login-tab.ts b/apps/web/src/codex-login-tab.ts
+index 3fb74b0..358493b 100644
+--- a/apps/web/src/codex-login-tab.ts
++++ b/apps/web/src/codex-login-tab.ts
+@@ -0,0 +1 @@
++import type { SettingsProvider } from "@le-fabrique/contracts";
+@@ -4 +5,4 @@ export class CodexLoginTab {
+-  constructor(private readonly tab: Window | null) {
++  constructor(
++    private readonly tab: Window | null,
++    private readonly provider: SettingsProvider = "CODEX",
++  ) {
+@@ -7 +11 @@ export class CodexLoginTab {
+-    tab.document.title = "Conectar assinatura Codex";
++    tab.document.title = `Conectar conta ${provider}`;
+@@ -9 +13 @@ export class CodexLoginTab {
+-      "Aguardando a URL oficial do Codex. Volte à Le Fabrique para consultar o código temporário e o andamento do login.";
++      "Aguardando a URL oficial do provedor. Volte à Le Fabrique para consultar as instruções e o andamento do login.";
+@@ -17 +21,7 @@ export class CodexLoginTab {
+-      !["auth.openai.com", "chatgpt.com"].includes(parsed.hostname) ||
++      !(
++        this.provider === "CODEX"
++          ? ["auth.openai.com", "chatgpt.com"]
++          : this.provider === "CLAUDE"
++            ? ["claude.ai", "claude.com", "platform.claude.com", "console.anthropic.com"]
++            : ["accounts.google.com"]
++      ).includes(parsed.hostname) ||
+@@ -43,2 +53,2 @@ export class CodexLoginTab {
+-export function openCodexLoginTab(): CodexLoginTab {
+-  return new CodexLoginTab(window.open("about:blank", "_blank"));
++export function openCodexLoginTab(provider: SettingsProvider = "CODEX"): CodexLoginTab {
++  return new CodexLoginTab(window.open("about:blank", "_blank"), provider);
+diff --git a/apps/web/src/control-api.ts b/apps/web/src/control-api.ts
+index 66c2e2b..01aea69 100644
+--- a/apps/web/src/control-api.ts
++++ b/apps/web/src/control-api.ts
+@@ -413,0 +414,11 @@ export async function updateFactoryScheduling(
++
++export async function submitProviderAuthorizationCode(
++  token: string,
++  sessionId: string,
++  code: string,
++): Promise<void> {
++  await request(`/settings/onboarding/${sessionId}/authorization-code`, token, {
++    method: "POST",
++    body: JSON.stringify({ code }),
++  });
++}
+diff --git a/apps/web/src/settings-view-model.ts b/apps/web/src/settings-view-model.ts
+index 285f2b8..246b77d 100644
+--- a/apps/web/src/settings-view-model.ts
++++ b/apps/web/src/settings-view-model.ts
+@@ -95,0 +96,4 @@ export function providerVerificationFeedback(result: ProviderVerification): stri
++  if (result.message === "Antigravity requires a private keyring; install gnome-keyring on the VPS")
++    return "Falta o keyring privado do Antigravity. Na VPS execute sudo apt-get install -y gnome-keyring; depois verifique novamente.";
++  if (result.message === "Build the worker to prepare the Antigravity private keyring launcher")
++    return "Prepare o worker na VPS com npm run build -w @le-fabrique/worker e verifique novamente.";
+diff --git a/apps/web/src/styles.css b/apps/web/src/styles.css
+index 73aaa11..9a57838 100644
+--- a/apps/web/src/styles.css
++++ b/apps/web/src/styles.css
+@@ -639,0 +640,25 @@ button:disabled {
++
++.settings-tabs {
++  display: flex;
++  gap: 8px;
++  flex-wrap: wrap;
++  border-bottom: 1px solid var(--border, #dce1e8);
++  padding-bottom: 12px;
++}
++.settings-tabs [role="tab"] {
++  background: transparent;
++  color: inherit;
++  border: 1px solid var(--border, #dce1e8);
++}
++.settings-tabs [aria-selected="true"] {
++  background: #1e293b;
++  color: #fff;
++  border-color: #1e293b;
++}
++.settings-tab-panel:not([hidden]) {
++  display: grid;
++  gap: 24px;
++}
++.settings-tab-panel[hidden] {
++  display: none;
++}
+diff --git a/apps/worker/package.json b/apps/worker/package.json
+index f7acf43..fe4fbcd 100644
+--- a/apps/worker/package.json
++++ b/apps/worker/package.json
+@@ -15,0 +16 @@
++    "node-pty": "1.1.0",
+diff --git a/apps/worker/src/antigravity-keyring-launcher.ts b/apps/worker/src/antigravity-keyring-launcher.ts
+new file mode 100644
+index 0000000..55e2287
+--- /dev/null
++++ b/apps/worker/src/antigravity-keyring-launcher.ts
+@@ -0,0 +1,110 @@
++import { spawn } from "node:child_process";
++import { constants } from "node:fs";
++import { mkdtemp, open, rm } from "node:fs/promises";
++import path from "node:path";
++
++/** Runs only under a fresh dbus-run-session, with an account-private HOME. */
++async function main() {
++  process.umask(0o077);
++  const [binary, secretPath, ...args] = process.argv.slice(2);
++  if (
++    !binary ||
++    !secretPath ||
++    !path.isAbsolute(binary) ||
++    !path.isAbsolute(secretPath) ||
++    !process.env.DBUS_SESSION_BUS_ADDRESS
++  )
++    throw new Error("Private keyring configuration unavailable");
++  const file = await open(secretPath, constants.O_RDONLY | constants.O_NOFOLLOW);
++  let password: Buffer;
++  try {
++    const metadata = await file.stat();
++    if (
++      !metadata.isFile() ||
++      metadata.uid !== process.getuid?.() ||
++      (metadata.mode & 0o077) !== 0 ||
++      metadata.size !== 64
++    )
++      throw new Error("Private keyring configuration unavailable");
++    password = await file.readFile();
++  } finally {
++    await file.close();
++  }
++  if (!/^[a-f0-9]{64}$/.test(password.toString()))
++    throw new Error("Private keyring configuration unavailable");
++  if (!process.env.XDG_RUNTIME_DIR) throw new Error("Private keyring configuration unavailable");
++  const controlDirectory = await mkdtemp(path.join(process.env.XDG_RUNTIME_DIR, "keyring-"));
++  const daemon = spawn(
++    "/usr/bin/gnome-keyring-daemon",
++    ["--foreground", "--unlock", "--components=secrets", "--control-directory", controlDirectory],
++    { env: process.env, shell: false, stdio: ["pipe", "ignore", "ignore"] },
++  );
++  daemon.stdin.on("error", () => {});
++  daemon.on("error", () => {});
++  daemon.stdin.end(Buffer.concat([password, Buffer.from("\n")]));
++  password.fill(0);
++  let client: ReturnType<typeof spawn> | undefined;
++  try {
++    let ready = false;
++    for (let attempt = 0; attempt < 30 && !ready; attempt++) {
++      ready = await new Promise<boolean>((resolve) => {
++        let output = "";
++        const probe = spawn(
++          "/usr/bin/dbus-send",
++          [
++            "--session",
++            "--dest=org.freedesktop.DBus",
++            "--type=method_call",
++            "--print-reply",
++            "/org/freedesktop/DBus",
++            "org.freedesktop.DBus.NameHasOwner",
++            "string:org.freedesktop.secrets",
++          ],
++          { env: process.env, shell: false, stdio: ["ignore", "pipe", "ignore"] },
++        );
++        const timer = setTimeout(() => probe.kill("SIGKILL"), 1000);
++        probe.stdout.on("data", (chunk) => {
++          if (output.length < 4096) output += chunk.toString();
++        });
++        probe.once("error", () => {
++          clearTimeout(timer);
++          resolve(false);
++        });
++        probe.once("close", () => {
++          clearTimeout(timer);
++          resolve(/boolean true/.test(output));
++        });
++      });
++      if (!ready) await new Promise((resolve) => setTimeout(resolve, 100));
++    }
++    if (!ready) throw new Error("Private keyring service unavailable");
++    client = spawn(binary, args, { env: process.env, shell: false, stdio: "inherit" });
++    const code = await new Promise<number | null>((resolve, reject) => {
++      client?.once("error", () => reject(new Error("Official client unavailable")));
++      client?.once("exit", resolve);
++    });
++    process.exitCode = code ?? 1;
++  } finally {
++    client?.kill("SIGKILL");
++    daemon.kill("SIGTERM");
++    await new Promise<void>((resolve) => {
++      if (daemon.exitCode !== null || daemon.signalCode !== null) {
++        resolve();
++        return;
++      }
++      const timer = setTimeout(() => {
++        daemon.kill("SIGKILL");
++        resolve();
++      }, 1000);
++      daemon.once("exit", () => {
++        clearTimeout(timer);
++        resolve();
++      });
++    });
++    await rm(controlDirectory, { recursive: true, force: true });
++  }
++}
++void main().catch(() => {
++  console.error("Antigravity private keyring or official client unavailable");
++  process.exitCode = 1;
++});
+diff --git a/apps/worker/src/config.ts b/apps/worker/src/config.ts
+index d330cb3..7dfb79b 100644
+--- a/apps/worker/src/config.ts
++++ b/apps/worker/src/config.ts
+@@ -45,0 +46 @@ const workerEnvironmentSchema = z
++    WORKER_ANTIGRAVITY_BINARY: z.string().trim().min(1).max(4096).default("/usr/bin/agy"),
+diff --git a/apps/worker/src/control-client.ts b/apps/worker/src/control-client.ts
+index a7316be..869a58e 100644
+--- a/apps/worker/src/control-client.ts
++++ b/apps/worker/src/control-client.ts
+@@ -28,0 +29 @@ import {
++  providerAuthorizationCodeResultSchema,
+@@ -65,0 +67,2 @@ export class ControlClient {
++            "claude-subscription-onboarding",
++            "antigravity-google-onboarding",
+@@ -303,0 +307,9 @@ export class ControlClient {
++  async takeProviderAuthorizationCode(sessionId: string): Promise<string | null> {
++    return providerAuthorizationCodeResultSchema.parse(
++      await this.request(`/internal/provider-onboarding/${sessionId}/authorization-code`, {
++        method: "POST",
++        body: JSON.stringify({ workerId: this.config.WORKER_ID }),
++      }),
++    ).code;
++  }
++
+diff --git a/apps/worker/src/main.ts b/apps/worker/src/main.ts
+index c9d497f..532de82 100644
+--- a/apps/worker/src/main.ts
++++ b/apps/worker/src/main.ts
+@@ -41,0 +42,4 @@ import { type ProbeResult, processProbe } from "./probe.processor";
++import {
++  cancelProviderAuthorizationProcesses,
++  runProviderAuthorizationLogin,
++} from "./provider-authorization.processor";
+@@ -78,0 +83 @@ async function bootstrap(): Promise<void> {
++    ANTIGRAVITY: config.WORKER_ANTIGRAVITY_BINARY,
+@@ -235,5 +240,11 @@ async function bootstrap(): Promise<void> {
+-          runCodexDeviceLogin(
+-            expiresAt,
+-            sink,
+-            await identities.prepare("CODEX", job.data.installationId),
+-          ),
++          job.data.provider !== "CODEX"
++            ? runProviderAuthorizationLogin(
++                job.data,
++                await identities.prepare(job.data.provider, job.data.installationId),
++                control,
++              )
++            : runCodexDeviceLogin(
++                expiresAt,
++                sink,
++                await identities.prepare("CODEX", job.data.installationId),
++              ),
+@@ -328,0 +340 @@ async function bootstrap(): Promise<void> {
++    cancelProviderAuthorizationProcesses();
+diff --git a/apps/worker/src/provider-authorization.processor.spec.ts b/apps/worker/src/provider-authorization.processor.spec.ts
+new file mode 100644
+index 0000000..82a5cb6
+--- /dev/null
++++ b/apps/worker/src/provider-authorization.processor.spec.ts
+@@ -0,0 +1,141 @@
++import { mkdtemp, rm, writeFile } from "node:fs/promises";
++import os from "node:os";
++import path from "node:path";
++import { describe, expect, it, vi } from "vitest";
++import {
++  extractProviderAuthorizationChallenge,
++  runProviderAuthorizationLogin,
++} from "./provider-authorization.processor";
++
++const expiresAt = new Date(Date.now() + 60000).toISOString();
++const claudeUrl =
++  "https://claude.com/cai/oauth/authorize?client_id=fixture&state=fixture-state&code_challenge=fixture-pkce&response_type=code";
++const googleUrl =
++  "https://accounts.google.com/o/oauth2/auth?client_id=fixture&state=fixture-state&code_challenge=fixture-pkce&response_type=code";
++const job = {
++  schemaVersion: 1 as const,
++  eventId: crypto.randomUUID(),
++  sessionId: crypto.randomUUID(),
++  installationId: "test-installation",
++  expiresAt,
++};
++describe("official provider authorization", () => {
++  it("extracts provider-bound OAuth URLs and rejects incomplete/foreign challenges", () => {
++    expect(
++      extractProviderAuthorizationChallenge("CLAUDE", `Open ${claudeUrl}`, expiresAt),
++    ).toMatchObject({ flow: "AUTHORIZATION_CODE", provider: "CLAUDE", verificationUri: claudeUrl });
++    expect(
++      extractProviderAuthorizationChallenge(
++        "ANTIGRAVITY",
++        `\x1b]8;;${googleUrl}\x07Open Google\x1b]8;;\x07`,
++        expiresAt,
++      ),
++    ).toMatchObject({ provider: "ANTIGRAVITY", verificationUri: googleUrl });
++    expect(extractProviderAuthorizationChallenge("CLAUDE", googleUrl, expiresAt)).toBeNull();
++    expect(
++      extractProviderAuthorizationChallenge(
++        "CLAUDE",
++        "https://claude.com/cai/oauth/authorize",
++        expiresAt,
++      ),
++    ).toBeNull();
++  });
++  it("delivers a one-time authorization code only to the official login subcommand", async () => {
++    const root = await mkdtemp(path.join(os.tmpdir(), "claude-login-fixture-"));
++    const fixture = path.join(root, "login.cjs");
++    await writeFile(
++      fixture,
++      `if(process.env.OPENAI_API_KEY||process.env.ANTHROPIC_API_KEY||process.env.WORKER_API_TOKEN)process.exit(2);if(!process.argv.includes('--claudeai')||process.argv.includes('--console'))process.exit(3);console.log(${JSON.stringify(claudeUrl)});console.log('Paste code here if prompted:');require('node:readline').createInterface({input:process.stdin}).once('line',code=>process.exit(code==='fixture-code#fixture-state'?0:4));`,
++    );
++    const control = {
++      publishProviderOnboardingChallenge: vi.fn().mockResolvedValue({}),
++      takeProviderAuthorizationCode: vi.fn().mockResolvedValue("fixture-code#fixture-state"),
++    };
++    try {
++      await expect(
++        runProviderAuthorizationLogin(
++          { ...job, provider: "CLAUDE" },
++          {
++            binaryPath: process.execPath,
++            binaryArgsPrefix: [fixture],
++            environment: { HOME: root, PATH: process.env.PATH },
++          },
++          control as never,
++        ),
++      ).resolves.toEqual({ exitCode: 0, challengePublished: true });
++      expect(control.takeProviderAuthorizationCode).toHaveBeenCalledWith(job.sessionId);
++      expect(control.publishProviderOnboardingChallenge).toHaveBeenCalledWith(
++        job.sessionId,
++        expect.objectContaining({ provider: "CLAUDE", flow: "AUTHORIZATION_CODE" }),
++      );
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  });
++  it("expires a waiting client without persisting raw output", async () => {
++    const root = await mkdtemp(path.join(os.tmpdir(), "claude-expiry-"));
++    const control = {
++      publishProviderOnboardingChallenge: vi.fn(),
++      takeProviderAuthorizationCode: vi.fn(),
++    };
++    try {
++      await expect(
++        runProviderAuthorizationLogin(
++          { ...job, provider: "CLAUDE", expiresAt: new Date(Date.now() + 200).toISOString() },
++          {
++            binaryPath: process.execPath,
++            binaryArgsPrefix: ["-e", "setInterval(()=>{},1000)", "--"],
++            environment: { HOME: root, PATH: process.env.PATH },
++          },
++          control as never,
++        ),
++      ).rejects.toThrow("Onboarding session expired");
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  });
++});
++
++describe("Antigravity OAuth terminal transport", () => {
++  it("selects Google OAuth, submits only the returned code and confirms through a fresh metadata process", async () => {
++    const root = await mkdtemp(path.join(os.tmpdir(), "google-login-fixture-"));
++    const fixture = path.join(root, "client.cjs");
++    await writeFile(
++      fixture,
++      `
++    const fs=require('node:fs');const path=require('node:path');const marker=path.join(process.env.HOME,'authenticated');
++    if(process.env.GEMINI_API_KEY||process.env.WORKER_API_TOKEN)process.exit(9);
++    if(process.argv.includes('--version')){console.log('fixture 1.0.0');process.exit(0);}
++    if(process.argv.includes('models')){if(fs.existsSync(marker)){console.log('fixture-model');process.exit(0);}console.log('authentication required');process.exit(1);}
++    console.log('1. Google OAuth');console.log('2. Use a Gemini API key');let stage=0;
++    require('node:readline').createInterface({input:process.stdin}).on('line',line=>{
++      if(stage===0){if(line!=='')process.exit(3);stage=1;console.log(${JSON.stringify(googleUrl)});console.log('Paste the code from the browser here:');}
++      else {if(line!=='fixture-code#fixture-state')process.exit(4);fs.writeFileSync(marker,'yes');console.log('Login successful');}
++    });`,
++    );
++    const control = {
++      publishProviderOnboardingChallenge: vi.fn().mockResolvedValue({}),
++      takeProviderAuthorizationCode: vi.fn().mockResolvedValue("fixture-code#fixture-state"),
++    };
++    try {
++      await expect(
++        runProviderAuthorizationLogin(
++          { ...job, provider: "ANTIGRAVITY" },
++          {
++            binaryPath: process.execPath,
++            binaryArgsPrefix: [fixture],
++            environment: { HOME: root, PATH: process.env.PATH, TERM: "xterm-256color" },
++          },
++          control as never,
++        ),
++      ).resolves.toEqual({ exitCode: 0, challengePublished: true });
++      expect(control.publishProviderOnboardingChallenge).toHaveBeenCalledWith(
++        job.sessionId,
++        expect.objectContaining({ provider: "ANTIGRAVITY" }),
++      );
++      expect(control.takeProviderAuthorizationCode).toHaveBeenCalledTimes(1);
++    } finally {
++      await rm(root, { recursive: true, force: true });
++    }
++  }, 10000);
++});
+diff --git a/apps/worker/src/provider-authorization.processor.ts b/apps/worker/src/provider-authorization.processor.ts
+new file mode 100644
+index 0000000..3450d63
+--- /dev/null
++++ b/apps/worker/src/provider-authorization.processor.ts
+@@ -0,0 +1,217 @@
++import { spawn } from "node:child_process";
++import { stripVTControlCharacters } from "node:util";
++import {
++  type ProviderOnboardingChallenge,
++  type ProviderOnboardingJob,
++  providerAuthorizationChallengeSchema,
++  providerAuthorizationCodeSchema,
++} from "@le-fabrique/contracts";
++import { spawn as spawnTerminal } from "node-pty";
++import type { ControlClient } from "./control-client";
++import type { ProviderIdentity } from "./provider-identity";
++import { inspectProvider, runVerificationCommand } from "./provider-verification.processor";
++
++const active = new Set<() => void>();
++export function cancelProviderAuthorizationProcesses(): void {
++  for (const stop of active) stop();
++}
++
++export function extractProviderAuthorizationChallenge(
++  provider: "CLAUDE" | "ANTIGRAVITY",
++  output: string,
++  expiresAt: string,
++): ProviderOnboardingChallenge | null {
++  // OSC hyperlinks contain the complete URL even when the TUI wraps the visible label.
++  // biome-ignore lint/suspicious/noControlCharactersInRegex: OSC terminal hyperlink boundaries are required to preserve the complete OAuth URL.
++  const rawUrls = output.match(/https:\/\/[^\s\x07\x1b<>"']+/g) ?? [];
++  const candidates = [
++    ...rawUrls,
++    ...(stripVTControlCharacters(output).match(/https:\/\/[^\s<>"']+/g) ?? []),
++  ];
++  for (const candidate of candidates) {
++    const parsed = providerAuthorizationChallengeSchema.safeParse({
++      flow: "AUTHORIZATION_CODE",
++      provider,
++      verificationUri: candidate,
++      expiresAt,
++    });
++    if (!parsed.success) continue;
++    const url = new URL(parsed.data.verificationUri);
++    if (
++      url.searchParams.get("response_type") !== "code" ||
++      !url.searchParams.get("state") ||
++      !url.searchParams.get("code_challenge") ||
++      !url.searchParams.get("client_id")
++    )
++      continue;
++    return parsed.data;
++  }
++  return null;
++}
++
++/** Official login only. No shell, prompts, tools, arbitrary terminal input or inherited API keys. */
++export function runProviderAuthorizationLogin(
++  job: ProviderOnboardingJob,
++  identity: ProviderIdentity,
++  control: Pick<
++    ControlClient,
++    "publishProviderOnboardingChallenge" | "takeProviderAuthorizationCode"
++  >,
++): Promise<{ exitCode: number | null; challengePublished: boolean }> {
++  if (job.provider === "CODEX") throw new Error("Use Codex device login");
++  const provider = job.provider;
++  return new Promise((resolve, reject) => {
++    const terminal =
++      provider === "ANTIGRAVITY"
++        ? spawnTerminal(identity.binaryPath, [...identity.binaryArgsPrefix, "--mode", "plan"], {
++            name: "xterm-256color",
++            cols: 240,
++            rows: 40,
++            cwd: identity.environment.HOME,
++            env: identity.environment,
++          })
++        : null;
++    const child =
++      provider === "CLAUDE"
++        ? spawn(
++            identity.binaryPath,
++            [...identity.binaryArgsPrefix, "auth", "login", "--claudeai"],
++            {
++              env: identity.environment,
++              cwd: identity.environment.HOME,
++              shell: false,
++              detached: true,
++              stdio: ["pipe", "pipe", "pipe"],
++            },
++          )
++        : null;
++    const pid = terminal?.pid ?? child?.pid;
++    let settled = false,
++      output = "",
++      bytes = 0,
++      published = false,
++      publishing = false,
++      selected = false,
++      awaitingCode = false,
++      codeSent = false,
++      polling = false;
++    let fatal: Error | null = null;
++    let authenticated = false;
++    const write = (text: string) => {
++      if (settled) return;
++      if (terminal) terminal.write(text);
++      else child?.stdin.write(text);
++    };
++    const stop = () => {
++      if (pid)
++        try {
++          process.kill(-pid, "SIGKILL");
++        } catch {
++          terminal?.kill("SIGKILL");
++          child?.kill("SIGKILL");
++        }
++    };
++    const finish = (exitCode: number | null) => {
++      if (settled) return;
++      settled = true;
++      clearTimeout(timeout);
++      clearInterval(poll);
++      active.delete(stop);
++      if (fatal) reject(fatal);
++      else resolve({ exitCode: authenticated ? 0 : exitCode, challengePublished: published });
++    };
++    const fail = (message: string) => {
++      fatal = new Error(message);
++      stop();
++    };
++    const receive = (chunk: string) => {
++      if (settled) return;
++      bytes += Buffer.byteLength(chunk);
++      if (bytes > 256 * 1024) {
++        fail("Authorization output limit exceeded");
++        return;
++      }
++      output += chunk;
++      if (terminal) {
++        for (const [query, reply] of [
++          ["\x1b]10;?", "\x1b]10;rgb:ffff/ffff/ffff\x07"],
++          ["\x1b]11;?", "\x1b]11;rgb:0000/0000/0000\x07"],
++          ["\x1b[6n", "\x1b[1;1R"],
++          ["\x1b[c", "\x1b[?1;2c"],
++        ] as const)
++          if (chunk.includes(query)) write(reply);
++        const plain = stripVTControlCharacters(output);
++        if (!selected && /1\.\s*Google OAuth/i.test(plain)) {
++          selected = true;
++          write("\r");
++        }
++      }
++      if (/(?:paste|enter)[^\r\n]*code|code[^\r\n]*paste/i.test(stripVTControlCharacters(chunk)))
++        awaitingCode = true;
++      if (
++        /login successful|signed in successfully|authenticated successfully/i.test(
++          stripVTControlCharacters(chunk),
++        )
++      )
++        awaitingCode = false;
++      if (!published && !publishing) {
++        const challenge = extractProviderAuthorizationChallenge(provider, output, job.expiresAt);
++        if (challenge) {
++          publishing = true;
++          void control.publishProviderOnboardingChallenge(job.sessionId, challenge).then(
++            () => {
++              published = true;
++            },
++            () => fail("Authorization challenge publication failed"),
++          );
++        }
++      }
++      if (published) output = output.slice(-16000);
++    };
++    child?.stdout.on("data", (chunk) => receive(chunk.toString()));
++    child?.stderr.on("data", (chunk) => receive(chunk.toString()));
++    child?.stdin.on("error", () => fail("Authorization input failed"));
++    child?.once("error", () => {
++      fatal = new Error("Official login client could not start");
++      finish(null);
++    });
++    child?.once("close", finish);
++    terminal?.onData(receive);
++    terminal?.onExit(({ exitCode }) => finish(exitCode));
++    active.add(stop);
++    const timeout = setTimeout(
++      () => fail("Onboarding session expired"),
++      Math.max(1, Math.min(600000, Date.parse(job.expiresAt) - Date.now())),
++    );
++    const poll = setInterval(() => {
++      if (settled || !published || polling) return;
++      polling = true;
++      void (async () => {
++        if (terminal) {
++          const status = await inspectProvider("ANTIGRAVITY", (binary, args) =>
++            runVerificationCommand(binary, args, identity),
++          );
++          if (status.providerState === "AVAILABLE") {
++            authenticated = true;
++            awaitingCode = false;
++            stop();
++            return;
++          }
++        }
++        if (!codeSent && awaitingCode) {
++          const code = await control.takeProviderAuthorizationCode(job.sessionId);
++          if (code) {
++            providerAuthorizationCodeSchema.parse({ code });
++            codeSent = true;
++            awaitingCode = false;
++            write(`${code}${terminal ? "\r" : "\n"}`);
++          }
++        }
++      })()
++        .catch(() => fail("Authorization control or status failed"))
++        .finally(() => {
++          polling = false;
++        });
++    }, 1000);
++  });
++}
+diff --git a/apps/worker/src/provider-identity.ts b/apps/worker/src/provider-identity.ts
+index 8a80283..430bc9e 100644
+--- a/apps/worker/src/provider-identity.ts
++++ b/apps/worker/src/provider-identity.ts
+@@ -1 +1,3 @@
+-import { lstat, mkdir, realpath } from "node:fs/promises";
++import { randomBytes } from "node:crypto";
++import { constants } from "node:fs";
++import { access, lstat, mkdir, open, realpath } from "node:fs/promises";
+@@ -18 +20 @@ export class ProviderIdentityManager {
+-    private readonly binaries: { CODEX: string; CLAUDE: string },
++    private readonly binaries: { CODEX: string; CLAUDE: string; ANTIGRAVITY?: string },
+@@ -24 +26 @@ export class ProviderIdentityManager {
+-    if (provider !== "CODEX" && provider !== "CLAUDE")
++    if (provider !== "CODEX" && provider !== "CLAUDE" && provider !== "ANTIGRAVITY")
+@@ -32,0 +35 @@ export class ProviderIdentityManager {
++    if (!binaryPath) throw new Error("Provider binary is not configured");
+@@ -48 +51,51 @@ export class ProviderIdentityManager {
+-    else environment.CLAUDE_CONFIG_DIR = store;
++    else if (provider === "CLAUDE") environment.CLAUDE_CONFIG_DIR = store;
++    else {
++      environment.SSH_CONNECTION = "127.0.0.1 0 127.0.0.1 0";
++      environment.TERM = "xterm-256color";
++      environment.XDG_RUNTIME_DIR = await privateChild(account, "runtime");
++    }
++    if (provider === "ANTIGRAVITY") {
++      try {
++        await Promise.all(
++          ["/usr/bin/dbus-run-session", "/usr/bin/dbus-send", "/usr/bin/gnome-keyring-daemon"].map(
++            (binary) => access(binary, constants.X_OK),
++          ),
++        );
++      } catch {
++        throw new Error("Antigravity private keyring dependencies missing");
++      }
++      const secretPath = path.join(account, "keyring-unlock");
++      try {
++        const file = await open(secretPath, "wx", 0o600);
++        try {
++          await file.writeFile(randomBytes(32).toString("hex"));
++        } finally {
++          await file.close();
++        }
++      } catch (error) {
++        if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
++      }
++      const metadata = await lstat(secretPath);
++      if (
++        !metadata.isFile() ||
++        metadata.isSymbolicLink() ||
++        metadata.uid !== process.getuid?.() ||
++        (metadata.mode & 0o077) !== 0 ||
++        metadata.size !== 64
++      )
++        throw new Error("Private keyring configuration unavailable");
++      let launcher = path.join(__dirname, "antigravity-keyring-launcher.js");
++      try {
++        await access(launcher, constants.R_OK);
++      } catch {
++        launcher = path.resolve(__dirname, "../dist/antigravity-keyring-launcher.js");
++        await access(launcher, constants.R_OK).catch(() => {
++          throw new Error("Antigravity keyring launcher must be built");
++        });
++      }
++      return {
++        binaryPath: "/usr/bin/dbus-run-session",
++        binaryArgsPrefix: ["--", process.execPath, launcher, binaryPath, secretPath],
++        environment,
++      };
++    }
+diff --git a/apps/worker/src/provider-onboarding.processor.ts b/apps/worker/src/provider-onboarding.processor.ts
+index b2bbc99..8e802a5 100644
+--- a/apps/worker/src/provider-onboarding.processor.ts
++++ b/apps/worker/src/provider-onboarding.processor.ts
+@@ -144 +144 @@ export async function processProviderOnboarding(
+-    const verification = await inspector("CODEX");
++    const verification = await inspector(job.provider);
+@@ -149 +149,4 @@ export async function processProviderOnboarding(
+-        message: "Official Codex subscription login confirmed",
++        message:
++          job.provider === "CODEX"
++            ? "Official Codex subscription login confirmed"
++            : "Official provider account login confirmed",
+@@ -155 +158 @@ export async function processProviderOnboarding(
+-        message: "Codex login was not confirmed by the official client",
++        message: "Provider login was not confirmed by the official client",
+@@ -165 +168 @@ export async function processProviderOnboarding(
+-        : "Codex login failed without persisted client output",
++        : "Provider login failed without persisted client output",
+diff --git a/apps/worker/src/provider-verification.processor.ts b/apps/worker/src/provider-verification.processor.ts
+index aa8f58a..832a5d2 100644
+--- a/apps/worker/src/provider-verification.processor.ts
++++ b/apps/worker/src/provider-verification.processor.ts
+@@ -146,0 +147,8 @@ export async function inspectProvider(
++    if (provider === "ANTIGRAVITY" && observedModels.length === 0)
++      return {
++        status: "COMPLETED",
++        providerState: "ERROR",
++        cliVersion,
++        observedModels: [],
++        message: "Official model catalog did not confirm account authentication",
++      };
+@@ -176 +184,7 @@ export async function inspectProvider(
+-          : "Client verification failed without persisted output",
++          : error instanceof Error &&
++              error.message === "Antigravity private keyring dependencies missing"
++            ? "Antigravity requires a private keyring; install gnome-keyring on the VPS"
++            : error instanceof Error &&
++                error.message === "Antigravity keyring launcher must be built"
++              ? "Build the worker to prepare the Antigravity private keyring launcher"
++              : "Client verification failed without persisted output",
+diff --git a/infrastructure/systemd/worker.env.example b/infrastructure/systemd/worker.env.example
+index 9eab310..9dba97b 100644
+--- a/infrastructure/systemd/worker.env.example
++++ b/infrastructure/systemd/worker.env.example
+@@ -20,0 +21,2 @@ WORKER_CLAUDE_BINARY=/usr/bin/claude
++WORKER_ANTIGRAVITY_BINARY=/usr/bin/agy
++# Antigravity requires gnome-keyring; its D-Bus/keyring session is private per account.
+diff --git a/package-lock.json b/package-lock.json
+index e96284f..68c627c 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -184,0 +185 @@
++        "node-pty": "1.1.0",
+@@ -3021,0 +3023,6 @@
++    "node_modules/node-addon-api": {
++      "version": "7.1.1",
++      "resolved": "https://registry.npmjs.org/node-addon-api/-/node-addon-api-7.1.1.tgz",
++      "integrity": "sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==",
++      "license": "MIT"
++    },
+@@ -3036,0 +3044,10 @@
++    "node_modules/node-pty": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/node-pty/-/node-pty-1.1.0.tgz",
++      "integrity": "sha512-20JqtutY6JPXTUnL0ij1uad7Qe1baT46lyolh2sSENDd4sTzKZ4nmAFkeAARDKwmlLjPx6XKRlwRUxwjOy+lUg==",
++      "hasInstallScript": true,
++      "license": "MIT",
++      "dependencies": {
++        "node-addon-api": "^7.1.0"
++      }
++    },
+diff --git a/packages/contracts/src/index.spec.ts b/packages/contracts/src/index.spec.ts
+index 169f33e..4d5c8d0 100644
+--- a/packages/contracts/src/index.spec.ts
++++ b/packages/contracts/src/index.spec.ts
+@@ -770,0 +771,34 @@ describe("Codex device code case", () => {
++
++describe("provider authorization challenges", () => {
++  it("binds Claude and Google authorization URLs to their providers", () => {
++    const common = { flow: "AUTHORIZATION_CODE", expiresAt: "2026-10-05T22:00:00.000Z" };
++    expect(
++      providerOnboardingChallengeSchema.safeParse({
++        ...common,
++        provider: "CLAUDE",
++        verificationUri: "https://claude.com/cai/oauth/authorize?state=fixture",
++      }).success,
++    ).toBe(true);
++    expect(
++      providerOnboardingChallengeSchema.safeParse({
++        ...common,
++        provider: "ANTIGRAVITY",
++        verificationUri: "https://accounts.google.com/o/oauth2/auth?state=fixture",
++      }).success,
++    ).toBe(true);
++    expect(
++      providerOnboardingChallengeSchema.safeParse({
++        ...common,
++        provider: "CLAUDE",
++        verificationUri: "https://accounts.google.com/oauth",
++      }).success,
++    ).toBe(false);
++    expect(
++      providerOnboardingChallengeSchema.safeParse({
++        ...common,
++        provider: "ANTIGRAVITY",
++        verificationUri: "https://accounts.google.com.evil.example/oauth",
++      }).success,
++    ).toBe(false);
++  });
++});
+diff --git a/packages/contracts/src/index.ts b/packages/contracts/src/index.ts
+index 9ec315c..a3235cf 100644
+--- a/packages/contracts/src/index.ts
++++ b/packages/contracts/src/index.ts
+@@ -1213 +1213 @@ export const providerOnboardingSessionSchema = z
+-    provider: z.literal("CODEX"),
++    provider: settingsProviderSchema,
+@@ -1233 +1233 @@ export const providerOnboardingJobSchema = z
+-    provider: z.literal("CODEX"),
++    provider: settingsProviderSchema,
+@@ -1239 +1239 @@ export type ProviderOnboardingJob = z.infer<typeof providerOnboardingJobSchema>;
+-export const providerOnboardingChallengeSchema = z
++const codexOnboardingChallengeSchema = z
+@@ -1240,0 +1241,2 @@ export const providerOnboardingChallengeSchema = z
++    flow: z.undefined().optional(),
++    provider: z.undefined().optional(),
+@@ -1260,0 +1263,39 @@ export const providerOnboardingChallengeSchema = z
++export const providerAuthorizationChallengeSchema = z
++  .object({
++    flow: z.literal("AUTHORIZATION_CODE"),
++    provider: z.enum(["CLAUDE", "ANTIGRAVITY"]),
++    verificationUri: z.url().max(12000),
++    userCode: z.undefined().optional(),
++    expiresAt: z.iso.datetime(),
++  })
++  .strict()
++  .superRefine((challenge, context) => {
++    const url = new URL(challenge.verificationUri);
++    const hosts =
++      challenge.provider === "CLAUDE"
++        ? ["claude.ai", "claude.com", "platform.claude.com", "console.anthropic.com"]
++        : ["accounts.google.com"];
++    if (url.protocol !== "https:" || !hosts.includes(url.hostname) || url.username || url.password)
++      context.addIssue({
++        code: "custom",
++        message: "Authorization URL must match the official provider",
++        path: ["verificationUri"],
++      });
++  });
++export const providerOnboardingChallengeSchema = z.union([
++  codexOnboardingChallengeSchema,
++  providerAuthorizationChallengeSchema,
++]);
++export const providerAuthorizationCodeSchema = z
++  .object({
++    code: z
++      .string()
++      .trim()
++      .min(8)
++      .max(4096)
++      .regex(/^[A-Za-z0-9._~+/#=-]+$/),
++  })
++  .strict();
++export const providerAuthorizationCodeResultSchema = z
++  .object({ code: providerAuthorizationCodeSchema.shape.code.nullable() })
++  .strict();
+diff --git a/scripts/providers.ts b/scripts/providers.ts
+index 7f6843f..6562d8c 100644
+--- a/scripts/providers.ts
++++ b/scripts/providers.ts
+@@ -47,0 +48 @@ async function main() {
++      WORKER_ANTIGRAVITY_BINARY: process.env.WORKER_ANTIGRAVITY_BINARY ?? (await binary("agy")),

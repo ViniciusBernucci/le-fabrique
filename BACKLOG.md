@@ -1,70 +1,72 @@
+> Nota editorial DOC-MV-001, 2026-10-07: backlog local integral preservado. As entradas acumuladas registram estado na revisão do incremento, com atualizações posteriores no mesmo arquivo. FAC-013 atual é modal de contas IMPLEMENTADO/AWAITING_HUMAN (54475ba e relato), enquanto “FAC-013 terceiro adapter PLANEJADO” é intenção histórica com ID reutilizado, não próximo ticket ativo. FAC-012/piloto/dependências antigas não tornam o piloto requisito do MVP: contrato local atual o mantém DEFERRED/opcional. Código de recovery/handoff/consumer integra incrementos posteriores; frases antigas “não integrado/pendente” não negam implementação atual descrita no AS-IS. Aceites por SHA continuam exatamente como registrados, sem promoção por esta migração.
+
 # Backlog v2
 
-- FAC-022: AWAITING_HUMAN — template persistente e fontes compactas em `4e042a1`, 43 testes web PASS; navegação/DOM/fontes verificadas em browser na porta 5173. [Relatório](documentacoes/controle/2026-10-05-FAC-022-template-tipografia.md).
+- FAC-022: AWAITING_HUMAN — template persistente e fontes compactas em `4e042a1`, 43 testes web PASS; navegação/DOM/fontes verificadas em browser na porta 5173. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-022-template-tipografia.md).
 
 
-- FAC-021: AWAITING_HUMAN — nome La fabrique e cena central 60% em `cde0cc6`, 322 testes PASS, browser na porta 5173 PASS. [Relatório](documentacoes/controle/2026-10-05-FAC-021-nome-escala-home.md).
-- FAC-020A: AWAITING_HUMAN — home integrada em developer por autorização explícita, funcionamento na porta habitual verificado e worktree FAC-020 removida após preservar commits. [Relatório](documentacoes/controle/2026-10-05-FAC-020A-home-em-developer.md).
+- FAC-021: AWAITING_HUMAN — nome La fabrique e cena central 60% em `cde0cc6`, 322 testes PASS, browser na porta 5173 PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-021-nome-escala-home.md).
+- FAC-020A: AWAITING_HUMAN — home integrada em developer por autorização explícita, funcionamento na porta habitual verificado e worktree FAC-020 removida após preservar commits. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-020A-home-em-developer.md).
 
 
-- FAC-020: AWAITING_HUMAN — central de controle estática em `904d0b5`, 42 testes web e browser desktop/mobile passaram. Dados simulados; aceite visual/integração pendentes. [Relatório](documentacoes/controle/2026-10-05-FAC-020-central-controle-estatica.md).
+- FAC-020: AWAITING_HUMAN — central de controle estática em `904d0b5`, 42 testes web e browser desktop/mobile passaram. Dados simulados; aceite visual/integração pendentes. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-020-central-controle-estatica.md).
 
 
-- FAC-017: AWAITING_HUMAN — desafio ANSI Codex corrigido e aba oficial/fallback implementados; confirmação humana da assinatura e visual pendentes. [Relatório](documentacoes/configuracao/2026-10-05-FAC-017-login-device-codex.md).
+- FAC-017: AWAITING_HUMAN — desafio ANSI Codex corrigido e aba oficial/fallback implementados; confirmação humana da assinatura e visual pendentes. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-017-login-device-codex.md).
 
-- FAC-016: AWAITING_HUMAN — feedback de verificação no modal; 35 testes web/209 worker passaram, pedido Codex real COMPLETED/AUTH_REQUIRED. [Relatório](documentacoes/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
+- FAC-016: AWAITING_HUMAN — feedback de verificação no modal; 35 testes web/209 worker passaram, pedido Codex real COMPLETED/AUTH_REQUIRED. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-016-feedback-verificacao-codex.md).
 
-- FAC-015: AWAITING_HUMAN — login oficial por conta, catálogo Codex integrado e modelos compartilhados; 537 testes passaram. Login real e verificação visual pendentes. [Relatório](documentacoes/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
+- FAC-015: AWAITING_HUMAN — login oficial por conta, catálogo Codex integrado e modelos compartilhados; 537 testes passaram. Login real e verificação visual pendentes. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-015-contas-autenticadas-modelos.md).
 
-- FAC-014: AWAITING_HUMAN — listas e modais de funcionários digitais/GitHub implementados, validação visual humana pendente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
-- FAC-013: AWAITING_HUMAN — lista compacta de contas IA/configuração em modal implementada em `54475ba`; 33 testes web, typecheck/lint/build passaram. Validação manual do visual pendente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
-- OPS-009: AWAITING_HUMAN — P3018 reconciliado após comprovar schema, zero migrations em falha ativa. Nove migrations pendentes; duas attempts sem stop preservadas. [Evidências](documentacoes/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
-- OPS-008: AWAITING_HUMAN — comandos Prisma com `.env` raiz e favicon implementados. Falhas de telas dependem de atualizar banco dev: histórico divergente e duas tentativas sem parada confirmada; nenhuma liberação presumida. [Relatório](documentacoes/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
-- OPS-007: AWAITING_HUMAN — FAC-012Z–AH integrados localmente em developer, nove worktrees funcionais removidas, branches preservadas. [Relatório](documentacoes/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
-- FAC-012AH: AWAITING_HUMAN — código `f2d80f1`, 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; revisão humana/ativação operacionais separadas do software e do piloto. [Relatório](documentacoes/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
+- FAC-014: AWAITING_HUMAN — listas e modais de funcionários digitais/GitHub implementados, validação visual humana pendente. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-014-modais-funcionarios-github.md).
+- FAC-013: AWAITING_HUMAN — lista compacta de contas IA/configuração em modal implementada em `54475ba`; 33 testes web, typecheck/lint/build passaram. Validação manual do visual pendente. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-013-modal-contas-ia.md).
+- OPS-009: AWAITING_HUMAN — P3018 reconciliado após comprovar schema, zero migrations em falha ativa. Nove migrations pendentes; duas attempts sem stop preservadas. [Evidências](docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-009-reconciliar-migration-historica.md).
+- OPS-008: AWAITING_HUMAN — comandos Prisma com `.env` raiz e favicon implementados. Falhas de telas dependem de atualizar banco dev: histórico divergente e duas tentativas sem parada confirmada; nenhuma liberação presumida. [Relatório](docs/09-entregas/2026/infraestrutura/2026-10-05-OPS-008-bootstrap-migrations-telas.md).
+- OPS-007: AWAITING_HUMAN — FAC-012Z–AH integrados localmente em developer, nove worktrees funcionais removidas, branches preservadas. [Relatório](docs/09-entregas/2026/operacao/2026-10-05-OPS-007-consolidacao-worktrees.md).
+- FAC-012AH: AWAITING_HUMAN — código `f2d80f1`, 528 testes + 10 PostgreSQL + 3 Redis. Lacunas internas auditadas implementadas; revisão humana/ativação operacionais separadas do software e do piloto. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012AH-admissao-capacidade.md).
 
-- FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup de capacidade fechado pelo FAC-012AH. [Relatório](documentacoes/controle/2026-10-03-FAC-012AG-pausa-global.md).
+- FAC-012AG: AWAITING_HUMAN — pausa global/claim/renew/queue/UI em `881ce3d`; 519 testes + 10 PostgreSQL + 2 Redis. Followup de capacidade fechado pelo FAC-012AH. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012AG-pausa-global.md).
 
-- FAC-012AF: AWAITING_HUMAN — backup/restauração em `7de9041`, 501 testes internos + 8 PostgreSQL; sem storage externo/serviço real. Pausa global implementada no FAC-012AG. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
+- FAC-012AF: AWAITING_HUMAN — backup/restauração em `7de9041`, 501 testes internos + 8 PostgreSQL; sem storage externo/serviço real. Pausa global implementada no FAC-012AG. [Evidências](docs/09-entregas/2026/operacao/2026-10-03-FAC-012AF-backup-restauracao.md).
 
-- FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Backup/restauração implementados no FAC-012AF. [Evidências](documentacoes/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
+- FAC-012AE: AWAITING_HUMAN — SSE/cursor/triggers/reconnect em `9173532`, 485 testes + 7 PostgreSQL; migration apenas efêmera. Backup/restauração implementados no FAC-012AF. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012AE-eventos-projeto.md).
 
-- FAC-012AD: AWAITING_HUMAN — painel/endpoint operacional e guard fail-closed em `6277a81`; 461 testes + 4 PostgreSQL. SSE implementado no FAC-012AE; piloto independente. [Relatório](documentacoes/controle/2026-10-03-FAC-012AD-painel-operacao.md).
+- FAC-012AD: AWAITING_HUMAN — painel/endpoint operacional e guard fail-closed em `6277a81`; 461 testes + 4 PostgreSQL. SSE implementado no FAC-012AE; piloto independente. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012AD-painel-operacao.md).
 
-- FAC-012AC: AWAITING_HUMAN — exclusão global em `143f3d6`, 445 testes + 3 PostgreSQL; migration somente efêmera. Piloto não bloqueia MVP. [Relatório](documentacoes/controle/2026-10-03-FAC-012AC-writer-global.md).
+- FAC-012AC: AWAITING_HUMAN — exclusão global em `143f3d6`, 445 testes + 3 PostgreSQL; migration somente efêmera. Piloto não bloqueia MVP. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012AC-writer-global.md).
 
-- FAC-012AB: AWAITING_HUMAN — ensaio integrado interno em `1714347`, 438 testes; providers/controle externos sintéticos, sem operação real. [Evidências](documentacoes/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
-- FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço pendente, sem conta real desbloqueada; piloto opcional separado. [Evidências](documentacoes/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
+- FAC-012AB: AWAITING_HUMAN — ensaio integrado interno em `1714347`, 438 testes; providers/controle externos sintéticos, sem operação real. [Evidências](docs/09-entregas/2026/operacao/2026-10-03-FAC-012AB-ensaio-integrado-mvp.md).
+- FAC-012AA: AWAITING_HUMAN — perfil Claude granular/preflight/gate de prova privada em `56f2e38`; 433 testes/checks. Validação de serviço pendente, sem conta real desbloqueada; piloto opcional separado. [Evidências](docs/09-entregas/2026/runtime/2026-10-03-FAC-012AA-confinamento-claude.md).
 
-- FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](documentacoes/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
+- FAC-012Z: AWAITING_HUMAN — gate documental técnico implementado em `9c48dd9`, configuração UI/READY/compilador, revisão semântica e hashes exatos; 422 testes/checks. Sem provider/piloto/deploy. [Evidências](docs/09-entregas/2026/controle/2026-10-03-FAC-012Z-gate-documentacao-tecnica.md).
 
-- FAC-012Y: AWAITING_HUMAN — alternativas UI/handoff no workflow real, código `f66a923`, 411 testes/checks; limites/stop/snapshot/restore/lease preservados, sem operação real. [Relatório](documentacoes/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
+- FAC-012Y: AWAITING_HUMAN — alternativas UI/handoff no workflow real, código `f66a923`, 411 testes/checks; limites/stop/snapshot/restore/lease preservados, sem operação real. [Relatório](docs/09-entregas/2026/handoff/2026-10-03-FAC-012Y-handoff-configurado.md).
 
-- FAC-012X: AWAITING_HUMAN — espera provider com stop/snapshot e retomada explícita, código `345e8ef`, 399 testes/checks; migration não aplicada. [Relatório](documentacoes/operacao/2026-10-03-FAC-012X-espera-provider.md).
+- FAC-012X: AWAITING_HUMAN — espera provider com stop/snapshot e retomada explícita, código `345e8ef`, 399 testes/checks; migration não aplicada. [Relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012X-espera-provider.md).
 
-- FAC-012W: AWAITING_HUMAN — entrega íntegra ampliada 8 MiB JSON/6 MiB raw, código `2a1ae96`, 387 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
+- FAC-012W: AWAITING_HUMAN — entrega íntegra ampliada 8 MiB JSON/6 MiB raw, código `2a1ae96`, 387 testes/checks. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012W-artefatos-ampliados.md).
 
-- FAC-012V: AWAITING_HUMAN — identidade privada por instalação UI no login/status/runtime, código `22f6375`, 380 testes/checks. Claude escrita bloqueada; [relatório](documentacoes/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
+- FAC-012V: AWAITING_HUMAN — identidade privada por instalação UI no login/status/runtime, código `22f6375`, 380 testes/checks. Claude escrita bloqueada; [relatório](docs/09-entregas/2026/runtime/2026-10-03-FAC-012V-identidades-instalacoes.md).
 
-- FAC-012U: AWAITING_HUMAN — recuperação de journal/checkpoint sem IA/novo writer, código `9d4a4f1`, 370 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
+- FAC-012U: AWAITING_HUMAN — recuperação de journal/checkpoint sem IA/novo writer, código `9d4a4f1`, 370 testes/checks. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012U-recuperacao-finalizacao.md).
 
-- FAC-012T: AWAITING_HUMAN — retomada explícita parada/íntegra, objetivo congelado, novo fence e baseline pré-restore; código `42e7037`, 355 testes/checks. [Relatório](documentacoes/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
+- FAC-012T: AWAITING_HUMAN — retomada explícita parada/íntegra, objetivo congelado, novo fence e baseline pré-restore; código `42e7037`, 355 testes/checks. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012T-retomada-snapshot.md).
 
-- FAC-012S: AWAITING_HUMAN — pausa/cancelamento no painel com stop/snapshot/journal, código `be4e2ff`, 336 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012S-comandos-run.md).
+- FAC-012S: AWAITING_HUMAN — pausa/cancelamento no painel com stop/snapshot/journal, código `be4e2ff`, 336 testes/checks. Migration não aplicada; [relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012S-comandos-run.md).
 
-- FAC-012R: AWAITING_HUMAN — snapshot/observações de interrupção conhecida e término unknown sticky, código `abfb033`, 315 testes/checks; [relatório](documentacoes/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
+- FAC-012R: AWAITING_HUMAN — snapshot/observações de interrupção conhecida e término unknown sticky, código `abfb033`, 315 testes/checks; [relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012R-snapshot-interrupcao.md).
 
-- FAC-012Q: AWAITING_HUMAN — relatório determinístico de entrega/aceite exato no painel, código `bfd8532`, 306 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
+- FAC-012Q: AWAITING_HUMAN — relatório determinístico de entrega/aceite exato no painel, código `bfd8532`, 306 testes/checks. Migration não aplicada; [relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012Q-documentacao-aceite-entrega.md).
 
-- FAC-012P: AWAITING_HUMAN — diff e bundle do último snapshot no painel, até 64 KiB, código `739cff0`, 289 testes/checks. Migration não aplicada; [relatório](documentacoes/controle/2026-10-03-FAC-012P-artefatos-painel.md).
+- FAC-012P: AWAITING_HUMAN — diff e bundle do último snapshot no painel, até 64 KiB, código `739cff0`, 289 testes/checks. Migration não aplicada; [relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012P-artefatos-painel.md).
 
-- FAC-012O: AWAITING_HUMAN — journal privado de resultado normal antes da API, replay sem IA; código `016a5ef`, 266 testes/checks. [Relatório](documentacoes/operacao/2026-10-03-FAC-012O-journal-resultados.md).
+- FAC-012O: AWAITING_HUMAN — journal privado de resultado normal antes da API, replay sem IA; código `016a5ef`, 266 testes/checks. [Relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012O-journal-resultados.md).
 
-- FAC-012N: AWAITING_HUMAN — reconciliação de checkpoint parado no replay sem checkout/IA; código `94b5d64`, 257 testes/checks locais. [Relatório](documentacoes/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
+- FAC-012N: AWAITING_HUMAN — reconciliação de checkpoint parado no replay sem checkout/IA; código `94b5d64`, 257 testes/checks locais. [Relatório](docs/09-entregas/2026/operacao/2026-10-03-FAC-012N-reconciliacao-checkpoint.md).
 
-- FAC-012M: AWAITING_HUMAN — resultados persistidos/fenced e histórico no painel, código `14ae5ba`, 240 testes/checks locais. Migration não aplicada; diff completo/recuperação pendentes. [Relatório](documentacoes/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).
+- FAC-012M: AWAITING_HUMAN — resultados persistidos/fenced e histórico no painel, código `14ae5ba`, 240 testes/checks locais. Migration não aplicada; diff completo/recuperação pendentes. [Relatório](docs/09-entregas/2026/controle/2026-10-03-FAC-012M-resultados-execucao-painel.md).
 
-Estado atual consolidado em [CONTROLE-MVP.md](CONTROLE-MVP.md). OPS-006 integrou OPS-005/FAC-012K/L localmente e retirou worktrees comprovadamente integrados; pendências de software permanecem explícitas.
+Estado atual consolidado em [CONTROLE-MVP.md](docs/08-desenvolvimento/controle-mvp.md). OPS-006 integrou OPS-005/FAC-012K/L localmente e retirou worktrees comprovadamente integrados; pendências de software permanecem explícitas.
 
 ## Decisão obrigatória da stack - revisão 2.3
 A stack da própria La fabrique está APROVADA: React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL; Redis + BullMQ; Docker Compose na mesma VPS. Não solicitar nova escolha ou confirmação da stack. Não iniciar a fábrica em PHP/Laravel, Angular ou .NET. Esta decisão substitui propostas anteriores.
@@ -120,22 +122,26 @@ Infraestrutura VPS única incluída em FAC-002/003/004/007/012; perfil Bom recom
 React + TypeScript + Vite no painel; NestJS + TypeScript na API; worker Node.js + TypeScript em processo separado; PostgreSQL e Redis + BullMQ. Monorepo apps/web, apps/api, apps/worker e packages/contracts. Ler documentacoes/arquitetura/ADR-003-stack-typescript.md.
 Compartilhar esquemas/DTOs e validar dados em runtime; impedir import de segredos/código servidor no painel. Outbox, idempotência, leases e fencing seguem obrigatórios: lock BullMQ não substitui exclusão do writer. API não executa builds/clientes. Executar typecheck, lint, builds e testes relevantes. Preservar a stack somente de pilotos externos; a própria fábrica segue a stack aprovada.
 
-FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
+FAC-018 AWAITING_HUMAN: login oficial Claude e Google/Antigravity no painel; keyring VPS e consentimento real pendentes. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-018-login-claude-antigravity.md).
 
-FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](documentacoes/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
+FAC-019 AWAITING_HUMAN: abas Contas, Integrações IA, Equipes. [Evidências](docs/09-entregas/2026/configuracao/2026-10-05-FAC-019-abas-configuracoes.md).
 
-- FAC-023: AWAITING_HUMAN — agentes e skills por projeto; 562 testes, typecheck/lint/build e browser fixture PASS. Código a25638acde42ba50576908f1bf6725570a360a99; registro não executa novos perfis automaticamente. [Relatório](documentacoes/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
+- FAC-023: AWAITING_HUMAN — agentes e skills por projeto; 562 testes, typecheck/lint/build e browser fixture PASS. Código a25638acde42ba50576908f1bf6725570a360a99; registro não executa novos perfis automaticamente. [Relatório](docs/09-entregas/2026/configuracao/2026-10-05-FAC-023-agentes-skills-projeto.md).
 
-- FAC-024: AWAITING_HUMAN — vídeo decorativo em loop e área compacta na home. Código eaf90013e8978a6562f930b98754f28d9a68c5d7; 46 testes web/typecheck/lint/build e browser com reprodução real PASS. [Relatório](documentacoes/controle/2026-10-05-FAC-024-video-dashboard.md).
+- FAC-024: AWAITING_HUMAN — vídeo decorativo em loop e área compacta na home. Código eaf90013e8978a6562f930b98754f28d9a68c5d7; 46 testes web/typecheck/lint/build e browser com reprodução real PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-05-FAC-024-video-dashboard.md).
 
-- FAC-025: AWAITING_HUMAN — vídeo retirado/imagem original restaurada, área compacta mantida. Código f264747e10a489c84338ae85f3d6c92e914524b2; 46 testes web e browser/typecheck/lint/build PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).
+- FAC-025: AWAITING_HUMAN — vídeo retirado/imagem original restaurada, área compacta mantida. Código f264747e10a489c84338ae85f3d6c92e914524b2; 46 testes web e browser/typecheck/lint/build PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-06-FAC-025-retirar-video-dashboard.md).
 
 - FAC-026 / FAC-027: AWAITING_HUMAN — agentes pré-configurados com switch/modal e menu recolhível. Código bb0ad15 / b1d794035342128b9ed832d5fe9b74c887eb7075; 46 testes web/typecheck/lint/build e dois fluxos browser PASS. Aceite exato pendente.
 
-- FAC-028: AWAITING_HUMAN — seta minimalista no toggle de menu; código efbcb86631da70e6afe40ce33265a97a69f62847, typecheck/build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
+- FAC-028: AWAITING_HUMAN — seta minimalista no toggle de menu; código efbcb86631da70e6afe40ce33265a97a69f62847, typecheck/build/lint/browser PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-06-FAC-028-seta-menu-minimalista.md).
 
-- FAC-029: AWAITING_HUMAN — seta à direita; código ec98b7dc2f2ea700857810fe5df708bae91a720a, build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-029-seta-direita-menu.md).
+- FAC-029: AWAITING_HUMAN — seta à direita; código ec98b7dc2f2ea700857810fe5df708bae91a720a, build/lint/browser PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-06-FAC-029-seta-direita-menu.md).
 
-- FAC-030: AWAITING_HUMAN — menu inicia recolhido; código 3608f1766c50ee49071a6430d1087fa2fd538749, 46 testes web/build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
+- FAC-030: AWAITING_HUMAN — menu inicia recolhido; código 3608f1766c50ee49071a6430d1087fa2fd538749, 46 testes web/build/lint/browser PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-06-FAC-030-menu-inicial-recolhido.md).
 
-- FAC-031: AWAITING_HUMAN — seta por estado do menu; código 3b7e02067884378b7775ebf48af81d61c82187a8, build/lint/browser PASS. [Relatório](documentacoes/controle/2026-10-06-FAC-031-posicao-seta-menu.md).
+- FAC-031: AWAITING_HUMAN — seta por estado do menu; código 3b7e02067884378b7775ebf48af81d61c82187a8, build/lint/browser PASS. [Relatório](docs/09-entregas/2026/controle/2026-10-06-FAC-031-posicao-seta-menu.md).
+
+## Migração documental — DOC-MV-001
+
+READY autorizado pelo pedido de 2026-10-07; implementação documental executada em branch isolada docs/manual-vivo-inicial. Estado AWAITING_HUMAN após checks registrados na entrega; não altera status/aceites FAC/OPS ou implementa LF-MT. [Entrega](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md), [plano LF-MT posterior PROPOSTO](docs/08-desenvolvimento/plano-lf-mt-proposto.md). Colisão histórica FAC-013 (plano terceiro adapter versus modal contas entregue) é explicitada na auditoria, sem renumerar passado.

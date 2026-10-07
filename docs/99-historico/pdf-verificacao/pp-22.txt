@@ -1,0 +1,18 @@
+Fábrica de Software | v2.1 | Planejamento
+22
+AUTH_REQUIRED: usuário autentica no fluxo oficial. RATE_LIMITED: cooldown/fallback elegível.
+TRANSIENT: backoff com limite. CONTEXT_TOO_LARGE: reduzir contexto e registrar mudança.
+TOOL_DENIED: corrigir perfil/escopo, não ampliar automaticamente. TIMEOUT: cancelar árvore,
+checkpoint e revisão de estado. RESULT_UNKNOWN: reconciliar antes de repetir. UNSUPPORTED:
+manter adapter desativado para a capacidade.
+Uso e cotas têm unidade/fonte/observed_at/reset_at/confiança. Estado de quota, crédito de
+assinatura e tarifa API são dados distintos. Não usar endpoints privados ou scraping do site para
+medir cota.
+Roteamento
+Filtrar por política/capacidade e disponibilidade; ordenar por preferência do papel e desempenho
+recente; adquirir lock do writer; executar. Preferências iniciais configuráveis: implementação
+Codex; revisão/arquitetura Claude; UI/QA Antigravity. Não usar percentuais fictícios de sucesso;
+aprender com ensaio registrado.
+Cache de roteamento não deve ignorar observações novas de limite. Provider indisponível não
+implica mudar modelo/conta silenciosamente. API só entra no catálogo quando habilitada
+explicitamente em política futura.

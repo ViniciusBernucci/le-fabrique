@@ -1,0 +1,62 @@
+# Matriz de cobertura — baseline histórica e extensão proposta
+
+O bloco v1→v2 abaixo é relato histórico da fonte anterior, não afirma recuperação do kit v1 nesta tarefa. Paths históricos da tabela não são o índice atual; use [mapa corrente](../00-governanca/MAPA-MIGRACAO.md).
+
+## Cobertura histórica v1 → v2
+Fonte: kit v1 e PDF original recuperados nesta tarefa, mais nova direção fornecida pelo usuário. Estrutura e requisitos anteriores preservados/adaptados; alterações incompatíveis substituídas.
+| Tema anterior | Tratamento v2 | Documento |
+|---|---|---|
+| VPS única para tudo | VPS única para controle e execução | Arquitetura 1-3 |
+| IA por API | Clientes oficiais/assinatura; API futura desligada | Runtime; Fontes |
+| AI Gateway | Agent Runtime Gateway, lifecycle real dos CLIs | ESPEC-MVP; Runtime |
+| ModelRouter | Elegibilidade/capacidade/cota e desempenho medido | Arquitetura 7 |
+| TokenMeter/CostLedger/BudgetGuard | UsageMeter + custos fixos/extras + RuntimeGuard; API budget futuro | Economia; Especificação |
+| Simulação API por tokens | Substituída por TCO/atribuição; sem promessa de tickets | Arquitetura 8 |
+| Context Builder/cache/Batch | Contexto enxuto; cache condicionado; Batch só futuro API | Arquitetura 6; Economia |
+| MacBook fora V1 | Sem dependência no MVP; execução na VPS | Operação |
+| Docker/worktrees/testes | Mantidos no worker, isolamento do cliente e código | Arquitetura 9; Operação |
+| Tickets/estados/recuperação | Acrescenta espera, leases, cancel e checkpoint | Especificação; Handoff |
+| Arquiteto/Tech Lead/Developer/Review/QA/docs | Papéis mantidos; mínimo Developer/Reviewer | Arquitetura 5 |
+| R0-R4 e escopo pequeno | Mantidos; piloto R0/R1 | Arquitetura 5; PILOTO |
+| APIs internas/entidades | Atualizadas com workers/installations/checkpoints | ESPEC-MVP |
+| Documentação por domínio/diffs | Mantida obrigatória em toda entrega | Política; templates |
+| Lessons com exemplos | Mantidas, reais e sem duplicação | Política; template |
+| Guias Claude/Codex/Antigravity | Atualizados para clientes/assinaturas | Três MDs |
+| Sprints/épicos/subtarefas | Replanejados, 12 tickets MVP + 1 evolução | PLANO-MVP; BACKLOG |
+| Backups/disco/retention | VPS única com recuperação a ensaiar | Operação; Arquitetura 3 |
+| Dashboard/custos/aceite | Uso observado/unknown, mobile, revisão exata | Arquitetura 12 |
+| Temporal/autoscaling/GPU | Evoluções condicionais | Arquitetura 10 |
+| Handoff entre providers | Novo contrato seguro incluindo untracked | Handoff; template |
+| Fontes/pendências | Revalidadas; não inventar capacidades | FONTES; PILOTO |
+
+Revisão 2.1: VPS única aceita; perfis mínimo/bom/ideal incorporados ao MVP, ADR-002 e dimensionamento. Evidências de implantação seguem pendentes.
+
+
+## Extensão v3 proposta — 2026-10-06
+
+Data: 2026-10-06 (America/Sao_Paulo). Status da arquitetura e controles: **PLANEJADO**. Implementação e eficácia: **NÃO VERIFICADAS**. Este documento especifica trabalho futuro; não comprova instalação, configuração ou execução.
+
+| Requisito v3 | Documento atual | LF-MT | Evidência exigida | Estado |
+|---|---|---|---|---|
+| Tenant/project/run/credential chain | tenant-isolation/README.md | 01,02,04 | SEC-01/02/04/05 | PLANEJADO; teste NÃO EXECUTADO |
+| RLS e defesa em profundidade | tenant-isolation/README.md | 02 | SEC-03 | PLANEJADO; teste NÃO EXECUTADO |
+| Runtime por tenant / credenciais fora do sandbox | runtime/README.md | 04,08 | SEC-05/13 | PLANEJADO; teste NÃO EXECUTADO |
+| Sandbox efêmero / host Linux | sandbox/README.md | 05 | SEC-06/11 | PLANEJADO; teste NÃO EXECUTADO |
+| Deny-by-default / egress / SSRF | seguranca/REDE-E-EGRESS.md | 06 | SEC-07/08 | PLANEJADO; teste NÃO EXECUTADO |
+| Capabilities curtas / ferramentas estreitas | seguranca/CAPABILITIES-E-TOOLS.md | 07 | SEC-09 | PLANEJADO; teste NÃO EXECUTADO |
+| IA comprometida / trust boundary | seguranca/THREAT-MODEL.md | 08,10 | SEC-10 | PLANEJADO; teste NÃO EXECUTADO |
+| Checkpoint / handoff / coleta | operacao/README.md | 09 | SEC-11/12 | PLANEJADO; teste NÃO EXECUTADO |
+| UI/log/cache/sessão segregados | tenant-isolation/README.md | 01,02,10 | SEC-01/12/13 | PLANEJADO; teste NÃO EXECUTADO |
+| VPS única / recursos / restore | infraestrutura/DIMENSIONAMENTO-VPS.md | 11 | SEC-14 | PLANEJADO; teste NÃO EXECUTADO |
+| Preparação e 11 prompts | ../prompts/PROMPTS-IMPLEMENTACAO.md | 00–11 | Gates de todas as etapas | PLANEJADO; teste NÃO EXECUTADO |
+
+Alteração de escopo: uso pessoal exclusivo → arquitetura multi-tenant planejada; Laravel/Angular do PDF → React/NestJS por instrução atual. Topologia VPS única, assinaturas, sem API/extras, writer único, contexto determinístico, handoff externo, docs/lessons reais e aceite por revisão preservados. A cobertura v1→v2 acima permanece histórica; os paths novos da tabela são relativos conceitualmente a documentacoes/ e serão integrados ao repo real. ADR-003–006 documentam decisões adicionais. Cobertura documental não é cobertura de implementação.
+
+
+## Origem desta edição
+
+[Versão original preservada](../99-historico/originais/output/le-fabrique-multitenant/MATRIZ-COBERTURA.md). Migração editorial de paths em 2026-10-06; conteúdo de engenharia continua proposto.
+
+## Integração documental de 2026-10-06
+
+[Mapa da reorganização](../00-governanca/MAPA-MIGRACAO.md); [Catálogo FAC original](catalogo-fac.md). Nenhum FAC/LF-MT mudou para DONE por este trabalho. Referências de tabelas antigas permanecem identificadas como histórico; navegar pelo índice atual.
