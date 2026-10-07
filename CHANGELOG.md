@@ -420,3 +420,7 @@ DOC-MV-001 — limpeza posterior autorizada: 202 bridges MD individuais redundan
 - Migração Manual Vivo 607d6ed incorporada por fast-forward autorizado; docs/ disponível na worktree principal.
 - Worktree documental limpa e integrada removida sem force; somente a principal permanece, sem registros órfãos adicionais.
 - Validação documental pós-merge executada; pacote recebido preservado. [Registro](docs/09-entregas/2026/2026-10-07-DOC-MV-001-migracao-manual-vivo.md#integração-em-developer--2026-10-07).
+
+### DOC-MV-001 — Remoção do pacote redundante
+
+Pasta reorganizacao-documental/ removida após comparar os 230 arquivos com a cópia histórica versionada, sem divergências. Conteúdo canônico e originais preservados em docs/.

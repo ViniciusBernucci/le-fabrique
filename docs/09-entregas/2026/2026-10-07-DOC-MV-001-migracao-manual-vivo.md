@@ -53,3 +53,7 @@ A worktree documental foi removida por `git worktree remove` sem force, após co
 [Checks da integração](evidencias/DOC-MV-001/INTEGRACAO.json) e [validação pós-integração](evidencias/DOC-MV-001/VALIDACAO-INTEGRACAO.json) registram evidências reais. Sem novo diff de software desde os checks web originais; não repetidos por esta operação Git. O manifesto REVISAO.json e o patch editorial descrevem a revisão inicial 607d6ed, anterior a este registro adicional. Autoload, render Mermaid e revisão semântica independente permanecem com os limites já declarados; autorização de merge não comprova esses testes.
 
 Rollback da integração: `git revert 607d6ededcb6499cac5df10ee4adb60a4b3156b1` em revisão isolada, preservando alterações posteriores; sem reset destrutivo. Para consultar a revisão original, usar Git; recriar worktree não é necessário para acessar docs atuais.
+
+## Remoção do pacote redundante — 2026-10-07
+
+Após pedido do usuário para retirar a pasta se tudo estivesse preservado, os 230 arquivos de reorganizacao-documental/ foram comparados byte a byte e por SHA-256 com docs/99-historico/pacote-recebido/. Zero ausências ou divergências; validador documental PASS. A pasta untracked original foi removida; a cópia histórica íntegra permanece versionada. Este registro sucede a preservação temporária relatada na integração acima. [Evidência e hashes](evidencias/DOC-MV-001/REMOCAO-PACOTE.json). Rollback: copiar pacote-recebido/ de volta para reorganizacao-documental/, sem modificar docs canônicos.
