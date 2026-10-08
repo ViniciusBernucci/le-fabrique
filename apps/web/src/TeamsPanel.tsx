@@ -164,12 +164,15 @@ export function TeamsPanel({
               type="button"
               className="account-list-item"
               key={item.id}
-              aria-label={`Editar agente ${item.name}`}
+              aria-label={`Editar agente ${item.nickname || item.name}`}
               onClick={() => editAgent(item)}
             >
-              <span className="provider-mark">{item.name.slice(0, 1).toUpperCase()}</span>
+              <span className="provider-mark">
+                {(item.nickname || item.name).slice(0, 1).toUpperCase()}
+              </span>
               <span className="account-list-name">
-                <strong>{item.name}</strong>
+                <strong>{item.nickname || item.name}</strong>
+                <span className="account-list-detail">Cargo: {item.name}</span>
                 <span className="account-list-detail">{item.description || "Sem descrição"}</span>
                 <span className="account-list-detail">
                   {projects.find((project) => project.id === item.projectId)?.name ??
@@ -255,7 +258,7 @@ export function TeamsPanel({
         <SettingsModal
           title={
             agents.some((item) => item.id === agent.id)
-              ? `Editar agente ${agent.name}`
+              ? `Editar agente ${agent.nickname || agent.name}`
               : "Novo agente"
           }
           saving={saving}
@@ -267,6 +270,16 @@ export function TeamsPanel({
         >
           <label>
             Nome do agente
+            <input
+              autoComplete="off"
+              placeholder="Ex.: Alex"
+              value={agent.nickname ?? ""}
+              onChange={(event) => setAgent({ ...agent, nickname: event.target.value })}
+              maxLength={100}
+            />
+          </label>
+          <label>
+            Cargo na empresa
             <input
               autoComplete="off"
               value={agent.name}

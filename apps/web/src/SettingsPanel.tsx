@@ -1420,11 +1420,25 @@ export function SettingsPanel({
                   : "";
               return (
                 <SettingsModal
-                  title={`Configurar ${roleLabels[assignment.role]}`}
+                  title={`Configurar ${assignment.nickname || roleLabels[assignment.role]}`}
                   saving={saving}
                   onClose={() => setEditingAssignment(null)}
                   onSave={() => void saveAssignment()}
                 >
+                  <label>
+                    Nome do agente
+                    <input
+                      autoComplete="off"
+                      placeholder="Ex.: Alex"
+                      value={assignment.nickname ?? ""}
+                      maxLength={100}
+                      onChange={(event) => updateAssignment({ nickname: event.target.value })}
+                    />
+                  </label>
+                  <label>
+                    Cargo na empresa
+                    <input value={roleLabels[assignment.role]} readOnly />
+                  </label>
                   <label>
                     Conta e modelo
                     <select

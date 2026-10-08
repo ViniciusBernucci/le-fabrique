@@ -60,6 +60,45 @@ describe("project skills and digital agents", () => {
     expect(result.projectSkills).toBeUndefined();
     expect(result.assignments).toHaveLength(6);
   });
+  it("preserves optional nicknames separately from operational and custom job titles", () => {
+    const result = factoryConfigurationSchema.parse({
+      ...base,
+      assignments: base.assignments.map((item) => ({ ...item, nickname: " Alex " })),
+      digitalAgents: [{ ...agent, nickname: " Sofia " }],
+      projectSkills: [skill],
+    });
+    expect(result.assignments[1]).toMatchObject({ role: "DEVELOPER", nickname: "Alex" });
+    expect(result.digitalAgents?.[0]).toMatchObject({ name: "Designer", nickname: "Sofia" });
+    const reread = factoryConfigurationSchema.parse(JSON.parse(JSON.stringify(result)));
+    expect(reread).toEqual(result);
+  });
+  it("allows clearing nicknames and rejects invalid nicknames on both kinds of agent", () => {
+    for (const nickname of ["", "   ", "a".repeat(100)]) {
+      const result = factoryConfigurationSchema.parse({
+        ...base,
+        assignments: base.assignments.map((item) => ({ ...item, nickname })),
+        digitalAgents: [{ ...agent, nickname }],
+        projectSkills: [skill],
+      });
+      expect(result.assignments[0]?.nickname).toBe(nickname.trim());
+      expect(result.digitalAgents?.[0]?.nickname).toBe(nickname.trim());
+    }
+    for (const nickname of ["a".repeat(101), 42, null]) {
+      expect(
+        factoryConfigurationSchema.safeParse({
+          ...base,
+          assignments: base.assignments.map((item) => ({ ...item, nickname })),
+        }).success,
+      ).toBe(false);
+      expect(
+        factoryConfigurationSchema.safeParse({
+          ...base,
+          digitalAgents: [{ ...agent, nickname }],
+          projectSkills: [skill],
+        }).success,
+      ).toBe(false);
+    }
+  });
   it("accepts more than six registered agents and validates skill content in runtime", () => {
     const agents = Array.from({ length: 25 }, (_, index) => ({
       ...agent,

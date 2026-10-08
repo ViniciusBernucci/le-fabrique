@@ -582,6 +582,7 @@ export type EmployeeRole = z.infer<typeof employeeRoleSchema>;
 export const agentAssignmentSchema = z
   .object({
     role: employeeRoleSchema,
+    nickname: z.string().trim().max(100).optional(),
     enabled: z.boolean(),
     installationId: z
       .string()
@@ -658,6 +659,7 @@ export type ProjectSkill = z.infer<typeof projectSkillSchema>;
 export const digitalAgentSchema = z
   .object({
     id: z.uuid(),
+    nickname: z.string().trim().max(100).optional(),
     name: z.string().trim().min(1).max(100),
     description: z.string().trim().max(500),
     instructions: z.string().trim().max(16_000),
