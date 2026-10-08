@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
+import { OrchestrationCore } from "./OrchestrationCore";
 import "./home-dashboard.css";
 
 export type HomeDestination = "control" | "settings" | "tasks";
@@ -64,8 +65,8 @@ function Avatar({ robot = false }: { robot?: boolean }) {
     <svg className="home-avatar" viewBox="0 0 48 48" aria-hidden="true">
       <defs>
         <linearGradient id={robot ? "robot-bg" : "person-bg"} x2="1" y2="1">
-          <stop stopColor={robot ? "#71dcff" : "#e8ad66"} />
-          <stop offset="1" stopColor="#103553" />
+          <stop stopColor={robot ? "var(--hud-teal)" : "var(--hud-amber)"} />
+          <stop offset="1" stopColor="var(--hud-surface-solid)" />
         </linearGradient>
       </defs>
       <circle
@@ -73,26 +74,26 @@ function Avatar({ robot = false }: { robot?: boolean }) {
         cy="24"
         r="22"
         fill={`url(#${robot ? "robot-bg" : "person-bg"})`}
-        stroke="#338fc5"
+        stroke="var(--hud-text-strong)"
         strokeWidth="2"
       />
       {robot ? (
         <>
-          <path d="M16 38v-8h16v8" fill="#e9f6ff" />
-          <rect x="9" y="10" width="30" height="24" rx="10" fill="#e9f6ff" />
-          <rect x="13" y="14" width="22" height="15" rx="6" fill="#08243b" />
-          <circle cx="19" cy="21" r="3" fill="#2bc9ff" />
-          <circle cx="29" cy="21" r="3" fill="#2bc9ff" />
-          <path d="M24 6v4" stroke="#e9f6ff" strokeWidth="3" />
+          <path d="M16 38v-8h16v8" fill="var(--hud-text-strong)" />
+          <rect x="9" y="10" width="30" height="24" rx="10" fill="var(--hud-text-strong)" />
+          <rect x="13" y="14" width="22" height="15" rx="6" fill="var(--hud-surface-solid)" />
+          <circle cx="19" cy="21" r="3" fill="var(--hud-teal)" />
+          <circle cx="29" cy="21" r="3" fill="var(--hud-teal)" />
+          <path d="M24 6v4" stroke="var(--hud-text-strong)" strokeWidth="3" />
         </>
       ) : (
         <>
-          <path d="M10 45c1-17 27-17 28 0" fill="#1d4a79" />
-          <ellipse cx="24" cy="24" rx="11" ry="13" fill="#f5bb86" />
-          <path d="M12 25C4 4 39 2 37 26l-6-10-8 2-7-3-4 10" fill="#302321" />
-          <circle cx="20" cy="25" r="1.6" fill="#202632" />
-          <circle cx="29" cy="25" r="1.6" fill="#202632" />
-          <path d="M21 32q4 3 7-1" stroke="#a45d41" strokeWidth="1.5" fill="none" />
+          <path d="M10 45c1-17 27-17 28 0" fill="var(--hud-text-strong)" />
+          <ellipse cx="24" cy="24" rx="11" ry="13" fill="var(--hud-amber)" />
+          <path d="M12 25C4 4 39 2 37 26l-6-10-8 2-7-3-4 10" fill="var(--hud-surface-solid)" />
+          <circle cx="20" cy="25" r="1.6" fill="var(--hud-surface-solid)" />
+          <circle cx="29" cy="25" r="1.6" fill="var(--hud-surface-solid)" />
+          <path d="M21 32q4 3 7-1" stroke="var(--hud-text-strong)" strokeWidth="1.5" fill="none" />
         </>
       )}
     </svg>
@@ -103,6 +104,11 @@ const navigation: { name: string; icon: IconName; destination?: HomeDestination 
   { name: "Projetos", icon: "folder", destination: "control" },
   { name: "Tarefas", icon: "content", destination: "tasks" },
   { name: "Agentes de IA", icon: "robot", destination: "settings" },
+  { name: "Núcleo IA", icon: "robot" },
+  { name: "Pipeline", icon: "chart" },
+  { name: "Revisões", icon: "content" },
+  { name: "Repositórios", icon: "folder" },
+  { name: "Histórico", icon: "clock" },
   { name: "Escritório", icon: "home" },
   { name: "Usuários", icon: "users" },
   { name: "Configurações", icon: "settings", destination: "settings" },
@@ -239,6 +245,13 @@ export function DashboardLayout({
   children?: ReactNode;
 }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const [now, setNow] = useState(() => new Date());
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const greeting =
+    now.getHours() < 12 ? "Bom dia" : now.getHours() < 18 ? "Boa tarde" : "Boa noite";
   useEffect(() => {
     const smallScreen = window.matchMedia("(max-width: 760px)");
     const collapseOnSmallScreen = () => {
@@ -313,21 +326,6 @@ export function DashboardLayout({
       <aside id="home-sidebar" className="home-sidebar" aria-label="Menu principal">
         <button
           type="button"
-          className="home-brand"
-          aria-label="La fabrique, painel inicial"
-          onClick={goHome}
-        >
-          <svg viewBox="0 0 42 46" aria-hidden="true">
-            <path d="m21 1 17 10-17 10L4 11Z" fill="#ff8d43" />
-            <path d="m4 13 15 9v20L4 33Z" fill="#278aff" />
-            <path d="m23 22 15-9v20l-15 9Z" fill="#20dca4" />
-            <path d="m21 12 9 5-9 5-9-5Z" fill="#b04bff" />
-            <path d="m21 1 8 5-8 5-8-5Z" fill="#ff4b61" />
-          </svg>
-          <span>La fabrique</span>
-        </button>
-        <button
-          type="button"
           className="home-menu-toggle"
           aria-label={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
           title={sidebarCollapsed ? "Expandir menu" : "Recolher menu"}
@@ -352,6 +350,11 @@ export function DashboardLayout({
             >
               <Icon name={item.icon} />
               <span>{item.name}</span>
+              {item.name === "Revisões" && (
+                <small className="home-nav-badge" title="Prévia demonstrativa">
+                  Prévia
+                </small>
+              )}
             </button>
           ))}
         </nav>
@@ -376,6 +379,45 @@ export function DashboardLayout({
       </aside>
       <div className="home-main">
         <header className="home-topbar">
+          <button
+            type="button"
+            className="home-brand"
+            aria-label="La fabrique, painel inicial"
+            onClick={goHome}
+          >
+            <svg viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <circle
+                cx="19"
+                cy="19"
+                r="17"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="4 3"
+              />
+              <circle cx="19" cy="19" r="10" stroke="currentColor" strokeWidth="2" />
+              <circle cx="19" cy="19" r="4" fill="currentColor" />
+            </svg>
+            <span>
+              <strong>La fabrique</strong>
+              <small>Centro de Comando</small>
+            </span>
+          </button>
+          <span className="home-operational">
+            <i />
+            OPERACIONAL <small>· demonstração</small>
+          </span>
+          <div className="home-clock">
+            <span>
+              {now.toLocaleDateString("pt-BR", {
+                weekday: "short",
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+            <time dateTime={now.toISOString()}>{now.toLocaleTimeString("pt-BR")}</time>
+          </div>
+
           <label className="home-search">
             <Icon name="search" />
             <input
@@ -434,115 +476,63 @@ export function DashboardLayout({
           </section>
         ) : (
           <main id="home-content" className="home-columns" tabIndex={-1}>
-            <div className="home-center">
-              <h1 className="home-sr-only">Central de controle La fabrique</h1>
-              <section className="home-office" aria-label="Escritório virtual da equipe">
-                <img
-                  src="/images/control-room-reference.png"
-                  alt="Escritório cartoon isométrico com agentes de marketing, conteúdo, financeiro e desenvolvimento, JARVIS ao centro e uma sala de reunião."
-                  fetchPriority="high"
-                />
-              </section>
-              <div className="home-center-panels">
-                <section className="home-metrics" aria-label="Indicadores de demonstração">
-                  {[
-                    {
-                      title: "Projetos Ativos",
-                      value: "5",
-                      detail: "de 5 disponíveis",
-                      icon: "folder" as const,
-                      color: "blue",
-                    },
-                    {
-                      title: "Leads (30 dias)",
-                      value: "127",
-                      detail: "↑ 12%",
-                      icon: "users" as const,
-                      color: "purple",
-                    },
-                    {
-                      title: "Vendas (30 dias)",
-                      value: "R$ 12.450",
-                      detail: "↑ 18%",
-                      icon: "money" as const,
-                      color: "green",
-                    },
-                    {
-                      title: "Conteúdos Gerados",
-                      value: "48",
-                      detail: "↑ 33%",
-                      icon: "content" as const,
-                      color: "purple",
-                    },
-                  ].map((metric, index) => (
-                    <article className="home-card home-metric" key={metric.title}>
-                      <span className={`home-icon-tile tone-${metric.color}`}>
-                        <Icon name={metric.icon} />
-                      </span>
-                      <div>
-                        <span>{metric.title}</span>
-                        <strong>{metric.value}</strong>
-                        <small className={index > 0 ? "home-growth" : ""}>{metric.detail}</small>
-                      </div>
-                      {index === 0 ? (
-                        <div className="home-metric-line" />
-                      ) : (
-                        <div className={`home-bars tone-${metric.color}`} aria-hidden="true">
-                          {[35, 63, 45, 72, 88, 100].map((height) => (
-                            <i key={height} style={{ height: `${height}%` }} />
-                          ))}
-                        </div>
-                      )}
-                    </article>
+            <h1 className="home-sr-only">Central de controle La fabrique</h1>
+            <p className="home-demo-note">
+              Prévia demonstrativa · Indicadores, notificações, mensagens, projetos e status são
+              dados simulados.
+            </p>
+            <div className="home-command-row">
+              <div className="home-core-status">
+                <section className="home-card">
+                  <h2>Status do núcleo</h2>
+                  {agents.map((agent) => (
+                    <div className={`home-status-row tone-${agent.color}`} key={agent.name}>
+                      <i className="home-dot" />
+                      <strong>{agent.name}</strong>
+                      <small>{agent.status}</small>
+                    </div>
                   ))}
                 </section>
-                <section className="home-card home-quick">
-                  <h2>Acesso rápido</h2>
-                  <div className="home-shortcuts">
-                    {filtered.map((item) => (
-                      <button
-                        type="button"
-                        key={item.name}
-                        onClick={() => open(item.name, item.destination)}
-                      >
-                        <span className={`home-shortcut-icon tone-${item.color}`}>
-                          <Icon name={item.icon} />
-                        </span>
-                        <span>
-                          <strong>{item.name}</strong>
-                          <small>{item.description}</small>
-                        </span>
-                      </button>
+                <section className="home-card home-diagnostics">
+                  <h2>Diagnóstico demonstrativo</h2>
+                  <div className="home-gauges">
+                    {agents.slice(1, 4).map((agent) => (
+                      <div className={`home-gauge tone-${agent.color}`} key={agent.name}>
+                        <svg viewBox="0 0 66 66" aria-hidden="true">
+                          <circle cx="33" cy="33" r="27" />
+                          <circle
+                            cx="33"
+                            cy="33"
+                            r="27"
+                            strokeDasharray={`${agent.progress * 1.696} 169.6`}
+                          />
+                        </svg>
+                        <strong>{agent.progress}%</strong>
+                        <small>{agent.name}</small>
+                      </div>
                     ))}
                   </div>
-                  {filtered.length === 0 && (
-                    <p className="home-empty" role="status">
-                      Nenhum atalho encontrado. Tente “projetos” ou “configurações”.
-                    </p>
-                  )}
+                  <p>Atividade simulada · não representa cota ou consumo.</p>
                 </section>
-                <section className="home-card home-important-message">
-                  <span className="home-shortcut-icon tone-blue">
-                    <Icon name="message" />
-                  </span>
-                  <div>
-                    <h2>Mensagens importantes</h2>
-                    <p>
-                      Seu escritório está pronto para ganhar vida. Revise as contas e a equipe para
-                      começar.
-                    </p>
-                  </div>
-                  <button type="button" onClick={() => onNavigate("settings")}>
-                    Configurar equipe <Icon name="arrow" />
-                  </button>
-                </section>
-                <p className="home-demo-note">
-                  Prévia demonstrativa · Indicadores, notificações, mensagens, projetos e status são
-                  dados simulados.
-                </p>
               </div>
-            </div>
-            <aside className="home-right" aria-label="Resumo do workspace">
+              <section className="home-office" aria-label="Escritório virtual da equipe">
+                <h2>Núcleo de orquestração</h2>
+                <span className="home-core-label">Demonstração</span>
+                <OrchestrationCore agents={agents} />
+                <div className="home-greeting">
+                  <h2>{greeting}, Administrador</h2>
+                  <p>JARVIS · Workspace de demonstração</p>
+                  <button
+                    type="button"
+                    className="home-command"
+                    onClick={() => onNavigate("tasks")}
+                  >
+                    <span aria-hidden="true">&gt;</span>
+                    <span>Descreva uma nova tarefa…</span>
+                    <strong>ENVIAR</strong>
+                  </button>
+                </div>
+              </section>
               <section className="home-card home-notifications">
                 {panelHeading("Notificações importantes", () =>
                   setPreview("Notificações importantes"),
@@ -565,6 +555,8 @@ export function DashboardLayout({
                   </button>
                 ))}
               </section>
+            </div>
+            <div className="home-bottom-row">
               <section className="home-card home-agents">
                 {panelHeading("Status dos Agentes", () => onNavigate("settings"))}
                 {agents.map((agent) => (
@@ -622,10 +614,127 @@ export function DashboardLayout({
                   </button>
                 ))}
               </section>
-            </aside>
+              <section className="home-metrics" aria-label="Indicadores de demonstração">
+                {[
+                  {
+                    title: "Projetos Ativos",
+                    value: "5",
+                    detail: "de 5 disponíveis",
+                    icon: "folder" as const,
+                    color: "blue",
+                  },
+                  {
+                    title: "Leads (30 dias)",
+                    value: "127",
+                    detail: "↑ 12%",
+                    icon: "users" as const,
+                    color: "purple",
+                  },
+                  {
+                    title: "Vendas (30 dias)",
+                    value: "R$ 12.450",
+                    detail: "↑ 18%",
+                    icon: "money" as const,
+                    color: "green",
+                  },
+                  {
+                    title: "Conteúdos Gerados",
+                    value: "48",
+                    detail: "↑ 33%",
+                    icon: "content" as const,
+                    color: "purple",
+                  },
+                ].map((metric, index) => (
+                  <article className="home-card home-metric" key={metric.title}>
+                    <span className={`home-icon-tile tone-${metric.color}`}>
+                      <Icon name={metric.icon} />
+                    </span>
+                    <div>
+                      <span>{metric.title}</span>
+                      <strong>{metric.value}</strong>
+                      <small className={index > 0 ? "home-growth" : ""}>{metric.detail}</small>
+                    </div>
+                    {index === 0 ? (
+                      <div className="home-metric-line" />
+                    ) : (
+                      <div className={`home-bars tone-${metric.color}`} aria-hidden="true">
+                        {[35, 63, 45, 72, 88, 100].map((height) => (
+                          <i key={height} style={{ height: `${height}%` }} />
+                        ))}
+                      </div>
+                    )}
+                  </article>
+                ))}
+              </section>
+            </div>
+            <div className="home-support-row">
+              <section className="home-card home-quick">
+                <h2>Acesso rápido</h2>
+                <div className="home-shortcuts">
+                  {filtered.map((item) => (
+                    <button
+                      type="button"
+                      key={item.name}
+                      onClick={() => open(item.name, item.destination)}
+                    >
+                      <span className={`home-shortcut-icon tone-${item.color}`}>
+                        <Icon name={item.icon} />
+                      </span>
+                      <span>
+                        <strong>{item.name}</strong>
+                        <small>{item.description}</small>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {filtered.length === 0 && (
+                  <p className="home-empty" role="status">
+                    Nenhum atalho encontrado. Tente “projetos” ou “configurações”.
+                  </p>
+                )}
+              </section>
+              <section className="home-card home-important-message">
+                <span className="home-shortcut-icon tone-blue">
+                  <Icon name="message" />
+                </span>
+                <div>
+                  <h2>Mensagens importantes</h2>
+                  <p>
+                    Seu escritório está pronto para ganhar vida. Revise as contas e a equipe para
+                    começar.
+                  </p>
+                </div>
+                <button type="button" onClick={() => onNavigate("settings")}>
+                  Configurar equipe <Icon name="arrow" />
+                </button>
+              </section>
+            </div>
           </main>
         )}
       </div>
+      <aside className="home-settings-rail" aria-label="Atalhos de configurações">
+        <span>CONFIG</span>
+        {(
+          [
+            ["Geral", "settings"],
+            ["Modelos", "robot"],
+            ["Integrações", "cloud"],
+            ["Acessos", "users"],
+            ["Alertas", "bell"],
+            ["Equipe", "users"],
+          ] as const
+        ).map(([label, icon]) => (
+          <button
+            type="button"
+            key={label}
+            aria-label={`Configurações: ${label}`}
+            onClick={() => onNavigate("settings")}
+          >
+            <Icon name={icon} />
+            <span>{label}</span>
+          </button>
+        ))}
+      </aside>
       <dialog
         ref={dialog}
         className="home-preview"

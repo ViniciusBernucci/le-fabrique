@@ -1,0 +1,38 @@
+{
+  "base": "de5dbfac0b00f3e1699b999f987856f592f65899",
+  "revision": "final working tree reconstructed by manifest.json patches",
+  "checks": {
+    "lint": {
+      "exit_code": 0,
+      "warning": "preexisting apps/api/src/orchestration/run-delivery.service.ts:209 useOptionalChain"
+    },
+    "typecheck": {
+      "exit_code": 0
+    },
+    "tests": {
+      "exit_code": 0,
+      "files": 22,
+      "tests": 62
+    },
+    "build": {
+      "exit_code": 0
+    },
+    "docs": {
+      "exit_code": 0,
+      "snapshots": 601
+    },
+    "browser": {
+      "status": "NOT_RUN",
+      "reason": "EPERM/sandbox environment"
+    },
+    "independent_review": {
+      "status": "NOT_RUN"
+    }
+  },
+  "commits": {
+    "status": "BLOCKED",
+    "reason": ".git index read-only"
+  },
+  "push": "NOT_RUN by request",
+  "merge": "NOT_RUN by request"
+}

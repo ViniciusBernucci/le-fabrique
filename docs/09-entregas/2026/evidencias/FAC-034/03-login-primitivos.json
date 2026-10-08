@@ -1,0 +1,22 @@
+[
+  {
+    "path": "apps/web/src/styles.css",
+    "before_sha256": "2b35933333df26e63bd82ba9b2b4cb87177e093a5e76c1ac3841392ebf1b95b5",
+    "after_sha256": "56429cca88d87844ad8a808b04d1c5db061a8acfe6577e96fd9bd18d6677d416"
+  },
+  {
+    "path": "apps/web/src/App.tsx",
+    "before_sha256": "f070e1482653f8724a0f24e82db7f5d2c04402d96cd34b60004082740a58012b",
+    "after_sha256": "18666f8b85ad6917d541f89603f1aa7e3ebcf15e0708ab945d8b903bcb30e174"
+  },
+  {
+    "path": "apps/web/src/HudSystemMessage.tsx",
+    "before_sha256": null,
+    "after_sha256": "12145bc14de47b0deec7655c91b6a1ba28ee998632af3b8b7f51b5386d6fb005"
+  },
+  {
+    "path": "apps/web/src/HudSystemMessage.spec.tsx",
+    "before_sha256": null,
+    "after_sha256": "8d82e33f70edc615f509bc41cbe786bd7ba9ee3ebe80aa3e57ba57e0d5669529"
+  }
+]

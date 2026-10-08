@@ -12,6 +12,7 @@ import {
   updateProjectBaseRevision,
 } from "./control-api";
 import { DashboardLayout } from "./DashboardLayout";
+import { HudSystemMessage } from "./HudSystemMessage";
 import { OperationPanel } from "./OperationPanel";
 import { ProjectDefinitionPanel } from "./ProjectDefinitionPanel";
 import { pollResource } from "./poll-resource";
@@ -155,6 +156,11 @@ export function App() {
     content = (
       <main className="login-shell">
         <form className="panel login" onSubmit={login}>
+          <svg className="login-core" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="29" stroke="currentColor" strokeDasharray="3 4" />
+            <circle cx="32" cy="32" r="20" stroke="currentColor" />
+            <circle cx="32" cy="32" r="6" fill="currentColor" />
+          </svg>
           <p className="eyebrow">La fabrique</p>
           <h1>Controle da fábrica</h1>
           <label>
@@ -171,9 +177,7 @@ export function App() {
           <button type="button" className="secondary-action" onClick={() => setShowHome(true)}>
             Voltar ao painel inicial
           </button>
-          <p className="message" role="status">
-            {message}
-          </p>
+          <HudSystemMessage message={message} />
         </form>
       </main>
     );
@@ -185,9 +189,7 @@ export function App() {
             <p className="eyebrow">La fabrique</p>
             <h1>{activeArea === "control" ? "Controle" : "Configurações"}</h1>
           </div>
-          <p className="message" role="status">
-            {message}
-          </p>
+          <HudSystemMessage message={message} />
         </header>
         {activeArea === "settings" ? (
           <SettingsPanel

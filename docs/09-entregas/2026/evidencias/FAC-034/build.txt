@@ -1,0 +1,14 @@
+
+> @le-fabrique/web@0.1.0 build
+> tsc -b && vite build
+
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 141 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.51 kB │ gzip:   0.32 kB
+dist/assets/index-Dpy0V-DO.css   52.65 kB │ gzip:  10.18 kB
+dist/assets/index-DCAmFr9j.js   480.99 kB │ gzip: 137.97 kB
+
+✓ built in 557ms

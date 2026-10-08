@@ -6,9 +6,9 @@ IMPLEMENTADO em a2cc5e0; evidência histórica por FAC-011/013–031. Verificaç
 
 ## Usuário e comportamento
 
-Operador administrativo da fábrica. Home estática e menu persistente entre telas; sidebar inicia recolhida. Configurações em abas/modal com rascunho; agentes/skills por projeto, contas e modelos; login/verificação/PR têm fluxo explícito separado de salvar.
+Operador administrativo da fábrica. Home demonstrativa com SVG animado e menu persistente entre telas; sidebar inicia recolhida. Configurações em abas/modal com rascunho; agentes/skills por projeto, contas e modelos; login/verificação/PR têm fluxo explícito separado de salvar.
 
-A navegação principal oferece Painel, Projetos, Tarefas, Agentes de IA, Escritório, Usuários e Configurações, nessa ordem. Escritório e Usuários exibem prévia; novos módulos serão acrescentados conforme evolução. [FAC-032](../09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
+A navegação principal oferece Painel, Projetos, Tarefas, Agentes de IA, Núcleo IA, Pipeline, Revisões, Repositórios, Histórico, Escritório, Usuários e Configurações, nessa ordem. Os cinco itens acrescentados em FAC-034, Escritório e Usuários exibem prévia; não comprovam módulos implementados. [FAC-032](../09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
 
 ## Regras e critério
 
@@ -35,3 +35,9 @@ O onboarding simulado cria projeto, depois cinco agentes habilitados e nove tick
 O aviso permanente identifica dados mockados. Simular onboarding recria exemplos mediante confirmação, preservando tarefas manuais. Remover tickets de exemplo limpa referências aos exemplos e preserva tarefas manuais/equipe. Exemplos editados continuam exemplos. Armazenamento local não disponível/corrompido é comunicado e não substituído silenciosamente. Multiusuário, sincronização entre abas, persistência PostgreSQL e geração/consumo pelo onboarding/worker real permanecem PLANEJADOS.
 
 Fonte de dados e regras: [contrato da demonstração](../05-contratos/schemas/00-entidades.md#tarefas-demonstrativas-fac-033). [Entrega FAC-033](../09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md).
+
+## Tema Centro de Comando — FAC-034
+
+IMPLEMENTADO no diff da developer sobre de5dbfa: tema HUD comum, núcleo SVG acessível/determinístico, relógio e saudação locais; navegação/autorizações originais preservadas. Login com anel decorativo; mensagens mantêm conteúdo e role status, com marca visual OK/INFO/ATENÇÃO/ERRO oculta de leitores de tela. Inputs técnicos mono, foco visível, ações de pausa/cancelamento em rosa, tabelas/logs/estados vazios/abas/dialogs seguem os tokens. Os 17 estados de execução reais têm tom próprio; tarefas demonstrativas mantêm suas nove etapas separadas, sem criar enums do kit ilustrativo.
+
+Critérios automatizados e limitações de browser na [entrega FAC-034](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Movimento reduzido por CSS; interações reais, fidelidade visual e revisão independente aguardam validação em ambiente que permita browser/porta local. Nenhuma API, regra de negócio ou credencial alterada.

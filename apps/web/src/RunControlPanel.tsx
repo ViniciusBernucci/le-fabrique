@@ -77,6 +77,7 @@ export function RunControlPanel({ token, run }: { token: string; run: RunDetail 
           </label>
           <button
             type="button"
+            className="danger-action"
             disabled={!confirmed || pending || !!requested}
             onClick={() => void submit("PAUSE")}
           >
@@ -84,6 +85,7 @@ export function RunControlPanel({ token, run }: { token: string; run: RunDetail 
           </button>
           <button
             type="button"
+            className="danger-action"
             disabled={!confirmed || pending || !!requested}
             onClick={() => void submit("CANCEL")}
           >

@@ -1,0 +1,17 @@
+[
+  {
+    "path": "apps/web/src/tasks.css",
+    "before_sha256": "529cc856f14c0f4226b1e308c65a55d7c2593db6711a5c78e188d9708ee4cc1e",
+    "after_sha256": "5c6e1a1529c1134a9d59232babd2007b10144723f577a7a22211cfe6a4b6de8c"
+  },
+  {
+    "path": "apps/web/src/TasksPanel.tsx",
+    "before_sha256": "41dfa005b3eff5bfacb6cbab106bf9c91a4f92f847c9ce8829882a1b07dd5a1e",
+    "after_sha256": "cb21b7f2f4ad1d5ba1a560ff0d8b72d92a442efdbac9758de637a6db2e2eb92b"
+  },
+  {
+    "path": "apps/web/src/hud-theme.spec.ts",
+    "before_sha256": "8d52296925d58a9d12057aa7e0519a8710c0aa8040af877fbc9f9ddbeb1c0225",
+    "after_sha256": "46c9aee9b124cbffb6297fdee48a46ed210f5096d3378d3dc327b01d55ec7f40"
+  }
+]

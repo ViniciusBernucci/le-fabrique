@@ -46,3 +46,7 @@ Menu principal reduzido: seis rótulos na ordem solicitada, destinos existentes 
 ## Cobertura FAC-033
 
 Quadro/lista de tarefas demonstrativas, filtros, edição e vínculo com agentes por projeto. Sete novos testes cobrem limites de atribuição, critérios, dependências, preservação de tarefas manuais e navegação acessível. Integração com PostgreSQL/onboarding/worker permanece PLANEJADA; sem alteração de enums/contratos de execução. [Entrega](../09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md).
+
+## Cobertura FAC-034
+
+Tokens HUD globais, frame/home e todas as áreas do painel; estados reais de execução separados das nove etapas de demonstração. Specs preservam limites mock, contratos/aria e cobrem tom de mensagens, mapeamento de estados e redução de movimento. [Entrega](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Browser/revisão independente NÃO VERIFICADOS por limites do ambiente; sem mudanças em backend, providers, schemas ou C4.

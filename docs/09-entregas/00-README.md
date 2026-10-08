@@ -108,3 +108,5 @@ Relatos locais preservam datas/IDs/revisões/resultados/limites; links editoriai
 [Backlog real](../08-desenvolvimento/09-backlog.md), [índice global](../02-INDEX.md).
 
 - [FAC-033 — painel Tarefas demonstrativo](2026/2026-10-07-FAC-033-painel-tarefas.md).
+
+- [FAC-034 — Centro de Comando em todo o painel](2026/2026-10-07-FAC-034-centro-comando.md).

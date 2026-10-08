@@ -533,3 +533,10 @@
 - [Painel Tarefas demonstrativo](04-features/01-control-settings.md#painel-tarefas--demonstração-fac-033).
 - [Ticket FAC-033](08-desenvolvimento/tickets/FAC-033.md).
 - [Entrega FAC-033](09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md).
+
+## Centro de Comando — FAC-034 (consulta)
+
+- [Ticket autorizado](08-desenvolvimento/tickets/controle/FAC-034-centro-comando.md).
+- [Entrega, checks e limites](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md).
+- [Handoff original de design](09-entregas/2026/evidencias/design_handoff_centro_comando/README.md).
+- [Prompt original recebido](09-entregas/2026/evidencias/design_handoff_centro_comando/PROMPT-CLAUDE-CODE.md).

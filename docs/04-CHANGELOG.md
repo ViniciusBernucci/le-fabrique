@@ -450,3 +450,7 @@ Commit solicitado foi impedido por .git read-only. Alterações preservadas em d
 ## 2026-10-07 — FAC-033: painel Tarefas
 
 Quadro/lista com criação e edição manual, responsáveis por projeto, prioridades, fases, prazos, dependências e histórico. Onboarding e tickets demonstrativos identificados e removíveis; armazenamento local isolado. Integração compartilhada/onboarding/execução real pendentes. [Entrega](09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md).
+
+## 2026-10-07 — FAC-034 — Centro de Comando (Europe/Berlin)
+
+Tema HUD global em apps/web: home com núcleo SVG em CSS, relógio, sidebar/trilho; login, Projetos/Operação, Tarefas, Configurações e modais com tokens comuns. Preservados navegação, aria, mocks, APIs e regras. Base developer = origin/main de5dbfa. Implementação em diff, commits bloqueados por .git somente leitura; sem push/merge. Checks reais e QA visual pendente na [entrega](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md); AWAITING_HUMAN.

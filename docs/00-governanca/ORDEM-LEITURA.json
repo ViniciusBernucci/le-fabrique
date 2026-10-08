@@ -1356,7 +1356,8 @@
   ],
   "exceptions": [
     "docs/00-governanca/POLITICA-IA.md",
-    "docs/00-governanca/POLITICA-DOCUMENTACAO.md"
+    "docs/00-governanca/POLITICA-DOCUMENTACAO.md",
+    "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/README.md"
   ],
   "preserved_ids": "ADRs/tickets conservam IDs; entregas conservam datas; snapshots/logs/evidências conservam bytes e proveniência",
   "main_trail": [
@@ -1369,5 +1370,8 @@
     "docs/07-operacao/00-README.md",
     "docs/08-desenvolvimento/00-README.md",
     "docs/10-lessons/00-README.md"
-  ]
+  ],
+  "evidence_exceptions_fac034": {
+    "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/README.md": "Handoff original recebido como evidência; preservado integralmente, fora da trilha didática. Indexado na entrega e no índice global."
+  }
 }

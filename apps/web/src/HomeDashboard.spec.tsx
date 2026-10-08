@@ -2,11 +2,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it } from "vitest";
 import { HomeDashboard } from "./HomeDashboard";
 
-it("identifies synthetic information and renders the local illustration without administrative data", () => {
+it("identifies synthetic information and renders the accessible orchestration core without administrative data", () => {
   const html = renderToStaticMarkup(<HomeDashboard onNavigate={() => undefined} />);
   expect(html).toContain("Central de controle La fabrique");
   expect(html).toContain("dados simulados");
-  expect(html).toContain("/images/control-room-reference.png");
+  expect(html).toContain('aria-label="Núcleo de orquestração JARVIS"');
+  expect(html).not.toContain("/images/control-room-reference.png");
   expect(html).toContain("Mensagens importantes");
   expect(html).not.toContain("adminToken");
   expect(html).not.toContain("Bearer");

@@ -1,0 +1,1 @@
+PASS: six ordered patches apply to pristine de5dbfa files and reconstruct every final web source byte; per-stage before/after hashes and preserved design hashes in manifest.json. No repository index changed.

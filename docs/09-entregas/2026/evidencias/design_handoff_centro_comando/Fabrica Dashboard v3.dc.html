@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#02060c}a{color:#2de2ff;text-decoration:none}a:hover{color:#b9f6ff}*{box-sizing:border-box}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinr{to{transform:rotate(-360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.12);opacity:.75}}
+@keyframes wave{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+@keyframes flow{to{stroke-dashoffset:-56}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(1000px 640px at 50% 34%,rgba(45,226,255,.12),transparent 65%),linear-gradient(rgba(45,226,255,.035) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,rgba(45,226,255,.035) 1px,transparent 1px) 0 0/32px 32px,#02060c;color:#d6f6ff;font-family:Rajdhani,sans-serif;font-size:15px">
+
+<header style="display:flex;align-items:center;gap:18px;padding:12px 20px;border-bottom:1px solid rgba(45,226,255,.16);background:rgba(2,10,18,.7)">
+  <div style="display:flex;align-items:center;gap:12px;flex:none">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="17" stroke="#2de2ff" stroke-width="1.5" stroke-dasharray="4 3"></circle><circle cx="19" cy="19" r="10" stroke="#2de2ff" stroke-width="2"></circle><circle cx="19" cy="19" r="4" fill="#2de2ff"></circle></svg>
+    <div><div style="font-family:Orbitron,sans-serif;font-weight:800;letter-spacing:.18em;font-size:16px;color:#e8fbff">FÁBRICA</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:#2de2ff">CENTRO DE COMANDO</div></div>
+  </div>
+  <div style="flex:none;display:flex;align-items:center;gap:8px;border:1px solid rgba(45,226,255,.3);border-radius:99px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em">STATUS <span style="width:7px;height:7px;border-radius:50%;background:#19f5c8;box-shadow:0 0 8px #19f5c8"></span><span style="color:#19f5c8">OPERACIONAL</span></div>
+  <div style="flex:1 1 0;text-align:center;min-width:0;white-space:nowrap">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6fa3b8;letter-spacing:.08em">{{ date }}</div>
+    <div style="font-family:Orbitron,sans-serif;font-weight:700;font-size:24px;color:#2de2ff;text-shadow:0 0 14px rgba(45,226,255,.6);letter-spacing:.06em">{{ time }}</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(45,226,255,.2);background:rgba(4,18,30,.7);border-radius:8px;padding:8px 12px;color:#6fa3b8;flex:0 1 200px;min-width:0;overflow:hidden;white-space:nowrap">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Buscar…
+  </div>
+  <div style="flex:none;display:flex;align-items:center;gap:10px;border:1px solid rgba(45,226,255,.2);border-radius:8px;padding:5px 12px 5px 6px">
+    <div style="width:28px;height:28px;border-radius:50%;border:1.5px solid #2de2ff;display:grid;place-items:center;font-family:Orbitron;font-size:11px;color:#2de2ff">OP</div>
+    <div style="line-height:1.1"><div style="font-weight:700">Operador</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#6fa3b8">admin</div></div>
+  </div>
+</header>
+
+<div style="flex:1;display:flex;min-height:0">
+<aside style="width:226px;flex:none;border-right:1px solid rgba(45,226,255,.12);background:rgba(2,10,18,.6);padding:16px 12px;display:flex;flex-direction:column;gap:4px">
+  <sc-for list="{{ nav }}" as="n" hint-placeholder-count="8">
+    <a href="{{ n.href }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-weight:600;font-size:15.5px;color:{{ n.color }};background:{{ n.bg }};border:1px solid {{ n.bd }}" style-hover="background:rgba(45,226,255,.08);color:#fff">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ n.d }}"></path></svg>
+      <span style="flex:1">{{ n.label }}</span>
+      <sc-if value="{{ n.badge }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;border:1px solid {{ n.bc }};color:{{ n.bc }};border-radius:6px;padding:0 6px">{{ n.badge }}</span></sc-if>
+    </a>
+  </sc-for>
+  <div style="margin-top:auto;border:1px solid rgba(45,226,255,.18);border-radius:10px;padding:12px;background:rgba(4,18,30,.6)">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#6fa3b8">PROJETO ATIVO</div>
+    <div style="font-weight:700;font-size:16px;margin-top:4px">Portal do Cliente</div>
+    <div style="height:3px;background:rgba(45,226,255,.12);margin-top:10px"><div style="width:68%;height:100%;background:#2de2ff;box-shadow:0 0 8px #2de2ff"></div></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#6fa3b8;margin-top:6px">68% · sprint 14</div>
+  </div>
+</aside>
+
+<main style="flex:1;min-width:0;overflow:hidden;padding:16px;display:flex;flex-direction:column;gap:14px">
+  <section style="display:flex;flex-wrap:wrap;gap:14px;align-items:stretch">
+    <div style="flex:1 1 240px;max-width:100%;display:flex;flex-direction:column;gap:14px">
+      <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff;margin-bottom:10px">NÚCLEO_STATUS</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ coreStatus }}" as="c" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(45,226,255,.12);background:rgba(45,226,255,.03);border-radius:8px;padding:7px 10px">
+              <span style="width:6px;height:6px;border-radius:50%;background:{{ c.color }};box-shadow:0 0 8px {{ c.color }}"></span>
+              <span style="flex:1;font-weight:600">{{ c.label }}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ c.color }}">{{ c.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff;margin-bottom:10px">DIAGNÓSTICO</div>
+        <div style="display:flex;justify-content:space-between">
+          <sc-for list="{{ gauges }}" as="g" hint-placeholder-count="3">
+            <div style="position:relative;width:66px;height:66px">
+              <svg width="66" height="66" viewBox="0 0 66 66" style="transform:rotate(-90deg)"><circle cx="33" cy="33" r="27" fill="none" stroke="rgba(45,226,255,.12)" stroke-width="4"></circle><circle cx="33" cy="33" r="27" fill="none" stroke="{{ g.color }}" stroke-width="4" stroke-linecap="round" stroke-dasharray="{{ g.dash }}"></circle></svg>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1"><b style="font-family:Orbitron;font-size:13px;color:{{ g.color }}">{{ g.v }}</b><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#6fa3b8;margin-top:3px">{{ g.k }}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:relative;flex:2.2 1 420px;max-width:100%;min-width:0;border:1px solid rgba(45,226,255,.14);border-radius:14px;background:radial-gradient(circle at 50% 46%,rgba(45,226,255,.1),transparent 60%);display:flex;flex-direction:column;align-items:center;padding:8px 12px 14px;min-height:0">
+      <div style="position:absolute;top:12px;left:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">NÚCLEO_DE_ORQUESTRAÇÃO</div>
+      <div style="position:absolute;top:12px;right:14px;display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#19f5c8"><span style="width:6px;height:6px;border-radius:50%;background:#19f5c8"></span>AO VIVO</div>
+      <div style="width:100%;max-width:520px;aspect-ratio:1;margin-top:18px">{{ core }}</div>
+      <div style="width:100%;max-width:520px;border:1px solid rgba(45,226,255,.3);background:rgba(4,18,30,.85);border-radius:10px;padding:12px 16px;text-align:center;box-shadow:0 0 30px rgba(45,226,255,.12)">
+        <div style="font-family:Orbitron,sans-serif;font-weight:700;font-size:18px;letter-spacing:.06em">{{ greeting }}, Operador</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#6fa3b8;margin-top:4px">5 AGENTES ATIVOS · AGUARDANDO DIRETIVA</div>
+        <a href="#nova" style="margin-top:12px;display:flex;align-items:center;gap:10px;border:1px solid rgba(45,226,255,.35);border-radius:8px;padding:10px 12px;color:#6fa3b8;text-align:left" style-hover="border-color:#2de2ff;color:#d6f6ff">
+          <span style="font-family:'JetBrains Mono',monospace;color:#2de2ff">&gt;</span><span style="flex:1">Descreva uma nova tarefa para o núcleo…</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#02101a;background:#2de2ff;border-radius:5px;padding:3px 8px;font-weight:600">ENVIAR</span>
+        </a>
+      </div>
+    </div>
+
+    <div style="flex:1 1 250px;max-width:100%;border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;margin-bottom:10px"><span style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">FEED_DE_INTELIGÊNCIA</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#19f5c8;border:1px solid rgba(25,245,200,.4);border-radius:4px;padding:1px 6px">LIVE</span></div>
+      <div style="display:flex;flex-direction:column;gap:7px;flex:1">
+        <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
+          <a href="{{ f.href }}" style="display:flex;gap:10px;border:1px solid {{ f.bd }};background:{{ f.bg }};border-radius:8px;padding:8px 10px;color:#d6f6ff" style-hover="border-color:{{ f.color }};color:#fff">
+            <span style="width:3px;align-self:stretch;border-radius:3px;background:{{ f.color }};box-shadow:0 0 8px {{ f.color }}"></span>
+            <div style="flex:1;min-width:0"><div style="font-weight:600;line-height:1.2">{{ f.title }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#6fa3b8;margin-top:3px">{{ f.sub }}</div></div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ f.color }}">{{ f.tag }}</span>
+          </a>
+        </sc-for>
+      </div>
+      <a href="#hist" style="margin-top:10px;text-align:center;font-weight:600">Ver todo o histórico ›</a>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px">
+      <div style="display:flex;align-items:center;margin-bottom:10px"><span style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">AGENTES</span><a href="#agentes" style="font-weight:600;font-size:13px">Gerenciar ›</a></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <sc-for list="{{ agents }}" as="a" hint-placeholder-count="6">
+          <a href="#agente" style="display:flex;align-items:center;gap:10px;border:1px solid rgba(45,226,255,.12);background:rgba(45,226,255,.03);border-radius:8px;padding:8px 10px;color:#d6f6ff" style-hover="border-color:{{ a.color }};color:#fff">
+            <div style="width:30px;height:30px;border-radius:7px;border:1px solid {{ a.color }};display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:{{ a.color }};flex:none">{{ a.code }}</div>
+            <div style="min-width:0;line-height:1.15"><div style="font-weight:700">{{ a.name }}</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ a.sc }}">● {{ a.status }}</div></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px">
+      <div style="display:flex;align-items:center;margin-bottom:10px"><span style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">PIPELINE</span><a href="#pipeline" style="font-weight:600;font-size:13px">Abrir ›</a></div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="4">
+          <div>
+            <div style="display:flex;font-weight:600"><span style="font-family:'JetBrains Mono',monospace;color:#6fa3b8;width:76px;font-size:12px">{{ p.id }}</span><span style="flex:1">{{ p.title }}</span><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ p.color }}">{{ p.stage }}</span></div>
+            <div style="height:3px;background:rgba(45,226,255,.1);margin-top:5px"><div style="height:100%;width:{{ p.pct }};background:{{ p.color }};box-shadow:0 0 6px {{ p.color }}"></div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff;margin-bottom:10px">MÉTRICAS · 7 DIAS</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+          <div style="border:1px solid rgba(45,226,255,.12);background:rgba(45,226,255,.03);border-radius:8px;padding:9px 11px">
+            <div style="font-size:13px;color:#8fbccd">{{ m.label }}</div>
+            <div style="font-family:Orbitron,sans-serif;font-weight:700;font-size:22px;color:{{ m.color }};margin-top:2px">{{ m.value }}</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#19f5c8">{{ m.delta }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</main>
+
+<aside style="width:78px;flex:none;border-left:1px solid rgba(45,226,255,.12);background:rgba(2,10,18,.6);padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:6px">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:#6fa3b8;margin-bottom:6px">CONFIG</div>
+  <sc-for list="{{ settings }}" as="s" hint-placeholder-count="6">
+    <a href="#cfg" style="width:62px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 2px;border-radius:8px;border:1px solid transparent;color:#8fbccd;font-size:11.5px;font-weight:600;text-align:center;line-height:1.05" style-hover="border-color:rgba(45,226,255,.35);background:rgba(45,226,255,.06);color:#fff">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.d }}"></path></svg>{{ s.label }}
+    </a>
+  </sc-for>
+  <div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9px;color:#6fa3b8"><span style="width:8px;height:8px;border-radius:50%;background:#19f5c8;box-shadow:0 0 8px #19f5c8"></span>v2.3</div>
+</aside>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { now: new Date() };
+  componentDidMount() { this.t = setInterval(() => this.setState({ now: new Date() }), 1000); }
+  componentWillUnmount() { clearInterval(this.t); }
+
+  buildCore() {
+    if (this._core) return this._core;
+    const h = React.createElement, C = 300;
+    const anim = (name, dur, rev) => ({ transformOrigin: '300px 300px', transformBox: 'view-box', animation: `${name} ${dur}s linear infinite${rev ? ' reverse' : ''}` });
+    const agents = [
+      ['ARQ','Arquiteto','#5aa8ff'],['DEV','Dev','#19f5c8'],['REV','Revisor','#ff5d7a'],
+      ['TST','Testador','#b18cff'],['DPL','Deploy','#6b8797'],['DOC','Documentador','#ffb547'],
+    ].map(([code,name,color],i) => { const a = (-90 + i*60) * Math.PI/180; return {code,name,color,x:C+Math.cos(a)*236,y:C+Math.sin(a)*236}; });
+    // neural points
+    let s = 7; const rnd = () => (s = (s*16807) % 2147483647) / 2147483647;
+    const pts = []; while (pts.length < 34) { const x = (rnd()*2-1)*88, y = (rnd()*2-1)*88; if (x*x+y*y < 88*88) pts.push([C+x, C+y]); }
+    const links = [];
+    pts.forEach((p,i) => { pts.map((q,j)=>[j,(p[0]-q[0])**2+(p[1]-q[1])**2]).filter(d=>d[0]!==i).sort((a,b)=>a[1]-b[1]).slice(0,2).forEach(([j])=>{ if (i<j) links.push([p,pts[j]]); }); });
+    const ticks = Array.from({length:120},(_,i)=>{ const a=i*3*Math.PI/180, r1=258, r2= i%10===0?246:252; return h('line',{key:i,x1:C+Math.cos(a)*r1,y1:C+Math.sin(a)*r1,x2:C+Math.cos(a)*r2,y2:C+Math.sin(a)*r2,stroke:'#2de2ff',strokeOpacity:i%10===0?.7:.3,strokeWidth:1}); });
+    const arc = (r,a0,a1) => { const p=a=>[C+Math.cos(a*Math.PI/180)*r, C+Math.sin(a*Math.PI/180)*r]; const [x0,y0]=p(a0),[x1,y1]=p(a1); return `M${x0} ${y0}A${r} ${r} 0 ${a1-a0>180?1:0} 1 ${x1} ${y1}`; };
+
+    this._core = h('svg',{viewBox:'0 0 600 600',width:'100%',height:'100%',style:{overflow:'visible',display:'block'}},
+      h('defs',null,
+        h('radialGradient',{id:'cg'},h('stop',{offset:'0',stopColor:'#e9fdff'}),h('stop',{offset:'.35',stopColor:'#7ff0ff'}),h('stop',{offset:'1',stopColor:'#2de2ff',stopOpacity:0})),
+        h('radialGradient',{id:'sg'},h('stop',{offset:'0',stopColor:'#2de2ff',stopOpacity:.28}),h('stop',{offset:'.8',stopColor:'#0a3a4e',stopOpacity:.25}),h('stop',{offset:'1',stopColor:'#2de2ff',stopOpacity:.55})),
+        h('filter',{id:'gl',x:'-50%',y:'-50%',width:'200%',height:'200%'},h('feGaussianBlur',{stdDeviation:4,result:'b'}),h('feMerge',null,h('feMergeNode',{in:'b'}),h('feMergeNode',{in:'SourceGraphic'})))
+      ),
+      h('g',{style:anim('spin',120)},ticks),
+      h('circle',{cx:C,cy:C,r:276,fill:'none',stroke:'#ffb547',strokeOpacity:.35,strokeDasharray:'2 7',style:anim('spinr',90)}),
+      h('g',{style:anim('spin',26),filter:'url(#gl)'},
+        h('path',{d:arc(208,-30,60),fill:'none',stroke:'#2de2ff',strokeWidth:3,strokeLinecap:'round'}),
+        h('path',{d:arc(208,150,215),fill:'none',stroke:'#2de2ff',strokeWidth:3,strokeLinecap:'round'})),
+      h('g',{style:anim('spinr',18)},
+        h('path',{d:arc(186,80,130),fill:'none',stroke:'#19f5c8',strokeWidth:2,strokeOpacity:.8}),
+        h('path',{d:arc(186,250,330),fill:'none',stroke:'#19f5c8',strokeWidth:2,strokeOpacity:.8}),
+        h('circle',{cx:C,cy:C,r:186,fill:'none',stroke:'#2de2ff',strokeOpacity:.15})),
+      // links to agents
+      agents.map((a,i)=>h('g',{key:'l'+i},
+        h('line',{x1:C,y1:C,x2:a.x,y2:a.y,stroke:a.color,strokeOpacity:.18,strokeWidth:1}),
+        h('line',{x1:C,y1:C,x2:a.x,y2:a.y,stroke:a.color,strokeWidth:1.6,strokeDasharray:'6 22',style:{animation:`flow ${1.6+i*.2}s linear infinite`}}),
+        h('circle',{r:3.5,fill:a.color,filter:'url(#gl)'},h('animateMotion',{dur:`${2.4+i*.35}s`,repeatCount:'indefinite',path:`M${a.x} ${a.y}L${C} ${C}`})))),
+      // sphere
+      h('circle',{cx:C,cy:C,r:120,fill:'url(#sg)',stroke:'#2de2ff',strokeOpacity:.6,strokeWidth:1.2}),
+      h('g',{style:anim('spin',14)},[0,30,60,90,120,150].map(r=>h('ellipse',{key:r,cx:C,cy:C,rx:120,ry:34,fill:'none',stroke:'#2de2ff',strokeOpacity:.22,transform:`rotate(${r} ${C} ${C})`}))),
+      h('g',null,links.map(([p,q],i)=>h('line',{key:i,x1:p[0],y1:p[1],x2:q[0],y2:q[1],stroke:'#9ff6ff',strokeOpacity:.35,strokeWidth:.8}))),
+      h('g',null,pts.map((p,i)=>h('circle',{key:i,cx:p[0],cy:p[1],r:i%5===0?2.6:1.6,fill:'#c9fbff',style:{animation:`blink ${1.4+(i%7)*.4}s ease-in-out ${(i%9)*.2}s infinite`}}))),
+      // orbits
+      [[-25,9,'#2de2ff'],[40,13,'#19f5c8'],[95,11,'#b18cff']].map(([rot,dur,c],i)=>h('g',{key:'o'+i,transform:`rotate(${rot} ${C} ${C})`},
+        h('ellipse',{cx:C,cy:C,rx:158,ry:52,fill:'none',stroke:c,strokeOpacity:.5,strokeWidth:1.2}),
+        h('circle',{r:4,fill:c,filter:'url(#gl)'},h('animateMotion',{dur:`${dur}s`,repeatCount:'indefinite',path:`M${C-158} ${C}a158 52 0 1 0 316 0a158 52 0 1 0 -316 0`})))),
+      // pulse waves + core
+      [0,1,2].map(i=>h('circle',{key:'w'+i,cx:C,cy:C,r:60,fill:'none',stroke:'#2de2ff',strokeWidth:1.5,style:{transformOrigin:'300px 300px',transformBox:'view-box',animation:`wave 3s ease-out ${i}s infinite`}})),
+      h('circle',{cx:C,cy:C,r:46,fill:'url(#cg)',style:{transformOrigin:'300px 300px',transformBox:'view-box',animation:'pulse 2.6s ease-in-out infinite'}}),
+      h('text',{x:C,y:C+4,textAnchor:'middle',fontFamily:'Orbitron',fontWeight:800,fontSize:10.5,letterSpacing:1,fill:'#03202b'},'MAESTRO'),
+      // agent nodes
+      agents.map((a,i)=>h('g',{key:'n'+i},
+        h('circle',{cx:a.x,cy:a.y,r:27,fill:'#03121d',stroke:a.color,strokeWidth:1.8,filter:'url(#gl)'}),
+        h('circle',{cx:a.x,cy:a.y,r:33,fill:'none',stroke:a.color,strokeOpacity:.35,strokeDasharray:'3 5',style:{transformOrigin:`${a.x}px ${a.y}px`,transformBox:'view-box',animation:`spin ${8+i}s linear infinite`}}),
+        h('text',{x:a.x,y:a.y+4,textAnchor:'middle',fontFamily:'JetBrains Mono',fontWeight:600,fontSize:12,fill:a.color},a.code),
+        h('text',{x:a.x,y:a.y+(a.y>C?52:-42),textAnchor:'middle',fontFamily:'Rajdhani',fontWeight:700,fontSize:15,fill:'#d6f6ff'},a.name)))
+    );
+    return this._core;
+  }
+
+  renderVals() {
+    const n = this.state.now, p = v => String(v).padStart(2,'0'), hr = n.getHours();
+    const on = {color:'#e8fbff',bg:'rgba(45,226,255,.1)',bd:'rgba(45,226,255,.4)'}, off = {color:'#8fbccd',bg:'transparent',bd:'transparent'};
+    const nav = [
+      ['Painel','#','M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z'],
+      ['Projetos','#projetos','M3 7V4h7l3 3h8v14H3V7zm0 3h18'],
+      ['Tarefas','#tarefas','M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01','9','#2de2ff'],
+      ['Agentes de IA','#agentes','M12 3v3M5 8h14v10H5zM9 13h.01M15 13h.01'],
+      ['Núcleo IA','#nucleo','M12 2a10 10 0 100 20 10 10 0 000-20zM12 8a4 4 0 100 8 4 4 0 000-8z'],
+      ['Pipeline','#pipeline','M4 6h6v4H4zM14 14h6v4h-6zM10 8h4a2 2 0 012 2v4'],
+      ['Revisões','#revisar','M5 12l4 4 10-10','1','#ff5d7a'],
+      ['Repositórios','#repos','M6 4v16M6 8a3 3 0 100-.1M18 8v2a4 4 0 01-4 4h-4'],
+      ['Histórico','#hist','M12 7v5l3 2M3 12a9 9 0 109-9 9 9 0 00-7 3M3 4v4h4'],
+      ['Escritório','#escritorio','M3 11l9-8 9 8M5 10v11h5v-7h4v7h5V10'],
+      ['Usuários','#usuarios','M9 11a3 3 0 100-6 3 3 0 000 6zM3 20c0-4 3-6 6-6s6 2 6 6M17 5a3 3 0 010 6'],
+      ['Configurações','#cfg','M12 9a3 3 0 100 6 3 3 0 000-6zM19 12l2-1-1-3-2 .5-1.5-1.5.5-2-3-1-1 2h-2l-1-2-3 1 .5 2L6 7.5 4 7 3 10l2 1v2l-2 1 1 3 2-.5 1.5 1.5-.5 2 3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3-2-1z'],
+    ].map(([label,href,d,badge,bc],i)=>({label,href,d,badge:badge||'',bc:bc||'',...(i===0?on:off)}));
+    const dias = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'], meses=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+    const g = (k,v,color)=>({k,v:v+'%',color,dash:`${(v/100)*169.6} 169.6`});
+    return {
+      core: this.buildCore(),
+      time: `${p(hr)}:${p(n.getMinutes())}:${p(n.getSeconds())}`,
+      date: `${dias[n.getDay()]}, ${n.getDate()} ${meses[n.getMonth()]} ${n.getFullYear()}`.toUpperCase(),
+      greeting: hr<12?'Bom dia':hr<18?'Boa tarde':'Boa noite',
+      nav,
+      coreStatus: [
+        {label:'Orquestrador',value:'ATIVO',color:'#19f5c8'},
+        {label:'Agentes',value:'5 / 6',color:'#2de2ff'},
+        {label:'Modelos LLM',value:'4 CONECT.',color:'#2de2ff'},
+        {label:'Memória',value:'3.380',color:'#b18cff'},
+        {label:'Fila de tarefas',value:'9',color:'#2de2ff'},
+        {label:'Ação humana',value:'1 PEND.',color:'#ff5d7a'},
+      ],
+      gauges: [g('CPU',38,'#2de2ff'), g('TOKENS',62,'#19f5c8'), g('ORÇAM.',45,'#ffb547')],
+      feed: [
+        {title:'FAC-018 aguarda você',sub:'login oficial Claude e Google',tag:'AÇÃO',color:'#ff5d7a',href:'#revisar'},
+        {title:'PR #212 aberto pelo Dev',sub:'Portal do Cliente · 2 min',tag:'PR',color:'#19f5c8',href:'#repos'},
+        {title:'214/214 testes aprovados',sub:'Testador · 8 min',tag:'OK',color:'#b18cff',href:'#hist'},
+        {title:'Desenho do módulo Auth',sub:'Arquiteto · 32 min',tag:'INFO',color:'#5aa8ff',href:'#hist'},
+        {title:'v2.3.1 em homologação',sub:'Deploy · 1 h',tag:'DEPLOY',color:'#2de2ff',href:'#pipeline'},
+        {title:'Orçamento em 45%',sub:'consumo dentro do previsto',tag:'CUSTO',color:'#ffb547',href:'#relatorios'},
+      ].map(f=>({...f,bd:f.tag==='AÇÃO'?'rgba(255,93,122,.45)':'rgba(45,226,255,.12)',bg:f.tag==='AÇÃO'?'rgba(255,93,122,.08)':'rgba(45,226,255,.03)'})),
+      agents: [
+        {code:'ARQ',name:'Arquiteto',status:'Projetando',color:'#5aa8ff',sc:'#19f5c8'},
+        {code:'DEV',name:'Dev',status:'Codificando',color:'#19f5c8',sc:'#19f5c8'},
+        {code:'REV',name:'Revisor',status:'Aguardando você',color:'#ff5d7a',sc:'#ff5d7a'},
+        {code:'TST',name:'Testador',status:'Testando',color:'#b18cff',sc:'#19f5c8'},
+        {code:'DPL',name:'Deploy',status:'Ocioso',color:'#6b8797',sc:'#6b8797'},
+        {code:'DOC',name:'Documentador',status:'Escrevendo',color:'#ffb547',sc:'#19f5c8'},
+      ],
+      pipeline: [
+        {id:'FAC-021',title:'Tela de login',stage:'CÓDIGO',pct:'62%',color:'#19f5c8'},
+        {id:'FAC-018',title:'Login oficial',stage:'BLOQUEADO',pct:'40%',color:'#ff5d7a'},
+        {id:'FAC-019',title:'Relatório de custos',stage:'TESTES',pct:'85%',color:'#b18cff'},
+        {id:'FAC-022',title:'Módulo Auth',stage:'DESENHO',pct:'22%',color:'#5aa8ff'},
+      ],
+      metrics: [
+        {label:'Concluídas',value:'128',delta:'+14 semana',color:'#e8fbff'},
+        {label:'Taxa de sucesso',value:'94%',delta:'+2%',color:'#19f5c8'},
+        {label:'Tempo médio',value:'42m',delta:'−6 min',color:'#2de2ff'},
+        {label:'Custo / tarefa',value:'R$ 3,10',delta:'−8%',color:'#ffb547'},
+      ],
+      settings: [
+        ['Geral','M4 6h16M4 12h16M4 18h16'],
+        ['Modelos','M12 3v3M5 8h14v10H5zM9 13h.01M15 13h.01'],
+        ['Integrações','M9 7V3M15 7V3M7 7h10v5a5 5 0 01-10 0zM12 17v4'],
+        ['Acessos','M8 11V8a4 4 0 118 0v3M6 11h12v9H6z'],
+        ['Alertas','M6 16V11a6 6 0 1112 0v5l2 2H4zM10 21h4'],
+        ['Equipe','M9 11a3 3 0 100-6 3 3 0 000 6zM3 20c0-4 3-6 6-6s6 2 6 6M17 5a3 3 0 010 6'],
+      ].map(([label,d])=>({label,d})),
+    };
+  }
+}
+</script>
+</body>
+</html>

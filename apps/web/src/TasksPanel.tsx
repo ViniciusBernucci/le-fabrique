@@ -250,7 +250,7 @@ export function TasksPanel({
   function card(task: Task) {
     const owner = agents.find((agent) => agent.id === task.assigneeId);
     return (
-      <article className="task-card" key={task.id}>
+      <article className="task-card" key={task.id} data-task-stage={task.stage}>
         <div className="task-card-meta">
           <span>{task.code}</span>
           <span className={`task-priority priority-${priorities.indexOf(task.priority)}`}>
@@ -265,6 +265,9 @@ export function TasksPanel({
             "Projeto indisponível"}
         </p>
         <span className="task-phase">{task.phase}</span>
+        <span className="task-stage" data-task-stage={task.stage}>
+          {task.stage}
+        </span>
         <div className="task-owner">
           <span className="task-avatar" aria-hidden="true">
             {owner?.name.slice(0, 2).toUpperCase() ?? "?"}
@@ -471,24 +474,10 @@ export function TasksPanel({
       )}
       {view === "board" ? (
         <section className="tasks-board" aria-label="Quadro de tarefas">
-          {stages.map((value, index) => (
-            <section className="tasks-column" key={value}>
+          {stages.map((value) => (
+            <section className="tasks-column" key={value} data-task-stage={value}>
               <h2>
-                <i
-                  style={{
-                    background: [
-                      "#8293b6",
-                      "#6693ef",
-                      "#a18afa",
-                      "#e7ad62",
-                      "#64bfce",
-                      "#7693d8",
-                      "#c78ac6",
-                      "#66bd9d",
-                      "#e88585",
-                    ][index],
-                  }}
-                />
+                <i aria-hidden="true" />
                 {value}
                 <span>{visible.filter((task) => task.stage === value).length}</span>
               </h2>

@@ -15,3 +15,18 @@ it("shares the navigation frame with custom content and marks the active destina
   expect(html).toMatch(/aria-label="Configurações"[^>]*class="is-active" aria-current="page"/);
   expect(html).not.toContain("Escritório virtual da equipe");
 });
+
+it("keeps the command frame and settings rail on every destination", () => {
+  for (const destination of ["control", "tasks", "settings"] as const) {
+    const html = renderToStaticMarkup(
+      <DashboardLayout onNavigate={() => undefined} activeDestination={destination}>
+        <p>Área</p>
+      </DashboardLayout>,
+    );
+    expect(html).toContain('aria-label="Buscar atalhos no sistema"');
+    expect(html).toContain('aria-label="Expandir menu"');
+    expect(html).toContain('aria-label="Atalhos de configurações"');
+    expect(html).toContain('aria-label="Configurações: Equipe"');
+    expect(html).toContain('aria-labelledby="home-preview-title"');
+  }
+});

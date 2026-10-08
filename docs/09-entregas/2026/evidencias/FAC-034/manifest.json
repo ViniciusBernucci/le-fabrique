@@ -1,0 +1,177 @@
+{
+  "base_sha": "de5dbfac0b00f3e1699b999f987856f592f65899",
+  "branch": "developer",
+  "commits_created": false,
+  "reason": "Git index is read-only; no permissions workaround.",
+  "stages": [
+    {
+      "stage": "01-tokens",
+      "patch": "01-tokens.patch",
+      "sha256": "227c801ed81ed704fc386343f9b72627961bbfe5a02004a8b4ffae08123a42b6",
+      "files": [
+        {
+          "path": "apps/web/src/theme-hud.css",
+          "before_sha256": null,
+          "after_sha256": "b46b1c51648920ffa45c29f101b955db3c637f9d76435801cd7b05efdd85a7cd"
+        },
+        {
+          "path": "apps/web/src/main.tsx",
+          "before_sha256": "e5850e1b35a0cc58f014f3a0ec66e024c7b41f362b04e5bdb003579eafa1e528",
+          "after_sha256": "001bea0cc038ed9699de64dba371a276f2bc32f8fa8a194c2bcfce40c97bebac"
+        }
+      ]
+    },
+    {
+      "stage": "02-frame-home",
+      "patch": "02-frame-home.patch",
+      "sha256": "839968f15414224c7da12f9fca3b4504b4b7777658c658935b5800be0c9acd45",
+      "files": [
+        {
+          "path": "apps/web/src/DashboardLayout.tsx",
+          "before_sha256": "1a706f63c709cffb1a0d980ebf6ea2e3f476fbd3c99df77c8bb32130ca81ecdf",
+          "after_sha256": "b83120d677e4748c587b6150ea9b382ce0a380b2fd49e92557af3139624a8a14"
+        },
+        {
+          "path": "apps/web/src/OrchestrationCore.tsx",
+          "before_sha256": null,
+          "after_sha256": "b09eaedfe9400335ecc6fed6505af6586faca2ba7794b0433953ae6ca05fd7b8"
+        },
+        {
+          "path": "apps/web/src/home-dashboard.css",
+          "before_sha256": "b2aaf3e18ab8dd6fbde0664a6a72953016c0924e1f3b12ba2530ae79fe1af4b8",
+          "after_sha256": "4a0bf4c56c4dbc8d8ea466e60bfe37b452b8ba3309c3f1ac825456d1f5ffd735"
+        },
+        {
+          "path": "apps/web/src/HomeDashboard.spec.tsx",
+          "before_sha256": "2f09099c351fde4a2b7b69dce7dc042b988e9d985ccab42ebe3c0cbd5582f49d",
+          "after_sha256": "ee8c33d09d1768c50442cd89820ebb6f805209fc05bc16d537d109f608c4d8c9"
+        },
+        {
+          "path": "apps/web/src/DashboardLayout.spec.tsx",
+          "before_sha256": "5dfa45c9afbd86569556e02426743d99caba52dad7309293a4065cfbe7ab6719",
+          "after_sha256": "c6e20c5ea24b272cada62a1dc2673595a4b0d046987b4080c0a8f7cd16754b20"
+        }
+      ]
+    },
+    {
+      "stage": "03-login-primitivos",
+      "patch": "03-login-primitivos.patch",
+      "sha256": "b9a4794c73776d30d27183f29e35a11e8013b66cac23e50fdbd99a5f2601acac",
+      "files": [
+        {
+          "path": "apps/web/src/styles.css",
+          "before_sha256": "2b35933333df26e63bd82ba9b2b4cb87177e093a5e76c1ac3841392ebf1b95b5",
+          "after_sha256": "56429cca88d87844ad8a808b04d1c5db061a8acfe6577e96fd9bd18d6677d416"
+        },
+        {
+          "path": "apps/web/src/App.tsx",
+          "before_sha256": "f070e1482653f8724a0f24e82db7f5d2c04402d96cd34b60004082740a58012b",
+          "after_sha256": "18666f8b85ad6917d541f89603f1aa7e3ebcf15e0708ab945d8b903bcb30e174"
+        },
+        {
+          "path": "apps/web/src/HudSystemMessage.tsx",
+          "before_sha256": null,
+          "after_sha256": "12145bc14de47b0deec7655c91b6a1ba28ee998632af3b8b7f51b5386d6fb005"
+        },
+        {
+          "path": "apps/web/src/HudSystemMessage.spec.tsx",
+          "before_sha256": null,
+          "after_sha256": "8d82e33f70edc615f509bc41cbe786bd7ba9ee3ebe80aa3e57ba57e0d5669529"
+        }
+      ]
+    },
+    {
+      "stage": "04-projetos-operacao",
+      "patch": "04-projetos-operacao.patch",
+      "sha256": "067793aa45091abc0f53dc805ffa600e3611d3381a9b06a2843ee22696cf373b",
+      "files": [
+        {
+          "path": "apps/web/src/styles.css",
+          "before_sha256": "56429cca88d87844ad8a808b04d1c5db061a8acfe6577e96fd9bd18d6677d416",
+          "after_sha256": "9138e734758df6036d56e6efba2782fb2dce1231fa3a33e2220bf9b53a35c449"
+        },
+        {
+          "path": "apps/web/src/RunPanel.tsx",
+          "before_sha256": "e3546ac6ae27322001e7150a714ad684e6186641612c6daa044008de0b58411e",
+          "after_sha256": "ef3d57ff873e6644ea267d4e49bcade1603e0f4e4ccb4b20d62120161e2c2c5a"
+        },
+        {
+          "path": "apps/web/src/RunControlPanel.tsx",
+          "before_sha256": "e778198597691a5a0c79613c513667bc917b5f3de1706e943ee4be143b5265ad",
+          "after_sha256": "6289c3b2d4fec55d6e60f6cf1c3c78db49c8d6f110ae295d6473351b904756e5"
+        },
+        {
+          "path": "apps/web/src/OperationPanel.tsx",
+          "before_sha256": "c8c6f904dbe0713d9107c4825d0515998185b1f2c1065734bd3b6636b91be80a",
+          "after_sha256": "6660f2f7c46de2dd72da4ee1973073bf8e5e84e9b989016280f642e230c0dba2"
+        },
+        {
+          "path": "apps/web/src/hud-theme.spec.ts",
+          "before_sha256": null,
+          "after_sha256": "8d52296925d58a9d12057aa7e0519a8710c0aa8040af877fbc9f9ddbeb1c0225"
+        }
+      ]
+    },
+    {
+      "stage": "05-tarefas",
+      "patch": "05-tarefas.patch",
+      "sha256": "6aec5457ecd521a3054ec35c75f76388e8e2803f7aceaeea377123c5ad64d7e6",
+      "files": [
+        {
+          "path": "apps/web/src/tasks.css",
+          "before_sha256": "529cc856f14c0f4226b1e308c65a55d7c2593db6711a5c78e188d9708ee4cc1e",
+          "after_sha256": "5c6e1a1529c1134a9d59232babd2007b10144723f577a7a22211cfe6a4b6de8c"
+        },
+        {
+          "path": "apps/web/src/TasksPanel.tsx",
+          "before_sha256": "41dfa005b3eff5bfacb6cbab106bf9c91a4f92f847c9ce8829882a1b07dd5a1e",
+          "after_sha256": "cb21b7f2f4ad1d5ba1a560ff0d8b72d92a442efdbac9758de637a6db2e2eb92b"
+        },
+        {
+          "path": "apps/web/src/hud-theme.spec.ts",
+          "before_sha256": "8d52296925d58a9d12057aa7e0519a8710c0aa8040af877fbc9f9ddbeb1c0225",
+          "after_sha256": "46c9aee9b124cbffb6297fdee48a46ed210f5096d3378d3dc327b01d55ec7f40"
+        }
+      ]
+    },
+    {
+      "stage": "06-configuracoes-modais",
+      "patch": "06-configuracoes-modais.patch",
+      "sha256": "77f3b5f585d4d00850b09633392662463ad733cc8a0ffdbb90f5eee5858ca69d",
+      "files": [
+        {
+          "path": "apps/web/src/styles.css",
+          "before_sha256": "9138e734758df6036d56e6efba2782fb2dce1231fa3a33e2220bf9b53a35c449",
+          "after_sha256": "483aca795bc5f1429ea469f47ff036b33861ca599b519c6c1781efd7efbb0ebf"
+        }
+      ]
+    }
+  ],
+  "design_sources": [
+    {
+      "path": "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/Fabrica Dashboard v3.dc.html",
+      "sha256": "8e0266ef57c80c1d684493eedf6ac26bea4a8d6dee3294d47ed09a6de2fe951a",
+      "bytes": 27472
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/HUD UI Kit.dc.html",
+      "sha256": "3fd01d67d4b427a6f3b236ad083521b819f427b287cac46705452c13a2ef710a",
+      "bytes": 14896
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/PROMPT-CLAUDE-CODE.md",
+      "sha256": "fa49cc44e0639c122603a3c0003202b61cb7624839bd0ce47ad894d15dc529aa",
+      "bytes": 2140
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/README.md",
+      "sha256": "792656c6e74c6ff6a7bca86879e71853fe20802cdd1c88b08cae966fa9dff639",
+      "bytes": 11013
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/design_handoff_centro_comando/theme-hud.css",
+      "sha256": "bf6c4c69c4ad9636e8c1b0d6a3a2d76b0475e5b229c3e3bdb9e5de6cfb50dac3",
+      "bytes": 2443
+    }
+  ]
+}
