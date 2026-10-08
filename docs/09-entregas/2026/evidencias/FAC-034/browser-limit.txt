@@ -1,0 +1,5 @@
+NOT_RUN: interactive/visual QA.
+Vite local: listen EPERM: operation not permitted 127.0.0.1:5185.
+Playwright Chromium, chromiumSandbox:true: FATAL:content/browser/sandbox_host_linux.cc:41 Check failed: . shutdown: Operation not permitted.
+No permissions expansion, no installation, no --no-sandbox workaround.
+Browser script syntax checked with node --check; not a functional PASS.

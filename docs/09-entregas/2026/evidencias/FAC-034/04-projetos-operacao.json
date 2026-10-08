@@ -1,0 +1,27 @@
+[
+  {
+    "path": "apps/web/src/styles.css",
+    "before_sha256": "56429cca88d87844ad8a808b04d1c5db061a8acfe6577e96fd9bd18d6677d416",
+    "after_sha256": "9138e734758df6036d56e6efba2782fb2dce1231fa3a33e2220bf9b53a35c449"
+  },
+  {
+    "path": "apps/web/src/RunPanel.tsx",
+    "before_sha256": "e3546ac6ae27322001e7150a714ad684e6186641612c6daa044008de0b58411e",
+    "after_sha256": "ef3d57ff873e6644ea267d4e49bcade1603e0f4e4ccb4b20d62120161e2c2c5a"
+  },
+  {
+    "path": "apps/web/src/RunControlPanel.tsx",
+    "before_sha256": "e778198597691a5a0c79613c513667bc917b5f3de1706e943ee4be143b5265ad",
+    "after_sha256": "6289c3b2d4fec55d6e60f6cf1c3c78db49c8d6f110ae295d6473351b904756e5"
+  },
+  {
+    "path": "apps/web/src/OperationPanel.tsx",
+    "before_sha256": "c8c6f904dbe0713d9107c4825d0515998185b1f2c1065734bd3b6636b91be80a",
+    "after_sha256": "6660f2f7c46de2dd72da4ee1973073bf8e5e84e9b989016280f642e230c0dba2"
+  },
+  {
+    "path": "apps/web/src/hud-theme.spec.ts",
+    "before_sha256": null,
+    "after_sha256": "8d52296925d58a9d12057aa7e0519a8710c0aa8040af877fbc9f9ddbeb1c0225"
+  }
+]

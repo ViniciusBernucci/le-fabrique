@@ -14,6 +14,10 @@ Contas/Integrações IA/Equipes → modal com rascunho → salvar versionado; ve
 
 Exemplo didático: ticket com critério “validar um campo” só avança com a base/definição/checks aprovados; request inválido não vira comando autorizado. O exemplo não é execução desta migração.
 
+## Apresentação comum — FAC-034
+
+Configurações, contas, modelos, equipes/skills, agentes predefinidos e modais compartilham os tokens HUD do [painel de controle](../controle/00-README.md#apresentação-centro-de-comando--fac-034). Abas têm estado ativo ciano, cards/badges refletem estados reais do provider, switches mantêm role/aria, dialogs usam superfície sólida e backdrop escuro. A camada visual não altera rascunhos, salvar/cancelar, aprovação de revisão nem login oficial. [Entrega e limites de verificação](../../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md).
+
 ## Estados, dados e regras
 
 FactorySettings singleton JSON; skills não são instaladas/executadas pelo cadastro. PR exige preparar/aprovar payload exato; código não faz merge. Veja [estados por entidade](../../05-contratos/schemas/01-workflow.md) e [contratos canônicos](../../05-contratos/00-README.md).

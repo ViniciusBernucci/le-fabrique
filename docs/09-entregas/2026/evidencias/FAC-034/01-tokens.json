@@ -1,0 +1,12 @@
+[
+  {
+    "path": "apps/web/src/theme-hud.css",
+    "before_sha256": null,
+    "after_sha256": "b46b1c51648920ffa45c29f101b955db3c637f9d76435801cd7b05efdd85a7cd"
+  },
+  {
+    "path": "apps/web/src/main.tsx",
+    "before_sha256": "e5850e1b35a0cc58f014f3a0ec66e024c7b41f362b04e5bdb003579eafa1e528",
+    "after_sha256": "001bea0cc038ed9699de64dba371a276f2bc32f8fa8a194c2bcfce40c97bebac"
+  }
+]

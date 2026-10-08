@@ -133,6 +133,7 @@ export function OperationStatusView({
               {onToggle && (
                 <button
                   type="button"
+                  className={status.scheduling.paused ? "secondary-action" : "danger-action"}
                   disabled={
                     changing || (!status.scheduling.paused ? false : !status.writerGuardInstalled)
                   }

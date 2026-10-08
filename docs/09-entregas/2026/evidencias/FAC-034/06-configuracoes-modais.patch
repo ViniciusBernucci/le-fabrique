@@ -1,0 +1,299 @@
+--- a/apps/web/src/styles.css
++++ b/apps/web/src/styles.css
+@@ -1033,3 +1033,296 @@
+   }
+ }
+ 
++/* Settings, teams, agents and every shared modal use the same HUD surfaces. */
++.settings-hero {
++  border-radius: var(--hud-radius-lg);
++  padding: 20px;
++  background:
++    linear-gradient(120deg, var(--hud-selected), transparent 55%), var(--hud-surface-solid);
++}
++.settings-hero h2 {
++  color: var(--hud-text-strong);
++  font: 700 24px var(--hud-font-display);
++  letter-spacing: 0.04em;
++}
++.settings-section {
++  padding: 16px;
++}
++.metric-grid {
++  gap: 14px;
++}
++.metric-grid article {
++  background: var(--hud-surface);
++  padding: 14px;
++}
++.metric-grid strong {
++  font: 700 22px var(--hud-font-display);
++  color: var(--hud-cyan);
++}
++.section-heading {
++  gap: 14px;
++}
++.section-heading > div {
++  flex-wrap: wrap;
++}
++.settings-tabs {
++  gap: 6px;
++  border-color: var(--hud-line-soft);
++}
++.settings-tabs [role="tab"] {
++  color: var(--hud-text-muted);
++  border: 1px solid var(--hud-line-soft);
++  background: transparent;
++  box-shadow: none;
++}
++.settings-tabs [role="tab"]:hover {
++  background: var(--hud-hover);
++  color: var(--hud-text-strong);
++}
++.settings-tabs [aria-selected="true"] {
++  color: var(--hud-text-strong);
++  border-color: var(--hud-line-strong);
++  background: var(--hud-selected);
++}
++.account-card,
++.account-list-item,
++.assignment-row {
++  background: var(--hud-surface);
++  border-color: var(--hud-line);
++}
++.account-list-item {
++  font-weight: 500;
++  box-shadow: none;
++}
++.account-list-item:hover,
++.account-list-item:focus-visible {
++  border-color: var(--hud-cyan);
++  background: var(--hud-hover);
++  box-shadow: none;
++}
++.provider-mark {
++  color: var(--hud-cyan);
++  background: var(--hud-button-surface);
++  border: 1px solid var(--hud-line-strong);
++  font: 600 16px var(--hud-font-mono);
++  border-radius: var(--hud-radius);
++}
++.provider-mark--claude {
++  color: var(--hud-amber);
++  background: color-mix(in srgb, var(--hud-amber) 8%, transparent);
++  border-color: color-mix(in srgb, var(--hud-amber) 40%, transparent);
++}
++.provider-mark--antigravity {
++  color: var(--hud-violet);
++  background: color-mix(in srgb, var(--hud-violet) 8%, transparent);
++  border-color: color-mix(in srgb, var(--hud-violet) 40%, transparent);
++}
++.status--unconfigured,
++.status--disabled {
++  --status-tone: var(--hud-idle);
++}
++.status--available {
++  --status-tone: var(--hud-teal);
++}
++.status--busy {
++  --status-tone: var(--hud-blue);
++}
++.status--auth_required {
++  --status-tone: var(--hud-rose);
++}
++.status--rate_limited,
++.status--cooldown {
++  --status-tone: var(--hud-amber);
++}
++.status--error {
++  --status-tone: var(--hud-rose);
++}
++.status {
++  color: var(--status-tone);
++  border-color: color-mix(in srgb, var(--status-tone) 40%, transparent);
++  background: color-mix(in srgb, var(--status-tone) 8%, transparent);
++}
++.account-dialog,
++dialog {
++  border: 1px solid var(--hud-line-strong);
++  border-radius: var(--hud-radius-lg);
++  color: var(--hud-text);
++  background: var(--hud-surface-solid);
++  box-shadow:
++    0 0 40px var(--hud-glow-soft),
++    0 20px 60px var(--hud-shadow);
++}
++dialog::backdrop,
++.account-dialog::backdrop {
++  background: var(--hud-backdrop);
++  backdrop-filter: blur(5px);
++}
++.account-dialog h2 {
++  font: 700 18px var(--hud-font-display);
++  color: var(--hud-text-strong);
++  letter-spacing: 0.04em;
++}
++.account-dialog-heading button {
++  box-shadow: none;
++}
++.account-dialog fieldset {
++  margin: 0;
++  padding: 0;
++  border: 0;
++}
++.account-dialog-footer {
++  border-color: var(--hud-line);
++}
++.account-dialog input[type="checkbox"] {
++  flex-shrink: 0;
++}
++.onboarding-status {
++  background: var(--hud-surface-2);
++}
++.onboarding-challenge {
++  padding: 12px;
++  border: 1px solid var(--hud-line-soft);
++  border-radius: var(--hud-radius);
++  background: var(--hud-log-bg);
++  font-family: var(--hud-font-mono);
++}
++.verification-line {
++  color: var(--hud-text-dim);
++  font-family: var(--hud-font-mono);
++  line-height: 1.8;
++}
++.verification-line strong {
++  color: var(--hud-teal);
++}
++.security-note {
++  border-left-color: var(--hud-amber);
++  background: color-mix(in srgb, var(--hud-amber) 6%, transparent);
++  color: var(--hud-text-muted);
++}
++.team-tabs {
++  margin-bottom: 18px;
++}
++.team-list-heading {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  gap: 18px;
++  margin: 16px 0;
++}
++.team-list-heading label {
++  width: min(360px, 100%);
++  margin: 0;
++}
++.team-list-heading button {
++  white-space: nowrap;
++}
++.team-empty,
++.account-list > .muted {
++  padding: 22px 16px;
++  border: 1px dashed var(--hud-line-strong);
++  border-radius: var(--hud-radius);
++  text-align: center;
++}
++.team-empty::before,
++.account-list > .muted::before {
++  content: "◎";
++  display: block;
++  color: var(--hud-cyan);
++  font-size: 32px;
++  margin-bottom: 8px;
++}
++.team-skill-picker {
++  border: 1px solid var(--hud-line);
++  border-radius: var(--hud-radius);
++  padding: 12px;
++  margin-top: 16px;
++}
++.team-skill-picker legend {
++  color: var(--hud-text-muted);
++  font-size: 12px;
++  padding: 0 5px;
++}
++.preset-agent-list {
++  margin-bottom: 12px;
++}
++.preset-agent-row {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) auto;
++  border: 1px solid var(--hud-line);
++  border-radius: var(--hud-radius);
++  background: var(--hud-surface);
++}
++.preset-agent-row > .account-list-item {
++  border: 0;
++  background: transparent;
++}
++.preset-agent-toggle {
++  display: flex;
++  align-items: center;
++  gap: 8px;
++  margin: 0 12px;
++  cursor: pointer;
++}
++.preset-agent-toggle input {
++  appearance: none;
++  width: 36px;
++  min-width: 36px;
++  height: 20px;
++  padding: 2px;
++  border-radius: var(--hud-radius-pill);
++  background: var(--hud-idle);
++  cursor: pointer;
++}
++.preset-agent-toggle input::before {
++  content: "";
++  display: block;
++  width: 14px;
++  height: 14px;
++  border-radius: 50%;
++  background: var(--hud-text-strong);
++  transform: translateX(0);
++  transition: transform 0.15s ease;
++}
++.preset-agent-toggle input:checked {
++  background: var(--hud-cyan);
++}
++.preset-agent-toggle input:checked::before {
++  transform: translateX(15px);
++}
++.preset-agent-toggle input:disabled {
++  opacity: 0.5;
++  cursor: wait;
++}
++.agent-overview {
++  padding: 24px;
++}
++.agent-overview p {
++  line-height: 1.6;
++}
++@media (max-width: 1150px) {
++  .settings-bottom-grid {
++    grid-template-columns: minmax(0, 1fr);
++  }
++  .assignment-row {
++    grid-template-columns: 1fr 1fr;
++  }
++}
++@media (max-width: 760px) {
++  .assignment-row {
++    grid-template-columns: minmax(0, 1fr);
++  }
++  .team-list-heading {
++    align-items: start;
++    flex-direction: column;
++  }
++  .settings-hero h2 {
++    font-size: 20px;
++  }
++}
++@media (max-width: 600px) {
++  .preset-agent-toggle {
++    flex-direction: column;
++    justify-content: center;
++    gap: 4px;
++  }
++}

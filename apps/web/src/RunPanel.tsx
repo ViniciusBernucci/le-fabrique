@@ -107,7 +107,9 @@ export function RunPanel({
                 onClick={() => setSelected(run.id)}
               >
                 <strong>{run.title}</strong>
-                <span>{statusLabels[run.status] ?? run.status}</span>
+                <span className="hud-status" data-hud-status={run.status}>
+                  {statusLabels[run.status] ?? run.status}
+                </span>
               </button>
             ))}
           </fieldset>
@@ -126,7 +128,9 @@ export function RunResultView({ run, token }: { run: RunDetail; token?: string }
   return (
     <div className="run-details">
       <h3>{run.title}</h3>
-      <p>{statusLabels[run.status] ?? run.status}</p>
+      <p className="hud-status" data-hud-status={run.status}>
+        {statusLabels[run.status] ?? run.status}
+      </p>
       {token && <RunControlPanel key={run.id} token={token} run={run} />}
       {token && <RunResumePanel key={run.id} token={token} run={run} />}
       {token && <RunRecoveryPanel key={run.id} token={token} run={run} />}

@@ -10,11 +10,19 @@ Oferecer navegação e operação administrativa da fábrica.
 
 ## Fluxo e comportamento
 
-Menu principal: Painel, Projetos, Tarefas, Agentes de IA, Escritório, Usuários e Configurações, nessa ordem. Tarefas abre o painel demonstrativo FAC-033 sem exigir login; Projetos abre controle; Agentes de IA e Configurações abrem configurações; Escritório e Usuários usam a prévia de áreas futuras. Os atalhos da home são independentes do menu. [Entrega FAC-032](../../09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
+Menu principal: Painel, Projetos, Tarefas, Agentes de IA, Núcleo IA, Pipeline, Revisões, Repositórios, Histórico, Escritório, Usuários e Configurações, nessa ordem. Núcleo IA, Pipeline, Revisões, Repositórios e Histórico são prévias, sem novos endpoints. Tarefas abre o painel demonstrativo FAC-033 sem exigir login; Projetos abre controle; Agentes de IA e Configurações abrem configurações; Escritório e Usuários usam a prévia de áreas futuras. Os atalhos da home são independentes do menu. [Entrega FAC-032](../../09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
 
-Home estática antes de login → sessão Bearer → projetos/tickets/runs/operação; menu abre recolhido, mantém expansão durante navegação e reinicia recolhido no reload.
+Home demonstrativa com núcleo SVG animado antes de login → sessão Bearer → projetos/tickets/runs/operação; menu abre recolhido, mantém expansão durante navegação e reinicia recolhido no reload.
 
 Exemplo didático: ticket com critério “validar um campo” só avança com a base/definição/checks aprovados; request inválido não vira comando autorizado. O exemplo não é execução desta migração.
+
+## Apresentação Centro de Comando — FAC-034
+
+Tokens canônicos em [theme-hud.css](../../../apps/web/src/theme-hud.css), importados antes de styles.css; fundo com grade, títulos Orbitron, UI Rajdhani, rótulos técnicos JetBrains Mono, superfícies/bordas ciano. Login, projetos/operação, execuções, tarefas, configurações e dialogs compartilham o tema. Cores fixas ficam nos tokens; não usar paleta isolada por tela.
+
+[OrchestrationCore](../../../apps/web/src/OrchestrationCore.tsx) substitui a imagem da home: JARVIS ao centro e os quatro outros agentes já existentes, rede determinística, anéis/ondas/partículas em CSS. Movimento reduzido desativa animações e transições. Relógio mostra a hora local, com timer limpo no unmount; status/diagnóstico continuam dados simulados, não telemetria ou orçamento. O atalho ENVIAR abre Tarefas, sem executar ou persistir diretivas. Projetos recentes permanecem projetos, sem serem convertidos em runs fictícias.
+
+Frame mantém props/HomeDestination, busca ⌘K/Ctrl+K, skip link, aria-current, menu recolhível e prévia. Sidebar expandida mede 226px; recolhida 66px. Trilho de 78px oferece Geral/Modelos/Integrações/Acessos/Alertas/Equipe para a mesma tela de configurações; em telas estreitas vira faixa inferior. Textos existentes são preservados, maiúsculas de títulos por CSS. Estado atual IMPLEMENTADO no diff sobre de5dbfa; checks e limites visuais na [entrega FAC-034](../../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Revisão independente/aceite visual pendentes.
 
 ## Estados, dados e regras
 

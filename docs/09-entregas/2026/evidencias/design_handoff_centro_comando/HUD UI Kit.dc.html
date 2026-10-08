@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#02060c}a{color:#2de2ff;text-decoration:none}a:hover{color:#b9f6ff}*{box-sizing:border-box}</style>
+</helmet>
+<div style="min-height:100vh;background:radial-gradient(1000px 640px at 50% 20%,rgba(45,226,255,.1),transparent 65%),linear-gradient(rgba(45,226,255,.035) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,rgba(45,226,255,.035) 1px,transparent 1px) 0 0/32px 32px,#02060c;color:#d6f6ff;font-family:Rajdhani,sans-serif;font-size:15px;padding:28px;display:flex;flex-direction:column;gap:18px">
+
+  <header>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">LA_FABRIQUE // KIT_DE_INTERFACE</div>
+    <h1 style="margin:4px 0 0;font-family:Orbitron,sans-serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:#e8fbff">Padrão visual para todas as telas</h1>
+    <div style="color:#8fbccd;margin-top:4px;max-width:720px">Componentes base do tema Centro de Comando aplicados às telas existentes: Projetos, Tarefas, Execução e Configurações.</div>
+  </header>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px">
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">BOTÕES</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button style="white-space:nowrap;font-family:Rajdhani;font-weight:700;font-size:15px;background:#2de2ff;color:#02101a;border:0;border-radius:8px;padding:9px 16px;box-shadow:0 0 18px rgba(45,226,255,.35);cursor:pointer" style-hover="box-shadow:0 0 26px rgba(45,226,255,.6)">Executar ticket</button>
+        <button style="white-space:nowrap;font-family:Rajdhani;font-weight:700;font-size:15px;background:rgba(45,226,255,.06);color:#d6f6ff;border:1px solid rgba(45,226,255,.4);border-radius:8px;padding:9px 16px;cursor:pointer" style-hover="border-color:#2de2ff;color:#fff">Salvar rascunho</button>
+        <button style="white-space:nowrap;font-family:Rajdhani;font-weight:600;font-size:15px;background:transparent;color:#8fbccd;border:1px solid transparent;border-radius:8px;padding:9px 12px;cursor:pointer" style-hover="background:rgba(45,226,255,.08);color:#fff">Cancelar</button>
+        <button style="white-space:nowrap;font-family:Rajdhani;font-weight:700;font-size:15px;background:rgba(255,93,122,.1);color:#ff8fa3;border:1px solid rgba(255,93,122,.5);border-radius:8px;padding:9px 16px;cursor:pointer" style-hover="background:rgba(255,93,122,.18);color:#fff">Pausar fábrica</button>
+        <button disabled="" style="white-space:nowrap;font-family:Rajdhani;font-weight:600;font-size:15px;background:rgba(107,135,151,.1);color:#6b8797;border:1px solid rgba(107,135,151,.3);border-radius:8px;padding:9px 16px">Desabilitado</button>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff;margin-top:4px">STATUS DE TICKET</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ statuses }}" as="s" hint-placeholder-count="8">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.06em;color:{{ s.c }};border:1px solid {{ s.bd }};background:{{ s.bg }};border-radius:6px;padding:3px 8px"><span style="width:6px;height:6px;border-radius:50%;background:{{ s.c }};box-shadow:0 0 8px {{ s.c }}"></span>{{ s.k }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">FORMULÁRIO · NOVO PROJETO</div>
+      <label style="display:flex;flex-direction:column;gap:5px"><span style="font-weight:600;color:#8fbccd;font-size:14px">Nome</span>
+        <input value="Portal do Cliente" style="font-family:Rajdhani;font-size:15px;font-weight:600;color:#e8fbff;background:#041220;border:1px solid rgba(45,226,255,.25);border-radius:8px;padding:10px 12px;outline:none" style-focus="border-color:#2de2ff;box-shadow:0 0 0 3px rgba(45,226,255,.15)"></input></label>
+      <label style="display:flex;flex-direction:column;gap:5px"><span style="font-weight:600;color:#8fbccd;font-size:14px">URL do repositório</span>
+        <input value="git@github.com:org/portal.git" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8fbff;background:#041220;border:1px solid rgba(45,226,255,.25);border-radius:8px;padding:10px 12px;outline:none" style-focus="border-color:#2de2ff;box-shadow:0 0 0 3px rgba(45,226,255,.15)"></input></label>
+      <label style="display:flex;flex-direction:column;gap:5px"><span style="font-weight:600;color:#8fbccd;font-size:14px">Revisão-base (SHA)</span>
+        <input value="a1b2c3" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#e8fbff;background:#041220;border:1px solid rgba(255,93,122,.6);border-radius:8px;padding:10px 12px;outline:none"></input>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#ff8fa3">SHA precisa ter 40 caracteres</span></label>
+    </div>
+
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">MENSAGENS DO SISTEMA</div>
+      <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="4">
+        <div style="display:flex;gap:10px;border:1px solid {{ a.bd }};background:{{ a.bg }};border-radius:8px;padding:10px 12px">
+          <span style="width:3px;align-self:stretch;border-radius:3px;background:{{ a.c }};box-shadow:0 0 8px {{ a.c }}"></span>
+          <div style="flex:1"><div style="font-weight:700">{{ a.t }}</div><div style="font-size:13.5px;color:#8fbccd">{{ a.d }}</div></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:{{ a.c }}">{{ a.k }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+      <div style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">TABELA · TICKETS DO PROJETO</div>
+      <div style="display:flex;gap:4px;border:1px solid rgba(45,226,255,.15);border-radius:8px;padding:3px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+          <span style="font-weight:600;font-size:14px;padding:5px 12px;border-radius:6px;color:{{ t.c }};background:{{ t.bg }}">{{ t.k }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <div style="min-width:640px">
+        <div style="display:grid;grid-template-columns:110px 1fr 160px 130px 90px;gap:12px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:#6fa3b8;border-bottom:1px solid rgba(45,226,255,.2)"><span>ID</span><span>TÍTULO</span><span>STATUS</span><span>AGENTE</span><span style="text-align:right">AÇÃO</span></div>
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:110px 1fr 160px 130px 90px;gap:12px;align-items:center;padding:11px 12px;border-bottom:1px solid rgba(45,226,255,.08)" style-hover="background:rgba(45,226,255,.04)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#8fbccd">{{ r.id }}</span>
+            <span style="font-weight:600">{{ r.t }}</span>
+            <span><span style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:{{ r.c }};border:1px solid {{ r.bd }};background:{{ r.bg }};border-radius:6px;padding:2px 8px"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.c }}"></span>{{ r.s }}</span></span>
+            <span style="color:#8fbccd">{{ r.a }}</span>
+            <a href="#" style="text-align:right;font-weight:700">{{ r.act }} ›</a>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px">
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px">
+      <div style="display:flex;align-items:center;margin-bottom:10px"><span style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">LOG_DE_EXECUÇÃO · RUN #48</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#19f5c8;border:1px solid rgba(25,245,200,.4);border-radius:4px;padding:1px 6px">LIVE</span></div>
+      <div style="background:#020a12;border:1px solid rgba(45,226,255,.12);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8">
+        <sc-for list="{{ log }}" as="l" hint-placeholder-count="6">
+          <div style="display:flex;gap:10px"><span style="color:#3f6578">{{ l.t }}</span><span style="color:{{ l.c }}">{{ l.k }}</span><span style="color:#b8dce8">{{ l.m }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="border:1px solid rgba(45,226,255,.2);background:rgba(4,16,28,.72);border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:center">
+      <div style="width:100%;max-width:380px;border:1px solid rgba(45,226,255,.4);background:#041220;border-radius:12px;padding:18px;box-shadow:0 0 40px rgba(45,226,255,.15),0 20px 60px rgba(0,0,0,.6)">
+        <div style="display:flex;align-items:center;margin-bottom:8px"><span style="flex:1;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#2de2ff">MODAL · CONFIRMAÇÃO</span><span style="color:#6fa3b8;font-size:20px;line-height:1">×</span></div>
+        <div style="font-family:Orbitron,sans-serif;font-weight:700;font-size:17px;color:#e8fbff">Promover FAC-021 a READY?</div>
+        <div style="color:#8fbccd;margin-top:6px">O ticket entra na fila do JARVIS e um evento de outbox é registrado.</div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+          <button style="white-space:nowrap;font-family:Rajdhani;font-weight:600;font-size:15px;background:transparent;color:#8fbccd;border:0;border-radius:8px;padding:8px 12px">Cancelar</button>
+          <button style="white-space:nowrap;font-family:Rajdhani;font-weight:700;font-size:15px;background:#2de2ff;color:#02101a;border:0;border-radius:8px;padding:8px 16px;box-shadow:0 0 18px rgba(45,226,255,.35)">Promover</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:1px dashed rgba(45,226,255,.3);background:rgba(4,16,28,.5);border-radius:12px;padding:28px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center">
+      <svg width="54" height="54" viewBox="0 0 54 54" fill="none"><circle cx="27" cy="27" r="24" stroke="#2de2ff" stroke-opacity=".4" stroke-dasharray="3 5"></circle><circle cx="27" cy="27" r="12" stroke="#2de2ff" stroke-width="1.5"></circle><circle cx="27" cy="27" r="4" fill="#2de2ff"></circle></svg>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#2de2ff">ESTADO_VAZIO</div>
+      <div style="font-weight:700;font-size:17px">Nenhum ticket neste projeto</div>
+      <div style="color:#8fbccd;max-width:280px">Crie o primeiro ticket para o núcleo começar a trabalhar.</div>
+      <button style="white-space:nowrap;margin-top:6px;font-family:Rajdhani;font-weight:700;font-size:15px;background:rgba(45,226,255,.06);color:#d6f6ff;border:1px solid rgba(45,226,255,.4);border-radius:8px;padding:8px 14px">+ Novo ticket</button>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const tone = {
+      DRAFT:'#6b8797', READY:'#2de2ff', RUNNING:'#5aa8ff', IN_REVIEW:'#b18cff',
+      AWAITING_HUMAN:'#ff5d7a', DONE:'#19f5c8', FAILED:'#ff5d7a', BLOCKED:'#ffb547',
+    };
+    const b = (k) => { const c = tone[k]; return { c, bd: c + '66', bg: c + '14' }; };
+    return {
+      statuses: ['DRAFT','READY','RUNNING','IN_REVIEW','AWAITING_HUMAN','BLOCKED','DONE','FAILED'].map(k => ({ k, ...b(k) })),
+      alerts: [
+        { t:'Sessão administrativa ativa', d:'Token validado com sucesso.', k:'OK', c:'#19f5c8' },
+        { t:'Ticket cadastrado como rascunho', d:'Revise os critérios antes de promover.', k:'INFO', c:'#5aa8ff' },
+        { t:'Orçamento em 80%', d:'Consumo acima do previsto para o sprint.', k:'ATENÇÃO', c:'#ffb547' },
+        { t:'Falha ao carregar tickets', d:'Polling HTTP continua tentando.', k:'ERRO', c:'#ff5d7a' },
+      ].map(a => ({ ...a, bd: a.c + '55', bg: a.c + '10' })),
+      tabs: [['Todos',1],['Ativos'],['Revisão'],['Concluídos']].map(([k,on]) => ({ k, c: on ? '#e8fbff' : '#8fbccd', bg: on ? 'rgba(45,226,255,.12)' : 'transparent' })),
+      rows: [
+        { id:'FAC-021', t:'Tela de login', s:'RUNNING', a:'Dev', act:'Abrir' },
+        { id:'FAC-018', t:'Login oficial Claude e Google', s:'AWAITING_HUMAN', a:'Revisor', act:'Resolver' },
+        { id:'FAC-019', t:'Relatório de custos', s:'IN_REVIEW', a:'Testador', act:'Revisar' },
+        { id:'FAC-022', t:'Módulo Auth', s:'READY', a:'—', act:'Executar' },
+        { id:'FAC-017', t:'Preflight Codex', s:'DONE', a:'Deploy', act:'Ver' },
+      ].map(r => ({ ...r, ...b(r.s) })),
+      log: [
+        { t:'15:36:01', k:'JARVIS ›', m:'run #48 iniciado para FAC-021', c:'#2de2ff' },
+        { t:'15:36:04', k:'DEV ›', m:'worktree criado em .claude/worktrees', c:'#19f5c8' },
+        { t:'15:36:22', k:'DEV ›', m:'12 arquivos alterados', c:'#19f5c8' },
+        { t:'15:37:10', k:'TST ›', m:'vitest: 214/214 aprovados', c:'#b18cff' },
+        { t:'15:37:15', k:'WARN ›', m:'biome: 2 avisos de estilo', c:'#ffb547' },
+        { t:'15:37:16', k:'JARVIS ›', m:'aguardando revisão…', c:'#2de2ff' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

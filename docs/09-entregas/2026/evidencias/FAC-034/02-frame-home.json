@@ -1,0 +1,27 @@
+[
+  {
+    "path": "apps/web/src/DashboardLayout.tsx",
+    "before_sha256": "1a706f63c709cffb1a0d980ebf6ea2e3f476fbd3c99df77c8bb32130ca81ecdf",
+    "after_sha256": "b83120d677e4748c587b6150ea9b382ce0a380b2fd49e92557af3139624a8a14"
+  },
+  {
+    "path": "apps/web/src/OrchestrationCore.tsx",
+    "before_sha256": null,
+    "after_sha256": "b09eaedfe9400335ecc6fed6505af6586faca2ba7794b0433953ae6ca05fd7b8"
+  },
+  {
+    "path": "apps/web/src/home-dashboard.css",
+    "before_sha256": "b2aaf3e18ab8dd6fbde0664a6a72953016c0924e1f3b12ba2530ae79fe1af4b8",
+    "after_sha256": "4a0bf4c56c4dbc8d8ea466e60bfe37b452b8ba3309c3f1ac825456d1f5ffd735"
+  },
+  {
+    "path": "apps/web/src/HomeDashboard.spec.tsx",
+    "before_sha256": "2f09099c351fde4a2b7b69dce7dc042b988e9d985ccab42ebe3c0cbd5582f49d",
+    "after_sha256": "ee8c33d09d1768c50442cd89820ebb6f805209fc05bc16d537d109f608c4d8c9"
+  },
+  {
+    "path": "apps/web/src/DashboardLayout.spec.tsx",
+    "before_sha256": "5dfa45c9afbd86569556e02426743d99caba52dad7309293a4065cfbe7ab6719",
+    "after_sha256": "c6e20c5ea24b272cada62a1dc2673595a4b0d046987b4080c0a8f7cd16754b20"
+  }
+]

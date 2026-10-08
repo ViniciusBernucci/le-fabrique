@@ -4,6 +4,8 @@
 
 # Backlog v2
 
+- FAC-034: AWAITING_HUMAN — Centro de Comando aplicado a todo apps/web no diff de developer sobre de5dbfa. Tokens, núcleo SVG CSS/reduced-motion, frame e áreas preservam APIs/contratos. Commits impedidos por .git somente leitura; patches separados. Browser/revisão independente pendentes. [Ticket](tickets/controle/FAC-034-centro-comando.md) · [Entrega](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md).
+
 - FAC-022: AWAITING_HUMAN — template persistente e fontes compactas em `4e042a1`, 43 testes web PASS; navegação/DOM/fontes verificadas em browser na porta 5173. [Relatório](../09-entregas/2026/controle/2026-10-05-FAC-022-template-tipografia.md).
 
 

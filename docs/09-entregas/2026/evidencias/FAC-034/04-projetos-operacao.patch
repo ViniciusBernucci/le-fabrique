@@ -1,0 +1,276 @@
+--- a/apps/web/src/styles.css
++++ b/apps/web/src/styles.css
+@@ -838,3 +838,198 @@
+   }
+ }
+ 
++/* Projects, operation and execution share the real workflow states. */
++.badge,
++.status,
++.hud-status {
++  --status-tone: var(--hud-idle);
++  display: inline-flex;
++  align-items: center;
++  gap: 6px;
++  font: 600 11px var(--hud-font-mono);
++  letter-spacing: 0.06em;
++  color: var(--status-tone);
++  border: 1px solid color-mix(in srgb, var(--status-tone) 40%, transparent);
++  background: color-mix(in srgb, var(--status-tone) 8%, transparent);
++  border-radius: var(--hud-radius-sm);
++  padding: 3px 8px;
++}
++.badge::before,
++.hud-status::before {
++  content: "";
++  width: 6px;
++  height: 6px;
++  border-radius: 50%;
++  background: var(--status-tone);
++  box-shadow: var(--hud-glow) var(--status-tone);
++}
++.badge--draft,
++[data-hud-status="DRAFT"] {
++  --status-tone: var(--hud-idle);
++}
++.badge--ready,
++[data-hud-status="READY"] {
++  --status-tone: var(--hud-cyan);
++}
++.badge--waiting_worker,
++[data-hud-status="WAITING_WORKER"] {
++  --status-tone: var(--hud-cyan);
++}
++.badge--running,
++[data-hud-status="RUNNING"] {
++  --status-tone: var(--hud-blue);
++}
++.badge--validating,
++[data-hud-status="VALIDATING"] {
++  --status-tone: var(--hud-violet);
++}
++.badge--review,
++[data-hud-status="REVIEW"] {
++  --status-tone: var(--hud-violet);
++}
++.badge--docs,
++[data-hud-status="DOCS"] {
++  --status-tone: var(--hud-violet);
++}
++.badge--awaiting_human,
++[data-hud-status="AWAITING_HUMAN"] {
++  --status-tone: var(--hud-rose);
++}
++.badge--done,
++[data-hud-status="DONE"] {
++  --status-tone: var(--hud-teal);
++}
++.badge--waiting_provider,
++[data-hud-status="WAITING_PROVIDER"] {
++  --status-tone: var(--hud-amber);
++}
++.badge--paused,
++[data-hud-status="PAUSED"] {
++  --status-tone: var(--hud-amber);
++}
++.badge--paused_limit,
++[data-hud-status="PAUSED_LIMIT"] {
++  --status-tone: var(--hud-amber);
++}
++.badge--paused_resource,
++[data-hud-status="PAUSED_RESOURCE"] {
++  --status-tone: var(--hud-amber);
++}
++.badge--blocked_recovery,
++[data-hud-status="BLOCKED_RECOVERY"] {
++  --status-tone: var(--hud-amber);
++}
++.badge--auth_required,
++[data-hud-status="AUTH_REQUIRED"] {
++  --status-tone: var(--hud-rose);
++}
++.badge--failed,
++[data-hud-status="FAILED"] {
++  --status-tone: var(--hud-rose);
++}
++.badge--cancelled,
++[data-hud-status="CANCELLED"] {
++  --status-tone: var(--hud-idle);
++}
++.workspace-content .columns {
++  margin-top: 14px;
++  gap: 14px;
++}
++.workspace-content fieldset {
++  min-width: 0;
++  padding: 14px;
++  border: 1px solid var(--hud-line);
++  border-radius: var(--hud-radius);
++  margin: 14px 0;
++}
++.workspace-content legend {
++  padding: 0 6px;
++}
++.workspace-content .run-list {
++  margin: 0;
++  padding: 0;
++  border: 0;
++}
++.run-list button {
++  border: 1px solid var(--hud-line-soft);
++  background: var(--hud-surface-2);
++  color: var(--hud-text);
++  box-shadow: none;
++}
++.run-list button:hover,
++.run-list button[aria-pressed="true"] {
++  border-color: var(--hud-cyan);
++  background: var(--hud-selected);
++}
++.run-details {
++  min-width: 0;
++}
++.run-details .hud-status {
++  margin-bottom: 14px;
++}
++.run-details h4 {
++  color: var(--hud-text-strong);
++  font-family: var(--hud-font-ui);
++}
++.run-details code,
++.run-snapshot code {
++  color: var(--hud-cyan);
++}
++.run-table table {
++  border-collapse: collapse;
++  width: 100%;
++  min-width: 540px;
++}
++.run-table th {
++  color: var(--hud-text-dim);
++  font: 500 10.5px var(--hud-font-mono);
++  text-transform: uppercase;
++  letter-spacing: 0.12em;
++  border-bottom: 1px solid var(--hud-line);
++}
++.run-table td {
++  border-bottom: 1px solid var(--hud-line-soft);
++  color: var(--hud-text);
++}
++.run-table tr:hover td {
++  background: var(--hud-surface-2);
++}
++.execution-artifact pre {
++  border: 1px solid var(--hud-line-soft);
++  border-radius: var(--hud-radius);
++  background: var(--hud-log-bg);
++  font: 12.5px / 1.8 var(--hud-font-mono);
++  color: var(--hud-text);
++}
++.execution-artifact button {
++  margin: 8px 8px 8px 0;
++}
++.records > .muted,
++.run-panel > .muted {
++  border: 1px dashed var(--hud-line-strong);
++  border-radius: var(--hud-radius);
++  padding: 18px;
++}
++.check-row {
++  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr) auto;
++}
++.check-row input,
++.check-row textarea,
++.project-definition code {
++  min-width: 0;
++}
++.check-row .check-approval {
++  align-self: center;
++  font-size: 12px;
++}
++@media (max-width: 1100px) {
++  .check-row {
++    grid-template-columns: 1fr 1fr;
++  }
++}
++@media (max-width: 760px) {
++  .check-row {
++    grid-template-columns: 1fr;
++  }
++}
++
+--- a/apps/web/src/RunPanel.tsx
++++ b/apps/web/src/RunPanel.tsx
+@@ -107,7 +107,9 @@
+                 onClick={() => setSelected(run.id)}
+               >
+                 <strong>{run.title}</strong>
+-                <span>{statusLabels[run.status] ?? run.status}</span>
++                <span className="hud-status" data-hud-status={run.status}>
++                  {statusLabels[run.status] ?? run.status}
++                </span>
+               </button>
+             ))}
+           </fieldset>
+@@ -126,7 +128,9 @@
+   return (
+     <div className="run-details">
+       <h3>{run.title}</h3>
+-      <p>{statusLabels[run.status] ?? run.status}</p>
++      <p className="hud-status" data-hud-status={run.status}>
++        {statusLabels[run.status] ?? run.status}
++      </p>
+       {token && <RunControlPanel key={run.id} token={token} run={run} />}
+       {token && <RunResumePanel key={run.id} token={token} run={run} />}
+       {token && <RunRecoveryPanel key={run.id} token={token} run={run} />}
+--- a/apps/web/src/RunControlPanel.tsx
++++ b/apps/web/src/RunControlPanel.tsx
+@@ -77,6 +77,7 @@
+           </label>
+           <button
+             type="button"
++            className="danger-action"
+             disabled={!confirmed || pending || !!requested}
+             onClick={() => void submit("PAUSE")}
+           >
+@@ -84,6 +85,7 @@
+           </button>
+           <button
+             type="button"
++            className="danger-action"
+             disabled={!confirmed || pending || !!requested}
+             onClick={() => void submit("CANCEL")}
+           >
+--- a/apps/web/src/OperationPanel.tsx
++++ b/apps/web/src/OperationPanel.tsx
+@@ -133,6 +133,7 @@
+               {onToggle && (
+                 <button
+                   type="button"
++                  className={status.scheduling.paused ? "secondary-action" : "danger-action"}
+                   disabled={
+                     changing || (!status.scheduling.paused ? false : !status.writerGuardInstalled)
+                   }
+--- /dev/null
++++ b/apps/web/src/hud-theme.spec.ts
+@@ -0,0 +1,20 @@
++/// <reference types="node" />
++import { readFileSync } from "node:fs";
++import { ticketStatusSchema } from "@le-fabrique/contracts";
++import { expect, it } from "vitest";
++
++it("covers every current workflow status without introducing illustrative kit enums", () => {
++  const css = readFileSync(new URL("./styles.css", import.meta.url), "utf8");
++  const statuses = [...css.matchAll(/\[data-hud-status="([A-Z_]+)"\]/g)].map((match) => match[1]);
++  expect(statuses.sort()).toEqual([...ticketStatusSchema.options].sort());
++});
++
++it("stops all CSS animation in reduced motion, including inline durations", () => {
++  const css = readFileSync(new URL("./theme-hud.css", import.meta.url), "utf8");
++  expect(css).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
++  expect(css).toContain("animation: none !important");
++  const component = readFileSync(new URL("./OrchestrationCore.tsx", import.meta.url), "utf8");
++  expect(component).not.toContain("<animateMotion");
++  expect(component).not.toContain("Math.random");
++});
++
