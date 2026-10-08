@@ -540,3 +540,8 @@
 - [Entrega, checks e limites](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md).
 - [Handoff original de design](09-entregas/2026/evidencias/design_handoff_centro_comando/README.md).
 - [Prompt original recebido](09-entregas/2026/evidencias/design_handoff_centro_comando/PROMPT-CLAUDE-CODE.md).
+
+## Nome dos agentes — FAC-035 (consulta)
+
+- [Ticket](08-desenvolvimento/tickets/configuracao/FAC-035-nomes-agentes.md).
+- [Entrega e checks](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).

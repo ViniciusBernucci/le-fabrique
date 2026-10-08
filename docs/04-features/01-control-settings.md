@@ -41,3 +41,7 @@ Fonte de dados e regras: [contrato da demonstração](../05-contratos/schemas/00
 IMPLEMENTADO no diff da developer sobre de5dbfa: tema HUD comum, núcleo SVG acessível/determinístico, relógio e saudação locais; navegação/autorizações originais preservadas. Login com anel decorativo; mensagens mantêm conteúdo e role status, com marca visual OK/INFO/ATENÇÃO/ERRO oculta de leitores de tela. Inputs técnicos mono, foco visível, ações de pausa/cancelamento em rosa, tabelas/logs/estados vazios/abas/dialogs seguem os tokens. Os 17 estados de execução reais têm tom próprio; tarefas demonstrativas mantêm suas nove etapas separadas, sem criar enums do kit ilustrativo.
 
 Critérios automatizados e limitações de browser na [entrega FAC-034](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Movimento reduzido por CSS; interações reais, fidelidade visual e revisão independente aguardam validação em ambiente que permita browser/porta local. Nenhuma API, regra de negócio ou credencial alterada.
+
+## Nome dos agentes — FAC-035
+
+Em Configurações → Equipes, abrir um agente e suas configurações permite editar Nome do agente. O cargo anterior continua apresentado separadamente; agentes personalizados permitem editar também o cargo. Salvar grava o nome no JSON versionado, cancelar descarta a edição. Nome pode ser removido, retornando à exibição do cargo, e admite até 100 caracteres após trim. [Funcionamento e evidências](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).

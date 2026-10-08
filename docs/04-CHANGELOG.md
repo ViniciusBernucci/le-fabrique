@@ -454,3 +454,7 @@ Quadro/lista com criação e edição manual, responsáveis por projeto, priorid
 ## 2026-10-07 — FAC-034 — Centro de Comando (Europe/Berlin)
 
 Tema HUD global em apps/web: home com núcleo SVG em CSS, relógio, sidebar/trilho; login, Projetos/Operação, Tarefas, Configurações e modais com tokens comuns. Preservados navegação, aria, mocks, APIs e regras. Base developer = origin/main de5dbfa. Implementação em diff, commits bloqueados por .git somente leitura; sem push/merge. Checks reais e QA visual pendente na [entrega](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md); AWAITING_HUMAN.
+
+## 2026-10-08 — FAC-035: nome e cargo dos agentes (Europe/Berlin)
+
+Configurações → Equipes permite apelidar agentes pré-configurados e personalizados. Nome aparece em destaque e identificação anterior permanece como cargo; nickname opcional persiste no JSON versionado sem migration. Código bc38715; fechamento e integração local à developer autorizados pelo responsável; sem push/deploy. AWAITING_HUMAN. [Entrega](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).

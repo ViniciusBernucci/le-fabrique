@@ -179,3 +179,7 @@ FAC-032: AWAITING_HUMAN — implementação local concluída, 46 testes web/type
 ## FAC-033 — Painel de tarefas
 
 IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/lista, edição, filtros, dependências e atribuição por agentes do projeto. Onboarding simulado cria equipe antes de tickets; integração real com onboarding/PostgreSQL/worker PLANEJADA. [Ticket](tickets/FAC-033.md), [entrega](../09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md). Revisão independente e aceite exato pendentes.
+
+## FAC-035 — Nome e cargo dos agentes
+
+IMPLEMENTADO / AWAITING_HUMAN em worktree isolada sobre 9786910: nomes opcionais para pré-configurados/personalizados, cargos preservados, persistência versionada existente. Código bc38715; commit e integração local à developer autorizados em seguida pelo responsável. Revisão independente, browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-035-nomes-agentes.md) · [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).

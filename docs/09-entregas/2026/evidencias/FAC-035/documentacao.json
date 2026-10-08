@@ -1,0 +1,10 @@
+{
+  "markdown_correntes": 387,
+  "links_locais_verificados": 2384,
+  "snapshots_verificados": 601,
+  "secoes_mapeadas": 2444,
+  "fontes_originais_conferidas": false,
+  "historico_excluido_da_validacao_de_links": true,
+  "erros": [],
+  "limite": "Checks estruturais/hashes; não comprova software, isolamento nem veracidade semântica."
+}
