@@ -183,3 +183,5 @@ IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/li
 ## FAC-035 — Nome e cargo dos agentes
 
 IMPLEMENTADO / AWAITING_HUMAN em worktree isolada sobre 9786910: nomes opcionais para pré-configurados/personalizados, cargos preservados, persistência versionada existente. Código bc38715; commit e integração local à developer autorizados em seguida pelo responsável. Revisão independente, browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-035-nomes-agentes.md) · [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+Adendo FAC-035 (2026-10-09): corrigida preparação de contratos compilados no desenvolvimento para evitar rejeição de nickname; checks locais PASS, ambiente específico do usuário não validado. AWAITING_HUMAN. [Correção](../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).

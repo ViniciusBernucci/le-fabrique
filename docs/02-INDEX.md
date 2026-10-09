@@ -545,3 +545,5 @@
 
 - [Ticket](08-desenvolvimento/tickets/configuracao/FAC-035-nomes-agentes.md).
 - [Entrega e checks](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+- [FAC-035: correção da inicialização para nomes](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).

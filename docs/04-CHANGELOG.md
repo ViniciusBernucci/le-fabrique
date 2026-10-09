@@ -458,3 +458,7 @@ Tema HUD global em apps/web: home com núcleo SVG em CSS, relógio, sidebar/tril
 ## 2026-10-08 — FAC-035: nome e cargo dos agentes (Europe/Berlin)
 
 Configurações → Equipes permite apelidar agentes pré-configurados e personalizados. Nome aparece em destaque e identificação anterior permanece como cargo; nickname opcional persiste no JSON versionado sem migration. Código bc38715; fechamento e integração local à developer autorizados pelo responsável; sem push/deploy. AWAITING_HUMAN. [Entrega](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## 2026-10-09 — FAC-035: preparação para salvar nomes
+
+`npm run dev` recompila contratos/runtime antes de iniciar os serviços, evitando contrato CommonJS antigo que rejeita nickname. Reprodução e checks locais PASS; browser e sessão real do usuário não validados. [Correção](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).

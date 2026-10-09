@@ -110,3 +110,5 @@ Relatos locais preservam datas/IDs/revisões/resultados/limites; links editoriai
 - [FAC-033 — painel Tarefas demonstrativo](2026/2026-10-07-FAC-033-painel-tarefas.md).
 
 - [FAC-034 — Centro de Comando em todo o painel](2026/2026-10-07-FAC-034-centro-comando.md).
+
+- [FAC-035: correção da inicialização para nomes](2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).

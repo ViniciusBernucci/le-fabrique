@@ -11,3 +11,5 @@ Escopo: contratos compartilhados, painel de configurações/equipes, testes pert
 Critérios: nome editável com limite de 100 caracteres; listagem e modal apresentam nome e cargo separadamente; registros antigos continuam válidos; limpar nome retorna à identificação pelo cargo; salvar/cancelar mantêm comportamento versionado e rascunho; checks pertinentes passam. Duas correções no máximo. Sem subagentes, commit, merge, push ou deploy autorizados; revisão independente e aceite exato pendentes.
 
 Fechamento em 2026-10-08: IMPLEMENTADO / AWAITING_HUMAN; código bc38715faffa5c1f3cdad82dca43822508fd0b7b. Pedido explícito posterior autoriza commit e integração local à developer. Revisão independente/browser/aceite exato e deploy continuam pendentes.
+
+Adendo 2026-10-09: usuário relatou falha ao salvar pelo frontend. Reproduzida rejeição de nickname em dist antigo; hook predev prepara contratos/runtime antes dos serviços. [Correção e limites](../../../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md). Sessão real/browser e aceite pendentes.
