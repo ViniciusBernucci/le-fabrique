@@ -137,6 +137,10 @@ async function bootstrap(): Promise<void> {
                       },
                       undefined,
                       signal,
+                      await control.getAccountRepositoryCredential(
+                        claim.attemptId,
+                        claim.fencingToken,
+                      ),
                     );
                   },
                   createProfile: (payload, checkout) => {
@@ -153,8 +157,12 @@ async function bootstrap(): Promise<void> {
                       ),
                       contextBuilder: new ContextBuilder(),
                       guard: new RuntimeGuard(request.guardPolicy),
-                      agentRouter: new ConfiguredAgentRouter(control, (route) =>
-                        identities.adapter(route),
+                      agentRouter: new ConfiguredAgentRouter(
+                        {
+                          getWorkerConfiguration: () =>
+                            control.getWorkerConfiguration(specification.project.id),
+                        },
+                        (route) => identities.adapter(route),
                       ),
                       sandbox: new SandboxRunner(),
                       snapshots: new SnapshotManager(path.join(executionConfig.root, "snapshots")),

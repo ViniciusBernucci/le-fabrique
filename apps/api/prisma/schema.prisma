@@ -109,6 +109,7 @@ enum GithubPullRequestStatus {
 
 model Project {
   id        String   @id @default(uuid()) @db.Uuid
+  organizationId String? @db.Uuid @map("organization_id")
   name      String
   repoUrl   String   @map("repo_url")
   baseRef   String   @map("base_ref")
@@ -407,4 +408,231 @@ model ProviderApiCredential {
   encryptedKey String @map("encrypted_key")
   updatedAt DateTime @updatedAt @map("updated_at")
   @@map("provider_api_credentials")
+}
+
+// Account-only ownership. Existing projects/runtime/configuration are not tenant-scoped yet.
+model AccountUser {
+  id           String @id @default(uuid()) @db.Uuid
+  name         String
+  email        String @unique
+  passwordHash String @map("password_hash")
+  emailVerifiedAt DateTime? @map("email_verified_at")
+  avatarDataUrl String? @map("avatar_data_url")
+  mfaSecret String? @map("mfa_secret")
+  mfaPendingSecret String? @map("mfa_pending_secret")
+  mfaPendingExpiresAt DateTime? @map("mfa_pending_expires_at")
+  mfaLastStep BigInt? @map("mfa_last_step")
+  recoveryHashes Json @default("[]") @map("recovery_hashes")
+  version      Int @default(1)
+  preferences  Json
+  createdAt    DateTime @default(now()) @map("created_at")
+  memberships  AccountMembership[]
+  sessions     AccountSession[]
+  audit        AccountAuditEvent[]
+  @@map("account_users")
+}
+
+model AccountOrganization {
+  archivedAt DateTime? @map("archived_at")
+  retentionDays Int @default(365) @map("retention_days")
+  billing Json @default("{}")
+  planId String? @map("plan_id")
+  planSnapshot Json? @map("plan_snapshot")
+  stripeCustomerId String? @unique @map("stripe_customer_id")
+  stripeSubscriptionId String? @unique @map("stripe_subscription_id")
+  subscriptionStatus String @default("NONE") @map("subscription_status")
+  cancelAtPeriodEnd Boolean @default(false) @map("cancel_at_period_end")
+  currentPeriodEnd DateTime? @map("current_period_end")
+  id          String @id @default(uuid()) @db.Uuid
+  name        String
+  version     Int @default(1)
+  createdAt   DateTime @default(now()) @map("created_at")
+  memberships AccountMembership[]
+  invitations AccountInvitation[]
+  sessions    AccountSession[]
+  audit       AccountAuditEvent[]
+  @@map("account_organizations")
+}
+
+model AccountMembership {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  userId         String @db.Uuid @map("user_id")
+  role           String
+  status         String @default("ACTIVE")
+  version        Int @default(1)
+  organization   AccountOrganization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  user           AccountUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+  @@unique([organizationId, userId])
+  @@index([userId, status])
+  @@map("account_memberships")
+}
+
+model AccountSession {
+  id             String @id @default(uuid()) @db.Uuid
+  userId         String @db.Uuid @map("user_id")
+  organizationId String @db.Uuid @map("organization_id")
+  tokenHash      String @unique @map("token_hash")
+  csrfToken      String @map("csrf_token")
+  createdAt      DateTime @default(now()) @map("created_at")
+  expiresAt      DateTime @map("expires_at")
+  user           AccountUser @relation(fields: [userId], references: [id], onDelete: Restrict)
+  organization   AccountOrganization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  @@index([userId, expiresAt])
+  @@map("account_sessions")
+}
+
+model AccountInvitation {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  email          String
+  role           String
+  tokenHash      String @unique @map("token_hash")
+  status         String @default("PENDING")
+  expiresAt      DateTime @map("expires_at")
+  organization   AccountOrganization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  @@index([organizationId, status])
+  @@map("account_invitations")
+}
+
+model AccountAuditEvent {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  actorId        String @db.Uuid @map("actor_id")
+  action         String
+  createdAt      DateTime @default(now()) @map("created_at")
+  organization   AccountOrganization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  actor          AccountUser @relation(fields: [actorId], references: [id], onDelete: Restrict)
+  @@index([organizationId, createdAt])
+  @@map("account_audit_events")
+}
+
+model AccountProjectGrant {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  projectId String @db.Uuid @map("project_id")
+  membershipId String @db.Uuid @map("membership_id")
+  role String
+  @@unique([projectId, membershipId])
+  @@index([organizationId])
+  @@map("account_project_grants")
+}
+model AccountJobAuthority {
+  ticketId String @id @db.Uuid @map("ticket_id")
+  organizationId String @db.Uuid @map("organization_id")
+  userId String @db.Uuid @map("user_id")
+  projectId String @db.Uuid @map("project_id")
+  revoked Boolean @default(false)
+  @@map("account_job_authorities")
+}
+model AccountIntegration {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  name String
+  provider String
+  mode String
+  runtimeId String? @unique @map("runtime_id")
+  configuration Json
+  secretEncrypted String? @map("secret_encrypted")
+  enabled Boolean @default(true)
+  version Int @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  @@index([organizationId])
+  @@map("account_integrations")
+}
+model AccountIntegrationGrant {
+  integrationId String @db.Uuid @map("integration_id")
+  projectId String @db.Uuid @map("project_id")
+  organizationId String @db.Uuid @map("organization_id")
+  @@id([integrationId, projectId])
+  @@map("account_integration_grants")
+}
+model AccountSecurityToken {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid @map("user_id")
+  kind String
+  subject String
+  tokenHash String @unique @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  usedAt DateTime? @map("used_at")
+  @@index([userId, kind])
+  @@map("account_security_tokens")
+}
+model AccountEmailJob {
+  id String @id @default(uuid()) @db.Uuid
+  recipient String
+  subject String
+  encryptedBody String @map("encrypted_body")
+  status String @default("PENDING")
+  attempts Int @default(0)
+  nextAttemptAt DateTime @default(now()) @map("next_attempt_at")
+  claimedAt DateTime? @map("claimed_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  @@index([status, nextAttemptAt])
+  @@map("account_email_jobs")
+}
+model AccountNotification {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid @map("user_id")
+  organizationId String @db.Uuid @map("organization_id")
+  projectId String? @db.Uuid @map("project_id")
+  kind String
+  title String
+  body String
+  readAt DateTime? @map("read_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  @@index([userId, organizationId, createdAt])
+  @@map("account_notifications")
+}
+model AccountBillingEvent {
+  id String @id
+  createdAt DateTime @default(now()) @map("created_at")
+  @@map("account_billing_events")
+}
+model AccountInvoice {
+  id String @id
+  organizationId String @db.Uuid @map("organization_id")
+  amountMinor BigInt @map("amount_minor")
+  currency String
+  status String
+  hostedUrl String? @map("hosted_url")
+  createdAt DateTime @map("created_at")
+  @@index([organizationId, createdAt])
+  @@map("account_invoices")
+}
+model AccountOwnershipTransfer {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid @map("organization_id")
+  fromUserId String @db.Uuid @map("from_user_id")
+  toUserId String @db.Uuid @map("to_user_id")
+  tokenHash String @unique @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  acceptedAt DateTime? @map("accepted_at")
+  @@map("account_ownership_transfers")
+}
+
+model AccountBillingIntent {
+ id String @id @db.Uuid
+ organizationId String @db.Uuid @map("organization_id")
+ planSnapshot Json @map("plan_snapshot")
+ stripeSessionId String? @unique @map("stripe_session_id")
+ status String @default("REQUESTED")
+ createdAt DateTime @default(now()) @map("created_at")
+ @@index([organizationId,status])
+ @@map("account_billing_intents")
+}
+
+model AccountProjectConfiguration {
+ projectId String @id @db.Uuid @map("project_id")
+ organizationId String @db.Uuid @map("organization_id")
+ configuration Json
+ version Int @default(1)
+ @@map("account_project_configurations")
+}
+
+model AccountStorageReservation {
+ attemptId String @id @db.Uuid @map("attempt_id")
+ organizationId String @db.Uuid @map("organization_id")
+ bytes BigInt
+ @@map("account_storage_reservations")
 }

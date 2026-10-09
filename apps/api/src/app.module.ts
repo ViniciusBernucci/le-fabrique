@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { z } from "zod";
+import { AccountModule } from "./account/account.module";
 import { ControlModule } from "./control/control.module";
 import { HealthModule } from "./health/health.module";
 import { InfrastructureModule } from "./infrastructure.module";
@@ -25,6 +26,7 @@ const environmentSchema = z.object({
       validate: (environment) => environmentSchema.parse(environment),
     }),
     InfrastructureModule,
+    AccountModule,
     ControlModule,
     WorkerIdentityModule,
     OrchestrationModule,

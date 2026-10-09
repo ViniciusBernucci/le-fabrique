@@ -5,7 +5,7 @@ import { AppModule } from "./app.module";
 import { configureBodyLimits } from "./body-limits";
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { rawBody: true });
   configureBodyLimits(app);
   app.setGlobalPrefix("api");
   app.useGlobalPipes(

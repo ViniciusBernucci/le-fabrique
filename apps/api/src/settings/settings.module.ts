@@ -61,6 +61,7 @@ import { SettingsService } from "./settings.service";
 import { WorkerSettingsController } from "./worker-settings.controller";
 
 @Module({
+  exports: [ProviderOnboardingService, ProviderVerificationService],
   controllers: [
     SettingsController,
     WorkerSettingsController,

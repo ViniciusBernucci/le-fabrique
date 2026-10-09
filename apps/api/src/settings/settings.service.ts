@@ -6,7 +6,13 @@ import {
   type WorkerConfigurationSnapshot,
   workerConfigurationSnapshotSchema,
 } from "@le-fabrique/contracts";
-import { BadRequestException, ConflictException, Inject, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import type { FactorySettings as FactorySettingsRecord, Prisma } from "@prisma/client";
 import { PrismaService } from "../prisma.service";
 import { encryptProviderApiKey } from "./api-key-encryption";
@@ -73,14 +79,47 @@ export class SettingsService {
     );
   }
 
-  async getWorkerConfigurationSnapshot(now = new Date()): Promise<WorkerConfigurationSnapshot> {
+  async getWorkerConfigurationSnapshot(
+    now = new Date(),
+    projectId?: string,
+  ): Promise<WorkerConfigurationSnapshot> {
     const settings = await this.prisma.factorySettings.findUnique({ where: { id: SETTINGS_ID } });
+    let scoped: unknown;
+    if (projectId) {
+      const project = await this.prisma.project.findUnique({ where: { id: projectId } });
+      if (!project) throw new NotFoundException("Project not found");
+      if (project.organizationId) {
+        const row = await this.prisma.accountProjectConfiguration.findUnique({
+          where: { projectId },
+        });
+        if (!row) throw new ConflictException("Account project agents are not configured");
+        const config = factoryConfigurationSchema.parse(row.configuration);
+        const global = settings
+          ? factoryConfigurationSchema.parse(settings.configuration)
+          : createDefaultFactoryConfiguration();
+        const grants = await this.prisma.accountIntegrationGrant.findMany({
+          where: { projectId, organizationId: project.organizationId },
+        });
+        const integrations = await this.prisma.accountIntegration.findMany({
+          where: {
+            id: { in: grants.map((g) => g.integrationId) },
+            organizationId: project.organizationId,
+            enabled: true,
+            mode: "SUBSCRIPTION_CLI",
+          },
+        });
+        const ids = new Set(integrations.map((i) => i.runtimeId));
+        scoped = { ...config, installations: global.installations.filter((i) => ids.has(i.id)) };
+      }
+    }
     return workerConfigurationSnapshotSchema.parse({
       version: settings?.version ?? 0,
       observedAt: now.toISOString(),
-      configuration: settings
-        ? factoryConfigurationSchema.parse(settings.configuration)
-        : createDefaultFactoryConfiguration(),
+      configuration:
+        scoped ??
+        (settings
+          ? factoryConfigurationSchema.parse(settings.configuration)
+          : createDefaultFactoryConfiguration()),
     });
   }
 

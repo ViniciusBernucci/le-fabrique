@@ -87,9 +87,21 @@ export class ControlClient {
     );
   }
 
-  async getWorkerConfiguration(): Promise<WorkerConfigurationSnapshot> {
+  async getAccountRepositoryCredential(attemptId: string, fencingToken: number) {
+    const { accountRepositoryCredentialSchema } = await import("@le-fabrique/contracts");
+    return accountRepositoryCredentialSchema.parse(
+      await this.request(`/internal/account-repositories/${attemptId}/credential`, {
+        method: "POST",
+        body: JSON.stringify({ workerId: this.config.WORKER_ID, fencingToken }),
+      }),
+    );
+  }
+  async getWorkerConfiguration(projectId?: string): Promise<WorkerConfigurationSnapshot> {
     return workerConfigurationSnapshotSchema.parse(
-      await this.request("/internal/worker-settings", { method: "GET" }),
+      await this.request(
+        `/internal/worker-settings${projectId ? `?projectId=${encodeURIComponent(projectId)}` : ""}`,
+        { method: "GET" },
+      ),
     );
   }
 

@@ -305,6 +305,7 @@ export async function prepareRepositoryCheckout(
   config: RepositoryCheckoutConfig,
   runner: CheckoutCommandRunner = runCheckoutCommand,
   signal?: AbortSignal,
+  credential?: { scoped: boolean; token: string | null },
 ): Promise<PreparedRepositoryCheckout> {
   validateCheckoutInput(input);
   const root = validateRoot(config.root);
@@ -334,7 +335,13 @@ export async function prepareRepositoryCheckout(
     }
 
     temporary = await mkdtemp(path.join(projectRoot, `.preparing-${input.workflowId}-`));
-    const token = await readGithubToken(repository.hostname, runner, signal);
+    const token = credential?.scoped
+      ? credential.token
+      : await readGithubToken(repository.hostname, runner, signal);
+    if (!token || /[\r\n\0]/.test(token))
+      throw new Error("Private repository credential unavailable");
+    if (credential?.scoped && repository.hostname !== "github.com")
+      throw new Error("Private account checkout supports github.com only");
     const environment = gitEnvironment(repository.hostname, token);
     const runGit = async (args: readonly string[], cwd: string) =>
       runner("git", [...gitSafetyArgs, ...args], {

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { OrchestrationCore } from "./OrchestrationCore";
 import "./home-dashboard.css";
 
-export type HomeDestination = "control" | "settings" | "tasks";
+export type HomeDestination = "control" | "settings" | "tasks" | "account" | "users";
 type IconName =
   | "home"
   | "folder"
@@ -110,7 +110,7 @@ const navigation: { name: string; icon: IconName; destination?: HomeDestination 
   { name: "Repositórios", icon: "folder" },
   { name: "Histórico", icon: "clock" },
   { name: "Escritório", icon: "home" },
-  { name: "Usuários", icon: "users" },
+  { name: "Usuários", icon: "users", destination: "users" },
   { name: "Configurações", icon: "settings", destination: "settings" },
 ];
 const shortcuts: {
@@ -313,9 +313,13 @@ export function DashboardLayout({
         ? "Projetos"
         : activeDestination === "settings"
           ? "Configurações"
-          : activeDestination === "tasks"
-            ? "Tarefas"
-            : "Painel")
+          : activeDestination === "users"
+            ? "Usuários"
+            : activeDestination === "account"
+              ? "Minha conta"
+              : activeDestination === "tasks"
+                ? "Tarefas"
+                : "Painel")
     );
   }
   return (
@@ -445,12 +449,13 @@ export function DashboardLayout({
             <button
               type="button"
               className="home-profile"
-              onClick={() => setPreview("Perfil de demonstração")}
+              aria-label="Abrir minha conta"
+              onClick={() => onNavigate("account")}
             >
               <Avatar />
               <span>
-                <strong>Administrador</strong>
-                <small>Workspace pessoal</small>
+                <strong>Minha conta</strong>
+                <small>Perfil e equipe</small>
               </span>
               <span>⌄</span>
             </button>
