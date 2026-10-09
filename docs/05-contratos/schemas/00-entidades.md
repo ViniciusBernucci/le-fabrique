@@ -31,3 +31,13 @@ Leitura inválida bloqueia gravação e mantém conteúdo original. Falha de gra
 [agentAssignmentSchema e digitalAgentSchema](../../../packages/contracts/src/index.ts) admitem `nickname?: string`, com trim e até 100 caracteres, incluindo vazio. Em assignments, `role` mantém a identidade operacional e o cargo pré-configurado; em digitalAgents, `name` mantém a identificação anterior como cargo personalizado. O nome próprio não participa do roteamento, das permissões ou dos vínculos por ID.
 
 Persistência: FactorySettings.configuration JSON pela rota versionada existente, sem nova coluna/migration/evento. Leitura de registros sem nickname continua válida; nome vazio/ausente exibe o cargo. Clientes antigos com schema strict anterior não aceitam nickname: publicar API/worker/painel compatíveis juntos; um cliente antigo que sobrescreve o JSON completo pode perder o nome. Rollback exige remover nickname de assignments/digitalAgents antes de ler a configuração com código anterior. Não houve alteração de dados ativos. [Entrega](../../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Chaves de API FAC-037
+
+`ProviderInstallation.authMode` passa a aceitar `SUBSCRIPTION_CLI` ou `API_KEY`; registros CLI existentes não precisam de conversão. API admite CODEX (OpenAI) e CLAUDE; ANTIGRAVITY API é rejeitado. Identidade do modo não muda no mesmo ID.
+
+PUT `/api/settings` mantém `expectedVersion` e `configuration`, acrescentando `apiKeys` opcional: até 20 entradas de `installationId` e `key` (1–4096 caracteres, sem espaços). Duplicatas ou chave dirigida a conta CLI/inexistente são rejeitadas. Nova conta API e troca de fornecedor requerem chave. As respostas de configuração e snapshot do worker não possuem esse campo.
+
+A tabela `provider_api_credentials` contém ID da instalação, fornecedor, ciphertext AES-GCM versionado e updated_at; não existe segredo no JSON FactorySettings. Nonce aleatório e AAD vinculam a cifra à instalação/fornecedor. Configuração, segredo e limpeza das contas removidas são escritos numa transação com concorrência otimista. A chave mestra hexadecimal de 32 bytes é configuração privada da implantação; ausência impede escrita do segredo. A tabela foi preparada por migration, aplicação operacional NÃO VERIFICADA.
+
+Login/verificação CLI recusam contas API, inclusive resultados tardios; o roteador exige modo CLI além de estado AVAILABLE. API permanece apenas cadastrável/atribuível neste incremento. [Operação e rollback](../../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#rollback).

@@ -547,3 +547,8 @@
 - [Entrega e checks](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
 
 - [FAC-035: correção da inicialização para nomes](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+### Incremento FAC-037 — cadastro API/CLI
+
+1. [Ticket FAC-037](08-desenvolvimento/tickets/configuracao/FAC-037-api-cli-agentes.md).
+2. [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).

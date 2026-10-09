@@ -1,0 +1,18 @@
+{
+  "markdown_correntes": 397,
+  "links_locais_verificados": 2415,
+  "snapshots_verificados": 601,
+  "secoes_mapeadas": 2444,
+  "fontes_originais_conferidas": false,
+  "historico_excluido_da_validacao_de_links": true,
+  "erros": [
+    "Markdown corrente fora do índice: handoff-FAC-035/PASSO-A-PASSO.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/08-desenvolvimento/tickets/FAC-035.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/09-entregas/2026/evidencias/FAC-035/00-plano.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/09-entregas/2026/evidencias/FAC-035/01-prompt-contratos-api.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/09-entregas/2026/evidencias/FAC-035/02-prompt-web.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/09-entregas/2026/evidencias/FAC-035/03-especificacao-visual.md",
+    "Markdown corrente fora do índice: handoff-FAC-035/docs/09-entregas/2026/evidencias/FAC-035/04-prompt-revisao.md"
+  ],
+  "limite": "Checks estruturais/hashes; não comprova software, isolamento nem veracidade semântica."
+}

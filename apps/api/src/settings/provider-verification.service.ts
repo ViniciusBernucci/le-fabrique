@@ -31,6 +31,10 @@ export class ProviderVerificationService {
         const configuration = factoryConfigurationSchema.parse(settings.configuration);
         const installation = configuration.installations.find((item) => item.id === installationId);
         if (!installation) throw new NotFoundException("Provider installation not found");
+        if (installation.authMode !== "SUBSCRIPTION_CLI")
+          throw new ConflictException(
+            "CLI onboarding and verification require a subscription installation",
+          );
         const active = await transaction.providerVerification.findFirst({
           where: { installationId, status: { in: ["PENDING", "RUNNING"] } },
           orderBy: { createdAt: "desc" },
@@ -105,7 +109,11 @@ export class ProviderVerificationService {
         (item) => item.id === current.installationId,
       );
       const installation = configuration.installations[installationIndex];
-      if (!installation || installation.provider !== current.provider) {
+      if (
+        !installation ||
+        installation.provider !== current.provider ||
+        installation.authMode !== "SUBSCRIPTION_CLI"
+      ) {
         throw new ConflictException("Provider installation changed during verification");
       }
       const updatedConfiguration: FactoryConfiguration = {

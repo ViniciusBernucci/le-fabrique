@@ -7,12 +7,14 @@ export function SettingsModal({
   onClose,
   onSave,
   children,
+  showSave = true,
 }: {
   title: string;
   saving: boolean;
   onClose: () => void;
   onSave: () => void;
   children: ReactNode;
+  showSave?: boolean;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -54,9 +56,11 @@ export function SettingsModal({
           <button type="button" className="secondary-action" disabled={saving} onClick={onClose}>
             Cancelar
           </button>
-          <button type="submit" disabled={saving}>
-            {saving ? "Salvando…" : "Salvar configuração"}
-          </button>
+          {showSave && (
+            <button type="submit" disabled={saving}>
+              {saving ? "Salvando…" : "Salvar configuração"}
+            </button>
+          )}
         </div>
       </form>
     </dialog>

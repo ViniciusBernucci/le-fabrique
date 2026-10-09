@@ -185,3 +185,7 @@ IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/li
 IMPLEMENTADO / AWAITING_HUMAN em worktree isolada sobre 9786910: nomes opcionais para pré-configurados/personalizados, cargos preservados, persistência versionada existente. Código bc38715; commit e integração local à developer autorizados em seguida pelo responsável. Revisão independente, browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-035-nomes-agentes.md) · [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
 
 Adendo FAC-035 (2026-10-09): corrigida preparação de contratos compilados no desenvolvimento para evitar rejeição de nickname; checks locais PASS, ambiente específico do usuário não validado. AWAITING_HUMAN. [Correção](../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## FAC-037 — Cadastro API/assinatura CLI e escolha de IA/modelo
+
+IMPLEMENTADO cadastro/atribuição / AWAITING_HUMAN em worktree isolada feat/fac-037-api-cli-agents sobre 36e48f9. Seletor inicial, chave API criptografada separada da configuração, IA/modelo separados para ambos os tipos de agente. Execução agentiva por API permanece PLANEJADA; cadastro não ativa gastos. Migration preparada, não aplicada; implantação, revisão independente/browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-037-api-cli-agentes.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).

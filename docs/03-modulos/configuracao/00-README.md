@@ -49,3 +49,13 @@ Configurações → Equipes → Agentes permite atribuir um nome próprio aos ag
 O cargo pré-configurado é fixado pelo papel operacional. Para agentes personalizados, a identificação anterior passa a ser o campo Cargo na empresa, editável. Nome opcional vazio volta a exibir o cargo. A configuração existente continua válida; veja [contrato de dados](../../05-contratos/schemas/00-entidades.md#nomes-de-agentes-fac-035) e [entrega](../../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
 
 O ambiente de desenvolvimento recompila os contratos antes de iniciar os serviços. API e painel precisam reconhecer o campo `nickname` na mesma revisão; um contrato compilado anterior rejeita esse campo. [Diagnóstico e correção de inicialização](../../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## Cadastro API ou assinatura CLI — FAC-037
+
+O primeiro passo de Adicionar conta ou Cadastrar integração de IA é escolher chave de API ou plano de assinatura (CLI). O modo escolhido é imutável nessa conta; para outro modo, criar outra integração. API aceita OpenAI e Claude; Antigravity permanece CLI. Assinaturas mantêm login e verificação oficiais existentes.
+
+Chaves são enviadas somente no salvamento autenticado e guardadas com AES-256-GCM em tabela separada. Configuração pública e snapshot do worker contêm somente modo, conta e modelos, sem segredo. Editar conta API com campo de chave vazio preserva a chave existente; remover conta e salvar remove o segredo na mesma transação. Configurações antigas CLI seguem válidas.
+
+Agentes predefinidos e personalizados têm dois seletores: IA cadastrada/habilitada e modelo dessa IA. Trocar IA seleciona seu modelo padrão ou primeiro modelo; integrações sem modelos exigem configurar o catálogo antes de salvar a atribuição. Nenhum catálogo global inventado aparece no formulário.
+
+Este incremento implementa cadastro/atribuição, não inferência por API. API continua sem adapter agentivo, sem verificação de chave por chamada externa e sem execução paga. Conta API não pode usar login, evidência ou adapter CLI. [Entrega e requisitos operacionais](../../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).

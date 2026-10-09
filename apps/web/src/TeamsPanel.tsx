@@ -7,6 +7,7 @@ import type {
 import { factoryConfigurationSchema } from "@le-fabrique/contracts";
 import type { KeyboardEvent, ReactNode } from "react";
 import { useId, useState } from "react";
+import { AgentModelSelector } from "./AgentModelSelector";
 import { SettingsModal } from "./SettingsModal";
 import { removeProjectSkill, upsertProjectSkill } from "./teams-view-model";
 
@@ -319,33 +320,12 @@ export function TeamsPanel({
               ))}
             </select>
           </label>
-          <label>
-            Conta e modelo do agente
-            <select
-              value={
-                agent.installationId && agent.model ? `${agent.installationId}::${agent.model}` : ""
-              }
-              onChange={(event) => {
-                const [installationId, ...modelParts] = event.target.value.split("::");
-                setAgent({
-                  ...agent,
-                  installationId: installationId || null,
-                  model: modelParts.join("::") || null,
-                });
-              }}
-            >
-              <option value="">Sem conta e modelo</option>
-              {configuration.installations
-                .filter((item) => item.enabled)
-                .flatMap((item) =>
-                  item.models.map((model) => (
-                    <option key={`${item.id}::${model}`} value={`${item.id}::${model}`}>
-                      {item.label} · {model}
-                    </option>
-                  )),
-                )}
-            </select>
-          </label>
+          <AgentModelSelector
+            installations={configuration.installations}
+            installationId={agent.installationId}
+            model={agent.model}
+            onChange={(selection) => setAgent({ ...agent, ...selection })}
+          />
           <label>
             Instruções do agente
             <textarea

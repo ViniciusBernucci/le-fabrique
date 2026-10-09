@@ -543,12 +543,18 @@ export const providerInstallationSchema = z
       .regex(/^\/?[a-zA-Z0-9._/-]+$/),
     enabled: z.boolean(),
     state: settingsProviderStateSchema,
-    authMode: z.literal("SUBSCRIPTION_CLI"),
+    authMode: z.enum(["SUBSCRIPTION_CLI", "API_KEY"]),
     models: z.array(z.string().trim().min(1).max(120)).max(50),
     defaultModel: z.string().trim().min(1).max(120).nullable(),
   })
   .strict()
   .superRefine((installation, context) => {
+    if (installation.authMode === "API_KEY" && installation.provider === "ANTIGRAVITY")
+      context.addIssue({
+        code: "custom",
+        message: "Antigravity supports CLI registration only",
+        path: ["authMode"],
+      });
     if (new Set(installation.models).size !== installation.models.length) {
       context.addIssue({
         code: "custom",
@@ -823,6 +829,22 @@ export const updateFactorySettingsSchema = z
   .object({
     expectedVersion: z.number().int().positive(),
     configuration: factoryConfigurationSchema,
+    apiKeys: z
+      .array(
+        z
+          .object({
+            installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+            key: z
+              .string()
+              .trim()
+              .min(1)
+              .max(4096)
+              .regex(/^[^\s]+$/),
+          })
+          .strict(),
+      )
+      .max(20)
+      .optional(),
   })
   .strict();
 export type UpdateFactorySettings = z.infer<typeof updateFactorySettingsSchema>;

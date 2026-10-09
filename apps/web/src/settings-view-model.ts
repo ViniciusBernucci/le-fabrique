@@ -46,6 +46,12 @@ export const providerLabels: Record<SettingsProvider, string> = {
   ANTIGRAVITY: "Antigravity",
 };
 
+export function installationProviderLabel(installation: ProviderInstallation): string {
+  if (installation.authMode === "API_KEY")
+    return installation.provider === "CODEX" ? "OpenAI" : "Claude";
+  return providerLabels[installation.provider];
+}
+
 export function configurationSummary(settings: FactorySettings) {
   const { configuration } = settings;
   return {

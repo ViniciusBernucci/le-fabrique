@@ -462,3 +462,10 @@ Configurações → Equipes permite apelidar agentes pré-configurados e persona
 ## 2026-10-09 — FAC-035: preparação para salvar nomes
 
 `npm run dev` recompila contratos/runtime antes de iniciar os serviços, evitando contrato CommonJS antigo que rejeita nickname. Reprodução e checks locais PASS; browser e sessão real do usuário não validados. [Correção](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## 2026-10-09 — FAC-037 (cadastro/atribuição)
+
+- Cadastro de IA começa pela escolha chave de API ou assinatura CLI; API possui segredo criptografado fora da configuração pública.
+- Pré-configurados e personalizados escolhem IA cadastrada/habilitada e seu modelo em campos separados.
+- Login/evidência/adapter CLI recusam modo API. Sem inferência API, migration aplicada, gastos, integração na developer ou deploy nesta entrega.
+- [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).

@@ -56,3 +56,14 @@ Tokens HUD globais, frame/home e todas as áreas do painel; estados reais de exe
 Nome próprio opcional separado do cargo para agentes pré-configurados e personalizados. Contratos cobrem leitura legada, trim, remoção e limite; testes web cobrem resumo e rótulos acessíveis; serviço cobre gravação versionada do nome. Browser, revisão independente, integração e aceite pendentes. [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
 
 Adendo FAC-035 (2026-10-09): contrato CommonJS antigo reproduzido e preparação predev validada; 53 testes de contratos, 8 SettingsService e 2 launcher PASS. Browser e banco real NÃO VALIDADOS. [Correção](../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## FAC-037 — Cadastro de integração e seleção de IA/modelo
+
+| Critério | Código/check | Limite |
+|---|---|---|
+| API/CLI em cadastro; chave separada | contracts/api-registration.spec.ts; api/settings/api-registration.spec.ts | Sem chamada externa |
+| Criptografia autenticada vinculada à conta | api/settings/api-key-encryption.spec.ts | Fixtures sintéticas |
+| Somente IAs habilitadas e modelos da IA | web/AgentModelSelector.spec.tsx | Browser pendente |
+| Conta API não executa CLI | worker/configured-agent-router.spec.ts | Sem adapter API |
+
+[Evidências e resultados](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#testes-e-evidências).

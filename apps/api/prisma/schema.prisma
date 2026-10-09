@@ -399,3 +399,12 @@ model FactoryOperation {
   updatedAt DateTime @updatedAt @map("updated_at")
   @@map("factory_operations")
 }
+
+// Secrets are encrypted separately from public configuration and worker snapshots.
+model ProviderApiCredential {
+  installationId String @id @map("installation_id")
+  provider String
+  encryptedKey String @map("encrypted_key")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  @@map("provider_api_credentials")
+}

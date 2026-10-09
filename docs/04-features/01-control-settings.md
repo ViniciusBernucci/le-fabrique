@@ -45,3 +45,11 @@ Critérios automatizados e limitações de browser na [entrega FAC-034](../09-en
 ## Nome dos agentes — FAC-035
 
 Em Configurações → Equipes, abrir um agente e suas configurações permite editar Nome do agente. O cargo anterior continua apresentado separadamente; agentes personalizados permitem editar também o cargo. Salvar grava o nome no JSON versionado, cancelar descarta a edição. Nome pode ser removido, retornando à exibição do cargo, e admite até 100 caracteres após trim. [Funcionamento e evidências](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Integrações e escolha de IA/modelo — FAC-037
+
+Adicionar conta e Cadastrar integração de IA abrem primeiro duas opções: Cadastrar chave de API e Cadastrar plano de assinatura (CLI). Cancelar descarta a escolha. API permite informar a chave num campo protegido; uma conta salva nunca revela o valor, e campo vazio mantém sua chave. Assinatura usa o fluxo oficial já existente.
+
+Agentes personalizados e pré-configurados escolhem a integração habilitada no campo IA do agente e um modelo do catálogo dessa integração no campo Modelo da IA. Trocar a integração redefine o modelo. Sem cadastro habilitado, a tela orienta cadastrar uma integração; sem catálogo, orienta configurar seus modelos.
+
+Cadastro API foi autorizado pelo responsável em 2026-10-09; não ativa execução ou fallback pago. O runtime atual continua CLI, e a tela informa que execução por API está indisponível. [Configuração](../03-modulos/configuracao/00-README.md#cadastro-api-ou-assinatura-cli--fac-037), [dados](../05-contratos/schemas/00-entidades.md#chaves-de-api-fac-037) e [entrega](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
