@@ -2,6 +2,14 @@
 
 # Changelog
 
+## 2026-10-09 — FAC-038
+
+Primeira versão da conta de usuário: cadastro/login individual, perfil/preferências, conta/equipe, convites privados, papéis, sessões/senha e auditoria. Plano/uso sem valores comerciais inventados. Cookie humano separado do controle global; migration testada apenas em PostgreSQL temporário. [Entrega](09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md).
+
+## 2026-10-09 — PLAN-ADM-001
+
+Proposta focal de painel administrativo da conta do usuário; painel global reservado para depois. Perfil, organização, convites, papéis/grants, segurança, auditoria, uso e distinção entre plano da fábrica e assinatura IA. Estado observado e evolução no handoff existente; decisões comerciais pendentes. Nenhum software implementado. [Registro](09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
+
 ## 2026-10-07 — FAC-032
 
 Menu principal limitado a Painel, Projetos, Agentes de IA, Escritório, Usuários e Configurações. 46 testes web, typecheck, build e lint PASS. [Entrega](09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
@@ -473,3 +481,7 @@ Configurações → Equipes permite apelidar agentes pré-configurados e persona
 ### FAC-037 — integração e limpeza local autorizadas
 
 Commit `67ce0a0` integrado à developer por fast-forward. Removidas duas worktrees limpas/integradas e 72 branches locais integradas. FAC-036 com alterações não commitadas preservada. Sem push/deploy/migration; [adendo de entrega](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#adendo--commit-integração-e-limpeza-autorizados).
+
+## 2026-10-09 — FAC-039–041 (complemento da conta)
+
+Projetos/grants e execução da conta, integração privada/roteamento, métricas reais/quota/reservas, notificações/exportação/dados fiscais/transferência/encerramento, MFA/email/recuperação e adaptadores de planos/SMTP/Stripe. Nenhum cadastro comercial/preço real, email externo, gasto/provider, migration ativa ou release inferido. [Entrega e checks](09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md); revisão independente/aceite pendentes.

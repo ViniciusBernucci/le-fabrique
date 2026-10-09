@@ -67,3 +67,20 @@ Adendo FAC-035 (2026-10-09): contrato CommonJS antigo reproduzido e preparação
 | Conta API não executa CLI | worker/configured-agent-router.spec.ts | Sem adapter API |
 
 [Evidências e resultados](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#testes-e-evidências).
+
+## Cobertura FAC-038 — conta do usuário
+
+Contratos validam senha/timezone/version/papéis. API cobre salt/hashing, cookie dedicado, CSRF/origem e delegação. Integração HTTP/PostgreSQL efêmera cobre contas A/B, legado versus cookie humano, convite concorrente/email/expiração/reemissão, owner protegido, suspensão, conflitos, auditoria, senha/logout e rate limit fail closed. Web cobre fetch cookie/contexto/CSRF, recuperação de conflito, fragmento de convite sob StrictMode e navegação de conta. [Entrega e checks](../09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md). Browser funcional, produção, email/MFA e ownership de projeto/runtime NÃO VALIDADOS por estes testes.
+
+## Complemento de conta — FAC-039–041
+
+| Requisito | Implementação | Verificação |
+|---|---|---|
+| Projeto/grant/HTTP/artifacts/stream por conta | AccountWorkService/Guard e worker revalidado | PostgreSQL/HTTP A/B e revogação; ver evidência final |
+| Integração e credencial privada/roteamento | AccountDataService/WorkerController/worker-settings/contexto | Ciphertext/export sanitizados, lease/fence/ACL e regressões |
+| Quota/uso/notificação/dados/ownership | Reservations/trigger/export/transfer/archive | Concorrência/capacidade/preferências/aceite em PG |
+| MFA/tokens/SMTP | AccountIdentityService/EmailService | RFC6238/anti-replay/recovery/SMTP local |
+| Planos/Stripe | BillingIntent/Webhook/portal/reconsulta | Fake Stripe idempotência/dedupe/reordenação/raw HTTP |
+| Interface | Abas reais da conta e projetos/integrações | Browser fixture, desktop/mobile; sem autenticação real de provider |
+
+[Entrega/checks](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Revisão independente/aceite, preços/catálogo e ativação externa continuam pendentes; testes não comprovam isolamento hostil/comercial.

@@ -59,3 +59,11 @@ Chaves são enviadas somente no salvamento autenticado e guardadas com AES-256-G
 Agentes predefinidos e personalizados têm dois seletores: IA cadastrada/habilitada e modelo dessa IA. Trocar IA seleciona seu modelo padrão ou primeiro modelo; integrações sem modelos exigem configurar o catálogo antes de salvar a atribuição. Nenhum catálogo global inventado aparece no formulário.
 
 Este incremento implementa cadastro/atribuição, não inferência por API. API continua sem adapter agentivo, sem verificação de chave por chamada externa e sem execução paga. Conta API não pode usar login, evidência ou adapter CLI. [Entrega e requisitos operacionais](../../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+## Configuração pessoal e da conta — FAC-038
+
+A camada AccountModule persiste perfil/preferências em AccountUser e nome em AccountOrganization, com atualização otimista. AccountMembership autoriza equipe; AccountSession autentica pessoas. Essas configurações são independentes de FactorySettings global, integrações e agentes anteriores. [Fonte](../../../apps/api/src/account/account.service.ts), [contratos](../../05-contratos/schemas/00-entidades.md#conta-do-usuário--fac-038) e [feature](../../04-features/01-control-settings.md#painel-da-conta-do-usuário--fac-038). Nenhum segredo/senha/session token aparece no DTO. Convite entrega segredo apenas uma vez ao criador, fora de auditoria/logs. Novos controles não prometem tenant-isolation dos projetos/runtime existentes.
+
+## Recursos próprios da organização — FAC-039–041
+
+[Feature da conta](../../04-features/01-control-settings.md#painel-da-conta-do-usuário--fac-038) descreve papéis/grants, projetos/execuções, integração privada/roteamento, MFA/email, plano, notificações e dados. AccountModule importa serviços de onboarding/verificação existentes; nenhuma CLI/build/check é executado pela API. FactorySettings continua registro operacional de instalações, mas novos runtimeIds pertencem à organização; o worker recebe configuração filtrada pelo projeto. Conta humana nunca recebe o token global. SMTP/Stripe exigem configuração privada explícita e não foram ativados.

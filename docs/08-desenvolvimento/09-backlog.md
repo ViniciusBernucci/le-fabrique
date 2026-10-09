@@ -191,3 +191,17 @@ Adendo FAC-035 (2026-10-09): corrigida preparação de contratos compilados no d
 IMPLEMENTADO cadastro/atribuição / AWAITING_HUMAN em worktree isolada feat/fac-037-api-cli-agents sobre 36e48f9. Seletor inicial, chave API criptografada separada da configuração, IA/modelo separados para ambos os tipos de agente. Execução agentiva por API permanece PLANEJADA; cadastro não ativa gastos. Migration preparada, não aplicada; implantação, revisão independente/browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-037-api-cli-agentes.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
 
 FAC-037, adendo 2026-10-09: commit `67ce0a09272966b7b1234663d087e79d12b4381f` integrado localmente à developer por fast-forward autorizado. Worktrees limpas FAC-035/FAC-037 e 72 branches locais integradas removidas; FAC-036 com trabalho não commitado preservada. AWAITING_HUMAN e limites de execução/implantação mantidos.
+
+
+## PLAN-ADM-001 — Arquitetura do painel administrativo da conta
+
+PROPOSTA DOCUMENTADA / implementada em FAC-038–041, aceite pendente. Pedido de 2026-10-09 para analisar perfil pessoal, organização, usuários/permissões, dados e planos com arquiteto-de-software. [Proposta e handoff](08-tech-lead-handoff.md#proposta-focal--painel-administrativo-da-conta) · [Registro](../09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md). Escopo confirmado: camada da conta do usuário; administração global posterior. Implementação autorizada posteriormente pelo pedido explícito do responsável; tickets FAC-038–041 abaixo. Dados comerciais/ativação externa aguardam configuração e não constituem aceite estrutural.
+
+
+## FAC-038 — Painel da conta do usuário
+
+IMPLEMENTADO / AWAITING_HUMAN no diff feat/fac-038-painel-conta sobre ee4485b. [Ticket](tickets/FAC-038.md), [entrega](../09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md), [ADR-007](../06-decisoes/ADR-007-conta-usuario-e-sessoes.md). Identidade/profile/organização/equipe/convites/sessões/auditoria, complementados por FAC-039–041 abaixo. Migration apenas em DB efêmero; browser verificado no complemento FAC-041; revisão independente/aceite/implantação pendentes.
+
+## FAC-039–041 — Complemento da camada de usuário
+
+IMPLEMENTADO em `1e6274aa6f4d5b8d9fbf6e28590c37fdafb8244e` / checks automatizados e browser fixture PASS / revisão independente e aceite pendentes. READY autorizado pelo pedido explícito para concluir todas as partes. [FAC-039](tickets/FAC-039.md), [FAC-040](tickets/FAC-040.md), [FAC-041](tickets/FAC-041.md) e [entrega](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Projetos/grants/execução/integrações privados, uso/quota, notificações/exportação/dados/transferência/encerramento, MFA/email/recuperação e planos/Stripe configuráveis. Catálogo comercial/SMTP/Stripe reais não definidos nem ativados; migrations somente em DB efêmero, nenhuma propriedade legada inferida. Não promover a DONE ou release comercial por esses checks.

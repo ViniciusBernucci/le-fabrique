@@ -168,6 +168,7 @@
 ## Decisões e propostas
 
 1. [Decisões e propostas](06-decisoes/00-README.md).
+2. [ADR-007 — Conta do usuário e sessões individuais](06-decisoes/ADR-007-conta-usuario-e-sessoes.md).
 
 ## Operar e recuperar
 
@@ -267,6 +268,12 @@
 1. [Planejamento atual](08-desenvolvimento/tickets/planejamento/00-README.md).
 
 ## Histórico de entregas
+
+- [FAC-038 — Ticket do painel da conta do usuário](08-desenvolvimento/tickets/FAC-038.md).
+
+- [FAC-038 — Painel da conta do usuário](09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md).
+
+- [PLAN-ADM-001 — Proposta do painel administrativo da conta](09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
 
 1. [Histórico de entregas](09-entregas/00-README.md).
 
@@ -552,3 +559,10 @@
 
 1. [Ticket FAC-037](08-desenvolvimento/tickets/configuracao/FAC-037-api-cli-agentes.md).
 2. [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+## Complemento do painel da conta — consulta FAC-039–041
+
+1. [Projetos/grants/execução](08-desenvolvimento/tickets/FAC-039.md).
+2. [Integrações/uso/dados](08-desenvolvimento/tickets/FAC-040.md).
+3. [Segurança/email/planos](08-desenvolvimento/tickets/FAC-041.md).
+4. [Entrega e evidências complementares](09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md).

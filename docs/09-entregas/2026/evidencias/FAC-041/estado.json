@@ -1,0 +1,59 @@
+{
+  "tickets": [
+    "FAC-038",
+    "FAC-039",
+    "FAC-040",
+    "FAC-041"
+  ],
+  "branch": "feat/fac-038-painel-conta",
+  "base": "ee4485bffb517247cd7b584653ad9ec1423f9202",
+  "codeCommit": "1e6274aa6f4d5b8d9fbf6e28590c37fdafb8244e",
+  "phase": "REVISAO",
+  "implementation": "IMPLEMENTADO",
+  "writer": "single implementation session; code frozen at recorded commit; no subagents; fixture API, Vite, Chromium and PostgreSQL stopped",
+  "authorization": [
+    "Ok pode executar",
+    "commits and merge developer conditional on completed panel",
+    "termine todas as outras partes; só pare quando terminar tudo"
+  ],
+  "verification": {
+    "fullTests": {
+      "status": "PASS",
+      "total": 648,
+      "scripts": 7,
+      "contracts": 58,
+      "runtime": 65,
+      "api": 231,
+      "worker": 217,
+      "web": 70,
+      "postgresAccountScenarios": 25
+    },
+    "typecheck": "PASS; root plus final affected web typecheck and API compiler",
+    "build": "PASS; root plus final affected API/web builds",
+    "lint": "PASS; one preexisting warning in run-delivery.service.ts",
+    "prisma": "PASS; schema valid and all 24 migrations up to date in disposable account_test only",
+    "browser": {
+      "status": "PASS",
+      "checks": 15,
+      "runtimeExceptions": 0,
+      "independentQA": false
+    },
+    "auditProduction": "PASS; zero vulnerabilities",
+    "documentation": "FAIL baseline: 7 preexisting handoff-FAC-035 unindexed markdown; no new structural/link errors"
+  },
+  "review": "NOT_RUN independent; self-checks only; implementer cannot approve own review/QA",
+  "merge": "NOT_RUN; authorization exists but local independent-review gate pending",
+  "push": "NOT_RUN; not requested",
+  "deployment": "NOT_RUN; real services/data not changed",
+  "externalServices": "NOT_RUN; no actual SMTP, Stripe charge, GitHub token verification or provider login",
+  "next": "Independent code review and QA of exact commit, then authorized local merge developer; human exact revision acceptance before DONE",
+  "readingEvidence": {
+    "AGENTS.md": "7ca4664cba5de95bb0d19d0b8131c078f3d917486b143afda60edc841a0665ca",
+    "docs/00-governanca/01-POLITICA-IA.md": "cf459b7d679a9796427d40b734dc0f2cabf5405de94c7ab05912574e1c3e6971",
+    "docs/00-governanca/02-POLITICA-DOCUMENTACAO.md": "10d419ece5476593c37a092525d18f8c358f95f582eb5faf6f42540f1b1c022e",
+    "skills/00-perfil-la-fabrique.md": "1c9823965d4f3015d5610f96a6482c4a88e2e38ede14bcf50a2be1a77ddf1621",
+    "skills/fechar-entrega/SKILL.md": "2b61e46e3ee0163647277c63436571ce1036d056118126aae7ff8aef25cbb24f",
+    "skills/orquestrador-fluxo-ia/SKILL.md": "547f89d03a6760a23d93922d2376a9490af2e37332042a1ad622bf32ac3be0b9"
+  },
+  "cleanup": "PASS: created container stopped/removed; fixture services stopped; other worktree untouched"
+}

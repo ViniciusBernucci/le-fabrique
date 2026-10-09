@@ -114,3 +114,9 @@ Relatos locais preservam datas/IDs/revisões/resultados/limites; links editoriai
 - [FAC-035: correção da inicialização para nomes](2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
 
 - [2026-10-09 — FAC-037: cadastro API/CLI e IA/modelo dos agentes](2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+- [PLAN-ADM-001 — Proposta do painel administrativo da conta](2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
+
+- [FAC-038 — Painel da conta do usuário](2026/2026-10-09-FAC-038-painel-conta-usuario.md).
+
+- [FAC-039–041 — Complemento funcional do painel da conta](2026/2026-10-09-FAC-041-complemento-painel-conta.md).

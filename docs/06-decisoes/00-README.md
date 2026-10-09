@@ -14,3 +14,7 @@
 | [DOC-ADR-001](DOC-ADR-001-manual-vivo.md) | PROPOSTA PARA INTEGRAÇÃO no pacote | Organização integrada pelo pedido; aceite documental exato pendente |
 
 Não reescrever status/decisão original para descrever HEAD. [AS-IS](../02-arquitetura/01-as-is.md) e [auditoria](../00-governanca/08-AUDITORIA.md) registram evolução e diferenças. Substituição futura exige ADR próprio explícito. Snapshots guardam bytes anteriores aos links editoriais.
+
+## Identidade humana da conta
+
+[ADR-007 — Conta do usuário e sessões individuais](ADR-007-conta-usuario-e-sessoes.md) registra a implementação focal FAC-038, sem atribuir projetos/configuração global a contas novas e sem substituir a direção LF-MT. Status PROPOSTA IMPLEMENTADA; revisão/aceite/implantação pendentes.
