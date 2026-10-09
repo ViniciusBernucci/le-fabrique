@@ -74,3 +74,15 @@ Codex nesta sessão, modelo efetivo/versão/uso/custos não observados por evid�
 ## Pendências, próximos passos e aceite
 
 Responsável: usuário/revisor independente. Revisão exata, browser e implantação pendentes; nenhum DONE atribuído. Inferência/execução por API requer adapter agentivo próprio e controle financeiro; não foi fingida por conexão CLI. Trabalho preservado na branch isolada; não integrado à developer. Esta entrega fecha implementação do cadastro/seleção e explicita limites operacionais.
+
+## Adendo — commit, integração e limpeza autorizados
+
+Em 2026-10-09 (Europe/Berlin), o responsável autorizou commit, merge na developer e remoção das worktrees/branches órfãs. Código/documentação commitados em `67ce0a09272966b7b1234663d087e79d12b4381f` e integrados por fast-forward à developer, sem conflitos. Revisão anterior encerrada; nenhum outro processo tinha cwd nas worktrees removidas. Hashes dos 20 arquivos do código foram conferidos na developer e correspondem ao manifesto da implementação.
+
+Removidas as worktrees FAC-035 e FAC-037, limpas e integralmente integradas, e 72 branches locais de tarefas cuja ancestralidade na developer foi comprovada. Preservadas main/developer e a worktree/branch FAC-036-instrucoes-md: possui alterações e arquivos novos ainda não commitados/integrados, portanto não é órfã descartável. Não houve remoção forçada, reset ou alteração desse trabalho. [Inventário anterior](evidencias/FAC-037/inventario-antes-limpeza.json) e [resultado da limpeza](evidencias/FAC-037/limpeza-concluida.json) preservam paths/SHAs.
+
+O cliente Prisma foi regenerado localmente com `npm run db:generate` (PASS), sem aplicar migration nem acessar banco. As worktrees removidas não eram necessárias para guardar mudanças: código/evidências permanecem no histórico da developer. Nenhum push, deploy, alteração de credenciais ou ativação de inferência por API. Revisão independente, browser e implantação permanecem pendentes; o pedido de integração não foi tratado como aprovação técnica independente ou DONE.
+
+Nota de validação: artefatos `.patch` preservam espaços de contexto obrigatórios do formato unified diff. O whitespace do código foi conferido excluindo esses artefatos com `git diff HEAD^ HEAD --check -- . ':(exclude)**/*.patch'` (PASS); não se removeu espaço sintático do patch apenas para silenciar o validador.
+
+Verificação após integração: `npm run typecheck` PASS na developer em 67ce0a0, incluindo scripts/integração. Validador documental novamente encontrou somente os sete erros preexistentes do handoff FAC-035; nenhum erro de link ou índice acrescentado pelo adendo. Nenhum código mudou após os 529 testes da implementação, e os hashes do código integrado foram conferidos.

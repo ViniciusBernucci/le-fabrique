@@ -469,3 +469,7 @@ Configurações → Equipes permite apelidar agentes pré-configurados e persona
 - Pré-configurados e personalizados escolhem IA cadastrada/habilitada e seu modelo em campos separados.
 - Login/evidência/adapter CLI recusam modo API. Sem inferência API, migration aplicada, gastos, integração na developer ou deploy nesta entrega.
 - [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+### FAC-037 — integração e limpeza local autorizadas
+
+Commit `67ce0a0` integrado à developer por fast-forward. Removidas duas worktrees limpas/integradas e 72 branches locais integradas. FAC-036 com alterações não commitadas preservada. Sem push/deploy/migration; [adendo de entrega](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#adendo--commit-integração-e-limpeza-autorizados).

@@ -189,3 +189,5 @@ Adendo FAC-035 (2026-10-09): corrigida preparação de contratos compilados no d
 ## FAC-037 — Cadastro API/assinatura CLI e escolha de IA/modelo
 
 IMPLEMENTADO cadastro/atribuição / AWAITING_HUMAN em worktree isolada feat/fac-037-api-cli-agents sobre 36e48f9. Seletor inicial, chave API criptografada separada da configuração, IA/modelo separados para ambos os tipos de agente. Execução agentiva por API permanece PLANEJADA; cadastro não ativa gastos. Migration preparada, não aplicada; implantação, revisão independente/browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-037-api-cli-agentes.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+FAC-037, adendo 2026-10-09: commit `67ce0a09272966b7b1234663d087e79d12b4381f` integrado localmente à developer por fast-forward autorizado. Worktrees limpas FAC-035/FAC-037 e 72 branches locais integradas removidas; FAC-036 com trabalho não commitado preservada. AWAITING_HUMAN e limites de execução/implantação mantidos.
