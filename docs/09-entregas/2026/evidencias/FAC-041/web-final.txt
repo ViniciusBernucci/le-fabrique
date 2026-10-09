@@ -1,0 +1,37 @@
+
+> @le-fabrique/web@0.1.0 typecheck
+> tsc -b --noEmit
+
+
+> @le-fabrique/web@0.1.0 build
+> tsc -b && vite build
+
+vite v8.3.1 building client environment for production...
+transforming...
+✓ 151 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                          0.51 kB │ gzip:   0.32 kB
+dist/assets/AccountPanel-D8vxX7LV.css    1.92 kB │ gzip:   0.69 kB
+dist/assets/index-Dpy0V-DO.css          52.65 kB │ gzip:  10.18 kB
+dist/assets/AccountPanel-DgFjTmNm.js    55.54 kB │ gzip:  14.45 kB
+dist/assets/index-DT723XkD.js          492.99 kB │ gzip: 141.53 kB
+
+✓ built in 412ms
+
+> @le-fabrique/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/web
+
+
+ Test Files  25 passed (25)
+      Tests  70 passed (70)
+   Start at  19:47:07
+   Duration  4.63s (import 53%, transform 31%, tests 13%, worker 2%)
+
+  Transform  transforming modules took 2.50s · 31% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

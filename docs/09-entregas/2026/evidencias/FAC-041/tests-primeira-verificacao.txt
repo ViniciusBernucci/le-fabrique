@@ -1,0 +1,162 @@
+
+> le-fabrique@0.1.0 pretest
+> npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime
+
+
+> @le-fabrique/contracts@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @le-fabrique/runtime@0.1.0 build
+> tsc -p tsconfig.json && cp src/sandbox-launcher.cjs dist/sandbox-launcher.cjs
+
+
+> le-fabrique@0.1.0 test
+> node --test scripts/dev.test.mjs scripts/db.test.mjs scripts/claude-preflight.test.mjs scripts/evidence-backup-cli.test.mjs && npm run test -w @le-fabrique/contracts && npm run test -w @le-fabrique/runtime && npm run test -w @le-fabrique/api && npm run test -w @le-fabrique/worker && npm run test -w @le-fabrique/web
+
+TAP version 13
+# Subtest: preflight refuses missing confirmation and inherited API keys before creating identities
+ok 1 - preflight refuses missing confirmation and inherited API keys before creating identities
+  ---
+  duration_ms: 1335.289038
+  type: 'test'
+  ...
+# Subtest: preflight rejects a successful synthetic turn without native tool evidence and publishes no proof
+ok 2 - preflight rejects a successful synthetic turn without native tool evidence and publishes no proof
+  ---
+  duration_ms: 704.46463
+  type: 'test'
+  ...
+# Subtest: synthetic complete native trace publishes private binary-bound proof and retires the previous proof
+ok 3 - synthetic complete native trace publishes private binary-bound proof and retires the previous proof
+  ---
+  duration_ms: 1639.044808
+  type: 'test'
+  ...
+# Subtest: Prisma recebe ambiente raiz em subprocesso real sem depender do cwd do workspace
+ok 4 - Prisma recebe ambiente raiz em subprocesso real sem depender do cwd do workspace
+  ---
+  duration_ms: 52.675683
+  type: 'test'
+  ...
+# Subtest: carrega o arquivo .env da raiz no processo launcher
+ok 5 - carrega o arquivo .env da raiz no processo launcher
+  ---
+  duration_ms: 7.134573
+  type: 'test'
+  ...
+# Subtest: inicia os tres workspaces sem shell e com o ambiente carregado
+ok 6 - inicia os tres workspaces sem shell e com o ambiente carregado
+  ---
+  duration_ms: 1.541226
+  type: 'test'
+  ...
+# Subtest: offline backup CLI refuses invalid commands without exposing supplied private details
+ok 7 - offline backup CLI refuses invalid commands without exposing supplied private details
+  ---
+  duration_ms: 1127.079472
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3772.116832
+
+> @le-fabrique/contracts@0.1.0 test
+> vitest run src
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/packages/contracts
+
+
+ Test Files  7 passed (7)
+      Tests  58 passed (58)
+   Start at  19:40:25
+   Duration  1.78s (import 49%, transform 27%, tests 21%, worker 2%)
+
+    Isolate  7 workers spawned · ~195ms startup each (spawn + environment, per file)
+             at least ~260ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> @le-fabrique/runtime@0.1.0 test
+> vitest run src
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/packages/runtime
+
+
+ Test Files  8 passed (8)
+      Tests  65 passed (65)
+   Start at  19:40:27
+   Duration  5.54s (tests 73%, import 15%, transform 11%)
+
+    Isolate  8 workers spawned · ~278ms startup each (spawn + environment, per file)
+             at least ~464ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> @le-fabrique/api@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/api
+
+
+ Test Files  36 passed (36)
+      Tests  230 passed (230)
+   Start at  19:40:34
+   Duration  37.42s (tests 52%, import 44%, transform 4%)
+
+     Import  115 modules were evaluated 213 times · 34.55s total, 44% of tracked time
+             ~3.24s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+
+> @le-fabrique/worker@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/worker
+
+ ❯ src/repository-checkout.spec.ts (11 tests | 1 failed) 248ms
+   ❯ trusted repository checkout (11)
+     × uses the account credential without falling back to a global GitHub session 60ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/repository-checkout.spec.ts > trusted repository checkout > uses the account credential without falling back to a global GitHub session
+AssertionError: expected [Function] to throw error including 'Private repository credential unavail…' but got 'Trusted repository checkout failed wi…'
+
+Expected: "Private repository credential unavailable"
+Received: "Trusted repository checkout failed without exposing command output"
+
+ ❯ src/repository-checkout.spec.ts:166:6
+    164|         { scoped: true, token: null },
+    165|       ),
+    166|     ).rejects.toThrow("Private repository credential unavailable");
+       |      ^
+    167|     expect(runner).not.toHaveBeenCalled();
+    168|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 25 passed (26)
+      Tests  1 failed | 216 passed (217)
+   Start at  19:41:12
+   Duration  13.84s (tests 63%, import 30%, transform 7%, worker 1%)
+
+    Isolate  26 workers spawned · ~253ms startup each (spawn + environment, per file)
+             at least ~1.94s faster with isolate: false — reuses workers across files instead of one per file
+
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path /home/vinicius/le-fabrique/apps/worker
+npm error workspace @le-fabrique/worker@0.1.0
+npm error location /home/vinicius/le-fabrique/apps/worker
+npm error command failed
+npm error command sh -c vitest run

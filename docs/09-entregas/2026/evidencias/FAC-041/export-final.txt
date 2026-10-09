@@ -1,0 +1,13 @@
+
+> @le-fabrique/api@0.1.0 test
+> vitest run src/account/account.integration.spec.ts -t isolates owned projects|routes workers
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/api
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 23 skipped (25)
+   Start at  19:49:26
+   Duration  5.53s (tests 65%, transform 18%, import 17%)
+
