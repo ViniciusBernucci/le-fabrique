@@ -45,3 +45,7 @@ Papel: arquiteto via skill local adaptada `skills/arquiteto-de-software/SKILL.md
 ## Pendências e aceite
 
 Responsável avalia propostas técnicas e a revisão documental exata; Tech Lead deriva tickets depois. Retenção, formatos de metadados, override durante execução, parâmetros JEV pelo sistema e benchmark são pendências explícitas de configuração/avaliação. Revisão independente e aceite documental exato pendentes. Nenhum ticket existente mudou para DONE.
+
+## Adendo 2026-10-24 — integração
+
+Trabalho da worktree commitado em `826adb5` e integrado à developer local no merge `05a9877`; conflitos só em índices, changelog, backlog, matriz e handoff, com as entradas dos dois lados mantidas. A developer já continha [ADR-007 da conta do usuário](../../06-decisoes/ADR-007-conta-usuario-e-sessoes.md) (FAC-038); o [ADR-007 desta entrega](../../06-decisoes/ADR-007-memoria-e-decisoes-versionadas.md) mantém número e arquivo para não invalidar o [manifesto](evidencias/ARQ-MEM-001/manifesto.json). Numeração pendente de decisão do responsável. Nenhuma pendência técnica desta entrega depende de execução: avaliação das propostas e aceite continuam com o responsável.

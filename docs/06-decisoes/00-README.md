@@ -22,4 +22,5 @@ Não reescrever status/decisão original para descrever HEAD. [AS-IS](../02-arqu
 ## Memória e decisões — avaliação de 2026-10-09
 
 - [ADR-007](ADR-007-memoria-e-decisoes-versionadas.md): estrutura proposta; requisitos confirmados identificados separadamente.
+- Colisão de número: este ADR-007 (ARQ-MEM-001) e o [ADR-007 da conta do usuário](ADR-007-conta-usuario-e-sessoes.md) (FAC-038) foram criados em paralelo. Ambos mantidos por nome/origem, como no caso do ADR-003; não recebem novo número sem decisão.
 - [ADR-008](ADR-008-excecao-jev.md): exceção específica JEV confirmada, integração futura e desenho técnico proposto.

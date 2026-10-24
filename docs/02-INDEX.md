@@ -572,6 +572,7 @@
 - [Ticket](08-desenvolvimento/tickets/configuracao/FAC-036-instrucoes-markdown.md).
 - [Entrega e checks](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
 - [Leitura obrigatória e evidências da sessão FAC-036](09-entregas/2026/evidencias/FAC-036/leitura-checks.md).
+- [Revisão e verificação em browser após integração](09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
 
 ## Memória e decisões — guias, planos e contratos
 

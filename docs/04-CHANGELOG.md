@@ -2,6 +2,10 @@
 
 # Changelog
 
+## 2026-10-24 — Integração FAC-036 e ARQ-MEM-001
+
+FAC-036 e ARQ-MEM-001 integrados à developer local; FAC-036 verificado em browser com fixture descartável (7 verificações PASS). Dois ADR-007 coexistem até decisão de numeração. [Verificação FAC-036](09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
+
 ## 2026-10-09 — FAC-038
 
 Primeira versão da conta de usuário: cadastro/login individual, perfil/preferências, conta/equipe, convites privados, papéis, sessões/senha e auditoria. Plano/uso sem valores comerciais inventados. Cookie humano separado do controle global; migration testada apenas em PostgreSQL temporário. [Entrega](09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md).

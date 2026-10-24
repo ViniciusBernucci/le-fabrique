@@ -11,3 +11,5 @@ Critérios: selecionar .md UTF-8 não vazio e limitado; salvar/reabrir mantém c
 Checks: testes web/contratos/settings, typecheck/build/lint pertinente, gate documental. Revisão independente/browser/aceite humano da revisão exata são gates separados. Sem gastos adicionais autorizados.
 
 Estado após implementação: IMPLEMENTADO / AWAITING_HUMAN. [Entrega](../../../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+Adendo 2026-10-24: integrado localmente à developer no merge `82bcfc7` (2026-10-24), com conflitos resolvidos sobre FAC-037: descrição e arquivo .md junto ao seletor IA/modelo. Browser em fixture descartável PASS (7 verificações, zero exceções) e checks pós-integração PASS. Sessão distinta da implementação revisou sem achados bloqueantes, mas também resolveu o merge: revisão independente formal continua NOT_RUN. AWAITING_HUMAN para aceite da revisão exata. [Revisão e verificação](../../../09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).

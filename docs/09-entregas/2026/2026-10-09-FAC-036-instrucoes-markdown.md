@@ -68,3 +68,9 @@ Codex nesta sessão; modelo efetivo/versão/modo de cobrança/uso/cota não obse
 ## Pendências, próximos passos e aceite
 
 AWAITING_HUMAN. Revisão independente, browser, integração e aceite da revisão exata pendentes. Não houve merge, push, deploy ou promoção a DONE.
+
+## Adendo 2026-10-24 — integração e verificação em browser
+
+O registro acima descreve o estado em 2026-10-09 e permanece inalterado. Em 2026-10-24 o trabalho da worktree foi commitado em `40c9159` e integrado à developer local no merge `82bcfc7`, combinando os modais com o AgentModelSelector do FAC-037. Os logs de evidência desta entrega foram adicionados ao Git apesar do ignore de `*.log`, para manter os links.
+
+Fluxo completo em browser, antes NOT_RUN, passou em fixture descartável: 7 verificações e zero exceções de runtime. Checks pós-integração PASS. Detalhes, achados da revisão e limites em [revisão e verificação](evidencias/FAC-036/revisao-integracao.md). Pendentes: revisão independente formal e aceite humano da revisão exata. Sem push, PR ou deploy.
