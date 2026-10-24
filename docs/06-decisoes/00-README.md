@@ -14,3 +14,8 @@
 | [DOC-ADR-001](DOC-ADR-001-manual-vivo.md) | PROPOSTA PARA INTEGRAÇÃO no pacote | Organização integrada pelo pedido; aceite documental exato pendente |
 
 Não reescrever status/decisão original para descrever HEAD. [AS-IS](../02-arquitetura/01-as-is.md) e [auditoria](../00-governanca/08-AUDITORIA.md) registram evolução e diferenças. Substituição futura exige ADR próprio explícito. Snapshots guardam bytes anteriores aos links editoriais.
+
+## Memória e decisões — avaliação de 2026-10-09
+
+- [ADR-007](ADR-007-memoria-e-decisoes-versionadas.md): estrutura proposta; requisitos confirmados identificados separadamente.
+- [ADR-008](ADR-008-excecao-jev.md): exceção específica JEV confirmada, integração futura e desenho técnico proposto.

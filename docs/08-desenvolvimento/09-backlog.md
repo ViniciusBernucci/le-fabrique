@@ -179,3 +179,7 @@ FAC-032: AWAITING_HUMAN — implementação local concluída, 46 testes web/type
 ## FAC-033 — Painel de tarefas
 
 IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/lista, edição, filtros, dependências e atribuição por agentes do projeto. Onboarding simulado cria equipe antes de tickets; integração real com onboarding/PostgreSQL/worker PLANEJADA. [Ticket](tickets/FAC-033.md), [entrega](../09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md). Revisão independente e aceite exato pendentes.
+
+## Planejamento arquitetural — memória e decisões (2026-10-09)
+
+Pedido do responsável: oito planos e documentação didática, sem backlog detalhado nesta etapa. [Planos](planos-memoria-e-decisoes/00-README.md), [requisitos e pendências](planos-memoria-e-decisoes/01-decisoes-e-dependencias.md), [matriz](planos-memoria-e-decisoes/10-matriz-fluxo.md) e [entrega documental](../09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md). Estado: DOCUMENTADO / AWAITING_HUMAN para revisão exata; nenhum ticket de software promovido ou novo ID FAC criado. ARQ-MEM-001 é identificador documental desta análise, não ticket de implementação. Tech Lead define tickets posteriores após avaliação conjunta.

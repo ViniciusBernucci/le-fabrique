@@ -25,3 +25,7 @@ C4 atual: [contexto nível 1](02-contexto.md), [containers nível 2](03-containe
 13. [fluxos-alvo](13-fluxos-alvo.md).
 14. [dados-alvo](14-dados-alvo.md).
 15. [referencia-v2.3](15-referencia-v2.3.md).
+
+## Trilha didática de memória e decisões
+
+[Comece pela explicação integrada](memoria-e-decisoes/00-README.md), depois siga os oito capítulos. Proposta arquitetural de evolução, sem implementação nesta entrega.

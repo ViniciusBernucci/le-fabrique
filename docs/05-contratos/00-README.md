@@ -14,3 +14,7 @@ Cada contrato identifica auth/produtor/consumidores/request/response/erros/efeit
 ## Sequência de leitura deste capítulo
 
 1. [especificacao-v2.3](01-especificacao-v2.3.md).
+
+## Contratos propostos de memória e decisões
+
+[Semântica compartilhada e gates](memoria-e-decisoes/00-contratos-propostos.md). Planejamento; não schemas executáveis ou APIs implementadas.

@@ -50,3 +50,7 @@ Quadro/lista de tarefas demonstrativas, filtros, edição e vínculo com agentes
 ## Cobertura FAC-034
 
 Tokens HUD globais, frame/home e todas as áreas do painel; estados reais de execução separados das nove etapas de demonstração. Specs preservam limites mock, contratos/aria e cobrem tom de mensagens, mapeamento de estados e redução de movimento. [Entrega](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Browser/revisão independente NÃO VERIFICADOS por limites do ambiente; sem mudanças em backend, providers, schemas ou C4.
+
+## Cobertura documental de memória e decisões
+
+[Matriz de rastreabilidade](planos-memoria-e-decisoes/10-matriz-fluxo.md) conserva 145 operações, 56 exceções e 20 decisões candidatas JEV da transcrição. Cobertura de requisitos neste planejamento não equivale a cobertura por testes: implementação e verificação funcional de cada item NÃO VERIFICADAS individualmente. Oito planos e guias distinguem estado observado, requisitos confirmados e propostas técnicas.

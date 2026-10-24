@@ -2,6 +2,10 @@
 
 # Changelog
 
+## 2026-10-09 — ARQ-MEM-001
+
+Oito planos arquiteturais e guias didáticos de memória/contexto/decisões, contratos propostos, matriz com 145 operações/56 exceções/20 candidatas JEV e exceção específica JEV autorizada. Implementação futura; nenhum runtime ativado. [Entrega](09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md).
+
 ## 2026-10-07 — FAC-032
 
 Menu principal limitado a Painel, Projetos, Agentes de IA, Escritório, Usuários e Configurações. 46 testes web, typecheck, build e lint PASS. [Entrega](09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).

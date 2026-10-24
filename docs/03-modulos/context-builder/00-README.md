@@ -37,3 +37,7 @@ Payload/versão/base inválidos são recusados antes de efeito pertinente; auth/
 ## Sequência de leitura deste capítulo
 
 1. [referencia-v2.3](01-referencia-v2.3.md).
+
+## Evolução planejada em 2026-10-09
+
+[Guia didático de Context Packs](../../02-arquitetura/memoria-e-decisoes/04-context-packs.md) e [plano](../../08-desenvolvimento/planos-memoria-e-decisoes/04-context-packs.md) propõem seleção, obrigatórios, expansão e cache. A descrição implementada acima permanece; não atribuir índice/grafo ao builder atual.
