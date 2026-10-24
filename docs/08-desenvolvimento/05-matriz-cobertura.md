@@ -88,3 +88,7 @@ Contratos validam senha/timezone/version/papéis. API cobre salt/hashing, cookie
 ## Cobertura FAC-036
 
 Upload .md para agentes/skills e download do conteúdo; testes de leitura cobrem extensão/nome, UTF-8, BOM/espaços, vazio/NUL e limites; contratos cobrem metadados nos três tipos e leitura legada; serviço verifica persistência JSON versionada. Browser, revisão independente e aceite exato pendentes. [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+## Cobertura documental de memória e decisões
+
+[Matriz de rastreabilidade](planos-memoria-e-decisoes/10-matriz-fluxo.md) conserva 145 operações, 56 exceções e 20 decisões candidatas JEV da transcrição. Cobertura de requisitos neste planejamento não equivale a cobertura por testes: implementação e verificação funcional de cada item NÃO VERIFICADAS individualmente. Oito planos e guias distinguem estado observado, requisitos confirmados e propostas técnicas.

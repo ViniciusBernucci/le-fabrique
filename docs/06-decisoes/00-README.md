@@ -18,3 +18,8 @@ Não reescrever status/decisão original para descrever HEAD. [AS-IS](../02-arqu
 ## Identidade humana da conta
 
 [ADR-007 — Conta do usuário e sessões individuais](ADR-007-conta-usuario-e-sessoes.md) registra a implementação focal FAC-038, sem atribuir projetos/configuração global a contas novas e sem substituir a direção LF-MT. Status PROPOSTA IMPLEMENTADA; revisão/aceite/implantação pendentes.
+
+## Memória e decisões — avaliação de 2026-10-09
+
+- [ADR-007](ADR-007-memoria-e-decisoes-versionadas.md): estrutura proposta; requisitos confirmados identificados separadamente.
+- [ADR-008](ADR-008-excecao-jev.md): exceção específica JEV confirmada, integração futura e desenho técnico proposto.

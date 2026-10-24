@@ -209,3 +209,7 @@ IMPLEMENTADO em `1e6274aa6f4d5b8d9fbf6e28590c37fdafb8244e` / checks automatizado
 ## FAC-036 — Instruções por arquivo Markdown
 
 READY autorizado pelo pedido de 2026-10-09; IMPLEMENTADO / AWAITING_HUMAN em worktree isolada feat/fac-036-instrucoes-md. Upload/substituição/download de instruções .md para agentes e skills; descrição apenas resumo, persistência JSON versionada compatível com registros anteriores. Revisão independente, browser, integração e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-036-instrucoes-markdown.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+## Planejamento arquitetural — memória e decisões (2026-10-09)
+
+Pedido do responsável: oito planos e documentação didática, sem backlog detalhado nesta etapa. [Planos](planos-memoria-e-decisoes/00-README.md), [requisitos e pendências](planos-memoria-e-decisoes/01-decisoes-e-dependencias.md), [matriz](planos-memoria-e-decisoes/10-matriz-fluxo.md) e [entrega documental](../09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md). Estado: DOCUMENTADO / AWAITING_HUMAN para revisão exata; nenhum ticket de software promovido ou novo ID FAC criado. ARQ-MEM-001 é identificador documental desta análise, não ticket de implementação. Tech Lead define tickets posteriores após avaliação conjunta.

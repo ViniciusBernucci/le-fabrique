@@ -63,3 +63,7 @@ Este manual resume e aponta fontes canônicas. Contratos detalhados não devem s
 - [Planejamento v2.1](99-historico/originais/sources/README.md)
 - [Proposta multi-tenant](99-historico/originais/output/le-fabrique-multitenant/README.md)
 - [Contratos v3](99-historico/originais/output/le-fabrique-multitenant/ESPEC-MVP.md)
+
+## Entender memória e decisões antes de avaliar os planos
+
+[Guia didático passo a passo](02-arquitetura/memoria-e-decisoes/00-README.md) explica as oito capacidades propostas. [Planos separados](08-desenvolvimento/planos-memoria-e-decisoes/00-README.md) distinguem próxima versão e evolução futura. Nenhuma nova integração foi implementada por esse planejamento.

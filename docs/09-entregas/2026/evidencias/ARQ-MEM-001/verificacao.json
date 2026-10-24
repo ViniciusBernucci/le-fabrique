@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-09T20:22:51.902724+00:00",
+  "base_revision": "896ef0d2c804b80711d5ad00ad96695eaaf9f2d7",
+  "documentation": {
+    "exit_code": 0,
+    "result": {
+      "markdown_correntes": 410,
+      "links_locais_verificados": 2771,
+      "snapshots_verificados": 601,
+      "secoes_mapeadas": 2444,
+      "fontes_originais_conferidas": false,
+      "historico_excluido_da_validacao_de_links": true,
+      "erros": [],
+      "limite": "Checks estruturais/hashes; não comprova software, isolamento nem veracidade semântica."
+    }
+  },
+  "whitespace": {
+    "exit_code": 0,
+    "output": ""
+  },
+  "traceability": {
+    "operations": 145,
+    "exceptions": 56,
+    "jev_candidates": 20,
+    "source_fields_preserved": true,
+    "each_id_once": true
+  },
+  "application_tests": "NOT_RUN — documentary change",
+  "independent_review": "NOT_RUN",
+  "mermaid_render": "NOT_RUN"
+}

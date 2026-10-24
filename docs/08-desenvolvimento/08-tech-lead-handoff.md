@@ -137,3 +137,13 @@ Dependências posteriores: FAC-039 (ownership/grants projetos, artefatos/SSE/job
 ## Execução dos complementos autorizados
 
 O pedido “termine todas as outras partes” tornou READY os [tickets FAC-039–041](09-backlog.md#fac-039041--complemento-da-camada-de-usuário). Implementação de software segue a [feature atual](../04-features/01-control-settings.md#painel-da-conta-do-usuário--fac-038). Configuração de catálogo/serviço SMTP/cobrança foi consultada ao responsável e não respondida; adaptadores não ativados e sem preços inventados. Não descontinuar token operacional legado nem atribuir seus projetos sem dono confirmado. Gates de review/aceite/produção/LF-MT permanecem próprios.
+
+## Handoff arquitetural — memória e decisões (2026-10-09)
+
+[Planos separados](planos-memoria-e-decisoes/00-README.md) e [requisitos/evidências/pendências](planos-memoria-e-decisoes/01-decisoes-e-dependencias.md) constituem o handoff desta análise. Objetivo: memória persistente e contexto da própria La fabrique; base inspecionada `896ef0d2c804b80711d5ad00ad96695eaaf9f2d7`; main de referência ainda requer conferência, pois a ref local aponta ao bootstrap. Stack e VPS única preservadas; recursos declarados 2 vCPUs/8 GB.
+
+Estado alvo: memória versionada, índice/grafo, packs/expansão/continuidade, decisões auditadas, atualização/conflitos e painel. Modelos locais, integração JEV e treinamento ficam para tarefas futuras. [Contratos comuns](../05-contratos/memoria-e-decisoes/00-contratos-propostos.md) e contratos por plano são propostas, não software existente. [Matriz](planos-memoria-e-decisoes/10-matriz-fluxo.md) conserva 145/56/20 itens, sem provar implementação individual.
+
+Sequência por dependências: fontes/autoridade → índice → pacotes → integração com decisões/workflow/painel e avaliação → modelos/treino futuros. Riscos: revisão main divergente, lacunas dinâmicas do grafo, dados/índices obsoletos, limites host inadequados e consumo externo desconhecido. Migrações devem ser aditivas/versionadas, preservar contratos atuais e permitir fallback somente quando cumprir obrigatórios.
+
+Tech Lead deverá gerar backlog/tickets somente após avaliação das propostas técnicas relevantes; não reutilizar FAC ilustrativos da transcrição, não reabrir stack nem reimplementar tickets aceitos por leitura histórica. Preencher orçamento JEV pelo sistema e benchmark antes de ativação/modelos. Exceção específica [ADR-008](../06-decisoes/ADR-008-excecao-jev.md) não libera APIs de LLM. Sem implementação/push/deploy neste handoff.
