@@ -183,3 +183,7 @@ IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/li
 ## FAC-035 — Nome e cargo dos agentes
 
 IMPLEMENTADO / AWAITING_HUMAN em worktree isolada sobre 9786910: nomes opcionais para pré-configurados/personalizados, cargos preservados, persistência versionada existente. Código bc38715; commit e integração local à developer autorizados em seguida pelo responsável. Revisão independente, browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-035-nomes-agentes.md) · [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## FAC-036 — Instruções por arquivo Markdown
+
+READY autorizado pelo pedido de 2026-10-09; IMPLEMENTADO / AWAITING_HUMAN em worktree isolada feat/fac-036-instrucoes-md. Upload/substituição/download de instruções .md para agentes e skills; descrição apenas resumo, persistência JSON versionada compatível com registros anteriores. Revisão independente, browser, integração e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-036-instrucoes-markdown.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

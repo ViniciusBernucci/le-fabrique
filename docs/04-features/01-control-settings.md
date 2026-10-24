@@ -45,3 +45,7 @@ Critérios automatizados e limitações de browser na [entrega FAC-034](../09-en
 ## Nome dos agentes — FAC-035
 
 Em Configurações → Equipes, abrir um agente e suas configurações permite editar Nome do agente. O cargo anterior continua apresentado separadamente; agentes personalizados permitem editar também o cargo. Salvar grava o nome no JSON versionado, cancelar descarta a edição. Nome pode ser removido, retornando à exibição do cargo, e admite até 100 caracteres após trim. [Funcionamento e evidências](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Instruções em Markdown — FAC-036
+
+Configurações → Equipes → modal de agente ou skill oferece descrição breve e área separada para arquivo .md. Adicionar/substituir prepara o rascunho; salvar registra o conteúdo e o nome; cancelar preserva o cadastro anterior. Baixar arquivo .md permite recuperar instruções registradas, inclusive conteúdo anterior ao upload. Arquivo inválido mostra erro e mantém o conteúdo anterior. [Regras e limites](../03-modulos/configuracao/00-README.md#arquivos-de-instruções--fac-036) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

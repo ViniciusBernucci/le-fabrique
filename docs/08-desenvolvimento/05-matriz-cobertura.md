@@ -54,3 +54,7 @@ Tokens HUD globais, frame/home e todas as áreas do painel; estados reais de exe
 ## Cobertura FAC-035
 
 Nome próprio opcional separado do cargo para agentes pré-configurados e personalizados. Contratos cobrem leitura legada, trim, remoção e limite; testes web cobrem resumo e rótulos acessíveis; serviço cobre gravação versionada do nome. Browser, revisão independente, integração e aceite pendentes. [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Cobertura FAC-036
+
+Upload .md para agentes/skills e download do conteúdo; testes de leitura cobrem extensão/nome, UTF-8, BOM/espaços, vazio/NUL e limites; contratos cobrem metadados nos três tipos e leitura legada; serviço verifica persistência JSON versionada. Browser, revisão independente e aceite exato pendentes. [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

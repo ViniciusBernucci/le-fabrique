@@ -166,13 +166,20 @@ it("persists project skills and more than six agents using the existing versione
   const current = createDefaultFactoryConfiguration();
   const configuration = {
     ...current,
+    assignments: current.assignments.map((assignment) => ({
+      ...assignment,
+      description: "Resumo",
+      instructions: "# Regras\n",
+      instructionsFilename: "AGENTS.md",
+    })),
     projectSkills: [
       {
         id: skillId,
         projectId,
         name: "Skill de revisão",
         description: "",
-        instructions: "Verifique a UI.",
+        instructions: "Verifique a UI.\n",
+        instructionsFilename: "SKILL.md",
       },
     ],
     digitalAgents: Array.from({ length: 12 }, (_, index) => ({
@@ -180,7 +187,8 @@ it("persists project skills and more than six agents using the existing versione
       projectId,
       name: `Agente ${index}`,
       description: "",
-      instructions: "",
+      instructions: "# Agente\n",
+      instructionsFilename: "custom.md",
       installationId: null,
       model: null,
       skillIds: [skillId],

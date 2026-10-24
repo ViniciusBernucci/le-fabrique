@@ -47,3 +47,9 @@ Payload/versão/base inválidos são recusados antes de efeito pertinente; auth/
 Configurações → Equipes → Agentes permite atribuir um nome próprio aos agentes pré-configurados e personalizados. No resumo e nas informações do agente, o nome aparece em destaque e o cargo em uma linha separada. Exemplo didático: Alex, cargo Developer. O campo Nome do agente está no modal de configuração; salvar persiste o rascunho pela API versionada, cancelar o descarta.
 
 O cargo pré-configurado é fixado pelo papel operacional. Para agentes personalizados, a identificação anterior passa a ser o campo Cargo na empresa, editável. Nome opcional vazio volta a exibir o cargo. A configuração existente continua válida; veja [contrato de dados](../../05-contratos/schemas/00-entidades.md#nomes-de-agentes-fac-035) e [entrega](../../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Arquivos de instruções — FAC-036
+
+Nos modais de agentes pré-configurados, personalizados e skills, Descrição breve contém somente o resumo. A área Arquivo de instruções permite adicionar ou substituir um .md UTF-8 e baixar o conteúdo registrado. Seleção altera o rascunho; Salvar configuração grava conteúdo e nome no JSON versionado; cancelar descarta a substituição. Instruções antigas sem nome podem ser baixadas como AGENTS.md ou SKILL.md.
+
+Arquivos vazios, binários com NUL, UTF-8 inválido, nomes com caminhos e conteúdo acima do limite são recusados, preservando o rascunho anterior. Durante leitura, o salvamento aguarda. Limites: 16.000 caracteres para agentes, 64.000 para skills. O cadastro não instala skills nem adiciona invocação automática de perfis; a descrição nunca é convertida em instrução. [Contrato](../../05-contratos/schemas/00-entidades.md#arquivos-markdown-fac-036) · [Entrega](../../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

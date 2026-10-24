@@ -545,3 +545,9 @@
 
 - [Ticket](08-desenvolvimento/tickets/configuracao/FAC-035-nomes-agentes.md).
 - [Entrega e checks](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## Instruções Markdown — FAC-036 (consulta)
+
+- [Ticket](08-desenvolvimento/tickets/configuracao/FAC-036-instrucoes-markdown.md).
+- [Entrega e checks](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+- [Leitura obrigatória e evidências da sessão FAC-036](09-entregas/2026/evidencias/FAC-036/leitura-checks.md).

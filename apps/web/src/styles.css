@@ -1326,3 +1326,18 @@ dialog::backdrop,
     gap: 4px;
   }
 }
+
+.markdown-instructions {
+  border: 1px solid var(--hud-line);
+  padding: 1rem;
+  margin-block: 1rem;
+  min-width: 0;
+}
+.instructions-download {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  overflow-wrap: anywhere;
+}
