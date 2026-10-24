@@ -1,0 +1,40 @@
+
+> le-fabrique@0.1.0 typecheck
+> npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime && npm run typecheck -w @le-fabrique/contracts && npm run typecheck -w @le-fabrique/runtime && npm run typecheck -w @le-fabrique/api && npm run typecheck -w @le-fabrique/worker && npm run typecheck -w @le-fabrique/web && npm run typecheck:scripts && npm run typecheck:integration
+
+
+> @le-fabrique/contracts@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @le-fabrique/runtime@0.1.0 build
+> tsc -p tsconfig.json && cp src/sandbox-launcher.cjs dist/sandbox-launcher.cjs
+
+
+> @le-fabrique/contracts@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @le-fabrique/runtime@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @le-fabrique/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @le-fabrique/worker@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @le-fabrique/web@0.1.0 typecheck
+> tsc -b --noEmit
+
+
+> le-fabrique@0.1.0 typecheck:scripts
+> tsc -p tsconfig.scripts.json
+
+
+> le-fabrique@0.1.0 typecheck:integration
+> tsc -p tsconfig.integration.json
+

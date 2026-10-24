@@ -205,3 +205,7 @@ IMPLEMENTADO / AWAITING_HUMAN no diff feat/fac-038-painel-conta sobre ee4485b. [
 ## FAC-039–041 — Complemento da camada de usuário
 
 IMPLEMENTADO em `1e6274aa6f4d5b8d9fbf6e28590c37fdafb8244e` / checks automatizados e browser fixture PASS / revisão independente e aceite pendentes. READY autorizado pelo pedido explícito para concluir todas as partes. [FAC-039](tickets/FAC-039.md), [FAC-040](tickets/FAC-040.md), [FAC-041](tickets/FAC-041.md) e [entrega](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Projetos/grants/execução/integrações privados, uso/quota, notificações/exportação/dados/transferência/encerramento, MFA/email/recuperação e planos/Stripe configuráveis. Catálogo comercial/SMTP/Stripe reais não definidos nem ativados; migrations somente em DB efêmero, nenhuma propriedade legada inferida. Não promover a DONE ou release comercial por esses checks.
+
+## FAC-036 — Instruções por arquivo Markdown
+
+READY autorizado pelo pedido de 2026-10-09; IMPLEMENTADO / AWAITING_HUMAN em worktree isolada feat/fac-036-instrucoes-md. Upload/substituição/download de instruções .md para agentes e skills; descrição apenas resumo, persistência JSON versionada compatível com registros anteriores. Revisão independente, browser, integração e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-036-instrucoes-markdown.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

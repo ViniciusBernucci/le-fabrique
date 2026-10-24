@@ -146,3 +146,41 @@ describe("project skills and digital agents", () => {
     expect(projectSkillSchema.safeParse({ ...skill, apiKey: "forbidden" }).success).toBe(false);
   });
 });
+
+it("persists Markdown metadata and descriptions separately for every agent type", () => {
+  const markdown = "# Regras\r\n\n    manter espaços\n";
+  const result = factoryConfigurationSchema.parse({
+    ...base,
+    assignments: base.assignments.map((assignment) => ({
+      ...assignment,
+      description: "Resumo breve",
+      instructions: markdown,
+      instructionsFilename: "AGENTS.md",
+    })),
+    digitalAgents: [{ ...agent, instructions: markdown, instructionsFilename: "custom.md" }],
+    projectSkills: [{ ...skill, instructions: markdown, instructionsFilename: "SKILL.md" }],
+  });
+  expect(result.assignments[0]).toMatchObject({
+    description: "Resumo breve",
+    instructions: markdown,
+    instructionsFilename: "AGENTS.md",
+  });
+  expect(result.digitalAgents?.[0].instructions).toBe(markdown);
+  expect(result.projectSkills?.[0]).toMatchObject({
+    description: skill.description,
+    instructions: markdown,
+    instructionsFilename: "SKILL.md",
+  });
+  for (const name of [
+    "../SKILL.md",
+    "a/b.md",
+    "a\\b.md",
+    "file.txt",
+    "a\0.md",
+    `${"x".repeat(200)}.md`,
+  ]) {
+    expect(projectSkillSchema.safeParse({ ...skill, instructionsFilename: name }).success).toBe(
+      false,
+    );
+  }
+});

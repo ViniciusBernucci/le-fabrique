@@ -10,6 +10,10 @@ Primeira versão da conta de usuário: cadastro/login individual, perfil/prefer�
 
 Proposta focal de painel administrativo da conta do usuário; painel global reservado para depois. Perfil, organização, convites, papéis/grants, segurança, auditoria, uso e distinção entre plano da fábrica e assinatura IA. Estado observado e evolução no handoff existente; decisões comerciais pendentes. Nenhum software implementado. [Registro](09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
 
+## 2026-10-09 — FAC-036
+
+Área de adicionar/substituir/baixar .md nos agentes e skills; descrição breve separada, conteúdo/nome persistidos na configuração versionada. IMPLEMENTADO / AWAITING_HUMAN em worktree isolada. [Entrega](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
 ## 2026-10-07 — FAC-032
 
 Menu principal limitado a Painel, Projetos, Agentes de IA, Escritório, Usuários e Configurações. 46 testes web, typecheck, build e lint PASS. [Entrega](09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).

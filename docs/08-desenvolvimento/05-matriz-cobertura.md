@@ -84,3 +84,7 @@ Contratos validam senha/timezone/version/papéis. API cobre salt/hashing, cookie
 | Interface | Abas reais da conta e projetos/integrações | Browser fixture, desktop/mobile; sem autenticação real de provider |
 
 [Entrega/checks](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Revisão independente/aceite, preços/catálogo e ativação externa continuam pendentes; testes não comprovam isolamento hostil/comercial.
+
+## Cobertura FAC-036
+
+Upload .md para agentes/skills e download do conteúdo; testes de leitura cobrem extensão/nome, UTF-8, BOM/espaços, vazio/NUL e limites; contratos cobrem metadados nos três tipos e leitura legada; serviço verifica persistência JSON versionada. Browser, revisão independente e aceite exato pendentes. [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

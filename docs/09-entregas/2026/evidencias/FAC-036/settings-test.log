@@ -1,0 +1,13 @@
+
+> @le-fabrique/api@0.1.0 test
+> vitest run src/settings/settings.service.spec.ts
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique-fac-036/apps/api
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  03:42:43
+   Duration  1.83s (import 57%, transform 39%, tests 4%, worker 1%)
+

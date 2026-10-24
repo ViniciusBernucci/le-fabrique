@@ -38,6 +38,7 @@ import {
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
+import { MarkdownInstructions } from "./MarkdownInstructions";
 import { PresetAgents } from "./PresetAgents";
 import { SettingsModal } from "./SettingsModal";
 import {
@@ -69,6 +70,7 @@ export function SettingsPanel({
   projects = [],
   activeProjectId,
 }: SettingsPanelProps) {
+  const [readingInstructions, setReadingInstructions] = useState(false);
   const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
@@ -1514,7 +1516,7 @@ export function SettingsPanel({
               return (
                 <SettingsModal
                   title={`Configurar ${assignment.nickname || roleLabels[assignment.role]}`}
-                  saving={saving}
+                  saving={saving || readingInstructions}
                   onClose={() => setEditingAssignment(null)}
                   onSave={() => void saveAssignment()}
                 >
@@ -1532,6 +1534,26 @@ export function SettingsPanel({
                     Cargo na empresa
                     <input value={roleLabels[assignment.role]} readOnly />
                   </label>
+                  <label>
+                    Descrição breve do agente
+                    <textarea
+                      value={assignment.description ?? ""}
+                      maxLength={500}
+                      onChange={(event) => updateAssignment({ description: event.target.value })}
+                    />
+                  </label>
+                  <MarkdownInstructions
+                    key={assignment.role}
+                    label="Arquivo de instruções do agente"
+                    instructions={assignment.instructions ?? ""}
+                    filename={assignment.instructionsFilename}
+                    fallbackFilename="AGENTS.md"
+                    maxCharacters={16_000}
+                    onBusyChange={setReadingInstructions}
+                    onChange={(instructions, instructionsFilename) =>
+                      updateAssignment({ instructions, instructionsFilename })
+                    }
+                  />
                   <AgentModelSelector
                     installations={draft.installations}
                     installationId={assignment.installationId}

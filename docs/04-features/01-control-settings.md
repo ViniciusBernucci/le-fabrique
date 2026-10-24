@@ -91,3 +91,7 @@ Proprietário gerencia troca/cancelamento pelo portal e consulta faturas. Webhoo
 [Entrega complementar FAC-039–041](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md) · [Operação](../07-operacao/01-deploy.md#configuração-de-email-segurança-e-planos--fac-039041).
 
 FAC-041: tempo de execução soma apenas tentativas com término confirmado; tokens observados também são agrupados por provider. Resultados desconhecidos/ausentes e limite de 10.000 tentativas tornam a agregação parcial, sem estimar consumo ou custo. Exportação inclui tentativas e resultados sanitizados, além das demais seções da conta.
+
+## Instruções em Markdown — FAC-036
+
+Configurações → Equipes → modal de agente ou skill oferece descrição breve e área separada para arquivo .md. Adicionar/substituir prepara o rascunho; salvar registra o conteúdo e o nome; cancelar preserva o cadastro anterior. Baixar arquivo .md permite recuperar instruções registradas, inclusive conteúdo anterior ao upload. Arquivo inválido mostra erro e mantém o conteúdo anterior. [Regras e limites](../03-modulos/configuracao/00-README.md#arquivos-de-instruções--fac-036) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).

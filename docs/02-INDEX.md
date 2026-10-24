@@ -566,3 +566,9 @@
 2. [Integrações/uso/dados](08-desenvolvimento/tickets/FAC-040.md).
 3. [Segurança/email/planos](08-desenvolvimento/tickets/FAC-041.md).
 4. [Entrega e evidências complementares](09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md).
+
+## Instruções Markdown — FAC-036 (consulta)
+
+- [Ticket](08-desenvolvimento/tickets/configuracao/FAC-036-instrucoes-markdown.md).
+- [Entrega e checks](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+- [Leitura obrigatória e evidências da sessão FAC-036](09-entregas/2026/evidencias/FAC-036/leitura-checks.md).

@@ -585,9 +585,21 @@ export const employeeRoleSchema = z.enum([
 ]);
 export type EmployeeRole = z.infer<typeof employeeRoleSchema>;
 
+export const markdownInstructionsFilenameSchema = z
+  .string()
+  .min(4)
+  .max(200)
+  .regex(/^[^/\\]+\.md$/i)
+  .refine((value) =>
+    [...value].every((char) => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127),
+  );
+
 export const agentAssignmentSchema = z
   .object({
     role: employeeRoleSchema,
+    description: z.string().trim().max(500).optional(),
+    instructions: z.string().max(16_000).optional(),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
     nickname: z.string().trim().max(100).optional(),
     enabled: z.boolean(),
     installationId: z
@@ -657,7 +669,11 @@ export const projectSkillSchema = z
     projectId: z.uuid(),
     name: z.string().trim().min(1).max(100),
     description: z.string().trim().max(500),
-    instructions: z.string().trim().min(1).max(64_000),
+    instructions: z
+      .string()
+      .max(64_000)
+      .refine((value) => value.trim().length > 0),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
   })
   .strict();
 export type ProjectSkill = z.infer<typeof projectSkillSchema>;
@@ -668,7 +684,8 @@ export const digitalAgentSchema = z
     nickname: z.string().trim().max(100).optional(),
     name: z.string().trim().min(1).max(100),
     description: z.string().trim().max(500),
-    instructions: z.string().trim().max(16_000),
+    instructions: z.string().max(16_000),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
     projectId: z.uuid().nullable(),
     installationId: z
       .string()
