@@ -1,0 +1,25 @@
+{
+  "fixture": true,
+  "web": "http://127.0.0.1:5179/",
+  "api": "http://127.0.0.1:3910/api",
+  "database": "PostgreSQL descartável",
+  "worker": false,
+  "checks": [
+    "Pré-configurado: descrição e .md (BOM/CRLF/espaços/acentos) salvos pela API",
+    "Reabrir após recarregar e baixar bytes idênticos ao arquivo enviado",
+    "Vazio e extensão inválida mostram erro e preservam o arquivo anterior",
+    "Cancelar descarta a substituição na tela e na API",
+    "Agente personalizado: .md salvo pela API",
+    "Skill: .md salvo pela API",
+    "390px sem overflow horizontal com o modal aberto"
+  ],
+  "runtimeExceptions": [],
+  "desktop": [
+    1280,
+    900
+  ],
+  "mobile": [
+    390,
+    844
+  ]
+}

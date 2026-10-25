@@ -30,3 +30,15 @@ it("keeps the command frame and settings rail on every destination", () => {
     expect(html).toContain('aria-labelledby="home-preview-title"');
   }
 });
+
+it("exposes the user account entry and a real users destination", () => {
+  const html = renderToStaticMarkup(
+    <DashboardLayout onNavigate={() => undefined} activeDestination="users">
+      <p>Team</p>
+    </DashboardLayout>,
+  );
+  expect(html).toContain('aria-label="Abrir minha conta"');
+  expect(html).toContain('aria-label="Usuários"');
+  expect(html).not.toContain("Perfil de demonstração");
+  expect(html).toContain("Perfil e equipe");
+});

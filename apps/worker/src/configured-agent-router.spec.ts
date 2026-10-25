@@ -308,3 +308,15 @@ describe("ConfiguredAgentRouter", () => {
     );
   });
 });
+
+it("never uses a subscription adapter for an API key installation", async () => {
+  const config = configuration();
+  config.installations[0].authMode = "API_KEY";
+  const createAdapter = vi.fn(async () => adapter("codex"));
+  const router = new ConfiguredAgentRouter(
+    { getWorkerConfiguration: async () => snapshot(1, config) },
+    createAdapter,
+  );
+  await expect(router.resolve("DEVELOPER")).rejects.toThrow("not available");
+  expect(createAdapter).not.toHaveBeenCalled();
+});

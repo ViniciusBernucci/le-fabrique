@@ -179,3 +179,41 @@ FAC-032: AWAITING_HUMAN — implementação local concluída, 46 testes web/type
 ## FAC-033 — Painel de tarefas
 
 IMPLEMENTADO como demonstração local / AWAITING_HUMAN. Menu Tarefas, quadro/lista, edição, filtros, dependências e atribuição por agentes do projeto. Onboarding simulado cria equipe antes de tickets; integração real com onboarding/PostgreSQL/worker PLANEJADA. [Ticket](tickets/FAC-033.md), [entrega](../09-entregas/2026/2026-10-07-FAC-033-painel-tarefas.md). Revisão independente e aceite exato pendentes.
+
+## FAC-035 — Nome e cargo dos agentes
+
+IMPLEMENTADO / AWAITING_HUMAN em worktree isolada sobre 9786910: nomes opcionais para pré-configurados/personalizados, cargos preservados, persistência versionada existente. Código bc38715; commit e integração local à developer autorizados em seguida pelo responsável. Revisão independente, browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-035-nomes-agentes.md) · [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+Adendo FAC-035 (2026-10-09): corrigida preparação de contratos compilados no desenvolvimento para evitar rejeição de nickname; checks locais PASS, ambiente específico do usuário não validado. AWAITING_HUMAN. [Correção](../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## FAC-037 — Cadastro API/assinatura CLI e escolha de IA/modelo
+
+IMPLEMENTADO cadastro/atribuição / AWAITING_HUMAN em worktree isolada feat/fac-037-api-cli-agents sobre 36e48f9. Seletor inicial, chave API criptografada separada da configuração, IA/modelo separados para ambos os tipos de agente. Execução agentiva por API permanece PLANEJADA; cadastro não ativa gastos. Migration preparada, não aplicada; implantação, revisão independente/browser e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-037-api-cli-agentes.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+FAC-037, adendo 2026-10-09: commit `67ce0a09272966b7b1234663d087e79d12b4381f` integrado localmente à developer por fast-forward autorizado. Worktrees limpas FAC-035/FAC-037 e 72 branches locais integradas removidas; FAC-036 com trabalho não commitado preservada. AWAITING_HUMAN e limites de execução/implantação mantidos.
+
+
+## PLAN-ADM-001 — Arquitetura do painel administrativo da conta
+
+PROPOSTA DOCUMENTADA / implementada em FAC-038–041, aceite pendente. Pedido de 2026-10-09 para analisar perfil pessoal, organização, usuários/permissões, dados e planos com arquiteto-de-software. [Proposta e handoff](08-tech-lead-handoff.md#proposta-focal--painel-administrativo-da-conta) · [Registro](../09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md). Escopo confirmado: camada da conta do usuário; administração global posterior. Implementação autorizada posteriormente pelo pedido explícito do responsável; tickets FAC-038–041 abaixo. Dados comerciais/ativação externa aguardam configuração e não constituem aceite estrutural.
+
+
+## FAC-038 — Painel da conta do usuário
+
+IMPLEMENTADO / AWAITING_HUMAN no diff feat/fac-038-painel-conta sobre ee4485b. [Ticket](tickets/FAC-038.md), [entrega](../09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md), [ADR-007](../06-decisoes/ADR-007-conta-usuario-e-sessoes.md). Identidade/profile/organização/equipe/convites/sessões/auditoria, complementados por FAC-039–041 abaixo. Migration apenas em DB efêmero; browser verificado no complemento FAC-041; revisão independente/aceite/implantação pendentes.
+
+## FAC-039–041 — Complemento da camada de usuário
+
+IMPLEMENTADO em `1e6274aa6f4d5b8d9fbf6e28590c37fdafb8244e` / checks automatizados e browser fixture PASS / revisão independente e aceite pendentes. READY autorizado pelo pedido explícito para concluir todas as partes. [FAC-039](tickets/FAC-039.md), [FAC-040](tickets/FAC-040.md), [FAC-041](tickets/FAC-041.md) e [entrega](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Projetos/grants/execução/integrações privados, uso/quota, notificações/exportação/dados/transferência/encerramento, MFA/email/recuperação e planos/Stripe configuráveis. Catálogo comercial/SMTP/Stripe reais não definidos nem ativados; migrations somente em DB efêmero, nenhuma propriedade legada inferida. Não promover a DONE ou release comercial por esses checks.
+
+## FAC-036 — Instruções por arquivo Markdown
+
+READY autorizado pelo pedido de 2026-10-09; IMPLEMENTADO / AWAITING_HUMAN em worktree isolada feat/fac-036-instrucoes-md. Upload/substituição/download de instruções .md para agentes e skills; descrição apenas resumo, persistência JSON versionada compatível com registros anteriores. Revisão independente, browser, integração e aceite exato pendentes. [Ticket](tickets/configuracao/FAC-036-instrucoes-markdown.md) · [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+FAC-036, adendo 2026-10-24: integrado localmente à developer no merge `82bcfc7` (2026-10-24), com conflitos resolvidos sobre FAC-037: descrição e arquivo .md junto ao seletor IA/modelo. Browser em fixture descartável PASS (7 verificações, zero exceções) e checks pós-integração PASS. Sessão distinta da implementação revisou sem achados bloqueantes, mas também resolveu o merge: revisão independente formal continua NOT_RUN. AWAITING_HUMAN para aceite da revisão exata. [Revisão e verificação](../09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
+
+## Planejamento arquitetural — memória e decisões (2026-10-09)
+
+Pedido do responsável: oito planos e documentação didática, sem backlog detalhado nesta etapa. [Planos](planos-memoria-e-decisoes/00-README.md), [requisitos e pendências](planos-memoria-e-decisoes/01-decisoes-e-dependencias.md), [matriz](planos-memoria-e-decisoes/10-matriz-fluxo.md) e [entrega documental](../09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md). Estado: DOCUMENTADO / AWAITING_HUMAN para revisão exata; nenhum ticket de software promovido ou novo ID FAC criado. ARQ-MEM-001 é identificador documental desta análise, não ticket de implementação. Tech Lead define tickets posteriores após avaliação conjunta.
+
+ARQ-MEM-001, adendo 2026-10-24: documentação integrada localmente à developer no merge `05a9877`. Colisão de número com ADR-007 da conta (FAC-038) mantida por nome de arquivo, sem renumerar; decisão de numeração pendente do responsável. Estado DOCUMENTADO / AWAITING_HUMAN inalterado.

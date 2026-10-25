@@ -1,0 +1,340 @@
+diff --git a/apps/api/src/settings/settings.service.spec.ts b/apps/api/src/settings/settings.service.spec.ts
+index 3fed377..bc9654a 100644
+--- a/apps/api/src/settings/settings.service.spec.ts
++++ b/apps/api/src/settings/settings.service.spec.ts
+@@ -65,8 +65,25 @@ describe("SettingsService", () => {
+     });
+   });
+ 
+-  it("updates atomically with optimistic concurrency", async () => {
++  it("updates names atomically with optimistic concurrency and reads them back", async () => {
+     const configuration = createDefaultFactoryConfiguration();
++    configuration.assignments = configuration.assignments.map((agent) =>
++      agent.role === "DEVELOPER" ? { ...agent, nickname: "Alex" } : agent,
++    );
++    configuration.digitalAgents = [
++      {
++        id: crypto.randomUUID(),
++        name: "Designer",
++        nickname: "Sofia",
++        description: "",
++        instructions: "",
++        projectId: null,
++        installationId: null,
++        model: null,
++        skillIds: [],
++        enabled: true,
++      },
++    ];
+     const record = {
+       id: "global",
+       version: 2,
+@@ -84,9 +101,15 @@ describe("SettingsService", () => {
+     const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
+     const service = new SettingsService(prisma as never);
+ 
+-    await expect(service.update(1, configuration)).resolves.toMatchObject({ version: 2 });
++    await expect(service.update(1, configuration)).resolves.toMatchObject({
++      version: 2,
++      configuration,
++    });
+     expect(transaction.factorySettings.updateMany).toHaveBeenCalledWith(
+-      expect.objectContaining({ where: { id: "global", version: 1 } }),
++      expect.objectContaining({
++        where: { id: "global", version: 1 },
++        data: expect.objectContaining({ configuration }),
++      }),
+     );
+   });
+ 
+diff --git a/apps/web/src/PresetAgents.tsx b/apps/web/src/PresetAgents.tsx
+index 67a8189..f636d62 100644
+--- a/apps/web/src/PresetAgents.tsx
++++ b/apps/web/src/PresetAgents.tsx
+@@ -94,15 +94,18 @@ export function PresetAgents({
+             <button
+               type="button"
+               className="account-list-item"
+-              aria-label={`Ver agente ${roleLabels[agent.role]}`}
++              aria-label={`Ver agente ${agent.nickname || roleLabels[agent.role]}`}
+               onClick={(event) => {
+                 trigger.current = event.currentTarget;
+                 setSelected(agent.role);
+               }}
+             >
+-              <span className="provider-mark">{roleLabels[agent.role].slice(0, 1)}</span>
++              <span className="provider-mark">
++                {(agent.nickname || roleLabels[agent.role]).slice(0, 1).toUpperCase()}
++              </span>
+               <span className="account-list-name">
+-                <strong>{roleLabels[agent.role]}</strong>
++                <strong>{agent.nickname || roleLabels[agent.role]}</strong>
++                <span className="account-list-detail">Cargo: {roleLabels[agent.role]}</span>
+                 <span className="account-list-detail">Agente pré-configurado</span>
+                 <span className="account-list-detail">
+                   {agent.installationId && agent.model
+@@ -116,7 +119,7 @@ export function PresetAgents({
+                 type="checkbox"
+                 role="switch"
+                 aria-checked={agent.enabled}
+-                aria-label={`Ativar agente ${roleLabels[agent.role]}`}
++                aria-label={`Ativar agente ${agent.nickname || roleLabels[agent.role]}`}
+                 checked={agent.enabled}
+                 disabled={saving}
+                 onChange={(event) => void toggle(agent.role, event.target.checked)}
+@@ -135,7 +138,10 @@ export function PresetAgents({
+           onCancel={() => setSelected(null)}
+         >
+           <div className="account-dialog-heading">
+-            <h2 id={titleId}>{roleLabels[selected]}</h2>
++            <h2 id={titleId}>
++              {configuration.assignments.find((agent) => agent.role === selected)?.nickname ||
++                roleLabels[selected]}
++            </h2>
+             <button
+               type="button"
+               aria-label="Fechar informações do agente"
+@@ -144,6 +150,7 @@ export function PresetAgents({
+               ×
+             </button>
+           </div>
++          <p>Cargo: {roleLabels[selected]}</p>
+           <h3>Função do agente</h3>
+           <p>{roleInformation[selected].purpose}</p>
+           <h3>Participação no fluxo</h3>
+diff --git a/apps/web/src/SettingsPanel.tsx b/apps/web/src/SettingsPanel.tsx
+index 49501a9..88a6dbe 100644
+--- a/apps/web/src/SettingsPanel.tsx
++++ b/apps/web/src/SettingsPanel.tsx
+@@ -1420,11 +1420,25 @@ export function SettingsPanel({
+                   : "";
+               return (
+                 <SettingsModal
+-                  title={`Configurar ${roleLabels[assignment.role]}`}
++                  title={`Configurar ${assignment.nickname || roleLabels[assignment.role]}`}
+                   saving={saving}
+                   onClose={() => setEditingAssignment(null)}
+                   onSave={() => void saveAssignment()}
+                 >
++                  <label>
++                    Nome do agente
++                    <input
++                      autoComplete="off"
++                      placeholder="Ex.: Alex"
++                      value={assignment.nickname ?? ""}
++                      maxLength={100}
++                      onChange={(event) => updateAssignment({ nickname: event.target.value })}
++                    />
++                  </label>
++                  <label>
++                    Cargo na empresa
++                    <input value={roleLabels[assignment.role]} readOnly />
++                  </label>
+                   <label>
+                     Conta e modelo
+                     <select
+diff --git a/apps/web/src/TeamsPanel.tsx b/apps/web/src/TeamsPanel.tsx
+index 36daf6e..ace545c 100644
+--- a/apps/web/src/TeamsPanel.tsx
++++ b/apps/web/src/TeamsPanel.tsx
+@@ -164,12 +164,15 @@ export function TeamsPanel({
+               type="button"
+               className="account-list-item"
+               key={item.id}
+-              aria-label={`Editar agente ${item.name}`}
++              aria-label={`Editar agente ${item.nickname || item.name}`}
+               onClick={() => editAgent(item)}
+             >
+-              <span className="provider-mark">{item.name.slice(0, 1).toUpperCase()}</span>
++              <span className="provider-mark">
++                {(item.nickname || item.name).slice(0, 1).toUpperCase()}
++              </span>
+               <span className="account-list-name">
+-                <strong>{item.name}</strong>
++                <strong>{item.nickname || item.name}</strong>
++                <span className="account-list-detail">Cargo: {item.name}</span>
+                 <span className="account-list-detail">{item.description || "Sem descrição"}</span>
+                 <span className="account-list-detail">
+                   {projects.find((project) => project.id === item.projectId)?.name ??
+@@ -255,7 +258,7 @@ export function TeamsPanel({
+         <SettingsModal
+           title={
+             agents.some((item) => item.id === agent.id)
+-              ? `Editar agente ${agent.name}`
++              ? `Editar agente ${agent.nickname || agent.name}`
+               : "Novo agente"
+           }
+           saving={saving}
+@@ -267,6 +270,16 @@ export function TeamsPanel({
+         >
+           <label>
+             Nome do agente
++            <input
++              autoComplete="off"
++              placeholder="Ex.: Alex"
++              value={agent.nickname ?? ""}
++              onChange={(event) => setAgent({ ...agent, nickname: event.target.value })}
++              maxLength={100}
++            />
++          </label>
++          <label>
++            Cargo na empresa
+             <input
+               autoComplete="off"
+               value={agent.name}
+diff --git a/packages/contracts/src/index.ts b/packages/contracts/src/index.ts
+index 799e8d5..858e85e 100644
+--- a/packages/contracts/src/index.ts
++++ b/packages/contracts/src/index.ts
+@@ -582,6 +582,7 @@ export type EmployeeRole = z.infer<typeof employeeRoleSchema>;
+ export const agentAssignmentSchema = z
+   .object({
+     role: employeeRoleSchema,
++    nickname: z.string().trim().max(100).optional(),
+     enabled: z.boolean(),
+     installationId: z
+       .string()
+@@ -658,6 +659,7 @@ export type ProjectSkill = z.infer<typeof projectSkillSchema>;
+ export const digitalAgentSchema = z
+   .object({
+     id: z.uuid(),
++    nickname: z.string().trim().max(100).optional(),
+     name: z.string().trim().min(1).max(100),
+     description: z.string().trim().max(500),
+     instructions: z.string().trim().max(16_000),
+diff --git a/packages/contracts/src/teams.spec.ts b/packages/contracts/src/teams.spec.ts
+index 31bca26..041fc0c 100644
+--- a/packages/contracts/src/teams.spec.ts
++++ b/packages/contracts/src/teams.spec.ts
+@@ -60,6 +60,45 @@ describe("project skills and digital agents", () => {
+     expect(result.projectSkills).toBeUndefined();
+     expect(result.assignments).toHaveLength(6);
+   });
++  it("preserves optional nicknames separately from operational and custom job titles", () => {
++    const result = factoryConfigurationSchema.parse({
++      ...base,
++      assignments: base.assignments.map((item) => ({ ...item, nickname: " Alex " })),
++      digitalAgents: [{ ...agent, nickname: " Sofia " }],
++      projectSkills: [skill],
++    });
++    expect(result.assignments[1]).toMatchObject({ role: "DEVELOPER", nickname: "Alex" });
++    expect(result.digitalAgents?.[0]).toMatchObject({ name: "Designer", nickname: "Sofia" });
++    const reread = factoryConfigurationSchema.parse(JSON.parse(JSON.stringify(result)));
++    expect(reread).toEqual(result);
++  });
++  it("allows clearing nicknames and rejects invalid nicknames on both kinds of agent", () => {
++    for (const nickname of ["", "   ", "a".repeat(100)]) {
++      const result = factoryConfigurationSchema.parse({
++        ...base,
++        assignments: base.assignments.map((item) => ({ ...item, nickname })),
++        digitalAgents: [{ ...agent, nickname }],
++        projectSkills: [skill],
++      });
++      expect(result.assignments[0]?.nickname).toBe(nickname.trim());
++      expect(result.digitalAgents?.[0]?.nickname).toBe(nickname.trim());
++    }
++    for (const nickname of ["a".repeat(101), 42, null]) {
++      expect(
++        factoryConfigurationSchema.safeParse({
++          ...base,
++          assignments: base.assignments.map((item) => ({ ...item, nickname })),
++        }).success,
++      ).toBe(false);
++      expect(
++        factoryConfigurationSchema.safeParse({
++          ...base,
++          digitalAgents: [{ ...agent, nickname }],
++          projectSkills: [skill],
++        }).success,
++      ).toBe(false);
++    }
++  });
+   it("accepts more than six registered agents and validates skill content in runtime", () => {
+     const agents = Array.from({ length: 25 }, (_, index) => ({
+       ...agent,
+diff --git a/apps/web/src/agent-names.spec.ts b/apps/web/src/agent-names.spec.ts
+new file mode 100644
+index 0000000..ab1a651
+--- /dev/null
++++ b/apps/web/src/agent-names.spec.ts
+@@ -0,0 +1,80 @@
++import type { FactoryConfiguration } from "@le-fabrique/contracts";
++import { createElement } from "react";
++import { renderToStaticMarkup } from "react-dom/server";
++import { expect, it } from "vitest";
++import { PresetAgents } from "./PresetAgents";
++import { TeamsPanel } from "./TeamsPanel";
++
++const configuration = {
++  assignments: [{ role: "DEVELOPER", nickname: "Alex", enabled: false }],
++  digitalAgents: [
++    {
++      id: "designer",
++      name: "Designer",
++      nickname: "Sofia",
++      description: "",
++      projectId: null,
++      skillIds: [],
++      enabled: true,
++    },
++  ],
++  projectSkills: [],
++} as unknown as FactoryConfiguration;
++
++it("shows agent names and job titles separately, including accessible preset actions", () => {
++  const preset = renderToStaticMarkup(
++    createElement(PresetAgents, {
++      configuration,
++      saving: false,
++      onSave: async () => true,
++      onConfigure: () => {},
++      configuring: false,
++    }),
++  );
++  expect(preset).toContain("<strong>Alex</strong>");
++  expect(preset).toContain("Cargo: Developer");
++  expect(preset).toContain('aria-label="Ver agente Alex"');
++  expect(preset).toContain('aria-label="Ativar agente Alex"');
++  const custom = renderToStaticMarkup(
++    createElement(TeamsPanel, {
++      configuration,
++      projects: [],
++      saving: false,
++      onSave: async () => true,
++    }),
++  );
++  expect(custom).toContain("<strong>Sofia</strong>");
++  expect(custom).toContain("Cargo: Designer");
++  expect(custom).toContain('aria-label="Editar agente Sofia"');
++});
++
++it("keeps legacy job titles visible when the name is absent or cleared", () => {
++  for (const nickname of [undefined, ""]) {
++    const legacy = {
++      ...configuration,
++      assignments: configuration.assignments.map((agent) => ({ ...agent, nickname })),
++      digitalAgents: configuration.digitalAgents?.map((agent) => ({ ...agent, nickname })),
++    };
++    expect(
++      renderToStaticMarkup(
++        createElement(PresetAgents, {
++          configuration: legacy,
++          saving: false,
++          onSave: async () => true,
++          onConfigure: () => {},
++          configuring: false,
++        }),
++      ),
++    ).toContain("<strong>Developer</strong>");
++    expect(
++      renderToStaticMarkup(
++        createElement(TeamsPanel, {
++          configuration: legacy,
++          projects: [],
++          saving: false,
++          onSave: async () => true,
++        }),
++      ),
++    ).toContain("<strong>Designer</strong>");
++  }
++});

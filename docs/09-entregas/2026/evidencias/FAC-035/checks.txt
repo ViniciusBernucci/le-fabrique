@@ -1,0 +1,22 @@
+# Checks FAC-035
+
+2026-10-08, Europe/Berlin; base 9786910 e diff codigo.patch.
+
+- Contratos: 5 arquivos / 53 testes PASS.
+- Web: 23 arquivos / 64 testes PASS antes da correção exclusiva da lista de skills. Revalidação final abaixo.
+- API settings: 1 arquivo / 8 testes PASS (Prisma simulado).
+- Worker router: 1 arquivo / 15 testes PASS.
+- Lint: exit 0; aviso useOptionalChain preexistente em apps/api/src/orchestration/run-delivery.service.ts:209.
+- Primeiro typecheck: FAIL em TeamsPanel.tsx por nickname numa skill; corrigido sem alterar skills.
+- Browser/HTTP/PostgreSQL real/revisão independente: NOT_RUN.
+
+Verificação final:
+- npm run typecheck: PASS, exit 0, monorepo + scripts + integração.
+- npm run build: PASS, exit 0, contratos/runtime/API/worker/web.
+- npm run test -w @le-fabrique/web: PASS, 64 testes na revisão final.
+- npx biome check nos sete arquivos TS/TSX alterados: PASS, sem avisos.
+- git diff --check: PASS.
+- git apply --reverse --check codigo.patch: PASS.
+- python3 scripts/validar-documentacao.py: PASS, zero erros.
+
+Autorrevisão do diff: campo nickname optional/trim/max100, roles e IDs preservados, rascunho/modal existentes reusados, lista de skills preservada. Não constitui revisão independente.

@@ -2,6 +2,26 @@
 
 # Changelog
 
+## 2026-10-24 — Integração FAC-036 e ARQ-MEM-001
+
+FAC-036 e ARQ-MEM-001 integrados à developer local; FAC-036 verificado em browser com fixture descartável (7 verificações PASS). Dois ADR-007 coexistem até decisão de numeração. [Verificação FAC-036](09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
+
+## 2026-10-09 — FAC-038
+
+Primeira versão da conta de usuário: cadastro/login individual, perfil/preferências, conta/equipe, convites privados, papéis, sessões/senha e auditoria. Plano/uso sem valores comerciais inventados. Cookie humano separado do controle global; migration testada apenas em PostgreSQL temporário. [Entrega](09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md).
+
+## 2026-10-09 — PLAN-ADM-001
+
+Proposta focal de painel administrativo da conta do usuário; painel global reservado para depois. Perfil, organização, convites, papéis/grants, segurança, auditoria, uso e distinção entre plano da fábrica e assinatura IA. Estado observado e evolução no handoff existente; decisões comerciais pendentes. Nenhum software implementado. [Registro](09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
+
+## 2026-10-09 — FAC-036
+
+Área de adicionar/substituir/baixar .md nos agentes e skills; descrição breve separada, conteúdo/nome persistidos na configuração versionada. IMPLEMENTADO / AWAITING_HUMAN em worktree isolada. [Entrega](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+## 2026-10-09 — ARQ-MEM-001
+
+Oito planos arquiteturais e guias didáticos de memória/contexto/decisões, contratos propostos, matriz com 145 operações/56 exceções/20 candidatas JEV e exceção específica JEV autorizada. Implementação futura; nenhum runtime ativado. [Entrega](09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md).
+
 ## 2026-10-07 — FAC-032
 
 Menu principal limitado a Painel, Projetos, Agentes de IA, Escritório, Usuários e Configurações. 46 testes web, typecheck, build e lint PASS. [Entrega](09-entregas/2026/2026-10-07-FAC-032-menu-inicial-reduzido.md).
@@ -454,3 +474,26 @@ Quadro/lista com criação e edição manual, responsáveis por projeto, priorid
 ## 2026-10-07 — FAC-034 — Centro de Comando (Europe/Berlin)
 
 Tema HUD global em apps/web: home com núcleo SVG em CSS, relógio, sidebar/trilho; login, Projetos/Operação, Tarefas, Configurações e modais com tokens comuns. Preservados navegação, aria, mocks, APIs e regras. Base developer = origin/main de5dbfa. Implementação em diff, commits bloqueados por .git somente leitura; sem push/merge. Checks reais e QA visual pendente na [entrega](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md); AWAITING_HUMAN.
+
+## 2026-10-08 — FAC-035: nome e cargo dos agentes (Europe/Berlin)
+
+Configurações → Equipes permite apelidar agentes pré-configurados e personalizados. Nome aparece em destaque e identificação anterior permanece como cargo; nickname opcional persiste no JSON versionado sem migration. Código bc38715; fechamento e integração local à developer autorizados pelo responsável; sem push/deploy. AWAITING_HUMAN. [Entrega](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+## 2026-10-09 — FAC-035: preparação para salvar nomes
+
+`npm run dev` recompila contratos/runtime antes de iniciar os serviços, evitando contrato CommonJS antigo que rejeita nickname. Reprodução e checks locais PASS; browser e sessão real do usuário não validados. [Correção](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## 2026-10-09 — FAC-037 (cadastro/atribuição)
+
+- Cadastro de IA começa pela escolha chave de API ou assinatura CLI; API possui segredo criptografado fora da configuração pública.
+- Pré-configurados e personalizados escolhem IA cadastrada/habilitada e seu modelo em campos separados.
+- Login/evidência/adapter CLI recusam modo API. Sem inferência API, migration aplicada, gastos, integração na developer ou deploy nesta entrega.
+- [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+### FAC-037 — integração e limpeza local autorizadas
+
+Commit `67ce0a0` integrado à developer por fast-forward. Removidas duas worktrees limpas/integradas e 72 branches locais integradas. FAC-036 com alterações não commitadas preservada. Sem push/deploy/migration; [adendo de entrega](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#adendo--commit-integração-e-limpeza-autorizados).
+
+## 2026-10-09 — FAC-039–041 (complemento da conta)
+
+Projetos/grants e execução da conta, integração privada/roteamento, métricas reais/quota/reservas, notificações/exportação/dados fiscais/transferência/encerramento, MFA/email/recuperação e adaptadores de planos/SMTP/Stripe. Nenhum cadastro comercial/preço real, email externo, gasto/provider, migration ativa ou release inferido. [Entrega e checks](09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md); revisão independente/aceite pendentes.

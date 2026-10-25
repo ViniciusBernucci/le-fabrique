@@ -7,6 +7,8 @@ import type {
 import { factoryConfigurationSchema } from "@le-fabrique/contracts";
 import type { KeyboardEvent, ReactNode } from "react";
 import { useId, useState } from "react";
+import { AgentModelSelector } from "./AgentModelSelector";
+import { MarkdownInstructions } from "./MarkdownInstructions";
 import { SettingsModal } from "./SettingsModal";
 import { removeProjectSkill, upsertProjectSkill } from "./teams-view-model";
 
@@ -31,6 +33,7 @@ export function TeamsPanel({
   const [agent, setAgent] = useState<DigitalAgent | null>(null);
   const [skill, setSkill] = useState<ProjectSkill | null>(null);
   const [error, setError] = useState("");
+  const [readingInstructions, setReadingInstructions] = useState(false);
   const prefix = useId();
   const selectedProject =
     projects.find((project) => project.id === projectId) ??
@@ -164,12 +167,15 @@ export function TeamsPanel({
               type="button"
               className="account-list-item"
               key={item.id}
-              aria-label={`Editar agente ${item.name}`}
+              aria-label={`Editar agente ${item.nickname || item.name}`}
               onClick={() => editAgent(item)}
             >
-              <span className="provider-mark">{item.name.slice(0, 1).toUpperCase()}</span>
+              <span className="provider-mark">
+                {(item.nickname || item.name).slice(0, 1).toUpperCase()}
+              </span>
               <span className="account-list-name">
-                <strong>{item.name}</strong>
+                <strong>{item.nickname || item.name}</strong>
+                <span className="account-list-detail">Cargo: {item.name}</span>
                 <span className="account-list-detail">{item.description || "Sem descrição"}</span>
                 <span className="account-list-detail">
                   {projects.find((project) => project.id === item.projectId)?.name ??
@@ -255,10 +261,10 @@ export function TeamsPanel({
         <SettingsModal
           title={
             agents.some((item) => item.id === agent.id)
-              ? `Editar agente ${agent.name}`
+              ? `Editar agente ${agent.nickname || agent.name}`
               : "Novo agente"
           }
-          saving={saving}
+          saving={saving || readingInstructions}
           onClose={() => {
             setAgent(null);
             setError("");
@@ -269,6 +275,16 @@ export function TeamsPanel({
             Nome do agente
             <input
               autoComplete="off"
+              placeholder="Ex.: Alex"
+              value={agent.nickname ?? ""}
+              onChange={(event) => setAgent({ ...agent, nickname: event.target.value })}
+              maxLength={100}
+            />
+          </label>
+          <label>
+            Cargo na empresa
+            <input
+              autoComplete="off"
               value={agent.name}
               onChange={(event) => setAgent({ ...agent, name: event.target.value })}
               required
@@ -276,7 +292,7 @@ export function TeamsPanel({
             />
           </label>
           <label>
-            Descrição do agente
+            Descrição breve do agente
             <textarea
               value={agent.description}
               onChange={(event) => setAgent({ ...agent, description: event.target.value })}
@@ -306,41 +322,24 @@ export function TeamsPanel({
               ))}
             </select>
           </label>
-          <label>
-            Conta e modelo do agente
-            <select
-              value={
-                agent.installationId && agent.model ? `${agent.installationId}::${agent.model}` : ""
-              }
-              onChange={(event) => {
-                const [installationId, ...modelParts] = event.target.value.split("::");
-                setAgent({
-                  ...agent,
-                  installationId: installationId || null,
-                  model: modelParts.join("::") || null,
-                });
-              }}
-            >
-              <option value="">Sem conta e modelo</option>
-              {configuration.installations
-                .filter((item) => item.enabled)
-                .flatMap((item) =>
-                  item.models.map((model) => (
-                    <option key={`${item.id}::${model}`} value={`${item.id}::${model}`}>
-                      {item.label} · {model}
-                    </option>
-                  )),
-                )}
-            </select>
-          </label>
-          <label>
-            Instruções do agente
-            <textarea
-              value={agent.instructions}
-              onChange={(event) => setAgent({ ...agent, instructions: event.target.value })}
-              maxLength={16_000}
-            />
-          </label>
+          <AgentModelSelector
+            installations={configuration.installations}
+            installationId={agent.installationId}
+            model={agent.model}
+            onChange={(selection) => setAgent({ ...agent, ...selection })}
+          />
+          <MarkdownInstructions
+            key={agent.id}
+            label="Arquivo de instruções do agente"
+            instructions={agent.instructions}
+            filename={agent.instructionsFilename}
+            fallbackFilename="AGENTS.md"
+            maxCharacters={16_000}
+            onBusyChange={setReadingInstructions}
+            onChange={(instructions, instructionsFilename) =>
+              setAgent((current) => current && { ...current, instructions, instructionsFilename })
+            }
+          />
           <fieldset className="team-skill-picker">
             <legend>Skills do projeto</legend>
             {skills
@@ -401,7 +400,7 @@ export function TeamsPanel({
               ? `Editar skill ${skill.name}`
               : "Registrar skill"
           }
-          saving={saving}
+          saving={saving || readingInstructions}
           onClose={() => {
             setSkill(null);
             setError("");
@@ -433,22 +432,25 @@ export function TeamsPanel({
             />
           </label>
           <label>
-            Descrição da skill
+            Descrição breve da skill
             <textarea
               value={skill.description}
               onChange={(event) => setSkill({ ...skill, description: event.target.value })}
               maxLength={500}
             />
           </label>
-          <label>
-            Instruções da skill
-            <textarea
-              value={skill.instructions}
-              onChange={(event) => setSkill({ ...skill, instructions: event.target.value })}
-              required
-              maxLength={64_000}
-            />
-          </label>
+          <MarkdownInstructions
+            key={skill.id}
+            label="Arquivo de instruções da skill"
+            instructions={skill.instructions}
+            filename={skill.instructionsFilename}
+            fallbackFilename="SKILL.md"
+            maxCharacters={64_000}
+            onBusyChange={setReadingInstructions}
+            onChange={(instructions, instructionsFilename) =>
+              setSkill((current) => current && { ...current, instructions, instructionsFilename })
+            }
+          />
           {error && <p role="alert">{error}</p>}
           {skills.some((item) => item.id === skill.id) && (
             <button

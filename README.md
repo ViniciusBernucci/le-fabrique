@@ -6,6 +6,10 @@ React + TypeScript + Vite; API NestJS; worker Node/TypeScript separado; PostgreS
 
 Código existe no monorepo. Tenancy/RLS/broker são propostas posteriores, sem eficácia comprovada. [Estado conferido em a2cc5e0](docs/02-arquitetura/01-as-is.md) distingue código, proposta e validação operacional. Aceites FAC continuam no [backlog real](docs/08-desenvolvimento/09-backlog.md); [changelog](docs/04-CHANGELOG.md) preserva cronologia.
 
+## Conta do usuário
+
+O avatar Minha conta e o menu Usuários abrem perfil, conta/equipe, convites, projetos/permissões, integrações privadas, notificações, dados, plano e segurança individuais. [Feature FAC-038](docs/04-features/01-control-settings.md#painel-da-conta-do-usuário--fac-038) e [rollout](docs/07-operacao/01-deploy.md#rollout-da-camada-de-conta--fac-038). Migration aditiva preparada; não aplicada no banco ativo nesta entrega. Rotas globais anteriores continuam sob token administrativo separado.
+
 ## Desenvolvimento
 
 [Setup e comandos reais](docs/08-desenvolvimento/01-ambiente-local.md). Requer Node 22.20.0, npm 10.9.3 e Docker Compose. Checks de software: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. Migrations/ativação são ações explícitas separadas; não são parte da reorganização.

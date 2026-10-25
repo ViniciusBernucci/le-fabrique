@@ -43,6 +43,7 @@ export function resolveAgentRoute(
         (item) =>
           item.id === target.installationId &&
           item.enabled &&
+          item.authMode === "SUBSCRIPTION_CLI" &&
           item.state === "AVAILABLE" &&
           !!runtimeProviders[item.provider],
       ),

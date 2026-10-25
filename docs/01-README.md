@@ -39,6 +39,10 @@ Features descrevem comportamento e critérios. FAC registra entregas e aceites r
 
 Uma VPS é ponto único de falha; backup fica fora dela. Um executor global inicial e um writer por workspace. Container comum é perfil de piloto próprio com dados sintéticos; código hostil de terceiros requer avaliação de perfil mais forte. Mediação exclusiva de tools pelo broker é condição a provar: se o cliente não suportar, provider fica desabilitado. Não existe garantia universal contra kernel/root comprometido.
 
+## Conta do usuário
+
+FAC-038–041 adicionam cadastro/login e painel Minha conta, acessível pelo avatar ou menu Usuários: perfil, equipe, convites, projetos/permissões/execuções, integrações privadas, segurança/MFA, notificações, dados/exportação, plano/uso e atividade. Essa camada não concede acesso automático aos projetos/configurações globais descritos acima; sua autorização usa cookie próprio. [Funcionamento e limites](04-features/01-control-settings.md#painel-da-conta-do-usuário--fac-038). Implantação/aceite pendentes.
+
 ## Onde continuar
 
 - [Como ler o sistema](00-LEIA-ME-PRIMEIRO.md): trilhas por objetivo.
@@ -59,3 +63,7 @@ Este manual resume e aponta fontes canônicas. Contratos detalhados não devem s
 - [Planejamento v2.1](99-historico/originais/sources/README.md)
 - [Proposta multi-tenant](99-historico/originais/output/le-fabrique-multitenant/README.md)
 - [Contratos v3](99-historico/originais/output/le-fabrique-multitenant/ESPEC-MVP.md)
+
+## Entender memória e decisões antes de avaliar os planos
+
+[Guia didático passo a passo](02-arquitetura/memoria-e-decisoes/00-README.md) explica as oito capacidades propostas. [Planos separados](08-desenvolvimento/planos-memoria-e-decisoes/00-README.md) distinguem próxima versão e evolução futura. Nenhuma nova integração foi implementada por esse planejamento.

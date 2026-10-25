@@ -14,6 +14,7 @@ import type {
   ProviderVerification,
 } from "@le-fabrique/contracts";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { AgentModelSelector } from "./AgentModelSelector";
 import { type CodexLoginTab, openCodexLoginTab } from "./codex-login-tab";
 import {
   approveGithubPullRequest,
@@ -37,10 +38,12 @@ import {
   updateFactorySettings,
 } from "./control-api";
 import { HandoffAlternatives } from "./HandoffAlternatives";
+import { MarkdownInstructions } from "./MarkdownInstructions";
 import { PresetAgents } from "./PresetAgents";
 import { SettingsModal } from "./SettingsModal";
 import {
   configurationSummary,
+  installationProviderLabel,
   mergeObservedInstallations,
   providerLabels,
   providerVerificationFeedback,
@@ -67,6 +70,7 @@ export function SettingsPanel({
   projects = [],
   activeProjectId,
 }: SettingsPanelProps) {
+  const [readingInstructions, setReadingInstructions] = useState(false);
   const [activeTab, setActiveTab] = useState<"accounts" | "integrations" | "teams">("accounts");
   const [settings, setSettings] = useState<FactorySettings | null>(null);
   const [draft, setDraft] = useState<FactoryConfiguration | null>(null);
@@ -80,6 +84,12 @@ export function SettingsPanel({
   const initiatedLogins = useRef(new Set<string>());
   const [saving, setSaving] = useState(false);
   const [editingInstallation, setEditingInstallation] = useState<ProviderInstallation | null>(null);
+  const [choosingAuthMode, setChoosingAuthMode] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const editingInstallationId = editingInstallation?.id;
+  useEffect(() => {
+    if (!editingInstallationId) setApiKey("");
+  }, [editingInstallationId]);
   const [editingAssignment, setEditingAssignment] = useState<AgentAssignment | null>(null);
   const [editingGithub, setEditingGithub] = useState<FactoryConfiguration["github"] | null>(null);
 
@@ -359,14 +369,21 @@ export function SettingsPanel({
       ),
     );
     if (
-      await save({
-        ...draft,
-        installations,
-        assignments,
-        digitalAgents: pruneTeamAgentInstallations(draft.digitalAgents, installations),
-      })
-    )
+      await save(
+        {
+          ...draft,
+          installations,
+          assignments,
+          digitalAgents: pruneTeamAgentInstallations(draft.digitalAgents, installations),
+        },
+        updated.authMode === "API_KEY" && apiKey.trim()
+          ? [{ installationId: updated.id, key: apiKey.trim() }]
+          : undefined,
+      )
+    ) {
+      setApiKey("");
       setEditingInstallation(null);
+    }
   }
 
   function updateAssignment(patch: Partial<AgentAssignment>) {
@@ -390,16 +407,18 @@ export function SettingsPanel({
     if (await save({ ...draft, github: editingGithub })) setEditingGithub(null);
   }
 
-  function addInstallation() {
+  function addInstallation(authMode: ProviderInstallation["authMode"]) {
     if (!draft || draft.installations.length >= 20) return;
+    setChoosingAuthMode(false);
+    setApiKey("");
     setEditingInstallation({
       id: `account-${crypto.randomUUID()}`,
       provider: "CODEX",
-      label: "Nova conta Codex",
+      label: authMode === "API_KEY" ? "Nova conta OpenAI" : "Nova conta Codex",
       executable: "codex",
       enabled: false,
       state: "AUTH_REQUIRED",
-      authMode: "SUBSCRIPTION_CLI",
+      authMode,
       models: [],
       defaultModel: null,
     });
@@ -436,13 +455,14 @@ export function SettingsPanel({
     );
   }
 
-  async function save(configuration = draft) {
+  async function save(configuration = draft, apiKeys?: { installationId: string; key: string }[]) {
     if (!settings || !configuration) return false;
     setSaving(true);
     try {
       const updated = await updateFactorySettings(token, {
         expectedVersion: settings.version,
         configuration,
+        ...(apiKeys?.length ? { apiKeys } : {}),
       });
       setSettings(updated);
       setDraft(structuredClone(updated.configuration));
@@ -694,14 +714,12 @@ export function SettingsPanel({
               <p className="section-index">01</p>
               <h2>Contas de IA</h2>
             </div>
-            <p>
-              Clientes oficiais por assinatura. Modelos só devem ser incluídos após observação real.
-            </p>
+            <p>Cadastre uma chave de API ou conecte seu plano de assinatura via CLI.</p>
           </div>
           <button
             className="secondary-action"
             type="button"
-            onClick={addInstallation}
+            onClick={() => setChoosingAuthMode(true)}
             disabled={draft.installations.length >= 20}
           >
             + Adicionar conta
@@ -726,7 +744,8 @@ export function SettingsPanel({
                 <span className="account-list-name">
                   <strong>{installation.label}</strong>
                   <span className="account-list-detail">
-                    {providerLabels[installation.provider]} ·{" "}
+                    {installationProviderLabel(installation)} ·{" "}
+                    {installation.authMode === "API_KEY" ? "API" : "Assinatura CLI"} ·{" "}
                     {installation.enabled ? "Habilitada" : "Desabilitada"}
                   </span>
                 </span>
@@ -737,6 +756,31 @@ export function SettingsPanel({
               </button>
             ))}
           </div>
+          {choosingAuthMode && (
+            <SettingsModal
+              title="Cadastrar integração de IA"
+              saving={false}
+              onClose={() => setChoosingAuthMode(false)}
+              onSave={() => {}}
+              showSave={false}
+            >
+              <p>Escolha como conectar a IA antes de preencher o cadastro.</p>
+              <button
+                type="button"
+                className="secondary-action"
+                onClick={() => addInstallation("API_KEY")}
+              >
+                Cadastrar chave de API
+              </button>
+              <button
+                type="button"
+                className="secondary-action"
+                onClick={() => addInstallation("SUBSCRIPTION_CLI")}
+              >
+                Cadastrar plano de assinatura (CLI)
+              </button>
+            </SettingsModal>
+          )}
           {editingInstallation &&
             (() => {
               const installation = {
@@ -868,7 +912,7 @@ export function SettingsPanel({
                       {providerLabels[installation.provider].slice(0, 1)}
                     </div>
                     <div>
-                      <h3>{providerLabels[installation.provider]}</h3>
+                      <h3>{installationProviderLabel(installation)}</h3>
                       <span>{installation.authMode}</span>
                     </div>
                     <span className={`status status--${installation.state.toLowerCase()}`}>
@@ -885,11 +929,18 @@ export function SettingsPanel({
                         })
                       }
                     >
-                      {Object.entries(providerLabels).map(([provider, label]) => (
-                        <option key={provider} value={provider}>
-                          {label}
-                        </option>
-                      ))}
+                      {Object.entries(providerLabels)
+                        .filter(
+                          ([provider]) =>
+                            installation.authMode !== "API_KEY" || provider !== "ANTIGRAVITY",
+                        )
+                        .map(([provider, label]) => (
+                          <option key={provider} value={provider}>
+                            {installation.authMode === "API_KEY" && provider === "CODEX"
+                              ? "OpenAI"
+                              : label}
+                          </option>
+                        ))}
                     </select>
                   </label>
                   <label>
@@ -899,13 +950,35 @@ export function SettingsPanel({
                       onChange={(event) => updateInstallation({ label: event.target.value })}
                     />
                   </label>
-                  <label>
-                    Executável
-                    <input
-                      value={installation.executable}
-                      onChange={(event) => updateInstallation({ executable: event.target.value })}
-                    />
-                  </label>
+                  {installation.authMode === "API_KEY" ? (
+                    <label>
+                      Chave de API
+                      <input
+                        type="password"
+                        autoComplete="new-password"
+                        value={apiKey}
+                        onChange={(event) => setApiKey(event.target.value)}
+                        maxLength={4096}
+                        required={
+                          !settings.configuration.installations.some(
+                            (item) =>
+                              item.id === installation.id &&
+                              item.authMode === "API_KEY" &&
+                              item.provider === installation.provider,
+                          )
+                        }
+                        placeholder="Cole a chave; em uma conta salva, deixe vazio para mantê-la"
+                      />
+                    </label>
+                  ) : (
+                    <label>
+                      Executável
+                      <input
+                        value={installation.executable}
+                        onChange={(event) => updateInstallation({ executable: event.target.value })}
+                      />
+                    </label>
+                  )}
                   <label>
                     Modelos permitidos, um por linha
                     <textarea
@@ -952,75 +1025,85 @@ export function SettingsPanel({
                     />
                     <span>Disponível para atribuição</span>
                   </label>
-                  <button
-                    className="secondary-action account-action"
-                    type="button"
-                    disabled={
-                      saving ||
-                      requestingVerification !== null ||
-                      verifications.some(
-                        (item) =>
-                          item.installationId === installation.id &&
-                          ["PENDING", "RUNNING"].includes(item.status),
-                      ) ||
-                      !settings.configuration.installations.some(
-                        (item) => item.id === installation.id,
-                      )
-                    }
-                    onClick={() => verify(installation.id)}
-                  >
-                    {requestingVerification === installation.id
-                      ? "Enviando…"
-                      : verifications.some(
+                  {installation.authMode === "SUBSCRIPTION_CLI" ? (
+                    <>
+                      <button
+                        className="secondary-action account-action"
+                        type="button"
+                        disabled={
+                          saving ||
+                          requestingVerification !== null ||
+                          verifications.some(
                             (item) =>
                               item.installationId === installation.id &&
                               ["PENDING", "RUNNING"].includes(item.status),
+                          ) ||
+                          !settings.configuration.installations.some(
+                            (item) => item.id === installation.id,
                           )
-                        ? "Verificação em andamento…"
-                        : "Verificar conta e modelos"}
-                  </button>
-                  {settings.configuration.installations.some(
-                    (item) => item.id === installation.id && item.enabled,
-                  ) && installation.state === "AUTH_REQUIRED" ? (
-                    <button
-                      className="secondary-action account-action"
-                      type="button"
-                      onClick={() => connect(installation.id)}
-                      disabled={
-                        connectingInstallation !== null ||
-                        onboardingSessions.some(
-                          (item) =>
-                            item.installationId === installation.id &&
-                            ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
-                        )
-                      }
-                    >
-                      {installation.provider === "ANTIGRAVITY"
-                        ? "Conectar conta Google"
-                        : `Conectar assinatura ${providerLabels[installation.provider]}`}
-                    </button>
-                  ) : null}
-                  {installation.provider === "CLAUDE" ? (
+                        }
+                        onClick={() => verify(installation.id)}
+                      >
+                        {requestingVerification === installation.id
+                          ? "Enviando…"
+                          : verifications.some(
+                                (item) =>
+                                  item.installationId === installation.id &&
+                                  ["PENDING", "RUNNING"].includes(item.status),
+                              )
+                            ? "Verificação em andamento…"
+                            : "Verificar conta e modelos"}
+                      </button>
+                      {settings.configuration.installations.some(
+                        (item) => item.id === installation.id && item.enabled,
+                      ) && installation.state === "AUTH_REQUIRED" ? (
+                        <button
+                          className="secondary-action account-action"
+                          type="button"
+                          onClick={() => connect(installation.id)}
+                          disabled={
+                            connectingInstallation !== null ||
+                            onboardingSessions.some(
+                              (item) =>
+                                item.installationId === installation.id &&
+                                ["PENDING", "RUNNING", "AWAITING_USER"].includes(item.status),
+                            )
+                          }
+                        >
+                          {installation.provider === "ANTIGRAVITY"
+                            ? "Conectar conta Google"
+                            : `Conectar assinatura ${providerLabels[installation.provider]}`}
+                        </button>
+                      ) : null}
+                      {installation.provider === "CLAUDE" ? (
+                        <p>
+                          Conecte sua assinatura na aba oficial; se o navegador apresentar um
+                          código, cole-o neste modal. Os modelos Claude são informados no campo
+                          acima; o status oficial não fornece um catálogo.
+                        </p>
+                      ) : null}
+                      {installation.provider === "CODEX" ? (
+                        <p>
+                          Salve e habilite a conta, conecte sua assinatura e clique em Verificar
+                          conta e modelos para importar o catálogo oficial. Os modelos ficarão
+                          disponíveis nos funcionários digitais.
+                        </p>
+                      ) : null}
+                      {installation.provider === "ANTIGRAVITY" ? (
+                        <p>
+                          Conecte sua conta Google pelo fluxo oficial; se solicitado, devolva o
+                          código ao modal. A confirmação depende de armazenamento seguro da sessão
+                          no cliente. Integração de execução ainda indisponível.
+                        </p>
+                      ) : null}
+                    </>
+                  ) : (
                     <p>
-                      Conecte sua assinatura na aba oficial; se o navegador apresentar um código,
-                      cole-o neste modal. Os modelos Claude são informados no campo acima; o status
-                      oficial não fornece um catálogo.
+                      Chave armazenada criptografada e nunca devolvida ao painel. O cadastro permite
+                      atribuir IA e modelo; a execução por API ainda não está disponível neste
+                      runtime.
                     </p>
-                  ) : null}
-                  {installation.provider === "CODEX" ? (
-                    <p>
-                      Salve e habilite a conta, conecte sua assinatura e clique em Verificar conta e
-                      modelos para importar o catálogo oficial. Os modelos ficarão disponíveis nos
-                      funcionários digitais.
-                    </p>
-                  ) : null}
-                  {installation.provider === "ANTIGRAVITY" ? (
-                    <p>
-                      Conecte sua conta Google pelo fluxo oficial; se solicitado, devolva o código
-                      ao modal. A confirmação depende de armazenamento seguro da sessão no cliente.
-                      Integração de execução ainda indisponível.
-                    </p>
-                  ) : null}
+                  )}
                   <button
                     className="remove-action"
                     type="button"
@@ -1335,9 +1418,20 @@ export function SettingsPanel({
             </div>
             <p>Modelos configurados por conta para uso nas equipes.</p>
           </div>
+          <button
+            type="button"
+            className="secondary-action"
+            disabled={draft.installations.length >= 20}
+            onClick={() => {
+              setActiveTab("accounts");
+              setChoosingAuthMode(true);
+            }}
+          >
+            + Cadastrar integração de IA
+          </button>
           <div className="account-list">
             {draft.installations.length === 0 && (
-              <p className="muted">Cadastre uma conta na aba Contas para configurar os modelos.</p>
+              <p className="muted">Cadastre uma integração para configurar os modelos.</p>
             )}
             {draft.installations.map((installation) => (
               <button
@@ -1374,16 +1468,21 @@ export function SettingsPanel({
         <section className="panel safety-card">
           <p className="section-index">POLÍTICA FINANCEIRA</p>
           <h2>Proteções ativas</h2>
-          {["API paga", "Extra usage", "Créditos pagos", "Recarga automática", "Fallback pago"].map(
-            (label) => (
-              <div className="safety-row" key={label}>
-                <span>{label}</span>
-                <strong>DESLIGADO</strong>
-              </div>
-            ),
-          )}
+          {[
+            "Execução paga via API",
+            "Extra usage",
+            "Créditos pagos",
+            "Recarga automática",
+            "Fallback pago",
+          ].map((label) => (
+            <div className="safety-row" key={label}>
+              <span>{label}</span>
+              <strong>DESLIGADO</strong>
+            </div>
+          ))}
           <p className="security-note">
-            Estas proteções são fixas neste MVP e não podem ser ativadas por esta tela.
+            Cadastrar uma chave de API não ativa execução paga. Extras, recarga e fallback pago
+            permanecem desativados.
           </p>
         </section>
       </div>
@@ -1414,41 +1513,53 @@ export function SettingsPanel({
           {editingAssignment &&
             (() => {
               const assignment = editingAssignment;
-              const selection =
-                assignment.installationId && assignment.model
-                  ? `${assignment.installationId}::${assignment.model}`
-                  : "";
               return (
                 <SettingsModal
-                  title={`Configurar ${roleLabels[assignment.role]}`}
-                  saving={saving}
+                  title={`Configurar ${assignment.nickname || roleLabels[assignment.role]}`}
+                  saving={saving || readingInstructions}
                   onClose={() => setEditingAssignment(null)}
                   onSave={() => void saveAssignment()}
                 >
                   <label>
-                    Conta e modelo
-                    <select
-                      value={selection}
-                      onChange={(event) => {
-                        const [installationId, ...modelParts] = event.target.value.split("::");
-                        updateAssignment({
-                          installationId: installationId || null,
-                          model: modelParts.join("::") || null,
-                        });
-                      }}
-                    >
-                      <option value="">Sem atribuição</option>
-                      {draft.installations
-                        .filter((item) => item.enabled)
-                        .flatMap((item) =>
-                          item.models.map((model) => (
-                            <option key={`${item.id}:${model}`} value={`${item.id}::${model}`}>
-                              {item.label} · {model}
-                            </option>
-                          )),
-                        )}
-                    </select>
+                    Nome do agente
+                    <input
+                      autoComplete="off"
+                      placeholder="Ex.: Alex"
+                      value={assignment.nickname ?? ""}
+                      maxLength={100}
+                      onChange={(event) => updateAssignment({ nickname: event.target.value })}
+                    />
                   </label>
+                  <label>
+                    Cargo na empresa
+                    <input value={roleLabels[assignment.role]} readOnly />
+                  </label>
+                  <label>
+                    Descrição breve do agente
+                    <textarea
+                      value={assignment.description ?? ""}
+                      maxLength={500}
+                      onChange={(event) => updateAssignment({ description: event.target.value })}
+                    />
+                  </label>
+                  <MarkdownInstructions
+                    key={assignment.role}
+                    label="Arquivo de instruções do agente"
+                    instructions={assignment.instructions ?? ""}
+                    filename={assignment.instructionsFilename}
+                    fallbackFilename="AGENTS.md"
+                    maxCharacters={16_000}
+                    onBusyChange={setReadingInstructions}
+                    onChange={(instructions, instructionsFilename) =>
+                      updateAssignment({ instructions, instructionsFilename })
+                    }
+                  />
+                  <AgentModelSelector
+                    installations={draft.installations}
+                    installationId={assignment.installationId}
+                    model={assignment.model}
+                    onChange={updateAssignment}
+                  />
                   <HandoffAlternatives
                     assignment={assignment}
                     installations={draft.installations}

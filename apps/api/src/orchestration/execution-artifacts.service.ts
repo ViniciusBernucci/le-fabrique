@@ -29,7 +29,11 @@ export class ExecutionArtifactsService {
       async (transaction) => {
         const attempt = await transaction.attempt.findUnique({
           where: { id: attemptId },
-          include: { run: true },
+          include: {
+            run: {
+              include: { ticket: { include: { project: { select: { organizationId: true } } } } },
+            },
+          },
         });
         if (!attempt) throw new NotFoundException("Attempt not found");
         if (
@@ -53,6 +57,22 @@ export class ExecutionArtifactsService {
           throw new ConflictException("Artifact does not match execution result");
         if (attempt.artifactDigest && attempt.artifactDigest !== digest)
           throw new ConflictException("Execution artifact is immutable");
+        if (!attempt.artifactDigest && attempt.run.ticket?.project?.organizationId) {
+          const org = attempt.run.ticket.project.organizationId;
+          await transaction.$queryRaw`SELECT id FROM account_organizations WHERE id=${org}::uuid FOR UPDATE`;
+          const reservation = await transaction.accountStorageReservation.findUnique({
+            where: { attemptId },
+          });
+          const size = Number(
+            (
+              await transaction.$queryRaw<
+                { bytes: number }[]
+              >`SELECT octet_length(${JSON.stringify(artifact)}::jsonb::text) AS bytes`
+            )[0]?.bytes ?? 0,
+          );
+          if (!reservation || size > Number(reservation.bytes))
+            throw new ConflictException("Artifact storage reservation missing or insufficient");
+        }
         if (!attempt.artifactDigest)
           await transaction.attempt.update({
             where: { id: attemptId },
@@ -61,6 +81,8 @@ export class ExecutionArtifactsService {
               artifactDigest: digest,
             },
           });
+        if (attempt.run.ticket?.project?.organizationId)
+          await transaction.accountStorageReservation.deleteMany({ where: { attemptId } });
         return executionResultReceiptSchema.parse({ attemptId, digest });
       },
       { isolationLevel: "Serializable" },

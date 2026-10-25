@@ -1,0 +1,202 @@
+{
+  "base_revision": "896ef0d2c804b80711d5ad00ad96695eaaf9f2d7",
+  "files": [
+    {
+      "path": "docs/00-governanca/01-POLITICA-IA.md",
+      "sha256": "971ef65f12d021b0cef4f898b69114949383d5af392ee18f4a878632cf3b2507",
+      "bytes": 7694
+    },
+    {
+      "path": "docs/00-governanca/ORDEM-LEITURA.json",
+      "sha256": "a78c2b4c9f454222610b101a5de34c65fdc347acf0c940c8017b07a1dab61860",
+      "bytes": 59992
+    },
+    {
+      "path": "docs/01-README.md",
+      "sha256": "d4c51549705720f39138fb1a734f2854166844ac38650fabf98e48a54eabd6b8",
+      "bytes": 5720
+    },
+    {
+      "path": "docs/02-INDEX.md",
+      "sha256": "a8eb75c8a533308177f2331c72b1a2f935b91548ef95c774907f5b3ac1a52725",
+      "bytes": 43916
+    },
+    {
+      "path": "docs/02-arquitetura/00-README.md",
+      "sha256": "444b59c077a1441d159e87ac3d21d23dca7280a87ef16b0f09d542a5dcce618c",
+      "bytes": 1693
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/00-README.md",
+      "sha256": "d2990ff033b638a6728803abbe86bce64496a6a8b2cab6d2fe7c0c09f67f5549",
+      "bytes": 1350
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/01-visao-integrada.md",
+      "sha256": "8901e5e27bba78eabec0fe1eb29610ad2bd6ba47d8cafd048110e6d394f85693",
+      "bytes": 3984
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/02-memoria-persistente.md",
+      "sha256": "40013f03c8f0041702ff4ee2a07834ce34f3b9fc4e62b27e69c2ff868ca6b069",
+      "bytes": 4267
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/03-indexacao-e-grafo.md",
+      "sha256": "79cda38aad22e24bc799381c4e68f1bfb39f342e68fd9c99552d1b17982dd46f",
+      "bytes": 3096
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/04-context-packs.md",
+      "sha256": "4d813fa4edd7337f8ea9d9fb994f7a76920366229a1ecf076317055b937e54a2",
+      "bytes": 2856
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/05-decision-engine.md",
+      "sha256": "a9c9482b3ca94e322df73ac92559a71e3280584c8434e6b93d5457d245c9effb",
+      "bytes": 2874
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/06-modelo-local.md",
+      "sha256": "44d3aa2c8a28cff911dbbadb713036429f88349d960fb6cbe2fa93dc77444ab4",
+      "bytes": 2663
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/07-jev.md",
+      "sha256": "43e365fb827e0baeb7b6fcd45f6c67f7aa72b94b62d4897048e0b0c3c7ef9315",
+      "bytes": 3080
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/08-aprendizado.md",
+      "sha256": "2aafa514579d19b4e998ebb244dcb42b296ddadb5471c2a5f28fdfcbf5227052",
+      "bytes": 2583
+    },
+    {
+      "path": "docs/02-arquitetura/memoria-e-decisoes/09-fluxo-completo.md",
+      "sha256": "268a41ac69c469099dbb7248e437f429a5e501af9e63167b4d071b6ac3481fe4",
+      "bytes": 2880
+    },
+    {
+      "path": "docs/03-modulos/context-builder/00-README.md",
+      "sha256": "cba62c80a774cdfae42c7a3bbbfeee226848b7c44d527299a4eeda33f9140cbe",
+      "bytes": 2872
+    },
+    {
+      "path": "docs/04-CHANGELOG.md",
+      "sha256": "b6ecdf272a928aae6fb04c592ffacae3abdf8b8a7992b342bc99d8f9ad091d66",
+      "bytes": 40290
+    },
+    {
+      "path": "docs/05-contratos/00-README.md",
+      "sha256": "04779e4fec578a50b91421591086cd84cc2f622c39de9b49a71bc51b6c661044",
+      "bytes": 1579
+    },
+    {
+      "path": "docs/05-contratos/memoria-e-decisoes/00-contratos-propostos.md",
+      "sha256": "e368df0db9e020bb63c7218299bad6914f37b76b6832fa98a2da81b5578e0f6f",
+      "bytes": 7372
+    },
+    {
+      "path": "docs/06-decisoes/00-README.md",
+      "sha256": "f3bf721beabb093ce5f40a5e85a4b0bc3a9ada08c19eea94a0f09a29cf5e0bb2",
+      "bytes": 1894
+    },
+    {
+      "path": "docs/06-decisoes/ADR-007-memoria-e-decisoes-versionadas.md",
+      "sha256": "f22ebf8043acc0392796b696626038cea40edc67a1ad0f2a275e387769780375",
+      "bytes": 2654
+    },
+    {
+      "path": "docs/06-decisoes/ADR-008-excecao-jev.md",
+      "sha256": "beda7de342e231de7b91c25f638c146a2bedc8cefff7579e15d14475772b8a03",
+      "bytes": 2564
+    },
+    {
+      "path": "docs/08-desenvolvimento/00-README.md",
+      "sha256": "333307c151462a827484606993e65de7bb5d26f0d24ebd1060dce6ac568f2694",
+      "bytes": 1895
+    },
+    {
+      "path": "docs/08-desenvolvimento/05-matriz-cobertura.md",
+      "sha256": "37f8477bc8465bf5dcd53dec2f61782faa4a54f7b14dcf3b4b20f081e2de6066",
+      "bytes": 5620
+    },
+    {
+      "path": "docs/08-desenvolvimento/08-tech-lead-handoff.md",
+      "sha256": "a2d3440131b6c457e818223cfa35c73988b81a4b5d2a83d0a9219cdabfd45278",
+      "bytes": 4599
+    },
+    {
+      "path": "docs/08-desenvolvimento/09-backlog.md",
+      "sha256": "c992453cdf9e3cc4519c3ebdf0ff846c41737726a3c0f8f4c842cb375b3f7f84",
+      "bytes": 27859
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/00-README.md",
+      "sha256": "080aac6f5873d1797e36969a2646d5cee86efb762997f0b0520c37cc6d5fa860",
+      "bytes": 1859
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/01-decisoes-e-dependencias.md",
+      "sha256": "28be813fc320fdd8d49e4cc4615d15a6a05fde78fce865c5e16025323064add1",
+      "bytes": 6353
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/02-memoria-persistente.md",
+      "sha256": "5d0ad4de3bc8e00ab52cebad5fef903d9f3b05c80fd03d70a2026f8ccf06af3d",
+      "bytes": 5302
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/03-indexacao-e-grafo.md",
+      "sha256": "7e4ac1c13368495e57fd4512d44b0f2f7137007c352700211ae18097e520c81f",
+      "bytes": 4925
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/04-context-packs.md",
+      "sha256": "0f63ca3f11f871ca82ea9892c83b7c515b358408fdc3eaae5bfffd34c9d525c0",
+      "bytes": 5157
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/05-decision-engine.md",
+      "sha256": "d2e1fb6899aae1717a63603d6743b67a0be112583ced56c6e0777e901e8c595e",
+      "bytes": 5132
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/06-modelo-local.md",
+      "sha256": "542c16cda1a2166161d24590fe7a65eedf5ae68081cc8e7246f43e176eea2e94",
+      "bytes": 4782
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/07-jev.md",
+      "sha256": "8cf9a09f3d0b2bbea2d55db8a926d9e888f96ef53feb14a9aab75609f4899905",
+      "bytes": 6493
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/08-aprendizado.md",
+      "sha256": "6b61cf1f1ee9c2a7ac61bd3b04eb91e934090e87cbbce3748698bcc2537cd7fd",
+      "bytes": 4531
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/09-fluxo-completo.md",
+      "sha256": "900f154eff632b87f757e25e0b5a3359d2de2a4e0ea09d0dfc931b1ec63c4ac7",
+      "bytes": 5077
+    },
+    {
+      "path": "docs/08-desenvolvimento/planos-memoria-e-decisoes/10-matriz-fluxo.md",
+      "sha256": "4b81dd40a2376e7ab105d61d936942a0c5244be053d5ba0e433e6adf501c5725",
+      "bytes": 41398
+    },
+    {
+      "path": "docs/09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md",
+      "sha256": "1e7d7d1eb4de19ebaddf0208d6a8802a4c0d778b76ebade30dadca4c82253d70",
+      "bytes": 6717
+    },
+    {
+      "path": "docs/09-entregas/2026/evidencias/ARQ-MEM-001/verificacao.json",
+      "sha256": "80ac2a513cc2cbd6fbee665b086d8679c095a528f978eb1cd8265bcce90c735d",
+      "bytes": 894
+    }
+  ],
+  "self_excluded": true,
+  "commit_created": false
+}

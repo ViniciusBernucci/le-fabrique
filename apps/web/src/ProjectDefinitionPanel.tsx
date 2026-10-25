@@ -25,13 +25,16 @@ export function ProjectDefinitionPanel({
   onMessage,
   onVersion,
   onProfileReady,
+  api,
 }: {
   token: string;
+  api?: { get: typeof getProjectDefinition; put: typeof putProjectDefinition };
   project: Project | undefined;
   onMessage: (message: string) => void;
   onVersion: (version: number | null) => void;
   onProfileReady: (ready: boolean) => void;
 }) {
+  const [loadedProject, setLoadedProject] = useState<string | null>(null);
   const [version, setVersion] = useState(0);
   const [summary, setSummary] = useState("");
   const [externalStack, setExternalStack] = useState("");
@@ -50,9 +53,13 @@ export function ProjectDefinitionPanel({
   useEffect(() => {
     onVersion(null);
     onProfileReady(false);
+    setLoadedProject(null);
     if (!project) return;
-    getProjectDefinition(token, project.id)
+    let current = true;
+    (api?.get ?? getProjectDefinition)(token, project.id)
       .then((definition) => {
+        if (!current) return;
+        setLoadedProject(project.id);
         setVersion(definition?.version ?? 0);
         setSummary(definition?.summary ?? "");
         setExternalStack(definition?.externalStack ?? "");
@@ -88,8 +95,13 @@ export function ProjectDefinitionPanel({
         );
         onVersion(definition?.version ?? null);
       })
-      .catch(() => onMessage("Falha ao carregar a definição do projeto."));
-  }, [onMessage, onProfileReady, onVersion, project, token]);
+      .catch(() => {
+        if (current) onMessage("Falha ao carregar a definição do projeto.");
+      });
+    return () => {
+      current = false;
+    };
+  }, [api, onMessage, onProfileReady, onVersion, project, token]);
 
   function updateCheck(index: number, patch: Partial<EditableCheck>) {
     const current = checks[index];
@@ -107,7 +119,7 @@ export function ProjectDefinitionPanel({
 
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!project) return;
+    if (!project || loadedProject !== project.id) return;
     try {
       const savedChecks = checks.map(({ name, command, argsText }) => ({
         name,
@@ -141,7 +153,7 @@ export function ProjectDefinitionPanel({
                 : {}),
             }
           : null;
-      const saved = await putProjectDefinition(token, project.id, version, {
+      const saved = await (api?.put ?? putProjectDefinition)(token, project.id, version, {
         summary,
         externalStack,
         instructions,
@@ -215,7 +227,7 @@ export function ProjectDefinitionPanel({
               <textarea
                 value={allowedPaths}
                 onChange={(event) => setAllowedPaths(event.target.value)}
-                placeholder="src\ntests"
+                placeholder={"src\ntests"}
                 required
               />
             </label>
@@ -224,7 +236,7 @@ export function ProjectDefinitionPanel({
               <textarea
                 value={forbiddenPaths}
                 onChange={(event) => setForbiddenPaths(event.target.value)}
-                placeholder="secrets\ninfra/production"
+                placeholder={"secrets\ninfra/production"}
               />
             </label>
           </div>
@@ -306,7 +318,9 @@ export function ProjectDefinitionPanel({
                 setContextSources(event.target.value);
                 onProfileReady(false);
               }}
-              placeholder="README.md | INSTRUCTION\nsrc/index.ts | SOURCE\ntests/app.test.ts | TEST"
+              placeholder={
+                "README.md | INSTRUCTION\nsrc/index.ts | SOURCE\ntests/app.test.ts | TEST"
+              }
             />
           </label>
           <h3>Documentação obrigatória para entrega</h3>
@@ -324,7 +338,9 @@ export function ProjectDefinitionPanel({
                 setDocFiles(event.target.value);
                 onProfileReady(false);
               }}
-              placeholder="README.md\ndocs/02-INDEX.md\ndocs/04-CHANGELOG.md\ndocs/08-desenvolvimento/09-backlog.md\ndocs/09-entregas/2026/entrega-atual.md"
+              placeholder={
+                "README.md\ndocs/02-INDEX.md\ndocs/04-CHANGELOG.md\ndocs/08-desenvolvimento/09-backlog.md\ndocs/09-entregas/2026/entrega-atual.md"
+              }
             />
           </label>
           <label>
@@ -348,7 +364,9 @@ export function ProjectDefinitionPanel({
               }}
             />
           </label>
-          <button type="submit">Salvar definição</button>
+          <button type="submit" disabled={loadedProject !== project.id}>
+            Salvar definição
+          </button>
         </>
       )}
     </form>

@@ -1,0 +1,25 @@
+{
+  "ticket": "FAC-038",
+  "base": "ee4485bffb517247cd7b584653ad9ec1423f9202",
+  "branch": "feat/fac-038-painel-conta",
+  "phase": "AWAITING_HUMAN",
+  "writer": "single current session; prior planning turn completed",
+  "authorization": "Ok pode executar; user-account layer only",
+  "review": "self-review only; independent review pending",
+  "qa": "HTTP/ephemeral PostgreSQL verified; browser NOT_RUN missing libatk-1.0.so.0",
+  "deployment": "NOT_RUN; active database untouched",
+  "tests": "npm test final PASS: 623 tests including 10 opt-in account PostgreSQL scenarios",
+  "hashes": {
+    "apps/api/src/account/account-security.ts": "a47076dcd63c6a8eda27c69c5049d39adccf99502e8de76edcd44b2c1e8be8e5",
+    "apps/api/src/account/account.service.ts": "c13545b5ea1ff437546b0f858a13d0bc94cd08df1274b0b9b0a5928486d9041f",
+    "apps/api/src/account/account.guard.ts": "92e3d89e4410d83dfef0c630ddb8e58a8a7b3cf3bd5064181f40c5b0e4fde56a",
+    "apps/api/src/account/account.controller.ts": "f66a63ffd22beaa1f0b157ca504ecc7ad1254c8f150dc10fa04d54b24ac73a87",
+    "apps/web/src/AccountPanel.tsx": "7d968354d113af1823e1f65a5bc6570594ef02d65551cd0dd00c1652b644fb70",
+    "apps/web/src/account-api.ts": "63edd97a8647d799e5bd57e8b8218509f8d37c975aaf19e93a6ef22aeda85a80",
+    "packages/contracts/src/account.ts": "edaa46214537d83423478911dabeac76dc40edc20d89b74a8b4fc0ccf94dfc00",
+    "apps/api/prisma/migrations/20261009120000_user_accounts/migration.sql": "ae17d9b006525252b2e24c12a06ea1d400b1fbc4f6d684be2e17dc869acb52d9",
+    "apps/api/src/account/account-exception.filter.ts": "d6921d1a10ac68bd4f2af37e7eae4ce256a2aa29f543a9dbc2c994a1d7e41ec5"
+  },
+  "next": "Review exact diff and authorized rollout; future ownership/MFA/commercial work remains planned",
+  "cleanup": "PASS: created ephemeral PostgreSQL container stopped and auto-removed; existing services untouched"
+}

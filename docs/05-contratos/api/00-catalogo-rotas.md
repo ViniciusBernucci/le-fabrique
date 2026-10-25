@@ -76,3 +76,9 @@ Extraídas de todos os controllers NestJS da base a2cc5e0. Prefixo global /api e
 | GET | `/api/workers` | AdminAuthGuard | `workerListSchema` | [worker-identity.controller.ts](../../../apps/api/src/worker-identity/worker-identity.controller.ts) |
 
 Fonte runtime de todos os DTOs: [Zod compartilhado](../../../packages/contracts/src/index.ts). Auth inválida retorna 401; payload/UUID/cursor inválido 400; objeto ausente 404; conflito de versão/estado/evidência 409; pausa global de claim 423; capacidade conhecida 429 WRITER_BUSY. Não impor 422/403/404 de proposta ao código. Exemplos/efeitos e concorrência dos principais fluxos em [controle](01-controle.md) e [worker](02-worker.md).
+
+## Rotas da conta — FAC-038
+
+[API da conta do usuário](01-controle.md#api-da-conta-do-usuário--fac-038) cataloga /api/account, com cookie humano/AccountGuard e contratos próprios. Não substitui guards administrativos/worker anteriores. Catálogo machine-readable atualizado em [ROTAS-OBSERVADAS.json](ROTAS-OBSERVADAS.json).
+
+FAC-039–041 ampliam a mesma camada com [rotas complementares](01-controle.md#recursos-complementares-da-conta--fac-039041), mantendo separado o canal interno do worker e o webhook assinado da cobrança.

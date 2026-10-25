@@ -25,12 +25,17 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { type Attempt, Prisma, type Run } from "@prisma/client";
+import { jobAuthorized } from "../account/account-access";
+import { reserveStorage } from "../account/account-storage";
 import { PrismaService } from "../prisma.service";
 import { factorySchedulingPause, requireFactoryScheduling } from "./factory-scheduling-guard";
 import { hasGlobalWriterGuard } from "./global-writer-guard";
 import { stoppedResumeEvidence } from "./resume-evidence";
 
-type AttemptWithRun = Attempt & { run: Run; checkpoint?: { stoppedConfirmed: boolean } | null };
+type AttemptWithRun = Attempt & {
+  run: Run & { ticket?: { project: { organizationId: string | null } } };
+  checkpoint?: { stoppedConfirmed: boolean } | null;
+};
 
 @Injectable()
 export class OrchestrationService {
@@ -45,11 +50,19 @@ export class OrchestrationService {
             where: { id: input.workerId },
           });
           if (worker?.status !== "ONLINE") throw new NotFoundException("Worker unavailable");
-          const ticket = await transaction.ticket.findUnique({ where: { id: input.ticketId } });
+          const ticket = await transaction.ticket.findUnique({
+            where: { id: input.ticketId },
+            include: { project: { select: { organizationId: true } } },
+          });
           if (!ticket) throw new NotFoundException("Ticket not found");
           if (ticket.projectId !== input.projectId) {
             throw new ConflictException("Ticket belongs to another project");
           }
+          if (
+            ticket.project?.organizationId &&
+            !(await jobAuthorized(transaction, ticket.id, ticket.project.organizationId))
+          )
+            throw new ConflictException("Account execution authority revoked");
           let run = await transaction.run.findUnique({ where: { dispatchEventId: input.eventId } });
           if (!run) {
             if (ticket.status !== "READY" || ticket.version !== input.ticketVersion) {
@@ -158,6 +171,8 @@ export class OrchestrationService {
                 throw writerBusy("Global writer already claimed concurrently");
               throw error;
             });
+          if (ticket.project?.organizationId)
+            await reserveStorage(transaction, ticket.project.organizationId, attempt.id);
           await transaction.run.update({
             where: { id: run.id },
             data: {
@@ -194,6 +209,10 @@ export class OrchestrationService {
         if (attempt.status !== "RUNNING" || attempt.leaseExpiresAt <= now) {
           throw new ConflictException("Lease already expired");
         }
+        const ticket = attempt.run.ticket;
+        const accountPaused =
+          !!ticket?.project?.organizationId &&
+          !(await jobAuthorized(transaction, attempt.run.ticketId, ticket.project.organizationId));
         const updated = await transaction.attempt.update({
           where: { id: attempt.id },
           data: { leaseExpiresAt: new Date(now.getTime() + input.leaseDurationMs) },
@@ -201,7 +220,7 @@ export class OrchestrationService {
         return {
           ...mapClaim(updated, false),
           controlAction: (attempt.run.controlAction ??
-            ((await factorySchedulingPause(transaction)) ? "PAUSE" : null)) as
+            (accountPaused || (await factorySchedulingPause(transaction)) ? "PAUSE" : null)) as
             | "PAUSE"
             | "CANCEL"
             | null,
@@ -399,6 +418,13 @@ export class OrchestrationService {
       where: { id: attemptId },
       data: { status: attemptStatus, stoppedConfirmed: true, completedAt: new Date() },
     });
+    const report = executionResultReportSchema.safeParse(attempt.result);
+    if (
+      attempt.run.ticket?.project.organizationId &&
+      report.success &&
+      report.data.snapshots.length === 0
+    )
+      await transaction.accountStorageReservation.deleteMany({ where: { attemptId } });
     await transaction.run.update({
       where: { id: attempt.runId },
       data: { status: input.outcome, controlAction: null, version: { increment: 1 } },
@@ -423,7 +449,11 @@ export class OrchestrationService {
   ): Promise<AttemptWithRun> {
     const attempt = await transaction.attempt.findUnique({
       where: { id: attemptId },
-      include: { run: true },
+      include: {
+        run: {
+          include: { ticket: { include: { project: { select: { organizationId: true } } } } },
+        },
+      },
     });
     if (!attempt) throw new NotFoundException("Attempt not found");
     if (

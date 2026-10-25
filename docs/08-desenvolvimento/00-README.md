@@ -23,3 +23,7 @@ O repo tem código/manifests/tests reais. [Setup local](01-ambiente-local.md), [
 11. [plano-lf-mt-proposto](11-plano-lf-mt-proposto.md).
 12. [testes-seguranca](12-testes-seguranca.md).
 13. [catalogo-fac](13-catalogo-fac.md).
+
+## Planos arquiteturais separados
+
+[Memória e decisões](planos-memoria-e-decisoes/00-README.md): oito planos, requisitos confirmados, propostas e matriz completa do fluxo. Backlog de implementação fica para Tech Lead após avaliação.

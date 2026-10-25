@@ -134,6 +134,39 @@ describe("trusted repository checkout", () => {
     expect(authCall?.options.environment.GH_TOKEN).toBeUndefined();
   });
 
+  it("uses the account credential without falling back to a global GitHub session", async () => {
+    const root = await checkoutRoot();
+    const calls: Array<{
+      binary: string;
+      args: readonly string[];
+      options: Parameters<CheckoutCommandRunner>[2];
+    }> = [];
+    const result = await prepareRepositoryCheckout(
+      inputs,
+      { root, allowedHosts: ["github.com"] },
+      successfulRunner(calls),
+      undefined,
+      { scoped: true, token: "account-fixture-private" },
+    );
+    expect(calls.every((c) => c.binary === "git")).toBe(true);
+    expect(JSON.stringify(result)).not.toContain("account-fixture-private");
+    expect(calls.every((c) => !JSON.stringify(c.args).includes("account-fixture-private"))).toBe(
+      true,
+    );
+    const missingRoot = await checkoutRoot();
+    const runner = vi.fn<CheckoutCommandRunner>();
+    await expect(
+      prepareRepositoryCheckout(
+        inputs,
+        { root: missingRoot, allowedHosts: ["github.com"] },
+        runner,
+        undefined,
+        { scoped: true, token: null },
+      ),
+    ).rejects.toThrow("Trusted repository checkout failed without exposing command output");
+    expect(runner).not.toHaveBeenCalled();
+  });
+
   it("rejects disallowed hosts and credential-bearing URLs before invoking clients", async () => {
     const root = await checkoutRoot();
     const runner = vi.fn<CheckoutCommandRunner>();

@@ -607,5 +607,553 @@
       "workerListSchema"
     ],
     "controller": "apps/api/src/worker-identity/worker-identity.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/register",
+    "guard": "Origin + Redis rate limit",
+    "schemas": [
+      "accountRegisterSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/login",
+    "guard": "Origin + Redis rate limit",
+    "schemas": [
+      "accountLoginSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/session",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSessionSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/overview",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountOverviewSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/profile",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountProfileUpdateSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/organization",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountOrganizationUpdateSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/session/organization",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSwitchSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/invitations",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountInviteSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/account/invitations/:id",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/invitations/accept",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountAcceptInviteSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/account/members/:id",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountMemberUpdateSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/sessions",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSessionsSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/account/sessions/:id",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/password",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountPasswordUpdateSchema"
+    ],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/logout",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/projects",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountCreateProjectSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/definition",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/work/projects/:id/definition",
+    "guard": "AccountGuard",
+    "schemas": [
+      "putProjectDefinitionSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/account/work/projects/:id/base-revision",
+    "guard": "AccountGuard",
+    "schemas": [
+      "updateProjectBaseRevisionSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/tickets",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/projects/:id/tickets",
+    "guard": "AccountGuard",
+    "schemas": [
+      "createTicketSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/tickets/:id/ready",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/grants",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/work/projects/:id/grants",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountGrantSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/account/work/projects/:id/grants/:member",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/routes",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/work/projects/:id/routes",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/runs",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/runs/:id",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/runs/:id/delivery",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/runs/:id/approval",
+    "guard": "AccountGuard",
+    "schemas": [
+      "approveRunDeliverySchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/runs/:id/control",
+    "guard": "AccountGuard",
+    "schemas": [
+      "requestRunControlSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/runs/:id/resume",
+    "guard": "AccountGuard",
+    "schemas": [
+      "requestRunResumeSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/work/runs/:id/recovery",
+    "guard": "AccountGuard",
+    "schemas": [
+      "requestRunRecoverySchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/runs/:id/attempts/:attempt/artifact",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/work/projects/:id/events",
+    "guard": "AccountGuard",
+    "schemas": [
+      "projectEventCursorSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "GET (SSE)",
+    "path": "/api/account/work/projects/:id/events/stream",
+    "guard": "AccountGuard",
+    "schemas": [
+      "projectEventCursorSchema"
+    ],
+    "controller": "apps/api/src/account/account-work.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/recover",
+    "guard": "origin/request header + Redis rate limit",
+    "schemas": [
+      "accountRecoverSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/reset",
+    "guard": "origin/request header + Redis rate limit",
+    "schemas": [
+      "accountResetSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/verify",
+    "guard": "origin/request header + Redis rate limit",
+    "schemas": [
+      "accountTokenInputSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/email/verification",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/email/change",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountChangeEmailSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/mfa/prepare",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSensitiveSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/mfa/confirm",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountMfaConfirmSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/mfa/disable",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSensitiveSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/billing",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/billing/checkout",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountPlanSelectionSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/billing/portal",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/billing/reconcile",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/data/settings",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountDataSettingsSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/data/export",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/notifications",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/account/notifications/:id/read",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/integrations",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/integrations",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountIntegrationInputSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/account/integrations/:id",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/account/integrations/:id/projects/:projectId",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/integrations/:id/login",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/integrations/:id/verify",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/integrations/:id/login/:loginId",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/account/integrations/:id/login/:loginId/challenge",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/integrations/:id/login/:loginId/code",
+    "guard": "AccountGuard",
+    "schemas": [
+      "providerAuthorizationCodeSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/ownership/transfer",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountTransferSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/ownership/accept",
+    "guard": "AccountGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/archive",
+    "guard": "AccountGuard",
+    "schemas": [
+      "accountSensitiveSchema"
+    ],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/account/billing/webhook",
+    "guard": "Stripe-Signature",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-features.controller.ts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/internal/account-repositories/:attemptId/credential",
+    "guard": "WorkerAuthGuard",
+    "schemas": [],
+    "controller": "apps/api/src/account/account-worker.controller.ts"
   }
 ]

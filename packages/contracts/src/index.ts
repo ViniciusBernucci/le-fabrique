@@ -543,12 +543,18 @@ export const providerInstallationSchema = z
       .regex(/^\/?[a-zA-Z0-9._/-]+$/),
     enabled: z.boolean(),
     state: settingsProviderStateSchema,
-    authMode: z.literal("SUBSCRIPTION_CLI"),
+    authMode: z.enum(["SUBSCRIPTION_CLI", "API_KEY"]),
     models: z.array(z.string().trim().min(1).max(120)).max(50),
     defaultModel: z.string().trim().min(1).max(120).nullable(),
   })
   .strict()
   .superRefine((installation, context) => {
+    if (installation.authMode === "API_KEY" && installation.provider === "ANTIGRAVITY")
+      context.addIssue({
+        code: "custom",
+        message: "Antigravity supports CLI registration only",
+        path: ["authMode"],
+      });
     if (new Set(installation.models).size !== installation.models.length) {
       context.addIssue({
         code: "custom",
@@ -579,9 +585,22 @@ export const employeeRoleSchema = z.enum([
 ]);
 export type EmployeeRole = z.infer<typeof employeeRoleSchema>;
 
+export const markdownInstructionsFilenameSchema = z
+  .string()
+  .min(4)
+  .max(200)
+  .regex(/^[^/\\]+\.md$/i)
+  .refine((value) =>
+    [...value].every((char) => char.charCodeAt(0) >= 32 && char.charCodeAt(0) !== 127),
+  );
+
 export const agentAssignmentSchema = z
   .object({
     role: employeeRoleSchema,
+    description: z.string().trim().max(500).optional(),
+    instructions: z.string().max(16_000).optional(),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
+    nickname: z.string().trim().max(100).optional(),
     enabled: z.boolean(),
     installationId: z
       .string()
@@ -650,7 +669,11 @@ export const projectSkillSchema = z
     projectId: z.uuid(),
     name: z.string().trim().min(1).max(100),
     description: z.string().trim().max(500),
-    instructions: z.string().trim().min(1).max(64_000),
+    instructions: z
+      .string()
+      .max(64_000)
+      .refine((value) => value.trim().length > 0),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
   })
   .strict();
 export type ProjectSkill = z.infer<typeof projectSkillSchema>;
@@ -658,9 +681,11 @@ export type ProjectSkill = z.infer<typeof projectSkillSchema>;
 export const digitalAgentSchema = z
   .object({
     id: z.uuid(),
+    nickname: z.string().trim().max(100).optional(),
     name: z.string().trim().min(1).max(100),
     description: z.string().trim().max(500),
-    instructions: z.string().trim().max(16_000),
+    instructions: z.string().max(16_000),
+    instructionsFilename: markdownInstructionsFilenameSchema.optional(),
     projectId: z.uuid().nullable(),
     installationId: z
       .string()
@@ -821,6 +846,22 @@ export const updateFactorySettingsSchema = z
   .object({
     expectedVersion: z.number().int().positive(),
     configuration: factoryConfigurationSchema,
+    apiKeys: z
+      .array(
+        z
+          .object({
+            installationId: z.string().regex(/^[a-z0-9][a-z0-9-]{1,62}$/),
+            key: z
+              .string()
+              .trim()
+              .min(1)
+              .max(4096)
+              .regex(/^[^\s]+$/),
+          })
+          .strict(),
+      )
+      .max(20)
+      .optional(),
   })
   .strict();
 export type UpdateFactorySettings = z.infer<typeof updateFactorySettingsSchema>;
@@ -2530,3 +2571,5 @@ export const evidenceBackupPayloadSchema = z
   })
   .strict();
 export type EvidenceBackupPayload = z.infer<typeof evidenceBackupPayloadSchema>;
+
+export * from "./account";

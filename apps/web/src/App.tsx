@@ -1,6 +1,6 @@
 import type { Project, Ticket } from "@le-fabrique/contracts";
 import type { FormEvent, ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   authenticate,
   createProject,
@@ -22,8 +22,14 @@ import { RunPanel } from "./RunPanel";
 import { SettingsPanel } from "./SettingsPanel";
 import { TasksPanel } from "./TasksPanel";
 
+const AccountPanel = lazy(() =>
+  import("./AccountPanel").then((module) => ({ default: module.AccountPanel })),
+);
+
 export function App() {
-  const [showHome, setShowHome] = useState(true);
+  const [showHome, setShowHome] = useState(
+    () => !/^#account-(invite|verify|reset|transfer|billing)=/.test(window.location.hash),
+  );
   const [token, setToken] = useState(() => sessionStorage.getItem("adminToken") ?? "");
   const [authenticated, setAuthenticated] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -31,7 +37,13 @@ export function App() {
   const [eventSequence, setEventSequence] = useState("0");
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [message, setMessage] = useState("Informe o token administrativo.");
-  const [activeArea, setActiveArea] = useState<"control" | "settings" | "tasks">("control");
+  const [activeArea, setActiveArea] = useState<
+    "control" | "settings" | "tasks" | "account" | "users"
+  >(() =>
+    /^#account-(invite|verify|reset|transfer|billing)=/.test(window.location.hash)
+      ? "account"
+      : "control",
+  );
   const [projectDefinitionVersion, setProjectDefinitionVersion] = useState<number | null>(null);
   const [projectExecutionProfileReady, setProjectExecutionProfileReady] = useState(false);
   const activeProject = projects.find((project) => project.id === selectedProject);
@@ -150,7 +162,19 @@ export function App() {
 
   let content: ReactNode;
 
-  if (!showHome && activeArea === "tasks")
+  if (!showHome && (activeArea === "account" || activeArea === "users"))
+    content = (
+      <Suspense
+        fallback={
+          <main className="shell">
+            <p role="status">Carregando sua conta…</p>
+          </main>
+        }
+      >
+        <AccountPanel initialTab={activeArea === "users" ? "members" : "profile"} />
+      </Suspense>
+    );
+  else if (!showHome && activeArea === "tasks")
     content = <TasksPanel projects={projects} token={authenticated ? token : undefined} />;
   else if (!showHome && !authenticated)
     content = (

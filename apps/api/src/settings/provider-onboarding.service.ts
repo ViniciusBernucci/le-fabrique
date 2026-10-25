@@ -50,6 +50,10 @@ export class ProviderOnboardingService {
         const configuration = factoryConfigurationSchema.parse(settings.configuration);
         const installation = configuration.installations.find((item) => item.id === installationId);
         if (!installation) throw new NotFoundException("Provider installation not found");
+        if (installation.authMode !== "SUBSCRIPTION_CLI")
+          throw new ConflictException(
+            "CLI onboarding and verification require a subscription installation",
+          );
         if (!installation.enabled) {
           throw new ConflictException("Only an enabled installation supports managed login");
         }
@@ -251,7 +255,10 @@ export class ProviderOnboardingService {
         (item) => item.id === current.installationId,
       );
       const installation = configuration.installations[installationIndex];
-      if (installation?.provider !== current.provider) {
+      if (
+        installation?.provider !== current.provider ||
+        installation.authMode !== "SUBSCRIPTION_CLI"
+      ) {
         throw new ConflictException("Provider installation changed during onboarding");
       }
       const updatedConfiguration: FactoryConfiguration = {

@@ -18,7 +18,11 @@ export class SettingsController {
     const input = updateFactorySettingsSchema.safeParse(body);
     if (!input.success) throw new BadRequestException("Invalid settings payload");
     return factorySettingsSchema.parse(
-      await this.settings.update(input.data.expectedVersion, input.data.configuration),
+      await this.settings.update(
+        input.data.expectedVersion,
+        input.data.configuration,
+        input.data.apiKeys,
+      ),
     );
   }
 }

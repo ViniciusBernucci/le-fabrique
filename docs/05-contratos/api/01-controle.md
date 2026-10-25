@@ -48,3 +48,46 @@ Body válido de criação de ticket sob projeto cadastrado; UUID e Bearer só v�
 ## Testes e limites
 
 Testes versionados: control.service.spec.ts, run-control/resume/recovery/delivery e execution-results/artifacts specs em apps/api/src; contratos em packages/contracts/src. Não executados nesta migração. Rotas e schemas foram conferidos por leitura local. Revisão semântica independente/aceite da revisão documental permanece pendente.
+
+## API da conta do usuário — FAC-038
+
+Rotas /api/account usam AccountGuard/cookie próprio, não ADMIN_API_TOKEN nem WORKER_API_TOKEN. Login/cadastro são públicos da camada de identidade, mas exigem X-Account-Request: 1, origem permitida e rate limit Redis. Todos os contratos são [schemas de conta](../../../packages/contracts/src/account.ts); [controller](../../../apps/api/src/account/account.controller.ts). GETs de sessão/overview/sessions e emissão de convite usam Cache-Control: no-store.
+
+| Método e path relativo a /api/account | Contrato/efeito |
+|---|---|
+| POST /register; POST /login | accountRegisterSchema/accountLoginSchema → accountSessionSchema + cookie privado |
+| GET /session | Perfil/conta atual, organizações ativas e CSRF; nenhum segredo de sessão |
+| GET /overview | Membros autorizados, convites/auditoria somente gestores, contagens reais por escopo, storage/reservas reais e tokens observados nullable |
+| PUT /profile; PUT /organization | Rascunho validado, expectedVersion, gravação/auditoria atômicas |
+| PUT /session/organization | Membership ativa obrigatória; muda seleção da sessão |
+| POST /invitations; DELETE /invitations/:id | Convite 72h por link privado/uso único; reemissão revoga anterior; token só na resposta de criação |
+| POST /invitations/accept | Conta autenticada/email correspondente verificado; lock serializa aceite concorrente |
+| PATCH /members/:id | Papel/status/version; escopo da conta, owner protegido e limite de delegação |
+| GET /sessions; DELETE /sessions/:id | Sessões próprias, sem cookie/hash/CSRF; revogação por proprietário da sessão |
+| PUT /password | Senha atual obrigatória; novo hash e revogação das outras sessões na transação |
+| POST /logout | Remove sessão corrente e limpa cookie |
+
+Mutações exigem X-Account-CSRF e X-Account-Organization (conta esperada). Conta mudou em outra aba → 409; UUID externo/membership ausente → 404 nos alvos; papel/origem/CSRF inválidos → 403; sessão inválida/expirada → 401; rate limit → 429; Redis/hash capacity indisponíveis → 503. Body inválido → 400. Mesmo no acesso HTTP direto não existe fallback para token administrativo. Cookies humanos não abrem rotas antigas de projeto/settings/operation. Config WEB_ORIGIN define origem exata quando presente; instalação recomendada usa frontend/API no mesmo origin.
+
+## Recursos complementares da conta — FAC-039–041
+
+[Controller work](../../../apps/api/src/account/account-work.controller.ts), [features](../../../apps/api/src/account/account-features.controller.ts), [canal worker](../../../apps/api/src/account/account-worker.controller.ts) e [contratos runtime](../../../packages/contracts/src/account.ts) são fontes executáveis; paths exatos em [ROTAS-OBSERVADAS.json](ROTAS-OBSERVADAS.json).
+
+| Família | Autorização e contrato |
+|---|---|
+| /account/work/projects, definition, base-revision, tickets, grants, routes | AccountGuard; leitura exige grant/gestão, operação OPERATOR em conta/projeto, configuração/grants só gestores; contratos existentes de projeto/ticket/definição e accountCreateProjectSchema/accountGrantSchema |
+| /account/work/runs, delivery, approval, control, resume, recovery, artifacts | AccountGuard e projeto derivado do run no servidor; aceite APPROVER/gestor, operação OPERATOR/gestor; contratos existentes de digest/versão/stop/fence |
+| /account/work/projects/:id/events e /stream | Mesmo escopo; stream verifica sessão/grant a cada poll, sem confiar em autorização inicial |
+| /account/integrations e /projects/:projectId, login/verify/challenge/code | Gestores; segredo somente na entrada, AES-GCM privado, grants compostos; DTOs sanitizados e contratos oficiais de onboarding existentes |
+| /account/recover, /reset, /verify | Públicos com origem/cabeçalho e rate-limit; tokens de uso único, resposta genérica na recuperação |
+| /account/email, /mfa | Cookie/CSRF/rate-limit; senha e segundo fator para ações sensíveis; MFA/recovery codes retornam uma vez na configuração |
+| /account/notifications, /read | Usuário/organização correntes e grants atuais; leitura individual, limite de 100 |
+| /account/data/settings, /data/export | Dados fiscais/retenção somente owner; exportação por seção/cursor própria, 200 registros/página, gestores para dados da equipe |
+| /account/ownership, /archive | Owner/aceite do destinatário, senha/segundo fator e invariantes de owner/stop/assinatura |
+| /account/billing, checkout, portal, reconcile | Consulta de plano da conta; dados fiscais/faturas/ação comercial só owner; intenção persistida/idempotency key |
+| /account/billing/webhook | Sem cookie humano: raw body/Stripe-Signature obrigatório, timestamp/HMAC/dedupe e reconsulta da Stripe |
+| /internal/account-repositories/:attemptId/credential | WorkerAuthGuard, worker/attempt/fence/lease atuais, job/grant ainda autorizado; no-store; credencial somente no supervisor |
+
+Todos os endpoints protegidos da conta são no-store. Contexto de conta fornecido também é verificado em GETs; browser reconsulta /session sem contexto antigo para atualizar a seleção. Negar 404 para recurso de organização diferente e 403 para recurso próprio sem grant não expõe IDs externos. Serviços de domínio se unem à transação do check via account-transaction.ts; nenhuma commit separado entre autorização e mutação. Registrar chaves API não habilita execução API/gasto.
+
+FAC-041: overview inclui `awaitingApproval`, `executionSeconds` nullable, `executionTimeIncomplete`/`executionTimeObservedAt` e `aiUsage.byProvider` (tokens nullable quando não observados). Exportação aceita a seção `attempts`, paginada e restrita aos projetos autorizados, com resultado público sanitizado; não inclui worker/fence/credenciais nem artefato bruto.

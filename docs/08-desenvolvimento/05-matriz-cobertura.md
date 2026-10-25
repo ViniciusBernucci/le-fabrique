@@ -50,3 +50,47 @@ Quadro/lista de tarefas demonstrativas, filtros, edição e vínculo com agentes
 ## Cobertura FAC-034
 
 Tokens HUD globais, frame/home e todas as áreas do painel; estados reais de execução separados das nove etapas de demonstração. Specs preservam limites mock, contratos/aria e cobrem tom de mensagens, mapeamento de estados e redução de movimento. [Entrega](../09-entregas/2026/2026-10-07-FAC-034-centro-comando.md). Browser/revisão independente NÃO VERIFICADOS por limites do ambiente; sem mudanças em backend, providers, schemas ou C4.
+
+## Cobertura FAC-035
+
+Nome próprio opcional separado do cargo para agentes pré-configurados e personalizados. Contratos cobrem leitura legada, trim, remoção e limite; testes web cobrem resumo e rótulos acessíveis; serviço cobre gravação versionada do nome. Browser, revisão independente, integração e aceite pendentes. [Entrega](../09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+Adendo FAC-035 (2026-10-09): contrato CommonJS antigo reproduzido e preparação predev validada; 53 testes de contratos, 8 SettingsService e 2 launcher PASS. Browser e banco real NÃO VALIDADOS. [Correção](../09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+## FAC-037 — Cadastro de integração e seleção de IA/modelo
+
+| Critério | Código/check | Limite |
+|---|---|---|
+| API/CLI em cadastro; chave separada | contracts/api-registration.spec.ts; api/settings/api-registration.spec.ts | Sem chamada externa |
+| Criptografia autenticada vinculada à conta | api/settings/api-key-encryption.spec.ts | Fixtures sintéticas |
+| Somente IAs habilitadas e modelos da IA | web/AgentModelSelector.spec.tsx | Browser pendente |
+| Conta API não executa CLI | worker/configured-agent-router.spec.ts | Sem adapter API |
+
+[Evidências e resultados](../09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md#testes-e-evidências).
+
+## Cobertura FAC-038 — conta do usuário
+
+Contratos validam senha/timezone/version/papéis. API cobre salt/hashing, cookie dedicado, CSRF/origem e delegação. Integração HTTP/PostgreSQL efêmera cobre contas A/B, legado versus cookie humano, convite concorrente/email/expiração/reemissão, owner protegido, suspensão, conflitos, auditoria, senha/logout e rate limit fail closed. Web cobre fetch cookie/contexto/CSRF, recuperação de conflito, fragmento de convite sob StrictMode e navegação de conta. [Entrega e checks](../09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md). Browser funcional, produção, email/MFA e ownership de projeto/runtime NÃO VALIDADOS por estes testes.
+
+## Complemento de conta — FAC-039–041
+
+| Requisito | Implementação | Verificação |
+|---|---|---|
+| Projeto/grant/HTTP/artifacts/stream por conta | AccountWorkService/Guard e worker revalidado | PostgreSQL/HTTP A/B e revogação; ver evidência final |
+| Integração e credencial privada/roteamento | AccountDataService/WorkerController/worker-settings/contexto | Ciphertext/export sanitizados, lease/fence/ACL e regressões |
+| Quota/uso/notificação/dados/ownership | Reservations/trigger/export/transfer/archive | Concorrência/capacidade/preferências/aceite em PG |
+| MFA/tokens/SMTP | AccountIdentityService/EmailService | RFC6238/anti-replay/recovery/SMTP local |
+| Planos/Stripe | BillingIntent/Webhook/portal/reconsulta | Fake Stripe idempotência/dedupe/reordenação/raw HTTP |
+| Interface | Abas reais da conta e projetos/integrações | Browser fixture, desktop/mobile; sem autenticação real de provider |
+
+[Entrega/checks](../09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md). Revisão independente/aceite, preços/catálogo e ativação externa continuam pendentes; testes não comprovam isolamento hostil/comercial.
+
+## Cobertura FAC-036
+
+Upload .md para agentes/skills e download do conteúdo; testes de leitura cobrem extensão/nome, UTF-8, BOM/espaços, vazio/NUL e limites; contratos cobrem metadados nos três tipos e leitura legada; serviço verifica persistência JSON versionada. Browser, revisão independente e aceite exato pendentes. [Entrega](../09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+
+Adendo FAC-036 (2026-10-24): browser em fixture descartável PASS — salvar/recarregar/baixar bytes idênticos, erros sem substituir, cancelar, agente personalizado, skill e 390 px. Revisão independente formal e aceite pendentes. [Verificação](../09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
+
+## Cobertura documental de memória e decisões
+
+[Matriz de rastreabilidade](planos-memoria-e-decisoes/10-matriz-fluxo.md) conserva 145 operações, 56 exceções e 20 decisões candidatas JEV da transcrição. Cobertura de requisitos neste planejamento não equivale a cobertura por testes: implementação e verificação funcional de cada item NÃO VERIFICADAS individualmente. Oito planos e guias distinguem estado observado, requisitos confirmados e propostas técnicas.

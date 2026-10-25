@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime && npm run build -w @le-fabrique/api && npm run build -w @le-fabrique/worker && npm run build -w @le-fabrique/web",
+    "predev": "npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime",
     "dev": "node scripts/dev.mjs",
     "format": "biome format --write .",
     "lint": "biome check .",

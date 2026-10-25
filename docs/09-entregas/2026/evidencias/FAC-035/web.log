@@ -1,0 +1,17 @@
+
+> @le-fabrique/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique-fac-035/apps/web
+
+
+ Test Files  23 passed (23)
+      Tests  64 passed (64)
+   Start at  19:30:28
+   Duration  6.12s (import 53%, transform 28%, tests 16%, worker 2%)
+
+  Transform  transforming modules took 2.91s · 28% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+

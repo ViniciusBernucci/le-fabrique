@@ -1,0 +1,33 @@
+{
+  "fixture": true,
+  "origin": "http://127.0.0.1:5178",
+  "database": "account_test",
+  "worker": false,
+  "externalServices": false,
+  "checks": [
+    "Meu perfil",
+    "Minha conta",
+    "Pessoas e acesso",
+    "Segurança",
+    "Plano e uso",
+    "Atividade",
+    "Projetos e execuções",
+    "Integrações",
+    "Notificações",
+    "Meus dados",
+    "Criar projeto e carregar configuração privada",
+    "Criar ticket privado e listar no projeto",
+    "Criar integração CLI privada sem autenticar provider",
+    "Exportação JSON baixada com seções autorizadas e sem segredos",
+    "390px sem overflow horizontal"
+  ],
+  "runtimeExceptions": [],
+  "desktop": [
+    1280,
+    900
+  ],
+  "mobile": [
+    390,
+    844
+  ]
+}

@@ -65,8 +65,25 @@ describe("SettingsService", () => {
     });
   });
 
-  it("updates atomically with optimistic concurrency", async () => {
+  it("updates names atomically with optimistic concurrency and reads them back", async () => {
     const configuration = createDefaultFactoryConfiguration();
+    configuration.assignments = configuration.assignments.map((agent) =>
+      agent.role === "DEVELOPER" ? { ...agent, nickname: "Alex" } : agent,
+    );
+    configuration.digitalAgents = [
+      {
+        id: crypto.randomUUID(),
+        name: "Designer",
+        nickname: "Sofia",
+        description: "",
+        instructions: "",
+        projectId: null,
+        installationId: null,
+        model: null,
+        skillIds: [],
+        enabled: true,
+      },
+    ];
     const record = {
       id: "global",
       version: 2,
@@ -84,9 +101,15 @@ describe("SettingsService", () => {
     const prisma = { $transaction: vi.fn((callback) => callback(transaction)) };
     const service = new SettingsService(prisma as never);
 
-    await expect(service.update(1, configuration)).resolves.toMatchObject({ version: 2 });
+    await expect(service.update(1, configuration)).resolves.toMatchObject({
+      version: 2,
+      configuration,
+    });
     expect(transaction.factorySettings.updateMany).toHaveBeenCalledWith(
-      expect.objectContaining({ where: { id: "global", version: 1 } }),
+      expect.objectContaining({
+        where: { id: "global", version: 1 },
+        data: expect.objectContaining({ configuration }),
+      }),
     );
   });
 
@@ -143,13 +166,20 @@ it("persists project skills and more than six agents using the existing versione
   const current = createDefaultFactoryConfiguration();
   const configuration = {
     ...current,
+    assignments: current.assignments.map((assignment) => ({
+      ...assignment,
+      description: "Resumo",
+      instructions: "# Regras\n",
+      instructionsFilename: "AGENTS.md",
+    })),
     projectSkills: [
       {
         id: skillId,
         projectId,
         name: "Skill de revisão",
         description: "",
-        instructions: "Verifique a UI.",
+        instructions: "Verifique a UI.\n",
+        instructionsFilename: "SKILL.md",
       },
     ],
     digitalAgents: Array.from({ length: 12 }, (_, index) => ({
@@ -157,7 +187,8 @@ it("persists project skills and more than six agents using the existing versione
       projectId,
       name: `Agente ${index}`,
       description: "",
-      instructions: "",
+      instructions: "# Agente\n",
+      instructionsFilename: "custom.md",
       installationId: null,
       model: null,
       skillIds: [skillId],

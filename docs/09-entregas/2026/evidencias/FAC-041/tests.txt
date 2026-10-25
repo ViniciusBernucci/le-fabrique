@@ -1,0 +1,149 @@
+
+> le-fabrique@0.1.0 pretest
+> npm run build -w @le-fabrique/contracts && npm run build -w @le-fabrique/runtime
+
+
+> @le-fabrique/contracts@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @le-fabrique/runtime@0.1.0 build
+> tsc -p tsconfig.json && cp src/sandbox-launcher.cjs dist/sandbox-launcher.cjs
+
+
+> le-fabrique@0.1.0 test
+> node --test scripts/dev.test.mjs scripts/db.test.mjs scripts/claude-preflight.test.mjs scripts/evidence-backup-cli.test.mjs && npm run test -w @le-fabrique/contracts && npm run test -w @le-fabrique/runtime && npm run test -w @le-fabrique/api && npm run test -w @le-fabrique/worker && npm run test -w @le-fabrique/web
+
+TAP version 13
+# Subtest: preflight refuses missing confirmation and inherited API keys before creating identities
+ok 1 - preflight refuses missing confirmation and inherited API keys before creating identities
+  ---
+  duration_ms: 1532.970592
+  type: 'test'
+  ...
+# Subtest: preflight rejects a successful synthetic turn without native tool evidence and publishes no proof
+ok 2 - preflight rejects a successful synthetic turn without native tool evidence and publishes no proof
+  ---
+  duration_ms: 851.347674
+  type: 'test'
+  ...
+# Subtest: synthetic complete native trace publishes private binary-bound proof and retires the previous proof
+ok 3 - synthetic complete native trace publishes private binary-bound proof and retires the previous proof
+  ---
+  duration_ms: 1618.061246
+  type: 'test'
+  ...
+# Subtest: Prisma recebe ambiente raiz em subprocesso real sem depender do cwd do workspace
+ok 4 - Prisma recebe ambiente raiz em subprocesso real sem depender do cwd do workspace
+  ---
+  duration_ms: 64.225129
+  type: 'test'
+  ...
+# Subtest: carrega o arquivo .env da raiz no processo launcher
+ok 5 - carrega o arquivo .env da raiz no processo launcher
+  ---
+  duration_ms: 6.565966
+  type: 'test'
+  ...
+# Subtest: inicia os tres workspaces sem shell e com o ambiente carregado
+ok 6 - inicia os tres workspaces sem shell e com o ambiente carregado
+  ---
+  duration_ms: 1.825218
+  type: 'test'
+  ...
+# Subtest: offline backup CLI refuses invalid commands without exposing supplied private details
+ok 7 - offline backup CLI refuses invalid commands without exposing supplied private details
+  ---
+  duration_ms: 1208.345945
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4105.735338
+
+> @le-fabrique/contracts@0.1.0 test
+> vitest run src
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/packages/contracts
+
+
+ Test Files  7 passed (7)
+      Tests  58 passed (58)
+   Start at  19:50:17
+   Duration  1.72s (import 51%, transform 28%, tests 19%, worker 2%)
+
+    Isolate  7 workers spawned · ~197ms startup each (spawn + environment, per file)
+             at least ~262ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> @le-fabrique/runtime@0.1.0 test
+> vitest run src
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/packages/runtime
+
+
+ Test Files  8 passed (8)
+      Tests  65 passed (65)
+   Start at  19:50:20
+   Duration  3.54s (tests 69%, import 17%, transform 13%, worker 1%)
+
+    Isolate  8 workers spawned · ~172ms startup each (spawn + environment, per file)
+             at least ~287ms faster with isolate: false — reuses workers across files instead of one per file
+
+
+> @le-fabrique/api@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/api
+
+
+ Test Files  36 passed (36)
+      Tests  231 passed (231)
+   Start at  19:50:24
+   Duration  30.88s (tests 57%, import 39%, transform 4%)
+
+     Import  115 modules were evaluated 212 times · 23.20s total, 39% of tracked time
+             ~2.19s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+
+> @le-fabrique/worker@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/worker
+
+
+ Test Files  26 passed (26)
+      Tests  217 passed (217)
+   Start at  19:50:56
+   Duration  10.20s (tests 61%, import 31%, transform 7%, worker 1%)
+
+    Isolate  26 workers spawned · ~191ms startup each (spawn + environment, per file)
+             at least ~1.47s faster with isolate: false — reuses workers across files instead of one per file
+
+
+> @le-fabrique/web@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /home/vinicius/le-fabrique/apps/web
+
+
+ Test Files  25 passed (25)
+      Tests  70 passed (70)
+   Start at  19:51:07
+   Duration  4.35s (import 57%, transform 27%, tests 13%, worker 3%)
+
+    Isolate  25 workers spawned · ~192ms startup each (spawn + environment, per file)
+             at least ~1.41s faster with isolate: false — reuses workers across files instead of one per file
+

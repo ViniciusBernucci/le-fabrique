@@ -168,6 +168,7 @@
 ## Decisões e propostas
 
 1. [Decisões e propostas](06-decisoes/00-README.md).
+2. [ADR-007 — Conta do usuário e sessões individuais](06-decisoes/ADR-007-conta-usuario-e-sessoes.md).
 
 ## Operar e recuperar
 
@@ -267,6 +268,12 @@
 1. [Planejamento atual](08-desenvolvimento/tickets/planejamento/00-README.md).
 
 ## Histórico de entregas
+
+- [FAC-038 — Ticket do painel da conta do usuário](08-desenvolvimento/tickets/FAC-038.md).
+
+- [FAC-038 — Painel da conta do usuário](09-entregas/2026/2026-10-09-FAC-038-painel-conta-usuario.md).
+
+- [PLAN-ADM-001 — Proposta do painel administrativo da conta](09-entregas/2026/2026-10-09-PLAN-ADM-001-painel-administrativo-conta.md).
 
 1. [Histórico de entregas](09-entregas/00-README.md).
 
@@ -540,3 +547,60 @@
 - [Entrega, checks e limites](09-entregas/2026/2026-10-07-FAC-034-centro-comando.md).
 - [Handoff original de design](09-entregas/2026/evidencias/design_handoff_centro_comando/README.md).
 - [Prompt original recebido](09-entregas/2026/evidencias/design_handoff_centro_comando/PROMPT-CLAUDE-CODE.md).
+
+## Nome dos agentes — FAC-035 (consulta)
+
+- [Ticket](08-desenvolvimento/tickets/configuracao/FAC-035-nomes-agentes.md).
+- [Entrega e checks](09-entregas/2026/2026-10-08-FAC-035-nomes-agentes.md).
+
+- [FAC-035: correção da inicialização para nomes](09-entregas/2026/2026-10-09-FAC-035-correcao-salvamento-nomes.md).
+
+### Incremento FAC-037 — cadastro API/CLI
+
+1. [Ticket FAC-037](08-desenvolvimento/tickets/configuracao/FAC-037-api-cli-agentes.md).
+2. [Entrega FAC-037](09-entregas/2026/2026-10-09-FAC-037-api-cli-agentes.md).
+
+## Complemento do painel da conta — consulta FAC-039–041
+
+1. [Projetos/grants/execução](08-desenvolvimento/tickets/FAC-039.md).
+2. [Integrações/uso/dados](08-desenvolvimento/tickets/FAC-040.md).
+3. [Segurança/email/planos](08-desenvolvimento/tickets/FAC-041.md).
+4. [Entrega e evidências complementares](09-entregas/2026/2026-10-09-FAC-041-complemento-painel-conta.md).
+
+## Instruções Markdown — FAC-036 (consulta)
+
+- [Ticket](08-desenvolvimento/tickets/configuracao/FAC-036-instrucoes-markdown.md).
+- [Entrega e checks](09-entregas/2026/2026-10-09-FAC-036-instrucoes-markdown.md).
+- [Leitura obrigatória e evidências da sessão FAC-036](09-entregas/2026/evidencias/FAC-036/leitura-checks.md).
+- [Revisão e verificação em browser após integração](09-entregas/2026/evidencias/FAC-036/revisao-integracao.md).
+
+## Memória e decisões — guias, planos e contratos
+
+1. [Aprender a arquitetura de memória e decisões](02-arquitetura/memoria-e-decisoes/00-README.md).
+2. [Visão integrada: memória, contexto e decisão](02-arquitetura/memoria-e-decisoes/01-visao-integrada.md).
+3. [Memória persistente: o que a fábrica precisa lembrar](02-arquitetura/memoria-e-decisoes/02-memoria-persistente.md).
+4. [Índices e grafo: como descobrir relações](02-arquitetura/memoria-e-decisoes/03-indexacao-e-grafo.md).
+5. [Context Packs: como entregar conhecimento a uma tarefa](02-arquitetura/memoria-e-decisoes/04-context-packs.md).
+6. [Decision Engine: quem decide o quê](02-arquitetura/memoria-e-decisoes/05-decision-engine.md).
+7. [Modelo local: encontrar semelhanças sem gerar código](02-arquitetura/memoria-e-decisoes/06-modelo-local.md).
+8. [JEV: julgamento entre alternativas permitidas](02-arquitetura/memoria-e-decisoes/07-jev.md).
+9. [Aprendizado: transformar resultados em exemplos confiáveis](02-arquitetura/memoria-e-decisoes/08-aprendizado.md).
+10. [Fluxo completo: como os componentes trabalham juntos](02-arquitetura/memoria-e-decisoes/09-fluxo-completo.md).
+11. [Planos arquiteturais de memória e decisões](08-desenvolvimento/planos-memoria-e-decisoes/00-README.md).
+12. [Decisões confirmadas, propostas e evidências](08-desenvolvimento/planos-memoria-e-decisoes/01-decisoes-e-dependencias.md).
+13. [Plano — Memória persistente](08-desenvolvimento/planos-memoria-e-decisoes/02-memoria-persistente.md).
+14. [Plano — Indexação, grafo e análise de impacto](08-desenvolvimento/planos-memoria-e-decisoes/03-indexacao-e-grafo.md).
+15. [Plano — Context Packs e continuidade](08-desenvolvimento/planos-memoria-e-decisoes/04-context-packs.md).
+16. [Plano — Decision Engine](08-desenvolvimento/planos-memoria-e-decisoes/05-decision-engine.md).
+17. [Plano futuro — Modelo local e recuperação semântica](08-desenvolvimento/planos-memoria-e-decisoes/06-modelo-local.md).
+18. [Plano futuro — Integração JEV preparada para configuração no sistema](08-desenvolvimento/planos-memoria-e-decisoes/07-jev.md).
+19. [Plano futuro — Dataset e classificador próprio](08-desenvolvimento/planos-memoria-e-decisoes/08-aprendizado.md).
+20. [Plano — Fluxo completo e matriz de decisões](08-desenvolvimento/planos-memoria-e-decisoes/09-fluxo-completo.md).
+21. [Matriz de rastreabilidade do fluxo discutido](08-desenvolvimento/planos-memoria-e-decisoes/10-matriz-fluxo.md).
+22. [Contratos comuns propostos — memória e decisões](05-contratos/memoria-e-decisoes/00-contratos-propostos.md).
+23. [ADR-007 — Memória e decisões versionadas](06-decisoes/ADR-007-memoria-e-decisoes-versionadas.md).
+24. [ADR-008 — Exceção específica para API JEV](06-decisoes/ADR-008-excecao-jev.md).
+
+## Entrega arquitetural de memória e decisões
+
+1. [ARQ-MEM-001 — planos, guias e evidências](09-entregas/2026/2026-10-09-ARQ-MEM-001-planos-memoria-decisoes.md).

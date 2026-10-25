@@ -1352,6 +1352,43 @@
       "chapters": [
         "docs/09-entregas/00-README.md"
       ]
+    },
+    {
+      "folder": "docs/02-arquitetura/memoria-e-decisoes",
+      "chapters": [
+        "docs/02-arquitetura/memoria-e-decisoes/00-README.md",
+        "docs/02-arquitetura/memoria-e-decisoes/01-visao-integrada.md",
+        "docs/02-arquitetura/memoria-e-decisoes/02-memoria-persistente.md",
+        "docs/02-arquitetura/memoria-e-decisoes/03-indexacao-e-grafo.md",
+        "docs/02-arquitetura/memoria-e-decisoes/04-context-packs.md",
+        "docs/02-arquitetura/memoria-e-decisoes/05-decision-engine.md",
+        "docs/02-arquitetura/memoria-e-decisoes/06-modelo-local.md",
+        "docs/02-arquitetura/memoria-e-decisoes/07-jev.md",
+        "docs/02-arquitetura/memoria-e-decisoes/08-aprendizado.md",
+        "docs/02-arquitetura/memoria-e-decisoes/09-fluxo-completo.md"
+      ]
+    },
+    {
+      "folder": "docs/08-desenvolvimento/planos-memoria-e-decisoes",
+      "chapters": [
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/00-README.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/01-decisoes-e-dependencias.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/02-memoria-persistente.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/03-indexacao-e-grafo.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/04-context-packs.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/05-decision-engine.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/06-modelo-local.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/07-jev.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/08-aprendizado.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/09-fluxo-completo.md",
+        "docs/08-desenvolvimento/planos-memoria-e-decisoes/10-matriz-fluxo.md"
+      ]
+    },
+    {
+      "folder": "docs/05-contratos/memoria-e-decisoes",
+      "chapters": [
+        "docs/05-contratos/memoria-e-decisoes/00-contratos-propostos.md"
+      ]
     }
   ],
   "exceptions": [

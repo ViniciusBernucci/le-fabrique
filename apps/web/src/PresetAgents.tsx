@@ -94,15 +94,18 @@ export function PresetAgents({
             <button
               type="button"
               className="account-list-item"
-              aria-label={`Ver agente ${roleLabels[agent.role]}`}
+              aria-label={`Ver agente ${agent.nickname || roleLabels[agent.role]}`}
               onClick={(event) => {
                 trigger.current = event.currentTarget;
                 setSelected(agent.role);
               }}
             >
-              <span className="provider-mark">{roleLabels[agent.role].slice(0, 1)}</span>
+              <span className="provider-mark">
+                {(agent.nickname || roleLabels[agent.role]).slice(0, 1).toUpperCase()}
+              </span>
               <span className="account-list-name">
-                <strong>{roleLabels[agent.role]}</strong>
+                <strong>{agent.nickname || roleLabels[agent.role]}</strong>
+                <span className="account-list-detail">Cargo: {roleLabels[agent.role]}</span>
                 <span className="account-list-detail">Agente pré-configurado</span>
                 <span className="account-list-detail">
                   {agent.installationId && agent.model
@@ -116,7 +119,7 @@ export function PresetAgents({
                 type="checkbox"
                 role="switch"
                 aria-checked={agent.enabled}
-                aria-label={`Ativar agente ${roleLabels[agent.role]}`}
+                aria-label={`Ativar agente ${agent.nickname || roleLabels[agent.role]}`}
                 checked={agent.enabled}
                 disabled={saving}
                 onChange={(event) => void toggle(agent.role, event.target.checked)}
@@ -135,7 +138,10 @@ export function PresetAgents({
           onCancel={() => setSelected(null)}
         >
           <div className="account-dialog-heading">
-            <h2 id={titleId}>{roleLabels[selected]}</h2>
+            <h2 id={titleId}>
+              {configuration.assignments.find((agent) => agent.role === selected)?.nickname ||
+                roleLabels[selected]}
+            </h2>
             <button
               type="button"
               aria-label="Fechar informações do agente"
@@ -144,6 +150,7 @@ export function PresetAgents({
               ×
             </button>
           </div>
+          <p>Cargo: {roleLabels[selected]}</p>
           <h3>Função do agente</h3>
           <p>{roleInformation[selected].purpose}</p>
           <h3>Participação no fluxo</h3>

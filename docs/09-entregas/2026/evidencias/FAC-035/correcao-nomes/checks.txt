@@ -1,0 +1,14 @@
+Base: 38998ebf313625d2202dcb51c574803d78a3a1ef; branch fix/agent-name-persistence
+Reproducao local antes: require(@le-fabrique/contracts).agentAssignmentSchema.safeParse rejeita nickname com unrecognized_keys. dist datado 2026-10-05, fonte de 2026-10-08.
+Containers api/web criados 2026-09-30; API sem exports de settings e GET /api/settings retorna 404. Nenhum deploy realizado.
+PASS npm run predev: contratos e runtime compilados.
+PASS contrato CommonJS depois: inputName Alex, parsedName Alex.
+PASS npm test -w @le-fabrique/contracts: 5 arquivos, 53 testes.
+PASS npm test -w @le-fabrique/api -- src/settings/settings.service.spec.ts: 8 testes, inclui gravacao/leitura de nome predefinido e personalizado.
+PASS node --test scripts/dev.test.mjs: 2 testes.
+PASS npm run db:generate: cliente local, sem conexao/migration.
+PASS npm run build -w @le-fabrique/api e npm run build -w @le-fabrique/web.
+Browser NOT_RUN: Chromium nao iniciou por falta de libatk-1.0.so.0; script sintetico preparado, sem afirmar validacao.
+PASS python3 scripts/validar-documentacao.py: sem erros.
+PASS npx biome check package.json; git diff --check.
+Codigo: 6184f78; docs em commit posterior para evitar hash circular.

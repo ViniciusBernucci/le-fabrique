@@ -1,5 +1,5 @@
 import { workerConfigurationSnapshotSchema } from "@le-fabrique/contracts";
-import { Controller, Get, Inject, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Query, UseGuards } from "@nestjs/common";
 import { WorkerAuthGuard } from "../worker-identity/worker-auth.guard";
 import { SettingsService } from "./settings.service";
 
@@ -9,9 +9,9 @@ export class WorkerSettingsController {
   constructor(@Inject(SettingsService) private readonly settings: SettingsService) {}
 
   @Get()
-  async getConfiguration() {
+  async getConfiguration(@Query("projectId") projectId?: string) {
     return workerConfigurationSnapshotSchema.parse(
-      await this.settings.getWorkerConfigurationSnapshot(),
+      await this.settings.getWorkerConfigurationSnapshot(new Date(), projectId),
     );
   }
 }
